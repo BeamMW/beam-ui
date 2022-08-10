@@ -2246,14 +2246,6 @@ mucho más en completar una transacción.</translation>
         <source>Connect more currencies</source>
         <translation>Añadir más monedas</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Ofertas activas</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Mis ofertas</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>Transacciones</translation>
@@ -3785,13 +3777,17 @@ Please, restart the wallet and try again.</source>
         <source>Transaction fee</source>
         <translation type="unfinished">Tarifa de la transacción</translation>
     </message>
-    <message id="dex-offers">
-        <source>Offers</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">Ofertas activas</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">Mis ofertas</translation>
     </message>
 </context>
 </TS>

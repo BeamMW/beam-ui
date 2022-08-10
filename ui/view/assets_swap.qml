@@ -86,11 +86,19 @@ Item {
                 Layout.bottomMargin: 15
                 height: 18
 
+                property bool showOnlyMyOffers: false
+
                 state: "offers"
                 states: [
                     State {
                         name: "offers"
                         PropertyChanges { target: offersTab; state: "active" }
+                        PropertyChanges { target: tabSelector; showOnlyMyOffers: false }
+                    },
+                    State {
+                        name: "myoffers"
+                        PropertyChanges { target: myOffersTab; state: "active" }
+                        PropertyChanges { target: tabSelector; showOnlyMyOffers: true }
                     },
                     State {
                         name: "transactions"
@@ -103,12 +111,36 @@ Item {
 
                     TxFilter {
                         id: offersTab
-                        //% "Offers"
-                        label: qsTrId("dex-offers")
+                        //% "Active offers"
+                        label: qsTrId("swap-active-offers-tab")
                         Layout.alignment: Qt.AlignVCenter
 
                         onClicked: function () {
                             tabSelector.state = "offers"
+                        }
+
+                        showLed: false
+                        opacity: this.state != "active" ? 0.5 : 1
+                        activeColor: Style.active
+                        inactiveColor: Style.content_main
+
+                        font {
+                            styleName:      "Bold"
+                            weight:         Font.Bold
+                            pixelSize:      14
+                            letterSpacing:  3.11
+                            capitalization: Font.AllUppercase
+                        }
+                    }
+
+                    TxFilter {
+                        id: myOffersTab
+                        //% "My offers"
+                        label: qsTrId("swap-my-offers-tab")
+                        Layout.alignment: Qt.AlignVCenter
+
+                        onClicked: function () {
+                            tabSelector.state = "myoffers"
                         }
 
                         showLed: false
@@ -170,8 +202,13 @@ Item {
                     id: ordersProxyModel
 
                     source: ordersModel.orders
+
+                    filterRole: "isMine"
+                    filterString: tabSelector.showOnlyMyOffers ? "true" : "*"
+                    filterSyntax: SortFilterProxyModel.Wildcard
+                    filterCaseSensitivity: Qt.CaseInsensitive
                 }
-                visible: tabSelector.state == "offers" && model.count > 0
+                visible: tabSelector.state != "transactions" && model.count > 0
 
                 property real rowHeight: 56
                 property double columnResizeRatio: width / 1000
@@ -377,10 +414,40 @@ Item {
                 visible: tabSelector.state == "transactions"
             }
 
-            Item {
-                Layout.fillWidth:  true
-                Layout.fillHeight: true
-                visible:           tabSelector.state == "offers" && !ordersTable.visible
+            ColumnLayout {
+                Layout.minimumWidth: parent.width
+                Layout.minimumHeight: parent.height
+                visible: !ordersTable.visible && tabSelector.state != "transactions"
+
+                SvgImage {
+                    Layout.topMargin: 100
+                    Layout.alignment: Qt.AlignHCenter
+                    source:     "qrc:/assets/icon-dex.svg"
+                    sourceSize: Qt.size(60, 60)
+                }
+
+                SFText {
+                    Layout.topMargin:     30
+                    Layout.alignment:     Qt.AlignHCenter
+                    horizontalAlignment:  Text.AlignHCenter
+                    font.pixelSize:       14
+                    color:                Style.content_main
+                    opacity:              0.5
+                    lineHeight:           1.43
+
+                    text:                 tabSelector.showOnlyMyOffers ?
+//% "There are no offers yet."
+                    qsTrId("atomic-no-my-offers")
+                    :
+/*% "There are no active offers at the moment.
+Please try again later or create an offer yourself."
+*/
+                    qsTrId("atomic-no-offers")
+                }
+
+                Item {
+                    Layout.fillHeight: true
+                }
             }
 
         }

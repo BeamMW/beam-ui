@@ -352,7 +352,7 @@ Item {
                     id: offersTabSelector
                     Layout.alignment: Qt.AlignTop
                     //% "Active offers"
-                    label: qsTrId("atomic-swap-active-offers-tab")
+                    label: qsTrId("swap-active-offers-tab")
                     onClicked: atomicSwapLayout.state = "offers"
                     showLed: false
                     font {
@@ -366,7 +366,7 @@ Item {
                     Layout.alignment: Qt.AlignTop
                     Layout.leftMargin: 40
                     //% "My offers"
-                    label: qsTrId("atomic-swap-my-offers-tab")
+                    label: qsTrId("swap-my-offers-tab")
                     onClicked: atomicSwapLayout.state = "myoffers"
                     showLed: false
                     font {

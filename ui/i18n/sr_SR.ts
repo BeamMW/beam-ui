@@ -2251,14 +2251,6 @@ much longer for a transaction to complete.</translation>
         <source>Connect more currencies</source>
         <translation type="unfinished">Connect more currencies</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Активне понуде</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Моје понуде</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation type="unfinished">Transactions</translation>
@@ -3794,13 +3786,17 @@ Please, restart the wallet and try again.</source>
         <source>Transaction fee</source>
         <translation type="unfinished">Transaction fee</translation>
     </message>
-    <message id="dex-offers">
-        <source>Offers</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">Активне понуде</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">Моје понуде</translation>
     </message>
 </context>
 </TS>

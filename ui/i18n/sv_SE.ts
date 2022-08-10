@@ -2242,14 +2242,6 @@ mycket längre tid för en transaktion att slutföras.</translation>
         <source>Connect more currencies</source>
         <translation>Anslut fler valutor</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Aktiva erbjudanden</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Mina erbjudanden</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>Transaktioner</translation>
@@ -3781,13 +3773,17 @@ Please, restart the wallet and try again.</source>
         <source>Transaction fee</source>
         <translation type="unfinished">Transaktionskostnad</translation>
     </message>
-    <message id="dex-offers">
-        <source>Offers</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">Aktiva erbjudanden</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">Mina erbjudanden</translation>
     </message>
 </context>
 </TS>

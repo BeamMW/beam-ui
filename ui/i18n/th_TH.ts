@@ -2241,14 +2241,6 @@ much longer for a transaction to complete.</translation>
         <source>Connect more currencies</source>
         <translation type="unfinished">Connect more currencies</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>ข้อเสนอเสนอที่ใช้งานอยู่</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>ข้อเสนอของฉัน</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>ธุรกรรม</translation>
@@ -3775,13 +3767,17 @@ Please, restart the wallet and try again.</source>
         <source>Transaction fee</source>
         <translation type="unfinished">ค่าธรรมเนียมธุรกรรม</translation>
     </message>
-    <message id="dex-offers">
-        <source>Offers</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">ข้อเสนอเสนอที่ใช้งานอยู่</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">ข้อเสนอของฉัน</translation>
     </message>
 </context>
 </TS>

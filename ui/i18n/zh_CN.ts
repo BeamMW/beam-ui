@@ -2253,14 +2253,6 @@ much longer for a transaction to complete.</oldsource>
         <source>Connect more currencies</source>
         <translation>连接更多货币</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>有效报价</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>我的报价</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>交易</translation>
@@ -3789,13 +3781,17 @@ Please, restart the wallet and try again.</source>
         <source>Transaction fee</source>
         <translation type="unfinished">交易费</translation>
     </message>
-    <message id="dex-offers">
-        <source>Offers</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">有效报价</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">我的报价</translation>
     </message>
 </context>
 </TS>
