@@ -351,9 +351,11 @@ Control {
                 var index = tableViewModel.transactions.index(0, 0);
                 var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, id);
                 if (indexList.length > 0) {
-                    index = dappFilterProxy.mapFromSource(indexList[0]);
+                    index = dexFilterProxy.mapFromSource(indexList[0]);
+                    index = dappFilterProxy.mapFromSource(index);
                     index = assetFilterProxy.mapFromSource(index);
                     index = searchProxyModel.mapFromSource(index);
+                    index = statusProxy.mapFromSource(index);
                     index = txProxyModel.mapFromSource(index);
                     transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
 
