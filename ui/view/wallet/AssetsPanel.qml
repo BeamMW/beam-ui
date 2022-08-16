@@ -323,7 +323,7 @@ Control {
         width:       parent.width / 2 - 5
         leftPadding: itemWidth + 10
         topPadding:  50
-        visible:     true
+        visible:     showValidationPromo && !control.showFaucetPromo && control.assetsCount == 1
 
         SeedValidationPanel {
             canHideValidationPromo: viewModel.canHideValidationPromo
