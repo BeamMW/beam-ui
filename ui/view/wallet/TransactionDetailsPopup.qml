@@ -664,7 +664,7 @@ CustomDialog {
                     ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
                     ScrollBar.vertical.policy:    ScrollBar.AsNeeded
                     SFText {
-                        width:              450
+                        width:              425
                         wrapMode:           Text.Wrap
                         font.pixelSize:     14
                         text:               paymentInfo ? paymentInfo.paymentProof : ""
