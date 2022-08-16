@@ -186,7 +186,6 @@ Control {
 
     contentItem: ScrollView {
         id: scroll
-        // Layout.topMargin: 25
 
         implicitHeight: control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -323,7 +322,8 @@ Control {
     Row {
         width:       parent.width / 2 - 5
         leftPadding: itemWidth + 10
-        visible:     showValidationPromo && !control.showFaucetPromo && control.assetsCount == 1
+        topPadding:  50
+        visible:     true
 
         SeedValidationPanel {
             canHideValidationPromo: viewModel.canHideValidationPromo
