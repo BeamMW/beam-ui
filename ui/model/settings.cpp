@@ -777,7 +777,7 @@ uint32_t WalletSettings::getShadersPrivilegeLvl() const
     // On testnet 2 by default
     return m_data.value(kShadersPrivLvl, 2).toUInt();
     #else
-    return m_data.value(kShadersPrivLvl).toUInt();
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
     #endif
 }
 
