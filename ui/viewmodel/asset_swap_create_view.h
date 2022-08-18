@@ -35,6 +35,8 @@ class AssetSwapCreateViewModel: public QObject
     Q_PROPERTY(QString comment           READ getComment           WRITE  setComment          NOTIFY  commentChanged)
     Q_PROPERTY(QString rate              READ getRate                                         NOTIFY  rateChanged)
     Q_PROPERTY(bool    canCreate         READ getCanCreate                                    NOTIFY  canCreateChanged)
+    Q_PROPERTY(bool    isEnough          READ getIsEnough                                     NOTIFY  canCreateChanged)
+    Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  canCreateChanged)
     // Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
 
   public:
@@ -84,6 +86,8 @@ class AssetSwapCreateViewModel: public QObject
     QString getRate() const;
 
     bool getCanCreate() const;
+    bool getIsEnough() const;
+    QString getMaxSendAmount() const;
 
     // void setTransactionToken(const QString& value);
     // QString getTransactionToken() const;
@@ -106,6 +110,7 @@ class AssetSwapCreateViewModel: public QObject
     uint             _sendAssetIndex = 0;
     uint32_t         _offerExpires = 0;
     bool             _isEnoughtToSend = false;
-    QString   _comment;
+    QString          _comment;
+    beam::Amount     _maxAmountToSendGrothes = 0;
     // QString   _token;
 };

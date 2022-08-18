@@ -83,7 +83,15 @@ ColumnLayout {
                             multi:                      true
                             resetAmount:                false
                             currColor:                  Style.content_main
-                            error:                      ""
+                            error: {
+                                if (!viewModel.isEnough)
+                                {
+                                    var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
+                                    //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
+                                    return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(sentAmountInput.currencyUnit, 10))
+                                }
+                                return ""
+                            }
                         }
                     }
 
