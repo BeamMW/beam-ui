@@ -46,6 +46,17 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
         _currenciesList = _myCurrenciesList;
     }
 
+    uint index = 0;
+    for (const auto& currencyInfo: _currenciesList)
+    {
+        if (currencyInfo["verified"].toBool())
+        {
+            setReceiveAssetIndex(index);
+            break;
+        }
+        ++index;
+    }
+
     _walletModel->getAsync()->generateNewAddress();
 }
 
