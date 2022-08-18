@@ -365,7 +365,7 @@ Item {
                             }
                         }
                         RowLayout {
-                            visible: !styleData.value
+                            visible: !styleData.value && ordersTable.model.getRoleValue(styleData.row, "hasAssetToSend");
                             SvgImage {
                                 z: 1
                                 sourceSize: Qt.size(16, 16)

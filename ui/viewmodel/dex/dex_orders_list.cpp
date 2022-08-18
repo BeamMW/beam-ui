@@ -28,14 +28,15 @@ QHash<int, QByteArray> DexOrdersList::roleNames() const
 {
     static const auto roles = QHash<int, QByteArray>
     {
-        {static_cast<int>(Roles::RId),         "id"},
-        {static_cast<int>(Roles::RSend),       "send"},
-        {static_cast<int>(Roles::RReceive),    "receive"},
-        {static_cast<int>(Roles::RRate),       "rate"},
-        {static_cast<int>(Roles::RIsMine),     "isMine"},
-        {static_cast<int>(Roles::RCreateTime), "created"},
-        {static_cast<int>(Roles::RExpireTime), "expiration"},
-        {static_cast<int>(Roles::RCoins),      "coins"},
+        {static_cast<int>(Roles::RId),              "id"},
+        {static_cast<int>(Roles::RSend),            "send"},
+        {static_cast<int>(Roles::RReceive),         "receive"},
+        {static_cast<int>(Roles::RRate),            "rate"},
+        {static_cast<int>(Roles::RIsMine),          "isMine"},
+        {static_cast<int>(Roles::RCreateTime),      "created"},
+        {static_cast<int>(Roles::RExpireTime),      "expiration"},
+        {static_cast<int>(Roles::RCoins),           "coins"},
+        {static_cast<int>(Roles::RHasAssetToSend),  "hasAssetToSend"},
     };
     return roles;
 }
@@ -93,6 +94,10 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
             res.insert("sendIcon", m_amgr->getIcon(order.getSendAssetId()));
             res.insert("receiveIcon", m_amgr->getIcon(order.getReceiveAssetId()));
             return QVariant::fromValue(res);
+        }
+        case Roles::RHasAssetToSend:
+        {
+            return m_amgr->hasAsset(order.getSendAssetId());
         }
 
         default:

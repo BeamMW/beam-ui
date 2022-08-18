@@ -34,7 +34,8 @@ public:
         RIsMine,
         RCreateTime,
         RExpireTime,
-        RCoins
+        RCoins,
+        RHasAssetToSend
     };
 
     Q_ENUM(Roles)
