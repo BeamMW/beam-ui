@@ -3804,5 +3804,9 @@ Please, restart the wallet and try again.</source>
         <source>You can&apos;t accept offer with identical assets on both sides</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="assets-same-create">
+        <source>You can&apos;t create offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

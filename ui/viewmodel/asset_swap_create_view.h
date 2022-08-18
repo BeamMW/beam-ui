@@ -37,6 +37,7 @@ class AssetSwapCreateViewModel: public QObject
     Q_PROPERTY(bool    canCreate         READ getCanCreate                                    NOTIFY  canCreateChanged)
     Q_PROPERTY(bool    isEnough          READ getIsEnough                                     NOTIFY  canCreateChanged)
     Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  canCreateChanged)
+    Q_PROPERTY(bool    isAssetsSame      READ getIsAssetsSame                                 NOTIFY  canCreateChanged)
     // Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
 
   public:
@@ -88,6 +89,7 @@ class AssetSwapCreateViewModel: public QObject
     bool getCanCreate() const;
     bool getIsEnough() const;
     QString getMaxSendAmount() const;
+    bool getIsAssetsSame() const;
 
     // void setTransactionToken(const QString& value);
     // QString getTransactionToken() const;
