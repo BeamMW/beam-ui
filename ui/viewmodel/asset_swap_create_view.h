@@ -109,8 +109,8 @@ class AssetSwapCreateViewModel: public QObject
     std::string      _sendAssetSname;
     uint             _sendAssetIndex = 0;
     uint32_t         _offerExpires = 0;
-    bool             _isEnoughtToSend = false;
     QString          _comment;
+    bool             _isEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;
     // QString   _token;
 };

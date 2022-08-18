@@ -28,6 +28,7 @@ AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
     , _amgr(AppModel::getInstance().getAssets())
 {
     connect(_walletModel.get(), &WalletModel::dexOrdersFinded, this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
+    connect(_walletModel.get(), &WalletModel::coinsSelected,   this, &AssetSwapAcceptViewModel::onCoinsSelected);
 }
 
 void AssetSwapAcceptViewModel::startSwap()
@@ -57,6 +58,25 @@ void AssetSwapAcceptViewModel::onDexOrdersFinded(const beam::wallet::DexOrder& o
 
     _offerCreated = order.getCreation();
     _offerExpires = order.getExpiration();
+    emit orderChanged();
+
+    _walletModel->getAsync()->selectCoins(
+        _amountToSendGrothes,
+        0,
+        _sendAsset,
+        false);
+}
+
+void AssetSwapAcceptViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
+{
+    if (selectionRes.m_requestedSum != _amountToSendGrothes || selectionRes.m_assetID != _sendAsset)
+    {
+        return;
+    }
+
+    _isEnoughtToSend = selectionRes.m_isEnought;
+    _canAccept = _isEnoughtToSend;
+    _maxAmountToSendGrothes = selectionRes.get_NettoValue();
     emit orderChanged();
 }
 
@@ -168,3 +188,19 @@ QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getCurrenciesList(
 
     return result;
 }
+
+bool AssetSwapAcceptViewModel::getCanAccept() const
+{
+    return _canAccept && _receiveAsset != _sendAsset;
+}
+
+bool AssetSwapAcceptViewModel::getIsEnough() const
+{
+    return _isEnoughtToSend;
+}
+
+QString AssetSwapAcceptViewModel::getMaxSendAmount() const
+{
+    return beamui::AmountToUIString(_maxAmountToSendGrothes);
+}
+

@@ -82,11 +82,19 @@ ColumnLayout {
                             amount:       viewModel.amountToSend
                             currencies:   viewModel.sendCurrencies
                             currencyIdx:  0
-                            readOnlyA:    true
+                            readOnlyA:    false
                             multi:        false
                             color:        Style.accent_outgoing
                             currColor:    Style.content_main
-                            // error:        getErrorText()
+                            error: {
+                                if (!viewModel.isEnough)
+                                {
+                                    var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
+                                    //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
+                                    return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(sendAmountInput.currencyUnit, 10))
+                                }
+                                return ""
+                            }
                         }
                     }
 
@@ -148,7 +156,6 @@ ColumnLayout {
                             multi:         false
                             color:         Style.accent_incoming
                             currColor:     Style.content_main
-                            // error:         getErrorText()
                         }
                     }
 
@@ -281,7 +288,7 @@ ColumnLayout {
                 palette.buttonText:  Style.content_opposite
                 palette.button:      Style.accent_outgoing
                 icon.source:         "qrc:/assets/icon-create-offer.svg"
-                // enabled:             viewModel.canSend && sendSwapView.isValid()
+                enabled:             viewModel.canAccept
                 onClicked: {
                     viewModel.startSwap()
                     thisView.onClosed()
