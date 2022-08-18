@@ -36,6 +36,8 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     , _sendAssetSname(kBeamAssetSName)
 {
     connect(_walletModel.get(), &WalletModel::generatedNewAddress, this, &AssetSwapCreateViewModel::onGeneratedNewAddress);
+    connect(_walletModel.get(), &WalletModel::coinsSelected,       this, &AssetSwapCreateViewModel::onCoinsSelected);
+
 
     _myCurrenciesList = _amgr->getAssetsList();
     _currenciesList = _amgr->getAssetsListFull();
@@ -76,6 +78,17 @@ void AssetSwapCreateViewModel::onGeneratedNewAddress(const beam::wallet::WalletA
     _walletModel->getAsync()->loadDexOrderParams();
 }
 
+void AssetSwapCreateViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
+{
+    if (selectionRes.m_requestedSum != _amountToSendGrothes || selectionRes.m_assetID != _sendAsset)
+    {
+        return;
+    }
+
+    _isEnoughtToSend = selectionRes.m_isEnought;
+    emit canCreateChanged();
+}
+
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getCurrenciesList() const
 {
     return _currenciesList;
@@ -99,6 +112,7 @@ void AssetSwapCreateViewModel::setAmountToReceive(QString value)
         _amountToReceiveGrothes = amount;
         emit amountReceiveChanged();
         emit rateChanged();
+        emit canCreateChanged();
     }
 }
 
@@ -115,6 +129,13 @@ void AssetSwapCreateViewModel::setAmountToSend(QString value)
         _amountToSendGrothes = amount;
         emit amountSendChanged();
         emit rateChanged();
+        emit canCreateChanged();
+
+        _walletModel->getAsync()->selectCoins(
+            _amountToSendGrothes,
+            0,
+            _sendAsset,
+            false);
     }
 }
 
@@ -135,6 +156,8 @@ void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
         _receiveAssetSname = _receiveAsset == beam::Asset::s_BeamID
             ? kBeamAssetSName
             : assetsInfoMap[kUnitNameField].toString().toStdString();
+
+        emit canCreateChanged();
     }
 }
 
@@ -155,6 +178,8 @@ void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
         _sendAssetSname = _sendAsset == beam::Asset::s_BeamID
             ? kBeamAssetSName
             : assetsInfoMap[kUnitNameField].toString().toStdString();
+
+        emit canCreateChanged();
     }
 }
 
@@ -187,6 +212,11 @@ QString AssetSwapCreateViewModel::getRate() const
                 beamui::AmountToUIString(_amountToReceiveGrothes),
                 beamui::AmountToUIString(_amountToSendGrothes),
                 beam::wallet::kDexOrderRatePrecission);
+}
+
+bool AssetSwapCreateViewModel::getCanCreate() const
+{
+    return _receiveAsset != _sendAsset && _amountToReceiveGrothes != 0 && _amountToSendGrothes != 0 && _isEnoughtToSend;
 }
 
 // void AssetSwapCreateViewModel::setTransactionToken(const QString& value)

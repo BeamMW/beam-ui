@@ -31,9 +31,10 @@ class AssetSwapCreateViewModel: public QObject
     Q_PROPERTY(int     receiveAssetIndex READ getReceiveAssetIndex WRITE setReceiveAssetIndex NOTIFY  receiveAssetIndexChanged)
     Q_PROPERTY(int     sendAssetIndex    READ getSendAssetIndex    WRITE setSendAssetIndex    NOTIFY  sendAssetIndexChanged)
 
-    Q_PROPERTY(int        offerExpires   READ getOfferExpires      WRITE  setOfferExpires     NOTIFY  offerExpiresChanged)
-    Q_PROPERTY(QString    comment        READ getComment           WRITE  setComment          NOTIFY  commentChanged)
-    Q_PROPERTY(QString    rate           READ getRate                                         NOTIFY  rateChanged)
+    Q_PROPERTY(int     offerExpires      READ getOfferExpires      WRITE  setOfferExpires     NOTIFY  offerExpiresChanged)
+    Q_PROPERTY(QString comment           READ getComment           WRITE  setComment          NOTIFY  commentChanged)
+    Q_PROPERTY(QString rate              READ getRate                                         NOTIFY  rateChanged)
+    Q_PROPERTY(bool    canCreate         READ getCanCreate                                    NOTIFY  canCreateChanged)
     // Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
 
   public:
@@ -51,10 +52,12 @@ class AssetSwapCreateViewModel: public QObject
     void offerExpiresChanged();
     void commentChanged();
     void rateChanged();
+    void canCreateChanged();
     // void transactionTokenChanged();
 
   private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
+    void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&);
 
   private:
     QList<QMap<QString, QVariant>> getCurrenciesList() const;
@@ -80,6 +83,8 @@ class AssetSwapCreateViewModel: public QObject
 
     QString getRate() const;
 
+    bool getCanCreate() const;
+
     // void setTransactionToken(const QString& value);
     // QString getTransactionToken() const;
 
@@ -100,6 +105,7 @@ class AssetSwapCreateViewModel: public QObject
     std::string      _sendAssetSname;
     uint             _sendAssetIndex = 0;
     uint32_t         _offerExpires = 0;
+    bool             _isEnoughtToSend = false;
     QString   _comment;
     // QString   _token;
 };

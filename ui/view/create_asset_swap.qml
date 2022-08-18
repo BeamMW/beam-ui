@@ -84,10 +84,6 @@ ColumnLayout {
                             resetAmount:                false
                             currColor:                  Style.content_main
                             error:                      ""
-
-                            onCurrencyIdxChanged: {
-                                console.log('LEFT onCurrencyIdxChanged');
-                            }
                         }
                     }
 
@@ -371,9 +367,8 @@ ColumnLayout {
                     icon.color:          Style.content_opposite
                     palette.button:      Style.active
                     icon.source:         "qrc:/assets/icon-share.svg"
-                    // enabled:             thisView.canSend()
+                    enabled:             viewModel.canCreate
                     onClicked: {
-                        console.log('publish offer');
                         viewModel.publishOffer();
                         onClosed();
                     }
