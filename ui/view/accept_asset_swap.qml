@@ -82,7 +82,7 @@ ColumnLayout {
                             amount:       viewModel.amountToSend
                             currencies:   viewModel.sendCurrencies
                             currencyIdx:  0
-                            readOnlyA:    false
+                            readOnlyA:    true
                             multi:        false
                             color:        Style.accent_outgoing
                             currColor:    Style.content_main
@@ -92,6 +92,11 @@ ColumnLayout {
                                     var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
                                     //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
                                     return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(sendAmountInput.currencyUnit, 10))
+                                }
+                                if (viewModel.isAssetsSame)
+                                {
+                                    //% "You can't accept offer with identical assets on both sides"
+                                    return qsTrId("assets-same-accept");
                                 }
                                 return ""
                             }
@@ -156,6 +161,14 @@ ColumnLayout {
                             multi:         false
                             color:         Style.accent_incoming
                             currColor:     Style.content_main
+                            error: {
+                                if (viewModel.isAssetsSame)
+                                {
+                                    //% "You can't accept offer with identical assets on both sides"
+                                    return qsTrId("assets-same-accept");
+                                }
+                                return ""
+                            }
                         }
                     }
 

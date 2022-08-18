@@ -37,6 +37,7 @@ class AssetSwapAcceptViewModel: public QObject
     Q_PROPERTY(bool    canAccept         READ getCanAccept                                    NOTIFY  orderChanged)
     Q_PROPERTY(bool    isEnough          READ getIsEnough                                     NOTIFY  orderChanged)
     Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  orderChanged)
+    Q_PROPERTY(bool    isAssetsSame      READ getIsAssetsSame                                 NOTIFY  orderChanged)
 
   public:
     AssetSwapAcceptViewModel();
@@ -71,6 +72,7 @@ class AssetSwapAcceptViewModel: public QObject
     bool getCanAccept() const;
     bool getIsEnough() const;
     QString getMaxSendAmount() const;
+    bool getIsAssetsSame() const;
 
     WalletModel::Ptr _walletModel;
     AssetsManager::Ptr _amgr;

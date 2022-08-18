@@ -204,3 +204,8 @@ QString AssetSwapAcceptViewModel::getMaxSendAmount() const
     return beamui::AmountToUIString(_maxAmountToSendGrothes);
 }
 
+bool AssetSwapAcceptViewModel::getIsAssetsSame() const
+{
+    return _receiveAsset == _sendAsset;
+}
+

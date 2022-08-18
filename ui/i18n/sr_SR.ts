@@ -3798,5 +3798,9 @@ Please, restart the wallet and try again.</source>
         <source>My offers</source>
         <translation type="unfinished">Моје понуде</translation>
     </message>
+    <message id="assets-same-accept">
+        <source>You can&apos;t accept offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
