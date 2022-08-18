@@ -191,7 +191,7 @@ QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getCurrenciesList(
 
 bool AssetSwapAcceptViewModel::getCanAccept() const
 {
-    return _canAccept && _receiveAsset != _sendAsset;
+    return _canAccept && _receiveAsset != _sendAsset && _amountToReceiveGrothes && _amountToSendGrothes;
 }
 
 bool AssetSwapAcceptViewModel::getIsEnough() const
