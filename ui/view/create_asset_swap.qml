@@ -124,7 +124,7 @@ ColumnLayout {
                             CustomComboBox {
                                 id:                  expiresCombo
                                 Layout.fillWidth:    true
-                                currentIndex:        0
+                                currentIndex:        viewModel.offerExpires
                                 fontPixelSize:       14
                                 model: [
                                     //% "30 minutes"

@@ -61,6 +61,7 @@ class AssetSwapCreateViewModel: public QObject
   private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&);
+    void onAssetsSwapParamsLoaded(const beam::ByteBuffer& params);
 
   private:
     QList<QMap<QString, QVariant>> getCurrenciesList() const;
@@ -73,6 +74,7 @@ class AssetSwapCreateViewModel: public QObject
     void setAmountToSend(QString value);
 
     uint getReceiveAssetIndex() const;
+    void setReceiveAssetIndexImpl(uint value);
     void setReceiveAssetIndex(uint value);
 
     uint getSendAssetIndex() const;
@@ -90,6 +92,8 @@ class AssetSwapCreateViewModel: public QObject
     bool getIsEnough() const;
     QString getMaxSendAmount() const;
     bool getIsAssetsSame() const;
+
+    void saveLastOfferState();
 
     // void setTransactionToken(const QString& value);
     // QString getTransactionToken() const;
@@ -111,6 +115,7 @@ class AssetSwapCreateViewModel: public QObject
     std::string      _sendAssetSname;
     uint             _sendAssetIndex = 0;
     uint32_t         _offerExpires = 0;
+    uint             _offerExpiresIndex = 0;
     QString          _comment;
     bool             _isEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;

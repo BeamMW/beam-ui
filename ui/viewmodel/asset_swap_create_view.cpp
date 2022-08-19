@@ -19,8 +19,6 @@
 #include "wallet/client/extensions/dex_board/dex_order.h"
 #include "wallet/transactions/dex/dex_tx.h"
 
-#include <qdebug.h>
-
 namespace
 {
     const char kBeamAssetSName[] = "BEAM";
@@ -35,9 +33,9 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     , _receiveAssetSname(kBeamAssetSName)
     , _sendAssetSname(kBeamAssetSName)
 {
-    connect(_walletModel.get(), &WalletModel::generatedNewAddress, this, &AssetSwapCreateViewModel::onGeneratedNewAddress);
-    connect(_walletModel.get(), &WalletModel::coinsSelected,       this, &AssetSwapCreateViewModel::onCoinsSelected);
-
+    connect(_walletModel.get(), &WalletModel::generatedNewAddress,    this, &AssetSwapCreateViewModel::onGeneratedNewAddress);
+    connect(_walletModel.get(), &WalletModel::coinsSelected,          this, &AssetSwapCreateViewModel::onCoinsSelected);
+    connect(_walletModel.get(), &WalletModel::assetsSwapParamsLoaded, this, &AssetSwapCreateViewModel::onAssetsSwapParamsLoaded);
 
     _myCurrenciesList = _amgr->getAssetsList();
     _currenciesList = _amgr->getAssetsListFull();
@@ -51,12 +49,13 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     {
         if (currencyInfo["verified"].toBool())
         {
-            setReceiveAssetIndex(index);
+            setReceiveAssetIndexImpl(index);
             break;
         }
         ++index;
     }
 
+    _walletModel->getAsync()->loadDexOrderParams();
     _walletModel->getAsync()->generateNewAddress();
 }
 
@@ -86,7 +85,6 @@ void AssetSwapCreateViewModel::publishOffer()
 void AssetSwapCreateViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
 {
     _receiverAddress = addr;
-    _walletModel->getAsync()->loadDexOrderParams();
 }
 
 void AssetSwapCreateViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& selectionRes)
@@ -99,6 +97,24 @@ void AssetSwapCreateViewModel::onCoinsSelected(const beam::wallet::CoinsSelectio
     _isEnoughtToSend = selectionRes.m_isEnought;
     _maxAmountToSendGrothes = selectionRes.get_NettoValue();
     emit canCreateChanged();
+}
+
+void AssetSwapCreateViewModel::onAssetsSwapParamsLoaded(const beam::ByteBuffer& params)
+{
+    beam::Deserializer der;
+    der.reset(params);
+
+    uint sendAssetIndex = 0;
+    der & sendAssetIndex;
+    setSendAssetIndex(sendAssetIndex);
+
+    uint receiveAssetIndex = 0;
+    der & receiveAssetIndex;
+    setReceiveAssetIndex(receiveAssetIndex);
+
+    uint offerExpiresIndex = 0;
+    der & offerExpiresIndex;
+    setOfferExpires(offerExpiresIndex);
 }
 
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getCurrenciesList() const
@@ -156,8 +172,13 @@ uint AssetSwapCreateViewModel::getReceiveAssetIndex() const
     return _receiveAssetIndex;
 }
 
-void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
+void AssetSwapCreateViewModel::setReceiveAssetIndexImpl(uint value)
 {
+    if (value >= _currenciesList.size())
+    {
+        value = _currenciesList.size() - 1;
+    }
+
     if (_receiveAssetIndex != value)
     {
         _receiveAssetIndex = value;
@@ -173,6 +194,15 @@ void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
     }
 }
 
+void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
+{
+    if (_receiveAssetIndex != value)
+    {
+        setReceiveAssetIndexImpl(value);
+        saveLastOfferState();
+    }
+}
+
 uint AssetSwapCreateViewModel::getSendAssetIndex() const
 {
     return _sendAssetIndex;
@@ -180,6 +210,11 @@ uint AssetSwapCreateViewModel::getSendAssetIndex() const
 
 void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
 {
+    if (value >= _myCurrenciesList.size())
+    {
+        value = _myCurrenciesList.size() - 1;
+    }
+
     if (_sendAssetIndex != value)
     {
         _sendAssetIndex = value;
@@ -191,19 +226,26 @@ void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
             ? kBeamAssetSName
             : assetsInfoMap[kUnitNameField].toString().toStdString();
 
+        saveLastOfferState();
+
         emit canCreateChanged();
     }
 }
 
 void AssetSwapCreateViewModel::setOfferExpires(int value)
 {
-    _offerExpires = kExpireOptions[value];
-    emit offerExpiresChanged();
+    if (_offerExpiresIndex != value)
+    {
+        _offerExpiresIndex = value;
+        _offerExpires = kExpireOptions[value];
+        saveLastOfferState();
+        emit offerExpiresChanged();
+    }
 }
 
 int AssetSwapCreateViewModel::getOfferExpires() const
 {
-    return _offerExpires;
+    return _offerExpiresIndex;
 }
 
 void AssetSwapCreateViewModel::setComment(const QString& value)
@@ -244,6 +286,17 @@ QString AssetSwapCreateViewModel::getMaxSendAmount() const
 bool AssetSwapCreateViewModel::getIsAssetsSame() const
 {
     return _receiveAsset == _sendAsset;
+}
+
+void AssetSwapCreateViewModel::saveLastOfferState()
+{
+    beam::ByteBuffer buffer;
+    beam::Serializer ser;
+    ser & _sendAssetIndex;
+    ser & _receiveAssetIndex;
+    ser & _offerExpiresIndex;
+    ser.swap_buf(buffer);
+    _walletModel->getAsync()->storeDexOrderParams(buffer);
 }
 
 // void AssetSwapCreateViewModel::setTransactionToken(const QString& value)

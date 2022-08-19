@@ -72,6 +72,7 @@ signals:
     void dexOrdersFinded(const beam::wallet::DexOrder& order);
     void generatedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void swapParamsLoaded(const beam::ByteBuffer& params);
+    void assetsSwapParamsLoaded(const beam::ByteBuffer& params);
     void newAddressFailed();
     void nodeConnectionChanged(bool isNodeConnected);
     void walletError(beam::wallet::ErrorType error);
@@ -116,6 +117,7 @@ private:
 
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr) override;
     void onSwapParamsLoaded(const beam::ByteBuffer& token) override;
+    void onAssetSwapParamsLoaded(const beam::ByteBuffer& params) override;
     void onNewAddressFailed() override;
     void onNodeConnectionChanged(bool isNodeConnected) override;
     void onWalletError(beam::wallet::ErrorType error) override;

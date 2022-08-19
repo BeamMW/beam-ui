@@ -234,6 +234,12 @@ void WalletModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
     emit swapParamsLoaded(params);
 }
 
+
+void WalletModel::onAssetSwapParamsLoaded(const beam::ByteBuffer& params)
+{
+    emit assetsSwapParamsLoaded(params);
+}
+
 void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr)
 {
     emit generatedNewAddress(walletAddr);
