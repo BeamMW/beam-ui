@@ -38,6 +38,7 @@ class AssetSwapCreateViewModel: public QObject
     Q_PROPERTY(bool    isEnough          READ getIsEnough                                     NOTIFY  canCreateChanged)
     Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  canCreateChanged)
     Q_PROPERTY(bool    isAssetsSame      READ getIsAssetsSame                                 NOTIFY  canCreateChanged)
+    Q_PROPERTY(bool    commentValid      READ getCommentValid                                 NOTIFY  commentValidChanged)
     // Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
 
   public:
@@ -56,6 +57,7 @@ class AssetSwapCreateViewModel: public QObject
     void commentChanged();
     void rateChanged();
     void canCreateChanged();
+    void commentValidChanged();
     // void transactionTokenChanged();
 
   private slots:
@@ -92,6 +94,7 @@ class AssetSwapCreateViewModel: public QObject
     bool getIsEnough() const;
     QString getMaxSendAmount() const;
     bool getIsAssetsSame() const;
+    bool getCommentValid() const;
 
     void saveLastOfferState();
 

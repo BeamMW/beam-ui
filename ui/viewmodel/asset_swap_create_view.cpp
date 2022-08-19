@@ -64,6 +64,8 @@ void AssetSwapCreateViewModel::publishOffer()
     using namespace beam;
     using namespace beam::wallet;
 
+    _receiverAddress.m_label = _comment.toStdString();
+    _receiverAddress.m_duration = WalletAddress::AddressExpirationAuto;
     _walletModel->getAsync()->saveAddress(_receiverAddress);
 
     DexOrder orderObj(
@@ -104,15 +106,15 @@ void AssetSwapCreateViewModel::onAssetsSwapParamsLoaded(const beam::ByteBuffer& 
     beam::Deserializer der;
     der.reset(params);
 
-    uint sendAssetIndex = 0;
+    int sendAssetIndex = 0;
     der & sendAssetIndex;
     setSendAssetIndex(sendAssetIndex);
 
-    uint receiveAssetIndex = 0;
+    int receiveAssetIndex = 0;
     der & receiveAssetIndex;
     setReceiveAssetIndex(receiveAssetIndex);
 
-    uint offerExpiresIndex = 0;
+    int offerExpiresIndex = 0;
     der & offerExpiresIndex;
     setOfferExpires(offerExpiresIndex);
 }
@@ -250,8 +252,14 @@ int AssetSwapCreateViewModel::getOfferExpires() const
 
 void AssetSwapCreateViewModel::setComment(const QString& value)
 {
-    _comment = value;
-    emit commentChanged();
+    auto trimmed = value.trimmed();
+    if (_comment != trimmed)
+    {
+        _comment = trimmed;
+        emit commentChanged();
+        emit commentValidChanged();
+        emit canCreateChanged();
+    }
 }
 
 QString AssetSwapCreateViewModel::getComment() const
@@ -270,7 +278,7 @@ QString AssetSwapCreateViewModel::getRate() const
 
 bool AssetSwapCreateViewModel::getCanCreate() const
 {
-    return _receiveAsset != _sendAsset && _amountToReceiveGrothes && _amountToSendGrothes && _isEnoughtToSend;
+    return _receiveAsset != _sendAsset && _amountToReceiveGrothes && _amountToSendGrothes && _isEnoughtToSend && getCommentValid();
 }
 
 bool AssetSwapCreateViewModel::getIsEnough() const
@@ -286,6 +294,11 @@ QString AssetSwapCreateViewModel::getMaxSendAmount() const
 bool AssetSwapCreateViewModel::getIsAssetsSame() const
 {
     return _receiveAsset == _sendAsset;
+}
+
+bool AssetSwapCreateViewModel::getCommentValid() const
+{
+    return !_walletModel->isAddressWithCommentExist(_comment.toStdString());
 }
 
 void AssetSwapCreateViewModel::saveLastOfferState()
