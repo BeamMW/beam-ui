@@ -74,11 +74,11 @@ class AssetSwapCreateViewModel: public QObject
     void setAmountToSend(QString value);
 
     uint getReceiveAssetIndex() const;
-    void setReceiveAssetIndexImpl(uint value);
-    void setReceiveAssetIndex(uint value);
+    void setReceiveAssetIndexImpl(int value);
+    void setReceiveAssetIndex(int value);
 
     uint getSendAssetIndex() const;
-    void setSendAssetIndex(uint value);
+    void setSendAssetIndex(int value);
 
     void setOfferExpires(int value);
     int  getOfferExpires() const;
@@ -110,12 +110,12 @@ class AssetSwapCreateViewModel: public QObject
 
     beam::Asset::ID  _receiveAsset = 0;
     std::string      _receiveAssetSname;
-    uint             _receiveAssetIndex = 0;
+    int              _receiveAssetIndex = 0;
     beam::Asset::ID  _sendAsset = 0;
     std::string      _sendAssetSname;
-    uint             _sendAssetIndex = 0;
+    int              _sendAssetIndex = 0;
     uint32_t         _offerExpires = 0;
-    uint             _offerExpiresIndex = 0;
+    int              _offerExpiresIndex = 0;
     QString          _comment;
     bool             _isEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;

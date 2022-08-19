@@ -172,7 +172,7 @@ uint AssetSwapCreateViewModel::getReceiveAssetIndex() const
     return _receiveAssetIndex;
 }
 
-void AssetSwapCreateViewModel::setReceiveAssetIndexImpl(uint value)
+void AssetSwapCreateViewModel::setReceiveAssetIndexImpl(int value)
 {
     if (value >= _currenciesList.size())
     {
@@ -194,7 +194,7 @@ void AssetSwapCreateViewModel::setReceiveAssetIndexImpl(uint value)
     }
 }
 
-void AssetSwapCreateViewModel::setReceiveAssetIndex(uint value)
+void AssetSwapCreateViewModel::setReceiveAssetIndex(int value)
 {
     if (_receiveAssetIndex != value)
     {
@@ -208,7 +208,7 @@ uint AssetSwapCreateViewModel::getSendAssetIndex() const
     return _sendAssetIndex;
 }
 
-void AssetSwapCreateViewModel::setSendAssetIndex(uint value)
+void AssetSwapCreateViewModel::setSendAssetIndex(int value)
 {
     if (value >= _myCurrenciesList.size())
     {
