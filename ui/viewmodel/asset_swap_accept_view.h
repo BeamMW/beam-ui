@@ -38,6 +38,7 @@ class AssetSwapAcceptViewModel: public QObject
     Q_PROPERTY(bool    isEnough          READ getIsEnough                                     NOTIFY  orderChanged)
     Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  orderChanged)
     Q_PROPERTY(bool    isAssetsSame      READ getIsAssetsSame                                 NOTIFY  orderChanged)
+    Q_PROPERTY(bool    commentValid      READ getCommentValid                                 NOTIFY  commentValidChanged)
 
   public:
     AssetSwapAcceptViewModel();
@@ -46,8 +47,10 @@ class AssetSwapAcceptViewModel: public QObject
   signals:
     void orderChanged();
     void commentChanged();
+    void commentValidChanged();
 
   private slots:
+    void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onDexOrdersFinded(const beam::wallet::DexOrder& order);
     void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&);
 
@@ -73,6 +76,7 @@ class AssetSwapAcceptViewModel: public QObject
     bool getIsEnough() const;
     QString getMaxSendAmount() const;
     bool getIsAssetsSame() const;
+    bool getCommentValid() const;
 
     WalletModel::Ptr _walletModel;
     AssetsManager::Ptr _amgr;
@@ -89,9 +93,11 @@ class AssetSwapAcceptViewModel: public QObject
     std::string      _sendAssetSname;
     beam::Timestamp  _offerCreated = 0;
     beam::Timestamp  _offerExpires = 0;
-    QString   _comment;
-    QString   _errorStr;
+    QString          _comment;
+    QString          _errorStr;
     bool             _canAccept = false;
     bool             _isEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;
+  
+    beam::wallet::WalletAddress _myAddress;
 };

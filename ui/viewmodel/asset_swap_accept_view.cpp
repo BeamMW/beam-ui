@@ -27,21 +27,34 @@ AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(_walletModel.get(), &WalletModel::dexOrdersFinded, this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
-    connect(_walletModel.get(), &WalletModel::coinsSelected,   this, &AssetSwapAcceptViewModel::onCoinsSelected);
+    connect(_walletModel.get(), &WalletModel::generatedNewAddress, this, &AssetSwapAcceptViewModel::onGeneratedNewAddress);
+    connect(_walletModel.get(), &WalletModel::dexOrdersFinded,     this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
+    connect(_walletModel.get(), &WalletModel::coinsSelected,       this, &AssetSwapAcceptViewModel::onCoinsSelected);
+
+    _walletModel->getAsync()->generateNewAddress();
 }
 
 void AssetSwapAcceptViewModel::startSwap()
 {
+    _myAddress.m_label = _comment.toStdString();
+    _myAddress.m_duration = beam::wallet::WalletAddress::AddressExpirationAuto;
+    _walletModel->getAsync()->saveAddress(_myAddress);
+
     auto params = beam::wallet::CreateDexTransactionParams(
                     _orderId,
                     _sbbsID,
+                    _myAddress.m_walletID,
                     _sendAsset,
                     _amountToSendGrothes,
                     _receiveAsset,
                     _amountToReceiveGrothes);
 
     _walletModel->getAsync()->startTransaction(std::move(params));
+}
+
+void AssetSwapAcceptViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr)
+{
+    _myAddress = walletAddr;
 }
 
 void AssetSwapAcceptViewModel::onDexOrdersFinded(const beam::wallet::DexOrder& order)
@@ -126,8 +139,14 @@ QString AssetSwapAcceptViewModel::getComment() const
 
 void AssetSwapAcceptViewModel::setComment(QString value)
 {
-    _comment = value;
-    emit commentChanged();
+    auto trimmed = value.trimmed();
+    if (_comment != trimmed)
+    {
+        _comment = trimmed;
+        emit commentChanged();
+        emit commentValidChanged();
+        emit orderChanged();
+    }
 }
 
 QString AssetSwapAcceptViewModel::getRate() const
@@ -191,7 +210,7 @@ QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getCurrenciesList(
 
 bool AssetSwapAcceptViewModel::getCanAccept() const
 {
-    return _canAccept && _receiveAsset != _sendAsset && _amountToReceiveGrothes && _amountToSendGrothes;
+    return _canAccept && _receiveAsset != _sendAsset && _amountToReceiveGrothes && _amountToSendGrothes && getCommentValid();
 }
 
 bool AssetSwapAcceptViewModel::getIsEnough() const
@@ -209,3 +228,7 @@ bool AssetSwapAcceptViewModel::getIsAssetsSame() const
     return _receiveAsset == _sendAsset;
 }
 
+bool AssetSwapAcceptViewModel::getCommentValid() const
+{
+    return !_walletModel->isAddressWithCommentExist(_comment.toStdString());
+}

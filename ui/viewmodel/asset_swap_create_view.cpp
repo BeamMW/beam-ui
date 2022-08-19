@@ -61,15 +61,12 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
 
 void AssetSwapCreateViewModel::publishOffer()
 {
-    using namespace beam;
-    using namespace beam::wallet;
-
     _receiverAddress.m_label = _comment.toStdString();
-    _receiverAddress.m_duration = WalletAddress::AddressExpirationAuto;
+    _receiverAddress.m_duration = beam::wallet::WalletAddress::AddressExpirationAuto;
     _walletModel->getAsync()->saveAddress(_receiverAddress);
 
-    DexOrder orderObj(
-        DexOrderID::generate(),
+    beam::wallet::DexOrder orderObj(
+        beam::wallet::DexOrderID::generate(),
         _receiverAddress.m_walletID,
         _receiverAddress.m_OwnID,
         _sendAsset,
