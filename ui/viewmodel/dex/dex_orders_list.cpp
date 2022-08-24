@@ -73,7 +73,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RSendSort:
         {
-            return order.getSendAmount();
+            return QVariant::fromValue(order.getSendAmount());
         }
         case Roles::RReceive:
         {
@@ -81,7 +81,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RReceiveSort:
         {
-            return order.getReceiveAmount();
+            return QVariant::fromValue(order.getReceiveAmount());
         }
         case Roles::RRate:
         case Roles::RRateSort:
@@ -104,7 +104,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RCreateTimeSort:
         {
-            return order.getCreation();
+            return QVariant::fromValue(order.getCreation());
         }
         case Roles::RExpireTime:
         {
@@ -114,7 +114,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RExpireTimeSort:
         {
-            return order.getExpiration();
+            return QVariant::fromValue(order.getExpiration());
         }
         case Roles::RCoins:
         {
