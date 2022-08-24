@@ -127,7 +127,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         {
             uint64_t res = static_cast<uint64_t>(order.getSendAssetId()) << 32;
             res += order.getReceiveAssetId();
-            return res;
+            return QVariant::fromValue(res);
 
         }
         case Roles::RHasAssetToSend:
