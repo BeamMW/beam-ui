@@ -28,14 +28,23 @@ public:
     enum class Roles
     {
         RId = Qt::UserRole + 1,
+        RIdSort,
         RSend,
+        RSendSort,
         RReceive,
+        RReceiveSort,
         RRate,
+        RRateSort,
         RIsMine,
+        RIsMineSort,
         RCreateTime,
+        RCreateTimeSort,
         RExpireTime,
+        RExpireTimeSort,
         RCoins,
-        RHasAssetToSend
+        RCoinsSort,
+        RHasAssetToSend,
+        RHasAssetToSendSort
     };
 
     Q_ENUM(Roles)

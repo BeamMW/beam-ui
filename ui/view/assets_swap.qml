@@ -198,6 +198,12 @@ Item {
                 sortIndicatorColumn: 0
                 sortIndicatorOrder: Qt.DescendingOrder
 
+                onSortIndicatorColumnChanged: {
+                    sortIndicatorOrder = sortIndicatorColumn != 1
+                        ? Qt.AscendingOrder
+                        : Qt.DescendingOrder;
+                }
+
                 model: SortFilterProxyModel {
                     id: ordersProxyModel
 
@@ -207,6 +213,9 @@ Item {
                     filterString: tabSelector.showOnlyMyOffers ? "true" : "*"
                     filterSyntax: SortFilterProxyModel.Wildcard
                     filterCaseSensitivity: Qt.CaseInsensitive
+                    sortOrder: ordersTable.sortIndicatorOrder
+                    sortCaseSensitivity: Qt.CaseInsensitive
+                    sortRole: ordersTable.getColumn(ordersTable.sortIndicatorColumn).role + "Sort"
                 }
                 visible: tabSelector.state != "transactions" && model.count > 0
 

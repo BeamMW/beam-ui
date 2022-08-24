@@ -28,15 +28,24 @@ QHash<int, QByteArray> DexOrdersList::roleNames() const
 {
     static const auto roles = QHash<int, QByteArray>
     {
-        {static_cast<int>(Roles::RId),              "id"},
-        {static_cast<int>(Roles::RSend),            "send"},
-        {static_cast<int>(Roles::RReceive),         "receive"},
-        {static_cast<int>(Roles::RRate),            "rate"},
-        {static_cast<int>(Roles::RIsMine),          "isMine"},
-        {static_cast<int>(Roles::RCreateTime),      "created"},
-        {static_cast<int>(Roles::RExpireTime),      "expiration"},
-        {static_cast<int>(Roles::RCoins),           "coins"},
-        {static_cast<int>(Roles::RHasAssetToSend),  "hasAssetToSend"},
+        {static_cast<int>(Roles::RId),                 "id"},
+        {static_cast<int>(Roles::RIdSort),             "idSort"},
+        {static_cast<int>(Roles::RSend),               "send"},
+        {static_cast<int>(Roles::RSendSort),           "sendSort"},
+        {static_cast<int>(Roles::RReceive),            "receive"},
+        {static_cast<int>(Roles::RReceiveSort),        "receiveSort"},
+        {static_cast<int>(Roles::RRate),               "rate"},
+        {static_cast<int>(Roles::RRateSort),           "rateSort"},
+        {static_cast<int>(Roles::RIsMine),             "isMine"},
+        {static_cast<int>(Roles::RIsMineSort),         "isMineSort"},
+        {static_cast<int>(Roles::RCreateTime),         "created"},
+        {static_cast<int>(Roles::RCreateTimeSort),     "createdSort"},
+        {static_cast<int>(Roles::RExpireTime),         "expiration"},
+        {static_cast<int>(Roles::RExpireTimeSort),     "expirationSort"},
+        {static_cast<int>(Roles::RCoins),              "coins"},
+        {static_cast<int>(Roles::RCoinsSort),          "coinsSort"},
+        {static_cast<int>(Roles::RHasAssetToSend),     "hasAssetToSend"},
+        {static_cast<int>(Roles::RHasAssetToSendSort), "hasAssetToSendSort"},
     };
     return roles;
 }
@@ -54,6 +63,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
     switch (static_cast<Roles>(role))
     {
         case Roles::RId:
+        case Roles::RIdSort:
         {
             return QString::fromStdString(order.getID().to_string());
         }
@@ -61,11 +71,20 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         {
             return beamui::AmountToUIString(order.getSendAmount()) + " " + QString::fromStdString(order.getSendAssetSName());
         }
+        case Roles::RSendSort:
+        {
+            return order.getSendAmount();
+        }
         case Roles::RReceive:
         {
             return beamui::AmountToUIString(order.getReceiveAmount()) + " " + QString::fromStdString(order.getReceiveAssetSName());
         }
+        case Roles::RReceiveSort:
+        {
+            return order.getReceiveAmount();
+        }
         case Roles::RRate:
+        case Roles::RRateSort:
         {
             return QMLGlobals::divideWithPrecision(
                 beamui::AmountToUIString(order.getReceiveAmount()),
@@ -73,6 +92,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
                 beam::wallet::kDexOrderRatePrecission);
         }
         case Roles::RIsMine:
+        case Roles::RIsMineSort:
         {
             return order.isMine();
         }
@@ -82,11 +102,19 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
             datetime.setTime_t(order.getCreation());
             return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         }
+        case Roles::RCreateTimeSort:
+        {
+            return order.getCreation();
+        }
         case Roles::RExpireTime:
         {
             QDateTime datetime;
             datetime.setTime_t(order.getExpiration());
             return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
+        }
+        case Roles::RExpireTimeSort:
+        {
+            return order.getExpiration();
         }
         case Roles::RCoins:
         {
@@ -95,7 +123,15 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
             res.insert("receiveIcon", m_amgr->getIcon(order.getReceiveAssetId()));
             return QVariant::fromValue(res);
         }
+        case Roles::RCoinsSort:
+        {
+            uint64_t res = static_cast<uint64_t>(order.getSendAssetId()) << 32;
+            res += order.getReceiveAssetId();
+            return res;
+
+        }
         case Roles::RHasAssetToSend:
+        case Roles::RHasAssetToSendSort:
         {
             return m_amgr->hasAsset(order.getSendAssetId());
         }
