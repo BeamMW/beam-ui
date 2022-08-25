@@ -64,7 +64,6 @@ ColumnLayout {
                     Layout.alignment:       Qt.AlignTop
                     Layout.fillWidth:       true
                     Layout.preferredWidth:  400
-                    Layout.rightMargin:     -5
                     spacing:                10
                     //
                     // Send amount
@@ -191,41 +190,12 @@ ColumnLayout {
                 }  // ColumnLayout
 
                 //
-                // Middle column
-                //
-                Rectangle {
-                    Layout.alignment:       Qt.AlignTop
-                    Layout.topMargin:       60
-                    Layout.leftMargin:      -12
-                    Layout.rightMargin:     -12
-                    Layout.preferredHeight: 24
-                    Layout.preferredWidth:  24
-                    color:                  Style.background_main
-                    z:                      1
-                    radius:                 12
-                    SvgImage {                 
-                        Layout.maximumHeight: 24
-                        Layout.maximumWidth:  24
-                        source: "qrc:/assets/icon-swap-currencies.svg"
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                console.log('Swap columns');
-                            }
-                        }
-                    }
-                } // Rectangle
-
-                //
                 // Right column
                 //
                 ColumnLayout {
                     Layout.alignment:       Qt.AlignTop
                     Layout.fillWidth:       true
                     Layout.preferredWidth:  400
-                    Layout.leftMargin:      -5
                     spacing:                10
 
                     //
