@@ -77,6 +77,11 @@ Item {
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
 
+                Binding {
+                    target:    txTable
+                    property:  "selectedAssets"
+                    value:     assets.selectedIds
+                }
             }
 
             Item {
