@@ -37,22 +37,6 @@ Item {
                 Layout.topMargin: 30
                 spacing: 20
 
-                // CustomButton {
-                //     id: acceptOfferButton
-                //     Layout.minimumWidth: 172
-                //     Layout.preferredHeight: 32
-                //     Layout.maximumHeight: 32
-                //     palette.button: Style.accent_outgoing
-                //     palette.buttonText: Style.content_opposite
-                //     icon.source: "qrc:/assets/icon-accept-offer.svg"
-                //     //% "Accept offer"
-                //     text: qsTrId("atomic-swap-accept")
-                //     font.pixelSize: 12
-                //     onClicked: {
-                //         console.log('accept affer');
-                //     }
-                // }
-
                 CustomButton {
                     id: sendOfferButton
                     Layout.minimumWidth: 172
@@ -79,6 +63,12 @@ Item {
 
                 Binding {
                     target:    txTable
+                    property:  "selectedAssets"
+                    value:     assets.selectedIds
+                }
+
+                Binding {
+                    target:    ordersTable
                     property:  "selectedAssets"
                     value:     assets.selectedIds
                 }
@@ -198,6 +188,8 @@ Item {
                 Layout.fillHeight:    true
                 Layout.bottomMargin:  9
 
+                property var          selectedAssets: []
+
                 selectionMode: SelectionMode.NoSelection
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 0
@@ -212,7 +204,14 @@ Item {
                 model: SortFilterProxyModel {
                     id: ordersProxyModel
 
-                    source: ordersModel.orders
+                    source: SortFilterProxyModel {
+                            id:           assetFilterProxy
+                            filterRole:   "assetsFilter"
+                            filterString: ordersTable.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
+                            filterSyntax: SortFilterProxyModel.RegExp
+
+                            source: ordersModel.orders
+                    }
 
                     filterRole: "isMine"
                     filterString: tabSelector.showOnlyMyOffers ? "true" : "*"
@@ -269,11 +268,11 @@ Item {
                             SvgImage {
                                 z: 1
                                 sourceSize: Qt.size(26, 26)
-                                source: styleData.value["sendIcon"]
+                                source: styleData.value["sendIcon"] ? styleData.value["sendIcon"] : ""
                             }
                             SvgImage {
                                 sourceSize: Qt.size(26, 26)
-                                source: styleData.value["receiveIcon"]
+                                source: styleData.value["receiveIcon"] ? styleData.value["receiveIcon"] : ""
                             }
                         }
                     }
@@ -379,7 +378,7 @@ Item {
                             }
                         }
                         RowLayout {
-                            visible: !styleData.value && ordersTable.model.getRoleValue(styleData.row, "hasAssetToSend");
+                            visible: !styleData.value && !!ordersTable.model.getRoleValue(styleData.row, "hasAssetToSend");
                             SvgImage {
                                 z: 1
                                 sourceSize: Qt.size(16, 16)

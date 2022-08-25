@@ -44,7 +44,8 @@ public:
         RCoins,
         RCoinsSort,
         RHasAssetToSend,
-        RHasAssetToSendSort
+        RHasAssetToSendSort,
+        RAssetsFilter
     };
 
     Q_ENUM(Roles)

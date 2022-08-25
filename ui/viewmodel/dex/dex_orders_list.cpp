@@ -46,6 +46,8 @@ QHash<int, QByteArray> DexOrdersList::roleNames() const
         {static_cast<int>(Roles::RCoinsSort),          "coinsSort"},
         {static_cast<int>(Roles::RHasAssetToSend),     "hasAssetToSend"},
         {static_cast<int>(Roles::RHasAssetToSendSort), "hasAssetToSendSort"},
+        {static_cast<int>(Roles::RAssetsFilter),       "assetsFilter"},
+        
     };
     return roles;
 }
@@ -134,6 +136,15 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         case Roles::RHasAssetToSendSort:
         {
             return m_amgr->hasAsset(order.getSendAssetId());
+        }
+
+        case Roles::RAssetsFilter:
+        {
+            QString res;
+            res.append(QString::number(order.getSendAssetId()));
+            res.append(",");
+            res.append(QString::number(order.getReceiveAssetId()));
+            return res;
         }
 
         default:
