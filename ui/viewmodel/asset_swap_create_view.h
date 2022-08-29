@@ -39,7 +39,6 @@ class AssetSwapCreateViewModel: public QObject
     Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  canCreateChanged)
     Q_PROPERTY(bool    isAssetsSame      READ getIsAssetsSame                                 NOTIFY  canCreateChanged)
     Q_PROPERTY(bool    commentValid      READ getCommentValid                                 NOTIFY  commentValidChanged)
-    // Q_PROPERTY(QString       transactionToken         READ getTransactionToken   WRITE  setTransactionToken  NOTIFY  transactionTokenChanged)
 
   public:
     AssetSwapCreateViewModel();
@@ -58,7 +57,6 @@ class AssetSwapCreateViewModel: public QObject
     void rateChanged();
     void canCreateChanged();
     void commentValidChanged();
-    // void transactionTokenChanged();
 
   private slots:
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
@@ -98,10 +96,6 @@ class AssetSwapCreateViewModel: public QObject
 
     void saveLastOfferState();
 
-    // void setTransactionToken(const QString& value);
-    // QString getTransactionToken() const;
-
-
     WalletModel::Ptr _walletModel;
     AssetsManager::Ptr _amgr;
     QList<QMap<QString, QVariant>> _currenciesList;
@@ -122,5 +116,4 @@ class AssetSwapCreateViewModel: public QObject
     QString          _comment;
     bool             _isEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;
-    // QString   _token;
 };

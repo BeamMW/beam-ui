@@ -260,20 +260,6 @@ ColumnLayout {
                                 rowSpacing:          20
                                 columns:             2
 
-                                // SFText {
-                                //     Layout.alignment:       Qt.AlignTop
-                                //     font.pixelSize:         14
-                                //     color:                  Style.content_secondary
-                                //     //% "Beam transaction fee (est)"
-                                //     text:                   qsTrId("general-asset-swap-rate") + ":"
-                                // }
-    
-                                // SFText {
-                                //     font.pixelSize:   14
-                                //     color:            Style.content_main
-                                //     text:             ""
-                                // }
-
                                 SFText {
                                     font.pixelSize:         14
                                     color:                  Style.content_secondary
@@ -286,54 +272,6 @@ ColumnLayout {
                                     color:            Style.content_main
                                     text:             viewModel.rate
                                 }
-
-                                // SFText {
-                                //     Layout.alignment:       Qt.AlignTop
-                                //     Layout.topMargin:       20
-                                //     font.pixelSize:         14
-                                //     color:                  Style.content_secondary
-                                //     //% "Swap token"
-                                //     text:                   qsTrId("send-swap-token") + ":"
-                                // }
-
-                                // ColumnLayout {
-                                //     spacing: 11
-                                //     RowLayout {
-                                //         Layout.fillWidth:        true
-                                //         Layout.topMargin:        20
-
-                                //         SFLabel {
-                                //             id:                  tokenLabel
-                                //             Layout.fillWidth:    true
-                                //             font.pixelSize:      14
-                                //             color:               Style.content_main
-                                //             elide:               Text.ElideMiddle
-                                //             text:                "-"
-                                //         }
-                                    
-                                //         LinkButton {
-                                //             //% "Token details"
-                                //             text: qsTrId("swap-token-details")
-                                //             linkColor: Style.accent_incoming
-                                //             // enabled:  thisView.canSend()
-                                //             onClicked: {
-                                //                 console.log('tokenInfoDialog.open();');
-                                //             }
-                                //         }
-                                //     }
-
-                                //     CustomButton {
-                                //         //% "copy and close"
-                                //         text:                qsTrId("general-copy-and-close")
-                                //         palette.buttonText:  Style.content_main
-                                //         palette.button:      Style.background_button
-                                //         icon.source:         enabled ? "qrc:/assets/icon-copy.svg" : "qrc:/assets/icon-copy-gray.svg"
-                                //         // enabled:             thisView.canSend()
-                                //         onClicked: {
-                                //             console.log('copy and close');
-                                //         }
-                                //     }
-                                // }
                             }
                         }
                     }

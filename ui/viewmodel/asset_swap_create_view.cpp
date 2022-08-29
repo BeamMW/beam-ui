@@ -32,6 +32,7 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     , _amgr(AppModel::getInstance().getAssets())
     , _receiveAssetSname(kBeamAssetSName)
     , _sendAssetSname(kBeamAssetSName)
+    , _offerExpires(kExpireOptions[0])
 {
     connect(_walletModel.get(), &WalletModel::generatedNewAddress,    this, &AssetSwapCreateViewModel::onGeneratedNewAddress);
     connect(_walletModel.get(), &WalletModel::coinsSelected,          this, &AssetSwapCreateViewModel::onCoinsSelected);
@@ -308,13 +309,3 @@ void AssetSwapCreateViewModel::saveLastOfferState()
     ser.swap_buf(buffer);
     _walletModel->getAsync()->storeDexOrderParams(buffer);
 }
-
-// void AssetSwapCreateViewModel::setTransactionToken(const QString& value)
-// {
-
-// }
-
-// QString AssetSwapCreateViewModel::getTransactionToken() const
-// {
-//     return _token;
-// }
