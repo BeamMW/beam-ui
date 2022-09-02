@@ -30,6 +30,7 @@ class AssetSwapAcceptViewModel: public QObject
     Q_PROPERTY(QString comment           READ getComment           WRITE   setComment   NOTIFY  commentChanged)
     Q_PROPERTY(QString rate              READ getRate              NOTIFY  orderChanged)
     Q_PROPERTY(QString orderId           READ getOrderId           WRITE   setOrderId)
+    Q_PROPERTY(QString fee               READ getFee               NOTIFY  orderChanged)
 
     Q_PROPERTY(QList<QMap<QString, QVariant>> sendCurrencies       READ getSendCurrencies     NOTIFY  orderChanged)
     Q_PROPERTY(QList<QMap<QString, QVariant>> receiveCurrencies    READ getReceiveCurrencies  NOTIFY  orderChanged)
@@ -98,6 +99,7 @@ class AssetSwapAcceptViewModel: public QObject
     bool             _canAccept = false;
     bool             _isEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;
+    beam::Amount     _fee = 100000;
   
     beam::wallet::WalletAddress _myAddress;
 };

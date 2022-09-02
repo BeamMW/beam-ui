@@ -16,6 +16,7 @@
 
 #include "model/app_model.h"
 #include "viewmodel/qml_globals.h"
+#include "wallet/core/currency.h"
 #include "wallet/transactions/dex/dex_tx.h"
 
 namespace
@@ -47,7 +48,9 @@ void AssetSwapAcceptViewModel::startSwap()
                     _sendAsset,
                     _amountToSendGrothes,
                     _receiveAsset,
-                    _amountToReceiveGrothes);
+                    _amountToReceiveGrothes,
+                    _fee
+                    );
 
     _walletModel->getAsync()->startTransaction(std::move(params));
 }
@@ -109,7 +112,7 @@ QString AssetSwapAcceptViewModel::getAmountToSend() const
 
 QString AssetSwapAcceptViewModel::getFee() const
 {
-    return "-";
+    return beamui::AmountToUIString(_fee) + " " + beamui::getCurrencyUnitName(beam::wallet::Currency::BEAM());;
 }
 
 QString AssetSwapAcceptViewModel::getOfferCreated() const
