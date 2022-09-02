@@ -267,10 +267,14 @@ Item {
                             spacing: -8
                             SvgImage {
                                 z: 1
+                                height: sourceSize.height
+                                width:  sourceSize.width
                                 sourceSize: Qt.size(26, 26)
                                 source: styleData.value["sendIcon"] ? styleData.value["sendIcon"] : ""
                             }
                             SvgImage {
+                                height: sourceSize.height
+                                width:  sourceSize.width
                                 sourceSize: Qt.size(26, 26)
                                 source: styleData.value["receiveIcon"] ? styleData.value["receiveIcon"] : ""
                             }
