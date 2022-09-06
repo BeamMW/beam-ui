@@ -2164,53 +2164,6 @@ much longer for a transaction to complete.</oldsource>
         <source>This is your dev application</source>
         <translation>Это ваше разрабатываемое приложение</translation>
     </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation>Все заявки</translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation>Открытые мною</translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation>Открытые другими пользователями</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation>Тип</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation>Цена</translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation>Размер</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation>Всего</translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation>Срок действия</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation>Принять заказ</translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation>На данный момент активных заказов нет.
-Пожалуйста, повторите попытку позже или создайте заказ самостоятельно.</translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation>Книга заказов</translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation>Комиссия за транзакцию для %1</translation>
@@ -2300,14 +2253,6 @@ Please try again later or create an offer yourself.</source>
         <source>Connect more currencies</source>
         <translation>Подключить еще валюты</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Активные предложения</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Мои предложения</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>Транзакции</translation>
@@ -2332,25 +2277,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">В данный момент нет активных предложений.
 Пожалуйста, повторите попытку позже или создайте предложение самостоятельно.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Дата | Время</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Отправить</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Получить</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Курс</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Срок действия</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -2403,10 +2332,6 @@ Update your settings and try again.</source>
 Update your settings and try again.</oldsource>
         <translation type="unfinished">У вас нет подключенных сторонних валют.
 Обновите настройки и повторите попытку.</translation>
-    </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Создать предложение обмена</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
@@ -2833,22 +2758,6 @@ Update your settings and try again.</oldsource>
         <source>Confirmed (%1)</source>
         <translation>Подтверждено (%1)</translation>
     </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation>Просрочено</translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation>Действующие</translation>
-    </message>
-    <message id="dex-order-fulfilled">
-        <source>Fulfilled</source>
-        <translation>Выполнено</translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation>Прогресс</translation>
-    </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>
         <translation>копировать и закрыть</translation>
@@ -3185,11 +3094,28 @@ cannot be canceled.</source>
         <translation>отправлено на собственный адрес
 (оффлайн)</translation>
     </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation>Этот DApp требует версию кошелька %1 или выше. Пожалуйста, обновите ваш кошелек.</translation>
+    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
         <translation>ожидание получателя
 (оффлайн)</translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation>Удалить</translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
+        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
+        <translation>Вы уверены, что хотите удалить %1 DApp?</translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
+        <translation>Удалить DApp</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
@@ -3466,6 +3392,20 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>become a publisher</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-install">
+        <source>install</source>
+        <oldsource>Install</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-update">
+        <source>update</source>
+        <oldsource>Update</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
         <translation type="unfinished"></translation>
@@ -3719,6 +3659,10 @@ Let&apos;s start!</source>
         <source>Publisher link</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-launch">
+        <source>launch</source>
+        <translation type="unfinished">запустить</translation>
+    </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
@@ -3777,44 +3721,12 @@ Please, check the file and try again.</source>
         <source>Blockchain height</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+    <message id="assets-swap-title">
+        <source>Assets Swaps</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-uninstall">
-        <source>Uninstall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-uninstall-title">
-        <source>Uninstall DApp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-uninstall-confirm">
-        <source>Are you sure you want to uninstall %1 DApp?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-updating">
-        <source>updating</source>
-        <translation type="unfinished">обновление</translation>
-    </message>
-    <message id="dapps-store-update">
-        <source>update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-installing">
-        <source>installing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-install">
-        <source>install</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-launch">
-        <source>launch</source>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-install-timeout-fail">
@@ -3830,6 +3742,70 @@ Please, check the file and try again.</source>
     <message id="app-update-timeout-fail">
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation type="unfinished">обновление</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Получить</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Курс</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Дата | Время</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Срок действия</translation>
+    </message>
+    <message id="swap-cancel-offer">
+        <source>cancel offer</source>
+        <translation type="unfinished">отменить своп-предложение</translation>
+    </message>
+    <message id="swap-accept-offer">
+        <source>accept offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-accept-asset-swap-title">
+        <source>Accept an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-create-asset-swap-title">
+        <source>Create an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-fee">
+        <source>Transaction fee</source>
+        <translation type="unfinished">Комиссия</translation>
+    </message>
+    <message id="amount-input-asset-search">
+        <source>Enter asset name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">Активные предложения</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">Мои предложения</translation>
+    </message>
+    <message id="assets-same-accept">
+        <source>You can&apos;t accept offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-same-create">
+        <source>You can&apos;t create offer with identical assets on both sides</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

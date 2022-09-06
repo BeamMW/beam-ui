@@ -50,6 +50,7 @@ WalletModel::WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::strin
     qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
     qRegisterMetaType<beam::wallet::CoinsSelectionInfo>("beam::wallet::CoinsSelectionInfo");
     qRegisterMetaType<vector<beam::wallet::DexOrder>>("std::vector<beam::wallet::DexOrder>");
+    qRegisterMetaType<beam::wallet::DexOrder>("beam::wallet::DexOrder");
 
     connect(this, &WalletModel::walletStatusInternal, this, &WalletModel::onWalletStatusInternal);
     connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),this, SLOT(setAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
@@ -193,6 +194,11 @@ void WalletModel::onDexOrdersChanged(beam::wallet::ChangeAction action, const st
     emit dexOrdersChanged(action, offers);
 }
 
+void WalletModel::onFindDexOrder(const beam::wallet::DexOrder& order)
+{
+    emit dexOrdersFinded(order);
+}
+
 void WalletModel::onCoinsByTx(const std::vector<beam::wallet::Coin>& coins)
 {
 }
@@ -226,6 +232,12 @@ void WalletModel::ShowKeyKeeperError(const std::string& error)
 void WalletModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
 {
     emit swapParamsLoaded(params);
+}
+
+
+void WalletModel::onAssetSwapParamsLoaded(const beam::ByteBuffer& params)
+{
+    emit assetsSwapParamsLoaded(params);
 }
 
 void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr)

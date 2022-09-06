@@ -1668,9 +1668,9 @@ namespace beamui::applications
                 throw std::runtime_error("Failed to parse invoke data");
             }
 
-            const auto comment = beam::bvm2::getFullComment(contractInvokeData);
-            const auto fee = beam::bvm2::getFullFee(contractInvokeData, AppModel::getInstance().getWalletModel()->getCurrentHeight());
-            const auto fullSpend = beam::bvm2::getFullSpend(contractInvokeData);
+            const auto comment = contractInvokeData.get_FullComment();
+            const auto fee = contractInvokeData.get_FullFee(AppModel::getInstance().getWalletModel()->getCurrentHeight());
+            const auto fullSpend = contractInvokeData.get_FullSpend();
 
             if (!fullSpend.empty())
             {

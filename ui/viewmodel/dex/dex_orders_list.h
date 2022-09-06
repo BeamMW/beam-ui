@@ -1,3 +1,6 @@
+// Copyright 2022 The Beam Team
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -10,10 +13,10 @@
 // limitations under the License.
 #pragma once
 
-#include <memory>
-#include "dex_order_object.h"
+#include "model/assets_manager.h"
 #include "viewmodel/helpers/list_model.h"
 #include "wallet/client/extensions/dex_board/dex_order.h"
+#include <QLocale>
 
 class DexOrdersList : public ListModel<beam::wallet::DexOrder>
 {
@@ -25,16 +28,24 @@ public:
     enum class Roles
     {
         RId = Qt::UserRole + 1,
-        RType,
-        RPrice,
-        RSize,
-        RTotal,
-        RExpiration,
-        RStatus,
+        RIdSort,
+        RSend,
+        RSendSort,
+        RReceive,
+        RReceiveSort,
+        RRate,
+        RRateSort,
         RIsMine,
-        RIsActive,
-        RProgress,
-        RCanAccept,
+        RIsMineSort,
+        RCreateTime,
+        RCreateTimeSort,
+        RExpireTime,
+        RExpireTimeSort,
+        RCoins,
+        RCoinsSort,
+        RHasAssetToSend,
+        RHasAssetToSendSort,
+        RAssetsFilter
     };
 
     Q_ENUM(Roles)
@@ -42,6 +53,7 @@ public:
     [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
-    // TODO:DEX refactor and hide
-    beam::PeerID selfID;
+private:
+    QLocale m_locale; // default
+    AssetsManager::Ptr m_amgr;
 };

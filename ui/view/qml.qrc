@@ -110,8 +110,6 @@
         <file>wallet/TransactionsSearchHighlighter.qml</file>
         <file>wallet/CoinsList.qml</file>
         <file>wallet/SeedValidationPanel.qml</file>
-        <file>dex/MarketPanel.qml</file>
-        <file>dex/MarketTable.qml</file>
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
         <file>applications/AppButton.qml</file>
@@ -133,16 +131,18 @@
         <file>settings.qml</file>
         <file>addresses.qml</file>
         <file>atomic_swap.qml</file>
+        <file>assets_swap.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
-        <file>receive_swap.qml</file>
+        <file>accept_asset_swap.qml</file>
+        <file>create_asset_swap.qml</file>
+        <file>create_atomic_swap.qml</file>
         <file>send.qml</file>
         <file>send_regular.qml</file>
         <file>send_swap.qml</file>
         <file>send_confirm.qml</file>
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
-        <file>dex.qml</file>
         <file>assets/fonts/Proxima Nova Black Italic.otf</file>
         <file>assets/fonts/Proxima Nova Black.otf</file>
         <file>assets/fonts/Proxima Nova Bold Italic.otf</file>
@@ -219,6 +219,8 @@
         <file>assets/icon-wallet-active.svg</file>
         <file>assets/icon-atomic_swap.svg</file>
         <file>assets/icon-atomic_swap-active.svg</file>
+        <file>assets/icon-assets_swap.svg</file>
+        <file>assets/icon-assets_swap-active.svg</file>
         <file>assets/icon-wallet-small.svg</file>
         <file>assets/icon-notifications.svg</file>
         <file>assets/icon-notifications-active.svg</file>
@@ -336,8 +338,6 @@
         <file>assets/icon-copy-blue.svg</file>
         <file>assets/icon-details.svg</file>
         <file>assets/icon-activate.svg</file>
-        <file>assets/beta-label.svg</file>
-        <file>assets/beta2-label.svg</file>
         <file>assets/icon-accept-offer.svg</file>
         <file>assets/icon-create-offer.svg</file>
         <file>assets/atomic-empty-state.svg</file>
@@ -424,5 +424,7 @@
         <file>assets/icon-voting.svg</file>
         <file>assets/icon-voting-active.svg</file>
         <file>assets/icon-no-transaction-filter.svg</file>
+        <file>assets/icon-offer-cancel.svg</file>
+        <file>assets/icon-offer-accept.svg</file>
     </qresource>
 </RCC>

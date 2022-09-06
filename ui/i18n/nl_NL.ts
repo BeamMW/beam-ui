@@ -2154,53 +2154,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <source>This is your dev application</source>
         <translation>Dit is uw ontwikkelaar applicatie</translation>
     </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation>Alle orders</translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation>Door mij geopend</translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation>Geopend door andere gebruikers</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation>Prijs</translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation>Grootte</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation>Totaal</translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation>Order accepteren</translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation>Er zijn op dit moment geen actieve orders.
-Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation>Orderboek</translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation>%1 Transactiekosten</translation>
@@ -2290,14 +2243,6 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
         <source>Connect more currencies</source>
         <translation>Verbind meer currencies</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Actieve aanbiedingen</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Mijn aanbiedingen</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>Transacties</translation>
@@ -2322,25 +2267,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">Er zijn momenteel geen actieve aanbiedingen.
 Probeer het later opnieuw of maak zelf een aanbieding.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Gemaakt op</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Verzend</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Ontvang</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Rate</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -2393,10 +2322,6 @@ Update your settings and try again.</source>
 Update your settings and try again.</oldsource>
         <translation type="unfinished">U heeft geen 3rd-party valuta gekoppeld.
 Update uw instellingen en probeer opnieuw.</translation>
-    </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Swap aanbieding aanmaken</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
@@ -2822,22 +2747,6 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>Confirmed (%1)</source>
         <translation>Bevestigd (%1)</translation>
     </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation>Verlopen</translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation>Actief</translation>
-    </message>
-    <message id="dex-order-fulfilled">
-        <source>Fulfilled</source>
-        <translation>Vervuld</translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation>Voortgang</translation>
-    </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>
         <translation>kopieer en sluit</translation>
@@ -3172,11 +3081,28 @@ cannot be canceled.</source>
         <translation>verzonden naar eigen adres
 (offline)</translation>
     </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation>Deze DApp vereist Beam Wallet versie %1 of hoger. Werk uw wallet bij.</translation>
+    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
         <translation>wachten op ontvanger
 (offline)</translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation>Verwijder</translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
+        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
+        <translation>Weet u zeker dat u %1 DApp wilt verwijderen?</translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
+        <translation>DApp verwijderen</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
@@ -3451,6 +3377,20 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <source>become a publisher</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-install">
+        <source>install</source>
+        <oldsource>Install</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-update">
+        <source>update</source>
+        <oldsource>Update</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
         <translation type="unfinished"></translation>
@@ -3704,6 +3644,10 @@ Let&apos;s start!</source>
         <source>Publisher link</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="dapps-store-launch">
+        <source>launch</source>
+        <translation type="unfinished">starten</translation>
+    </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
@@ -3762,44 +3706,12 @@ Please, check the file and try again.</source>
         <source>Blockchain height</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+    <message id="assets-swap-title">
+        <source>Assets Swaps</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="apps-uninstall">
-        <source>Uninstall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-uninstall-title">
-        <source>Uninstall DApp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-uninstall-confirm">
-        <source>Are you sure you want to uninstall %1 DApp?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-updating">
-        <source>updating</source>
-        <translation type="unfinished">bijwerken</translation>
-    </message>
-    <message id="dapps-store-update">
-        <source>update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-installing">
-        <source>installing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-install">
-        <source>install</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="dapps-store-launch">
-        <source>launch</source>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="app-install-timeout-fail">
@@ -3815,6 +3727,70 @@ Please, check the file and try again.</source>
     <message id="app-update-timeout-fail">
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation type="unfinished">bijwerken</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Ontvang</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Rate</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Gemaakt op</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Vervaltijd</translation>
+    </message>
+    <message id="swap-cancel-offer">
+        <source>cancel offer</source>
+        <translation type="unfinished">aanbod annuleren</translation>
+    </message>
+    <message id="swap-accept-offer">
+        <source>accept offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-accept-asset-swap-title">
+        <source>Accept an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-create-asset-swap-title">
+        <source>Create an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-fee">
+        <source>Transaction fee</source>
+        <translation type="unfinished">Transactiekosten</translation>
+    </message>
+    <message id="amount-input-asset-search">
+        <source>Enter asset name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">Actieve aanbiedingen</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">Mijn aanbiedingen</translation>
+    </message>
+    <message id="assets-same-accept">
+        <source>You can&apos;t accept offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-same-create">
+        <source>You can&apos;t create offer with identical assets on both sides</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

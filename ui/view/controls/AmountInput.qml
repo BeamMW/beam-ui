@@ -58,8 +58,8 @@ ColumnLayout {
             font.pixelSize:   36
             font.styleName:   "Light"
             font.weight:      Font.Light
-            color:            error.length ? Style.validator_error : control.color
-            backgroundColor:  error.length ? Style.validator_error : Style.content_main
+            color:            !isValid ? Style.validator_error : control.color
+            backgroundColor:  !isValid ? Style.validator_error : Style.content_main
             validator:        RegExpValidator {regExp: new RegExp(ainput.getRegExpPattern())}
             selectByMouse:    true
             text:             formatDisplayedAmount()
@@ -124,7 +124,7 @@ ColumnLayout {
                 fontPixelSize:       20
                 dropFontPixelSize:   14
                 currentIndex:        control.currencyIdx
-                color:               error.length ? Style.validator_error : control.currColor
+                color:               !isValid ? Style.validator_error : control.currColor
                 underlineColor:      "transparent"
                 enabled:             multi
                 colorConst:          true
@@ -137,6 +137,8 @@ ColumnLayout {
                 maxTextWidth:        80
                 dropDownIconSixe:    Qt.size(9, 5)
                 dropDownIconRightMargin: 14
+                //% "Enter asset name..."
+                searchPlaseholder: qsTrId("amount-input-asset-search")
 
                 onActivated: {
                     if (multi) {
@@ -192,7 +194,7 @@ ColumnLayout {
         color:                Style.validator_error
         font.pixelSize:       14
         font.italic:          true
-        visible:              error.length
+        visible:              !isValid
         wrapMode:             "WordWrap"
     }
 }

@@ -89,8 +89,8 @@ Update your settings and try again."
         Layout.topMargin:    100
         Layout.bottomMargin: 30
 
-        //% "Create a Swap Offer"
-        text: qsTrId("wallet-receive-swap-title")
+        //% "Create Atomic Swap Offer"
+        text: qsTrId("wallet-atomic-swap-title")
         onBack: function () {
             onClosed()
         }

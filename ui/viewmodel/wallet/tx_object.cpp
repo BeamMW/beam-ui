@@ -113,18 +113,18 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
         bvm2::ContractInvokeData vData;
         if(_tx.GetParameter(TxParameterID::ContractDataPacked, vData))
         {
-            _contractFee = bvm2::getFullFee(vData, h);
-            _contractSpend = bvm2::getFullSpend(vData);
+            _contractFee = vData.get_FullFee(h);
+            _contractSpend = vData.get_FullSpend();
         }
 
-        if (!vData.empty())
+        if (!vData.m_vec.empty())
         {
             std::stringstream ss;
-            ss << vData[0].m_Cid.str();
+            ss << vData.m_vec[0].m_Cid.str();
 
-            if (vData.size() > 1)
+            if (vData.m_vec.size() > 1)
             {
-                ss << " +" << vData.size() - 1;
+                ss << " +" << vData.m_vec.size() - 1;
             }
 
             _contractCids = QString::fromStdString(ss.str());

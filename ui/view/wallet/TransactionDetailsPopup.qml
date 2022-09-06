@@ -323,24 +323,9 @@ CustomDialog {
                 SFText {
                     Layout.alignment: Qt.AlignTop
                     font.pixelSize: 14
-                    color: Style.content_main
+                    color: Style.content_secondary
                     //% "Amount"
                     text: qsTrId("tx-details-amount-label") + ":"
-                }
-
-                SFLabel {
-                    Layout.fillWidth: true
-                    Layout.preferredWidth: 190
-                    id: detailsRateDescription
-                    font.pixelSize: 14
-                    color: Style.content_secondary
-                    text: dialog.assetRates.length ?
-                    //% "calculated with the exchange rate at the time of the transaction"
-                    "(" + qsTrId("tx-details-rate-notice") + ")"
-                    //% "exchange rate was not available at the time of the transaction"
-                    : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
-                    wrapMode: Text.WordWrap
-                    elide: Text.ElideRight
                 }
             }
 
@@ -414,6 +399,21 @@ CustomDialog {
                             }
                         }
                     }
+                }
+
+                SFLabel {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 190
+                    id: detailsRateDescription
+                    font.pixelSize: 14
+                    color: Style.content_secondary
+                    text: dialog.assetRates.length ?
+                    //% "calculated with the exchange rate at the time of the transaction"
+                    "(" + qsTrId("tx-details-rate-notice") + ")"
+                    //% "exchange rate was not available at the time of the transaction"
+                    : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
+                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
                 }
             }
 
@@ -664,7 +664,7 @@ CustomDialog {
                     ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
                     ScrollBar.vertical.policy:    ScrollBar.AsNeeded
                     SFText {
-                        width:              450
+                        width:              425
                         wrapMode:           Text.Wrap
                         font.pixelSize:     14
                         text:               paymentInfo ? paymentInfo.paymentProof : ""

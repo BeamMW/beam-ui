@@ -85,20 +85,11 @@ Item {
         }
     }
 
-    RowLayout {
-        Title {
-            //% "Atomic Swaps"
-            text: qsTrId("atomic-swap-title")
-        }
-
-        SvgImage {
-            Layout.alignment: Qt.AlignLeft | Qt.AlignHCenter
-            Layout.maximumHeight: 15
-            Layout.maximumWidth: 51
-            Layout.topMargin: 8
-            source: "qrc:/assets/beta2-label.svg"
-        }
+    Title {
+        //% "Atomic Swaps"
+        text: qsTrId("atomic-swap-title")
     }
+
 
     StatusBar {
         id: statusBar
@@ -208,7 +199,7 @@ Item {
 
                     onClicked: {
                         function onClosed() {offersStackView.pop();}
-                        offersStackView.push(Qt.createComponent("receive_swap.qml"), {"onClosed": onClosed});
+                        offersStackView.push(Qt.createComponent("create_atomic_swap.qml"), {"onClosed": onClosed});
                     }
                 }
             }
@@ -361,7 +352,7 @@ Item {
                     id: offersTabSelector
                     Layout.alignment: Qt.AlignTop
                     //% "Active offers"
-                    label: qsTrId("atomic-swap-active-offers-tab")
+                    label: qsTrId("swap-active-offers-tab")
                     onClicked: atomicSwapLayout.state = "offers"
                     showLed: false
                     font {
@@ -375,7 +366,7 @@ Item {
                     Layout.alignment: Qt.AlignTop
                     Layout.leftMargin: 40
                     //% "My offers"
-                    label: qsTrId("atomic-swap-my-offers-tab")
+                    label: qsTrId("swap-my-offers-tab")
                     onClicked: atomicSwapLayout.state = "myoffers"
                     showLed: false
                     font {
@@ -631,7 +622,7 @@ Please try again later or create an offer yourself."
                                 height: offersTable.rowHeight
                                 property var swapCoin: styleData.value
                                 property var isSendBeam: !!model && model.isSendBeam
-                                
+
                                 anchors.fill: parent
                                 anchors.leftMargin: 20
                                 anchors.rightMargin: 20
@@ -659,7 +650,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "timeCreated"
                             //% "Created on"
-                            title: qsTrId("atomic-swap-time-created")
+                            title: qsTrId("swap-time-created")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false
@@ -683,7 +674,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "amountReceive"
                             //% "Receive"
-                            title: qsTrId("atomic-swap-amount-receive")
+                            title: qsTrId("general-receive")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false
@@ -698,7 +689,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "rate"
                             //% "Rate"
-                            title: qsTrId("atomic-swap-rate")
+                            title: qsTrId("swap-rate")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false
@@ -710,7 +701,7 @@ Please try again later or create an offer yourself."
                         TableViewColumn {
                             role: "expiration"
                             //% "Expiration"
-                            title: qsTrId("atomic-swap-expiration")
+                            title: qsTrId("swap-expiration")
                             width: offersTable.columnWidth
                             movable: false
                             resizable: false
@@ -1210,6 +1201,7 @@ Please try again later or create an offer yourself."
         id: offersStackView
 
         anchors.fill: parent
+        anchors.topMargin: -27
         initialItem: offersViewComponent
 
         pushEnter: Transition {
