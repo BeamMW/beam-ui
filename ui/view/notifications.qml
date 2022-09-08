@@ -436,6 +436,24 @@ ColumnLayout {
             actionIcon: icons.goToAppIcon,
             action:     navigateToDAppTransaction,
             icon:       "qrc:/assets/icon-contract-failed.svg"
+        },
+        dexCompleted: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-contract-completed.svg"
+        },
+        dexExpired: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-contract-expired.svg"
+        },
+        dexFailed: {
+            label:      labels.detailsLabel,
+            actionIcon: icons.detailsIcon,
+            action:     navigateToTransaction,
+            icon:       "qrc:/assets/icon-contract-failed.svg"
         }
     })
 

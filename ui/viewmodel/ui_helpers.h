@@ -102,4 +102,6 @@ namespace beamui
     quint32 getCurrentUIRevision();
 
     QString GetTokenTypeUIString(const std::string& token, bool choiceOffline);
+
+    QString getReasonString(beam::wallet::TxFailureReason reason);
 }  // namespace beamui
