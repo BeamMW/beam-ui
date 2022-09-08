@@ -3808,5 +3808,21 @@ Please, restart the wallet and try again.</source>
         <source>You can&apos;t create offer with identical assets on both sides</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="notification-dex-completed">
+        <source>DEX transaction completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-expired">
+        <source>DEX transaction expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-failed">
+        <source>DEX transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-canceled">
+        <source>DEX transaction canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
