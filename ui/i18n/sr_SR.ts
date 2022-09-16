@@ -3807,19 +3807,27 @@ Please, restart the wallet and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-completed">
-        <source>DEX transaction completed</source>
+        <source>Assets Swaps transaction completed</source>
+        <oldsource>DEX transaction completed</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-expired">
-        <source>DEX transaction expired</source>
+        <source>Assets Swaps transaction expired</source>
+        <oldsource>DEX transaction expired</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-failed">
-        <source>DEX transaction failed</source>
+        <source>Assets Swaps transaction failed</source>
+        <oldsource>DEX transaction failed</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-canceled">
-        <source>DEX transaction canceled</source>
+        <source>Assets Swaps transaction canceled</source>
+        <oldsource>DEX transaction canceled</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-asset-swap-default-comment">
+        <source>Assets Swaps transaction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

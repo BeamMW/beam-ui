@@ -3788,20 +3788,24 @@ Please, restart the wallet and try again.</source>
         <translation>You can&apos;t create offer with identical assets on both sides</translation>
     </message>
     <message id="notification-dex-completed">
-        <source>DEX transaction completed</source>
-        <translation>DEX transaction completed</translation>
+        <source>Assets Swaps transaction completed</source>
+        <translation>Assets Swaps transaction completed</translation>
     </message>
     <message id="notification-dex-expired">
-        <source>DEX transaction expired</source>
-        <translation>DEX transaction expired</translation>
+        <source>Assets Swaps transaction expired</source>
+        <translation>Assets Swaps transaction expired</translation>
     </message>
     <message id="notification-dex-failed">
-        <source>DEX transaction failed</source>
-        <translation>DEX transaction failed</translation>
+        <source>Assets Swaps transaction failed</source>
+        <translation>Assets Swaps transaction failed</translation>
     </message>
     <message id="notification-dex-canceled">
-        <source>DEX transaction canceled</source>
-        <translation>DEX transaction canceled</translation>
+        <source>Assets Swaps transaction canceled</source>
+        <translation>Assets Swaps transaction canceled</translation>
+    </message>
+    <message id="tx-asset-swap-default-comment">
+        <source>Assets Swaps transaction</source>
+        <translation>Assets Swaps transaction</translation>
     </message>
 </context>
 </TS>

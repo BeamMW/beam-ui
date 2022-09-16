@@ -289,7 +289,7 @@ QString NotificationItem::title() const
                 //% "DApp transaction completed"
                 return qtTrId("notification-contract-completed");
             case TxType::DexSimpleSwap:
-                //% "DEX transaction completed"
+                //% "Assets Swaps transaction completed"
                 return qtTrId("notification-dex-completed");
             default:
                 return "error";
@@ -329,9 +329,9 @@ QString NotificationItem::title() const
                     qtTrId("notification-contract-failed");
             case TxType::DexSimpleSwap:
                 return isExpired(p) ?
-                    //% "DEX transaction expired"
+                    //% "Assets Swaps transaction expired"
                     qtTrId("notification-dex-expired") :
-                    //% "DEX transaction failed"
+                    //% "Assets Swaps transaction failed"
                     qtTrId("notification-dex-failed");
             default:
                 return "error";
@@ -417,7 +417,7 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             case TxType::Contract:
                 return getContractMessage(p);
             case TxType::DexSimpleSwap:
-                //% "DEX transaction completed"
+                //% "Assets Swaps transaction completed"
                 return qtTrId("notification-dex-completed");
             default:
                 return "error";
@@ -477,7 +477,7 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             {
                 TxDescription d(p);
                 return d.m_status == TxStatus::Canceled ?
-                    //% "DEX transaction canceled"
+                    //% "Assets Swaps transaction canceled"
                     qtTrId("notification-dex-canceled") :
                     beamui::getReasonString(d.m_failureReason);
             }
