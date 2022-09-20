@@ -94,8 +94,7 @@ void AssetSwapCreateViewModel::onCoinsSelected(const beam::wallet::CoinsSelectio
         return;
     }
 
-    _isEnoughtToSend = selectionRes.m_isEnought;
-    _isFeeEnoughtToSend = !_isEnoughtToSend && selectionRes.m_selectedSumBeam != 0;
+    _isEnoughtToSend = selectionRes.m_selectedSumAsset >= selectionRes.m_requestedSum;
     _maxAmountToSendGrothes = selectionRes.get_NettoValue();
     emit canCreateChanged();
 }
@@ -283,11 +282,6 @@ bool AssetSwapCreateViewModel::getCanCreate() const
 bool AssetSwapCreateViewModel::getIsEnough() const
 {
     return _amountToSendGrothes == 0 || _isEnoughtToSend;
-}
-
-bool AssetSwapCreateViewModel::getIsFeeEnough() const
-{
-    return _amountToSendGrothes == 0 || _isFeeEnoughtToSend;
 }
 
 QString AssetSwapCreateViewModel::getMaxSendAmount() const

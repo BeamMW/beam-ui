@@ -89,6 +89,11 @@ ColumnLayout {
                             error: {
                                 if (!viewModel.isEnough)
                                 {
+                                    if (!viewModel.isFeeEnough)
+                                    {
+                                        //% "Insufficient funds to pay transaction fee."
+                                        return qsTrId("send-no-funds-for-fee");
+                                    }
                                     var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
                                     //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
                                     return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(sendAmountInput.currencyUnit, 10))
