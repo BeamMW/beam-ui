@@ -450,7 +450,6 @@ Item {
                 Layout.fillHeight: true
                 id: txTable
                 owner: assetsSwapComponent
-                headerShaderVisible: false
                 dexFilter: true
                 visible: tabSelector.state == "transactions"
             }
