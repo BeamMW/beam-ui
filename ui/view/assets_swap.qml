@@ -136,6 +136,7 @@ Item {
 
                         onClicked: function () {
                             tabSelector.state = "myoffers"
+                            checkboxFitBalance.checked = false
                         }
 
                         showLed: false
@@ -191,6 +192,7 @@ Item {
                     id: checkboxFitBalance
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
                     checked: false
+                    enabled: !tabSelector.showOnlyMyOffers
                     //% "Fit my current balance"
                     text: qsTrId("atomic-swap-fit-current-balance")
                 }
