@@ -89,7 +89,7 @@ ColumnLayout {
                             error: {
                                 if (!viewModel.isEnough)
                                 {
-                                    if (!viewModel.isFeeEnough && sendAmountInput.currencyIdx != 0)
+                                    if (!viewModel.isFeeEnough && sendAmountInput.currencyUnit != "BEAM")
                                     {
                                         //% "Insufficient funds to pay transaction fee."
                                         return qsTrId("send-no-funds-for-fee");
