@@ -56,4 +56,5 @@ public:
 private:
     QLocale m_locale; // default
     AssetsManager::Ptr m_amgr;
+    WalletModel::Ptr m_wallet;
 };
