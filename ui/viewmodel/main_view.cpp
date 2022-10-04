@@ -172,6 +172,25 @@ QString MainViewModel::getFaucetAppID() const
     return QString::fromStdString(appid);
 }
 
+QString MainViewModel::getEthBridgeAppID() const
+{
+    const std::string appName = "Bridge app";
+    std::string appURL = "";
+
+#if defined(BEAM_TESTNET)
+    appURL = "https://apps-testnet.beam.mw/app/beam-bridge-app/index.html";
+#elif defined(BEAM_MAINNET)
+    appURL = "https://apps.beam.mw/app/beam-bridge-app/index.html";
+#elif defined(BEAM_DAPPNET)
+    appURL = "http://3.16.160.95:80/app/beam-bridge-app/index.html";
+#else
+    appURL = "http://3.19.141.112:80/app/beam-bridge-app/index.html";
+#endif
+
+    const auto appid = beam::wallet::GenerateAppID(appName, appURL);
+    return QString::fromStdString(appid);
+}
+
 bool MainViewModel::getDevMode() const
 {
     return m_settings.getDevMode();

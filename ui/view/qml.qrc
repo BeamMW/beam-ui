@@ -426,5 +426,7 @@
         <file>assets/icon-no-transaction-filter.svg</file>
         <file>assets/icon-offer-cancel.svg</file>
         <file>assets/icon-offer-accept.svg</file>
+		<file>assets/icon-bridge.svg</file>
+		<file>assets/icon-bridge-active.svg</file>
     </qresource>
 </RCC>
