@@ -36,6 +36,7 @@ class AssetSwapAcceptViewModel: public QObject
 
     Q_PROPERTY(bool    canAccept         READ getCanAccept                                    NOTIFY  orderChanged)
     Q_PROPERTY(bool    isEnough          READ getIsEnough                                     NOTIFY  orderChanged)
+    Q_PROPERTY(bool    isFeeEnough       READ getIsFeeEnough                                  NOTIFY  orderChanged)
     Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  orderChanged)
     Q_PROPERTY(bool    isAssetsSame      READ getIsAssetsSame                                 NOTIFY  orderChanged)
     Q_PROPERTY(bool    commentValid      READ getCommentValid                                 NOTIFY  commentValidChanged)
@@ -74,6 +75,7 @@ class AssetSwapAcceptViewModel: public QObject
 
     bool getCanAccept() const;
     bool getIsEnough() const;
+    bool getIsFeeEnough() const;
     QString getMaxSendAmount() const;
     bool getIsAssetsSame() const;
     bool getCommentValid() const;
@@ -97,6 +99,7 @@ class AssetSwapAcceptViewModel: public QObject
     QString          _errorStr;
     bool             _canAccept = false;
     bool             _isEnoughtToSend = false;
+    bool             _isFeeEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;
     beam::Amount     _fee = 100000;
   

@@ -21,6 +21,7 @@
 
 DexOrdersList::DexOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
+    , m_wallet(AppModel::getInstance().getWalletModel())
 {
 }
 
@@ -135,7 +136,11 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         case Roles::RHasAssetToSend:
         case Roles::RHasAssetToSendSort:
         {
-            return m_amgr->hasAsset(order.getSendAssetId());
+            if (!m_amgr->hasAsset(order.getSendAssetId())) return false;
+
+            auto availableAmount = m_wallet->getAvailable(order.getSendAssetId());
+            return order.getSendAmount() <= beam::AmountBig::get_Lo(availableAmount) &&
+                !beam::AmountBig::get_Hi(availableAmount);
         }
 
         case Roles::RAssetsFilter:

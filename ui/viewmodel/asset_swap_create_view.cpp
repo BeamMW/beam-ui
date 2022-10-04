@@ -94,7 +94,7 @@ void AssetSwapCreateViewModel::onCoinsSelected(const beam::wallet::CoinsSelectio
         return;
     }
 
-    _isEnoughtToSend = selectionRes.m_isEnought;
+    _isEnoughtToSend = selectionRes.m_selectedSumAsset >= selectionRes.m_requestedSum;
     _maxAmountToSendGrothes = selectionRes.get_NettoValue();
     emit canCreateChanged();
 }
