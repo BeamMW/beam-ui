@@ -183,7 +183,7 @@ Item {
             }
 
             RowLayout {
-                visible: ordersTable.visible
+                visible: tabSelector.state != "transactions"
                 spacing: 0
                 Layout.minimumHeight: 20
                 Layout.maximumHeight: 20
