@@ -19,6 +19,12 @@ Item {
         text: qsTrId("assets-swap-title")
     }
 
+    StatusBar {
+        id: statusBar
+        model: statusbarModel
+        z: 33
+    }
+
     Component {
         id: assetsSwapComponent
 
