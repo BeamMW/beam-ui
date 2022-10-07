@@ -141,6 +141,7 @@
         <file>send_regular.qml</file>
         <file>send_swap.qml</file>
         <file>send_confirm.qml</file>
+        <file>assets_swap_confirm.qml</file>
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
         <file>assets/fonts/Proxima Nova Black Italic.otf</file>

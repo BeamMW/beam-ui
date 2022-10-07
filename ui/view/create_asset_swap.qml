@@ -296,9 +296,24 @@ ColumnLayout {
                     icon.source:         "qrc:/assets/icon-share.svg"
                     enabled:             viewModel.canCreate
                     onClicked: {
-                        viewModel.publishOffer();
-                        onClosed();
+                        const dialogComponent = Qt.createComponent("assets_swap_confirm.qml");
+                        var dialogObject = dialogComponent.createObject(thisView,
+                            {
+                                createAssetSwap: true,
+                                sendAmount: viewModel.amountToSend,
+                                sendUnitName: sentAmountInput.currencyUnit,
+                                receiveAmount: viewModel.amountToReceive,
+                                receiveUnitName: receiveAmountInput.currencyUnit,
+                            });
+
+                        dialogObject.onAccepted.connect(function () {
+                            viewModel.publishOffer();
+                            thisView.onClosed();
+                        });
+
+                        dialogObject.open();
                     }
+
                 }
             }
         }  // ColumnLayout
