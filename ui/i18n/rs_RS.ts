@@ -774,10 +774,6 @@
         <source>UTXO</source>
         <translation type="unfinished">UTXO</translation>
     </message>
-    <message id="utxo-blockchain-height">
-        <source>Blockchain Height</source>
-        <translation type="unfinished">Blockchain Height</translation>
-    </message>
     <message id="utxo-last-block-hash">
         <source>Last block hash</source>
         <translation type="unfinished">Last block hash</translation>

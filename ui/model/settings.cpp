@@ -689,6 +689,8 @@ QString WalletSettings::getExplorerUrl() const
 {
     #ifdef BEAM_BEAMX
     return "https://beamx.explorer.beam.mw/";
+    #elif defined(BEAM_DAPPNET)
+    return "https://dappnet.explorer.beam.mw/";
     #elif defined(BEAM_TESTNET)
     return "https://testnet.explorer.beam.mw/";
     #elif defined(BEAM_MAINNET)
@@ -702,6 +704,8 @@ QString WalletSettings::getFaucetUrl() const
 {
     #ifdef BEAM_BEAMX
     return "https://faucet.beamprivacy.community/";
+    #elif defined(BEAM_DAPPNET)
+    return "https://faucet.beamprivacy.community/";
     #elif defined(BEAM_TESTNET)
     return "https://faucet.beamprivacy.community/";
     #elif defined(BEAM_MAINNET)
@@ -713,8 +717,8 @@ QString WalletSettings::getFaucetUrl() const
 
 QString WalletSettings::getAppsUrl() const
 {
-    #ifdef BEAM_BEAMX
-    return "";
+    #ifdef BEAM_DAPPNET
+    return "https://apps-dappnet.beam.mw/app/appslist.json";
     #elif defined(BEAM_TESTNET)
     return "https://apps-testnet.beam.mw/appslist.json";
     #elif defined(BEAM_MAINNET)
@@ -770,15 +774,7 @@ QString WalletSettings::getDevAppMinApiVer() const
 
 uint32_t WalletSettings::getShadersPrivilegeLvl() const
 {
-    #ifdef BEAM_DAPPNET
-    // On dappnet 2 by default
     return m_data.value(kShadersPrivLvl, 2).toUInt();
-    #elif BEAM_TESTNET
-    // On testnet 2 by default
-    return m_data.value(kShadersPrivLvl, 2).toUInt();
-    #else
-    return m_data.value(kShadersPrivLvl, 2).toUInt();
-    #endif
 }
 
 std::string WalletSettings::getDappStoreCID() const
@@ -791,6 +787,8 @@ std::string WalletSettings::getDappStoreCID() const
         "c673c2b940d4f6813901165c426ab084e401259c9794d61e1f5f80453ee80317"
 #elif defined(BEAM_MAINNET)
         "e2d24b686e8d31a0fe97eade9cd23281e7059b74b5757bdb96c820ef9e2af41c"
+#elif defined(BEAM_DAPPNET)
+        "59c7b485463eff35c361157038bad32f88a4ef9814f0891298a5e65099b6b50b"
 #else
         "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3"
 #endif
@@ -908,7 +906,6 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.autonat = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
     cfg.autonat_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
     cfg.autonat_peer_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
-    cfg.swarm_key = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY, QString::fromStdString(cfg.swarm_key)).toString().toStdString();
     cfg.routing_type = m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
     cfg.run_gc = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
 
@@ -917,11 +914,31 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     {
         auto list = m_data.value(keyBootstrap).toStringList();
         decltype(cfg.bootstrap)().swap(cfg.bootstrap);
+        decltype(cfg.peering)().swap(cfg.peering);
 
         for (const auto& qsval : list)
         {
             cfg.bootstrap.push_back(qsval.toStdString());
+            cfg.peering.push_back(qsval.toStdString());
         }
+    }
+
+    const QString keyPeering = QString(kIPFSPrefix) + cli::IPFS_PEERING;
+    if (m_data.contains(keyPeering))
+    {
+        auto list = m_data.value(keyPeering).toStringList();
+        decltype(cfg.peering)().swap(cfg.peering);
+
+        for (const auto& qsval : list)
+        {
+            cfg.peering.push_back(qsval.toStdString());
+        }
+    }
+
+    const QString keySwarm = QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY;
+    if (m_data.contains(keySwarm))
+    {
+        cfg.swarm_key = m_data.value(keySwarm).toString().toStdString();
     }
 
     return cfg;

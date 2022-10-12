@@ -28,9 +28,12 @@
 #include "viewmodel/utxo/utxo_view.h"
 #include "viewmodel/utxo/utxo_view_status.h"
 #include "viewmodel/utxo/utxo_view_type.h"
+#include "viewmodel/dex/dex_orders_model.h"
 #include "viewmodel/atomic_swap/swap_offers_view.h"
 #include "viewmodel/atomic_swap/swap_token_item.h"
 #include "viewmodel/address_book_view.h"
+#include "viewmodel/asset_swap_create_view.h"
+#include "viewmodel/asset_swap_accept_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
 #include "viewmodel/wallet/assets_view.h"
@@ -64,7 +67,6 @@
 #include "model/translator.h"
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
-#include "viewmodel/dex/dex_view.h"
 #include "viewmodel/window_event_filter.h"
 
 #if defined(BEAM_USE_STATIC_QT)
@@ -108,6 +110,7 @@ int main (int argc, char* argv[])
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 
     block_sigpipe();
 
@@ -294,8 +297,10 @@ int main (int argc, char* argv[])
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<SeedValidationHelper>("Beam.Wallet", 1, 0, "SeedValidationHelper");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
-            qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
+            qmlRegisterType<AssetSwapCreateViewModel>("Beam.Wallet", 1, 0, "AssetSwapCreateViewModel");
+            qmlRegisterType<DexOrdersModel>("Beam.Wallet", 1, 0, "DexOrdersModel");
+            qmlRegisterType<AssetSwapAcceptViewModel>("Beam.Wallet", 1, 0, "AssetSwapAcceptViewModel");
             beamui::applications::RegisterQMLTypes();
 
             WindowEventFilter filter;

@@ -86,19 +86,11 @@ jobs:
           git clone https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git c:/boost_prebuild
           echo "BOOST_ROOT=c:\boost_prebuild" >> $GITHUB_ENV
 
-      - name: Download boost [ubuntu]
-        if: matrix.os != 'windows-2019' && matrix.os != 'macos-11'
+      - name: Download boost [ubuntu && macos]
+        if: matrix.os != 'windows-2019'
         shell: bash
         run: |
           git clone --depth=1 https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git ${{runner.workspace}}/boost_prebuild
-          echo "BOOST_INCLUDEDIR=${{runner.workspace}}/boost_prebuild/include" >> $GITHUB_ENV
-          echo "BOOST_LIBRARYDIR=${{runner.workspace}}/boost_prebuild/lib/" >> $GITHUB_ENV
-
-      - name: Download boost [macos]
-        if: matrix.os == 'macos-11'
-        shell: bash
-        run: |
-          git clone --depth=1 https://github.com/BeamMW/boost_prebuild_macos-10.15.git ${{runner.workspace}}/boost_prebuild
           echo "BOOST_INCLUDEDIR=${{runner.workspace}}/boost_prebuild/include" >> $GITHUB_ENV
           echo "BOOST_LIBRARYDIR=${{runner.workspace}}/boost_prebuild/lib/" >> $GITHUB_ENV
 
@@ -291,7 +283,7 @@ jobs:
         if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
-          path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar
+          path: Beam-Wallet-${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}.tar
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v2

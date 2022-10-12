@@ -84,7 +84,6 @@ public:
 
 protected:
     [[nodiscard]] const beam::wallet::TxDescription& getTxDescription() const;
-    [[nodiscard]] QString getReasonString(beam::wallet::TxFailureReason reason) const;
 
     beam::wallet::TxDescription _tx;
     uint32_t _minConfirmations = 0;

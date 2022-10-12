@@ -2152,53 +2152,6 @@ much longer for a transaction to complete.</translation>
         <source>This is your dev application</source>
         <translation type="unfinished">This is your dev application</translation>
     </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation type="unfinished">All orders</translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation type="unfinished">Opened by me</translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation type="unfinished">Opened by other users</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation>ประเภท</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation type="unfinished">Price</translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation>ขนาด</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation>ทั้งหมด</translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation>วันหมดอายุ</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation type="unfinished">Accept Order</translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation type="unfinished">There are no active orders at the moment.
-Please try again later or create an offer yourself.</translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation type="unfinished">Order Book</translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation type="unfinished">%1 Transaction fee</translation>
@@ -2288,14 +2241,6 @@ Please try again later or create an offer yourself.</translation>
         <source>Connect more currencies</source>
         <translation type="unfinished">Connect more currencies</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>ข้อเสนอเสนอที่ใช้งานอยู่</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>ข้อเสนอของฉัน</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>ธุรกรรม</translation>
@@ -2320,25 +2265,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">ไม่มีข้อเสนอการแลกเปลี่ยนใดๆในตอนนี้
 กรุณาลองอีกครั้งหรือสร้างข้อเสนอของตัวเองเลย</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>สร้างเมื่อ</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>โอน</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>รับ</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>เรท</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>วันหมดอายุ</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -2390,10 +2319,6 @@ Update your settings and try again.</source>
         <oldsource>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</oldsource>
         <translation type="unfinished">คุณไม่มีสกุลเงินอื่นเชื่อมต่ออยู่ กรุณาแก้ไขการตั้งค่าและลองใหม่อีกครั้ง</translation>
-    </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>สร้างข้อเสนอการแลกเปลี่ยน</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
@@ -2817,22 +2742,6 @@ Update your settings and try again.</oldsource>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
         <translation type="unfinished">Confirmed (%1)</translation>
-    </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation>หมดอายุ</translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation>ใช้งานอยู่</translation>
-    </message>
-    <message id="dex-order-fulfilled">
-        <source>Fulfilled</source>
-        <translation type="unfinished">Fulfilled</translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation type="unfinished">Progress</translation>
     </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>
@@ -3787,6 +3696,18 @@ Please, check the file and try again.</source>
         <source>Dapp Store</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-blockchain-height">
+        <source>Blockchain height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-title">
+        <source>Assets Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
 Please, restart the wallet and try again.</source>
@@ -3800,6 +3721,122 @@ Please, check the file and try again.</source>
     <message id="app-update-timeout-fail">
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation type="unfinished">กำลังอัพเดท</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">รับ</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">เรท</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">สร้างเมื่อ</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">วันหมดอายุ</translation>
+    </message>
+    <message id="swap-cancel-offer">
+        <source>cancel offer</source>
+        <translation type="unfinished">ยกเลิกข้อเสนอ</translation>
+    </message>
+    <message id="swap-accept-offer">
+        <source>accept offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-accept-asset-swap-title">
+        <source>Accept an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-create-asset-swap-title">
+        <source>Create an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-fee">
+        <source>Transaction fee</source>
+        <translation type="unfinished">ค่าธรรมเนียมธุรกรรม</translation>
+    </message>
+    <message id="amount-input-asset-search">
+        <source>Enter asset name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">ข้อเสนอเสนอที่ใช้งานอยู่</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">ข้อเสนอของฉัน</translation>
+    </message>
+    <message id="assets-same-accept">
+        <source>You can&apos;t accept offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-same-create">
+        <source>You can&apos;t create offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-completed">
+        <source>Assets Swaps transaction completed</source>
+        <oldsource>DEX transaction completed</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-expired">
+        <source>Assets Swaps transaction expired</source>
+        <oldsource>DEX transaction expired</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-failed">
+        <source>Assets Swaps transaction failed</source>
+        <oldsource>DEX transaction failed</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-canceled">
+        <source>Assets Swaps transaction canceled</source>
+        <oldsource>DEX transaction canceled</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-asset-swap-default-comment">
+        <source>Assets Swaps transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-create-confirm-dialog-title">
+        <source>Create asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-accept-confirm-dialog-title">
+        <source>Accept asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-confirmation-create">
+        <source>Confirm asset swap creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-confirmation-accept">
+        <source>Accept asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-send-amount">
+        <source>Send amount</source>
+        <translation type="unfinished">จำนวนที่โอน</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-receive-amount">
+        <source>Receive amount</source>
+        <translation type="unfinished">จำนวนที่ได้รับ</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-fee-label">
+        <source>Asset swap fee</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
