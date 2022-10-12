@@ -166,6 +166,10 @@ set(UI_SRC
     viewmodel/settings_view.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
+    viewmodel/asset_swap_accept_view.h
+    viewmodel/asset_swap_accept_view.cpp
+    viewmodel/asset_swap_create_view.h
+    viewmodel/asset_swap_create_view.cpp
     viewmodel/fee_helpers.h
     viewmodel/fee_helpers.cpp
     viewmodel/ui_helpers.h
@@ -204,12 +208,12 @@ set(UI_SRC
         model/assets_manager.h
         model/assets_manager.cpp
     viewmodel/applications/webapi_creator.cpp
-    viewmodel/dex/dex_view.h
-    viewmodel/dex/dex_view.cpp
-    viewmodel/dex/dex_order_object.cpp
-    viewmodel/dex/dex_orders_list.cpp
     viewmodel/window_event_filter.h
     viewmodel/window_event_filter.cpp
+    viewmodel/dex/dex_orders_model.h
+    viewmodel/dex/dex_orders_model.cpp
+    viewmodel/dex/dex_orders_list.h
+    viewmodel/dex/dex_orders_list.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
@@ -265,6 +269,8 @@ elseif(BEAM_MAINNET)
     set(BEAM_ICON_SUFFIX "mainnet")
 elseif(BEAM_BEAMX)
     set(BEAM_ICON_SUFFIX "beamx")
+elseif(BEAM_DAPPNET)
+    set(BEAM_ICON_SUFFIX "dappnet")
 endif()
 
 add_definitions(-DAPP_NAME=\"${APP_NAME}\")

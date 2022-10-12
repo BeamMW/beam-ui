@@ -2154,53 +2154,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <source>This is your dev application</source>
         <translation>Dit is uw ontwikkelaar applicatie</translation>
     </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation>Alle orders</translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation>Door mij geopend</translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation>Geopend door andere gebruikers</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation>Prijs</translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation>Grootte</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation>Totaal</translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation>Order accepteren</translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation>Er zijn op dit moment geen actieve orders.
-Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation>Orderboek</translation>
-    </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
         <translation>%1 Transactiekosten</translation>
@@ -2290,14 +2243,6 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
         <source>Connect more currencies</source>
         <translation>Verbind meer currencies</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Actieve aanbiedingen</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Mijn aanbiedingen</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>Transacties</translation>
@@ -2322,25 +2267,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">Er zijn momenteel geen actieve aanbiedingen.
 Probeer het later opnieuw of maak zelf een aanbieding.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Gemaakt op</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Verzend</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Ontvang</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Rate</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -2393,10 +2322,6 @@ Update your settings and try again.</source>
 Update your settings and try again.</oldsource>
         <translation type="unfinished">U heeft geen 3rd-party valuta gekoppeld.
 Update uw instellingen en probeer opnieuw.</translation>
-    </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Swap aanbieding aanmaken</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
@@ -2821,22 +2746,6 @@ Update uw instellingen en probeer opnieuw.</translation>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
         <translation>Bevestigd (%1)</translation>
-    </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation>Verlopen</translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation>Actief</translation>
-    </message>
-    <message id="dex-order-fulfilled">
-        <source>Fulfilled</source>
-        <translation>Vervuld</translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation>Voortgang</translation>
     </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>
@@ -3793,6 +3702,18 @@ Please, check the file and try again.</source>
         <source>Dapp Store</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-blockchain-height">
+        <source>Blockchain height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-title">
+        <source>Assets Swaps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
 Please, restart the wallet and try again.</source>
@@ -3806,6 +3727,122 @@ Please, check the file and try again.</source>
     <message id="app-update-timeout-fail">
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation type="unfinished">bijwerken</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation type="unfinished">Ontvang</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation type="unfinished">Rate</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation type="unfinished">Gemaakt op</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation type="unfinished">Vervaltijd</translation>
+    </message>
+    <message id="swap-cancel-offer">
+        <source>cancel offer</source>
+        <translation type="unfinished">aanbod annuleren</translation>
+    </message>
+    <message id="swap-accept-offer">
+        <source>accept offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-accept-asset-swap-title">
+        <source>Accept an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-create-asset-swap-title">
+        <source>Create an Asset Swap Offer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-fee">
+        <source>Transaction fee</source>
+        <translation type="unfinished">Transactiekosten</translation>
+    </message>
+    <message id="amount-input-asset-search">
+        <source>Enter asset name...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation type="unfinished">Actieve aanbiedingen</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation type="unfinished">Mijn aanbiedingen</translation>
+    </message>
+    <message id="assets-same-accept">
+        <source>You can&apos;t accept offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-same-create">
+        <source>You can&apos;t create offer with identical assets on both sides</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-completed">
+        <source>Assets Swaps transaction completed</source>
+        <oldsource>DEX transaction completed</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-expired">
+        <source>Assets Swaps transaction expired</source>
+        <oldsource>DEX transaction expired</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-failed">
+        <source>Assets Swaps transaction failed</source>
+        <oldsource>DEX transaction failed</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="notification-dex-canceled">
+        <source>Assets Swaps transaction canceled</source>
+        <oldsource>DEX transaction canceled</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-asset-swap-default-comment">
+        <source>Assets Swaps transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-create-confirm-dialog-title">
+        <source>Create asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-accept-confirm-dialog-title">
+        <source>Accept asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-confirmation-create">
+        <source>Confirm asset swap creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-confirmation-accept">
+        <source>Accept asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-send-amount">
+        <source>Send amount</source>
+        <translation type="unfinished">Verzend bedrag</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-receive-amount">
+        <source>Receive amount</source>
+        <translation type="unfinished">Ontvang bedrag</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-fee-label">
+        <source>Asset swap fee</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

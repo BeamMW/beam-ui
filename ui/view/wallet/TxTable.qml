@@ -20,6 +20,7 @@ Control {
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
+    property bool      dexFilter: false
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
     readonly property  bool actionVisible: dappFilter !== undefined && dappFilter != "all"
@@ -350,9 +351,11 @@ Control {
                 var index = tableViewModel.transactions.index(0, 0);
                 var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, id);
                 if (indexList.length > 0) {
-                    index = dappFilterProxy.mapFromSource(indexList[0]);
+                    index = dexFilterProxy.mapFromSource(indexList[0]);
+                    index = dappFilterProxy.mapFromSource(index);
                     index = assetFilterProxy.mapFromSource(index);
                     index = searchProxyModel.mapFromSource(index);
+                    index = statusProxy.mapFromSource(index);
                     index = txProxyModel.mapFromSource(index);
                     transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
 
@@ -431,7 +434,15 @@ Control {
                                 filterString: dappFilter ? (dappFilter == "all" ? "true" : dappFilter) : ""
                                 filterSyntax: SortFilterProxyModel.FixedString
                                 filterCaseSensitivity: Qt.CaseInsensitive
-                                source: tableViewModel.transactions
+
+                                source: SortFilterProxyModel {
+                                    id:           dexFilterProxy
+                                    filterRole:   dexFilter ? "isDexTx" : ""
+                                    filterString: dexFilter ? "true" : ""
+                                    filterSyntax: SortFilterProxyModel.FixedString
+                                    filterCaseSensitivity: Qt.CaseInsensitive
+                                    source: tableViewModel.transactions
+                                }
                             }
                         }
                     }
@@ -448,15 +459,11 @@ Control {
                 collapsed:  true
                 rowInModel: styleData.row !== undefined && styleData.row >= 0 && styleData.row < txProxyModel.count
                 rowHeight:  transactionsTable.rowHeight
-                tableView:  transactionsTable
 
-                backgroundColor: !rowInModel ? "transparent":
-                                 styleData.selected ?
-                                 Style.row_selected :
-                                 hovered 
-                                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
-                                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
-                                                           : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
+                backgroundColor: hovered
+                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
+                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
+                                            : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
 
                 property var model: parent.model
                 property bool hideFiltered: true
@@ -511,6 +518,7 @@ Control {
             }
 
             itemDelegate: Item {
+                width: parent.width
                 Item {
                     width: parent.width
                     height: transactionsTable.rowHeight

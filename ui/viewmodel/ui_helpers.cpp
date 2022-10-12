@@ -5,8 +5,8 @@
 #include "3rdparty/libbitcoin/include/bitcoin/bitcoin/formats/base_10.hpp"
 #include "version.h"
 #include "core/common.h"
-
 #include "wallet/transactions/swaps/bridges/ethereum/common.h"
+#include "utility/logger.h"
 
 using namespace std;
 using namespace beam;
@@ -465,6 +465,131 @@ namespace beamui
 
         //% "Online"
         return qtTrId("tx-regular");
+    }
+
+    QString getReasonString(beam::wallet::TxFailureReason reason)
+    {
+    // clang doesn't allow to make 'auto reasons' so for the moment assertions below are a bit pointles
+    // let's wait until they fix template arg deduction and restore it back
+        static const std::array<QString, beam::wallet::TxFailureReason::Count> reasons = {
+            //% "Unexpected reason, please send wallet logs to Beam support" 
+            qtTrId("tx-failure-undefined"),
+            //% "Transaction cancelled"
+            qtTrId("tx-failure-cancelled"),
+            //% "Receiver signature in not valid, please send wallet logs to Beam support"
+            qtTrId("tx-failure-receiver-signature-invalid"),
+            //% "Failed to register transaction with the blockchain, see node logs for details"
+            qtTrId("tx-failure-not-registered-in-blockchain"),
+            //% "Transaction is not valid, please send wallet logs to Beam support"
+            qtTrId("tx-failure-not-valid"),
+            //% "Invalid kernel proof provided"
+            qtTrId("tx-failure-kernel-invalid"),
+            //% "Failed to send Transaction parameters"
+            qtTrId("tx-failure-parameters-not-sended"),
+            //% "Not enough inputs to process the transaction"
+            qtTrId("tx-failure-no-inputs"),
+            //% "Address is expired"
+            qtTrId("tx-failure-addr-expired"),
+            //% "Failed to get transaction parameters"
+            qtTrId("tx-failure-parameters-not-readed"),
+            //% "Transaction timed out"
+            qtTrId("tx-failure-time-out"),
+            //% "Payment not signed by the receiver, please send wallet logs to Beam support"
+            qtTrId("tx-failure-not-signed-by-receiver"),
+            //% "Kernel maximum height is too high"
+            qtTrId("tx-failure-max-height-to-high"),
+            //% "Transaction has invalid state"
+            qtTrId("tx-failure-invalid-state"),
+            //% "Subtransaction has failed"
+            qtTrId("tx-failure-subtx-failed"),
+            //% "Contract's amount is not valid"
+            qtTrId("tx-failure-invalid-contract-amount"),
+            //% "Side chain has invalid contract"
+            qtTrId("tx-failure-invalid-sidechain-contract"),
+            //% "Side chain bridge has internal error"
+            qtTrId("tx-failure-sidechain-internal-error"),
+            //% "Side chain bridge has network error"
+            qtTrId("tx-failure-sidechain-network-error"),
+            //% "Side chain bridge has response format error"
+            qtTrId("tx-failure-invalid-sidechain-response-format"),
+            //% "Invalid credentials of Side chain"
+            qtTrId("tx-failure-invalid-side-chain-credentials"),
+            //% "Not enough time to finish btc lock transaction"
+            qtTrId("tx-failure-not-enough-time-btc-lock"),
+            //% "Failed to create multi-signature"
+            qtTrId("tx-failure-create-multisig"),
+            //% "Fee is too small"
+            qtTrId("tx-failure-fee-too-small"),
+            //% "Fee is too large"
+            qtTrId("tx-failure-fee-too-large"),
+            //% "Kernel's min height is unacceptable"
+            qtTrId("tx-failure-kernel-min-height"),
+            //% "Not a loopback transaction"
+            qtTrId("tx-failure-loopback"),
+            //% "Key keeper is not initialized"
+            qtTrId("tx-failure-key-keeper-no-initialized"),
+            //% "No valid asset id/asset owner id"
+            qtTrId("tx-failure-invalid-asset-id"),
+            //% "No asset info or asset info is not valid"
+            qtTrId("tx-failure-asset-invalid-info"),
+            //% "No asset metadata or asset metadata is not valid"
+            qtTrId("tx-failure-asset-invalid-metadata"),
+            //% "Invalid asset id"
+            qtTrId("tx-failure-asset-invalid-id"),
+            //% "Failed to receive asset confirmation"
+            qtTrId("tx-failure-asset-confirmation"),
+            //% "Asset is still in use (issued amount > 0)"
+            qtTrId("tx-failure-asset-in-use"),
+            //% "Asset is still locked"
+            qtTrId("tx-failure-asset-locked"),
+            //% "Asset registration fee is too small"
+            qtTrId("tx-failure-asset-small-fee"),
+            //% "Cannot issue/consume more than MAX_INT64 asset groth in one transaction"
+            qtTrId("tx-failure-invalid-asset-amount"),
+            //% "Some mandatory data for payment proof is missing"
+            qtTrId("tx-failure-invalid-data-for-payment-proof"),
+            //%  "Master key is needed for this transaction, but unavailable"
+            qtTrId("tx-failure-there-is-no-master-key"),
+            //% "Key keeper malfunctioned"
+            qtTrId("tx-failure-keeper-malfunctioned"),
+            //% "Aborted by the user"
+            qtTrId("tx-failure-aborted-by-user"),
+            //% "Asset has been already registered"
+            qtTrId("tx-failure-asset-exists"),
+            //% "Invalid asset owner id"
+            qtTrId("tx-failure-asset-invalid-owner-id"),
+            //% "Asset transactions are disabled in the wallet"
+            qtTrId("tx-failure-assets-disabled"),
+            //% "No voucher, no address to receive it"
+            qtTrId("tx-failure-no-vouchers"),
+            //% "Asset transactions are not available until fork2"
+            qtTrId("tx-failure-assets-fork2"),
+            //% "Key keeper out of slots"
+            qtTrId("tx-failure-out-of-slots"),
+            //% "Cannot extract shielded coin, fee is too big."
+            qtTrId("tx-failure-shielded-coin-fee"),
+            //% "Asset transactions are disabled in the receiver wallet"
+            qtTrId("tx-failure-assets-disabled-receiver"),
+            //% "Asset transactions are disabled in blockchain configuration"
+            qtTrId("tx-failure-assets-disabled-blockchain"),
+            //% "Peer wallet's signature required"
+            qtTrId("tx-failure-identity-required"),
+            //% "The sender cannot get vouchers for max privacy transaction"
+            qtTrId("tx-failure-cannot-get-vouchers")
+        };
+        // ensure QString
+        static_assert(std::is_same<decltype(reasons)::value_type, QString>::value);
+        // ensure that we have all reasons, otherwise it would be runtime crash
+        static_assert(std::tuple_size<decltype(reasons)>::value == static_cast<size_t>(beam::wallet::TxFailureReason::Count));
+
+        assert(reasons.size() > static_cast<size_t>(reason));
+        if (static_cast<size_t>(reason) >= reasons.size())
+        {
+            LOG_WARNING()  << "Unknown failure reason code " << reason << ". Defaulting to 0";
+            reason = beam::wallet::TxFailureReason::Unknown;
+        }
+
+        return reasons[reason];
     }
 
 }  // namespace beamui

@@ -10,6 +10,7 @@ AbstractTheme {
 		property AbstractTheme testnet: Testnet{}
 		property AbstractTheme mainnet: Mainnet{}
 		property AbstractTheme beamx: BeamX{}
+		property AbstractTheme dappnet: Dappnet{}
 	}
 
 	Component.onCompleted: {
