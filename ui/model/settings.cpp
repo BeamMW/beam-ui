@@ -774,7 +774,7 @@ QString WalletSettings::getDevAppMinApiVer() const
 
 uint32_t WalletSettings::getShadersPrivilegeLvl() const
 {
-    return m_data.value(kShadersPrivLvl).toUInt();
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
 }
 
 std::string WalletSettings::getDappStoreCID() const
