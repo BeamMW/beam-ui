@@ -89,21 +89,23 @@ Control {
     }
 
     readonly property real scrollContentHeight: {
-        return grid.implicitHeight + (showValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? 95 : 0)
+        return grid.implicitHeight + (control.showValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? 95 : 0)
     }
 
     readonly property real scrollViewHeight: {
         return control.hasScroll
             ? control.itemHeight * control.maxVisibleRows + control.vSpacing * (control.maxVisibleRows - 1)
-            : control.scrollContentHeight
+            : control.scrollContentHeight + assetsFilter.rowHeight
     }
 
-    topPadding: 50
     RowLayout {
+        id: assetsFilter
+        property int rowHeight: 50
         width: parent.width
         spacing: 0
 
         SFText {
+            Layout.leftMargin: 10
             Layout.fillWidth: true
 
             font {
@@ -177,6 +179,7 @@ Control {
         }
 
         SFText {
+            Layout.rightMargin: 10
             //% "All"
             text: qsTrId("wallet-all-assets-checkbox")
             color: showSelected ? Style.content_secondary : Style.active
@@ -186,6 +189,7 @@ Control {
 
     contentItem: ScrollView {
         id: scroll
+        topPadding: assetsFilter.rowHeight
 
         implicitHeight: control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -196,7 +200,7 @@ Control {
 
         Column {
             spacing: 10
-            height: grid.implicitHeight + (showValidationPromo ? 95 : 0)
+            height: grid.implicitHeight + (control.showValidationPromo ? 95 : 0)
             width: parent.width
             Grid {
                 id: grid
@@ -227,8 +231,8 @@ Control {
                         }
 
                         Item {
-                        Layout.fillWidth: true
-                        visible: control.assetsCount > 1
+                            Layout.fillWidth: true
+                            visible: control.assetsCount > 1
                         }
                     }
                 }
@@ -304,8 +308,8 @@ Control {
             }
 
             Row {
-                width:       parent.width - (showFaucetPromo ? 0 : 5)
-                visible:     showValidationPromo && (control.showFaucetPromo || control.assetsCount > 1)
+                width:       scroll.width - (control.showFaucetPromo ? 0 : 5)
+                visible:     control.showValidationPromo && (control.showFaucetPromo || control.assetsCount > 1)
 
                 SeedValidationPanel {
                     canHideValidationPromo: viewModel.canHideValidationPromo
@@ -313,7 +317,7 @@ Control {
                     onShowSeedValidationPromoOff: function() {
                         viewModel.showSeedValidationPromo = false
                     }
-                    showFaucetPromo: viewModel.showFaucetPromo
+                    showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
                 }
             }
         }
@@ -323,7 +327,7 @@ Control {
         width:       parent.width / 2 - 5
         leftPadding: itemWidth + 10
         topPadding:  50
-        visible:     showValidationPromo && !control.showFaucetPromo && control.assetsCount == 1
+        visible:     control.showValidationPromo && !control.showFaucetPromo && control.assetsCount == 1
 
         SeedValidationPanel {
             canHideValidationPromo: viewModel.canHideValidationPromo
@@ -331,7 +335,7 @@ Control {
             onShowSeedValidationPromoOff: function() {
                 viewModel.showSeedValidationPromo = false
             }
-            showFaucetPromo: viewModel.showFaucetPromo
+            showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
         }
     }
 }
