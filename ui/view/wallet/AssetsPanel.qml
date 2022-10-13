@@ -95,11 +95,12 @@ Control {
     readonly property real scrollViewHeight: {
         return control.hasScroll
             ? control.itemHeight * control.maxVisibleRows + control.vSpacing * (control.maxVisibleRows - 1)
-            : control.scrollContentHeight
+            : control.scrollContentHeight + assetsFilter.rowHeight
     }
 
-    topPadding: 50
     RowLayout {
+        id: assetsFilter
+        property int rowHeight: 50
         width: parent.width
         spacing: 0
 
@@ -188,6 +189,7 @@ Control {
 
     contentItem: ScrollView {
         id: scroll
+        topPadding: assetsFilter.rowHeight
 
         implicitHeight: control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -306,7 +308,7 @@ Control {
             }
 
             Row {
-                width:       parent.width - (control.showFaucetPromo ? 0 : 5)
+                width:       scroll.width - (control.showFaucetPromo ? 0 : 5)
                 visible:     control.showValidationPromo && (control.showFaucetPromo || control.assetsCount > 1)
 
                 SeedValidationPanel {
@@ -315,7 +317,7 @@ Control {
                     onShowSeedValidationPromoOff: function() {
                         viewModel.showSeedValidationPromo = false
                     }
-                    showFaucetPromo: control.showFaucetPromo
+                    showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
                 }
             }
         }
@@ -333,7 +335,7 @@ Control {
             onShowSeedValidationPromoOff: function() {
                 viewModel.showSeedValidationPromo = false
             }
-            showFaucetPromo: control.showFaucetPromo
+            showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
         }
     }
 }

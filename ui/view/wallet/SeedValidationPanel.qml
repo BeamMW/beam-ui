@@ -21,7 +21,7 @@ Panel {
     content: RowLayout {
         SFText {
             Layout.topMargin:    -22
-            Layout.fillWidth:    !(showFaucetPromo || control.assetsCount > 1)
+            Layout.fillWidth:    !showFaucetPromo
             horizontalAlignment: Text.AlignHCenter
             height: 32
             font.pixelSize:      14
@@ -33,7 +33,7 @@ Panel {
 
         SFText {
             Layout.topMargin:    -22
-            Layout.fillWidth:    !(showFaucetPromo || control.assetsCount > 1)
+            Layout.fillWidth:    !showFaucetPromo
             Layout.leftMargin:   10
             font.pixelSize:      14
             color:               Style.active
