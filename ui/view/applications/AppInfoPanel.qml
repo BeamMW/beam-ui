@@ -61,150 +61,148 @@ Pane {
         }
     ]
 
-    contentItem: Item {
-        ColumnLayout {
+    contentItem: ColumnLayout {
+        spacing: 0
+        clip:    folded
+        width: parent.width
+
+        RowLayout {
+            id: headerRow
+            Layout.alignment: Qt.AlignTop
+            Layout.fillWidth: true
             spacing: 0
-            clip:    folded
-            width: parent.width
+            Layout.leftMargin: 25
+            Layout.rightMargin: 25
 
-            RowLayout {
-                id: headerRow
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth: true
-                spacing: 0
-                Layout.leftMargin: 25
-                Layout.rightMargin: 25
+            TxFilter {
+                id: balanceTab
+                //% "Wallet Balance"
+                label: qsTrId("wallet-balance-title")
+                Layout.alignment: Qt.AlignVCenter
 
-                TxFilter {
-                    id: balanceTab
-                    //% "Wallet Balance"
-                    label: qsTrId("wallet-balance-title")
-                    Layout.alignment: Qt.AlignVCenter
+                onClicked: function () {
+                    if (control.folded || control.state == "balance") control.folded = !control.folded
+                    control.state = "balance"
+                }
 
+                showLed: false
+                opacity: (folded || this.state != "active") ? 0.5 : 1
+                activeColor: folded ? Style.content_main : Style.active
+                inactiveColor: Style.content_main
+
+                font {
+                    styleName:      "Bold"
+                    weight:         Font.Bold
+                    pixelSize:      14
+                    letterSpacing:  3.11
+                    capitalization: Font.AllUppercase
+                }
+            }
+
+            Item {
+                width: 25
+                Layout.fillHeight: true
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape:  folded ? Qt.PointingHandCursor : Qt.ArrowCursor
                     onClicked: function () {
-                        if (control.folded || control.state == "balance") control.folded = !control.folded
-                        control.state = "balance"
-                    }
-
-                    showLed: false
-                    opacity: (folded || this.state != "active") ? 0.5 : 1
-                    activeColor: folded ? Style.content_main : Style.active
-                    inactiveColor: Style.content_main
-
-                    font {
-                        styleName:      "Bold"
-                        weight:         Font.Bold
-                        pixelSize:      14
-                        letterSpacing:  3.11
-                        capitalization: Font.AllUppercase
-                    }
-                }
-
-                Item {
-                    width: 25
-                    Layout.fillHeight: true
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape:  folded ? Qt.PointingHandCursor : Qt.ArrowCursor
-                        onClicked: function () {
-                            if (control.folded) control.folded = !control.folded
-                        }
-                    }
-                }
-
-                TxFilter {
-                    id: txsTab
-                    label: (dappName ? dappName + " " : "") + qsTrId("wallet-transactions-title")
-                    Layout.alignment: Qt.AlignVCenter
-
-                    onClicked: function () {
-                        if (control.folded || control.state == "transactions") control.folded = !control.folded
-                        control.state = "transactions"
-                    }
-
-                    showLed: false
-                    opacity: (folded || this.state != "active") ? 0.5 : 1
-                    activeColor: folded ? Style.content_main : Style.active
-                    inactiveColor: Style.content_main
-
-                    font {
-                        styleName:      "Bold"
-                        weight:         Font.Bold
-                        pixelSize:      14
-                        letterSpacing:  3.11
-                        capitalization: Font.AllUppercase
-                    }
-                }
-
-                Item {
-                    width: 5
-                    Layout.fillHeight: true
-                    visible: txTip.length != 0
-                }
-
-                SFText {
-                    color:   Style.content_main
-                    text:    txTip
-                    visible: txTip.length != 0
-                    Layout.alignment: Qt.AlignVCenter
-
-                    font {
-                        styleName:      "Bold"
-                        weight:         Font.Bold
-                        pixelSize:      14
-                        letterSpacing:  0.35
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape:  Qt.PointingHandCursor
-                        onClicked: {
-                            control.state = "transactions"
-                            if (control.folded) control.folded = !control.folded
-                        }
-                    }
-                }
-
-                Item {
-                    Layout.fillHeight: true
-                    Layout.fillWidth:  true
-                }
-
-                SvgImage {
-                    id: arrow
-                    Layout.alignment:       Qt.AlignCenter
-                    Layout.maximumHeight:   8
-                    Layout.maximumWidth:    13
-                    source:                 control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
-                    transform: Rotation {
-                        angle: foldsUp ? 0 : 180
-                        origin.x: arrow.width/2
-                        origin.y: arrow.height/2
+                        if (control.folded) control.folded = !control.folded
                     }
                 }
             }
 
-            Control {
-                id:                     placeholder
-                Layout.fillWidth:       true
-                Layout.topMargin:       folded ? 0 : 20
-                Layout.alignment:       Qt.AlignTop
-                contentItem:            control.content
+            TxFilter {
+                id: txsTab
+                label: (dappName ? dappName + " " : "") + qsTrId("wallet-transactions-title")
+                Layout.alignment: Qt.AlignVCenter
 
-                opacity:                folded ? 0.0 : 1.0
-                Layout.preferredHeight: folded ? 0 : (control.state == "transactions" ? control.contentItemHeight :
-                                                      assetsList.scrollViewHeight + assetsList.vSpacing)
+                onClicked: function () {
+                    if (control.folded || control.state == "transactions") control.folded = !control.folded
+                    control.state = "transactions"
+                }
 
-                Behavior on Layout.preferredHeight {
-                    NumberAnimation { duration:  100 }
+                showLed: false
+                opacity: (folded || this.state != "active") ? 0.5 : 1
+                activeColor: folded ? Style.content_main : Style.active
+                inactiveColor: Style.content_main
+
+                font {
+                    styleName:      "Bold"
+                    weight:         Font.Bold
+                    pixelSize:      14
+                    letterSpacing:  3.11
+                    capitalization: Font.AllUppercase
                 }
-                Behavior on Layout.topMargin {
-                    NumberAnimation { duration:  100 }
+            }
+
+            Item {
+                width: 5
+                Layout.fillHeight: true
+                visible: txTip.length != 0
+            }
+
+            SFText {
+                color:   Style.content_main
+                text:    txTip
+                visible: txTip.length != 0
+                Layout.alignment: Qt.AlignVCenter
+
+                font {
+                    styleName:      "Bold"
+                    weight:         Font.Bold
+                    pixelSize:      14
+                    letterSpacing:  0.35
                 }
-                Behavior on opacity {
-                    NumberAnimation { duration:  200 }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape:  Qt.PointingHandCursor
+                    onClicked: {
+                        control.state = "transactions"
+                        if (control.folded) control.folded = !control.folded
+                    }
                 }
+            }
+
+            Item {
+                Layout.fillHeight: true
+                Layout.fillWidth:  true
+            }
+
+            SvgImage {
+                id: arrow
+                Layout.alignment:       Qt.AlignCenter
+                Layout.maximumHeight:   8
+                Layout.maximumWidth:    13
+                source:                 control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
+                transform: Rotation {
+                    angle: foldsUp ? 0 : 180
+                    origin.x: arrow.width/2
+                    origin.y: arrow.height/2
+                }
+            }
+        }
+
+        Control {
+            id:                     placeholder
+            Layout.fillWidth:       true
+            Layout.topMargin:       folded ? 0 : 20
+            Layout.alignment:       Qt.AlignTop
+            contentItem:            control.content
+
+            opacity:                folded ? 0.0 : 1.0
+            Layout.preferredHeight: folded ? 0 : (control.state == "transactions" ? control.contentItemHeight :
+                                                    assetsList.scrollViewHeight + assetsList.vSpacing)
+
+            Behavior on Layout.preferredHeight {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on Layout.topMargin {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on opacity {
+                NumberAnimation { duration:  200 }
             }
         }
     }
