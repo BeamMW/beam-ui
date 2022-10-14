@@ -192,8 +192,11 @@ Pane {
             contentItem:            control.content
 
             opacity:                folded ? 0.0 : 1.0
-            Layout.preferredHeight: folded ? 0 : (control.state == "transactions" ? control.contentItemHeight :
-                                                    assetsList.scrollViewHeight + assetsList.vSpacing)
+            Layout.preferredHeight: folded ? 0 : (control.state == "transactions" 
+                                                    ? control.contentItemHeight
+                                                    : assetsList.scrollViewHeight
+                                                      + assetsList.vSpacing
+                                                      + assetsList.assetsFilterRowHeight)
 
             Behavior on Layout.preferredHeight {
                 NumberAnimation { duration:  100 }
