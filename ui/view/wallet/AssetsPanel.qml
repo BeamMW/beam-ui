@@ -53,16 +53,15 @@ Control {
     property bool   showSelected:   false
     property bool   selectable:     true
 
+    property real   assetsFilterRowHeight: 50
+
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showSeedValidationPromo && !seedValidationHelper.isSeedValidated
 
     readonly property real itemWidth: {
+        var assetsCount = control.showSelected ? control.selectedIds.length : control.assetsCount
         if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         return 220
-    }
-
-    readonly property real connectWidth: {
-        return control.availableWidth - (control.itemWidth + control.hSpacing) * control.assetsCount
     }
 
     readonly property int gridColumns: {
@@ -78,7 +77,7 @@ Control {
     }
 
     readonly property int gridRows: {
-        var modelLength = control.assetsCount
+        var modelLength = control.showSelected ? control.selectedIds.length : control.assetsCount
         var gridCols    = control.gridColumns
         var rowsCnt     = Math.floor(modelLength / gridCols) + (modelLength % gridCols ? 1 : 0)
         return rowsCnt
@@ -95,12 +94,12 @@ Control {
     readonly property real scrollViewHeight: {
         return control.hasScroll
             ? control.itemHeight * control.maxVisibleRows + control.vSpacing * (control.maxVisibleRows - 1)
-            : control.scrollContentHeight + assetsFilter.rowHeight
+            : control.scrollContentHeight
     }
 
+    topPadding: assetsFilterRowHeight
     RowLayout {
         id: assetsFilter
-        property int rowHeight: 50
         width: parent.width
         spacing: 0
 
@@ -189,7 +188,6 @@ Control {
 
     contentItem: ScrollView {
         id: scroll
-        topPadding: assetsFilter.rowHeight
 
         implicitHeight: control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff

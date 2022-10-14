@@ -3565,7 +3565,7 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-drop-text">
-        <source>or jusr drop it here</source>
+        <source>or just drop it here</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-continue">
