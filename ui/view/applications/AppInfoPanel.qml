@@ -34,8 +34,6 @@ Pane {
         AssetsPanel {
             id: assetsList
             anchors.fill: parent
-            selectable: false
-            showSelected: false
             visible: control.state == "balance"
         }
     }
@@ -192,8 +190,10 @@ Pane {
             contentItem:            control.content
 
             opacity:                folded ? 0.0 : 1.0
-            Layout.preferredHeight: folded ? 0 : (control.state == "transactions" ? control.contentItemHeight :
-                                                    assetsList.scrollViewHeight + assetsList.vSpacing)
+            Layout.preferredHeight: folded ? 0 : (control.state == "transactions" 
+                                                    ? control.contentItemHeight
+                                                    : assetsList.scrollViewHeight
+                                                      + assetsList.assetsFilterRowHeight)
 
             Behavior on Layout.preferredHeight {
                 NumberAnimation { duration:  100 }

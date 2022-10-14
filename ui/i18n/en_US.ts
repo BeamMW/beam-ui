@@ -3559,8 +3559,8 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-drop-text">
-        <source>or jusr drop it here</source>
-        <translation type="unfinished"></translation>
+        <source>or just drop it here</source>
+        <translation>or just drop it here</translation>
     </message>
     <message id="general-continue">
         <source>continue</source>
