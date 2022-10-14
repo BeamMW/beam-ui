@@ -249,7 +249,7 @@ CustomDialog {
                             horizontalAlignment:  Text.AlignHCenter
                             font.pixelSize:       14
                             font.weight:          Font.Normal
-                                                  //% "or jusr drop it here"
+                                                  //% "or just drop it here"
                             text:                 qsTrId("dapps-store-drop-text")
                         }
                     }
