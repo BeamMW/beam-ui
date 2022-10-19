@@ -43,6 +43,11 @@ void DexOrdersModel::cancelOrder(QString orderId)
     _walletModel->getAsync()->cancelDexOrder(id);
 }
 
+void DexOrdersModel::updateAssets()
+{
+    _walletModel->getAsync()->loadFullAssetsList();
+}
+
 void DexOrdersModel::onDexOrdersChanged(
     beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& orders)
 {

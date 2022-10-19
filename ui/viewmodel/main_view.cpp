@@ -174,7 +174,7 @@ QString MainViewModel::getFaucetAppID() const
 
 QString MainViewModel::getEthBridgeAppID() const
 {
-    const std::string appName = "Bridges app";
+    std::string appName = "Bridges app";
     std::string appURL = "";
 
 #if defined(BEAM_TESTNET)

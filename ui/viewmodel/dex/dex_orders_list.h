@@ -53,6 +53,9 @@ public:
     [[nodiscard]] QHash<int, QByteArray> roleNames() const override;
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
 
+public slots:
+    void assetsListChanged();
+
 private:
     QLocale m_locale; // default
     AssetsManager::Ptr m_amgr;
