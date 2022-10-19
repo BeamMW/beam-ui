@@ -28,6 +28,7 @@ public:
 
     QAbstractItemModel* getOrders();
     Q_INVOKABLE void cancelOrder(QString orderId);
+    Q_INVOKABLE void updateAssets();
 
 signals:
     void ordersChanged();

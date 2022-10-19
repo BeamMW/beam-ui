@@ -82,6 +82,7 @@ signals:
     void addressChecked(const QString& addr, bool isValid);
     void functionPosted(const std::function<void()>&);
     void txHistoryExportedToCsv(const QString& data);
+    void fullAssetsListLoaded();
 
     #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -137,6 +138,7 @@ private:
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
     void onPublicAddress(const std::string& publicAddr) override;
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
+    void onFullAssetsListLoaded() override;
 
     #ifdef BEAM_IPFS_SUPPORT
     virtual void onIPFSStatus(bool running, const std::string& error, unsigned int peercnt) override;

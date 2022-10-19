@@ -40,7 +40,7 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
 
     _myCurrenciesList = _amgr->getAssetsList();
     _currenciesList = _amgr->getAssetsListFull();
-    if (_currenciesList.empty())
+    if (_currenciesList.size() <= 1)
     {
         _currenciesList = _myCurrenciesList;
     }

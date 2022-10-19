@@ -56,7 +56,12 @@ Item {
                     font.pixelSize: 12
 
                     onClicked: {
-                        assetsSwapStackView.push(Qt.createComponent("create_asset_swap.qml"), {"onClosed": assetsSwapLayout.onClosed});
+                        assetsSwapStackView.push(Qt.createComponent("create_asset_swap.qml"), {
+                            "onClosed": function() {
+                                    ordersModel.updateAssets();
+                                    assetsSwapLayout.onClosed();
+                                }
+                            });
                     }
                 }
             }
