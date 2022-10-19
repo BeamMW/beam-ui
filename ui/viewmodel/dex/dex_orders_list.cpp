@@ -23,6 +23,8 @@ DexOrdersList::DexOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
     , m_wallet(AppModel::getInstance().getWalletModel())
 {
+    connect(m_wallet.get(), &WalletModel::fullAssetsListLoaded, this, &DexOrdersList::assetsListChanged);
+    m_wallet->getAsync()->loadFullAssetsList();
 }
 
 QHash<int, QByteArray> DexOrdersList::roleNames() const
@@ -121,6 +123,9 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RCoins:
         {
+            if (!m_amgr->isKnownAsset(order.getSendAssetId()) || !m_amgr->isKnownAsset(order.getReceiveAssetId()))
+                m_wallet->getAsync()->loadFullAssetsList();
+
             QVariantMap res;
             res.insert("sendIcon", m_amgr->getIcon(order.getSendAssetId()));
             res.insert("receiveIcon", m_amgr->getIcon(order.getReceiveAssetId()));
@@ -157,4 +162,9 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     }
+}
+
+void DexOrdersList::assetsListChanged()
+{
+    emit layoutChanged();
 }

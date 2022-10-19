@@ -344,6 +344,11 @@ void WalletModel::onAssetInfo(beam::Asset::ID assetId, const beam::wallet::Walle
     emit assetInfoChanged(assetId, info);
 }
 
+void WalletModel::onFullAssetsListLoaded()
+{
+    emit fullAssetsListLoaded();
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;

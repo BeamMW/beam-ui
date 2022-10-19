@@ -465,3 +465,9 @@ bool AssetsManager::isVerified(beam::Asset::ID assetId) const
     }
     return false;
 }
+
+bool AssetsManager::isKnownAsset(beam::Asset::ID assetId) const
+{
+    const auto assets = _wallet->getAssetsFull();
+    return assets.find(assetId) != assets.end();
+}
