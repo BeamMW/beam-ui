@@ -174,7 +174,7 @@ QString MainViewModel::getFaucetAppID() const
 
 QString MainViewModel::getEthBridgeAppID() const
 {
-    const std::string appName = "Bridge app";
+    std::string appName = "Bridges app";
     std::string appURL = "";
 
 #if defined(BEAM_TESTNET)
@@ -184,6 +184,7 @@ QString MainViewModel::getEthBridgeAppID() const
 #elif defined(BEAM_DAPPNET)
     appURL = "http://3.16.160.95:80/app/beam-bridge-app/index.html";
 #else
+    appName = "Bridge app";
     appURL = "http://3.19.141.112:80/app/beam-bridge-app/index.html";
 #endif
 
