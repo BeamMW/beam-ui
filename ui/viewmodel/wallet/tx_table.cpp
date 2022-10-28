@@ -44,8 +44,12 @@ TxTableViewModel::TxTableViewModel()
 {
     connect(_model.get(), SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(_model.get(), SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
     connect(_model.get(), SIGNAL(atomicSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAtomicSwapTxHistoryExportedToCsv(const QString&)));
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+#ifdef BEAM_ASSET_SWAP_SUPPORT
     connect(_model.get(), SIGNAL(assetsSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAssetsSwapTxHistoryExportedToCsv(const QString&)));
+#endif  // BEAM_ASSET_SWAP_SUPPORT
     connect(_model.get(), SIGNAL(contractTxHistoryExportedToCsv(const QString&)), this, SLOT(onContractTxHistoryExportedToCsv(const QString&)));
     connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
     connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
@@ -83,13 +87,18 @@ void TxTableViewModel::onTxHistoryExportedToCsv(const QString& data)
     _txHistoryData = data;
 
     if (_txHistoryData.isEmpty() ||
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
         _atomicSwapTxHistoryData.isEmpty() ||
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+#ifdef BEAM_ASSET_SWAP_SUPPORT
         _assetsSwapTxHistoryData.isEmpty() ||
+#endif  // BEAM_ASSET_SWAP_SUPPORT
         _contractTxHistoryData.isEmpty() ) return;
 
     writeArchiveWithExportedTxData();
 }
 
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
 void TxTableViewModel::onAtomicSwapTxHistoryExportedToCsv(const QString& data)
 {
     if (_txHistoryToCsvPaths.isEmpty()) return;
@@ -98,12 +107,16 @@ void TxTableViewModel::onAtomicSwapTxHistoryExportedToCsv(const QString& data)
 
     if (_txHistoryData.isEmpty() ||
         _atomicSwapTxHistoryData.isEmpty() ||
+#ifdef BEAM_ASSET_SWAP_SUPPORT
         _assetsSwapTxHistoryData.isEmpty() ||
+#endif  // BEAM_ASSET_SWAP_SUPPORT
         _contractTxHistoryData.isEmpty() ) return;
 
     writeArchiveWithExportedTxData();
 }
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
 void TxTableViewModel::onAssetsSwapTxHistoryExportedToCsv(const QString& data)
 {
     if (_txHistoryToCsvPaths.isEmpty()) return;
@@ -111,12 +124,15 @@ void TxTableViewModel::onAssetsSwapTxHistoryExportedToCsv(const QString& data)
     _assetsSwapTxHistoryData = data;
 
     if (_txHistoryData.isEmpty() ||
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
         _atomicSwapTxHistoryData.isEmpty() ||
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
         _assetsSwapTxHistoryData.isEmpty() ||
         _contractTxHistoryData.isEmpty() ) return;
 
     writeArchiveWithExportedTxData();
 }
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
 void TxTableViewModel::onContractTxHistoryExportedToCsv(const QString& data)
 {
@@ -125,8 +141,12 @@ void TxTableViewModel::onContractTxHistoryExportedToCsv(const QString& data)
     _contractTxHistoryData = data;
 
     if (_txHistoryData.isEmpty() ||
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
         _atomicSwapTxHistoryData.isEmpty() ||
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+#ifdef BEAM_ASSET_SWAP_SUPPORT
         _assetsSwapTxHistoryData.isEmpty() ||
+#endif  // BEAM_ASSET_SWAP_SUPPORT
         _contractTxHistoryData.isEmpty() ) return;
 
     writeArchiveWithExportedTxData();
