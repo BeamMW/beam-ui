@@ -82,6 +82,10 @@ signals:
     void addressChecked(const QString& addr, bool isValid);
     void functionPosted(const std::function<void()>&);
     void txHistoryExportedToCsv(const QString& data);
+    void atomicSwapTxHistoryExportedToCsv(const QString& data);
+    void assetsSwapTxHistoryExportedToCsv(const QString& data);
+    void contractTxHistoryExportedToCsv(const QString& data);
+
     void fullAssetsListLoaded();
 
     #if defined(BEAM_HW_WALLET)
@@ -133,6 +137,9 @@ private:
     void onImportDataFromJson(bool isOk) override;
     void onExportDataToJson(const std::string& data) override;
     void onExportTxHistoryToCsv(const std::string& data) override;
+    void onExportAtomicSwapTxHistoryToCsv(const std::string& data) override;
+    void onExportAssetsSwapTxHistoryToCsv(const std::string& data) override;
+    void onExportContractTxHistoryToCsv(const std::string& data) override;
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
     void onVerificationInfo(const std::vector<beam::wallet::VerificationInfo>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;

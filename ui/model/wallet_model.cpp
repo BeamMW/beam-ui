@@ -272,6 +272,21 @@ void WalletModel::onExportTxHistoryToCsv(const std::string& data)
     emit txHistoryExportedToCsv(QString::fromStdString(data));
 }
 
+void WalletModel::onExportAtomicSwapTxHistoryToCsv(const std::string& data)
+{
+    emit atomicSwapTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+
+void WalletModel::onExportAssetsSwapTxHistoryToCsv(const std::string& data)
+{
+    emit assetsSwapTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+
+void WalletModel::onExportContractTxHistoryToCsv(const std::string& data)
+{
+    emit contractTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+
 void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
 {
     emit nodeConnectionChanged(isNodeConnected);

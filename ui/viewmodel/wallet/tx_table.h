@@ -56,6 +56,9 @@ public:
 
 public slots:
     void onTxHistoryExportedToCsv(const QString& data);
+    void onAtomicSwapTxHistoryExportedToCsv(const QString& data);
+    void onAssetsSwapTxHistoryExportedToCsv(const QString& data);
+    void onContractTxHistoryExportedToCsv(const QString& data);
     void onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items);
 
 signals:
@@ -68,6 +71,8 @@ signals:
     void showAllChanged();
 
 private:
+    void writeArchiveWithExportedTxData();
+
     WalletModel::Ptr     _model;
     QQueue<QString>      _txHistoryToCsvPaths;
     TxObjectList         _transactionsList;
@@ -79,4 +84,9 @@ private:
     bool _showCompleted = true;
     bool _showCanceled = true;
     bool _showFailed = true;
+
+    QString _txHistoryData;
+    QString _atomicSwapTxHistoryData;
+    QString _assetsSwapTxHistoryData;
+    QString _contractTxHistoryData;
 };

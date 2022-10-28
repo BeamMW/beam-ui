@@ -19,12 +19,22 @@
 #include <QTextCodec>
 #include <vector>
 #include "model/app_model.h"
+#include "quazip/quazip.h"
+#include "quazip/quazipfile.h"
 
 namespace
 {
     const char kTxHistoryFileNamePrefix[] = "transactions_history_";
-    const char kTxHistoryFileFormatDesc[] = "Comma-Separated Values (*.csv)";
+    const char kTxHistoryFileFormatDesc[] = "Zip Archive (*.zip)";
     const char kTxHistoryFileNameFormat[] = "yyyy_MM_dd_HH_mm_ss";
+
+    void writeZipFile(QuaZipFile& zipFile, const QString& data)
+    {
+        QTextCodec *codec = QTextCodec::codecForName("UTF8");
+        QTextStream out(&zipFile);
+        out.setCodec(codec);
+        out << data;
+    }
 }
 
 TxTableViewModel::TxTableViewModel()
@@ -34,6 +44,9 @@ TxTableViewModel::TxTableViewModel()
 {
     connect(_model.get(), SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
     connect(_model.get(), SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
+    connect(_model.get(), SIGNAL(atomicSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAtomicSwapTxHistoryExportedToCsv(const QString&)));
+    connect(_model.get(), SIGNAL(assetsSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAssetsSwapTxHistoryExportedToCsv(const QString&)));
+    connect(_model.get(), SIGNAL(contractTxHistoryExportedToCsv(const QString&)), this, SLOT(onContractTxHistoryExportedToCsv(const QString&)));
     connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
     connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
 
@@ -65,18 +78,58 @@ void TxTableViewModel::exportTxHistoryToCsv()
 
 void TxTableViewModel::onTxHistoryExportedToCsv(const QString& data)
 {
-    if (!_txHistoryToCsvPaths.isEmpty())
-    {
-        const auto& path = _txHistoryToCsvPaths.dequeue();
-        QFile file(path);
-        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            QTextCodec *codec = QTextCodec::codecForName("UTF8");
-            QTextStream out(&file);
-            out.setCodec(codec);
-            out << data;
-        }
-    }
+    if (_txHistoryToCsvPaths.isEmpty()) return;
+
+    _txHistoryData = data;
+
+    if (_txHistoryData.isEmpty() ||
+        _atomicSwapTxHistoryData.isEmpty() ||
+        _assetsSwapTxHistoryData.isEmpty() ||
+        _contractTxHistoryData.isEmpty() ) return;
+
+    writeArchiveWithExportedTxData();
+}
+
+void TxTableViewModel::onAtomicSwapTxHistoryExportedToCsv(const QString& data)
+{
+    if (_txHistoryToCsvPaths.isEmpty()) return;
+
+    _atomicSwapTxHistoryData = data;
+
+    if (_txHistoryData.isEmpty() ||
+        _atomicSwapTxHistoryData.isEmpty() ||
+        _assetsSwapTxHistoryData.isEmpty() ||
+        _contractTxHistoryData.isEmpty() ) return;
+
+    writeArchiveWithExportedTxData();
+}
+
+void TxTableViewModel::onAssetsSwapTxHistoryExportedToCsv(const QString& data)
+{
+    if (_txHistoryToCsvPaths.isEmpty()) return;
+
+    _assetsSwapTxHistoryData = data;
+
+    if (_txHistoryData.isEmpty() ||
+        _atomicSwapTxHistoryData.isEmpty() ||
+        _assetsSwapTxHistoryData.isEmpty() ||
+        _contractTxHistoryData.isEmpty() ) return;
+
+    writeArchiveWithExportedTxData();
+}
+
+void TxTableViewModel::onContractTxHistoryExportedToCsv(const QString& data)
+{
+    if (_txHistoryToCsvPaths.isEmpty()) return;
+
+    _contractTxHistoryData = data;
+
+    if (_txHistoryData.isEmpty() ||
+        _atomicSwapTxHistoryData.isEmpty() ||
+        _assetsSwapTxHistoryData.isEmpty() ||
+        _contractTxHistoryData.isEmpty() ) return;
+
+    writeArchiveWithExportedTxData();
 }
 
 QAbstractItemModel* TxTableViewModel::getTransactions()
@@ -256,4 +309,39 @@ PaymentInfoItem* TxTableViewModel::getPaymentInfo(const QVariant& variantTxID)
         return new MyPaymentInfoItem(txId, this);
     }
     else return Q_NULLPTR;
+}
+
+void TxTableViewModel::writeArchiveWithExportedTxData()
+{
+    const auto& path = _txHistoryToCsvPaths.dequeue();
+    QFile file(path);
+
+    QuaZip zip(file.fileName());
+    zip.open(QuaZip::mdCreate);
+
+    QuaZipFile zipFile(&zip);
+
+    if (zipFile.open(QIODevice::WriteOnly, QuaZipNewInfo("transactions.csv")))
+    {
+        writeZipFile(zipFile, _txHistoryData);
+        zipFile.close();
+    }
+
+    if (zipFile.open(QIODevice::WriteOnly, QuaZipNewInfo("atomic_swap_transactions.csv")))
+    {
+        writeZipFile(zipFile, _atomicSwapTxHistoryData);
+        zipFile.close();
+    }
+
+    if (zipFile.open(QIODevice::WriteOnly, QuaZipNewInfo("assets_swap_transactions.csv")))
+    {
+        writeZipFile(zipFile, _assetsSwapTxHistoryData);
+        zipFile.close();
+    }
+
+    if (zipFile.open(QIODevice::WriteOnly, QuaZipNewInfo("contracts_transactions.csv")))
+    {
+        writeZipFile(zipFile, _contractTxHistoryData);
+        zipFile.close();
+    }
 }
