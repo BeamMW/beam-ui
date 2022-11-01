@@ -14,7 +14,7 @@ Window {
 
     function setMinMax () {
         var wlimit = appWindow.screen.width
-        var hlimit = appWindow.screen.height - 80
+        var hlimit = appWindow.screen.height
         var wmin = Math.min(1024, wlimit)
         var hmin = Math.min(852, hlimit)
 
