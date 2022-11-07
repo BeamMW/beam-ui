@@ -393,9 +393,10 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
 
     beam::wallet::Currency assetCurr(assetId);
     const bool isBEAM = assetId == beam::Asset::s_BeamID;
-
+    auto unitName = getUnitName(assetId, AssetsManager::NoShorten);
     asset.insert("isBEAM",     isBEAM);
-    asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
+    asset.insert("unitName",   unitName);
+    asset.insert("unitNameWithId", isBEAM ? unitName : QString("%1 <font color='#8da1ad'>(%2)</font>").arg(unitName).arg(assetId));
     asset.insert("rate",       beamui::AmountToUIString(_rates->getRate(assetCurr)));
     asset.insert("rateUnit",   getRateUnit());
     asset.insert("assetId",    static_cast<int>(assetId));
