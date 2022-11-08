@@ -21,7 +21,9 @@ ColumnLayout {
     readonly property bool     isValid: error.length == 0
 
     property int                currencyIdx:   currCombo.currentIndex
-    readonly property string    currencyUnit:  currencies[currencyIdx].unitName
+    readonly property string    currencyUnitNoId:  currencies[currencyIdx].unitName
+    readonly property string    currencyUnit:  currencies[currencyIdx].unitName + 
+                                    ((currencies[currencyIdx].assetId > 0) ? " (%1)".arg(currencies[currencyIdx].assetId) : "")
     readonly property bool      isBeam:        !!currencies[currencyIdx].isBEAM
 
     property string   rate:     currencies[currencyIdx].rate
@@ -37,7 +39,7 @@ ColumnLayout {
     property bool     readOnlyA:    false
     property bool     resetAmount:  true
     property var      amountInput:  ainput
-    property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnit
+    property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnitNoId
     readonly property bool isExchangeRateAvailable: control.rate != "0"
 
     SFText {
@@ -129,7 +131,7 @@ ColumnLayout {
                 enabled:             multi
                 colorConst:          true
                 model:               control.currencies
-                textRole:            "unitName"
+                textRole:            "unitNameWithId"
                 textMaxLenDrop:      10
                 enableScroll:        true
                 showBackground:      false
