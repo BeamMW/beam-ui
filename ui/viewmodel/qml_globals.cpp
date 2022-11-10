@@ -91,8 +91,7 @@ namespace
         std::string str = s.toStdString();
 
         if (str.find(",") == std::string::npos) return str;
-        
-        std::remove(str.begin(), str.end(), ',');
+
         str.erase(std::remove(str.begin(), str.end(), ','), str.end());
         return str;
     }
