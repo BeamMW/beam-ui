@@ -75,7 +75,7 @@ ComboBox {
             spacing: 0
             property int parentHeight: 0
 
-            visible: (Array.isArray(control.model) ? containSearchSubStr(modelData[control.textRole]) : containSearchSubStr(model[control.textRole]))
+            visible: (Array.isArray(control.model) ? containSearchSubStr(modelData[control.textRole]) && modelData["allowed"] : containSearchSubStr(model[control.textRole]) && model["allowed"])
             onVisibleChanged: {
                 parent.height = visible ? parentHeight : 0;
             }

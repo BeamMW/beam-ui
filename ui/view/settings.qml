@@ -135,6 +135,11 @@ ColumnLayout {
                     viewModel: viewModel
                 }
 
+                SettingsCA {
+                    id: caBlock
+                    viewModel: viewModel
+                }
+
                 SettingsTitle {
                     topPadding: 30
                     //% "Troubleshooting"

@@ -3839,5 +3839,13 @@ Please, restart the wallet and try again.</source>
         <source>Asset swap fee</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-ca">
+        <source>Confidential assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-ca-descr">
+        <source>Confidential assets allowed to receive</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

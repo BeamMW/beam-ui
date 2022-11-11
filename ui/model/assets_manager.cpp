@@ -14,6 +14,10 @@
 #include "assets_manager.h"
 #include "viewmodel/ui_helpers.h"
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+#include "model/app_model.h"
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
 namespace
 {
     const unsigned char ACAlpha = 252;
@@ -405,7 +409,9 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     asset.insert("iconHeight", 22);
     asset.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
     asset.insert("verified",   isVerified(assetId));
-    
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    asset.insert("allowed", _allowedAssets.contains(assetId));
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
     return asset;
 }
@@ -413,6 +419,10 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsListFull()
 {
     const auto assets = _wallet->getAssetsFull();
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    auto& settings = AppModel::getInstance().getSettings();
+    _allowedAssets = settings.getAllowedAssets();
+#endif  // BEAM_ASSET_SWAP_SUPPORT
     QList<QMap<QString, QVariant>> result;
 
     for(auto assetId: assets)
