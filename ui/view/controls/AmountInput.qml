@@ -41,6 +41,7 @@ ColumnLayout {
     property var      amountInput:  ainput
     property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnitNoId
     readonly property bool isExchangeRateAvailable: control.rate != "0"
+    property alias    filterAssets: currCombo.filterAssets
 
     SFText {
         font.pixelSize:   14

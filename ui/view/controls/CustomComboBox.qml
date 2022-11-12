@@ -40,6 +40,7 @@ ComboBox {
     backgroundColor: Style.content_main
     property string searchPlaseholder: ""
     property alias searchText: searchInput.text
+    property bool filterAssets: false
 
     TextMetrics {
         id: textMetrics
@@ -74,8 +75,15 @@ ComboBox {
             id: contentRow
             spacing: 0
             property int parentHeight: 0
+            property bool showRow: control.filterAssets
+                ? ((Array.isArray(control.model) 
+                    ? containSearchSubStr(modelData[control.textRole]) && modelData["allowed"] 
+                    : containSearchSubStr(model[control.textRole]) && model["allowed"]))
+                : ((Array.isArray(control.model) 
+                    ? containSearchSubStr(modelData[control.textRole])
+                    : containSearchSubStr(model[control.textRole])))
 
-            visible: (Array.isArray(control.model) ? containSearchSubStr(modelData[control.textRole]) && modelData["allowed"] : containSearchSubStr(model[control.textRole]) && model["allowed"])
+            visible: showRow
             onVisibleChanged: {
                 parent.height = visible ? parentHeight : 0;
             }

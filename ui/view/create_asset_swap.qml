@@ -215,6 +215,7 @@ ColumnLayout {
                             multi:                      true
                             resetAmount:                false
                             currColor:                  Style.content_main
+                            filterAssets:               true
                             error: {
                                 if (viewModel.isAssetsSame)
                                 {
