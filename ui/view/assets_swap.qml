@@ -25,26 +25,6 @@ Item {
         z: 33
     }
 
-    SFText {
-        x: 90
-        y: 61
-        z: 42
-        font.pixelSize: 14
-        color: Style.active
-        visible: control.showText
-        //% "Assets settings"
-        text: qsTrId("assets-settings")
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                main.openSettings("CA");
-            }
-            hoverEnabled: true
-        }
-    }
-
     Component {
         id: assetsSwapComponent
 
@@ -86,9 +66,29 @@ Item {
                 }
             }
 
+            SFText {
+                z: 42
+                Layout.leftMargin: 90
+                Layout.topMargin: 25
+                font.pixelSize: 14
+                color: Style.active
+                visible: control.showText
+                //% "Assets settings"
+                text: qsTrId("assets-settings")
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        main.openSettings("CA");
+                    }
+                    hoverEnabled: true
+                }
+            }
+
             AssetsPanel {
                 id: assets
-                Layout.topMargin: 25
+                Layout.topMargin: -19
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
 
