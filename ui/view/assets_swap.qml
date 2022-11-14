@@ -25,6 +25,26 @@ Item {
         z: 33
     }
 
+    SFText {
+        x: 90
+        y: 61
+        z: 42
+        font.pixelSize: 14
+        color: Style.active
+        visible: control.showText
+        //% "Assets settings"
+        text: qsTrId("assets-settings")
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                main.openSettings("CA");
+            }
+            hoverEnabled: true
+        }
+    }
+
     Component {
         id: assetsSwapComponent
 

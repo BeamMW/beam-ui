@@ -138,6 +138,7 @@ ColumnLayout {
                 SettingsCA {
                     id: caBlock
                     viewModel: viewModel
+                    folded: unfoldSection != "CA"
                 }
 
                 SettingsTitle {

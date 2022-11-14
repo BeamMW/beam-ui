@@ -3866,5 +3866,9 @@ Please, restart the wallet and try again.</source>
         <source>Confidential assets allowed to receive</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="assets-settings">
+        <source>Assets settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
