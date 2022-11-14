@@ -411,6 +411,10 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     asset.insert("verified",   isVerified(assetId));
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     asset.insert("allowed", _allowedAssets.contains(assetId));
+    if (assetId)
+    {
+        asset.insert("emission", beamui::AmountBigToUIString(_info[assetId].first->m_Value));
+    }
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 
     return asset;

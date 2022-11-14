@@ -76,6 +76,17 @@ SettingsFoldable {
                     }
                 }
                 Item {
+                    Layout.alignment: Qt.AlignLeft
+                    height: 16
+                    SFText {
+                        text: modelData["emission"]
+                        font.pixelSize: 12
+                        color: Style.content_secondary
+                        height: parent.height
+                        width: parent.width
+                    }
+                }
+                Item {
                     Layout.fillWidth: true
                     height: 16
                 }
