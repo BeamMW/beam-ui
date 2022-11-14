@@ -64,6 +64,7 @@
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
         <file>controls/SettingsFoldable.qml</file>
+        <file>controls/SettingsCA.qml</file>
         <file>controls/SettingsGeneral.qml</file>
         <file>controls/SettingsNotifications.qml</file>
         <file>controls/SettingsUtilities.qml</file>
@@ -141,6 +142,7 @@
         <file>send_regular.qml</file>
         <file>send_swap.qml</file>
         <file>send_confirm.qml</file>
+        <file>assets_swap_confirm.qml</file>
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
         <file>assets/fonts/Proxima Nova Black Italic.otf</file>
@@ -413,6 +415,7 @@
         <file>assets/dapp-loading.svg</file>
         <file>assets/icon-verified-asset.svg</file>
         <file>assets/asset-beamx.svg</file>
+        <file>assets/asset-nephrite.svg</file>
         <file>assets/icon-refresh.svg</file>
         <file>assets/icon-help.svg</file>
         <file>assets/icon-help-active.svg</file>
@@ -426,5 +429,7 @@
         <file>assets/icon-no-transaction-filter.svg</file>
         <file>assets/icon-offer-cancel.svg</file>
         <file>assets/icon-offer-accept.svg</file>
+		<file>assets/icon-bridge.svg</file>
+		<file>assets/icon-bridge-active.svg</file>
     </qresource>
 </RCC>

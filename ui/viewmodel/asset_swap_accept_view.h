@@ -30,13 +30,13 @@ class AssetSwapAcceptViewModel: public QObject
     Q_PROPERTY(QString comment           READ getComment           WRITE   setComment   NOTIFY  commentChanged)
     Q_PROPERTY(QString rate              READ getRate              NOTIFY  orderChanged)
     Q_PROPERTY(QString orderId           READ getOrderId           WRITE   setOrderId)
-    Q_PROPERTY(QString fee               READ getFee               NOTIFY  orderChanged)
 
     Q_PROPERTY(QList<QMap<QString, QVariant>> sendCurrencies       READ getSendCurrencies     NOTIFY  orderChanged)
     Q_PROPERTY(QList<QMap<QString, QVariant>> receiveCurrencies    READ getReceiveCurrencies  NOTIFY  orderChanged)
 
     Q_PROPERTY(bool    canAccept         READ getCanAccept                                    NOTIFY  orderChanged)
     Q_PROPERTY(bool    isEnough          READ getIsEnough                                     NOTIFY  orderChanged)
+    Q_PROPERTY(bool    isFeeEnough       READ getIsFeeEnough                                  NOTIFY  orderChanged)
     Q_PROPERTY(QString maxSendAmount     READ getMaxSendAmount                                NOTIFY  orderChanged)
     Q_PROPERTY(bool    isAssetsSame      READ getIsAssetsSame                                 NOTIFY  orderChanged)
     Q_PROPERTY(bool    commentValid      READ getCommentValid                                 NOTIFY  commentValidChanged)
@@ -75,6 +75,7 @@ class AssetSwapAcceptViewModel: public QObject
 
     bool getCanAccept() const;
     bool getIsEnough() const;
+    bool getIsFeeEnough() const;
     QString getMaxSendAmount() const;
     bool getIsAssetsSame() const;
     bool getCommentValid() const;
@@ -98,6 +99,7 @@ class AssetSwapAcceptViewModel: public QObject
     QString          _errorStr;
     bool             _canAccept = false;
     bool             _isEnoughtToSend = false;
+    bool             _isFeeEnoughtToSend = false;
     beam::Amount     _maxAmountToSendGrothes = 0;
     beam::Amount     _fee = 100000;
   

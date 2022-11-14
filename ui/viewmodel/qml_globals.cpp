@@ -85,6 +85,16 @@ namespace
                 return beamui::Currencies::Unknown;
         }
     }
+
+    std::string trimCommas(const QString& s)
+    {
+        std::string str = s.toStdString();
+
+        if (str.find(",") == std::string::npos) return str;
+
+        str.erase(std::remove(str.begin(), str.end(), ','), str.end());
+        return str;
+    }
 }
 
 QMLGlobals::QMLGlobals(QQmlEngine& engine)
@@ -233,7 +243,7 @@ QString QMLGlobals::roundUp(QString amount)
         const auto targetDecimals = amount.length() - point - 2;
         const cpp_dec_float_50 scale = pow(cpp_dec_float_50(10), targetDecimals);
 
-        const cpp_dec_float_50 original(amount.toStdString().c_str());
+        const cpp_dec_float_50 original(trimCommas(amount).c_str());
         const cpp_dec_float_50 rounded = ceil(original * scale) / scale;
 
         auto roundedStr = rounded.str(targetDecimals, std::ios_base::fixed);
@@ -438,8 +448,11 @@ QString QMLGlobals::divideWithPrecision(const QString& dividend, const QString& 
 
 QString QMLGlobals::multiplyWithPrecision(const QString& first, const QString& second, uint precision)
 {
-    cpp_dec_float_50 dec_first(first.toStdString().c_str());
-    cpp_dec_float_50 dec_second(second.toStdString().c_str());
+    std::string firstS = trimCommas(first);
+    std::string secondS = trimCommas(second);
+
+    cpp_dec_float_50 dec_first(firstS.c_str());
+    cpp_dec_float_50 dec_second(secondS.c_str());
 
     cpp_dec_float_50 product = dec_first * dec_second;
 

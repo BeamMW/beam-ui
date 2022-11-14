@@ -72,6 +72,10 @@ namespace
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    const char* kAllowedAssets = "assets/allowed";
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
     const std::map<QString, QString> kSupportedLangs { 
         { "zh_CN", "Chinese Simplified"},
         { "en_US", "English" },
@@ -774,7 +778,7 @@ QString WalletSettings::getDevAppMinApiVer() const
 
 uint32_t WalletSettings::getShadersPrivilegeLvl() const
 {
-    return m_data.value(kShadersPrivLvl).toUInt();
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
 }
 
 std::string WalletSettings::getDappStoreCID() const
@@ -1004,6 +1008,60 @@ WalletSettings::IPFSLaunch WalletSettings::getIPFSNodeLaunch() const
     return IPFSLaunch::Never;
 }
 #endif
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+QVector<beam::Asset::ID> WalletSettings::getAllowedAssets() const
+{
+    if (!m_allowedAssets.empty()) return m_allowedAssets;
+
+    Lock lock(m_mutex);
+
+    auto ser = m_data.value(kAllowedAssets).value<QByteArray>();
+    QDataStream in(&ser, QIODevice::ReadOnly);
+    in >> m_allowedAssets;
+
+    if (m_allowedAssets.empty())
+    {
+#ifdef BEAM_MAINNET
+        m_allowedAssets = {0, 7};
+#else
+        for (int i = 0; i <100; ++i)
+            m_allowedAssets.push_back(i);
+#endif
+    }
+
+    return m_allowedAssets;
+}
+
+void WalletSettings::addAllowedAsset(beam::Asset::ID asset)
+{
+    Lock lock(m_mutex);
+
+    if (m_allowedAssets.contains(asset)) return;
+
+    m_allowedAssets.push_back(asset);
+    QByteArray ser;
+    QDataStream out(&ser, QIODevice::WriteOnly);
+    out << m_allowedAssets;
+
+    m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
+}
+
+void WalletSettings::removeAllowedAsset(beam::Asset::ID asset)
+{
+    Lock lock(m_mutex);
+
+    if (m_allowedAssets.contains(asset))
+    {
+        m_allowedAssets.removeOne(asset);
+        QByteArray ser;
+        QDataStream out(&ser, QIODevice::WriteOnly);
+        out << m_allowedAssets;
+
+        m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
+    }
+}
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
 int WalletSettings::getAppsServerPort() const
 {

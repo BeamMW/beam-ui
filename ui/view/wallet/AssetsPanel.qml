@@ -53,16 +53,15 @@ Control {
     property bool   showSelected:   false
     property bool   selectable:     true
 
+    property real   assetsFilterRowHeight: 50
+
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showSeedValidationPromo && !seedValidationHelper.isSeedValidated
 
     readonly property real itemWidth: {
+        var assetsCount = control.showSelected ? control.selectedIds.length : control.assetsCount
         if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         return 220
-    }
-
-    readonly property real connectWidth: {
-        return control.availableWidth - (control.itemWidth + control.hSpacing) * control.assetsCount
     }
 
     readonly property int gridColumns: {
@@ -78,7 +77,7 @@ Control {
     }
 
     readonly property int gridRows: {
-        var modelLength = control.assetsCount
+        var modelLength = control.showSelected ? control.selectedIds.length : control.assetsCount
         var gridCols    = control.gridColumns
         var rowsCnt     = Math.floor(modelLength / gridCols) + (modelLength % gridCols ? 1 : 0)
         return rowsCnt
@@ -89,7 +88,7 @@ Control {
     }
 
     readonly property real scrollContentHeight: {
-        return grid.implicitHeight + (showValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? 95 : 0)
+        return grid.implicitHeight + (control.showValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? 95 : 0)
     }
 
     readonly property real scrollViewHeight: {
@@ -98,12 +97,14 @@ Control {
             : control.scrollContentHeight
     }
 
-    topPadding: 50
+    topPadding: assetsFilterRowHeight
     RowLayout {
+        id: assetsFilter
         width: parent.width
         spacing: 0
 
         SFText {
+            Layout.leftMargin: 10
             Layout.fillWidth: true
 
             font {
@@ -177,6 +178,7 @@ Control {
         }
 
         SFText {
+            Layout.rightMargin: 10
             //% "All"
             text: qsTrId("wallet-all-assets-checkbox")
             color: showSelected ? Style.content_secondary : Style.active
@@ -196,7 +198,7 @@ Control {
 
         Column {
             spacing: 10
-            height: grid.implicitHeight + (showValidationPromo ? 95 : 0)
+            height: grid.implicitHeight + (control.showValidationPromo ? 95 : 0)
             width: parent.width
             Grid {
                 id: grid
@@ -227,8 +229,8 @@ Control {
                         }
 
                         Item {
-                        Layout.fillWidth: true
-                        visible: control.assetsCount > 1
+                            Layout.fillWidth: true
+                            visible: control.assetsCount > 1
                         }
                     }
                 }
@@ -304,8 +306,8 @@ Control {
             }
 
             Row {
-                width:       parent.width - (showFaucetPromo ? 0 : 5)
-                visible:     showValidationPromo && (control.showFaucetPromo || control.assetsCount > 1)
+                width:       scroll.width - (control.showFaucetPromo ? 0 : 5)
+                visible:     control.showValidationPromo && (control.showFaucetPromo || control.assetsCount > 1)
 
                 SeedValidationPanel {
                     canHideValidationPromo: viewModel.canHideValidationPromo
@@ -313,7 +315,7 @@ Control {
                     onShowSeedValidationPromoOff: function() {
                         viewModel.showSeedValidationPromo = false
                     }
-                    showFaucetPromo: viewModel.showFaucetPromo
+                    showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
                 }
             }
         }
@@ -323,7 +325,7 @@ Control {
         width:       parent.width / 2 - 5
         leftPadding: itemWidth + 10
         topPadding:  50
-        visible:     showValidationPromo && !control.showFaucetPromo && control.assetsCount == 1
+        visible:     control.showValidationPromo && !control.showFaucetPromo && control.assetsCount == 1
 
         SeedValidationPanel {
             canHideValidationPromo: viewModel.canHideValidationPromo
@@ -331,7 +333,7 @@ Control {
             onShowSeedValidationPromoOff: function() {
                 viewModel.showSeedValidationPromo = false
             }
-            showFaucetPromo: viewModel.showFaucetPromo
+            showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
         }
     }
 }

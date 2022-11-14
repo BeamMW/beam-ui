@@ -19,6 +19,32 @@ Item {
         text: qsTrId("assets-swap-title")
     }
 
+    StatusBar {
+        id: statusBar
+        model: statusbarModel
+        z: 33
+    }
+
+    SFText {
+        x: 90
+        y: 61
+        z: 42
+        font.pixelSize: 14
+        color: Style.active
+        visible: control.showText
+        //% "Assets settings"
+        text: qsTrId("assets-settings")
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.LeftButton
+            cursorShape: Qt.PointingHandCursor
+            onClicked: {
+                main.openSettings("CA");
+            }
+            hoverEnabled: true
+        }
+    }
+
     Component {
         id: assetsSwapComponent
 
@@ -50,7 +76,12 @@ Item {
                     font.pixelSize: 12
 
                     onClicked: {
-                        assetsSwapStackView.push(Qt.createComponent("create_asset_swap.qml"), {"onClosed": assetsSwapLayout.onClosed});
+                        assetsSwapStackView.push(Qt.createComponent("create_asset_swap.qml"), {
+                            "onClosed": function() {
+                                    ordersModel.updateAssets();
+                                    assetsSwapLayout.onClosed();
+                                }
+                            });
                     }
                 }
             }
@@ -136,6 +167,7 @@ Item {
 
                         onClicked: function () {
                             tabSelector.state = "myoffers"
+                            checkboxFitBalance.checked = false
                         }
 
                         showLed: false
@@ -181,6 +213,22 @@ Item {
                 id: ordersModel
             }
 
+            RowLayout {
+                visible: tabSelector.state != "transactions"
+                spacing: 0
+                Layout.minimumHeight: 20
+                Layout.maximumHeight: 20
+                Layout.bottomMargin: 15
+                CustomCheckBox {
+                    id: checkboxFitBalance
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+                    checked: false
+                    enabled: !tabSelector.showOnlyMyOffers
+                    //% "Fit my current balance"
+                    text: qsTrId("atomic-swap-fit-current-balance")
+                }
+            }
+
             CustomTableView {
                 id: ordersTable
                 Layout.alignment:     Qt.AlignTop
@@ -192,7 +240,7 @@ Item {
 
                 selectionMode: SelectionMode.NoSelection
                 sortIndicatorVisible: true
-                sortIndicatorColumn: 0
+                sortIndicatorColumn: 4
                 sortIndicatorOrder: Qt.DescendingOrder
 
                 onSortIndicatorColumnChanged: {
@@ -203,14 +251,21 @@ Item {
 
                 model: SortFilterProxyModel {
                     id: ordersProxyModel
-
                     source: SortFilterProxyModel {
-                            id:           assetFilterProxy
-                            filterRole:   "assetsFilter"
-                            filterString: ordersTable.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
-                            filterSyntax: SortFilterProxyModel.RegExp
+                        id:           assetFilterProxy
+                        filterRole:   "assetsFilter"
+                        filterString: ordersTable.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
+                        filterSyntax: SortFilterProxyModel.RegExp
+
+                        source: SortFilterProxyModel {
+                            id:                    fitBalanceFilterProxy
+                            filterRole:            "hasAssetToSend"
+                            filterString:          checkboxFitBalance.visible && checkboxFitBalance.checked ? "true" : "*"
+                            filterSyntax:          SortFilterProxyModel.Wildcard
+                            filterCaseSensitivity: Qt.CaseInsensitive
 
                             source: ordersModel.orders
+                        }
                     }
 
                     filterRole: "isMine"
@@ -426,7 +481,6 @@ Item {
                 Layout.fillHeight: true
                 id: txTable
                 owner: assetsSwapComponent
-                headerShaderVisible: false
                 dexFilter: true
                 visible: tabSelector.state == "transactions"
             }

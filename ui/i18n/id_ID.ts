@@ -3559,7 +3559,7 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-drop-text">
-        <source>or jusr drop it here</source>
+        <source>or just drop it here</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="general-continue">
@@ -3788,19 +3788,67 @@ Please, restart the wallet and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-completed">
-        <source>DEX transaction completed</source>
+        <source>Assets Swaps transaction completed</source>
+        <oldsource>DEX transaction completed</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-expired">
-        <source>DEX transaction expired</source>
+        <source>Assets Swaps transaction expired</source>
+        <oldsource>DEX transaction expired</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-failed">
-        <source>DEX transaction failed</source>
+        <source>Assets Swaps transaction failed</source>
+        <oldsource>DEX transaction failed</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="notification-dex-canceled">
-        <source>DEX transaction canceled</source>
+        <source>Assets Swaps transaction canceled</source>
+        <oldsource>DEX transaction canceled</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="tx-asset-swap-default-comment">
+        <source>Assets Swaps transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-create-confirm-dialog-title">
+        <source>Create asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-accept-confirm-dialog-title">
+        <source>Accept asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-confirmation-create">
+        <source>Confirm asset swap creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="asset-swap-confirmation-accept">
+        <source>Accept asset swap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-send-amount">
+        <source>Send amount</source>
+        <translation type="unfinished">Send amount</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-receive-amount">
+        <source>Receive amount</source>
+        <translation type="unfinished">Receive amount</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-fee-label">
+        <source>Asset swap fee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-ca">
+        <source>Confidential assets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-ca-descr">
+        <source>Confidential assets allowed to receive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="assets-settings">
+        <source>Assets settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

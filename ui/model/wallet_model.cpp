@@ -272,6 +272,25 @@ void WalletModel::onExportTxHistoryToCsv(const std::string& data)
     emit txHistoryExportedToCsv(QString::fromStdString(data));
 }
 
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+void WalletModel::onExportAtomicSwapTxHistoryToCsv(const std::string& data)
+{
+    emit atomicSwapTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+void WalletModel::onExportAssetsSwapTxHistoryToCsv(const std::string& data)
+{
+    emit assetsSwapTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
+void WalletModel::onExportContractTxHistoryToCsv(const std::string& data)
+{
+    emit contractTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+
 void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
 {
     emit nodeConnectionChanged(isNodeConnected);
@@ -342,6 +361,11 @@ void WalletModel::onPublicAddress(const std::string& publicAddr)
 void WalletModel::onAssetInfo(beam::Asset::ID assetId, const beam::wallet::WalletAsset& info)
 {
     emit assetInfoChanged(assetId, info);
+}
+
+void WalletModel::onFullAssetsListLoaded()
+{
+    emit fullAssetsListLoaded();
 }
 
 beam::Version WalletModel::getLibVersion() const

@@ -199,6 +199,7 @@ Rectangle {
         {name: "applications", qml: appsQml, reloadable: true},
         {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
         {name: "voting", qml: appsQml, args: () => appArgs("BeamX DAO Voting", viewModel.votingAppID, false)},
+        {name: "bridge", qml: appsQml, args: () => appArgs("Bridges app", viewModel.ethBridgeAppID, false)},
         {name: "addresses"},
         {name: "notifications"},
         {name: "help"},

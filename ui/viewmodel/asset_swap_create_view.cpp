@@ -40,7 +40,7 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
 
     _myCurrenciesList = _amgr->getAssetsList();
     _currenciesList = _amgr->getAssetsListFull();
-    if (_currenciesList.empty())
+    if (_currenciesList.size() <= 1)
     {
         _currenciesList = _myCurrenciesList;
     }
@@ -94,7 +94,7 @@ void AssetSwapCreateViewModel::onCoinsSelected(const beam::wallet::CoinsSelectio
         return;
     }
 
-    _isEnoughtToSend = selectionRes.m_isEnought;
+    _isEnoughtToSend = selectionRes.m_selectedSumAsset >= selectionRes.m_requestedSum;
     _maxAmountToSendGrothes = selectionRes.get_NettoValue();
     emit canCreateChanged();
 }

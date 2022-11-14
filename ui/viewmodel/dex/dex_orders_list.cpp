@@ -19,9 +19,22 @@
 #include "viewmodel/ui_helpers.h"
 #include <QDateTime>
 
+namespace
+{
+    QString FormatAmount(beam::Amount amount, const std::string& unitName, beam::Asset::ID assetId)
+    {
+        return beamui::AmountToUIString(amount) +
+            " " + QString::fromStdString(unitName) +
+            (assetId > 0 ? QString("<font color='#8da1ad'> (%1)</font>").arg(assetId) : "");
+    }
+}
+
 DexOrdersList::DexOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
+    , m_wallet(AppModel::getInstance().getWalletModel())
 {
+    connect(m_wallet.get(), &WalletModel::fullAssetsListLoaded, this, &DexOrdersList::assetsListChanged);
+    m_wallet->getAsync()->loadFullAssetsList();
 }
 
 QHash<int, QByteArray> DexOrdersList::roleNames() const
@@ -71,7 +84,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RSend:
         {
-            return beamui::AmountToUIString(order.getSendAmount()) + " " + QString::fromStdString(order.getSendAssetSName());
+            return FormatAmount(order.getSendAmount(), order.getSendAssetSName(), order.getSendAssetId());
         }
         case Roles::RSendSort:
         {
@@ -79,7 +92,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RReceive:
         {
-            return beamui::AmountToUIString(order.getReceiveAmount()) + " " + QString::fromStdString(order.getReceiveAssetSName());
+            return FormatAmount(order.getReceiveAmount(), order.getReceiveAssetSName(), order.getReceiveAssetId());
         }
         case Roles::RReceiveSort:
         {
@@ -120,6 +133,9 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RCoins:
         {
+            if (!m_amgr->isKnownAsset(order.getSendAssetId()) || !m_amgr->isKnownAsset(order.getReceiveAssetId()))
+                m_wallet->getAsync()->loadFullAssetsList();
+
             QVariantMap res;
             res.insert("sendIcon", m_amgr->getIcon(order.getSendAssetId()));
             res.insert("receiveIcon", m_amgr->getIcon(order.getReceiveAssetId()));
@@ -135,7 +151,11 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         case Roles::RHasAssetToSend:
         case Roles::RHasAssetToSendSort:
         {
-            return m_amgr->hasAsset(order.getSendAssetId());
+            if (!m_amgr->hasAsset(order.getSendAssetId())) return false;
+
+            auto availableAmount = m_wallet->getAvailable(order.getSendAssetId());
+            return order.getSendAmount() <= beam::AmountBig::get_Lo(availableAmount) &&
+                !beam::AmountBig::get_Hi(availableAmount);
         }
 
         case Roles::RAssetsFilter:
@@ -152,4 +172,9 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
             return QVariant();
         }
     }
+}
+
+void DexOrdersList::assetsListChanged()
+{
+    emit layoutChanged();
 }

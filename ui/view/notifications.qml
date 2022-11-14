@@ -148,17 +148,11 @@ ColumnLayout {
                 onReleased : {
                     notificationList.interactive = true;
                 }
-            }
-
-            Timer {
-                id: readTimer
-                running: parent.isUnread
-                interval: 10000
-                onTriggered: {
+                onClicked: {
                     viewModel.markItemAsRead(model.rawID);
                 }
             }
-        
+
             Item {
                 anchors.fill: itemRect
         

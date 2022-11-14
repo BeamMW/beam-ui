@@ -89,6 +89,11 @@ ColumnLayout {
                             error: {
                                 if (!viewModel.isEnough)
                                 {
+                                    if (!viewModel.isFeeEnough && sendAmountInput.currencyUnit != "BEAM")
+                                    {
+                                        //% "Insufficient funds to pay transaction fee."
+                                        return qsTrId("send-no-funds-for-fee");
+                                    }
                                     var maxAmount = Utils.uiStringToLocale(viewModel.maxSendAmount)
                                     //% "Insufficient funds to complete the transaction. Maximum amount is %1 %2."
                                     return qsTrId("send-no-funds").arg(maxAmount).arg(Utils.limitText(sendAmountInput.currencyUnit, 10))
@@ -266,36 +271,6 @@ ColumnLayout {
                                     color:            Style.content_main
                                     text:             viewModel.rate
                                 }
-
-
-                                // SFText {
-                                //     Layout.alignment:       Qt.AlignTop
-                                //     font.pixelSize:         14
-                                //     color:                  Style.content_secondary
-                                //     //% "Swap token"
-                                //     text:                   qsTrId("send-swap-token") + ":"
-                                // }
-                                // RowLayout {
-                                //     Layout.fillWidth:        true
-                                //     SFLabel {
-                                //         id:                  tokenLabel
-                                //         Layout.fillWidth:    true
-                                //         font.pixelSize:      14
-                                //         color:               Style.content_main
-                                //         elide:               Text.ElideMiddle
-                                //         text:                viewModel.token
-                                //     }
-                                
-                                //     LinkButton {
-                                //         //% "Token details"
-                                //         text: qsTrId("swap-token-details")
-                                //         linkColor: Style.accent_outgoing
-                                //         onClicked: {
-                                //             tokenInfoDialog.open();
-                                //         }
-                                //     }
-                                // }
-
                             } // GridLayoyut
                         } // ColumnLayout
                     }
@@ -316,8 +291,22 @@ ColumnLayout {
                 icon.source:         "qrc:/assets/icon-create-offer.svg"
                 enabled:             viewModel.canAccept
                 onClicked: {
-                    viewModel.startSwap()
-                    thisView.onClosed()
+                    const dialogComponent = Qt.createComponent("assets_swap_confirm.qml");
+                    var dialogObject = dialogComponent.createObject(thisView,
+                        {
+                            sendAmount: viewModel.amountToSend,
+                            sendUnitName: sendAmountInput.currencyUnit,
+                            receiveAmount: viewModel.amountToReceive,
+                            receiveUnitName: receiveAmountInput.currencyUnit,
+                            fee: viewModel.fee,
+                        });
+
+                    dialogObject.onAccepted.connect(function () {
+                        viewModel.startSwap()
+                        thisView.onClosed()
+                    });
+
+                    dialogObject.open();
                 }
             }  // CustomButton
 

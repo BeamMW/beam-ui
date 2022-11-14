@@ -135,6 +135,12 @@ ColumnLayout {
                     viewModel: viewModel
                 }
 
+                SettingsCA {
+                    id: caBlock
+                    viewModel: viewModel
+                    folded: unfoldSection != "CA"
+                }
+
                 SettingsTitle {
                     topPadding: 30
                     //% "Troubleshooting"
