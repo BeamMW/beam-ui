@@ -1024,9 +1024,10 @@ QVector<beam::Asset::ID> WalletSettings::getAllowedAssets() const
     {
 #ifdef BEAM_MAINNET
         m_allowedAssets = {0, 7};
-#endif
+#else
         for (int i = 0; i <100; ++i)
             m_allowedAssets.push_back(i);
+#endif
     }
 
     return m_allowedAssets;
