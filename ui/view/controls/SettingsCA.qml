@@ -42,7 +42,8 @@ SettingsFoldable {
 
             delegate: RowLayout {
                 width: listView.width
-                height: 36
+                height: modelData["assetId"] == 0 ? 0 : 36
+                visible: modelData["assetId"] != 0
                 SvgImage {
                     source: modelData["icon"]
                     Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
@@ -95,6 +96,7 @@ SettingsFoldable {
                     Layout.alignment: Qt.AlignRight
                     Layout.rightMargin: 10
                     checked: modelData["allowed"]
+                    enabled: modelData["assetId"] != 0
                     onCheckedChanged: {
                         if (checked) {
                             viewModel.allowAssetId(modelData["assetId"]);
