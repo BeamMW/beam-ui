@@ -123,7 +123,7 @@ ComboBox {
                         : text;
                 }
                 color: highlighted ? Style.active : Style.content_main
-                elide: Text.ElideRight
+                elide: Text.ElideMiddle
                 font.pixelSize: dropFontPixelSize
                 font.letterSpacing: fontLetterSpacing
                 font.styleName: highlighted ? "DemiBold" : "Normal"

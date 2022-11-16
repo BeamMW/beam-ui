@@ -137,7 +137,7 @@ ColumnLayout {
                 enableScroll:        true
                 showBackground:      false
                 leftPadding:         30
-                maxTextWidth:        80
+                maxTextWidth:        100
                 dropDownIconSixe:    Qt.size(9, 5)
                 dropDownIconRightMargin: 14
                 //% "Enter asset name..."

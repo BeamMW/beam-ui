@@ -345,6 +345,23 @@ Item {
                     width:     150 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
+                    delegate: 
+                    Item {
+                        width: parent.width
+                        height: ordersTable.rowHeight
+                        clip:true
+                        SFLabel {
+                            font.pixelSize: 14
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            elide: Text.ElideMiddle
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: styleData.value
+                            color: Style.content_main
+                            copyMenuEnabled: true
+                            onCopyText: BeamGlobals.copyToClipboard(text)
+                        }
+                    }
                 }
 
                 TableViewColumn {
@@ -355,6 +372,23 @@ Item {
                     width:     150 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
+                    delegate: 
+                    Item {
+                        width: parent.width
+                        height: ordersTable.rowHeight
+                        clip:true
+                        SFLabel {
+                            font.pixelSize: 14
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            elide: Text.ElideMiddle
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: styleData.value
+                            color: Style.content_main
+                            copyMenuEnabled: true
+                            onCopyText: BeamGlobals.copyToClipboard(text)
+                        }
+                    }
                 }
 
                 TableViewColumn {
