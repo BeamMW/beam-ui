@@ -7,6 +7,7 @@
 #include "core/common.h"
 #include "wallet/transactions/swaps/bridges/ethereum/common.h"
 #include "utility/logger.h"
+#include "utility/string_helpers.h"
 
 using namespace std;
 using namespace beam;
@@ -134,10 +135,7 @@ namespace beamui
      {
         beam::wallet::PrintableAmount print(value, true);
 
-        std::ostringstream ss;
-        ss << print;
-
-        const auto str = ss.str();
+        auto str = string_helpers::trimCommas(std::to_string(print));
         return QString::fromStdString(str);
      }
 

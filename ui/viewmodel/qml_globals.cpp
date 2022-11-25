@@ -86,14 +86,9 @@ namespace
         }
     }
 
-    std::string trimCommas(const QString& s)
+    inline std::string trimCommas(const QString& s)
     {
-        std::string str = s.toStdString();
-
-        if (str.find(",") == std::string::npos) return str;
-
-        str.erase(std::remove(str.begin(), str.end(), ','), str.end());
-        return str;
+        return string_helpers::trimCommas(s.toStdString());
     }
 }
 
