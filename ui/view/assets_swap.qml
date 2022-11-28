@@ -66,9 +66,29 @@ Item {
                 }
             }
 
+            SFText {
+                z: 42
+                Layout.leftMargin: 90
+                Layout.topMargin: 25
+                font.pixelSize: 14
+                color: Style.active
+                visible: control.showText
+                //% "Assets settings"
+                text: qsTrId("assets-settings")
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        main.openSettings("CA");
+                    }
+                    hoverEnabled: true
+                }
+            }
+
             AssetsPanel {
                 id: assets
-                Layout.topMargin: 25
+                Layout.topMargin: -19
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignTop
 
@@ -325,6 +345,23 @@ Item {
                     width:     150 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
+                    delegate: 
+                    Item {
+                        width: parent.width
+                        height: ordersTable.rowHeight
+                        clip:true
+                        SFLabel {
+                            font.pixelSize: 14
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            elide: Text.ElideMiddle
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: styleData.value
+                            color: Style.content_main
+                            copyMenuEnabled: true
+                            onCopyText: BeamGlobals.copyToClipboard(text)
+                        }
+                    }
                 }
 
                 TableViewColumn {
@@ -335,6 +372,23 @@ Item {
                     width:     150 * ordersTable.columnResizeRatio
                     movable:   false
                     resizable: false
+                    delegate: 
+                    Item {
+                        width: parent.width
+                        height: ordersTable.rowHeight
+                        clip:true
+                        SFLabel {
+                            font.pixelSize: 14
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            elide: Text.ElideMiddle
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: styleData.value
+                            color: Style.content_main
+                            copyMenuEnabled: true
+                            onCopyText: BeamGlobals.copyToClipboard(text)
+                        }
+                    }
                 }
 
                 TableViewColumn {

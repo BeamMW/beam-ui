@@ -19,6 +19,16 @@
 #include "viewmodel/ui_helpers.h"
 #include <QDateTime>
 
+namespace
+{
+    QString FormatAmount(beam::Amount amount, const std::string& unitName, beam::Asset::ID assetId)
+    {
+        return beamui::AmountToUIString(amount) +
+            " " + QString::fromStdString(unitName) +
+            (assetId > 0 ? QString("<font color='#8da1ad'> (%1)</font>").arg(assetId) : "");
+    }
+}
+
 DexOrdersList::DexOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
     , m_wallet(AppModel::getInstance().getWalletModel())
@@ -74,7 +84,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RSend:
         {
-            return beamui::AmountToUIString(order.getSendAmount()) + " " + QString::fromStdString(order.getSendAssetSName());
+            return FormatAmount(order.getSendAmount(), order.getSendAssetSName(), order.getSendAssetId());
         }
         case Roles::RSendSort:
         {
@@ -82,7 +92,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         }
         case Roles::RReceive:
         {
-            return beamui::AmountToUIString(order.getReceiveAmount()) + " " + QString::fromStdString(order.getReceiveAssetSName());
+            return FormatAmount(order.getReceiveAmount(), order.getReceiveAssetSName(), order.getReceiveAssetId());
         }
         case Roles::RReceiveSort:
         {

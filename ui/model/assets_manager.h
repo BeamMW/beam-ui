@@ -83,4 +83,8 @@ private:
 
     std::map<int, QColor>  _colors;
     std::map<int, QString> _icons;
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    QVector<beam::Asset::ID> _allowedAssets;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 };

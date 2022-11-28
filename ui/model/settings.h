@@ -126,6 +126,12 @@ public:
     IPFSLaunch getIPFSNodeLaunch() const;
     #endif
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    QVector<beam::Asset::ID> getAllowedAssets() const;
+    void addAllowedAsset(beam::Asset::ID asset);
+    void removeAllowedAsset(beam::Asset::ID asset);
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
 
@@ -204,4 +210,8 @@ private:
     using Lock = std::unique_lock<decltype(m_mutex)>;
     bool m_isActive = false;
     uint64_t m_activateTime = 0;
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    mutable QVector<beam::Asset::ID> m_allowedAssets;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 };

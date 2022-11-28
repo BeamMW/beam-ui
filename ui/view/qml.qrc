@@ -64,6 +64,7 @@
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
         <file>controls/SettingsFoldable.qml</file>
+        <file>controls/SettingsCA.qml</file>
         <file>controls/SettingsGeneral.qml</file>
         <file>controls/SettingsNotifications.qml</file>
         <file>controls/SettingsUtilities.qml</file>

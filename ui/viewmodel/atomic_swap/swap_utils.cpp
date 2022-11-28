@@ -36,12 +36,13 @@ namespace swapui
         auto append = [&result] (OldWalletCurrency::OldCurrency curr, const QString& icon) {
             QMap<QString, QVariant> info;
 
-            info.insert("isBEAM",     curr == OldWalletCurrency::OldCurrency::CurrBeam);
-            info.insert("unitName",    QMLGlobals::getCurrencyUnitName(curr));
-            info.insert("icon",        icon);
-            info.insert("iconWidth",  22);
-            info.insert("iconHeight", 22);
-            info.insert("decimals",    QMLGlobals::getCurrencyDecimals(curr));
+            info.insert("isBEAM",         curr == OldWalletCurrency::OldCurrency::CurrBeam);
+            info.insert("unitName",       QMLGlobals::getCurrencyUnitName(curr));
+            info.insert("unitNameWithId", QMLGlobals::getCurrencyUnitName(curr));
+            info.insert("icon",           icon);
+            info.insert("iconWidth",      22);
+            info.insert("iconHeight",     22);
+            info.insert("decimals",       QMLGlobals::getCurrencyDecimals(curr));
 
             result.push_back(info);
         };
