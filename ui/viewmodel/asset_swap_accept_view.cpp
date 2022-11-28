@@ -199,8 +199,11 @@ QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getCurrenciesList(
     QList<QMap<QString, QVariant>> result;
     QMap<QString, QVariant> info;
 
-    info.insert("isBEAM",     assetId == beam::Asset::s_BeamID);
+    const bool isBEAM = assetId == beam::Asset::s_BeamID;
+    auto unitName = QString::fromStdString(assetSname);
+    info.insert("isBEAM",     isBEAM);
     info.insert("unitName",   QString::fromStdString(assetSname));
+    info.insert("unitNameWithId", isBEAM ? unitName : QString("%1 <font color='#8da1ad'>(%2)</font>").arg(unitName).arg(assetId));
     info.insert("icon",       _amgr->getIcon(assetId));
     info.insert("iconWidth",  22);
     info.insert("iconHeight", 22);
