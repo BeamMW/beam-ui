@@ -18,7 +18,7 @@
 
 namespace beam::wallet
 {
-    class WalletAddress;
+    struct WalletAddress;
 }
 
 class MessengerAddressAdd : public QObject

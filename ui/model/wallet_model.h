@@ -24,6 +24,11 @@
 
 #include <set>
 
+namespace beam::wallet
+{
+    struct InstantMessage;
+}
+
 class WalletModel
     : public QObject
     , public beam::wallet::WalletClient
