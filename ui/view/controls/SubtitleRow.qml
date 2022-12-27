@@ -37,10 +37,12 @@ Item {
         spacing: 0
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
+        width: control.width - backBtn.width - 135
 
         SFText {
             id: title
             color: Style.content_main
+            width: parent.width - 45
 
             font {
                 styleName:      "DemiBold"
@@ -49,6 +51,7 @@ Item {
                 letterSpacing:  4
                 capitalization: Font.AllUppercase
             }
+            elide: Text.ElideRight
         }
 
         SvgImage {

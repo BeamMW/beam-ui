@@ -3847,5 +3847,41 @@ Please, restart the wallet and try again.</source>
         <source>Assets settings</source>
         <translation>Assets settings</translation>
     </message>
+    <message id="messenger-title">
+        <source>Beam Messenger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="messenger-new-chat">
+        <source>New chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="chat-title">
+        <source>Chat with %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="chat-message-placeholder">
+        <source>[ctrl + enter] to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="messenger-add-receiver-address-dialog-title">
+        <source>Add receiver address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="messenger-add-receiver-address-address">
+        <source>Address</source>
+        <translation type="unfinished">Address</translation>
+    </message>
+    <message id="messenger-add-receiver-address-name">
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message id="messenger-add-receiver-address-save">
+        <source>add receiver address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="chat-title-anon">
+        <source>anonimus</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
