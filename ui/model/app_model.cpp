@@ -273,6 +273,10 @@ beam::wallet::IWalletDB::Ptr AppModel::getWalletDB() const
 
 void AppModel::openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
 {
+    io::Reactor::Scope s(*m_walletReactor);
+    // TODO: operate the reactor, respond to its events to display the UX related to wallet opening
+    // This is relevant to HW wallet.
+
     if (m_db != nullptr)
     {
         assert(false);
