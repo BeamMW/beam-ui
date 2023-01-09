@@ -24,6 +24,11 @@
 
 #include <set>
 
+namespace beam::wallet
+{
+    struct InstantMessage;
+}
+
 class WalletModel
     : public QObject
     , public beam::wallet::WalletClient
@@ -91,6 +96,9 @@ signals:
     void contractTxHistoryExportedToCsv(const QString& data);
 
     void fullAssetsListLoaded();
+    void instantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
+    void chatList(const std::vector<beam::wallet::WalletID>& chats);
+    void chatMessages(const std::vector<beam::wallet::InstantMessage>& messages);
 
     #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -154,6 +162,9 @@ private:
     void onPublicAddress(const std::string& publicAddr) override;
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
     void onFullAssetsListLoaded() override;
+    void onInstantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome) override;
+    void onGetChatList(const std::vector<beam::wallet::WalletID>& chats) override;
+    void onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages) override;
 
     #ifdef BEAM_IPFS_SUPPORT
     virtual void onIPFSStatus(bool running, const std::string& error, unsigned int peercnt) override;

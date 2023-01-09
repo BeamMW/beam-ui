@@ -368,6 +368,21 @@ void WalletModel::onFullAssetsListLoaded()
     emit fullAssetsListLoaded();
 }
 
+void WalletModel::onInstantMessage(Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome)
+{
+    emit instantMessage(time, counterpart, message, isIncome);
+}
+
+void WalletModel::onGetChatList(const std::vector<beam::wallet::WalletID>& chats)
+{
+    emit chatList(chats);
+}
+
+void WalletModel::onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages)
+{
+    emit chatMessages(messages);
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;
