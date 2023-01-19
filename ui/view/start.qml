@@ -137,6 +137,7 @@ Item
         }
         onAccepted: {
             onClicked: {
+                viewModel.useHWWallet = false;
                 viewModel.isRecoveryMode = true;
                 startWizzardView.push(create);
             }
@@ -231,6 +232,25 @@ Item
                             acceptedButtons: Qt.LeftButton
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
+                                viewModel.useHWWallet = false;
+                                restoreWalletConfirmation.open();
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+
+                    SFText {
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.topMargin: 40
+                        text: "Use Hardware Wallet"
+                        color: Style.active
+                        font.pixelSize: 14
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                viewModel.useHWWallet = true;
                                 restoreWalletConfirmation.open();
                             }
                             hoverEnabled: true
