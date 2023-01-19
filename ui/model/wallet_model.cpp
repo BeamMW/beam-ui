@@ -296,6 +296,16 @@ void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
     emit nodeConnectionChanged(isNodeConnected);
 }
 
+void WalletModel::OnDevState(const std::string& sErr, beam::wallet::UsbKeyKeeper::DevState state)
+{
+    emit devStateChanged(QString::fromStdString(sErr), static_cast<int>(state));
+}
+
+void WalletModel::OnDevReject(const beam::wallet::UsbKeyKeeper::CallStats&)
+{
+    // ignore
+}
+
 #ifdef BEAM_IPFS_SUPPORT
 void WalletModel::onIPFSStatus(bool running, const std::string& error, unsigned int peercnt)
 {

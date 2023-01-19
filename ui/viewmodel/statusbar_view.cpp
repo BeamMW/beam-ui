@@ -42,6 +42,7 @@ StatusbarViewModel::StatusbarViewModel()
     #endif
 
     connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
+    connect(m_model.get(), SIGNAL(devStateChanged(const QString&, int)), SLOT(onDevStateChanged(const QString&, int)));
     connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
     connect(m_model.get(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
     connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onNodeSyncProgressUpdated(int,int)));
@@ -230,6 +231,10 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
         setWalletStatusErrorMsg(qtTrId("wallet-model-connection-refused-error").arg("BEAM"));
         setIsFailedStatus(true);
     }
+}
+
+void StatusbarViewModel::onDevStateChanged(const QString& sErr, int state)
+{
 }
 
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)

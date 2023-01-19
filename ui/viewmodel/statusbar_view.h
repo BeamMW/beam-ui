@@ -85,6 +85,7 @@ public:
 
 public slots:
     void onNodeConnectionChanged(bool isNodeConnected);
+    void onDevStateChanged(const QString& sErr, int state);
     void onGetWalletError(beam::wallet::ErrorType error);
     void onSyncProgressUpdated(int done, int total);
     void onNodeSyncProgressUpdated(int done, int total);
