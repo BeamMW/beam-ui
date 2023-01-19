@@ -47,6 +47,8 @@
 #include "keykeeper/trezor_key_keeper.h"
 #endif
 
+#include "keykeeper/usb_key_keeper.h"
+
 using namespace beam;
 using namespace ECC;
 using namespace std;
@@ -276,6 +278,26 @@ void AppModel::openWalletThrow(const beam::SecString& pass, beam::wallet::IPriva
     io::Reactor::Scope s(*m_walletReactor);
     // TODO: operate the reactor, respond to its events to display the UX related to wallet opening
     // This is relevant to HW wallet.
+
+    struct MyEvents
+        :public wallet::UsbKeyKeeper::IEvents
+    {
+        void OnDevState(const std::string& sErr, wallet::UsbKeyKeeper::DevState s) override
+        {
+            if (wallet::UsbKeyKeeper::DevState::Disconnected == s)
+                throw std::runtime_error("HW Waller error: " + sErr);
+
+        }
+        void OnDevReject(const wallet::UsbKeyKeeper::CallStats&) override
+        {
+            throw std::runtime_error("HW Waller malfunction");
+        }
+
+    } evts;
+
+    wallet::UsbKeyKeeper::IEvents* pEvts = &evts;
+    beam::TemporarySwap ts(wallet::UsbKeyKeeper_ToConsole::s_pEvents, pEvts);
+
 
     if (m_db != nullptr)
     {
