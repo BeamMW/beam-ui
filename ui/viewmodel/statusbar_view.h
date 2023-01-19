@@ -34,6 +34,7 @@ class StatusbarViewModel : public QObject
     Q_OBJECT
     Q_PROPERTY(bool isOnline                READ getIsOnline            NOTIFY isOnlineChanged)
     Q_PROPERTY(bool isFailedStatus          READ getIsFailedStatus      NOTIFY isFailedStatusChanged)
+    Q_PROPERTY(bool isFailedHww             READ getIsFailedHww         NOTIFY isFailedHwwChanged)
     Q_PROPERTY(bool isSyncInProgress        READ getIsSyncInProgress    NOTIFY isSyncInProgressChanged)
     Q_PROPERTY(bool isConnectionTrusted     READ getIsConnectionTrusted NOTIFY isConnectionTrustedChanged)
     Q_PROPERTY(bool isExchangeRatesUpdated  READ getIsExchangeRatesUpdated NOTIFY exchangeRatesUpdateStatusChanged)
@@ -41,6 +42,7 @@ class StatusbarViewModel : public QObject
     Q_PROPERTY(int nodeSyncProgress         READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
     Q_PROPERTY(QString branchName           READ getBranchName          CONSTANT)
     Q_PROPERTY(QString walletError          READ getWalletError         NOTIFY walletErrorChanged)
+    Q_PROPERTY(QString hwwError             READ getHwwError            NOTIFY hwwErrorChanged)
 
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     Q_PROPERTY(bool isCoinClientFailed      READ getCoinClientFailed    NOTIFY isCoinClientFailedChanged)
@@ -64,6 +66,9 @@ public:
     [[nodiscard]] QString getBranchName() const;
     [[nodiscard]] QString getWalletError() const;
     [[nodiscard]] QString getExchangeStatus() const;
+    [[nodiscard]] bool getIsFailedHww() const;
+    [[nodiscard]] QString getHwwError() const;
+
 
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     [[nodiscard]] bool getCoinClientFailed() const;
@@ -103,10 +108,12 @@ public slots:
 signals:
     void isOnlineChanged();
     void isFailedStatusChanged();
+    void isFailedHwwChanged();
     void isSyncInProgressChanged();
     void isConnectionTrustedChanged();
     void nodeSyncProgressChanged();
     void walletErrorChanged();
+    void hwwErrorChanged();
     void exchangeRatesUpdateStatusChanged();
 
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -132,6 +139,7 @@ private:
     bool m_isOnline;
     bool m_isSyncInProgress;
     bool m_isFailedStatus;
+    bool m_isFailedHww;
     bool m_isConnectionTrusted;
     int m_nodeSyncProgress;
 
@@ -141,6 +149,7 @@ private:
     int m_total;
 
     QString m_walletError;
+    QString m_hwwError;
 
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     bool m_isCoinClientFailed = false;

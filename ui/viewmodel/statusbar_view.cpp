@@ -29,6 +29,7 @@ StatusbarViewModel::StatusbarViewModel()
     , m_isOnline(false)
     , m_isSyncInProgress(!m_model->isSynced())
     , m_isFailedStatus(false)
+    , m_isFailedHww(false)
     , m_isConnectionTrusted(false)
     , m_nodeSyncProgress(0)
     , m_nodeDone(0)
@@ -70,6 +71,11 @@ bool StatusbarViewModel::getIsFailedStatus() const
     return m_isFailedStatus;
 }
 
+bool StatusbarViewModel::getIsFailedHww() const
+{
+    return m_isFailedHww;
+}
+
 bool StatusbarViewModel::getIsSyncInProgress() const
 {
     return m_isSyncInProgress;
@@ -106,6 +112,11 @@ QString StatusbarViewModel::getBranchName() const
 QString StatusbarViewModel::getWalletError() const
 {
     return m_walletError;
+}
+
+QString StatusbarViewModel::getHwwError() const
+{
+    return m_hwwError;
 }
 
 QString StatusbarViewModel::getExchangeStatus() const
@@ -235,6 +246,27 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
 
 void StatusbarViewModel::onDevStateChanged(const QString& sErr, int state)
 {
+    m_isFailedHww = true;
+
+    if (!sErr.isEmpty())
+        m_hwwError = "HW Wallet: " + sErr;
+    else
+    {
+        auto eState = static_cast<beam::wallet::UsbKeyKeeper::DevState>(state);
+
+        if (beam::wallet::UsbKeyKeeper::DevState::Stalled == eState)
+            m_hwwError = "HW wallet: Waiting for user";
+        else
+        {
+            m_hwwError = "";
+            m_isFailedHww = false;
+        }
+
+    }
+
+    emit hwwErrorChanged();
+    emit isFailedHwwChanged();
+
 }
 
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)

@@ -15,6 +15,8 @@ Item {
     function getStatus() {
         if (model.isCoinClientFailed || model.ipfsError)
             return "error_3rd";
+        if (model.isFailedHww)
+            return "error_hww";
         if (model.isFailedStatus)
             return "error";
         else if (model.isSyncInProgress)
@@ -276,6 +278,15 @@ Item {
                     online_indicator.color = Style.accent_fail;
                     rootControl.setIndicator(online_indicator);
                 }
+            }
+        },
+        State {
+            name: "error_hww"
+            PropertyChanges {
+                target: status_text;
+                text: model.hwwError;
+                color: Style.accent_fail;
+
             }
         },
         State {
