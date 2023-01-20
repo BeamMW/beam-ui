@@ -702,25 +702,50 @@ void StartViewModel::createWallet(const QJSValue& callback)
     }
 #endif
 
-    if (m_isRecoveryMode)
-    {
-        assert(m_generatedPhrases.size() == static_cast<size_t>(m_recoveryPhrases.size()));
-        for (int i = 0; i < m_recoveryPhrases.size(); ++i)
-        {
-            QString s = static_cast<RecoveryPhraseItem*>(m_recoveryPhrases[i])->getValue();
-            m_generatedPhrases[i] = s.toStdString();
-        }
-    }
-    auto buf = beam::decodeMnemonic(m_generatedPhrases);
 
     SecString secretSeed;
-    secretSeed.assign(buf.data(), buf.size());
     SecString secretPass = m_password;
+    std::string rawSeed;
 
-    std::string rawSeed = m_saveSeed ? getPhrases().toStdString() : "";
+    if (!m_isRecoveryMode)
+        m_useHWWallet = false;
+
+    if (!m_useHWWallet)
+    {
+        if (m_isRecoveryMode)
+        {
+            assert(m_generatedPhrases.size() == static_cast<size_t>(m_recoveryPhrases.size()));
+            for (int i = 0; i < m_recoveryPhrases.size(); ++i)
+            {
+                QString s = static_cast<RecoveryPhraseItem*>(m_recoveryPhrases[i])->getValue();
+                m_generatedPhrases[i] = s.toStdString();
+            }
+        }
+
+        auto buf = beam::decodeMnemonic(m_generatedPhrases);
+        secretSeed.assign(buf.data(), buf.size());
+
+        if (m_saveSeed)
+            rawSeed = getPhrases().toStdString();
+    }
+
     if (AppModel::getInstance().isOnlyOneInstanceStarted())
     {
-        DoJSCallback(m_callback, AppModel::getInstance().createWallet(secretSeed, secretPass, rawSeed));
+        try
+        {
+            AppModel::getInstance().createWalletThrow(m_useHWWallet ? nullptr : &secretSeed, secretPass, rawSeed);
+            DoJSCallback(m_callback, QString());
+        }
+        catch (const std::exception& exc)
+        {
+            QString errmsg = exc.what();
+            if (errmsg.isEmpty())
+            {
+                //% "Failed to open wallet, please check logs"
+                errmsg = qtTrId("general-open-failed");
+            }
+            DoJSCallback(m_callback, errmsg);
+        }
     }
 }
 

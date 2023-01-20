@@ -204,36 +204,60 @@ void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
     }
 }
 
-bool AppModel::createWallet(const SecString& seed, const SecString& pass, const std::string& rawSeed)
+struct HwWalletEventsToExc
+    :public wallet::UsbKeyKeeper::IEvents
 {
-    const auto dbFilePath = m_settings.getWalletStorage();
-    backupDB(dbFilePath);
+    wallet::UsbKeyKeeper::IEvents* m_pEventsPrev;
+
+    HwWalletEventsToExc()
+    {
+        m_pEventsPrev = wallet::UsbKeyKeeper_ToConsole::s_pEvents;
+        wallet::UsbKeyKeeper_ToConsole::s_pEvents = this;
+    }
+
+    ~HwWalletEventsToExc()
+    {
+        wallet::UsbKeyKeeper_ToConsole::s_pEvents = m_pEventsPrev;
+    }
+
+    void OnDevState(const std::string& sErr, wallet::UsbKeyKeeper::DevState s) override
+    {
+        if (wallet::UsbKeyKeeper::DevState::Disconnected == s)
+            throw std::runtime_error("HW Waller error: " + sErr);
+
+    }
+    void OnDevReject(const wallet::UsbKeyKeeper::CallStats&) override
+    {
+        throw std::runtime_error("HW Waller malfunction");
+    }
+};
+
+
+void AppModel::createWalletThrow(const SecString* pSeed, const SecString& pass, const std::string& rawSeed)
+{
+    io::Reactor::Scope s(*m_walletReactor); // do it in main thread
+
+    HwWalletEventsToExc evts;
 
     {
-        io::Reactor::Scope s(*m_walletReactor); // do it in main thread
-        auto db = beam::wallet::WalletDB::init(dbFilePath, pass, seed.hash());
-        if (!db) 
-            return false;
+        const auto dbFilePath = m_settings.getWalletStorage();
+        backupDB(dbFilePath);
+
+        beam::wallet::WalletDB::Ptr db;
+        if (pSeed)
+            db = beam::wallet::WalletDB::init(dbFilePath, pass, pSeed->hash());
+        else
+            db = beam::wallet::WalletDB::initHww(dbFilePath, pass);
+
+        assert(db); // should either succeed or throw exc
 
         if (!rawSeed.empty())
-        {
             db->setVarRaw(beam::wallet::SEED_PARAM_NAME, rawSeed.c_str(), rawSeed.size());
-        }
 
         generateDefaultAddress(db);
     }
 
-    try
-    {
-        openWalletThrow(pass);
-        return true;
-    }
-    catch (std::runtime_error& err)
-    {
-        // TODO: handle the reasons of failure
-        LOG_ERROR() << "Error while trying to open database: " << err.what();
-        return false;
-    }
+    openWalletThrowWithReactor(pass);
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -273,30 +297,19 @@ beam::wallet::IWalletDB::Ptr AppModel::getWalletDB() const
     return m_db;
 }
 
-void AppModel::openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper)
+void AppModel::openWalletThrow(const beam::SecString& pass)
 {
     io::Reactor::Scope s(*m_walletReactor);
-    // TODO: operate the reactor, respond to its events to display the UX related to wallet opening
+
+    // operate the reactor, respond to its events to display the UX related to wallet opening
     // This is relevant to HW wallet.
+    HwWalletEventsToExc evts;
 
-    struct MyEvents
-        :public wallet::UsbKeyKeeper::IEvents
-    {
-        void OnDevState(const std::string& sErr, wallet::UsbKeyKeeper::DevState s) override
-        {
-            if (wallet::UsbKeyKeeper::DevState::Disconnected == s)
-                throw std::runtime_error("HW Waller error: " + sErr);
+    openWalletThrowWithReactor(pass);
+}
 
-        }
-        void OnDevReject(const wallet::UsbKeyKeeper::CallStats&) override
-        {
-            throw std::runtime_error("HW Waller malfunction");
-        }
-
-    } evts;
-
-    wallet::UsbKeyKeeper::IEvents* pEvts = &evts;
-    beam::TemporarySwap ts(wallet::UsbKeyKeeper_ToConsole::s_pEvents, pEvts);
+void AppModel::openWalletThrowWithReactor(const beam::SecString& pass)
+{
 
 
     if (m_db != nullptr)
