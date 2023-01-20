@@ -36,32 +36,49 @@ Item
         });
     }
 
-    Dialog
-    {
+
+
+
+
+    ConfirmationDialog {
         id: errorDlg
-        parent: ApplicationWindow.overlay
 
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-
-        focus: true
-        modal: true
+        okButtonText: "Ok"
+        okButtonIconSource: "qrc:/assets/icon-done.svg"
+        cancelButtonVisible: false
+        width: 460
+        height: contentItem.implicitHeight + footer.implicitHeight + 60
+        padding: 0
 
         property alias text: messageText.text
 
-        Label {
-            id: messageText
 
-            //color: Style.content_main
+        contentItem: Column {
+            width: parent.width
+            height: seedPhraseSubmitAllertTitle.implicitHeight + seedPhraseSubmitAllertMessage.implicitHeight
 
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
+            Item {
+                height: 30
+                width: parent.width
+            }
 
-            anchors.fill: parent
+            SFText {
+                id: messageText
+                padding: 30
+                bottomPadding: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment : Text.AlignHCenter
+                width: parent.width
+                height: 32
+                text: ""
+                color: Style.content_main
+                font.pixelSize: 14
+                wrapMode: Text.Wrap
+            }
         }
-
-        standardButtons: Dialog.Ok
     }
+
+
 
     function createWallet()
     {
