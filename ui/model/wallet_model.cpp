@@ -296,12 +296,12 @@ void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
     emit nodeConnectionChanged(isNodeConnected);
 }
 
-void WalletModel::OnDevState(const std::string& sErr, beam::wallet::UsbKeyKeeper::DevState state)
+void WalletModel::OnDevState(const std::string& sErr, beam::wallet::HidKeyKeeper::DevState state)
 {
     emit devStateChanged(QString::fromStdString(sErr), static_cast<int>(state));
 }
 
-void WalletModel::OnDevReject(const beam::wallet::UsbKeyKeeper::CallStats&)
+void WalletModel::OnDevReject(const beam::wallet::HidKeyKeeper::CallStats&)
 {
     // ignore
 }

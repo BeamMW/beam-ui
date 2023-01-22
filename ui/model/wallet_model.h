@@ -139,8 +139,8 @@ private:
     void onNewAddressFailed() override;
     void onNodeConnectionChanged(bool isNodeConnected) override;
     void onWalletError(beam::wallet::ErrorType error) override;
-    void OnDevState(const std::string& sErr, beam::wallet::UsbKeyKeeper::DevState) override;
-    void OnDevReject(const beam::wallet::UsbKeyKeeper::CallStats&) override;
+    void OnDevState(const std::string& sErr, beam::wallet::HidKeyKeeper::DevState) override;
+    void OnDevReject(const beam::wallet::HidKeyKeeper::CallStats&) override;
     void FailedToStartWallet() override;
     void onSendMoneyVerified() override;
     void onCantSendToExpired() override;

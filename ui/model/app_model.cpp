@@ -47,7 +47,7 @@
 #include "keykeeper/trezor_key_keeper.h"
 #endif
 
-#include "keykeeper/usb_key_keeper.h"
+#include "keykeeper/hid_key_keeper.h"
 
 using namespace beam;
 using namespace ECC;
@@ -205,28 +205,28 @@ void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
 }
 
 struct HwWalletEventsToExc
-    :public wallet::UsbKeyKeeper::IEvents
+    :public wallet::HidKeyKeeper::IEvents
 {
-    wallet::UsbKeyKeeper::IEvents* m_pEventsPrev;
+    wallet::HidKeyKeeper::IEvents* m_pEventsPrev;
 
     HwWalletEventsToExc()
     {
-        m_pEventsPrev = wallet::UsbKeyKeeper_ToConsole::s_pEvents;
-        wallet::UsbKeyKeeper_ToConsole::s_pEvents = this;
+        m_pEventsPrev = wallet::HidKeyKeeper_ToConsole::s_pEvents;
+        wallet::HidKeyKeeper_ToConsole::s_pEvents = this;
     }
 
     ~HwWalletEventsToExc()
     {
-        wallet::UsbKeyKeeper_ToConsole::s_pEvents = m_pEventsPrev;
+        wallet::HidKeyKeeper_ToConsole::s_pEvents = m_pEventsPrev;
     }
 
-    void OnDevState(const std::string& sErr, wallet::UsbKeyKeeper::DevState s) override
+    void OnDevState(const std::string& sErr, wallet::HidKeyKeeper::DevState s) override
     {
-        if (wallet::UsbKeyKeeper::DevState::Disconnected == s)
+        if (wallet::HidKeyKeeper::DevState::Disconnected == s)
             throw std::runtime_error("HW Waller error: " + sErr);
 
     }
-    void OnDevReject(const wallet::UsbKeyKeeper::CallStats&) override
+    void OnDevReject(const wallet::HidKeyKeeper::CallStats&) override
     {
         throw std::runtime_error("HW Waller malfunction");
     }

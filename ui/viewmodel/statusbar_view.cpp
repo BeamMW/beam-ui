@@ -252,9 +252,9 @@ void StatusbarViewModel::onDevStateChanged(const QString& sErr, int state)
         m_hwwError = "HW Wallet: " + sErr;
     else
     {
-        auto eState = static_cast<beam::wallet::UsbKeyKeeper::DevState>(state);
+        auto eState = static_cast<beam::wallet::HidKeyKeeper::DevState>(state);
 
-        if (beam::wallet::UsbKeyKeeper::DevState::Stalled == eState)
+        if (beam::wallet::HidKeyKeeper::DevState::Stalled == eState)
             m_hwwError = "HW wallet: Waiting for user";
         else
         {
