@@ -415,7 +415,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             r.append(" ");
             r.append(value->getComment());
             r.append(" ");
-            r.append(value->getSenderIdentity());
+            r.append(value->getSenderEndpoint());
             r.append(" ");
             r.append(value->getReceiverIdentity());
             r.append(" ");
@@ -427,7 +427,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::Token:
             return value->getToken();
         case Roles::SenderIdentity:
-            return value->getSenderIdentity();
+            return value->getSenderEndpoint();
         case Roles::ReceiverIdentity:
             return value->getReceiverIdentity();
         case Roles::AssetNamesSort:

@@ -124,9 +124,9 @@ void MessengerChat::onAddresses(bool own, const std::vector<beam::wallet::Wallet
 
         for (const auto& myAddr : _myIds)
         {
-            if (!myAddr.isExpired() && myAddr.m_walletID.IsValid())
+            if (!myAddr.isExpired() && myAddr.m_BbsAddr.IsValid())
             {
-                _myID = myAddr.m_walletID;
+                _myID = myAddr.m_BbsAddr;
                 break;
             }
         }

@@ -385,9 +385,9 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
     else if (!_walletModel->isOwnAddress(_receiverWalletID))
     {
         WalletAddress address;
-        address.m_walletID   = _receiverWalletID;
+        address.m_BbsAddr   = _receiverWalletID;
         address.m_createTime = beam::getTimestamp();
-        address.m_Identity   = _receiverIdentity;
+        address.m_Endpoint   = _receiverIdentity;
         address.m_label      = trimmed.toStdString();
         address.m_duration   = WalletAddress::AddressExpirationNever;
         address.m_Address    = _token.toStdString();
@@ -428,7 +428,7 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
         [[maybe_unused]] const auto type = GetAddressType(address->m_Address);
         if (_receiverWalletID != beam::Zero)
         {
-            if (_receiverWalletID != address->m_walletID)
+            if (_receiverWalletID != address->m_BbsAddr)
             {
                 assert(!"unexpected wallet id in send::onGetAddressReturned");
                 throw std::runtime_error("unexpected walletID in send::onGetAddressReturned");
@@ -437,14 +437,14 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
         else
         {
             assert(type == TxAddressType::MaxPrivacy || type == TxAddressType::PublicOffline);
-            _receiverWalletID = address->m_walletID; // our maxprivacy will have id in db
+            _receiverWalletID = address->m_BbsAddr; // our maxprivacy will have id in db
         }
 
         if (_receiverIdentity != beam::Zero)
         {
-            if (address->m_Identity != beam::Zero)
+            if (address->m_Endpoint != beam::Zero)
             {
-                if (_receiverIdentity != address->m_Identity)
+                if (_receiverIdentity != address->m_Endpoint)
                 {
                     assert(!"unexpected identity in send::onGetAddressReturned");
                     throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
@@ -458,9 +458,9 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
         }
         else
         {
-            if (address->m_Identity != beam::Zero)
+            if (address->m_Endpoint != beam::Zero)
             {
-                _receiverIdentity = address->m_Identity;
+                _receiverIdentity = address->m_Endpoint;
             }
             else
             {

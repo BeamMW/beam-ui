@@ -157,14 +157,14 @@ QString ReceiveViewModel::getToken() const
 
 QString ReceiveViewModel::getSbbsAddress() const
 {
-    return _receiverAddress ? beamui::toString(_receiverAddress->m_walletID) : _originalToken;
+    return _receiverAddress ? beamui::toString(_receiverAddress->m_BbsAddr) : _originalToken;
 }
 
 bool ReceiveViewModel::getCommentValid() const
 {
     if (_receiverAddress)
     {
-        return _walletModel->isOwnAddress(_receiverAddress->m_walletID) ||
+        return _walletModel->isOwnAddress(_receiverAddress->m_BbsAddr) ||
                !_walletModel->isAddressWithCommentExist(_receiverAddress->m_label);
     }
     else

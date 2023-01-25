@@ -47,7 +47,7 @@ QString AddressItem::getToken() const
 
 QString AddressItem::getWalletID() const
 {
-    return QString::fromStdString(std::to_string(m_walletAddress.m_walletID));
+    return QString::fromStdString(std::to_string(m_walletAddress.m_BbsAddr));
 }
 
 QString AddressItem::getName() const
@@ -62,7 +62,7 @@ QString AddressItem::getCategory() const
 
 QString AddressItem::getIdentity() const
 {
-    return beamui::toString(m_walletAddress.m_Identity);
+    return beamui::toString(m_walletAddress.m_Endpoint);
 }
 
 QDateTime AddressItem::getExpirationDate() const
@@ -109,7 +109,7 @@ ContactItem::ContactItem(const beam::wallet::WalletAddress& address)
 
 QString ContactItem::getWalletID() const
 {
-    return QString::fromStdString(std::to_string(m_walletAddress.m_walletID));
+    return QString::fromStdString(std::to_string(m_walletAddress.m_BbsAddr));
 }
 
 QString ContactItem::getName() const
@@ -124,9 +124,9 @@ QString ContactItem::getCategory() const
 
 QString ContactItem::getIdentity() const
 {
-    if (m_walletAddress.m_Identity != Zero)
+    if (m_walletAddress.m_Endpoint != Zero)
     {
-        return beamui::toString(m_walletAddress.m_Identity);
+        return beamui::toString(m_walletAddress.m_Endpoint);
     }
     return QString();
 }
@@ -389,7 +389,7 @@ void AddressBookViewModel::onTransactions(beam::wallet::ChangeAction action, con
                 {
                     if (!tx.canDelete())    // only active transactions
                     {
-                        m_busyAddresses.push_back(tx.m_myId);
+                        m_busyAddresses.push_back(tx.m_myAddr);
                     }
                 }
                 break;
@@ -399,7 +399,7 @@ void AddressBookViewModel::onTransactions(beam::wallet::ChangeAction action, con
             {
                 for (const auto& tx : transactions)
                 {
-                    auto it = find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), tx.m_myId);
+                    auto it = find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), tx.m_myAddr);
                     if (it != m_busyAddresses.cend() && tx.canDelete())
                     {
                         m_busyAddresses.erase(it);
@@ -412,7 +412,7 @@ void AddressBookViewModel::onTransactions(beam::wallet::ChangeAction action, con
             {
                 for (const auto& tx : transactions)
                 {
-                    auto it = find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), tx.m_myId);
+                    auto it = find(m_busyAddresses.cbegin(), m_busyAddresses.cend(), tx.m_myAddr);
                     if (it != m_busyAddresses.cend())
                     {
                         m_busyAddresses.erase(it);

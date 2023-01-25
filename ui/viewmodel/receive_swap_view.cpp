@@ -354,7 +354,7 @@ void ReceiveSwapViewModel::setOfferExpires(int value)
 
 QString ReceiveSwapViewModel::getReceiverAddress() const
 {
-    return beamui::toString(_receiverAddress.m_walletID);
+    return beamui::toString(_receiverAddress.m_BbsAddr);
 }
 
 void ReceiveSwapViewModel::generateNewAddress()
@@ -529,7 +529,7 @@ void ReceiveSwapViewModel::updateTransactionToken()
 
     FillSwapTxParams(
         &_txParameters,
-        _receiverAddress.m_walletID,
+        _receiverAddress.m_BbsAddr,
         _walletModel->getCurrentHeight(),
         beamAmount,
         beamFee,

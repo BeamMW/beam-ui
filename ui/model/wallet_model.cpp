@@ -165,12 +165,12 @@ void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const st
         {
             if (action == beam::wallet::ChangeAction::Removed)
             {
-                m_myWalletIds.erase(item.m_walletID);
+                m_myWalletIds.erase(item.m_BbsAddr);
                 m_myAddrLabels.erase(item.m_label);
             }
             else
             {
-                m_myWalletIds.emplace(item.m_walletID);
+                m_myWalletIds.emplace(item.m_BbsAddr);
                 m_myAddrLabels.emplace(item.m_label);
             }
         }
@@ -423,7 +423,7 @@ void WalletModel::setAddresses(bool own, const std::vector<beam::wallet::WalletA
 
         for (const auto& addr : addrs)
         {
-            m_myWalletIds.emplace(addr.m_walletID);
+            m_myWalletIds.emplace(addr.m_BbsAddr);
             m_myAddrLabels.emplace(addr.m_label);
         }
     }

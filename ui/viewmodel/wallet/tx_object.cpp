@@ -336,9 +336,9 @@ QString TxObject::getAddressFrom() const
 {
     if (_tx.m_txType == wallet::TxType::PushTransaction && !_tx.m_sender)
     {
-        return getSenderIdentity();
+        return getSenderEndpoint();
     }
-    return toString(_tx.m_sender ? _tx.m_myId : _tx.m_peerId);
+    return toString(_tx.m_sender ? _tx.m_myAddr : _tx.m_peerAddr);
 }
 
 QString TxObject::getAddressTo() const
@@ -347,11 +347,11 @@ QString TxObject::getAddressTo() const
     {
         auto token = getToken();
         if (token.isEmpty())
-            return toString(_tx.m_peerId);
+            return toString(_tx.m_peerAddr);
 
         return token;
     }
-    return toString(_tx.m_myId);
+    return toString(_tx.m_myAddr);
 }
 
 QString TxObject::getAmountGeneral() const
@@ -474,14 +474,14 @@ QString TxObject::getToken() const
     return QString::fromStdString(tx.getToken());
 }
 
-QString TxObject::getSenderIdentity() const
+QString TxObject::getSenderEndpoint() const
 {
-    return QString::fromStdString(_tx.getSenderIdentity());
+    return QString::fromStdString(_tx.getSenderEndpoint());
 }
 
 QString TxObject::getReceiverIdentity() const
 {
-    return QString::fromStdString(_tx.getReceiverIdentity());
+    return QString::fromStdString(_tx.getReceiverEndpoint());
 }
 
 bool TxObject::isMultiAsset() const

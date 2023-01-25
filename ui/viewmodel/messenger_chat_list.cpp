@@ -101,7 +101,7 @@ void MessengerChatList::onChatList(const std::vector<beam::wallet::WalletID>& ch
     {
         std::string name = "Anounimus";
         auto it = std::find_if(_contacts.begin(), _contacts.end(),
-                               [&item] (const auto& addr) { return addr.m_walletID == item;});
+                               [&item] (const auto& addr) { return addr.m_BbsAddr == item;});
         if (it != _contacts.end())
             name = it->m_label;
         modifiedItems.emplace_back(ChatItem{item, name});

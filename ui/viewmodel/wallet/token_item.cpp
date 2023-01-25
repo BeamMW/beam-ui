@@ -88,9 +88,9 @@ QString TokenInfoItem::getAddress() const
 
 QString TokenInfoItem::getIdentity() const
 {
-    if (m_identity != Zero)
+    if (m_Endpoint != Zero)
     {
-        return toString(m_identity);
+        return toString(m_Endpoint);
     }
     return "";
 }
@@ -127,7 +127,7 @@ void TokenInfoItem::setToken(const QString& token)
             m_UnitName = _amgr->getUnitName(m_assetId, AssetsManager::NoShorten);
 
             auto identity = params.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
-            m_identity = identity ? *identity : Zero;
+            m_Endpoint = identity ? *identity : Zero;
 
             auto type = params.GetParameter<TxType>(TxParameterID::TransactionType);
             if (type)
@@ -214,6 +214,6 @@ void TokenInfoItem::reset()
     m_isPublicOffline = false;
     m_amountValue = 0;
     m_addressSBBS = Zero;
-    m_identity = Zero;
+    m_Endpoint = Zero;
     m_offlinePayments = 0;
 }

@@ -133,7 +133,7 @@ namespace {
 
     QString getAddress(const beam::wallet::Notification& notification)
     {
-        return beamui::toString(getWalletAddressRaw(notification).m_walletID);
+        return beamui::toString(getWalletAddressRaw(notification).m_BbsAddr);
     }
 
     QString getTxCompletedMessage(const QString& amount, const QString& unitName, const QString& peer, bool isSender)

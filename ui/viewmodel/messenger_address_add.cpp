@@ -67,7 +67,7 @@ void MessengerAddressAdd::setAddress(const QString& addr)
                 _contacts.begin(), _contacts.end(),
                 [peerID] (const beam::wallet::WalletAddress& addr) 
                 {
-                    return addr.m_walletID == *peerID;
+                    return addr.m_BbsAddr == *peerID;
                 });
             if (fRes != _contacts.end())
             {
@@ -96,7 +96,7 @@ void MessengerAddressAdd::saveAddress()
     if (!_error && _peerID.IsValid())
     {
         beam::wallet::WalletAddress address;
-        address.m_walletID   = _peerID;
+        address.m_BbsAddr   = _peerID;
         address.m_createTime = beam::getTimestamp();
         address.m_label      = _name.trimmed().toStdString();
         address.m_duration   = beam::wallet::WalletAddress::AddressExpirationNever;
