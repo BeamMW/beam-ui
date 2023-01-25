@@ -45,7 +45,7 @@ void ReceiveViewModel::updateToken()
                 if (!guard) return;
                 if (!v.empty())
                 {
-                    _receiverAddress->m_Address = GenerateMaxPrivacyToken(*_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion());
+                    _receiverAddress->m_Token = GenerateMaxPrivacyToken(*_receiverAddress, _amount, _assetId, v[0], AppModel::getMyVersion());
                     emit tokenChanged();
                 }
             });
@@ -57,7 +57,7 @@ void ReceiveViewModel::updateToken()
                 if (!guard) return;
                 if (!v.empty())
                 {
-                    _receiverAddress->m_Address = GenerateOfflineToken(*_receiverAddress, _amount, _assetId, v, AppModel::getMyVersion());
+                    _receiverAddress->m_Token = GenerateOfflineToken(*_receiverAddress, _amount, _assetId, v, AppModel::getMyVersion());
                     emit tokenChanged();
                 }
             });
@@ -152,7 +152,7 @@ void ReceiveViewModel::setToken(const QString& token)
 
 QString ReceiveViewModel::getToken() const
 {
-    return _receiverAddress ? QString::fromStdString(_receiverAddress->m_Address) : _originalToken;
+    return _receiverAddress ? QString::fromStdString(_receiverAddress->m_Token) : _originalToken;
 }
 
 QString ReceiveViewModel::getSbbsAddress() const

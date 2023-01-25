@@ -42,7 +42,7 @@ AddressItem::AddressItem(beam::wallet::WalletAddress address)
 
 QString AddressItem::getToken() const
 {
-    return QString::fromStdString(m_walletAddress.m_Address);
+    return QString::fromStdString(m_walletAddress.m_Token);
 }
 
 QString AddressItem::getWalletID() const
@@ -133,7 +133,7 @@ QString ContactItem::getIdentity() const
 
 QString ContactItem::getToken() const
 {
-    return QString::fromStdString(m_walletAddress.m_Address);
+    return QString::fromStdString(m_walletAddress.m_Token);
 }
 
 AddressBookViewModel::AddressBookViewModel()
@@ -338,7 +338,7 @@ void AddressBookViewModel::onAddresses(bool own, const std::vector<beam::wallet:
 
         for (const auto& addr : addresses)
         {
-            assert(!addr.m_Address.empty());
+            assert(!addr.m_Token.empty());
             if (addr.isExpired())
             {
                 m_expiredAddresses.push_back(new AddressItem(addr));

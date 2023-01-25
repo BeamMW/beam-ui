@@ -168,7 +168,9 @@ ColumnLayout {
                         SFText {
                             Layout.margins: 7
                             Layout.topMargin: 0
+                            Layout.maximumWidth: scrollView.width - 70
                             text: message
+                            wrapMode: Text.WrapAnywhere
                             font.pixelSize: 16
                             color: Style.content_main
                         }

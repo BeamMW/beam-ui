@@ -100,7 +100,7 @@ void MessengerAddressAdd::saveAddress()
         address.m_createTime = beam::getTimestamp();
         address.m_label      = _name.trimmed().toStdString();
         address.m_duration   = beam::wallet::WalletAddress::AddressExpirationNever;
-        address.m_Address    = _address.toStdString();
+        address.m_Token    = _address.toStdString();
         _walletModel->getAsync()->saveAddress(address);
     }
 }

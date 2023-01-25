@@ -390,7 +390,7 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
         address.m_Endpoint   = _receiverIdentity;
         address.m_label      = trimmed.toStdString();
         address.m_duration   = WalletAddress::AddressExpirationNever;
-        address.m_Address    = _token.toStdString();
+        address.m_Token    = _token.toStdString();
         _walletModel->getAsync()->saveAddress(address);
     }
     else
@@ -425,7 +425,7 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
     {
         setComment(QString::fromStdString(address->m_label));
 
-        [[maybe_unused]] const auto type = GetAddressType(address->m_Address);
+        [[maybe_unused]] const auto type = GetAddressType(address->m_Token);
         if (_receiverWalletID != beam::Zero)
         {
             if (_receiverWalletID != address->m_BbsAddr)
