@@ -3900,5 +3900,9 @@ Please, restart the wallet and try again.</source>
         <source>anonimus</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="chat-message-placeholder-osx">
+        <source>[command + enter] to send</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

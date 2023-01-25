@@ -3841,7 +3841,7 @@ Please, restart the wallet and try again.</source>
     </message>
     <message id="settings-ca-descr">
         <source>Confidential assets allowed to receive</source>
-        <translation type="unfinished"></translation>
+        <translation>Confidential assets allowed to receive</translation>
     </message>
     <message id="assets-settings">
         <source>Assets settings</source>
@@ -3849,39 +3849,43 @@ Please, restart the wallet and try again.</source>
     </message>
     <message id="messenger-title">
         <source>Beam Messenger</source>
-        <translation type="unfinished"></translation>
+        <translation>Beam Messenger</translation>
     </message>
     <message id="messenger-new-chat">
         <source>New chat</source>
-        <translation type="unfinished"></translation>
+        <translation>New chat</translation>
     </message>
     <message id="chat-title">
         <source>Chat with %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat with %1</translation>
     </message>
     <message id="chat-message-placeholder">
         <source>[ctrl + enter] to send</source>
-        <translation type="unfinished"></translation>
+        <translation>[ctrl + enter] to send</translation>
     </message>
     <message id="messenger-add-receiver-address-dialog-title">
         <source>Add receiver address</source>
-        <translation type="unfinished"></translation>
+        <translation>Add receiver address</translation>
     </message>
     <message id="messenger-add-receiver-address-address">
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
+        <translation>Address</translation>
     </message>
     <message id="messenger-add-receiver-address-name">
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message id="messenger-add-receiver-address-save">
         <source>add receiver address</source>
-        <translation type="unfinished"></translation>
+        <translation>add receiver address</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonimus</source>
-        <translation type="unfinished"></translation>
+        <translation>anonimus</translation>
+    </message>
+    <message id="chat-message-placeholder-osx">
+        <source>[command + enter] to send</source>
+        <translation>[command + enter] to send</translation>
     </message>
 </context>
 </TS>
