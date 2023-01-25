@@ -39,6 +39,9 @@ ColumnLayout {
         onMessagesChanged: {
             scrollDownTimer.start();
         }
+        onEndChat: {
+            onClosed();
+        }
     }
 
     MessengerAddReceiver {
@@ -80,11 +83,32 @@ ColumnLayout {
     RowLayout {
         Layout.topMargin:    10
         Layout.bottomMargin: 15
+        Layout.fillWidth: true
         SFText {
+            Layout.fillWidth: true
             text: thisView.receiverAddr
             font.pixelSize: 14
             color: Style.content_secondary
             wrapMode: Text.Wrap
+        }
+
+        SvgImage {
+            Layout.rightMargin: 12
+            Layout.alignment: Qt.AlignRight
+            source: "qrc:/assets/icon-delete.svg"
+            sourceSize: Qt.size(16, 16)
+
+            MouseArea {
+                z: 42
+                anchors.fill:            parent
+                hoverEnabled:            true
+                propagateComposedEvents: true
+                cursorShape:             Qt.PointingHandCursor
+                onClicked: {
+                    console.log('delete chat');
+                    chatModel.removeChat();
+                }
+            }
         }
     }
 
@@ -102,9 +126,6 @@ ColumnLayout {
 
         function scrollTo(type, ratio) {
             var scrollFunc = function (bar, ratio) {
-                console.log('ratio: ' + ratio);
-                console.log('bar.size: ' + bar.size);
-                
                 bar.setPosition(ratio - bar.size)
             }
             switch(type) {

@@ -72,6 +72,10 @@ MessengerChat::MessengerChat() :
             SIGNAL(chatMessages(const std::vector<beam::wallet::InstantMessage>&)),
             SLOT(onMessages(const std::vector<beam::wallet::InstantMessage>&)));
 
+    connect(_walletModel.get(),
+            SIGNAL(chatRemoved(const beam::wallet::WalletID&)),
+            SLOT(onChatRemoved(const beam::wallet::WalletID&)));
+
     _walletModel->getAsync()->getAddresses(true);
 }
 
@@ -105,6 +109,11 @@ void MessengerChat::sendMessage(const QString& text)
         auto textStr = text.toStdString();
         _walletModel->getAsync()->sendInstantMessage(_peerID, _myID, beam::ByteBuffer(textStr.begin(), textStr.end()));
     }
+}
+
+void MessengerChat::removeChat()
+{
+    _walletModel->getAsync()->removeChat(_peerID);
 }
 
 void MessengerChat::onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses)
@@ -154,4 +163,12 @@ void MessengerChat::onMessages(const std::vector<beam::wallet::InstantMessage>& 
     }
     _messeges.reset(modifiedItems);
     emit messagesChanged();
+}
+
+void MessengerChat::onChatRemoved(const beam::wallet::WalletID& counterpart)
+{
+    if (counterpart == _peerID)
+    {
+        emit endChat();
+    }
 }

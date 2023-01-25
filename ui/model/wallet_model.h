@@ -100,6 +100,7 @@ signals:
     void instantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
     void chatList(const std::vector<beam::wallet::WalletID>& chats);
     void chatMessages(const std::vector<beam::wallet::InstantMessage>& messages);
+    void chatRemoved(const beam::wallet::WalletID& counterpart);
 
     #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -168,6 +169,7 @@ private:
     void onInstantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome) override;
     void onGetChatList(const std::vector<beam::wallet::WalletID>& chats) override;
     void onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages) override;
+    void onChatRemoved(const beam::wallet::WalletID& counterpart) override;
 
     #ifdef BEAM_IPFS_SUPPORT
     virtual void onIPFSStatus(bool running, const std::string& error, unsigned int peercnt) override;

@@ -393,6 +393,11 @@ void WalletModel::onGetChatMessages(const std::vector<beam::wallet::InstantMessa
     emit chatMessages(messages);
 }
 
+void WalletModel::onChatRemoved(const beam::wallet::WalletID& counterpart)
+{
+    emit chatRemoved(counterpart);
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;

@@ -63,15 +63,18 @@ public:
     QAbstractItemModel* getMessages();
 
     Q_INVOKABLE void sendMessage(const QString& text);
+    Q_INVOKABLE void removeChat();
 
 public slots:
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses);
     void onMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
     void onMessages(const std::vector<beam::wallet::InstantMessage>& messages);
+    void onChatRemoved(const beam::wallet::WalletID& counterpart);
 
 signals:
     void peerIDChanged();
     void messagesChanged();
+    void endChat();
 
 private:
     WalletModel::Ptr _walletModel;
