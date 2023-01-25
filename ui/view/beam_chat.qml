@@ -212,7 +212,7 @@ ColumnLayout {
                 backgroundColor: Style.content_main
                 placeholderText:  Qt.platform.os == "osx" ?
                     //% "[command + enter] to send"
-                    : qsTrId("chat-message-placeholder-osx")
+                    qsTrId("chat-message-placeholder-osx")
                     //% "[ctrl + enter] to send"
                     : qsTrId("chat-message-placeholder")
                 enabled: sendButton.enabled
