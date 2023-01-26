@@ -90,7 +90,7 @@ QString TokenInfoItem::getIdentity() const
 {
     if (m_Endpoint != Zero)
     {
-        return toString(m_Endpoint);
+        return QString::fromStdString(std::to_base58(m_Endpoint));
     }
     return "";
 }
@@ -116,8 +116,8 @@ void TokenInfoItem::setToken(const QString& token)
 
             const TxParameters& params = *p;
 
-            auto walletID = params.GetParameter<WalletID>(TxParameterID::PeerID);
-            m_addressSBBS = walletID ? *walletID : Zero;
+            auto walletAddr = params.GetParameter<WalletID>(TxParameterID::PeerAddr);
+            m_addressSBBS = walletAddr ? *walletAddr : Zero;
 
             auto amount = params.GetParameter<Amount>(TxParameterID::Amount);
             m_amountValue = amount ? *amount : 0;
@@ -126,8 +126,8 @@ void TokenInfoItem::setToken(const QString& token)
             m_assetId  = assetId ? *assetId : 0;
             m_UnitName = _amgr->getUnitName(m_assetId, AssetsManager::NoShorten);
 
-            auto identity = params.GetParameter<PeerID>(TxParameterID::PeerWalletIdentity);
-            m_Endpoint = identity ? *identity : Zero;
+            auto peerEndpoint = params.GetParameter<PeerID>(TxParameterID::PeerEndpoint);
+            m_Endpoint = peerEndpoint ? *peerEndpoint : Zero;
 
             auto type = params.GetParameter<TxType>(TxParameterID::TransactionType);
             if (type)
@@ -143,9 +143,9 @@ void TokenInfoItem::setToken(const QString& token)
                     if (vouchers && !vouchers->empty())
                     {
                         m_isOffline = true;
-                        if (walletID)
+                        if (walletAddr)
                         {
-                            AppModel::getInstance().getWalletModel()->getAsync()->saveVouchers(*vouchers, *walletID);
+                            AppModel::getInstance().getWalletModel()->getAsync()->saveVouchers(*vouchers, *walletAddr);
                         }
                     } 
                     else
@@ -176,10 +176,10 @@ void TokenInfoItem::setToken(const QString& token)
                 m_isPermanent = true;
             }
 
-            if (walletID)
+            if (walletAddr)
             {
                 QPointer<TokenInfoItem> guard(this);
-                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletID, [guard, this](const auto& addr, auto count)
+                AppModel::getInstance().getWalletModel()->getAsync()->getAddress(*walletAddr, [guard, this](const auto& addr, auto count)
                 {
                     if (!guard) return;
                     setOfflinePayments((int)count);

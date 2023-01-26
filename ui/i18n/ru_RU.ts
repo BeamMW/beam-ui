@@ -744,15 +744,15 @@
         <translation>Создать новый пароль для доступа к вашему кошельку</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:
-•  the length must be at least 10 characters
-•  must contain at least one lowercase letter
-•  must contain at least one uppercase letter
-•  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:<byte value="xd"/>
+        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
 •  the length must be at least 10 characters<byte value="xd"/>
 •  must contain at least one lowercase letter<byte value="xd"/>
 •  must contain at least one uppercase letter<byte value="xd"/>
+•  must contain at least one number</source>
+        <oldsource>Strong password needs to meet the following requirements:
+•  the length must be at least 10 characters
+•  must contain at least one lowercase letter
+•  must contain at least one uppercase letter
 •  must contain at least one number</oldsource>
         <translation type="unfinished">Хороший пароль должен соответствовать следующим требованиям:
         •  длина минимум 10 символов
@@ -775,9 +775,9 @@
         <translation>Ваш адрес</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2
+        <source>Allow access to %1 and %2<byte value="xd"/>
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2<byte value="xd"/>
+        <oldsource>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
         <translation type="unfinished">Разрешить доступ к %1 и %2
@@ -985,9 +985,9 @@
         <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, 
+        <source>%1 is not connected, <byte value="xd"/>
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, <byte value="xd"/>
+        <oldsource>%1 is not connected, 
 please review your settings and try again</oldsource>
         <translation type="unfinished">%1 не подключен, 
 проверьте настройки и повторите попытку</translation>
@@ -1177,9 +1177,9 @@ please review your settings and try again</oldsource>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.
+        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.<byte value="xd"/>
+        <oldsource>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</oldsource>
         <translation type="unfinished">Предложение обмена с этим токеном уже принято.
 Пожалуйста, проверьте токен и повторите попытку.</translation>
@@ -1394,11 +1394,11 @@ Please check the swap token and try again.</oldsource>
         <translation>Ключ владельца</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to<byte value="xd"/>
+        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
 know all your funds (UTXO). Make sure that you<byte value="xd"/>
+deploy the key at the node you trust completely.</source>
+        <oldsource>Please notice, that knowing your owner key allows to
+know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
         <translation type="unfinished">Пожалуйста, обратите внимание, что знание ключа владельца позволяет
@@ -1872,9 +1872,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Отправитель не может получить ваучеры для транзакции с макс. приватностью</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed 
+        <source>Random node address and port will be displayed <byte value="xd"/>
 when connection is established</source>
-        <oldsource>Random node address and port will be displayed <byte value="xd"/>
+        <oldsource>Random node address and port will be displayed 
 when connection is established</oldsource>
         <translation type="unfinished">Адрес и порт случайного узла будут показаны 
 при установлении соединения</translation>
@@ -2137,11 +2137,11 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Максимальная комиссия %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</source>
-        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
+        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
 Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
+much longer for a transaction to complete.</source>
+        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</oldsource>
         <translation type="unfinished">Ошибка соединения: невозможно рассчитать рекомендованную ставку комиссии. 
 Проверьте %1 блокчейн самостоятельно. Низкая комиссия может потребовать
@@ -2270,9 +2270,9 @@ much longer for a transaction to complete.</oldsource>
         <translation>Пожалуйста, подождите, загружаются предложения.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
+        <source>There are no active offers at the moment.<byte value="xd"/>
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.<byte value="xd"/>
+        <oldsource>There are no active offers at the moment.
 Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">В данный момент нет активных предложений.
 Пожалуйста, повторите попытку позже или создайте предложение самостоятельно.</translation>
@@ -2326,9 +2326,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation>аварийное завершение</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
+        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.<byte value="xd"/>
+        <oldsource>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</oldsource>
         <translation type="unfinished">У вас нет подключенных сторонних валют.
 Обновите настройки и повторите попытку.</translation>
@@ -2622,16 +2622,18 @@ Update your settings and try again.</oldsource>
         <translation>Адрес отправителя</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender&apos;s wallet signature</source>
-        <translation>Подпись кошелька отправителя</translation>
+        <source>Sender Endpoint</source>
+        <oldsource>Sender&apos;s wallet signature</oldsource>
+        <translation type="unfinished">Подпись кошелька отправителя</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>Адрес получателя</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver&apos;s wallet signature</source>
-        <translation>Подпись кошелька получателя</translation>
+        <source>Receiver Endpoint</source>
+        <oldsource>Receiver&apos;s wallet signature</oldsource>
+        <translation type="unfinished">Подпись кошелька получателя</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2869,11 +2871,11 @@ Update your settings and try again.</oldsource>
         <translation type="unfinished">Приватность DApps</translation>
     </message>
     <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.<byte value="xd"/>
+        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.<byte value="xd"/>
 <byte value="xd"/>
+Allow to proceed? You can always update your choice in Settings later.</source>
+        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
+
 Allow to proceed? You can always update your choice in Settings later.</oldsource>
         <translation type="unfinished">Beam Wallet требует разрешения на запуск распределенных приложений. Это действие может раскрыть вашу информацию, включая, но не ограничиваясь IP-адресами веб-серверов и/или контрактами сторонних разработчиков.
 
@@ -2896,8 +2898,9 @@ Allow to proceed? You can always update your choice in Settings later.</oldsourc
         <translation>Общая информация</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Wallet&apos;s signature</source>
-        <translation>Подпись кошелька</translation>
+        <source>Endpoint</source>
+        <oldsource>Wallet&apos;s signature</oldsource>
+        <translation type="unfinished">Подпись кошелька</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -3142,9 +3145,9 @@ cannot be canceled.</source>
         <translation>Обновите кошелек для запуска приложения %1</translation>
     </message>
     <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.
+        <source>To ensure a better privacy, new address is generated every time.<byte value="xd"/>
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <oldsource>To ensure a better privacy, new address is generated every time.<byte value="xd"/>
+        <oldsource>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</oldsource>
         <translation type="unfinished">Для повышения конфиденциальности каждый раз генерируется новый адрес.
 Если вы хотите повторно использовать ранее созданный обычный адрес, пожалуйста, используйте адресную книгу.</translation>
@@ -3158,9 +3161,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation>Детали токена</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit
+        <source>No limit<byte value="xd"/>
 (transaction can last indefinitely)</source>
-        <oldsource>No limit<byte value="xd"/>
+        <oldsource>No limit
 (transaction can last indefinitely)</oldsource>
         <translation type="unfinished">Без ограничений
 (транзакция может длиться бесконечно)</translation>
@@ -3588,11 +3591,11 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation type="unfinished"></translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.
-If something is wrong, please cancel the uploading,
-change the information in your file and upload your file again.</source>
-        <oldsource>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
+        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
 If something is wrong, please cancel the uploading,<byte value="xd"/>
+change the information in your file and upload your file again.</source>
+        <oldsource>Check the information below and select &quot;publish&quot;.
+If something is wrong, please cancel the uploading,
 change the information in your file and upload your file again.</oldsource>
         <translation type="unfinished"></translation>
     </message>

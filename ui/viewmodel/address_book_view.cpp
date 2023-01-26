@@ -62,7 +62,7 @@ QString AddressItem::getCategory() const
 
 QString AddressItem::getIdentity() const
 {
-    return beamui::toString(m_walletAddress.m_Endpoint);
+    return QString::fromStdString(std::to_base58(m_walletAddress.m_Endpoint));
 }
 
 QDateTime AddressItem::getExpirationDate() const
@@ -126,7 +126,7 @@ QString ContactItem::getIdentity() const
 {
     if (m_walletAddress.m_Endpoint != Zero)
     {
-        return beamui::toString(m_walletAddress.m_Endpoint);
+        return QString::fromStdString(std::to_base58(m_walletAddress.m_Endpoint));
     }
     return QString();
 }

@@ -406,7 +406,7 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
         }
         else
         {
-            // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
+            // Max privacy & public offline tokens do not have valid PeerAddr (_receiverWalletID)
             _walletModel->getAsync()->getAddressByToken(_token.toStdString(), [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
             {
                 WalletAddress address = *addr;
@@ -496,9 +496,9 @@ void SendViewModel::extractParameters()
     _vouchersLeft     = 0;
     _newTokenMsg.clear();
 
-    if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
+    if (auto peerAddr = _txParameters.GetParameter<WalletID>(TxParameterID::PeerAddr); peerAddr)
     {
-        _receiverWalletID = *peerID;
+        _receiverWalletID = *peerAddr;
         if (_receiverWalletID != beam::Zero)
         {
             if(auto vouchers = _txParameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList); vouchers)
@@ -512,9 +512,9 @@ void SendViewModel::extractParameters()
         }
     }
 
-    if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
+    if (auto peerEndpoint = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerEndpoint); peerEndpoint)
     {
-        _receiverIdentity = *peerIdentity;
+        _receiverIdentity = *peerEndpoint;
     }
 
     if (auto amount = _txParameters.GetParameter<beam::Amount>(TxParameterID::Amount); amount && *amount > 0)
@@ -548,7 +548,7 @@ void SendViewModel::extractParameters()
     }
     else
     {
-        // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
+        // Max privacy & public offline tokens do not have valid PeerAddr (_receiverWalletID)
         QPointer<SendViewModel> guard(this);
         _walletModel->getAsync()->getAddressByToken(_token.toStdString(), [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
         {

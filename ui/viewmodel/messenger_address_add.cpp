@@ -59,15 +59,15 @@ void MessengerAddressAdd::setAddress(const QString& addr)
         if (_error)
             return;
 
-        auto peerID = p->GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerID);
-        if (peerID)
+        auto peerAddr = p->GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerAddr);
+        if (peerAddr)
         {
-            _peerID = *peerID;
+            _peerID = *peerAddr;
             auto fRes = std::find_if(
                 _contacts.begin(), _contacts.end(),
-                [peerID] (const beam::wallet::WalletAddress& addr) 
+                [peerAddr] (const beam::wallet::WalletAddress& addr)
                 {
-                    return addr.m_BbsAddr == *peerID;
+                    return addr.m_BbsAddr == *peerAddr;
                 });
             if (fRes != _contacts.end())
             {

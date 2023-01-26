@@ -490,17 +490,17 @@ void ReceiveSwapViewModel::publishToken()
         PrepareSwapTxParamsForTokenization(mirroredTxParams);
 
     auto txId = readyForTokenizeTxParams.GetTxID();
-    auto publisherId =
+    auto publisherAddr =
         readyForTokenizeTxParams.GetParameter<beam::wallet::WalletID>(
-            beam::wallet::TxParameterID::PeerID);
+            beam::wallet::TxParameterID::PeerAddr);
     auto coin =
         readyForTokenizeTxParams.GetParameter<beam::wallet::AtomicSwapCoin>(
             beam::wallet::TxParameterID::AtomicSwapCoin);
-    if (publisherId && txId && coin)
+    if (publisherAddr && txId && coin)
     {
         beam::wallet::SwapOffer offer(*txId);
         offer.m_txId = *txId;
-        offer.m_publisherId = *publisherId;
+        offer.m_publisherId = *publisherAddr;
         offer.m_status = beam::wallet::SwapOfferStatus::Pending;
         offer.m_coin = *coin;
         offer.SetTxParameters(readyForTokenizeTxParams.Pack());

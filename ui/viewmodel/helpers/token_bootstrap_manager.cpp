@@ -74,9 +74,9 @@ void TokenBootstrapManager::checkTokenForDuplicate(const QString& token)
     }
 
     auto parametrsValue = *parameters;
-    auto peerID = parametrsValue.GetParameter<beam::wallet::WalletID>(
-        beam::wallet::TxParameterID::PeerID);
-    if (peerID && _wallet_model->isOwnAddress(*peerID))
+    auto peerAddr = parametrsValue.GetParameter<beam::wallet::WalletID>(
+        beam::wallet::TxParameterID::PeerAddr);
+    if (peerAddr && _wallet_model->isOwnAddress(*peerAddr))
     {
         emit tokenOwnGenerated(token);
         return;

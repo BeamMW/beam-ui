@@ -52,9 +52,9 @@ namespace {
     bool getPeerID(const beam::wallet::TxParameters &p, beam::wallet::WalletID &result)
     {
         using namespace beam::wallet;
-        if (auto peerId = p.GetParameter<WalletID>(TxParameterID::PeerID))
+        if (auto peerAddr = p.GetParameter<WalletID>(TxParameterID::PeerAddr))
         {
-            result = *peerId;
+            result = *peerAddr;
             return true;
         } else
         {
@@ -172,9 +172,9 @@ namespace {
                 return std::to_string(wid).c_str();
             }
         }
-        if (auto peerID = p.GetParameter<PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity); peerID)
+        if (auto peerEndpoint = p.GetParameter<PeerID>(beam::wallet::TxParameterID::PeerEndpoint); peerEndpoint)
         {
-            return std::to_string(*peerID).c_str();
+            return std::to_base58(*peerEndpoint).c_str();
         }
 
         //% "shielded pool"
