@@ -170,7 +170,7 @@ ColumnLayout {
                             Layout.topMargin: 0
                             Layout.maximumWidth: scrollView.width - 70
                             text: message
-                            wrapMode: Text.WrapAnywhere
+                            wrapMode: Text.Wrap
                             font.pixelSize: 16
                             color: Style.content_main
                         }
