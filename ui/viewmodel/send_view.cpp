@@ -616,7 +616,6 @@ void SendViewModel::sendMoney()
             assert(false);
             return;
         }
-        CopyParameter(TxParameterID::PeerOwnID, _txParameters, params);
     }
     else
     {
