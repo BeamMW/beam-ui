@@ -249,6 +249,16 @@ CustomTableView {
         }
 
         Action {
+            id: verifyOnHWAction
+            //% "Verify on HW wallet"
+            text:        "Verify on HW wallet"
+            enabled:     contextMenu.addressItem && !contextMenu.addressItem.isExpired
+            onTriggered: {
+                viewModel.verifyOnHw(contextMenu.addressItem.token)
+            }
+        }
+
+        Action {
             id: showQRAction
             //: Entry in address table context menu to show QR
             //% "Show QR code"
