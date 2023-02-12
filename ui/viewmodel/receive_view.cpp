@@ -34,8 +34,14 @@ void ReceiveViewModel::updateToken()
     using namespace beam::wallet;
     QPointer<ReceiveViewModel> guard = this;
 
-    auto generateToken = [guard, this] () {
-        if (!guard) return;
+    auto onTokenGenerated = [guard, this] (std::string&& sToken)
+    {
+        if (!guard)
+            return;
+
+        _originalToken = QString::fromStdString(sToken);
+        emit tokenChanged();
+/*
         assert(_receiverAddress.is_initialized());
 
         if (_maxp)
@@ -61,9 +67,11 @@ void ReceiveViewModel::updateToken()
                     emit tokenChanged();
                 }
             });
-        }
+        }*/
     };
 
+    _walletModel->getAsync()->generateToken(_maxp ? TokenType::MaxPrivacy : TokenType::Offline, _amount, _assetId, AppModel::getMyVersion(), std::move(onTokenGenerated));
+/*
     if (!_receiverAddress)
     {
         _walletModel->getAsync()->generateNewAddress([guard, generateToken, this](const auto& addr){
@@ -77,7 +85,7 @@ void ReceiveViewModel::updateToken()
     else
     {
         generateToken();
-    }
+    }*/
 }
 
 QString ReceiveViewModel::getAmount() const
@@ -98,7 +106,19 @@ void ReceiveViewModel::setAmount(const QString& value)
 
 QString ReceiveViewModel::getComment() const
 {
-    return QString::fromStdString(_receiverAddress ? _receiverAddress->m_label : std::string());
+    // TODO: embed comment into token
+    return QString();
+
+    //std::string s = _originalToken.toStdString();
+    //if (!s.empty())
+    //{
+    //    auto pParams = beam::wallet::ParseParameters(s);
+    //    if (pParams)
+    //    {
+    //    }
+    //}
+
+    //return QString::fromStdString(_receiverAddress ? _receiverAddress->m_label : std::string());
 }
 
 void ReceiveViewModel::setToken(const QString& token)
@@ -112,7 +132,7 @@ void ReceiveViewModel::setToken(const QString& token)
 
     _originalToken = token;
     emit tokenChanged();
-
+/*
     QPointer<ReceiveViewModel> guard = this;
     _walletModel->getAsync()->getAddressByToken(token.toStdString(),
         [guard, this, token](const boost::optional<beam::wallet::WalletAddress>& address, size_t offlineCount) {
@@ -147,58 +167,75 @@ void ReceiveViewModel::setToken(const QString& token)
 
             updateToken();
         }
-    );
+    );*/
 }
 
 QString ReceiveViewModel::getToken() const
 {
-    return _receiverAddress ? QString::fromStdString(_receiverAddress->m_Token) : _originalToken;
+    return /*_receiverAddress ? QString::fromStdString(_receiverAddress->m_Token) : */_originalToken;
 }
 
 QString ReceiveViewModel::getSbbsAddress() const
 {
-    return _receiverAddress ? beamui::toString(_receiverAddress->m_BbsAddr) : _originalToken;
+    std::string s = _originalToken.toStdString();
+    if (!s.empty())
+    {
+        auto pParams = beam::wallet::ParseParameters(s);
+        if (pParams)
+        {
+            beam::PeerID pid;
+            if (pParams->GetParameter(beam::wallet::TxParameterID::PeerEndpoint, pid))
+                return QString::fromStdString(std::to_base58(pid));
+        }
+    }
+
+    return QString();
+
+
+//    return _receiverAddress ? beamui::toString(_receiverAddress->m_BbsAddr) : _originalToken;
 }
 
 bool ReceiveViewModel::getCommentValid() const
 {
-    if (_receiverAddress)
-    {
-        return _walletModel->isOwnAddress(_receiverAddress->m_BbsAddr) ||
-               !_walletModel->isAddressWithCommentExist(_receiverAddress->m_label);
-    }
-    else
-    {
+    //if (_receiverAddress)
+    //{
+    //    return _walletModel->isOwnAddress(_receiverAddress->m_BbsAddr) ||
+    //           !_walletModel->isAddressWithCommentExist(_receiverAddress->m_label);
+    //}
+    //else
+    //{
         return true;
-    }
+    //}
 }
 
 void ReceiveViewModel::setComment(const QString& value)
 {
-    if (_receiverAddress)
-    {
-        auto trimmed = value.trimmed().toStdString();
-        if (_receiverAddress->m_label != trimmed)
-        {
-            _receiverAddress->m_label = trimmed;
-            emit commentChanged();
-            emit commentValidChanged();
-        }
-    }
+    // TODO
+
+    //if (_receiverAddress)
+    //{
+    //    auto trimmed = value.trimmed().toStdString();
+    //    if (_receiverAddress->m_label != trimmed)
+    //    {
+    //        _receiverAddress->m_label = trimmed;
+    //        emit commentChanged();
+    //        emit commentValidChanged();
+    //    }
+    //}
 }
 
 void ReceiveViewModel::saveAddress()
 {
-    // If you open receive view from address book and
-    // hit copy and close fast it might happen that
-    // address still not received from another thread
-    if (_receiverAddress)
-    {
-        if (getCommentValid())
-        {
-            _walletModel->getAsync()->saveAddress(*_receiverAddress);
-        }
-    }
+    //// If you open receive view from address book and
+    //// hit copy and close fast it might happen that
+    //// address still not received from another thread
+    //if (_receiverAddress)
+    //{
+    //    if (getCommentValid())
+    //    {
+    //        _walletModel->getAsync()->saveAddress(*_receiverAddress);
+    //    }
+    //}
 }
 
 bool ReceiveViewModel::getIsMaxPrivacy() const

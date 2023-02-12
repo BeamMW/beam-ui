@@ -32,7 +32,7 @@ AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
     connect(_walletModel.get(), &WalletModel::dexOrdersFinded,     this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
     connect(_walletModel.get(), &WalletModel::coinsSelected,       this, &AssetSwapAcceptViewModel::onCoinsSelected);
 
-    _walletModel->getAsync()->generateNewAddress();
+    //_walletModel->getAsync()->generateNewAddress();
 }
 
 void AssetSwapAcceptViewModel::startSwap()

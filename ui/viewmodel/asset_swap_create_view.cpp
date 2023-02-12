@@ -57,7 +57,7 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     }
 
     _walletModel->getAsync()->loadDexOrderParams();
-    _walletModel->getAsync()->generateNewAddress();
+    //_walletModel->getAsync()->generateNewAddress();
 }
 
 void AssetSwapCreateViewModel::publishOffer()

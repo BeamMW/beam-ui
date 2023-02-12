@@ -56,7 +56,7 @@ SendViewModel::SendViewModel()
     connect(_walletModel.get(),  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
     connect(_walletModel.get(),  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
 
-    _walletModel->getAsync()->getPublicAddress();
+    //_walletModel->getAsync()->getPublicAddress(); ??!?
 }
 
 beam::Amount SendViewModel::getTotalSpend() const
