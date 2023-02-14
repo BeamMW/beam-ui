@@ -13,10 +13,10 @@ Item {
     property var model
 
     function getStatus() {
-        if (model.isCoinClientFailed || model.ipfsError)
-            return "error_3rd";
         if (model.isFailedHww)
             return "error_hww";
+        if (model.isCoinClientFailed || model.ipfsError)
+            return "error_3rd";
         if (model.isFailedStatus)
             return "error";
         else if (model.isSyncInProgress)
@@ -135,7 +135,7 @@ Item {
         width: main.width - 70
         height: 24
         color: "transparent"
-        visible: !onlineTrusted.visible || !model.isExchangeRatesUpdated
+        visible: !onlineTrusted.visible || !model.isExchangeRatesUpdated || model.isFailedHww
         property color gradientColor: online_indicator.color
 
         LinearGradient {
@@ -286,7 +286,7 @@ Item {
                 target: status_text;
                 text: model.hwwError;
                 color: Style.accent_fail;
-
+                font.pixelSize: 20
             }
         },
         State {
