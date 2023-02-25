@@ -18,6 +18,7 @@ CustomDialog {
     property alias peerID: addressAddModel.peerID
     property alias peerAddr: addressAddModel.address
     property alias myAddr: addressAddModel.myAddress
+    property bool  nameEditMode: false
 
     MessengerAddressAdd {
         id: addressAddModel
@@ -72,6 +73,7 @@ CustomDialog {
                 currentIndex: addressAddModel.myAddressIndex
                 model: addressAddModel.myAddresses
                 textMaxLenDrop: 50
+                enabled: !control.nameEditMode
             }
 
             Binding {
@@ -106,13 +108,14 @@ CustomDialog {
                 color:            addressAddModel.error ? Style.validator_error : Style.content_main
                 backgroundColor:  addressAddModel.error ? Style.validator_error : Style.content_main
                 text:             addressAddModel.address
-                focus:            true
+                focus:            !control.nameEditMode
                 validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
                 Binding {
                     target:   addressAddModel
                     property: "address"
                     value:    addressInput.text
                 }
+                enabled: !control.nameEditMode
             }
 
             Row {
@@ -139,6 +142,7 @@ CustomDialog {
                 height: 45
                 color: Style.content_main
                 text: addressAddModel.name
+                focus: control.nameEditMode
                 Binding {
                     target:   addressAddModel
                     property: "name"

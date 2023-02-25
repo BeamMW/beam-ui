@@ -96,6 +96,33 @@ ColumnLayout {
         }
 
         SvgImage {
+            id: editIcon
+            Layout.leftMargin: 12
+            Layout.rightMargin: 12
+            Layout.alignment: Qt.AlignRight
+            source: "qrc:/assets/icon-edit.svg"
+            sourceSize: Qt.size(16, 16)
+
+            MouseArea {
+                z: 42
+                anchors.fill:            parent
+                hoverEnabled:            true
+                propagateComposedEvents: true
+                cursorShape:             Qt.PointingHandCursor
+                onClicked: {
+                    receiverAddrDialog.nameEditMode = true;
+                    receiverAddrDialog.peerAddr = thisView.receiverAddr;
+                    receiverAddrDialog.open();
+                }
+            }
+        }
+        ColorOverlay {
+            anchors.fill: editIcon
+            source: editIcon
+            color: Style.content_main
+        }
+
+        SvgImage {
             Layout.leftMargin: 12
             Layout.rightMargin: 12
             Layout.alignment: Qt.AlignRight
