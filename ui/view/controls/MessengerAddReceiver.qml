@@ -123,6 +123,13 @@ CustomDialog {
                     font.pixelSize: 14
                     font.weight: Font.Normal
                 }
+                SFText {
+                    text: "*"
+                    color: Style.content_main
+                    font.pixelSize: 14
+                    font.weight: Font.Normal
+                    verticalAlignment: TextInput.AlignTop
+                }
             }
 
             SFTextInput {
@@ -147,7 +154,7 @@ CustomDialog {
             //% "add receiver address"
             text: qsTrId("messenger-add-receiver-address-save")
             palette.buttonText: Style.content_opposite
-            enabled: addressInput.text.length != 0 && !addressAddModel.error
+            enabled: addressInput.text.length != 0 && nameInput.text.length != 0 && !addressAddModel.error
             onClicked: {
                 addressAddModel.saveAddress();
                 control.close();
