@@ -3914,5 +3914,9 @@ Please, restart the wallet and try again.</source>
         <source>[command + enter] to send</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="verify-on-hw-wallet">
+        <source>Verify on HW wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

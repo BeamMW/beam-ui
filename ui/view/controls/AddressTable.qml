@@ -251,7 +251,7 @@ CustomTableView {
         Action {
             id: verifyOnHWAction
             //% "Verify on HW wallet"
-            text:        "Verify on HW wallet"
+            text:        qsTrId("verify-on-hw-wallet")
             enabled:     contextMenu.addressItem && !contextMenu.addressItem.isExpired
             onTriggered: {
                 viewModel.verifyOnHw(contextMenu.addressItem.token)
