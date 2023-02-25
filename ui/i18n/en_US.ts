@@ -3503,7 +3503,7 @@ In case you’d like to re-use an earlier created regular address please use the
         <translation>To update %1, please add the new version of the file below</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-text">
-        <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
+        <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
         <translation>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</translation>
     </message>
     <message id="dapps-store-upload-common-error">
