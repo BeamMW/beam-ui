@@ -98,7 +98,7 @@ signals:
 
     void fullAssetsListLoaded();
     void instantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
-    void chatList(const std::vector<beam::wallet::WalletID>& chats);
+    void chatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats);
     void chatMessages(const std::vector<beam::wallet::InstantMessage>& messages);
     void chatRemoved(const beam::wallet::WalletID& counterpart);
 
@@ -167,7 +167,7 @@ private:
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
     void onFullAssetsListLoaded() override;
     void onInstantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome) override;
-    void onGetChatList(const std::vector<beam::wallet::WalletID>& chats) override;
+    void onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats) override;
     void onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages) override;
     void onChatRemoved(const beam::wallet::WalletID& counterpart) override;
 

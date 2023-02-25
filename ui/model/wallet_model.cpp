@@ -383,7 +383,7 @@ void WalletModel::onInstantMessage(Timestamp time, const beam::wallet::WalletID&
     emit instantMessage(time, counterpart, message, isIncome);
 }
 
-void WalletModel::onGetChatList(const std::vector<beam::wallet::WalletID>& chats)
+void WalletModel::onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats)
 {
     emit chatList(chats);
 }

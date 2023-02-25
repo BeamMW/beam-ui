@@ -32,6 +32,8 @@ if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())
             return QString::fromStdString(std::to_string(value._counterpartID));
         case Roles::Name:
             return QString::fromStdString(value._name);
+        case Roles::HaveUnread:
+            return value._haveUnread;
         default:
             return QVariant();
     }
@@ -42,7 +44,8 @@ QHash<int, QByteArray> MessengerChatListItem::roleNames() const
     static const auto roles = QHash<int, QByteArray>
     {
         { static_cast<int>(Roles::CID), "cid" },
-        { static_cast<int>(Roles::Name), "name" }
+        { static_cast<int>(Roles::Name), "name" },
+        { static_cast<int>(Roles::HaveUnread), "haveUnread" },
     };
     return roles;
 }
@@ -54,8 +57,8 @@ MessengerChatList::MessengerChatList() :
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
     connect(_walletModel.get(),
-            SIGNAL(chatList(const std::vector<beam::wallet::WalletID>& )),
-            SLOT(onChatList(const std::vector<beam::wallet::WalletID>& )));
+            SIGNAL(chatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& )),
+            SLOT(onChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& )));
 
     connect(_walletModel.get(),
             SIGNAL(instantMessage(beam::Timestamp, const beam::wallet::WalletID&, const std::string&, bool)),
@@ -90,7 +93,7 @@ void MessengerChatList::onAddresses(bool own, const std::vector<beam::wallet::Wa
     _walletModel->getAsync()->getChats();
 }
 
-void MessengerChatList::onChatList(const std::vector<beam::wallet::WalletID>& chats)
+void MessengerChatList::onChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats)
 {
     if (_signalBlocker) return;
 
@@ -101,10 +104,10 @@ void MessengerChatList::onChatList(const std::vector<beam::wallet::WalletID>& ch
     {
         std::string name = "Anounimus";
         auto it = std::find_if(_contacts.begin(), _contacts.end(),
-                               [&item] (const auto& addr) { return addr.m_BbsAddr == item;});
+                               [&item] (const auto& addr) { return addr.m_BbsAddr == item.first;});
         if (it != _contacts.end())
             name = it->m_label;
-        modifiedItems.emplace_back(ChatItem{item, name});
+        modifiedItems.emplace_back(ChatItem{item.first, name, item.second});
     }
     _chats.reset(modifiedItems);
     emit listChanged();

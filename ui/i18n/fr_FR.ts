@@ -3859,5 +3859,9 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
         <source>Verify on HW wallet</source>
         <translation type="unfinished">Verify on HW wallet</translation>
     </message>
+    <message id="messenger-add-receiver-address-my">
+        <source>My address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

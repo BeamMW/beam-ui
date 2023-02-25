@@ -49,16 +49,22 @@ private:
 class MessengerChat : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString peerID  READ getPeerID  WRITE setPeerID NOTIFY peerIDChanged)
-    Q_PROPERTY(bool    canSend READ getCanSend                 NOTIFY peerIDChanged)
+    Q_PROPERTY(QString address   READ getAddr       WRITE setAddr      NOTIFY peerIDChanged)
+    Q_PROPERTY(QString peerID    READ getPeerID     WRITE setPeerID    NOTIFY peerIDChanged)
+    Q_PROPERTY(QString myAddress READ getMyAddress  WRITE setMyAddress NOTIFY peerIDChanged)
+    Q_PROPERTY(bool    canSend   READ getCanSend                       NOTIFY canSendChanged)
 
     Q_PROPERTY(QAbstractItemModel* messages READ getMessages   NOTIFY messagesChanged)
 
 public:
     MessengerChat();
 
+    QString getAddr() const;
+    void setAddr(const QString& addr);
     QString getPeerID() const;
     void setPeerID(const QString& peerID);
+    QString getMyAddress() const;
+    void setMyAddress(const QString& myAddr);
     bool getCanSend() const;
     QAbstractItemModel* getMessages();
 
@@ -75,12 +81,15 @@ signals:
     void peerIDChanged();
     void messagesChanged();
     void endChat();
+    void canSendChanged();
 
 private:
     WalletModel::Ptr _walletModel;
     std::vector<beam::wallet::WalletAddress> _myIds;
 
+    std::string _peerAddr;
     beam::wallet::WalletID _peerID = beam::Zero;
+    std::string _myAddr;
     beam::wallet::WalletID _myID = beam::Zero;
 
     MessengesList _messeges;

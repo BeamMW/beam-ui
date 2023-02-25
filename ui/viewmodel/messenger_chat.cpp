@@ -79,6 +79,32 @@ MessengerChat::MessengerChat() :
     _walletModel->getAsync()->getAddresses(true);
 }
 
+QString MessengerChat::getAddr() const
+{
+    return QString::fromStdString(_peerAddr);
+}
+void MessengerChat::setAddr(const QString& addr)
+{
+    if (addr.isEmpty())
+        return;
+
+    _peerAddr = addr.toStdString();
+
+    auto p = beam::wallet::ParseParameters(_peerAddr);
+
+    if (!p)
+        return;
+
+    auto peerAddr = p->GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerAddr);
+    if (peerAddr)
+    {
+        _peerID = *peerAddr;
+    }
+
+    emit peerIDChanged();
+    _walletModel->getAsync()->getInstantMessages(_peerID);
+}
+
 QString MessengerChat::getPeerID() const
 {
     return _peerID.IsValid() ? QString::fromStdString(std::to_string(_peerID)) : "";
@@ -89,6 +115,31 @@ void MessengerChat::setPeerID(const QString& peerID)
     _peerID.FromHex(peerID.toStdString());
     emit peerIDChanged();
     _walletModel->getAsync()->getInstantMessages(_peerID);
+}
+
+QString MessengerChat::getMyAddress() const
+{
+    return QString::fromStdString(_myAddr);
+}
+
+void MessengerChat::setMyAddress(const QString& myAddr)
+{
+    if (myAddr.isEmpty())
+        return;
+
+    _myAddr = myAddr.toStdString();
+
+    auto p = beam::wallet::ParseParameters(_myAddr);
+
+    if (!p)
+        return;
+
+    auto myID = p->GetParameter<beam::wallet::WalletID>(beam::wallet::TxParameterID::PeerAddr);
+    if (myID)
+    {
+        _myID = *myID;
+        emit canSendChanged();
+    }
 }
 
 bool MessengerChat::getCanSend() const
@@ -121,15 +172,6 @@ void MessengerChat::onAddresses(bool own, const std::vector<beam::wallet::Wallet
     if (own)
     {
         _myIds = addresses;
-
-        for (const auto& myAddr : _myIds)
-        {
-            if (!myAddr.isExpired() && myAddr.m_BbsAddr.IsValid())
-            {
-                _myID = myAddr.m_BbsAddr;
-                break;
-            }
-        }
         emit peerIDChanged();
     }
 }
@@ -144,25 +186,57 @@ void MessengerChat::onMessage(beam::Timestamp time, const beam::wallet::WalletID
                 ChatMessage{time, counterpart, message, isIncome});
 
         _messeges.insert(modifiedItems);
+
+        std::vector<std::pair<beam::Timestamp, beam::wallet::WalletID>> unreadMessages;
+        unreadMessages.emplace_back(std::make_pair(time, counterpart));
+        _walletModel->getAsync()->markIMsasRead(std::move(unreadMessages));
+
         emit messagesChanged();
     }
 }
 
 void MessengerChat::onMessages(const std::vector<beam::wallet::InstantMessage>& messages)
 {
+    if (messages.empty())
+        return;
+
     std::vector<ChatMessage> modifiedItems;
     modifiedItems.reserve(messages.size());
 
+    std::vector<std::pair<beam::Timestamp, beam::wallet::WalletID>> unreadMessages;
     for (const auto& item : messages)
     {
         if (item.m_counterpart == _peerID)
         {
             modifiedItems.emplace_back(
                 ChatMessage{item.m_timestamp, item.m_counterpart, item.m_message, item.m_is_income});
+            if (!item.m_is_read)
+            {
+                unreadMessages.emplace_back(std::make_pair(item.m_timestamp, item.m_counterpart));
+            }
         }
     }
     _messeges.reset(modifiedItems);
     emit messagesChanged();
+
+    if (!unreadMessages.empty())
+    {
+        _walletModel->getAsync()->markIMsasRead(std::move(unreadMessages));
+    }
+
+    if (_myID.IsValid())
+        return;
+
+    auto lastMessageIt = messages.end() - 1;
+    for (const auto& myAddr : _myIds)
+    {
+        if (lastMessageIt->m_mySbbs == myAddr.m_BbsAddr)
+        {
+            _myID = myAddr.m_BbsAddr;
+            emit canSendChanged();
+            return;
+        }
+    }
 }
 
 void MessengerChat::onChatRemoved(const beam::wallet::WalletID& counterpart)

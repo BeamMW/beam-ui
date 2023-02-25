@@ -3,12 +3,13 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.12
+import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import "controls"
 import "utils.js" as Utils
 
 Item {
-    id: assetsSwapRoot
+    id: messengerRoot
     Layout.fillWidth: true
     Layout.fillHeight: true
 
@@ -67,7 +68,7 @@ Item {
                     icon.source:  "qrc:/assets/icon-messenger-new-chat.svg"
                     allLowercase: false
                     onClicked:    {
-                        assetsSwapRoot.openChat();
+                        messengerRoot.openChat();
                     }
                 }
             }
@@ -121,6 +122,26 @@ Item {
                             color: Style.content_secondary
                             wrapMode: Text.Wrap
                         }
+
+                        Item {
+                            Rectangle {
+                                id: not_read_indicator
+                                y: 6
+                                width: 4
+                                height: 64
+                                color: Style.active
+                            }
+
+                            DropShadow {
+                                anchors.fill: not_read_indicator
+                                radius: 5
+                                samples: 9
+                                color: Style.active
+                                source: not_read_indicator
+                            }
+
+                            visible: haveUnread
+                        }
                     }
 
                     MouseArea {
@@ -130,7 +151,7 @@ Item {
                         propagateComposedEvents: true
                         cursorShape:             Qt.PointingHandCursor
                         onClicked: {
-                            assetsSwapRoot.openChat(cid, name);
+                            messengerRoot.openChat(cid, name);
                         }
                     }
                 }

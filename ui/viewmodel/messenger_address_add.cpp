@@ -15,6 +15,7 @@
 #include "messenger_address_add.h"
 
 #include "model/app_model.h"
+#include "viewmodel/ui_helpers.h"
 
 MessengerAddressAdd::MessengerAddressAdd() :
     _walletModel(AppModel::getInstance().getWalletModel())
@@ -24,6 +25,7 @@ MessengerAddressAdd::MessengerAddressAdd() :
             SLOT(onAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
 
     _walletModel->getAsync()->getAddresses(false);
+    _walletModel->getAsync()->getAddresses(true);
 }
 
 const QString& MessengerAddressAdd::getAddress() const
@@ -91,6 +93,31 @@ void MessengerAddressAdd::setName(const QString& name)
     }
 }
 
+QQmlListProperty<AddressItem> MessengerAddressAdd::getMyAddresses()
+{
+    return beamui::CreateQmlListProperty<AddressItem>(this, _myAddresses);
+}
+
+QString MessengerAddressAdd::getMyAddress() const
+{
+    return _myAddresses[_myAddressIndex]->getToken();
+}
+
+uint MessengerAddressAdd::getMyAddressIndex() const
+{
+    return _myAddressIndex;
+}
+
+void MessengerAddressAdd::setMyAddressIndex(uint value)
+{
+    if (_myAddressIndex != value)
+    {
+        _myAddressIndex = value;
+        emit myAddressIndexChanged();
+        emit myAddressChanged();
+    }
+}
+
 void MessengerAddressAdd::saveAddress()
 {
     if (!_error && _peerID.IsValid())
@@ -107,6 +134,21 @@ void MessengerAddressAdd::saveAddress()
 
 void MessengerAddressAdd::onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses)
 {
-    if (!own)
+    if (own)
+    {
+        qDeleteAll(_myAddresses); _myAddresses.clear();
+
+        for (const auto& addr : addresses)
+        {
+            assert(!addr.m_Token.empty());
+            if (!addr.isExpired())
+            {
+                _myAddresses.push_back(new AddressItem(addr));
+            }
+        }
+
+        emit myAddressesChanged();
+    } else {
         _contacts = addresses;
+    }
 }

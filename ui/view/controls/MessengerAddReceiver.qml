@@ -14,11 +14,13 @@ CustomDialog {
     modal:       true
     focus:       true
 
-    property alias name: model.name
-    property alias peerID: model.peerID
+    property alias name: addressAddModel.name
+    property alias peerID: addressAddModel.peerID
+    property alias peerAddr: addressAddModel.address
+    property alias myAddr: addressAddModel.myAddress
 
     MessengerAddressAdd {
-        id: model
+        id: addressAddModel
     }
 
     contentItem: ColumnLayout {
@@ -45,6 +47,42 @@ CustomDialog {
 
             Row {
                 SFText {
+                    //% "My address"
+                    text: qsTrId("messenger-add-receiver-address-my")
+                    color: Style.content_main
+                    font.pixelSize: 14
+                    font.weight: Font.Normal
+                }
+                SFText {
+                    text: "*"
+                    color: Style.content_main
+                    font.pixelSize: 14
+                    font.weight: Font.Normal
+                    verticalAlignment: TextInput.AlignTop
+                }
+            }
+
+            CustomComboBox {
+                id: addrSelector
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignRight
+                Layout.fillWidth: true
+                fontPixelSize: 14
+                color: Style.content_main
+                textRole: "strView"
+                currentIndex: addressAddModel.myAddressIndex
+                model: addressAddModel.myAddresses
+                textMaxLenDrop: 50
+            }
+
+            Binding {
+                target:   addressAddModel
+                property: "myAddressIndex"
+                value:    addrSelector.currentIndex
+            }
+
+
+            Row {
+                SFText {
                     //% "Address"
                     text: qsTrId("messenger-add-receiver-address-address")
                     color: Style.content_main
@@ -65,13 +103,13 @@ CustomDialog {
                 id: addressInput
                 width: 335
                 height: 45
-                color:            model.error ? Style.validator_error : Style.content_main
-                backgroundColor:  model.error ? Style.validator_error : Style.content_main
-                text:             model.address
+                color:            addressAddModel.error ? Style.validator_error : Style.content_main
+                backgroundColor:  addressAddModel.error ? Style.validator_error : Style.content_main
+                text:             addressAddModel.address
                 focus:            true
                 validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
                 Binding {
-                    target:   model
+                    target:   addressAddModel
                     property: "address"
                     value:    addressInput.text
                 }
@@ -93,9 +131,9 @@ CustomDialog {
                 width: 335
                 height: 45
                 color: Style.content_main
-                text: model.name
+                text: addressAddModel.name
                 Binding {
-                    target:   model
+                    target:   addressAddModel
                     property: "name"
                     value:    nameInput.text
                 }
@@ -109,9 +147,9 @@ CustomDialog {
             //% "add receiver address"
             text: qsTrId("messenger-add-receiver-address-save")
             palette.buttonText: Style.content_opposite
-            enabled: addressInput.text.length != 0 && !model.error
+            enabled: addressInput.text.length != 0 && !addressAddModel.error
             onClicked: {
-                model.saveAddress();
+                addressAddModel.saveAddress();
                 control.close();
             }
         }

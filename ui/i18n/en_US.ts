@@ -3858,5 +3858,9 @@ Please, restart the wallet and try again.</translation>
         <source>Verify on HW wallet</source>
         <translation>Verify on HW wallet</translation>
     </message>
+    <message id="messenger-add-receiver-address-my">
+        <source>My address</source>
+        <translation>My address</translation>
+    </message>
 </context>
 </TS>

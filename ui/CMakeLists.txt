@@ -164,6 +164,8 @@ set(UI_SRC
     viewmodel/help_view.cpp
     viewmodel/settings_view.h
     viewmodel/settings_view.cpp
+    viewmodel/address_item.h
+    viewmodel/address_item.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
     viewmodel/asset_swap_accept_view.h

@@ -13,7 +13,9 @@
 // limitations under the License.
 #pragma once
 #include <QObject>
+#include <QQmlListProperty>
 #include "model/wallet_model.h"
+#include "viewmodel/address_item.h"
 #include "wallet/core/common.h"
 
 namespace beam::wallet
@@ -28,6 +30,10 @@ class MessengerAddressAdd : public QObject
     Q_PROPERTY(QString name    READ getName    WRITE setName    NOTIFY nameChanged)
     Q_PROPERTY(bool    error   READ getError                    NOTIFY errorChanged)
     Q_PROPERTY(QString peerID  READ getPeerID                   NOTIFY addressChanged)
+
+    Q_PROPERTY(QQmlListProperty<AddressItem> myAddresses    READ getMyAddresses                               NOTIFY myAddressesChanged)
+    Q_PROPERTY(QString                       myAddress      READ getMyAddress                                 NOTIFY myAddressChanged)
+    Q_PROPERTY(uint                          myAddressIndex READ getMyAddressIndex  WRITE setMyAddressIndex   NOTIFY myAddressIndexChanged)
 public:
     MessengerAddressAdd();
 
@@ -39,6 +45,11 @@ public:
     void setAddress(const QString& addr);
     void setName(const QString& name);
 
+    QQmlListProperty<AddressItem> getMyAddresses();
+    QString getMyAddress() const;
+    uint getMyAddressIndex() const;
+    void setMyAddressIndex(uint value);
+
     Q_INVOKABLE void saveAddress();
 
 public slots:
@@ -46,12 +57,17 @@ public slots:
 
 signals:
     void addressChanged();
+    void myAddressesChanged();
+    void myAddressChanged();
+    void myAddressIndexChanged();
     void nameChanged();
     void errorChanged();
 
 private:
     WalletModel::Ptr _walletModel;
     std::vector<beam::wallet::WalletAddress> _contacts;
+    QList<AddressItem*> _myAddresses;
+    uint _myAddressIndex = 0;
 
     QString _address;
     beam::wallet::WalletID _peerID = beam::Zero;

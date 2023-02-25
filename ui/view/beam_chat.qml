@@ -12,7 +12,9 @@ ColumnLayout {
     id: thisView
 
     property var onClosed: undefined
-    property alias receiverAddr: chatModel.peerID
+    property alias receiverAddr: chatModel.address
+    property alias receiverPeerId: chatModel.peerID
+    property alias myAddr: chatModel.myAddress
     property string name: ""
     property bool canSendMessage: thisView.receiverAddr.length != 0
     property var sendMessage: function() {
@@ -52,8 +54,9 @@ ColumnLayout {
             }
             else
             {
-                thisView.receiverAddr = receiverAddrDialog.peerID;
+                thisView.receiverAddr = receiverAddrDialog.peerAddr;
                 thisView.name = receiverAddrDialog.name;
+                thisView.myAddr = receiverAddrDialog.myAddr;
             }
         }
     }
@@ -74,7 +77,7 @@ ColumnLayout {
         readonly property string kanon: qsTrId("chat-title-anon")
 
         //% "Chat with %1"
-        text: qsTrId("chat-title").arg(thisView.name.length != 0 ? thisView.name : (thisView.receiverAddr.length != 0 ? thisView.receiverAddr : kanon))
+        text: qsTrId("chat-title").arg(thisView.name.length != 0 ? thisView.name : kanon)
         onBack: function () {
             onClosed()
         }
@@ -86,13 +89,14 @@ ColumnLayout {
         Layout.fillWidth: true
         SFText {
             Layout.fillWidth: true
-            text: thisView.receiverAddr
+            text: thisView.receiverPeerId
             font.pixelSize: 14
             color: Style.content_secondary
             wrapMode: Text.Wrap
         }
 
         SvgImage {
+            Layout.leftMargin: 12
             Layout.rightMargin: 12
             Layout.alignment: Qt.AlignRight
             source: "qrc:/assets/icon-delete.svg"
@@ -105,7 +109,6 @@ ColumnLayout {
                 propagateComposedEvents: true
                 cursorShape:             Qt.PointingHandCursor
                 onClicked: {
-                    console.log('delete chat');
                     chatModel.removeChat();
                 }
             }

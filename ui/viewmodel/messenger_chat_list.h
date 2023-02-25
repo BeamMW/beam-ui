@@ -21,6 +21,7 @@ struct ChatItem
 {
     beam::wallet::WalletID _counterpartID;
     std::string _name;
+    bool _haveUnread = true;
 };
 
 class MessengerChatListItem : public ListModel<ChatItem>
@@ -31,7 +32,8 @@ public:
     enum class Roles
     {
         CID = Qt::UserRole + 1,
-        Name
+        Name,
+        HaveUnread
     };
 
     [[nodiscard]] QVariant data(const QModelIndex &index, int role) const override;
@@ -50,7 +52,7 @@ public:
 
 public slots:
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses);
-    void onChatList(const std::vector<beam::wallet::WalletID>& chats);
+    void onChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats);
     void onMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
 
 signals:
