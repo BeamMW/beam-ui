@@ -43,7 +43,7 @@ Control {
             id:                amountCtrl
             amount:            assetInfo.amount
             lockedAmount:      assetInfo.locked
-            unitName:          assetInfo.unitName
+            unitName:          assetInfo.id == 0 ? assetInfo.unitName : assetInfo.unitName + "(" + assetInfo.id + ")"
             rateUnit:          assetInfo.rateUnit
             rate:              assetInfo.rate
             iconSource:        assetInfo.icon
