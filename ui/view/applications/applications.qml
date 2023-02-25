@@ -513,7 +513,7 @@ ColumnLayout {
 
                 Layout.fillHeight:   true
                 Layout.fillWidth:    true
-                Layout.bottomMargin: txPanel.folded ? 10 : 0
+                Layout.bottomMargin: txPanel.folded ? (txPanel.maximized ? dappsMainLayout.height - 130 : 10) : 0
                 Layout.topMargin:    20
                 visible:             false
                 opacity:             txPanel.folded ? 1.0 : 0.25
@@ -622,7 +622,7 @@ ColumnLayout {
                 Layout.topMargin:    unsupportedCnt ? 0 : 20
                 Layout.fillHeight:   true
                 Layout.fillWidth:    true
-                Layout.bottomMargin: txPanel.folded ? 10 : 0
+                Layout.bottomMargin: txPanel.folded ? (txPanel.maximized ? dappsMainLayout.height - 130 : 10) : 0
                 opacity:             txPanel.folded ? 1.0 : 0.25
                 visible:             control.hasApps && !control.activeApp
                 appsList:            control.appsList
@@ -686,7 +686,7 @@ ColumnLayout {
                 state:               control.openedTxID ? "transactions" : "balance"
                 Layout.fillWidth:    true
                 Layout.bottomMargin: 10
-                contentItemHeight:   control.height * 0.36
+                contentItemHeight:   control.height * (txPanel.maximized ? 0.79 : 0.36)
                 bottomPadding:       folded ? 20 : 5
                 foldsUp:             false
                 visible:             appsListView.visible || webLayout.visible
