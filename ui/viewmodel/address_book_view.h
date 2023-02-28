@@ -21,41 +21,7 @@
 #include <QQmlListProperty>
 #include "wallet/core/wallet_db.h"
 #include "model/wallet_model.h"
-
-class AddressItem : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(QString   walletID         READ getWalletID       CONSTANT)
-    Q_PROPERTY(QString   token            READ getToken          CONSTANT)
-    Q_PROPERTY(QString   name             READ getName           CONSTANT)
-    Q_PROPERTY(QString   category         READ getCategory       CONSTANT)
-    Q_PROPERTY(QString   identity         READ getIdentity       CONSTANT)
-    Q_PROPERTY(QDateTime expirationDate   READ getExpirationDate CONSTANT)
-    Q_PROPERTY(QDateTime createDate       READ getCreateDate     CONSTANT)
-    Q_PROPERTY(bool      neverExpired     READ isNeverExpired    CONSTANT)
-    Q_PROPERTY(bool      isExpired        READ isExpired         CONSTANT)
-
-public:
-
-    AddressItem() = default;
-    AddressItem(beam::wallet::WalletAddress);
-
-    QString getWalletID() const;
-    QString getToken() const;
-    QString getName() const;
-    QString getCategory() const;
-    QString getIdentity() const;
-    QDateTime getExpirationDate() const;
-    QDateTime getCreateDate() const;
-    bool isNeverExpired() const;
-
-    bool isExpired() const;
-    beam::Timestamp getCreateTimestamp() const;
-    beam::Timestamp getExpirationTimestamp() const;
-
-private:
-    beam::wallet::WalletAddress m_walletAddress;
-};
+#include "viewmodel/address_item.h"
 
 class ContactItem : public QObject
 {
@@ -107,6 +73,7 @@ public:
     Q_INVOKABLE bool    isWIDBusy(const QString& walletID);
     Q_INVOKABLE bool    commentValid(const QString& comment) const;
     Q_INVOKABLE void    deleteAddress(const QString& walletID);
+    Q_INVOKABLE void    verifyOnHw(const QString& walletID);
     Q_INVOKABLE void    saveChanges(const QString& walletID, const QString& name, const QDateTime& expirationDate);
     Q_INVOKABLE QString generateQR(const QString& addr, uint width, uint height);
 

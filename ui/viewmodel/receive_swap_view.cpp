@@ -75,7 +75,7 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _isBeamSide(false)
     , _minimalBeamFeeGrothes(minimalFee(OldWalletCurrency::OldCurrency::CurrBeam, false))
 {
-    connect(_walletModel.get(),  &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
+    //connect(_walletModel.get(),  &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
     connect(_walletModel.get(),  &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
     connect(_walletModel.get(),  &WalletModel::newAddressFailed, this, &ReceiveSwapViewModel::newAddressFailed);
     connect(_walletModel.get(),  &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
@@ -87,13 +87,13 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     updateTransactionToken();
 }
 
-void ReceiveSwapViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
-{
-    _receiverAddress = addr;
-    emit receiverAddressChanged();
-    updateTransactionToken();
-    loadSwapParams();
-}
+//void ReceiveSwapViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
+//{
+//    _receiverAddress = addr;
+//    emit receiverAddressChanged();
+//    updateTransactionToken();
+//    loadSwapParams();
+//}
 
 void ReceiveSwapViewModel::loadSwapParams()
 {
@@ -354,16 +354,17 @@ void ReceiveSwapViewModel::setOfferExpires(int value)
 
 QString ReceiveSwapViewModel::getReceiverAddress() const
 {
-    return beamui::toString(_receiverAddress.m_walletID);
+    return QString();
+    //return beamui::toString(_receiverAddress.m_BbsAddr);
 }
 
 void ReceiveSwapViewModel::generateNewAddress()
 {
-    _receiverAddress = {};
-    emit receiverAddressChanged();
+    //_receiverAddress = {};
+    //emit receiverAddressChanged();
 
-    setAddressComment("");
-    _walletModel->getAsync()->generateNewAddress();
+    //setAddressComment("");
+    //_walletModel->getAsync()->generateNewAddress();
 }
 
 void ReceiveSwapViewModel::setTransactionToken(const QString& value)
@@ -460,11 +461,11 @@ void ReceiveSwapViewModel::saveAddress()
 {
     using namespace beam::wallet;
 
-    if (getCommentValid()) {
-        _receiverAddress.m_label = _addressComment.toStdString();
-        _receiverAddress.m_duration = WalletAddress::AddressExpirationAuto;
-        _walletModel->getAsync()->saveAddress(_receiverAddress);
-    }
+    //if (getCommentValid()) {
+    //    _receiverAddress.m_label = _addressComment.toStdString();
+    //    _receiverAddress.m_duration = WalletAddress::AddressExpirationAuto;
+    //    _walletModel->getAsync()->saveAddress(_receiverAddress);
+    //}
 }
 
 void ReceiveSwapViewModel::startListen()
@@ -490,17 +491,17 @@ void ReceiveSwapViewModel::publishToken()
         PrepareSwapTxParamsForTokenization(mirroredTxParams);
 
     auto txId = readyForTokenizeTxParams.GetTxID();
-    auto publisherId =
+    auto publisherAddr =
         readyForTokenizeTxParams.GetParameter<beam::wallet::WalletID>(
-            beam::wallet::TxParameterID::PeerID);
+            beam::wallet::TxParameterID::PeerAddr);
     auto coin =
         readyForTokenizeTxParams.GetParameter<beam::wallet::AtomicSwapCoin>(
             beam::wallet::TxParameterID::AtomicSwapCoin);
-    if (publisherId && txId && coin)
+    if (publisherAddr && txId && coin)
     {
         beam::wallet::SwapOffer offer(*txId);
         offer.m_txId = *txId;
-        offer.m_publisherId = *publisherId;
+        offer.m_publisherId = *publisherAddr;
         offer.m_status = beam::wallet::SwapOfferStatus::Pending;
         offer.m_coin = *coin;
         offer.SetTxParameters(readyForTokenizeTxParams.Pack());
@@ -525,33 +526,53 @@ void ReceiveSwapViewModel::updateTransactionToken()
     auto beamFee = _isBeamSide ? _sentFeeGrothes : _receiveFeeGrothes;
     auto swapFeeRate = _isBeamSide ? _receiveFeeGrothes : _sentFeeGrothes;
 
-    _txParameters = beam::wallet::CreateSwapTransactionParameters();
 
-    FillSwapTxParams(
-        &_txParameters,
-        _receiverAddress.m_walletID,
-        _walletModel->getCurrentHeight(),
+    QPointer<ReceiveSwapViewModel> guard = this;
+
+    auto onSwapParams = [guard, this](beam::wallet::TxParameters&& params)
+    {
+        if (!guard)
+            return;
+
+        _txParameters = std::move(params);
+
+#ifdef BEAM_CLIENT_VERSION
+        _txParameters.SetParameter(
+            beam::wallet::TxParameterID::ClientVersion,
+            AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
+#endif // BEAM_CLIENT_VERSION
+
+        const auto& mirroredTxParams = MirrorSwapTxParams(_txParameters);
+        const auto& readyForTokenizeTxParams =
+            PrepareSwapTxParamsForTokenization(mirroredTxParams);
+
+        setTransactionToken(
+            QString::fromStdString(std::to_string(readyForTokenizeTxParams)));
+    };
+
+    _walletModel->getAsync()->CreateSwapTxParams(
         beamAmount,
         beamFee,
         swapCoin,
         swapAmount,
         swapFeeRate,
         _isBeamSide,
-        GetBlockCount(_offerExpires)
-    );
+        GetBlockCount(_offerExpires), onSwapParams);
 
-#ifdef BEAM_CLIENT_VERSION
-    _txParameters.SetParameter(
-        beam::wallet::TxParameterID::ClientVersion,
-        AppModel::getMyName() + " " + std::string(BEAM_CLIENT_VERSION));
-#endif // BEAM_CLIENT_VERSION
+    //_txParameters = beam::wallet::CreateSwapTransactionParameters();
 
-    const auto& mirroredTxParams = MirrorSwapTxParams(_txParameters);
-    const auto& readyForTokenizeTxParams =
-        PrepareSwapTxParamsForTokenization(mirroredTxParams);
-
-    setTransactionToken(
-        QString::fromStdString(std::to_string(readyForTokenizeTxParams)));
+    //FillSwapTxParams(
+    //    &_txParameters,
+    //    _receiverAddress.m_BbsAddr,
+    //    _walletModel->getCurrentHeight(),
+    //    beamAmount,
+    //    beamFee,
+    //    swapCoin,
+    //    swapAmount,
+    //    swapFeeRate,
+    //    _isBeamSide,
+    //    GetBlockCount(_offerExpires)
+    //);
 }
 
 QString ReceiveSwapViewModel::getSecondCurrencySendRateValue() const

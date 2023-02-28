@@ -45,7 +45,7 @@ public:
     virtual QString getFailureReason() const;
     virtual QString getStateDetails() const;
     QString getToken() const;
-    QString getSenderIdentity() const;
+    QString getSenderEndpoint() const;
     QString getReceiverIdentity() const;
     QString getFeeRate() const;
     QString getAmountSecondCurrency();

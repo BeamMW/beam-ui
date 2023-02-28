@@ -68,6 +68,9 @@
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
 #include "viewmodel/window_event_filter.h"
+#include "viewmodel/messenger_address_add.h"
+#include "viewmodel/messenger_chat.h"
+#include "viewmodel/messenger_chat_list.h"
 
 #if defined(BEAM_USE_STATIC_QT)
 
@@ -301,6 +304,9 @@ int main (int argc, char* argv[])
             qmlRegisterType<AssetSwapCreateViewModel>("Beam.Wallet", 1, 0, "AssetSwapCreateViewModel");
             qmlRegisterType<DexOrdersModel>("Beam.Wallet", 1, 0, "DexOrdersModel");
             qmlRegisterType<AssetSwapAcceptViewModel>("Beam.Wallet", 1, 0, "AssetSwapAcceptViewModel");
+            qmlRegisterType<MessengerAddressAdd>("Beam.Wallet", 1, 0, "MessengerAddressAdd");
+            qmlRegisterType<MessengerChat>("Beam.Wallet", 1, 0, "MessengerChat");
+            qmlRegisterType<MessengerChatList>("Beam.Wallet", 1, 0, "MessengerChatList");
             beamui::applications::RegisterQMLTypes();
 
             WindowEventFilter filter;

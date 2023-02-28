@@ -165,12 +165,12 @@ void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const st
         {
             if (action == beam::wallet::ChangeAction::Removed)
             {
-                m_myWalletIds.erase(item.m_walletID);
+                m_myWalletIds.erase(item.m_BbsAddr);
                 m_myAddrLabels.erase(item.m_label);
             }
             else
             {
-                m_myWalletIds.emplace(item.m_walletID);
+                m_myWalletIds.emplace(item.m_BbsAddr);
                 m_myAddrLabels.emplace(item.m_label);
             }
         }
@@ -296,6 +296,16 @@ void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
     emit nodeConnectionChanged(isNodeConnected);
 }
 
+void WalletModel::OnDevState(const std::string& sErr, beam::wallet::HidKeyKeeper::DevState state)
+{
+    emit devStateChanged(QString::fromStdString(sErr), static_cast<int>(state));
+}
+
+void WalletModel::OnDevReject(const beam::wallet::HidKeyKeeper::CallStats&)
+{
+    // ignore
+}
+
 #ifdef BEAM_IPFS_SUPPORT
 void WalletModel::onIPFSStatus(bool running, const std::string& error, unsigned int peercnt)
 {
@@ -368,6 +378,26 @@ void WalletModel::onFullAssetsListLoaded()
     emit fullAssetsListLoaded();
 }
 
+void WalletModel::onInstantMessage(Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome)
+{
+    emit instantMessage(time, counterpart, message, isIncome);
+}
+
+void WalletModel::onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats)
+{
+    emit chatList(chats);
+}
+
+void WalletModel::onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages)
+{
+    emit chatMessages(messages);
+}
+
+void WalletModel::onChatRemoved(const beam::wallet::WalletID& counterpart)
+{
+    emit chatRemoved(counterpart);
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;
@@ -393,7 +423,7 @@ void WalletModel::setAddresses(bool own, const std::vector<beam::wallet::WalletA
 
         for (const auto& addr : addrs)
         {
-            m_myWalletIds.emplace(addr.m_walletID);
+            m_myWalletIds.emplace(addr.m_BbsAddr);
             m_myAddrLabels.emplace(addr.m_label);
         }
     }

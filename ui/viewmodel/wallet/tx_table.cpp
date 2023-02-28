@@ -181,6 +181,7 @@ void TxTableViewModel::onTransactionsChanged(beam::wallet::ChangeAction action, 
             case TxType::UnlinkFunds:
             case TxType::VoucherRequest:
             case TxType::VoucherResponse:
+            case TxType::InstantSbbsMessage:
                 continue;
 
             case TxType::ALL:

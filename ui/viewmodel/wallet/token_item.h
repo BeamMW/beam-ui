@@ -66,7 +66,7 @@ private:
     beam::Amount m_amountValue = 0;
     beam::Asset::ID m_assetId = 0;
     beam::wallet::WalletID m_addressSBBS = beam::Zero;
-    beam::PeerID m_identity;
+    beam::PeerID m_Endpoint;
     QString m_UnitName;
     int m_offlinePayments = 0;
     AssetsManager::Ptr _amgr;

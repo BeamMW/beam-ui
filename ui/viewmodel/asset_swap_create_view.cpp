@@ -57,7 +57,7 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     }
 
     _walletModel->getAsync()->loadDexOrderParams();
-    _walletModel->getAsync()->generateNewAddress();
+    //_walletModel->getAsync()->generateNewAddress();
 }
 
 void AssetSwapCreateViewModel::publishOffer()
@@ -68,7 +68,7 @@ void AssetSwapCreateViewModel::publishOffer()
 
     beam::wallet::DexOrder orderObj(
         beam::wallet::DexOrderID::generate(),
-        _receiverAddress.m_walletID,
+        _receiverAddress.m_BbsAddr,
         _receiverAddress.m_OwnID,
         _sendAsset,
         _amountToSendGrothes,

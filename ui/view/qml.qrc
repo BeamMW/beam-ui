@@ -103,6 +103,7 @@
         <file>controls/OpenInBlockchainExplorer.qml</file>
         <file>controls/CheckRecoveryPhrase.qml</file>
         <file>controls/GenerateRecoveryPhrase.qml</file>
+        <file>controls/MessengerAddReceiver.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -133,6 +134,8 @@
         <file>addresses.qml</file>
         <file>atomic_swap.qml</file>
         <file>assets_swap.qml</file>
+        <file>beam_messenger.qml</file>
+        <file>beam_chat.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
         <file>accept_asset_swap.qml</file>
@@ -221,6 +224,9 @@
         <file>assets/icon-wallet-active.svg</file>
         <file>assets/icon-atomic_swap.svg</file>
         <file>assets/icon-atomic_swap-active.svg</file>
+        <file>assets/icon-beam_messenger.svg</file>
+        <file>assets/icon-beam_messenger-active.svg</file>
+        <file>assets/icon-messenger-new-chat.svg</file>
         <file>assets/icon-assets_swap.svg</file>
         <file>assets/icon-assets_swap-active.svg</file>
         <file>assets/icon-wallet-small.svg</file>

@@ -127,7 +127,7 @@ QString MainViewModel::getDaoCoreAppID() const
     #elif defined(BEAM_DAPPNET)
     appURL = "http://3.16.160.95:80/app/plugin-dao-core/index.html";
     #else
-    appURL = "http://3.19.141.112:80/app/plugin-dao-core/index.html";
+    appURL = "http://3.19.32.148:80/app/plugin-dao-core/index.html";
     #endif
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
@@ -146,7 +146,7 @@ QString MainViewModel::getVotingAppID() const
 #elif defined(BEAM_DAPPNET)
     appURL = "http://3.16.160.95:80/app-same-origin/dao-voting-app/index.html";
 #else
-    appURL = "http://3.19.141.112:80/app-same-origin/dao-voting-app/index.html";
+    appURL = "http://3.19.32.148:80/app-same-origin/dao-voting-app/index.html";
 #endif
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
@@ -165,7 +165,7 @@ QString MainViewModel::getFaucetAppID() const
     #elif defined(BEAM_DAPPNET)
     appURL = "http://3.16.160.95:80/app/plugin-faucet/index.html";
     #else
-    appURL = "http://3.19.141.112:80/app/plugin-faucet/index.html";
+    appURL = "http://3.19.32.148:80/app/plugin-faucet/index.html";
     #endif
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
@@ -185,7 +185,7 @@ QString MainViewModel::getEthBridgeAppID() const
     appURL = "http://3.16.160.95:80/app/beam-bridge-app/index.html";
 #else
     appName = "Bridge app";
-    appURL = "http://3.19.141.112:80/app/beam-bridge-app/index.html";
+    appURL = "http://3.19.32.148:80/app/beam-bridge-app/index.html";
 #endif
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);

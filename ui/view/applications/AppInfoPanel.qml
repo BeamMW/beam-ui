@@ -16,6 +16,7 @@ Pane {
     property alias bkColor:           background.color
     property int   contentItemHeight: 0
     property alias tableOwner:        txTable.owner
+    property bool  maximized:         false
     horizontalPadding: 2
 
     property var content: Item {
@@ -169,6 +170,34 @@ Pane {
             }
 
             SvgImage {
+                id: arrowSec
+                Layout.alignment:       Qt.AlignCenter
+                Layout.maximumHeight:   8
+                Layout.maximumWidth:    13
+                Layout.leftMargin:      7
+                visible:                !control.folded && !control.maximized
+                source:                 "qrc:/assets/icon-grey-arrow-up.svg"
+                transform: Rotation {
+                    angle: foldsUp ? 180 : 0
+                    origin.x: arrowSec.width/2
+                    origin.y: arrowSec.height/2
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape:  Qt.PointingHandCursor
+                    onClicked: {
+                        control.maximized = true
+                    }
+                }
+            }
+
+            Item {
+                width: 7
+                height: 1
+            }
+
+            SvgImage {
                 id: arrow
                 Layout.alignment:       Qt.AlignCenter
                 Layout.maximumHeight:   8
@@ -178,6 +207,17 @@ Pane {
                     angle: foldsUp ? 0 : 180
                     origin.x: arrow.width/2
                     origin.y: arrow.height/2
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape:  Qt.PointingHandCursor
+                    onClicked: {
+                        control.folded = !control.folded
+                        if (control.maximized) {
+                            control.maximized = false;
+                        }
+                    }
                 }
             }
         }
@@ -192,8 +232,7 @@ Pane {
             opacity:                folded ? 0.0 : 1.0
             Layout.preferredHeight: folded ? 0 : (control.state == "transactions" 
                                                     ? control.contentItemHeight
-                                                    : assetsList.scrollViewHeight
-                                                      + assetsList.assetsFilterRowHeight)
+                                                    : Math.max(control.contentItemHeight, assetsList.scrollViewHeight + assetsList.assetsFilterRowHeight))
 
             Behavior on Layout.preferredHeight {
                 NumberAnimation { duration:  100 }
@@ -211,19 +250,5 @@ Pane {
         id:      background
         radius:  10
         color:   Style.background_second
-
-        MouseArea {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: parent.top
-            height:  control.topPadding + headerRow.height +
-                    ( control.folded ? control.bottomPadding : 0 ) +
-                    ( placeholder.visible ? placeholder.Layout.topMargin : 0 )
-
-            cursorShape:  Qt.PointingHandCursor
-            onClicked: {
-                control.folded = !control.folded
-            }
-        }
     }
 }

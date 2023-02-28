@@ -164,6 +164,8 @@ set(UI_SRC
     viewmodel/help_view.cpp
     viewmodel/settings_view.h
     viewmodel/settings_view.cpp
+    viewmodel/address_item.h
+    viewmodel/address_item.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
     viewmodel/asset_swap_accept_view.h
@@ -214,6 +216,12 @@ set(UI_SRC
     viewmodel/dex/dex_orders_model.cpp
     viewmodel/dex/dex_orders_list.h
     viewmodel/dex/dex_orders_list.cpp
+    viewmodel/messenger_address_add.h
+    viewmodel/messenger_address_add.cpp
+    viewmodel/messenger_chat.h
+    viewmodel/messenger_chat.cpp
+    viewmodel/messenger_chat_list.h
+    viewmodel/messenger_chat_list.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
