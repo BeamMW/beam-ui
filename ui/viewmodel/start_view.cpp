@@ -762,7 +762,7 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
         }
         else
         {
-            //% "Hardwate wallet is not connected"
+            //% "Hardware wallet is not connected"
             DoJSCallback(m_callback, qtTrId("start-hw-not-connected"));
         }
         return;

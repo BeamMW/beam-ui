@@ -73,7 +73,7 @@ ColumnLayout {
         Layout.fillWidth:    true
         Layout.topMargin:    100
 
-        //% "anonimus"
+        //% "anonymous"
         readonly property string kanon: qsTrId("chat-title-anon")
 
         //% "Chat with %1"

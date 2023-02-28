@@ -2345,8 +2345,9 @@ Mettez à jour vos paramètres et réessayez.</translation>
         <translation>Échec de création du portefeuille Trezor</translation>
     </message>
     <message id="start-hw-not-connected">
-        <source>Hardwate wallet is not connected</source>
-        <translation>Le portefeuille matériel n&apos;est pas connecté</translation>
+        <source>Hardware wallet is not connected</source>
+        <oldsource>Hardwate wallet is not connected</oldsource>
+        <translation type="unfinished">Le portefeuille matériel n&apos;est pas connecté</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -3848,8 +3849,9 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
         <translation>ajouter adresse du destinataire</translation>
     </message>
     <message id="chat-title-anon">
-        <source>anonimus</source>
-        <translation>anonyme</translation>
+        <source>anonymous</source>
+        <oldsource>anonimus</oldsource>
+        <translation type="unfinished">anonyme</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>

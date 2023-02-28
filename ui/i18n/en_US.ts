@@ -2344,8 +2344,8 @@ Update your settings and try again.</translation>
         <translation>Failed to create trezor wallet</translation>
     </message>
     <message id="start-hw-not-connected">
-        <source>Hardwate wallet is not connected</source>
-        <translation>Hardwate wallet is not connected</translation>
+        <source>Hardware wallet is not connected</source>
+        <translation>Hardware wallet is not connected</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -3847,8 +3847,8 @@ Please, restart the wallet and try again.</translation>
         <translation>add receiver address</translation>
     </message>
     <message id="chat-title-anon">
-        <source>anonimus</source>
-        <translation>anonimus</translation>
+        <source>anonymous</source>
+        <translation>anonymous</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
