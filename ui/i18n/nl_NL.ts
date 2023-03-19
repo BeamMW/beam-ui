@@ -2057,8 +2057,8 @@ Uw versie is: %2. Controleer op updates.</translation>
     <message id="time-hour" numerus="yes">
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation>
-            <numerusform>%n uur</numerusform>
+        <translation type="unfinished">
+            <numerusform>%n hour(s)</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -2343,8 +2343,7 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <oldsource>Hardwate wallet is not connected</oldsource>
-        <translation type="unfinished">Hardware wallet is niet verbonden</translation>
+        <translation type="unfinished">Hardware wallet is not connected</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -3110,8 +3109,8 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n hour(s)</numerusform>
+        <translation>
+            <numerusform>%n uur</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -3845,8 +3844,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonymous</source>
-        <oldsource>anonimus</oldsource>
-        <translation type="unfinished">anonimus</translation>
+        <translation type="unfinished">anonymous</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
@@ -3858,7 +3856,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
-        <translation type="unfinished"></translation>
+        <translation>Mijn adres</translation>
     </message>
 </context>
 </TS>

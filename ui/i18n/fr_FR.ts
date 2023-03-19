@@ -608,7 +608,7 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
     </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
-        <translation>SQLite database file (*.db)</translation>
+        <translation>Fichier de base de donnée SQLite (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
         <source>Connection to %1 nodes lost</source>
@@ -820,7 +820,7 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
         <extracomment>start screen, select db for migration, best match label</extracomment>
-        <translation>(Meilleure correspondance)</translation>
+        <translation>(meilleure correspondance)</translation>
     </message>
     <message id="start-select-db-thead-created">
         <source>Date created</source>
@@ -917,7 +917,7 @@ Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si v
     </message>
     <message id="general-swap">
         <source>Swap</source>
-        <translation>Swap</translation>
+        <translation>Échanger</translation>
     </message>
     <message id="settings-node-address">
         <source>Node address</source>
@@ -996,8 +996,8 @@ Veuillez vérifier vos paramètres et réessayer</translation>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>%n heure(s)</numerusform>
-            <numerusform>%n heure(s)</numerusform>
+            <numerusform>%n heure</numerusform>
+            <numerusform>%n heures</numerusform>
         </translation>
     </message>
     <message id="loading-view-net-problems">
@@ -1018,7 +1018,7 @@ Veuillez vérifier vos paramètres et réessayer</translation>
     </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
-        <translation>Initier portefeuille avec Trezor</translation>
+        <translation>Initier le portefeuille avec Trezor</translation>
     </message>
     <message id="start-import-trezor-owner-key">
         <source>Import Trezor Owner Key</source>
@@ -1038,7 +1038,7 @@ Veuillez vérifier vos paramètres et réessayer</translation>
     </message>
     <message id="start-no-trezor-device-connected">
         <source>There is no device connected, please, connect your hardware wallet.</source>
-        <translation>Aucun appareil n&apos;est connecté. Veuillez connecter votre portefeuille matériel.</translation>
+        <translation>Aucun appareil n&apos;est connecté. Veuillez connecter votre portefeuille physique.</translation>
     </message>
     <message id="wallet-model-device-not-connected">
         <source>There is no Trezor device connected. Please, connect and try again.</source>
@@ -1094,11 +1094,11 @@ Veuillez vérifier vos paramètres et réessayer</translation>
     </message>
     <message id="swap-details-beam-lock-kernel-id">
         <source>BEAM lock transaction kernel ID</source>
-        <translation>Identifiant du noyau de transaction de verrouillage BEAM</translation>
+        <translation>Identifiant de noyau de transaction de verrouillage BEAM</translation>
     </message>
     <message id="swap-details-beam-redeem-kernel-id">
         <source>BEAM redeem transaction kernel ID</source>
-        <translation>Identifiant du noyau de transaction de récupération BEAM</translation>
+        <translation>Identifiant de noyau de transaction de récupération BEAM</translation>
     </message>
     <message id="swap-details-redeem-tx-id">
         <source>redeem transaction ID</source>
@@ -1110,7 +1110,7 @@ Veuillez vérifier vos paramètres et réessayer</translation>
     </message>
     <message id="swap-details-beam-refund-kernel-id">
         <source>BEAM refund transaction kernel ID</source>
-        <translation>Identifiant du noyau de transaction de remboursement BEAM</translation>
+        <translation>Identifiant de noyau de transaction de remboursement BEAM</translation>
     </message>
     <message id="swap-details-refund-tx-id">
         <source>refund transaction ID</source>
@@ -1126,7 +1126,7 @@ Veuillez vérifier vos paramètres et réessayer</translation>
     </message>
     <message id="swap-details-tx-fee">
         <source>BEAM Transaction fee</source>
-        <translation>Frais de transaction</translation>
+        <translation>Frais de transaction BEAM</translation>
     </message>
     <message id="swap-details-tx-comment">
         <source>Comment</source>
@@ -1290,7 +1290,7 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
     </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
-        <translation>Frais de transaction</translation>
+        <translation>Frais de transaction BEAM</translation>
     </message>
     <message id="send-swap-token">
         <source>Swap token</source>
@@ -1322,7 +1322,7 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
     </message>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
-        <translation>L&apos;échange a échoué, l&apos;argent est en cours de remise sur votre portefeuille</translation>
+        <translation>L&apos;échange a échoué, l&apos;argent est en cours de remise dans votre portefeuille</translation>
     </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
@@ -1355,7 +1355,7 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
     </message>
     <message id="settings-fee-rate-note">
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
-        <translation>Ne pas oublier de valider les frais estimés pour la blockchain (car il varie avec le temps).</translation>
+        <translation>Ne pas oublier de valider les frais estimés pour la blockchain (car ils varient avec le temps).</translation>
     </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
@@ -1998,11 +1998,11 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
     </message>
     <message id="settings-node-progress">
         <source>Swap in progress, cannot disconnect or switch connection type.</source>
-        <translation>Swap en cours, impossible de se déconnecter ou de changer de type de connexion.</translation>
+        <translation>Échange en cours, impossible de se déconnecter ou de changer de type de connexion.</translation>
     </message>
     <message id="settings-doge-node-progress">
         <source>Swap in progress, cannot disconnect.</source>
-        <translation>Swap en cours, impossible de se déconnecter.</translation>
+        <translation>Échange en cours, impossible de se déconnecter.</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
@@ -2060,16 +2060,16 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
         <translation>
-            <numerusform>%n heure(s)</numerusform>
-            <numerusform>%n heure(s)</numerusform>
+            <numerusform>%n heure</numerusform>
+            <numerusform>%n heures</numerusform>
         </translation>
     </message>
     <message id="time-day" numerus="yes">
         <source>%n day(s)</source>
         <extracomment>time &quot;day&quot; string</extracomment>
         <translation>
-            <numerusform>%n jour(s)</numerusform>
-            <numerusform>%n jour(s)</numerusform>
+            <numerusform>%n jour</numerusform>
+            <numerusform>%n jours</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
@@ -2322,7 +2322,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="swap-invalid-rate">
         <source>Invalid rate</source>
-        <translation>Taux invalide</translation>
+        <translation>Taux de change invalide</translation>
     </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
@@ -2346,8 +2346,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <oldsource>Hardwate wallet is not connected</oldsource>
-        <translation type="unfinished">Le portefeuille matériel n&apos;est pas connecté</translation>
+        <translation>Le portefeuille physique n&apos;est pas connecté</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -2444,7 +2443,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     <message id="wallet-receive-addr-message-mp" numerus="yes">
         <source>Transaction can last at most %n hour(s).</source>
         <translation>
-            <numerusform>La transaction peut durer %n heure(s).</numerusform>
+            <numerusform>La transaction peut durer %n heure.</numerusform>
             <numerusform>La transaction peut durer %n heures.</numerusform>
         </translation>
     </message>
@@ -3014,9 +3013,9 @@ ne peuvent pas être annulées.</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
-        <translation type="unfinished">
-            <numerusform>Adresse hors ligne : %n transaction(s) restante(s).</numerusform>
-            <numerusform>Offline address: %n transaction(s) left.</numerusform>
+        <translation>
+            <numerusform>Adresse hors ligne : %n transaction restante.</numerusform>
+            <numerusform>Adresse hors ligne : %n transactions restantes.</numerusform>
         </translation>
     </message>
     <message id="source-dex">
@@ -3083,9 +3082,9 @@ ne peuvent pas être annulées.</translation>
     </message>
     <message id="apps-err-cnt" numerus="yes">
         <source>%n DApp(s) is not available</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n DApp n&apos;est pas disponible</numerusform>
-            <numerusform>%n DApp(s) is not available</numerusform>
+            <numerusform>%n DApps ne sont pas disponibles</numerusform>
         </translation>
     </message>
     <message id="apps-update-message">
@@ -3114,8 +3113,8 @@ Si vous souhaitez réutiliser une adresse normale précédemment créée, veuill
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n hour(s)</numerusform>
+        <translation>
+            <numerusform>%n heure</numerusform>
             <numerusform>%n heures</numerusform>
         </translation>
     </message>
@@ -3129,7 +3128,7 @@ Si vous souhaitez réutiliser une adresse normale précédemment créée, veuill
     </message>
     <message id="status-online-stale-rates">
         <source>(exchange rate to %1 was not updated since %2)</source>
-        <translation>(le taux de change de %1 n&apos;a pas été mis à jour depuis %2)</translation>
+        <translation>(le taux de change de %1 n&apos;a pas été mis à jour depuis le %2)</translation>
     </message>
     <message id="loading-view-restoring">
         <source>Restoring wallet from the blockchain: </source>
@@ -3609,13 +3608,13 @@ Allons-y !</translation>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
-        <translation>Oups... Impossible de créer le publicateur.
+        <translation>Oups... Impossible de créer l&apos;éditeur.
 Veuillez vérifier le log et réessayer.</translation>
     </message>
     <message id="app-failed-edit-publisher">
         <source>Oops... Failed to edit Publisher.
 Please check the log and try again.</source>
-        <translation>Oups... Impossible de modifier le publicateur.
+        <translation>Oups... Impossible de modifier l&apos;éditeur.
 Veuillez vérifier le log et réessayer.</translation>
     </message>
     <message id="app-failed-publish-dapp">
@@ -3668,7 +3667,7 @@ Veuillez vérifier le fichier et réessayer.</translation>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
-        <translation>Échanges d&apos;actifs</translation>
+        <translation>Échanges d&apos;Actifs</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Atomic Swap Offer</source>
@@ -3850,8 +3849,7 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonymous</source>
-        <oldsource>anonimus</oldsource>
-        <translation type="unfinished">anonyme</translation>
+        <translation>anonyme</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
@@ -3859,11 +3857,11 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
     </message>
     <message id="verify-on-hw-wallet">
         <source>Verify on HW wallet</source>
-        <translation type="unfinished">Verify on HW wallet</translation>
+        <translation>Vérifier sur le portefeuille physique</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
-        <translation type="unfinished"></translation>
+        <translation>Mon adresse</translation>
     </message>
 </context>
 </TS>
