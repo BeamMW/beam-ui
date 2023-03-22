@@ -1008,10 +1008,6 @@ please review your settings and try again</source>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>เพื่อให้ธุรกรรมเสร็จสมบูรณ์ ผู้รับโอนจะต้องออนไลน์ภายใน 12 ชั่วโมงและคุณควรจะออนไลน์หลังจากนั้นภายใน 2 ชั่วโมง</translation>
     </message>
-    <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>กรุณาดูที่ Trezor ของคุณเพื่อดำเนินการคำสั่ง...</translation>
-    </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
         <translation>สร้างกระเป๋าใหม่ด้วย Trezor</translation>
@@ -1324,14 +1320,6 @@ Please check the swap token and try again.</source>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation> หลังจากที่ข้อเสนอถูกยอมรับจากอีกฝั่งนึงแล้วจะทำให้มีการคิดค่าธรรมเนียม %1 ถึงแม้ว่าข้อเสนอจะถูกยกเลิกก็ตาม</translation>
-    </message>
-    <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation>ปิดกระเป๋า Beam</translation>
-    </message>
-    <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation>มีธุรกรรมจำนวน %1 ที่กำลังดำเนินการ หากปิดกระเป๋าอาจจะทำให้การทำธุรกรรมล้มเหลวได้ คุณแน่ใจที่จะปิดกระเป๋าหรือไม่?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
@@ -3852,6 +3840,32 @@ Please, restart the wallet and try again.</translation>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
         <translation>ที่อยู่ของฉัน</translation>
+    </message>
+    <message id="receive-view-hw-wallet-disconnected">
+        <source>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-title">
+        <source>Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-text">
+        <source>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-title">
+        <source>Beam wallet close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-text">
+        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="trezor-message">
+        <source>Please, look at your Trezor device to complete actions...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

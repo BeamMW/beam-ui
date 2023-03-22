@@ -49,6 +49,7 @@ MainViewModel::MainViewModel()
     connect(walletModelPtr, &WalletModel::walletStatusChanged, this, &MainViewModel::unsafeTxCountChanged);
     connect(walletModelPtr, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SIGNAL(unsafeTxCountChanged()));
     connect(walletModelPtr, SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)), SIGNAL(unreadNotificationsChanged()));
+    connect(walletModelPtr, SIGNAL(devStateChanged(const QString&, int)), SLOT(onDevStateChanged(const QString&, int)));
 #if defined(BEAM_HW_WALLET)
     connect(walletModelPtr, SIGNAL(showTrezorMessage()), this, SIGNAL(showTrezorMessage()));
     connect(walletModelPtr, SIGNAL(hideTrezorMessage()), this, SIGNAL(hideTrezorMessage()));
@@ -85,6 +86,22 @@ void MainViewModel::onLockTimeoutChanged()
 void MainViewModel::onGeneralMouseEvent()
 {
     resetLockTimer();
+}
+
+void MainViewModel::onDevStateChanged(const QString& sErr, int state)
+{
+    auto eState = static_cast<beam::wallet::HidKeyKeeper::DevState>(state);
+
+    if (beam::wallet::HidKeyKeeper::DevState::Disconnected == eState ||
+        beam::wallet::HidKeyKeeper::DevState::Stalled == eState)
+    {
+        if (getUnsafeTxCount())
+            emit hwError("error");
+    }
+    else
+    {
+        emit hwError("");
+    }
 }
 
 void MainViewModel::onClipboardDataChanged()

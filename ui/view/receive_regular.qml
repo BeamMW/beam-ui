@@ -25,6 +25,7 @@ ColumnLayout {
     property var defaultFocusItem: null
     property var onClosed: function () {} // set by parent
     property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
+    property bool hasHwError: statusbarModel.hwwError.length
 
     property alias token:     viewModel.token
     property alias assetId:   viewModel.assetId
@@ -274,6 +275,7 @@ ColumnLayout {
 
                             RowLayout {
                                 spacing: 0
+                                visible: !control.hasHwError
 
                                 ColumnLayout {
                                     spacing: 0
@@ -330,11 +332,26 @@ ColumnLayout {
                                 color:                 Style.content_disabled
                                 wrapMode:              Text.WordWrap
                                 horizontalAlignment:   Text.AlignHCenter
-                                visible:               !viewModel.isMaxPrivacy
+                                visible:               !viewModel.isMaxPrivacy && !control.hasHwError
 /*% "To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book."
 */
                                 text:  qsTrId("wallet-receive-regular-address-message")
+                            }
+
+                            SFText {
+                                Layout.fillWidth:   true
+                                width: parent.width
+                                font.pixelSize:        14
+                                font.italic:           true
+                                color:                 Style.validator_error
+                                wrapMode:              Text.WordWrap
+                                horizontalAlignment:   Text.AlignHCenter
+                                visible:               control.hasHwError
+/*% "QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet"
+*/
+                                text:                  qsTrId("receive-view-hw-wallet-disconnected")
                             }
                         }
                     }

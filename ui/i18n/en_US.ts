@@ -3862,5 +3862,21 @@ Please, restart the wallet and try again.</translation>
         <source>My address</source>
         <translation>My address</translation>
     </message>
+    <message id="receive-view-hw-wallet-disconnected">
+        <source>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</source>
+        <translation>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</translation>
+    </message>
+    <message id="approve-on-hw-wallet-title">
+        <source>Transaction</source>
+        <translation>Transaction</translation>
+    </message>
+    <message id="approve-on-hw-wallet-text">
+        <source>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</source>
+        <translation>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</translation>
+    </message>
 </context>
 </TS>
