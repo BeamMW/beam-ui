@@ -42,11 +42,13 @@ signals:
     void unsafeTxCountChanged();
     void unreadNotificationsChanged();
     void clipboardChanged(const QString& message);
+    void hwError(const QString& message);
 
 public slots:
     void lockWallet();
     void onLockTimeoutChanged();
     void onGeneralMouseEvent();
+    void onDevStateChanged(const QString& sErr, int state);
 
 private slots:
     void onClipboardDataChanged();

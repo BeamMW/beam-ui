@@ -1008,10 +1008,6 @@ please review your settings and try again</source>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>거래가 완료되기 위해서, 수신자는 12시간 이내로 온라인 상태가 되어야하고 당신 역시 2시간 안으로 온라인 상태이어야합니다.</translation>
     </message>
-    <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>액션을 완료하기 위해 Trezor 디바이스를 확인해주세요</translation>
-    </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
         <translation>Trezor를 통해 지갑 초기화</translation>
@@ -1324,14 +1320,6 @@ Please check the swap token and try again.</translation>
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation type="unfinished"> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</translation>
     </message>
-    <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation type="unfinished">Beam wallet close</translation>
-    </message>
-    <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation type="unfinished">There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</translation>
-    </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
@@ -1403,7 +1391,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
         <source>Cannot connect to node. Invalid genesis block</source>
-        <translation type="unfinished">Cannot connect to node. Invalid genesis block</translation>
+        <translation>노드에 연결할 수 없습니다. 잘못된 제네시스 블록</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
@@ -1411,7 +1399,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-state-initial-receiver">
         <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation type="unfinished">If the sender doesn&apos;t get online in %1, the transaction will be canceled</translation>
+        <translation>만약 발신자가 %1 이내에 온라인 상태가 되지 않으면, 트랜잭션이 취소됩니다.</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
@@ -1472,7 +1460,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet updates</source>
-        <translation type="unfinished">Wallet updates</translation>
+        <translation>지갑 업데이트</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
@@ -1480,7 +1468,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-fee-too-large">
         <source>Fee is too large</source>
-        <translation type="unfinished">Fee is too large</translation>
+        <translation>수수료가 너무 큽니다</translation>
     </message>
     <message id="tx-failure-asset-invalid-info">
         <source>No asset info or asset info is not valid</source>
@@ -2340,8 +2328,7 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <oldsource>Hardwate wallet is not connected</oldsource>
-        <translation type="unfinished">Hardwate wallet is not connected</translation>
+        <translation type="unfinished">Hardware wallet is not connected</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -3840,8 +3827,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonymous</source>
-        <oldsource>anonimus</oldsource>
-        <translation type="unfinished">anonimus</translation>
+        <translation type="unfinished">anonymous</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
@@ -3853,6 +3839,32 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
+        <translation>내 주소</translation>
+    </message>
+    <message id="receive-view-hw-wallet-disconnected">
+        <source>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-title">
+        <source>Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-text">
+        <source>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-title">
+        <source>Beam wallet close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-text">
+        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="trezor-message">
+        <source>Please, look at your Trezor device to complete actions...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

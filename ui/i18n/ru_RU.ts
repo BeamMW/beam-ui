@@ -422,7 +422,7 @@
     <message id="start-migration-button">
         <source>start auto migration</source>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation type="unfinished">start auto migration</translation>
+        <translation>начать обновление версии</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -1014,10 +1014,6 @@ please review your settings and try again</source>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>Чтобы транзакция была завершена, получатель должен подключиться к Интернету в течение следующих 12 часов, с того момента вы должны подключиться к Интернету в течение 2 часов.</translation>
     </message>
-    <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>Пожалуйста, посмотрите на ваше устройство Trezor для завершения действий...</translation>
-    </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
         <translation>Инициализировать кошелек с Trezor</translation>
@@ -1329,14 +1325,6 @@ Please check the swap token and try again.</source>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation> Как только предложение будет принято другой стороной, %1 комиссия за транзакцию будет взиматься, даже если предложение будет отменено.</translation>
-    </message>
-    <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation>Закрытие кошелька Beam</translation>
-    </message>
-    <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation>Имеется %1 активных транзакций, которые могут не состояться, если кошелек выйдет в автономном режиме. Вы уверены, что хотите закрыть кошелек сейчас?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
@@ -2129,7 +2117,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="apps-title">
         <source>My DApp Store</source>
-        <translation type="unfinished">My DApp Store</translation>
+        <translation>Мой DApp Store</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2353,8 +2341,7 @@ Update your settings and try again.</source>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <oldsource>Hardwate wallet is not connected</oldsource>
-        <translation type="unfinished">Аппаратный кошелёк не подключен</translation>
+        <translation>Аппаратный кошелёк не подключен</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -2490,7 +2477,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation>Оффлайн</translation>
+        <translation>Отключен от сети</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -2542,7 +2529,7 @@ Update your settings and try again.</source>
     </message>
     <message id="balance-change">
         <source>Change</source>
-        <translation>Сдача</translation>
+        <translation>Изменить</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
@@ -2590,7 +2577,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender Endpoint</source>
-        <translation type="unfinished">Sender Endpoint</translation>
+        <translation>Отправитель</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
@@ -2598,7 +2585,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver Endpoint</source>
-        <translation type="unfinished">Receiver Endpoint</translation>
+        <translation>Получатель</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2819,7 +2806,7 @@ Update your settings and try again.</source>
     </message>
     <message id="notifications-open-dapp">
         <source>open the DApp</source>
-        <translation type="unfinished">open the DApp</translation>
+        <translation>открыть DApp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
@@ -2831,15 +2818,15 @@ Update your settings and try again.</source>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy Warning</source>
-        <translation type="unfinished">DApps Privacy Warning</translation>
+        <translation>Предупреждение о конфиденциальности DApps</translation>
     </message>
     <message id="dapps-privacy-warning">
         <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
 Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
+        <translation>Кошелёк Beam требует разрешения на запуск распределенных приложений. Это может раскрыть информацию о вас, включая, помимо прочего, IP-адрес, сторонним веб-серверам и/или контрактам.
 
-Allow to proceed? You can always update your choice in Settings later.</translation>
+Продолжить? Вы всегда можете изменить свой выбор в Настройках позже.</translation>
     </message>
     <message id="settings-dapps-allowed">
         <source>Allow to launch DApps</source>
@@ -3172,40 +3159,40 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-ipfsnode-title">
         <source>IPFS Integrated Node</source>
-        <translation type="unfinished">IPFS Integrated Node</translation>
+        <translation>Интегрированный узел IPFS</translation>
     </message>
     <message id="settings-ipfs-swarm-port">
         <source>Swarm Port</source>
-        <translation type="unfinished">Swarm Port</translation>
+        <translation>Swarm порт</translation>
     </message>
     <message id="wallet-txs-status-in-progress-pub-offline-to-own">
         <source>sending to own address
 (public offline)</source>
-        <translation type="unfinished">sending to own address
-(public offline)</translation>
+        <translation>отправка на собственный адрес
+(публичный оффлайн)</translation>
     </message>
     <message id="wallet-txs-status-sent-pub-offline-to-own">
         <source>sent to own address
 (public offline)</source>
-        <translation type="unfinished">sent to own address
-(public offline)</translation>
+        <translation>отправлено на собственный адрес
+(публичный оффлайн)</translation>
     </message>
     <message id="start-migration-manual-button">
         <source>start manual migration</source>
         <extracomment>migration screen, select db file button</extracomment>
-        <translation type="unfinished">start manual migration</translation>
+        <translation>начать ручную миграцию</translation>
     </message>
     <message id="restore-find-db">
         <source>Find the wallet database file manually</source>
-        <translation type="unfinished">Find the wallet database file manually</translation>
+        <translation>Найти файл базы данных кошелька вручную</translation>
     </message>
     <message id="settings-ipfs-location">
         <source>IPFS repository location</source>
-        <translation type="unfinished">IPFS repository location</translation>
+        <translation>Расположение репозитория IPFS</translation>
     </message>
     <message id="settings-ipfs-start">
         <source>Run node on</source>
-        <translation type="unfinished">Run node on</translation>
+        <translation>Запустить узел</translation>
     </message>
     <message id="tx-empty">
         <source>Your transaction list is empty</source>
@@ -3245,7 +3232,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="tx-table-filter-canceled">
         <source>Canceled</source>
-        <translation type="unfinished">Canceled</translation>
+        <translation>Отменено</translation>
     </message>
     <message id="tx-table-filter-failed">
         <source>Failed</source>
@@ -3281,7 +3268,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="tx-table-filter-label">
         <source>Show</source>
-        <translation type="unfinished">Show</translation>
+        <translation>Показать</translation>
     </message>
     <message id="multiselect-none">
         <source>None</source>
@@ -3293,11 +3280,11 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-remove-filter-button">
         <source>remove filter</source>
-        <translation type="unfinished">remove filter</translation>
+        <translation>удалить фильтр</translation>
     </message>
     <message id="wallet-assets-title">
         <source>Assets</source>
-        <translation type="unfinished">Assets</translation>
+        <translation>Активы</translation>
     </message>
     <message id="wallet-selected-assets-checkbox">
         <source>Selected</source>
@@ -3313,19 +3300,19 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dnd-load-a-file">
         <source>load a file</source>
-        <translation type="unfinished">load a file</translation>
+        <translation>загрузить файл</translation>
     </message>
     <message id="dnd-jus-drop">
         <source>or just drop it here</source>
-        <translation type="unfinished">or just drop it here</translation>
+        <translation>или просто перетяните его сюда</translation>
     </message>
     <message id="dnd-install-success">
         <source>The &quot;%1&quot; DApp is installed successfully</source>
-        <translation type="unfinished">The &quot;%1&quot; DApp is installed successfully</translation>
+        <translation>&quot;%1&quot; DApp успешно установлен</translation>
     </message>
     <message id="dnd-install-fail">
         <source>The DApp installation error.</source>
-        <translation type="unfinished">The DApp installation error.</translation>
+        <translation>Ошибка установки DApp.</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
@@ -3333,65 +3320,65 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-balance-title">
         <source>Wallet Balance</source>
-        <translation type="unfinished">Wallet Balance</translation>
+        <translation>Баланс кошелька</translation>
     </message>
     <message id="tx-no-transaction-filter">
         <source>No transactions to show</source>
-        <translation type="unfinished">No transactions to show</translation>
+        <translation>Нет транзакций</translation>
     </message>
     <message id="apps-become-a-publisher">
         <source>become a publisher</source>
-        <translation type="unfinished">become a publisher</translation>
+        <translation>стать издателем</translation>
     </message>
     <message id="dapps-store-install">
         <source>install</source>
-        <translation type="unfinished">install</translation>
+        <translation>установить</translation>
     </message>
     <message id="dapps-store-update">
         <source>update</source>
-        <translation type="unfinished">update</translation>
+        <translation>обновить</translation>
     </message>
     <message id="dapps-store-remove-dapp">
         <source>remove dapp</source>
-        <translation type="unfinished">remove dapp</translation>
+        <translation>удалить dapp</translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
-        <translation type="unfinished">Become a publisher</translation>
+        <translation>Стать издателем</translation>
     </message>
     <message id="dapps-store-edit-publisher-info">
         <source>Edit publisher info</source>
-        <translation type="unfinished">Edit publisher info</translation>
+        <translation>Редактировать информацию об издателе</translation>
     </message>
     <message id="dapps-store-become-publisher-text">
         <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation type="unfinished">To become a publisher you need to set up a username. ID number and personal Publisher Key will
- be given to you automatically. Registration will allow you to publish, update and delete DApps.</translation>
+        <translation>Чтобы стать издателем, необходимо указать имя пользователя. ID и персональный ключ издателя
+ будут переданы вам автоматически. Регистрация позволит публиковать, обновлять и удалять DApps.</translation>
     </message>
     <message id="dapps-store-nickname">
         <source>Nickname</source>
-        <translation type="unfinished">Nickname</translation>
+        <translation>Псевдоним</translation>
     </message>
     <message id="dapps-store-short-title">
         <source>Short title</source>
-        <translation type="unfinished">Short title</translation>
+        <translation>Короткое название</translation>
     </message>
     <message id="dapps-store-50-character-max">
         <source>50 characters max</source>
-        <translation type="unfinished">50 characters max</translation>
+        <translation>Максимум 50 символов</translation>
     </message>
     <message id="dapps-store-about-me">
         <source>About me</source>
-        <translation type="unfinished">About me</translation>
+        <translation>Обо мне</translation>
     </message>
     <message id="dapps-store-150-character-max">
         <source>150 characters max</source>
-        <translation type="unfinished">150 characters max</translation>
+        <translation>Максимум 150 символов</translation>
     </message>
     <message id="dapps-store-social-networks">
         <source>Social networks</source>
-        <translation type="unfinished">Social networks</translation>
+        <translation>Социальные сети</translation>
     </message>
     <message id="dapps-store-website">
         <source>Website</source>
@@ -3399,177 +3386,177 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-twitter">
         <source>Twitter</source>
-        <translation type="unfinished">Twitter</translation>
+        <translation>Twitter</translation>
     </message>
     <message id="dapps-store-linkedin">
         <source>LinkedIn</source>
-        <translation type="unfinished">LinkedIn</translation>
+        <translation>LinkedIn</translation>
     </message>
     <message id="dapps-store-instagram">
         <source>Instagram</source>
-        <translation type="unfinished">Instagram</translation>
+        <translation>Instagram</translation>
     </message>
     <message id="dapps-store-telegram">
         <source>Telegram</source>
-        <translation type="unfinished">Telegram</translation>
+        <translation>Telegram</translation>
     </message>
     <message id="dapps-store-discord">
         <source>Discord</source>
-        <translation type="unfinished">Discord</translation>
+        <translation>Discord</translation>
     </message>
     <message id="dapps-store-create-account">
         <source>create account</source>
-        <translation type="unfinished">create account</translation>
+        <translation>создать учётную запись</translation>
     </message>
     <message id="dapps-store-save-changes">
         <source>save changes</source>
-        <translation type="unfinished">save changes</translation>
+        <translation>сохранить изменения</translation>
     </message>
     <message id="dapps-store-publisher-page">
         <source>Publisher&apos;s page</source>
-        <translation type="unfinished">Publisher&apos;s page</translation>
+        <translation>Страница издателя</translation>
     </message>
     <message id="dapps-store-my-dapps">
         <source>My DAPPs - admin panel</source>
-        <translation type="unfinished">My DAPPs - admin panel</translation>
+        <translation>Мои DAPP - панель администратора</translation>
     </message>
     <message id="dapps-store-publisher-have-not-dapps">
         <source>You have no published DApps yet</source>
-        <translation type="unfinished">You have no published DApps yet</translation>
+        <translation>У вас пока нет опубликованных DApp&apos;ов</translation>
     </message>
     <message id="dapps-store-publisher-upload-first-dapp">
         <source>upload your first dapp</source>
-        <translation type="unfinished">upload your first dapp</translation>
+        <translation>загрузите свое первое приложение</translation>
     </message>
     <message id="dapps-store-publisher-key">
         <source>Publisher Key</source>
-        <translation type="unfinished">Publisher Key</translation>
+        <translation>Ключ издателя</translation>
     </message>
     <message id="dapps-store-publisher-key-dialog-note">
         <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
-        <translation type="unfinished">Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</translation>
+        <translation>Это ваш личный ключ для публикации. Любой пользователь может использовать его, чтобы добавить вас в свой личный список и следить за вашими приложениями. Вы можете добавить его на вашу персональную страницу или сайт.</translation>
     </message>
     <message id="dapps-store-publishers-page-title">
         <source>Publishers that i follow</source>
-        <translation type="unfinished">Publishers that i follow</translation>
+        <translation>Издатели, за которыми я следую</translation>
     </message>
     <message id="dapps-store-add-publisher">
         <source>add publisher</source>
-        <translation type="unfinished">add publisher</translation>
+        <translation>добавить издателя</translation>
     </message>
     <message id="dapps-store-add-publisher-title">
         <source>Add publisher</source>
-        <translation type="unfinished">Add publisher</translation>
+        <translation>Добавить издателя</translation>
     </message>
     <message id="dapps-store-add-publisher-note">
         <source>To add a publisher you need to paste his Publisher Key in the field below</source>
-        <translation type="unfinished">To add a publisher you need to paste his Publisher Key in the field below</translation>
+        <translation>Чтобы добавить издателя, необходимо вставить его ключ в поле ниже</translation>
     </message>
     <message id="dapps-store-add-publisher-error">
         <source>Publisher with that Key is not found</source>
-        <translation type="unfinished">Publisher with that Key is not found</translation>
+        <translation>Издатель с таким ключом не найден</translation>
     </message>
     <message id="dapps-store-submit">
         <source>Submit</source>
-        <translation type="unfinished">Submit</translation>
+        <translation>Отправить</translation>
     </message>
     <message id="dapps-store-add-publisher-notification">
         <source>&lt;b&gt;%1&lt;/b&gt; added to the list of publishers that you follow</source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; added to the list of publishers that you follow</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; добавлен в список издателей, на которые вы подписаны</translation>
     </message>
     <message id="copy-publisher-key">
         <source>Copy publisher key</source>
-        <translation type="unfinished">Copy publisher key</translation>
+        <translation>Скопировать ключ издателя</translation>
     </message>
     <message id="remove-from-list">
         <source>Remove from my list</source>
-        <translation type="unfinished">Remove from my list</translation>
+        <translation>Удалить из моего списка</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
         <source>The transaction is sent</source>
-        <translation type="unfinished">The transaction is sent</translation>
+        <translation>Транзакция отправлена</translation>
     </message>
     <message id="dapps-store-creation-of-account">
         <source>Creation of the personal publisher account takes time.
  You can continue as soon as transaction is completed.</source>
-        <translation type="unfinished">Creation of the personal publisher account takes time.
- You can continue as soon as transaction is completed.</translation>
+        <translation>Создание персональной учетной записи издателя занимает время.
+ Вы можете продолжить, как только транзакция будет завершена.</translation>
     </message>
     <message id="dapps-store-changes-takes-time">
         <source>Changes take time. You can continue as soon as transaction is completed.</source>
-        <translation type="unfinished">Changes take time. You can continue as soon as transaction is completed.</translation>
+        <translation>Изменения занимают время. Вы можете продолжить, как только транзакция завершится.</translation>
     </message>
     <message id="dapps-store-upload-choose-file-title">
         <source>Select application to upload</source>
-        <translation type="unfinished">Select application to upload</translation>
+        <translation>Выберите приложение для загрузки</translation>
     </message>
     <message id="dapps-store-update-dapp-title">
         <source>Update DApp</source>
-        <translation type="unfinished">Update DApp</translation>
+        <translation>Обновить DApp</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-title">
         <source>Upload new DApp</source>
-        <translation type="unfinished">Upload new DApp</translation>
+        <translation>Загрузить новый DApp</translation>
     </message>
     <message id="dapps-store-update-dapp-text">
         <source>To update %1, please add the new version of the file below</source>
-        <translation type="unfinished">To update %1, please add the new version of the file below</translation>
+        <translation>Чтобы обновить %1, пожалуйста, добавьте новую версию файла ниже</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-text">
         <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
-        <translation type="unfinished">To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</translation>
+        <translation>Чтобы загрузить свой собственный DApp в DApp Store, пожалуйста, используйте &lt;b&gt;&lt;i&gt;только файлы в формате .dapp&lt;/i&gt;&lt;/b&gt;</translation>
     </message>
     <message id="dapps-store-upload-common-error">
         <source>Something went wrong, please check your file and to try upload it again</source>
-        <translation type="unfinished">Something went wrong, please check your file and to try upload it again</translation>
+        <translation>Что-то пошло не так, пожалуйста, проверьте ваш файл и попробуйте загрузить его снова</translation>
     </message>
     <message id="dapp-store-load-file">
         <source>load .dapp file</source>
-        <translation type="unfinished">load .dapp file</translation>
+        <translation>загрузить файл .dapp</translation>
     </message>
     <message id="dapps-store-drop-text">
         <source>or just drop it here</source>
-        <translation type="unfinished">or just drop it here</translation>
+        <translation>или просто перетяните его сюда</translation>
     </message>
     <message id="general-continue">
         <source>continue</source>
-        <translation type="unfinished">continue</translation>
+        <translation>продолжить</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
         <source>Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
 change the information in your file and upload your file again.</source>
-        <translation type="unfinished">Check the information below and select &quot;publish&quot;.
-If something is wrong, please cancel the uploading,
-change the information in your file and upload your file again.</translation>
+        <translation>Проверьте информацию ниже и выберите &quot;опубликовать&quot;.
+Если что-то не так, отмените загрузку,
+измените информацию в вашем файле и загрузите файл снова.</translation>
     </message>
     <message id="dapps-store-dapp-release-date">
         <source>Release date:</source>
-        <translation type="unfinished">Release date:</translation>
+        <translation>Дата выпуска:</translation>
     </message>
     <message id="dapps-store-dapp-version">
         <source>Version:</source>
-        <translation type="unfinished">Version:</translation>
+        <translation>Версия:</translation>
     </message>
     <message id="dapps-store-dapp-api-version">
         <source>Api version:</source>
-        <translation type="unfinished">Api version:</translation>
+        <translation>Версия API:</translation>
     </message>
     <message id="dapps-store-dapp-min-api-version">
         <source>Minimal api version:</source>
-        <translation type="unfinished">Minimal api version:</translation>
+        <translation>Минимальная версия API:</translation>
     </message>
     <message id="dapps-store-dapp-guid">
         <source>Guid:</source>
-        <translation type="unfinished">Guid:</translation>
+        <translation>Guid:</translation>
     </message>
     <message id="dapps-store-publish">
         <source>publish</source>
-        <translation type="unfinished">publish</translation>
+        <translation>опубликовать</translation>
     </message>
     <message id="dapps-store-you-now-are-publisher">
         <source>You now are a publisher!</source>
-        <translation type="unfinished">You now are a publisher!</translation>
+        <translation>Теперь вы издатель!</translation>
     </message>
     <message id="dapps-store-congratulations">
         <source>Congratulations %1!
@@ -3580,18 +3567,18 @@ list and follow your apps. You can add it on your personal page or website.
 All the time you have access to it in yout personal publisher account.
 
 Let&apos;s start!</source>
-        <translation type="unfinished">Congratulations %1!
+        <translation>Поздравляем %1!
 
-We are glad to see you at our DApp Store as a Publisher.
-Below you will see your personal Publisher Key. Any user can use it to add you to their personal
-list and follow your apps. You can add it on your personal page or website.
-All the time you have access to it in yout personal publisher account.
+Мы рады видеть вас в нашем DApp Store в качестве издателя.
+Ниже вы увидите ваш персональный ключ издателя. Любой пользователь может использовать его, чтобы добавить вас в персональный
+список и подписаться на ваши приложения. Вы можете добавить его на вашу персональную страницу или сайт.
+Все время вы имеете доступ к нему в личном кабинете издателя.
 
-Let&apos;s start!</translation>
+Поехали!</translation>
     </message>
     <message id="dapps-store-to-to-my-account">
         <source>go to my account</source>
-        <translation type="unfinished">go to my account</translation>
+        <translation>перейти к моей учетной записи</translation>
     </message>
     <message id="apps-title-no-fork">
         <source>DApp Store</source>
@@ -3599,19 +3586,19 @@ Let&apos;s start!</translation>
     </message>
     <message id="publishers-list-nickname">
         <source>Nickname</source>
-        <translation type="unfinished">Nickname</translation>
+        <translation>Псевдоним</translation>
     </message>
     <message id="publishers-list-about">
         <source>About</source>
-        <translation type="unfinished">About</translation>
+        <translation>О нас</translation>
     </message>
     <message id="publishers-list-social-net">
         <source>Social networks</source>
-        <translation type="unfinished">Social networks</translation>
+        <translation>Социальные сети</translation>
     </message>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
-        <translation type="unfinished">Publisher link</translation>
+        <translation>Ссылка издателя</translation>
     </message>
     <message id="dapps-store-launch">
         <source>launch</source>
@@ -3620,58 +3607,58 @@ Let&apos;s start!</translation>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
-        <translation type="unfinished">Oops... Failed to create Publisher.
-Please check the log and try again.</translation>
+        <translation>Ой... Не удалось создать издателя.
+Пожалуйста, проверьте журнал и повторите попытку.</translation>
     </message>
     <message id="app-failed-edit-publisher">
         <source>Oops... Failed to edit Publisher.
 Please check the log and try again.</source>
-        <translation type="unfinished">Oops... Failed to edit Publisher.
-Please check the log and try again.</translation>
+        <translation>Ой... Не удалось изменить издателя.
+Пожалуйста, проверьте журнал и повторите попытку.</translation>
     </message>
     <message id="app-failed-publish-dapp">
         <source>Oops... Failed to publish DApp.
 Please check the log and try again.</source>
-        <translation type="unfinished">Oops... Failed to publish DApp.
-Please check the log and try again.</translation>
+        <translation>Ой... Не удалось опубликовать DApp.
+Проверьте журнал и повторите попытку.</translation>
     </message>
     <message id="app-failed-remove-dapp">
         <source>Oops... Failed to remove DApp.
 Please check the log and try again.</source>
-        <translation type="unfinished">Oops... Failed to remove DApp.
-Please check the log and try again.</translation>
+        <translation>Ой... Не удалось удалить DApp.
+Пожалуйста, проверьте журнал ошибок и повторите попытку.</translation>
     </message>
     <message id="dapps-store-ipfs-unavailable">
         <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
-        <translation type="unfinished">IPFS Service is not running or is not connected to the peers. Please check the settings.</translation>
+        <translation>Служба IPFS не запущена или не подключена к узлам. Пожалуйста, проверьте настройки.</translation>
     </message>
     <message id="app-uninstall-success">
         <source>Everything worked out.
 &apos;%1&apos; DApp is uninstalled.</source>
-        <translation type="unfinished">Everything worked out.
-&apos;%1&apos; DApp is uninstalled.</translation>
+        <translation>Все готово.
+&apos;%1&apos; DApp удалён.</translation>
     </message>
     <message id="app-uninstall-fail">
         <source>Something went wrong.
 Uninstall failed. Please try again later.</source>
-        <translation type="unfinished">Something went wrong.
-Uninstall failed. Please try again later.</translation>
+        <translation>Что-то пошло не так.
+Удаление не удалось. Пожалуйста, повторите попытку позже.</translation>
     </message>
     <message id="app-install-success">
         <source>Congratulations!
 &apos;%1&apos; DApp is successfully installed.</source>
-        <translation type="unfinished">Congratulations!
-&apos;%1&apos; DApp is successfully installed.</translation>
+        <translation>Поздравляем!
+DApp &apos;%1&apos; успешно установлен.</translation>
     </message>
     <message id="app-install-fail">
         <source>Sorry, the installation failed.
 Please, check the file and try again.</source>
-        <translation type="unfinished">Sorry, the installation failed.
-Please, check the file and try again.</translation>
+        <translation>К сожалению, установка не удалась.
+Пожалуйста, проверьте файл и повторите попытку.</translation>
     </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
-        <translation type="unfinished">Dapp Store</translation>
+        <translation>Dapp Store</translation>
     </message>
     <message id="settings-blockchain-height">
         <source>Blockchain height</source>
@@ -3679,33 +3666,33 @@ Please, check the file and try again.</translation>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
-        <translation type="unfinished">Assets Swaps</translation>
+        <translation>Обмен активами</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Atomic Swap Offer</source>
-        <translation type="unfinished">Create Atomic Swap Offer</translation>
+        <translation>Создать предложение атомарного обмена</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
 Please, restart the wallet and try again.</source>
-        <translation type="unfinished">Sorry, the installation failed.
-Please, restart the wallet and try again.</translation>
+        <translation>К сожалению, установка не удалась.
+Пожалуйста, перезапустите кошелек и повторите попытку.</translation>
     </message>
     <message id="app-update-fail">
         <source>Sorry, the update failed.
 Please, check the file and try again.</source>
-        <translation type="unfinished">Sorry, the update failed.
-Please, check the file and try again.</translation>
+        <translation>К сожалению, обновление не удалось.
+Пожалуйста, проверьте файл и повторите попытку.</translation>
     </message>
     <message id="app-update-timeout-fail">
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
-        <translation type="unfinished">Sorry, the update failed.
-Please, restart the wallet and try again.</translation>
+        <translation>К сожалению, обновление не удалось.
+Пожалуйста, перезапустите кошелек и повторите попытку.</translation>
     </message>
     <message id="dapps-store-installing">
         <source>installing</source>
-        <translation type="unfinished">installing</translation>
+        <translation>установка</translation>
     </message>
     <message id="dapps-store-updating">
         <source>updating</source>
@@ -3733,15 +3720,15 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="swap-accept-offer">
         <source>accept offer</source>
-        <translation type="unfinished">accept offer</translation>
+        <translation>принять предложение</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept an Asset Swap Offer</source>
-        <translation type="unfinished">Accept an Asset Swap Offer</translation>
+        <translation>Принять предложение обмена активов</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create an Asset Swap Offer</source>
-        <translation type="unfinished">Create an Asset Swap Offer</translation>
+        <translation>Создать предложение обмена активов</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3749,7 +3736,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
-        <translation type="unfinished">Enter asset name...</translation>
+        <translation>Введите имя актива...</translation>
     </message>
     <message id="swap-active-offers-tab">
         <source>Active offers</source>
@@ -3761,47 +3748,47 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="assets-same-accept">
         <source>You can&apos;t accept offer with identical assets on both sides</source>
-        <translation type="unfinished">You can&apos;t accept offer with identical assets on both sides</translation>
+        <translation>Вы можете принять предложение с идентичными активами с обеих сторон</translation>
     </message>
     <message id="assets-same-create">
         <source>You can&apos;t create offer with identical assets on both sides</source>
-        <translation type="unfinished">You can&apos;t create offer with identical assets on both sides</translation>
+        <translation>Вы можете создать предложение с идентичными активами с обеих сторон</translation>
     </message>
     <message id="notification-dex-completed">
         <source>Assets Swaps transaction completed</source>
-        <translation type="unfinished">Assets Swaps transaction completed</translation>
+        <translation>Транзакция обмена активами завершена</translation>
     </message>
     <message id="notification-dex-expired">
         <source>Assets Swaps transaction expired</source>
-        <translation type="unfinished">Assets Swaps transaction expired</translation>
+        <translation>Срок действия транзакция обмена активами истек</translation>
     </message>
     <message id="notification-dex-failed">
         <source>Assets Swaps transaction failed</source>
-        <translation type="unfinished">Assets Swaps transaction failed</translation>
+        <translation>Ошибка транзакции обмена активами</translation>
     </message>
     <message id="notification-dex-canceled">
         <source>Assets Swaps transaction canceled</source>
-        <translation type="unfinished">Assets Swaps transaction canceled</translation>
+        <translation>Транзакция обмена активами отменена</translation>
     </message>
     <message id="tx-asset-swap-default-comment">
         <source>Assets Swaps transaction</source>
-        <translation type="unfinished">Assets Swaps transaction</translation>
+        <translation>Транзакция обмена активами</translation>
     </message>
     <message id="assets-swap-create-confirm-dialog-title">
         <source>Create asset swap</source>
-        <translation type="unfinished">Create asset swap</translation>
+        <translation>Создать обмен активами</translation>
     </message>
     <message id="assets-swap-accept-confirm-dialog-title">
         <source>Accept asset swap</source>
-        <translation type="unfinished">Accept asset swap</translation>
+        <translation>Подтвердить обмен активами</translation>
     </message>
     <message id="asset-swap-confirmation-create">
         <source>Confirm asset swap creation</source>
-        <translation type="unfinished">Confirm asset swap creation</translation>
+        <translation>Подтвердите создание обмена активами</translation>
     </message>
     <message id="asset-swap-confirmation-accept">
         <source>Accept asset swap</source>
-        <translation type="unfinished">Accept asset swap</translation>
+        <translation>Подтвердить обмен активами</translation>
     </message>
     <message id="assets-swap-confirm-dialog-send-amount">
         <source>Send amount</source>
@@ -3813,39 +3800,39 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="assets-swap-confirm-dialog-fee-label">
         <source>Asset swap fee</source>
-        <translation type="unfinished">Asset swap fee</translation>
+        <translation>Комиссия при обмене активами</translation>
     </message>
     <message id="settings-ca">
         <source>Confidential assets</source>
-        <translation type="unfinished">Confidential assets</translation>
+        <translation>Конфиденциальные активы</translation>
     </message>
     <message id="settings-ca-descr">
         <source>Confidential assets allowed to receive</source>
-        <translation type="unfinished">Confidential assets allowed to receive</translation>
+        <translation>Конфиденциальные активы, разрешенные для получения</translation>
     </message>
     <message id="assets-settings">
         <source>Assets settings</source>
-        <translation type="unfinished">Assets settings</translation>
+        <translation>Настройки активов</translation>
     </message>
     <message id="messenger-title">
         <source>Beam Messenger</source>
-        <translation type="unfinished">Beam Messenger</translation>
+        <translation>Мессенджер Beam</translation>
     </message>
     <message id="messenger-new-chat">
         <source>New chat</source>
-        <translation type="unfinished">New chat</translation>
+        <translation>Новый чат</translation>
     </message>
     <message id="chat-title">
         <source>Chat with %1</source>
-        <translation type="unfinished">Chat with %1</translation>
+        <translation>Чат с %1</translation>
     </message>
     <message id="chat-message-placeholder">
         <source>[ctrl + enter] to send</source>
-        <translation type="unfinished">[ctrl + enter] to send</translation>
+        <translation>[Ctrl+Enter] для отправки</translation>
     </message>
     <message id="messenger-add-receiver-address-dialog-title">
         <source>Add receiver address</source>
-        <translation type="unfinished">Add receiver address</translation>
+        <translation>Добавить адрес получателя</translation>
     </message>
     <message id="messenger-add-receiver-address-address">
         <source>Address</source>
@@ -3857,23 +3844,48 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="messenger-add-receiver-address-save">
         <source>add receiver address</source>
-        <translation type="unfinished">add receiver address</translation>
+        <translation>добавить адрес получателя</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonymous</source>
-        <oldsource>anonimus</oldsource>
-        <translation type="unfinished">anonimus</translation>
+        <translation>аноним</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
-        <translation type="unfinished">[command + enter] to send</translation>
+        <translation>[command + enter] для отправки</translation>
     </message>
     <message id="verify-on-hw-wallet">
         <source>Verify on HW wallet</source>
-        <translation type="unfinished">Verify on HW wallet</translation>
+        <translation>Проверить на аппаратном кошельке</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
+        <translation>Мой адрес</translation>
+    </message>
+    <message id="receive-view-hw-wallet-disconnected">
+        <source>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-title">
+        <source>Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-text">
+        <source>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-title">
+        <source>Beam wallet close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-text">
+        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="trezor-message">
+        <source>Please, look at your Trezor device to complete actions...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

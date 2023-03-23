@@ -1010,10 +1010,6 @@ vänligen se över dina inställningar och testa igen</translation>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>För att transaktionen skall gå igenom måste mottagaren komma online inom 12 timmar och du bör vara online inom 2 timmar efteråt.</translation>
     </message>
-    <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>Vänligen, Se din Trezor-enhet för att slutföra steg...</translation>
-    </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
         <translation>Initiera plånbok med Trezor</translation>
@@ -1325,14 +1321,6 @@ Vänligen kontrollera swap-token och försök igen.</translation>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation> När erbjudandet väl är accepterat från den andra parten kommer %1 transaktionskostnad att gälla, även om erbjudandet avbryts.</translation>
-    </message>
-    <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation>Stäng Beam-plånboken</translation>
-    </message>
-    <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation>Det finns %1 aktiva transaktioner som kan misslyckas om plånboken går offline. Är du säker på att du vill stänga plånboken nu?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
@@ -2342,8 +2330,7 @@ Uppdatera dina inställningar och försök igen.</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <oldsource>Hardwate wallet is not connected</oldsource>
-        <translation type="unfinished">Hardwate wallet is not connected</translation>
+        <translation type="unfinished">Hardware wallet is not connected</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -3846,8 +3833,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonymous</source>
-        <oldsource>anonimus</oldsource>
-        <translation type="unfinished">anonimus</translation>
+        <translation type="unfinished">anonymous</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
@@ -3859,6 +3845,32 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
+        <translation>Min adress</translation>
+    </message>
+    <message id="receive-view-hw-wallet-disconnected">
+        <source>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-title">
+        <source>Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-text">
+        <source>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-title">
+        <source>Beam wallet close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-text">
+        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="trezor-message">
+        <source>Please, look at your Trezor device to complete actions...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

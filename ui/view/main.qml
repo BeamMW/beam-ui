@@ -90,10 +90,31 @@ Rectangle {
         notificationManager.closeContractNotification(txId);
     }
 
+    ConfirmationDialog {
+        id: approveHWAction
+        //% "Transaction"
+        title:                  qsTrId("approve-on-hw-wallet-title")
+        //% "Transaction is in process.\nConnect your Hardware Wallet to finalize the transaction."
+        text:                   qsTrId("approve-on-hw-wallet-text")
+        okButtonVisible:        false
+        cancelButtonVisible:    false
+        closePolicy:            Popup.NoAutoClose
+    }
+
 	MainViewModel {
         id: viewModel
         onClipboardChanged: function(message) {
             showSimplePopup(message)
+        }
+        onHwError: function(message) {
+            if (message.length)
+            {
+                approveHWAction.open();
+            }
+            else
+            {
+                approveHWAction.close();
+            }
         }
     }
 
