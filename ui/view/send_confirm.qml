@@ -232,12 +232,12 @@ ConfirmationDialog {
 
                     BeamAmount  {
                         amount:           modelData.amount
-                        unitName:         (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).unitName
+                        unitName:         (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).unitName + (modelData.assetID != "0" ? "(" + modelData.assetID + ")" : "")
                         rate:             (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).rate
                         prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
                         rateUnit:         control.rateUnit
                         maxPaintedWidth:  false
-                        maxUnitChars:     7
+                        maxUnitChars:     10
                         color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
                         iconSize:         Qt.size(20, 20)
                         iconSource:       (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).icon || ""
