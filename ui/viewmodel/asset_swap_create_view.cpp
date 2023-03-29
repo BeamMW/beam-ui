@@ -34,7 +34,8 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     , _sendAssetSname(kBeamAssetSName)
     , _offerExpires(kExpireOptions[0])
 {
-    connect(_walletModel.get(), &WalletModel::generatedNewAddress,    this, &AssetSwapCreateViewModel::onGeneratedNewAddress);
+    connect(_walletModel.get(), SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
+            this,               SLOT(onAddressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)));
     connect(_walletModel.get(), &WalletModel::coinsSelected,          this, &AssetSwapCreateViewModel::onCoinsSelected);
     connect(_walletModel.get(), &WalletModel::assetsSwapParamsLoaded, this, &AssetSwapCreateViewModel::onAssetsSwapParamsLoaded);
 
@@ -57,12 +58,11 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     }
 
     _walletModel->getAsync()->loadDexOrderParams();
-    //_walletModel->getAsync()->generateNewAddress();
+    _walletModel->getAsync()->getAddresses(true);
 }
 
 void AssetSwapCreateViewModel::publishOffer()
 {
-    _receiverAddress.m_label = _comment.toStdString();
     _receiverAddress.m_duration = beam::wallet::WalletAddress::AddressExpirationAuto;
     _walletModel->getAsync()->saveAddress(_receiverAddress);
 
@@ -115,6 +115,19 @@ void AssetSwapCreateViewModel::onAssetsSwapParamsLoaded(const beam::ByteBuffer& 
     int offerExpiresIndex = 0;
     der & offerExpiresIndex;
     setOfferExpires(offerExpiresIndex);
+}
+
+void AssetSwapCreateViewModel::onAddressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addrs)
+{
+    if (!own || addrs.empty())
+        return;
+
+    auto it = std::find_if(addrs.begin(), addrs.end(), [] (const beam::wallet::WalletAddress& addr)
+    {
+        return addr.m_label == "default";
+    });
+
+    _receiverAddress = it != addrs.end() ? *it : addrs[0];
 }
 
 QList<QMap<QString, QVariant>> AssetSwapCreateViewModel::getCurrenciesList() const
