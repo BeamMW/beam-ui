@@ -54,6 +54,7 @@ class AssetSwapAcceptViewModel: public QObject
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onDexOrdersFinded(const beam::wallet::DexOrder& order);
     void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&);
+    void onAddressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addrs);
 
   private:
     QString getAmountToReceive() const;
