@@ -28,16 +28,16 @@ AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(_walletModel.get(), &WalletModel::generatedNewAddress, this, &AssetSwapAcceptViewModel::onGeneratedNewAddress);
+    connect(_walletModel.get(), SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
+            this,               SLOT(onAddressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)));
     connect(_walletModel.get(), &WalletModel::dexOrdersFinded,     this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
     connect(_walletModel.get(), &WalletModel::coinsSelected,       this, &AssetSwapAcceptViewModel::onCoinsSelected);
 
-    //_walletModel->getAsync()->generateNewAddress();
+    _walletModel->getAsync()->getAddresses(true);
 }
 
 void AssetSwapAcceptViewModel::startSwap()
 {
-    _myAddress.m_label = _comment.toStdString();
     _myAddress.m_duration = beam::wallet::WalletAddress::AddressExpirationAuto;
     _walletModel->getAsync()->saveAddress(_myAddress);
 
@@ -95,6 +95,19 @@ void AssetSwapAcceptViewModel::onCoinsSelected(const beam::wallet::CoinsSelectio
     _canAccept = _isEnoughtToSend && _isFeeEnoughtToSend;
     _maxAmountToSendGrothes = selectionRes.get_NettoValue();
     emit orderChanged();
+}
+
+void AssetSwapAcceptViewModel::onAddressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addrs)
+{
+    if (!own || addrs.empty())
+        return;
+
+    auto it = std::find_if(addrs.begin(), addrs.end(), [] (const beam::wallet::WalletAddress& addr)
+    {
+        return addr.m_label == "default";
+    });
+
+    _myAddress = it != addrs.end() ? *it : addrs[0];
 }
 
 QString AssetSwapAcceptViewModel::getAmountToReceive() const
@@ -217,7 +230,7 @@ QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getCurrenciesList(
 
 bool AssetSwapAcceptViewModel::getCanAccept() const
 {
-    return _canAccept && _receiveAsset != _sendAsset && _amountToReceiveGrothes && _amountToSendGrothes && getCommentValid();
+    return _canAccept && _receiveAsset != _sendAsset && _amountToReceiveGrothes && _amountToSendGrothes;
 }
 
 bool AssetSwapAcceptViewModel::getIsEnough() const

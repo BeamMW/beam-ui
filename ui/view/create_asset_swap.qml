@@ -146,47 +146,6 @@ ColumnLayout {
                             }
                         }
                     }
-
-                    //
-                    // Comment
-                    //
-                    FoldablePanel {
-                        //% "Comment"
-                        title:                   qsTrId("general-comment")
-                        Layout.fillWidth:        true
-                        content: ColumnLayout {
-                            SFTextInput {
-                                id:               addressComment
-                                font.pixelSize:   14
-                                Layout.fillWidth: true
-                                font.italic :     !viewModel.commentValid
-                                backgroundColor:  Style.content_main
-                                color:            Style.content_main
-                                focus:            true
-                                maximumLength:    BeamGlobals.maxCommentLength()
-                                //% "Comments are local and won't be shared"
-                                placeholderText:  qsTrId("general-comment-local")
-                            }
-
-                            Binding {
-                                target:   viewModel
-                                property: "comment"
-                                value:    addressComment.text
-                            }
-
-                            Item {
-                                Layout.fillWidth: true
-                                SFText {
-                                    //% "Address with the same comment already exists"
-                                    text:           qsTrId("general-addr-comment-error")
-                                    color:          Style.validator_error
-                                    font.pixelSize: 12
-                                    font.italic:    true
-                                    visible:        !viewModel.commentValid
-                                }
-                            }
-                        }
-                    }
                 }  // ColumnLayout
 
                 //
