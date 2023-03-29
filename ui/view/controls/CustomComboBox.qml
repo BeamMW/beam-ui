@@ -137,27 +137,7 @@ ComboBox {
         background: Item {}
     }
 
-    function recalcSize() {
-        if (model) {
-            for(var i = 0; i < model.length; i++) {
-                var modelText = control.textRole ? model[i][control.textRole] : model[i];
-                if (transformText && typeof(transformText) == "function")
-                    modelText = transformText(modelText);
-                textMetrics.text = Utils.limitText(modelText, control.textMaxLenDrop)
-
-                var iconW = model[i]["iconWidth"] || 0
-                modelWidth = Math.max(textMetrics.width +
-                                      iconW + 10, // spacing between icon & text
-                                      modelWidth)
-            }
-        }
-    }
-
-    onModelChanged: recalcSize()
     indicator: Item {}
-    onDownChanged: {
-        //recalcSize();
-    }
 
     property var  iconW:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
     property var  iconH:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
@@ -232,7 +212,6 @@ ComboBox {
 
    popup: Popup {
         id: comboPopup
-        onAboutToShow: recalcSize
 
         y: control.height + 7
         x: {
