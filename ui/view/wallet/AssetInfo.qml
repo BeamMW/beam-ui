@@ -19,8 +19,8 @@ Control {
     readonly property bool hasBalanceTip: amountCtrl.hasTip || assetInfo.locked != "0" || assetInfo.amountShielded != "0"
 
     padding: 0
-    leftPadding: 20
-    rightPadding: 10
+    leftPadding: 15
+    rightPadding: 7
 
     Text {
         id: fakeTip
