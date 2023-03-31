@@ -70,7 +70,6 @@ Control {
             Layout.alignment: Qt.AlignRight | Qt.AlignTop
             Layout.topMargin: 7
             SFLabel {
-                font.pixelSize:  control.rateFontSize
                 font.italic:     true
                 color:           Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                 text:            "#" + assetInfo.id
