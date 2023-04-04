@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
-        os: [macos-11, ubuntu-18.04, windows-2019]
+        os: [macos-11, ubuntu-20.04, windows-2019]
 
     steps:
       - uses: actions/checkout@v2
@@ -169,12 +169,12 @@ jobs:
         if: matrix.os == 'ubuntu-16.04'
         run: echo "LINUX_QT_DEPLOY_TOOL=linuxdeployqt-7" >> $GITHUB_ENV
 
-      - name: LinuxQtDeployTool [ubuntu-18.04]
-        if: matrix.os == 'ubuntu-18.04'
+      - name: LinuxQtDeployTool [ubuntu-18.04 || ubuntu-20.04]
+        if: matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         run: echo "LINUX_QT_DEPLOY_TOOL=linuxdeployqt" >> $GITHUB_ENV
 
-      - name: AppImage [ubuntu-16.04 || ubuntu-18.04]
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
+      - name: AppImage [ubuntu-16.04 || ubuntu-18.04 || ubuntu-20.04]
+        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         run: |
           echo "Creating AppImage deploy tree"
           mkdir -p ./deploy/usr/bin
@@ -280,7 +280,7 @@ jobs:
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v2
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
+        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
           path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar
