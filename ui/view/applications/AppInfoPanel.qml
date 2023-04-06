@@ -1,43 +1,22 @@
 import QtQuick 2.11
-import QtQuick.Controls 1.2
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts 1.3
 import "../controls"
 import "../wallet"
 
-Pane {
-    id: control
+Control {
+    id: appInfoControl
     property string dappName
     property string dappFilter
 
     property bool  folded:            true
     property bool  foldsUp:           true
-    property alias bkColor:           background.color
+    property alias bkColor:           appBackground.color
     property int   contentItemHeight: 0
     property alias tableOwner:        txTable.owner
     property bool  maximized:         false
     horizontalPadding: 2
-
-    property var content: Item {
-        TxTable {
-            property bool isTransactionsView: control.state == "transactions"
-            anchors.leftMargin: isTransactionsView ? 25 : 0
-            anchors.rightMargin: isTransactionsView ? 25 : 0
-            id: txTable
-            owner: control
-            emptyMessageMargin: 60
-            headerShaderVisible: false
-            dappFilter: control.dappFilter
-            anchors.fill: parent
-            visible: isTransactionsView
-        }
-        AssetsPanel {
-            id: assetsList
-            anchors.fill: parent
-            visible: control.state == "balance"
-        }
-    }
 
     function showTxDetails(id) {
         txTable.showTxDetails(id)
@@ -62,12 +41,9 @@ Pane {
 
     contentItem: ColumnLayout {
         spacing: 0
-        clip:    folded
-        width: parent.width
 
         RowLayout {
             id: headerRow
-            Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
             spacing: 0
             Layout.leftMargin: 25
@@ -80,8 +56,9 @@ Pane {
                 Layout.alignment: Qt.AlignVCenter
 
                 onClicked: function () {
-                    if (control.folded || control.state == "balance") control.folded = !control.folded
-                    control.state = "balance"
+                    if (appInfoControl.folded || appInfoControl.state == "balance")
+                        appInfoControl.folded = !appInfoControl.folded
+                    appInfoControl.state = "balance"
                 }
 
                 showLed: false
@@ -106,7 +83,8 @@ Pane {
                     anchors.fill: parent
                     cursorShape:  folded ? Qt.PointingHandCursor : Qt.ArrowCursor
                     onClicked: function () {
-                        if (control.folded) control.folded = !control.folded
+                        if (appInfoControl.folded)
+                            appInfoControl.folded = !appInfoControl.folded
                     }
                 }
             }
@@ -117,8 +95,9 @@ Pane {
                 Layout.alignment: Qt.AlignVCenter
 
                 onClicked: function () {
-                    if (control.folded || control.state == "transactions") control.folded = !control.folded
-                    control.state = "transactions"
+                    if (appInfoControl.folded || appInfoControl.state == "transactions")
+                        appInfoControl.folded = !appInfoControl.folded
+                    appInfoControl.state = "transactions"
                 }
 
                 showLed: false
@@ -158,8 +137,9 @@ Pane {
                     anchors.fill: parent
                     cursorShape:  Qt.PointingHandCursor
                     onClicked: {
-                        control.state = "transactions"
-                        if (control.folded) control.folded = !control.folded
+                        appInfoControl.state = "transactions"
+                        if (appInfoControl.folded)
+                            appInfoControl.folded = !appInfoControl.folded
                     }
                 }
             }
@@ -175,7 +155,7 @@ Pane {
                 Layout.maximumHeight:   8
                 Layout.maximumWidth:    13
                 Layout.leftMargin:      7
-                visible:                !control.folded && !control.maximized
+                visible:                !appInfoControl.folded && !appInfoControl.maximized
                 source:                 "qrc:/assets/icon-grey-arrow-up.svg"
                 transform: Rotation {
                     angle: foldsUp ? 180 : 0
@@ -187,7 +167,7 @@ Pane {
                     anchors.fill: parent
                     cursorShape:  Qt.PointingHandCursor
                     onClicked: {
-                        control.maximized = true
+                        appInfoControl.maximized = true
                     }
                 }
             }
@@ -202,7 +182,7 @@ Pane {
                 Layout.alignment:       Qt.AlignCenter
                 Layout.maximumHeight:   8
                 Layout.maximumWidth:    13
-                source:                 control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
+                source:                 appInfoControl.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
                 transform: Rotation {
                     angle: foldsUp ? 0 : 180
                     origin.x: arrow.width/2
@@ -213,26 +193,45 @@ Pane {
                     anchors.fill: parent
                     cursorShape:  Qt.PointingHandCursor
                     onClicked: {
-                        control.folded = !control.folded
-                        if (control.maximized) {
-                            control.maximized = false;
+                        appInfoControl.folded = !appInfoControl.folded
+                        if (appInfoControl.maximized) {
+                            appInfoControl.maximized = false;
                         }
                     }
                 }
             }
         }
 
-        Control {
-            id:                     placeholder
+        RowLayout {
+            id: contentRow
             Layout.fillWidth:       true
             Layout.topMargin:       folded ? 0 : 20
             Layout.alignment:       Qt.AlignTop
-            contentItem:            control.content
-
             opacity:                folded ? 0.0 : 1.0
-            Layout.preferredHeight: folded ? 0 : (control.state == "transactions" 
-                                                    ? control.contentItemHeight
-                                                    : Math.max(control.contentItemHeight, assetsList.scrollViewHeight + assetsList.assetsFilterRowHeight))
+
+            Item {
+                Layout.fillWidth:       true
+                Layout.fillHeight:      true
+                TxTable {
+                    property bool isTransactionsView: appInfoControl.state == "transactions"
+                    anchors.fill: parent
+                    anchors.leftMargin: isTransactionsView ? 25 : 0
+                    anchors.rightMargin: isTransactionsView ? 25 : 0
+                    id: txTable
+                    owner: appInfoControl
+                    emptyMessageMargin: 60
+                    mainBackgroundRect: appBackground
+                    dappFilter: appInfoControl.dappFilter
+                    visible: isTransactionsView
+                }
+                AssetsPanel {
+                    id: assetsList
+                    anchors.fill: parent
+                    visible: appInfoControl.state == "balance"
+                }
+            }
+
+            Layout.preferredHeight: folded ? 0 : appInfoControl.contentItemHeight
 
             Behavior on Layout.preferredHeight {
                 NumberAnimation { duration:  100 }
@@ -247,7 +246,7 @@ Pane {
     }
 
     background: Rectangle {
-        id:      background
+        id:      appBackground
         radius:  10
         color:   Style.background_second
     }
