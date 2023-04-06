@@ -12,7 +12,7 @@ Control {
 
     property bool  folded:            true
     property bool  foldsUp:           true
-    property alias bkColor:           background.color
+    property alias bkColor:           appBackground.color
     property int   contentItemHeight: 0
     property alias tableOwner:        txTable.owner
     property bool  maximized:         false
@@ -220,7 +220,7 @@ Control {
                     id: txTable
                     owner: appInfoControl
                     emptyMessageMargin: 60
-                    headerShaderVisible: false
+                    mainBackgroundRect: appBackground
                     dappFilter: appInfoControl.dappFilter
                     visible: isTransactionsView
                 }
@@ -246,7 +246,7 @@ Control {
     }
 
     background: Rectangle {
-        id:      background
+        id:      appBackground
         radius:  10
         color:   Style.background_second
     }
