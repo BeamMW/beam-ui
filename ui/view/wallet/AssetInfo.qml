@@ -19,8 +19,8 @@ Control {
     readonly property bool hasBalanceTip: amountCtrl.hasTip || assetInfo.locked != "0" || assetInfo.amountShielded != "0"
 
     padding: 0
-    leftPadding: 20
-    rightPadding: 20
+    leftPadding: 15
+    rightPadding: 7
 
     Text {
         id: fakeTip
@@ -38,30 +38,42 @@ Control {
         implicitHeight:   control.height
     }
 
-    contentItem: ColumnLayout {
-        BeamAmount {
-            id:                amountCtrl
-            amount:            assetInfo.amount
-            lockedAmount:      assetInfo.locked
-            unitName:          assetInfo.unitName
-            rateUnit:          assetInfo.rateUnit
-            rate:              assetInfo.rate
-            iconSource:        assetInfo.icon
-            verified:          assetInfo.verified
-            Layout.fillWidth:  true
-            spacing:           12
-            iconSize:          Qt.size(26, 26)
-            verifiedIconSize:  Qt.size(18, 18)
-            copyMenuEnabled:   true
-            showDrop:          control.hasBalanceTip || assetInfo.id != 0
-            dropSize:          Qt.size(8, 4.8)
-            tipCtrl:           fakeTip
-            font.styleName:    "Normal"
-            font.weight:       Font.Normal
-            font.pixelSize:    16
-            showTip:           true
-            maxPaintedWidth:   true
-            maxUnitChars:      15
+    contentItem: RowLayout {
+        spacing: 5
+        ColumnLayout {
+            BeamAmount {
+                id:                amountCtrl
+                amount:            assetInfo.amount
+                lockedAmount:      assetInfo.locked
+                unitName:          assetInfo.unitName
+                rateUnit:          assetInfo.rateUnit
+                rate:              assetInfo.rate
+                iconSource:        assetInfo.icon
+                verified:          assetInfo.verified
+                Layout.fillWidth:  true
+                spacing:           12
+                iconSize:          Qt.size(26, 26)
+                verifiedIconSize:  Qt.size(18, 18)
+                copyMenuEnabled:   true
+                showDrop:          control.hasBalanceTip || assetInfo.id != 0
+                dropSize:          Qt.size(8, 4.8)
+                tipCtrl:           fakeTip
+                font.styleName:    "Normal"
+                font.weight:       Font.Normal
+                font.pixelSize:    16
+                showTip:           true
+                maxPaintedWidth:   true
+                maxUnitChars:      15
+            }
+        }
+        ColumnLayout {
+            Layout.alignment: Qt.AlignRight | Qt.AlignTop
+            Layout.topMargin: 7
+            SFLabel {
+                font.italic:     true
+                color:           Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
+                text:            "#" + assetInfo.id
+            }
         }
     }
 

@@ -77,7 +77,6 @@ private:
     beam::Asset::ID _assetId = beam::Asset::s_BeamID;
     bool            _maxp    = false;
 
-    boost::optional<beam::wallet::WalletAddress> _receiverAddress;
     QString               _originalToken;
     WalletModel::Ptr      _walletModel;
     ExchangeRatesManager::Ptr _rates;

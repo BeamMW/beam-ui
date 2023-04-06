@@ -29,6 +29,7 @@ StatusbarViewModel::StatusbarViewModel()
     , m_isOnline(false)
     , m_isSyncInProgress(!m_model->isSynced())
     , m_isFailedStatus(false)
+    , m_isFailedHww(false)
     , m_isConnectionTrusted(false)
     , m_nodeSyncProgress(0)
     , m_nodeDone(0)
@@ -42,6 +43,7 @@ StatusbarViewModel::StatusbarViewModel()
     #endif
 
     connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
+    connect(m_model.get(), SIGNAL(devStateChanged(const QString&, int)), SLOT(onDevStateChanged(const QString&, int)));
     connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
     connect(m_model.get(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
     connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onNodeSyncProgressUpdated(int,int)));
@@ -67,6 +69,11 @@ bool StatusbarViewModel::getIsOnline() const
 bool StatusbarViewModel::getIsFailedStatus() const
 {
     return m_isFailedStatus;
+}
+
+bool StatusbarViewModel::getIsFailedHww() const
+{
+    return m_isFailedHww;
 }
 
 bool StatusbarViewModel::getIsSyncInProgress() const
@@ -105,6 +112,11 @@ QString StatusbarViewModel::getBranchName() const
 QString StatusbarViewModel::getWalletError() const
 {
     return m_walletError;
+}
+
+QString StatusbarViewModel::getHwwError() const
+{
+    return m_hwwError;
 }
 
 QString StatusbarViewModel::getExchangeStatus() const
@@ -230,6 +242,31 @@ void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
         setWalletStatusErrorMsg(qtTrId("wallet-model-connection-refused-error").arg("BEAM"));
         setIsFailedStatus(true);
     }
+}
+
+void StatusbarViewModel::onDevStateChanged(const QString& sErr, int state)
+{
+    m_isFailedHww = true;
+
+    if (!sErr.isEmpty())
+        m_hwwError = "HW Wallet: " + sErr;
+    else
+    {
+        auto eState = static_cast<beam::wallet::HidKeyKeeper::DevState>(state);
+
+        if (beam::wallet::HidKeyKeeper::DevState::Stalled == eState)
+            m_hwwError = "HW wallet: Waiting for user";
+        else
+        {
+            m_hwwError = "";
+            m_isFailedHww = false;
+        }
+
+    }
+
+    emit hwwErrorChanged();
+    emit isFailedHwwChanged();
+
 }
 
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)

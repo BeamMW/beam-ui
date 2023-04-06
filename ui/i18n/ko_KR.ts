@@ -235,7 +235,6 @@
     </message>
     <message id="settings-version">
         <source>v</source>
-        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
         <translation type="unfinished">v</translation>
     </message>
@@ -418,14 +417,12 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v </source>
-        <oldsource>Your wallet will be migrated to v.</oldsource>
         <translation type="unfinished">Your wallet will be migrated to v </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
-        <oldsource>Start auto migration</oldsource>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation type="unfinished">자동 이전을 시작합니다</translation>
+        <translation type="unfinished">start auto migration</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -498,7 +495,6 @@
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
-        <oldsource>Password confrimation</oldsource>
         <translation type="unfinished">Password confirmation</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
@@ -551,7 +547,6 @@
     </message>
     <message id="appmodel-failed-start-node">
         <source>Failed to start node. Please save wallet logs and contact support.</source>
-        <oldsource>Failed to start node. Please check your node configuration</oldsource>
         <translation type="unfinished">Failed to start node. Please save wallet logs and contact support.</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
@@ -749,12 +744,7 @@
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
 •  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:<byte value="xd"/>
-•  the length must be at least 10 characters<byte value="xd"/>
-•  must contain at least one lowercase letter<byte value="xd"/>
-•  must contain at least one uppercase letter<byte value="xd"/>
-•  must contain at least one number</oldsource>
-        <translation type="unfinished">보안성이 강한 비밀번호를 만들기 위해서는 아래의 조건들을 충족시켜야 합니다 : 
+        <translation>보안성이 강한 비밀번호를 만들기 위해서는 아래의 조건들을 충족시켜야 합니다 : 
 • 최소한 10개의 글자로 이루어져야합니다.
 • 최소한 1개의 소문자가 포함되어야 합니다.
 • 최소한 1개의 대문자가 포함되어야 합니다.
@@ -777,10 +767,8 @@
     <message id="settings-general-allow-beammw-label">
         <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2<byte value="xd"/>
-(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation type="unfinished">%1, %2로의 접근을 허용합니다.
+        <translation>%1, %2로의 접근을 허용합니다.
 (거래소 정보 및 거래 데이터 가져오기)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
@@ -983,9 +971,7 @@
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, <byte value="xd"/>
-please review your settings and try again</oldsource>
-        <translation type="unfinished">%1 가 연결되지 않았습니다, 
+        <translation>%1 가 연결되지 않았습니다, 
 설정을 다시 하시고 재시도 해주세요.</translation>
     </message>
     <message id="send-not-enough">
@@ -1021,10 +1007,6 @@ please review your settings and try again</oldsource>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>거래가 완료되기 위해서, 수신자는 12시간 이내로 온라인 상태가 되어야하고 당신 역시 2시간 안으로 온라인 상태이어야합니다.</translation>
-    </message>
-    <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>액션을 완료하기 위해 Trezor 디바이스를 확인해주세요</translation>
     </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
@@ -1173,8 +1155,6 @@ please review your settings and try again</oldsource>
     <message id="swap-offer-duplicate-message">
         <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.<byte value="xd"/>
-Please check the swap token and try again.</oldsource>
         <translation type="unfinished">The offer with this transaction token is already accepted.
 Please check the swap token and try again.</translation>
     </message>
@@ -1310,7 +1290,6 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
-        <oldsource>Paste token here</oldsource>
         <translation type="unfinished">Paste token or address here</translation>
     </message>
     <message id="swap-tx-state-initial">
@@ -1340,14 +1319,6 @@ Please check the swap token and try again.</translation>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation type="unfinished"> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</translation>
-    </message>
-    <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation type="unfinished">Beam wallet close</translation>
-    </message>
-    <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation type="unfinished">There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
@@ -1391,9 +1362,6 @@ Please check the swap token and try again.</translation>
         <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to<byte value="xd"/>
-know all your funds (UTXO). Make sure that you<byte value="xd"/>
-deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
         <translation type="unfinished">Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
@@ -1423,7 +1391,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
         <source>Cannot connect to node. Invalid genesis block</source>
-        <translation type="unfinished">Cannot connect to node. Invalid genesis block</translation>
+        <translation>노드에 연결할 수 없습니다. 잘못된 제네시스 블록</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
@@ -1431,7 +1399,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-state-initial-receiver">
         <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation type="unfinished">If the sender doesn&apos;t get online in %1, the transaction will be canceled</translation>
+        <translation>만약 발신자가 %1 이내에 온라인 상태가 되지 않으면, 트랜잭션이 취소됩니다.</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
@@ -1492,8 +1460,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet updates</source>
-        <oldsource>Wallet update</oldsource>
-        <translation type="unfinished">Wallet updates</translation>
+        <translation>지갑 업데이트</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
@@ -1501,7 +1468,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-fee-too-large">
         <source>Fee is too large</source>
-        <translation type="unfinished">Fee is too large</translation>
+        <translation>수수료가 너무 큽니다</translation>
     </message>
     <message id="tx-failure-asset-invalid-info">
         <source>No asset info or asset info is not valid</source>
@@ -1734,7 +1701,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-regular">
         <source>Online</source>
-        <oldsource>Regular</oldsource>
         <translation>온라인</translation>
     </message>
     <message id="tx-max-privacy">
@@ -1865,8 +1831,6 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="settings-random-node-text">
         <source>Random node address and port will be displayed 
 when connection is established</source>
-        <oldsource>Random node address and port will be displayed <byte value="xd"/>
-when connection is established</oldsource>
         <translation type="unfinished">Random node address and port will be displayed 
 when connection is established</translation>
     </message>
@@ -2096,7 +2060,6 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="general-ethereum">
         <source>Ethereum</source>
-        <oldsource>ETHEREUM</oldsource>
         <translation type="unfinished">Ethereum</translation>
     </message>
     <message id="settings-swap-ethereum-node">
@@ -2127,9 +2090,6 @@ Your version is: %2. Please, check for updates.</translation>
         <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
-        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
-Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
-much longer for a transaction to complete.</oldsource>
         <translation type="unfinished">Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</translation>
@@ -2144,8 +2104,7 @@ much longer for a transaction to complete.</translation>
     </message>
     <message id="apps-title">
         <source>My DApp Store</source>
-        <oldsource>DApp Store</oldsource>
-        <translation type="unfinished">DApp Store</translation>
+        <translation type="unfinished">My DApp Store</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2157,7 +2116,6 @@ much longer for a transaction to complete.</translation>
     </message>
     <message id="notification-contract-no-message">
         <source>No description provided by the contract</source>
-        <oldsource>Contract: no description provided</oldsource>
         <translation type="unfinished">No description provided by the contract</translation>
     </message>
     <message id="notification-contract-completed">
@@ -2259,9 +2217,7 @@ much longer for a transaction to complete.</translation>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.<byte value="xd"/>
-Please try again later or create an offer yourself.</oldsource>
-        <translation type="unfinished">활성화된 오퍼가 현재 없습니다.
+        <translation>활성화된 오퍼가 현재 없습니다.
 잠시 후 재시도하거나 오퍼를 만드십시오.</translation>
     </message>
     <message id="atomic-swap-amount-send">
@@ -2315,9 +2271,7 @@ Please try again later or create an offer yourself.</oldsource>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.<byte value="xd"/>
-Update your settings and try again.</oldsource>
-        <translation type="unfinished">서드파티에 연결된 화폐가 없습니다. 
+        <translation>서드파티에 연결된 화폐가 없습니다. 
 세팅을 업데이트한 후 재시도 하세요.</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
@@ -2373,8 +2327,8 @@ Update your settings and try again.</oldsource>
         <translation type="unfinished">Failed to create trezor wallet</translation>
     </message>
     <message id="start-hw-not-connected">
-        <source>Hardwate wallet is not connected</source>
-        <translation type="unfinished">Hardwate wallet is not connected</translation>
+        <source>Hardware wallet is not connected</source>
+        <translation type="unfinished">Hardware wallet is not connected</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -2442,8 +2396,6 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="apps-bad-api-version">
         <source>Unsupported API version requested: %1</source>
-        <oldsource>Unsupported API version requested: %1
-</oldsource>
         <translation type="unfinished">Unsupported API version requested: %1</translation>
     </message>
     <message id="can-not-generate-new-address-message">
@@ -2478,7 +2430,6 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
-        <oldsource>Max Privacy transaction can last indefinitely.</oldsource>
         <translation type="unfinished">Transaction can last indefinitely.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
@@ -2519,7 +2470,6 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="amount-input-add-max">
         <source>max</source>
-        <oldsource>add max</oldsource>
         <translation type="unfinished">max</translation>
     </message>
     <message id="send-amount-label">
@@ -2602,21 +2552,25 @@ Update your settings and try again.</oldsource>
         <source>Whitepaper</source>
         <translation type="unfinished">Whitepaper</translation>
     </message>
+    <message id="tx-details-date-label">
+        <source>Date</source>
+        <translation>날짜</translation>
+    </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
         <translation>보내는 주소</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender&apos;s wallet signature</source>
-        <translation type="unfinished">Sender&apos;s wallet signature</translation>
+        <source>Sender Endpoint</source>
+        <translation type="unfinished">Sender Endpoint</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>받는 주소</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver&apos;s wallet signature</source>
-        <translation type="unfinished">Receiver&apos;s wallet signature</translation>
+        <source>Receiver Endpoint</source>
+        <translation type="unfinished">Receiver Endpoint</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2837,8 +2791,7 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="notifications-open-dapp">
         <source>open the DApp</source>
-        <oldsource>open the dapp</oldsource>
-        <translation type="unfinished">open the dapp</translation>
+        <translation type="unfinished">open the DApp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
@@ -2850,19 +2803,15 @@ Update your settings and try again.</oldsource>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy Warning</source>
-        <oldsource>DApps Privacy</oldsource>
-        <translation type="unfinished">DApps Privacy</translation>
+        <translation type="unfinished">DApps Privacy Warning</translation>
     </message>
     <message id="dapps-privacy-warning">
         <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
 Allow to proceed? You can always update your choice in Settings later.</source>
-        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.<byte value="xd"/>
-<byte value="xd"/>
-Allow to proceed? You can always update your choice in Settings later.</oldsource>
-        <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
+        <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
-Allow to proceed ? You can always update your choice in Settings later.</translation>
+Allow to proceed? You can always update your choice in Settings later.</translation>
     </message>
     <message id="settings-dapps-allowed">
         <source>Allow to launch DApps</source>
@@ -2881,8 +2830,8 @@ Allow to proceed ? You can always update your choice in Settings later.</transla
         <translation type="unfinished">General info</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Wallet&apos;s signature</source>
-        <translation type="unfinished">Wallet&apos;s signature</translation>
+        <source>Endpoint</source>
+        <translation type="unfinished">Endpoint</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -3093,7 +3042,6 @@ cannot be canceled.</translation>
     </message>
     <message id="apps-uninstall-confirm">
         <source>Are you sure you want to uninstall %1 DApp?</source>
-        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
         <translation type="unfinished">Are you sure you want to uninstall %1 DApp?</translation>
     </message>
     <message id="app-uninstall-title">
@@ -3125,8 +3073,6 @@ cannot be canceled.</translation>
     <message id="wallet-receive-regular-address-message">
         <source>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <oldsource>To ensure a better privacy, new address is generated every time.<byte value="xd"/>
-In case you’d like to re-use an earlier created regular address please use the Address Book.</oldsource>
         <translation type="unfinished">To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
     </message>
@@ -3141,8 +3087,6 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="settings-privacy-mp-time-no-limit-commented">
         <source>No limit
 (transaction can last indefinitely)</source>
-        <oldsource>No limit<byte value="xd"/>
-(transaction can last indefinitely)</oldsource>
         <translation type="unfinished">No limit
 (transaction can last indefinitely)</translation>
     </message>
@@ -3162,7 +3106,6 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="status-online-stale-rates">
         <source>(exchange rate to %1 was not updated since %2)</source>
-        <oldsource> (exchange rate to %1 was not updated since %2)</oldsource>
         <translation type="unfinished">(exchange rate to %1 was not updated since %2)</translation>
     </message>
     <message id="loading-view-restoring">
@@ -3195,140 +3138,140 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-ipfsnode-title">
         <source>IPFS Integrated Node</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">IPFS Integrated Node</translation>
     </message>
     <message id="settings-ipfs-swarm-port">
         <source>Swarm Port</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Swarm Port</translation>
     </message>
     <message id="wallet-txs-status-in-progress-pub-offline-to-own">
         <source>sending to own address
 (public offline)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sending to own address
+(public offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-pub-offline-to-own">
         <source>sent to own address
 (public offline)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">sent to own address
+(public offline)</translation>
     </message>
     <message id="start-migration-manual-button">
         <source>start manual migration</source>
         <extracomment>migration screen, select db file button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">start manual migration</translation>
     </message>
     <message id="restore-find-db">
         <source>Find the wallet database file manually</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Find the wallet database file manually</translation>
     </message>
     <message id="settings-ipfs-location">
         <source>IPFS repository location</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">IPFS repository location</translation>
     </message>
     <message id="settings-ipfs-start">
         <source>Run node on</source>
-        <oldsource>Start IPFS node on:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Run node on</translation>
     </message>
     <message id="tx-empty">
         <source>Your transaction list is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>거래 내역이 없습니다</translation>
     </message>
     <message id="tx-sent-empty">
         <source>There are no sent transactions yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">There are no sent transactions yet.</translation>
     </message>
     <message id="tx-received-empty">
         <source>There are no received transactions yet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">There are no received transactions yet.</translation>
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
-        <translation type="unfinished">전부</translation>
+        <translation>전부</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
         <source>In progress</source>
-        <translation type="unfinished">진행중</translation>
+        <translation>진행중</translation>
     </message>
     <message id="wallet-transactions-sent-tab">
         <source>Sent</source>
-        <translation type="unfinished">보냄</translation>
+        <translation>보냄</translation>
     </message>
     <message id="wallet-transactions-received-tab">
         <source>Received</source>
-        <translation type="unfinished">받음</translation>
+        <translation>받음</translation>
     </message>
     <message id="tx-table-filter-in-progress">
         <source>In progress</source>
-        <translation type="unfinished">진행중</translation>
+        <translation>진행중</translation>
     </message>
     <message id="tx-table-filter-completed">
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>완성</translation>
     </message>
     <message id="tx-table-filter-canceled">
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Canceled</translation>
     </message>
     <message id="tx-table-filter-failed">
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>실패</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
         <source>Enter search text...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enter search text...</translation>
     </message>
     <message id="wallet-verify-payment">
         <source>Verify payment</source>
-        <translation type="unfinished"></translation>
+        <translation>지불 증명</translation>
     </message>
     <message id="general-multiple-assets">
         <source>Multiple assets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Multiple assets</translation>
     </message>
     <message id="general-value">
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Value</translation>
     </message>
     <message id="wallet-txs-source">
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Source</translation>
     </message>
     <message id="wallet-txs-action">
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Action</translation>
     </message>
     <message id="wallet-txs-date-time">
         <source>Created on</source>
-        <translation type="unfinished">작성일</translation>
+        <translation>작성일</translation>
     </message>
     <message id="tx-table-filter-label">
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Show</translation>
     </message>
     <message id="multiselect-none">
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>없음</translation>
     </message>
     <message id="multiselect-all">
         <source>All</source>
-        <translation type="unfinished">전부</translation>
+        <translation>전부</translation>
     </message>
     <message id="wallet-remove-filter-button">
         <source>remove filter</source>
-        <oldsource>Remove filter</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">remove filter</translation>
     </message>
     <message id="wallet-assets-title">
         <source>Assets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Assets</translation>
     </message>
     <message id="wallet-selected-assets-checkbox">
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>선택됨</translation>
     </message>
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
-        <translation type="unfinished">전부</translation>
+        <translation>전부</translation>
     </message>
     <message id="dnd-app-install-title">
         <source>Install DApp</source>
@@ -3336,91 +3279,85 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dnd-load-a-file">
         <source>load a file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">load a file</translation>
     </message>
     <message id="dnd-jus-drop">
         <source>or just drop it here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">or just drop it here</translation>
     </message>
     <message id="dnd-install-success">
         <source>The &quot;%1&quot; DApp is installed successfully</source>
-        <oldsource>The &quot;%1&quot; DApp is installed successfully.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The &quot;%1&quot; DApp is installed successfully</translation>
     </message>
     <message id="dnd-install-fail">
         <source>The DApp installation error.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="tx-details-date-label">
-        <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The DApp installation error.</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">(%1 active)</translation>
     </message>
     <message id="wallet-balance-title">
         <source>Wallet Balance</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wallet Balance</translation>
     </message>
     <message id="tx-no-transaction-filter">
         <source>No transactions to show</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No transactions to show</translation>
     </message>
     <message id="apps-become-a-publisher">
         <source>become a publisher</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">become a publisher</translation>
     </message>
     <message id="dapps-store-install">
         <source>install</source>
-        <oldsource>Install</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">install</translation>
     </message>
     <message id="dapps-store-update">
         <source>update</source>
-        <oldsource>Update</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">update</translation>
     </message>
     <message id="dapps-store-remove-dapp">
         <source>remove dapp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">remove dapp</translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Become a publisher</translation>
     </message>
     <message id="dapps-store-edit-publisher-info">
         <source>Edit publisher info</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Edit publisher info</translation>
     </message>
     <message id="dapps-store-become-publisher-text">
         <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">To become a publisher you need to set up a username. ID number and personal Publisher Key will
+ be given to you automatically. Registration will allow you to publish, update and delete DApps.</translation>
     </message>
     <message id="dapps-store-nickname">
         <source>Nickname</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nickname</translation>
     </message>
     <message id="dapps-store-short-title">
         <source>Short title</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Short title</translation>
     </message>
     <message id="dapps-store-50-character-max">
         <source>50 characters max</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">50 characters max</translation>
     </message>
     <message id="dapps-store-about-me">
         <source>About me</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">About me</translation>
     </message>
     <message id="dapps-store-150-character-max">
         <source>150 characters max</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">150 characters max</translation>
     </message>
     <message id="dapps-store-social-networks">
         <source>Social networks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Social networks</translation>
     </message>
     <message id="dapps-store-website">
         <source>Website</source>
@@ -3428,180 +3365,177 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-twitter">
         <source>Twitter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Twitter</translation>
     </message>
     <message id="dapps-store-linkedin">
         <source>LinkedIn</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LinkedIn</translation>
     </message>
     <message id="dapps-store-instagram">
         <source>Instagram</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Instagram</translation>
     </message>
     <message id="dapps-store-telegram">
         <source>Telegram</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Telegram</translation>
     </message>
     <message id="dapps-store-discord">
         <source>Discord</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Discord</translation>
     </message>
     <message id="dapps-store-create-account">
         <source>create account</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">create account</translation>
     </message>
     <message id="dapps-store-save-changes">
         <source>save changes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">save changes</translation>
     </message>
     <message id="dapps-store-publisher-page">
         <source>Publisher&apos;s page</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher&apos;s page</translation>
     </message>
     <message id="dapps-store-my-dapps">
         <source>My DAPPs - admin panel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">My DAPPs - admin panel</translation>
     </message>
     <message id="dapps-store-publisher-have-not-dapps">
         <source>You have no published DApps yet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You have no published DApps yet</translation>
     </message>
     <message id="dapps-store-publisher-upload-first-dapp">
         <source>upload your first dapp</source>
-        <oldsource>upload your fist dapp</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">upload your first dapp</translation>
     </message>
     <message id="dapps-store-publisher-key">
         <source>Publisher Key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher Key</translation>
     </message>
     <message id="dapps-store-publisher-key-dialog-note">
         <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</translation>
     </message>
     <message id="dapps-store-publishers-page-title">
         <source>Publishers that i follow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publishers that i follow</translation>
     </message>
     <message id="dapps-store-add-publisher">
         <source>add publisher</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">add publisher</translation>
     </message>
     <message id="dapps-store-add-publisher-title">
         <source>Add publisher</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Add publisher</translation>
     </message>
     <message id="dapps-store-add-publisher-note">
         <source>To add a publisher you need to paste his Publisher Key in the field below</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">To add a publisher you need to paste his Publisher Key in the field below</translation>
     </message>
     <message id="dapps-store-add-publisher-error">
         <source>Publisher with that Key is not found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher with that Key is not found</translation>
     </message>
     <message id="dapps-store-submit">
         <source>Submit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Submit</translation>
     </message>
     <message id="dapps-store-add-publisher-notification">
         <source>&lt;b&gt;%1&lt;/b&gt; added to the list of publishers that you follow</source>
-        <oldsource>%1 added to the list of publishers that you follow</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; added to the list of publishers that you follow</translation>
     </message>
     <message id="copy-publisher-key">
         <source>Copy publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copy publisher key</translation>
     </message>
     <message id="remove-from-list">
         <source>Remove from my list</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remove from my list</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
         <source>The transaction is sent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The transaction is sent</translation>
     </message>
     <message id="dapps-store-creation-of-account">
         <source>Creation of the personal publisher account takes time.
  You can continue as soon as transaction is completed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Creation of the personal publisher account takes time.
+ You can continue as soon as transaction is completed.</translation>
     </message>
     <message id="dapps-store-changes-takes-time">
         <source>Changes take time. You can continue as soon as transaction is completed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Changes take time. You can continue as soon as transaction is completed.</translation>
     </message>
     <message id="dapps-store-upload-choose-file-title">
         <source>Select application to upload</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Select application to upload</translation>
     </message>
     <message id="dapps-store-update-dapp-title">
         <source>Update DApp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Update DApp</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-title">
         <source>Upload new DApp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Upload new DApp</translation>
     </message>
     <message id="dapps-store-update-dapp-text">
         <source>To update %1, please add the new version of the file below</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">To update %1, please add the new version of the file below</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-text">
         <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
-        <oldsource>To upload your own DApp in the DApp Store, please use files in the .dapp format only</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</translation>
     </message>
     <message id="dapps-store-upload-common-error">
         <source>Something went wrong, please check your file and to try upload it again</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Something went wrong, please check your file and to try upload it again</translation>
     </message>
     <message id="dapp-store-load-file">
         <source>load .dapp file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">load .dapp file</translation>
     </message>
     <message id="dapps-store-drop-text">
         <source>or just drop it here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">or just drop it here</translation>
     </message>
     <message id="general-continue">
         <source>continue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">continue</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
         <source>Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
 change the information in your file and upload your file again.</source>
-        <oldsource>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
-If something is wrong, please cancel the uploading,<byte value="xd"/>
-change the information in your file and upload your file again.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Check the information below and select &quot;publish&quot;.
+If something is wrong, please cancel the uploading,
+change the information in your file and upload your file again.</translation>
     </message>
     <message id="dapps-store-dapp-release-date">
         <source>Release date:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Release date:</translation>
     </message>
     <message id="dapps-store-dapp-version">
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Version:</translation>
     </message>
     <message id="dapps-store-dapp-api-version">
         <source>Api version:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Api version:</translation>
     </message>
     <message id="dapps-store-dapp-min-api-version">
         <source>Minimal api version:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minimal api version:</translation>
     </message>
     <message id="dapps-store-dapp-guid">
         <source>Guid:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Guid:</translation>
     </message>
     <message id="dapps-store-publish">
         <source>publish</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">publish</translation>
     </message>
     <message id="dapps-store-you-now-are-publisher">
         <source>You now are a publisher!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You now are a publisher!</translation>
     </message>
     <message id="dapps-store-congratulations">
         <source>Congratulations %1!
@@ -3612,31 +3546,38 @@ list and follow your apps. You can add it on your personal page or website.
 All the time you have access to it in yout personal publisher account.
 
 Let&apos;s start!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Congratulations %1!
+
+We are glad to see you at our DApp Store as a Publisher.
+Below you will see your personal Publisher Key. Any user can use it to add you to their personal
+list and follow your apps. You can add it on your personal page or website.
+All the time you have access to it in yout personal publisher account.
+
+Let&apos;s start!</translation>
     </message>
     <message id="dapps-store-to-to-my-account">
         <source>go to my account</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">go to my account</translation>
     </message>
     <message id="apps-title-no-fork">
         <source>DApp Store</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">DApp Store</translation>
     </message>
     <message id="publishers-list-nickname">
         <source>Nickname</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nickname</translation>
     </message>
     <message id="publishers-list-about">
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">About</translation>
     </message>
     <message id="publishers-list-social-net">
         <source>Social networks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Social networks</translation>
     </message>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher link</translation>
     </message>
     <message id="dapps-store-launch">
         <source>launch</source>
@@ -3645,135 +3586,140 @@ Let&apos;s start!</source>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
-        <oldsource>Oops... Failed to create Publisher. Please check the log and try again.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oops... Failed to create Publisher.
+Please check the log and try again.</translation>
     </message>
     <message id="app-failed-edit-publisher">
         <source>Oops... Failed to edit Publisher.
 Please check the log and try again.</source>
-        <oldsource>Oops... Failed to edit Publisher. Please check the log and try again.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oops... Failed to edit Publisher.
+Please check the log and try again.</translation>
     </message>
     <message id="app-failed-publish-dapp">
         <source>Oops... Failed to publish DApp.
 Please check the log and try again.</source>
-        <oldsource>Oops... Failed to publish DApp. Please check the log and try again.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oops... Failed to publish DApp.
+Please check the log and try again.</translation>
     </message>
     <message id="app-failed-remove-dapp">
         <source>Oops... Failed to remove DApp.
 Please check the log and try again.</source>
-        <oldsource>Oops... Failed to remove DApp. Please check the log and try again.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oops... Failed to remove DApp.
+Please check the log and try again.</translation>
     </message>
     <message id="dapps-store-ipfs-unavailable">
         <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">IPFS Service is not running or is not connected to the peers. Please check the settings.</translation>
     </message>
     <message id="app-uninstall-success">
         <source>Everything worked out.
 &apos;%1&apos; DApp is uninstalled.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Everything worked out.
+&apos;%1&apos; DApp is uninstalled.</translation>
     </message>
     <message id="app-uninstall-fail">
         <source>Something went wrong.
 Uninstall failed. Please try again later.</source>
-        <oldsource>Something went wrong.
-Uninstall failed. Please try again late.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Something went wrong.
+Uninstall failed. Please try again later.</translation>
     </message>
     <message id="app-install-success">
         <source>Congratulations!
 &apos;%1&apos; DApp is successfully installed.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Congratulations!
+&apos;%1&apos; DApp is successfully installed.</translation>
     </message>
     <message id="app-install-fail">
         <source>Sorry, the installation failed.
 Please, check the file and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sorry, the installation failed.
+Please, check the file and try again.</translation>
     </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dapp Store</translation>
     </message>
     <message id="settings-blockchain-height">
         <source>Blockchain height</source>
-        <translation type="unfinished"></translation>
+        <translation>블록체인 높이</translation>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Assets Swaps</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Atomic Swap Offer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Create Atomic Swap Offer</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
 Please, restart the wallet and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sorry, the installation failed.
+Please, restart the wallet and try again.</translation>
     </message>
     <message id="app-update-fail">
         <source>Sorry, the update failed.
 Please, check the file and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sorry, the update failed.
+Please, check the file and try again.</translation>
     </message>
     <message id="app-update-timeout-fail">
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sorry, the update failed.
+Please, restart the wallet and try again.</translation>
     </message>
     <message id="dapps-store-installing">
         <source>installing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">installing</translation>
     </message>
     <message id="dapps-store-updating">
         <source>updating</source>
-        <translation type="unfinished">업데이트 중</translation>
+        <translation>업데이트 중</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
-        <translation type="unfinished">받기</translation>
+        <translation>받기</translation>
     </message>
     <message id="swap-rate">
         <source>Rate</source>
-        <translation type="unfinished">Rate</translation>
+        <translation>Rate</translation>
     </message>
     <message id="swap-time-created">
         <source>Created on</source>
-        <translation type="unfinished">작성일</translation>
+        <translation>작성일</translation>
     </message>
     <message id="swap-expiration">
         <source>Expiration</source>
-        <translation type="unfinished">만료</translation>
+        <translation>만료</translation>
     </message>
     <message id="swap-cancel-offer">
         <source>cancel offer</source>
-        <translation type="unfinished">오퍼 취소</translation>
+        <translation>오퍼 취소</translation>
     </message>
     <message id="swap-accept-offer">
         <source>accept offer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">accept offer</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept an Asset Swap Offer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Accept an Asset Swap Offer</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create an Asset Swap Offer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Create an Asset Swap Offer</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
-        <translation type="unfinished">거래 수수료</translation>
+        <translation>거래 수수료</translation>
     </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enter asset name...</translation>
     </message>
     <message id="swap-active-offers-tab">
         <source>Active offers</source>
-        <translation type="unfinished">활성화된 오퍼들</translation>
+        <translation>활성화된 오퍼들</translation>
     </message>
     <message id="swap-my-offers-tab">
         <source>My offers</source>
@@ -3781,74 +3727,144 @@ Please, restart the wallet and try again.</source>
     </message>
     <message id="assets-same-accept">
         <source>You can&apos;t accept offer with identical assets on both sides</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You can&apos;t accept offer with identical assets on both sides</translation>
     </message>
     <message id="assets-same-create">
         <source>You can&apos;t create offer with identical assets on both sides</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You can&apos;t create offer with identical assets on both sides</translation>
     </message>
     <message id="notification-dex-completed">
         <source>Assets Swaps transaction completed</source>
-        <oldsource>DEX transaction completed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Assets Swaps transaction completed</translation>
     </message>
     <message id="notification-dex-expired">
         <source>Assets Swaps transaction expired</source>
-        <oldsource>DEX transaction expired</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Assets Swaps transaction expired</translation>
     </message>
     <message id="notification-dex-failed">
         <source>Assets Swaps transaction failed</source>
-        <oldsource>DEX transaction failed</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Assets Swaps transaction failed</translation>
     </message>
     <message id="notification-dex-canceled">
         <source>Assets Swaps transaction canceled</source>
-        <oldsource>DEX transaction canceled</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Assets Swaps transaction canceled</translation>
     </message>
     <message id="tx-asset-swap-default-comment">
         <source>Assets Swaps transaction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Assets Swaps transaction</translation>
     </message>
     <message id="assets-swap-create-confirm-dialog-title">
         <source>Create asset swap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Create asset swap</translation>
     </message>
     <message id="assets-swap-accept-confirm-dialog-title">
         <source>Accept asset swap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Accept asset swap</translation>
     </message>
     <message id="asset-swap-confirmation-create">
         <source>Confirm asset swap creation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confirm asset swap creation</translation>
     </message>
     <message id="asset-swap-confirmation-accept">
         <source>Accept asset swap</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Accept asset swap</translation>
     </message>
     <message id="assets-swap-confirm-dialog-send-amount">
         <source>Send amount</source>
-        <translation type="unfinished">송금하기</translation>
+        <translation>송금하기</translation>
     </message>
     <message id="assets-swap-confirm-dialog-receive-amount">
         <source>Receive amount</source>
-        <translation type="unfinished">송금 받기</translation>
+        <translation>송금 받기</translation>
     </message>
     <message id="assets-swap-confirm-dialog-fee-label">
         <source>Asset swap fee</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Asset swap fee</translation>
     </message>
     <message id="settings-ca">
         <source>Confidential assets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confidential assets</translation>
     </message>
     <message id="settings-ca-descr">
         <source>Confidential assets allowed to receive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Confidential assets allowed to receive</translation>
     </message>
     <message id="assets-settings">
         <source>Assets settings</source>
+        <translation type="unfinished">Assets settings</translation>
+    </message>
+    <message id="messenger-title">
+        <source>Beam Messenger</source>
+        <translation type="unfinished">Beam Messenger</translation>
+    </message>
+    <message id="messenger-new-chat">
+        <source>New chat</source>
+        <translation type="unfinished">New chat</translation>
+    </message>
+    <message id="chat-title">
+        <source>Chat with %1</source>
+        <translation type="unfinished">Chat with %1</translation>
+    </message>
+    <message id="chat-message-placeholder">
+        <source>[ctrl + enter] to send</source>
+        <translation type="unfinished">[ctrl + enter] to send</translation>
+    </message>
+    <message id="messenger-add-receiver-address-dialog-title">
+        <source>Add receiver address</source>
+        <translation type="unfinished">Add receiver address</translation>
+    </message>
+    <message id="messenger-add-receiver-address-address">
+        <source>Address</source>
+        <translation>주소</translation>
+    </message>
+    <message id="messenger-add-receiver-address-name">
+        <source>Name</source>
+        <translation>이름</translation>
+    </message>
+    <message id="messenger-add-receiver-address-save">
+        <source>add receiver address</source>
+        <translation type="unfinished">add receiver address</translation>
+    </message>
+    <message id="chat-title-anon">
+        <source>anonymous</source>
+        <translation type="unfinished">anonymous</translation>
+    </message>
+    <message id="chat-message-placeholder-osx">
+        <source>[command + enter] to send</source>
+        <translation type="unfinished">[command + enter] to send</translation>
+    </message>
+    <message id="verify-on-hw-wallet">
+        <source>Verify on HW wallet</source>
+        <translation type="unfinished">Verify on HW wallet</translation>
+    </message>
+    <message id="messenger-add-receiver-address-my">
+        <source>My address</source>
+        <translation>내 주소</translation>
+    </message>
+    <message id="receive-view-hw-wallet-disconnected">
+        <source>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-title">
+        <source>Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="approve-on-hw-wallet-text">
+        <source>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-title">
+        <source>Beam wallet close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-close-text">
+        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="trezor-message">
+        <source>Please, look at your Trezor device to complete actions...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

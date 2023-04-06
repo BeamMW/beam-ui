@@ -90,10 +90,31 @@ Rectangle {
         notificationManager.closeContractNotification(txId);
     }
 
+    ConfirmationDialog {
+        id: approveHWAction
+        //% "Transaction"
+        title:                  qsTrId("approve-on-hw-wallet-title")
+        //% "Transaction is in process.\nConnect your Hardware Wallet to finalize the transaction."
+        text:                   qsTrId("approve-on-hw-wallet-text")
+        okButtonVisible:        false
+        cancelButtonVisible:    false
+        closePolicy:            Popup.NoAutoClose
+    }
+
 	MainViewModel {
         id: viewModel
         onClipboardChanged: function(message) {
             showSimplePopup(message)
+        }
+        onHwError: function(message) {
+            if (message.length)
+            {
+                approveHWAction.open();
+            }
+            else
+            {
+                approveHWAction.close();
+            }
         }
     }
 
@@ -200,6 +221,7 @@ Rectangle {
         {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
         {name: "voting", qml: appsQml, args: () => appArgs("BeamX DAO Voting", viewModel.votingAppID, false)},
         {name: "bridge", qml: appsQml, args: () => appArgs("Bridges app", viewModel.ethBridgeAppID, false)},
+        {name: "beam_messenger"},
         {name: "addresses"},
         {name: "notifications"},
         {name: "help"},
@@ -229,115 +251,116 @@ Rectangle {
             source: Style.navigation_logo
         }
 
-        ColumnLayout {
+        ScrollView {
+            id: scrollView
             anchors.left:       parent.left
             anchors.right:      parent.right
             anchors.top:        parent.top
             anchors.bottom:     parent.bottom
             anchors.topMargin:  130
-            spacing:            0
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+            // hoverEnabled: true
 
-            Repeater {
-                id: controls
-                model: contentItems
+            ColumnLayout {
+                width: scrollView.availableWidth
+                spacing:            0
 
-                ColumnLayout {
-                    Layout.fillWidth:  true
-                    Layout.fillHeight: modelData.name =='addresses'
+                Repeater {
+                    id: controls
+                    model: contentItems
 
-                    Item {
-                        Layout.fillHeight: true
-                        visible: modelData.name == 'addresses'
-                    }
-
-                    Item {
-                        id: control
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 58
-                        Layout.alignment: Qt.AlignBottom
-                        activeFocusOnTab: true
-
-                        SvgImage {
-                            id: icon
-                            x: 21
-                            y: 14
-                            width: 28
-                            height: 28
-                            source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
-                        }
+                    ColumnLayout {
+                        Layout.fillWidth:  true
 
                         Item {
-                            Rectangle {
-                                id: indicator
-                                y: 6
-                                width: 4
-                                height: 44
-                                color: selectedItem == index ? Style.active : Style.passive
+                            id: control
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 58
+                            Layout.alignment: Qt.AlignBottom
+                            Layout.topMargin: {
+                                if (modelData.name != 'addresses')
+                                    return 0;
+                                var itemsHeight = contentItems.length * 69;
+                                var gap = sidebar.height - itemsHeight;
+                                return gap > 0 ? gap : 0;
+                            }
+                            activeFocusOnTab: true
+
+                            SvgImage {
+                                id: icon
+                                x: 21
+                                y: 14
+                                width: 28
+                                height: 28
+                                source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
                             }
 
-                            DropShadow {
-                                anchors.fill: indicator
-                                radius: 5
-                                samples: 9
-                                color: Style.active
-                                source: indicator
+                            Item {
+                                Rectangle {
+                                    id: indicator
+                                    y: 6
+                                    width: 4
+                                    height: 44
+                                    color: selectedItem == index ? Style.active : Style.passive
+                                }
+
+                                DropShadow {
+                                    anchors.fill: indicator
+                                    radius: 5
+                                    samples: 9
+                                    color: Style.active
+                                    source: indicator
+                                }
+
+                                visible: selectedItem == index
                             }
 
-                            visible: selectedItem == index
-                        }
+                            Item {
+                                visible: modelData.name == 'notifications' && viewModel.unreadNotifications > 0
+                                Rectangle {
+                                    id: counter
+                                    x: 42
+                                    y: 9
+                                    width: 16
+                                    height: 16
+                                    radius: width/2
+                                    color: Style.active
 
-                        Item {
-                            visible: modelData.name == 'notifications' && viewModel.unreadNotifications > 0
-                            Rectangle {
-                                id: counter
-                                x: 42
-                                y: 9
-                                width: 16
-                                height: 16
-                                radius: width/2
-                                color: Style.active
-
-                                SFText {
-                                    height: 14
-                                    text: viewModel.unreadNotifications
-                                    font.pixelSize: 12
-                                    anchors.centerIn: counter
+                                    SFText {
+                                        height: 14
+                                        text: viewModel.unreadNotifications
+                                        font.pixelSize: 12
+                                        anchors.centerIn: counter
+                                    }
+                                }
+                                DropShadow {
+                                    anchors.fill: counter
+                                    radius: 5
+                                    samples: 9
+                                    source: counter
+                                    color: Style.active
                                 }
                             }
-                            DropShadow {
-                                anchors.fill: counter
-                                radius: 5
-                                samples: 9
-                                source: counter
-                                color: Style.active
-                            }
-                        }
 
-                        Rectangle {
-                            x: 10
-                            width: parent.width - 20
-                            height: 2
-                            color: Style.background_button
-                            visible: modelData.name == 'dex'
-                        }
-
-                        Keys.onPressed: {
-                            if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
-                            if (modelData.reloadable || selectedItem != index) {
-                                updateItem(index);
-                            }
-                        }
-
-                        MouseArea {
-                            id: mouseArea
-                            anchors.fill: parent
-                            onClicked: {
-                                control.focus = true
+                            Keys.onPressed: {
+                                if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
                                 if (modelData.reloadable || selectedItem != index) {
                                     updateItem(index);
                                 }
                             }
-                            hoverEnabled: true
+
+                            MouseArea {
+                                id: mouseArea
+                                anchors.fill: parent
+                                onClicked: {
+                                    control.focus = true
+                                    if (modelData.reloadable || selectedItem != index) {
+                                        updateItem(index);
+                                    }
+                                }
+                                hoverEnabled: true
+                            }
                         }
                     }
                 }
