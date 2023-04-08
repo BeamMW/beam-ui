@@ -239,6 +239,48 @@ CustomDialog {
                         }
                     }
                 }
+
+                // Endpoint
+                SFText {
+                    Layout.alignment:       Qt.AlignTop
+                    font.pixelSize:         14
+                    color:                  Style.content_disabled
+                    //% "Endpoint"
+                    text:                   qsTrId("general-wallet-signature") + ":"
+                    visible:                endpointCtrl.visible
+                }
+
+                RowLayout {
+                    id: endpointCtrl
+                    Layout.fillWidth:  true
+                    visible:           viewModel.identity.length
+
+                    SFLabel {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.preferredWidth:  578
+                        wrapMode:               Text.Wrap
+                        font.pixelSize:         14
+                        color:                  Style.content_main
+                        text:                   viewModel.identity
+                        copyMenuEnabled:        true
+                        elide:                  Text.ElideMiddle
+                        onCopyText: function () {
+                            BeamGlobals.copyToClipboard(text)
+                        }
+                    }
+
+                    CustomToolButton {
+                        Layout.alignment:       Qt.AlignTop
+                        Layout.leftMargin:      4
+                        Layout.topMargin:       -8
+                        icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                        //% "Copy"
+                        ToolTip.text:           qsTrId("general-copy")
+                        onClicked: function () {
+                            BeamGlobals.copyToClipboard(viewModel.identity)
+                        }
+                    }
+                }
             }
 
             Row {
