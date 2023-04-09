@@ -195,7 +195,7 @@ CustomDialog {
                     height:  1
                     color:   "white"
                     opacity: 0.1
-                    visible: sbbsAdrrCtrl.visible
+                    visible: sbbsAdrrCtrl.visible || endpointCtrl.visible
                 }
 
                 // SBBS Address
@@ -211,7 +211,7 @@ CustomDialog {
                 RowLayout {
                     id: sbbsAdrrCtrl
                     Layout.fillWidth:  true
-                    visible:           viewModel.address.length && !viewModel.isMaxPrivacy
+                    visible:           false;//viewModel.address.length && !viewModel.isMaxPrivacy
 
                     SFLabel {
                         Layout.alignment:       Qt.AlignTop
