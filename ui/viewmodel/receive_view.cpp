@@ -70,7 +70,10 @@ void ReceiveViewModel::updateToken()
         }*/
     };
 
-    _walletModel->getAsync()->generateToken(_maxp ? TokenType::MaxPrivacy : TokenType::Offline, _amount, _assetId, AppModel::getMyVersion(), std::move(onTokenGenerated));
+    bool isShieldedSupported = _walletModel->isConnectionTrusted();
+    
+    auto tokenType = isShieldedSupported ? (_maxp ? TokenType::MaxPrivacy : TokenType::Offline) : TokenType::RegularNewStyle;
+    _walletModel->getAsync()->generateToken(tokenType, _amount, _assetId, AppModel::getMyVersion(), std::move(onTokenGenerated));
 /*
     if (!_receiverAddress)
     {
@@ -183,9 +186,9 @@ QString ReceiveViewModel::getSbbsAddress() const
         auto pParams = beam::wallet::ParseParameters(s);
         if (pParams)
         {
-            beam::PeerID pid;
-            if (pParams->GetParameter(beam::wallet::TxParameterID::PeerEndpoint, pid))
-                return QString::fromStdString(std::to_base58(pid));
+            beam::wallet::WalletID pid;
+            if (pParams->GetParameter(beam::wallet::TxParameterID::PeerAddr, pid))
+                return beamui::toString(pid);
         }
     }
 

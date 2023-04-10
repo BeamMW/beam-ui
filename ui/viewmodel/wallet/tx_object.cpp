@@ -114,7 +114,7 @@ TxObject::TxObject(beam::wallet::TxDescription tx, beam::wallet::Currency second
         if(_tx.GetParameter(TxParameterID::ContractDataPacked, vData))
         {
             _contractFee = vData.get_FullFee(h);
-            _contractSpend = vData.get_FullSpend();
+            _contractSpend = vData.m_SpendMax.empty() ? vData.get_FullSpend() : vData.m_SpendMax;
         }
 
         if (!vData.m_vec.empty())
