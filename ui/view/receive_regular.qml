@@ -65,7 +65,6 @@ ColumnLayout {
         id:       tokenInfoDialog
         token:    viewModel.token
         incoming: true
-        isShieldedSupported: control.isShieldedSupported
     }
 
     function isValid () {
@@ -74,7 +73,7 @@ ColumnLayout {
 
     function copyAndClose() {
         if (isValid()) {
-            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
+            BeamGlobals.copyToClipboard(viewModel.token);
             viewModel.saveAddress();
             control.onClosed()
         }
@@ -82,7 +81,7 @@ ColumnLayout {
 
     function copyAndSave() {
          if (isValid()) {
-            BeamGlobals.copyToClipboard(control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress);
+            BeamGlobals.copyToClipboard(viewModel.token);
             viewModel.saveAddress();
          }
     }
@@ -104,7 +103,7 @@ ColumnLayout {
 
     QR {
         id: qrCode
-        address: control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
+        address: viewModel.token
     }
 
     ScrollView {
@@ -287,7 +286,7 @@ ColumnLayout {
 
                                     SFText {
                                         Layout.fillWidth:   true
-                                        text:  control.isShieldedSupported ? viewModel.token : viewModel.sbbsAddress
+                                        text:  viewModel.token
                                         width: parent.width
                                         color: Style.content_main
                                         elide: Text.ElideMiddle
