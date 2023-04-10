@@ -1670,12 +1670,6 @@ namespace beamui::applications
 
             const auto comment = contractInvokeData.get_FullComment();
             const auto fee = contractInvokeData.get_FullFee(AppModel::getInstance().getWalletModel()->getCurrentHeight());
-            const auto fullSpend = contractInvokeData.get_FullSpend();
-
-            if (!fullSpend.empty())
-            {
-                throw std::runtime_error("Unexpected fullSpend amounts");
-            }
 
             const auto assetsManager = AppModel::getInstance().getAssets();
             const auto feeRate = beamui::AmountToUIString(assetsManager->getRate(beam::Asset::s_BeamID));
