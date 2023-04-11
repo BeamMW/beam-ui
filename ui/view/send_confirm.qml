@@ -231,18 +231,20 @@ ConfirmationDialog {
                     model: control.amounts
 
                     BeamAmount  {
+                        property var data:       assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData
                         amount:           modelData.amount
-                        unitName:         (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).unitName + (modelData.assetID != "0" ? "(" + modelData.assetID + ")" : "")
-                        rate:             (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).rate
+                        unitName:         data.unitName
+                        assetId:          data.assetID != "0" ? data.assetID : ""
+                        rate:             data.rate
                         prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
                         rateUnit:         control.rateUnit
                         maxPaintedWidth:  false
                         maxUnitChars:     10
                         color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
                         iconSize:         Qt.size(20, 20)
-                        iconSource:       (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).icon || ""
+                        iconSource:       data.icon || ""
                         iconAnchorCenter: false
-                        verified:         !!(assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).verified
+                        verified:         !!data.verified
 
                         font.pixelSize:   14
                         font.styleName:   "DemiBold"
