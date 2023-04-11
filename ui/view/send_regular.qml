@@ -556,7 +556,8 @@ ColumnLayout {
                                 amount:   viewModel.sendAmount,
                                 unitName: control.sendUnit,
                                 rate:     control.rate,
-                                spend:    true
+                                spend:    true,
+                                assetID:  viewModel.assetId
                             }],
                             rateUnit:      control.rateUnit,
                             fee:           viewModel.fee,
