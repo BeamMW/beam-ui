@@ -1011,6 +1011,10 @@ Tarkista asetuksesi ja yritä uudelleen.</translation>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>Jotta maksutapahtuma onnistuu, tulee saajan avata lompakkonsa 12 tunnin sisällä lähetyksestä, minkä jälkeen sinun tulee vielä avata lompakko 2 tunnin sisällä.</translation>
     </message>
+    <message id="trezor-message">
+        <source>Please, look at your Trezor device to complete actions...</source>
+        <translation>Suorita loppuun Trezor-laitteessasi näkyvät toiminnot...</translation>
+    </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
         <translation>Asenna Trezor-yhteensopiva lompakko</translation>
@@ -1323,6 +1327,14 @@ Tarkista swap-tunniste ja yritä uudelleen.</translation>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation> Kun vastapuoli hyväksyy tarjouksen, siirtomaksu (%1) veloitetaan siitä huolimatta, vaikka tarjous peruutettaisiin.</translation>
+    </message>
+    <message id="app-close-title">
+        <source>Beam wallet close</source>
+        <translation>Sulje Beam-lompakko</translation>
+    </message>
+    <message id="app-close-text">
+        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+        <translation>Sinulla on aktiivisia tapahtumia (%1 kpl), jotka voivat epäonnistua, jos lompakon yhteys katkeaa. Oletko varma, että haluat sulkea lompakon?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
@@ -1861,8 +1873,8 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
 (use for CEX withdrawals)</source>
-        <oldsource>Online (SBBS) Address</oldsource>
-        <translation type="unfinished">Online (SBBS) Address</translation>
+        <translation type="unfinished">SBBS Address
+(use for CEX withdrawals)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2571,8 +2583,7 @@ Päivitä asetuksesi ja yritä uudelleen.</translation>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender signature</source>
-        <oldsource>Sender Endpoint</oldsource>
-        <translation type="unfinished">Sender Endpoint</translation>
+        <translation type="unfinished">Sender signature</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
@@ -2580,8 +2591,7 @@ Päivitä asetuksesi ja yritä uudelleen.</translation>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver signature</source>
-        <oldsource>Receiver Endpoint</oldsource>
-        <translation type="unfinished">Receiver Endpoint</translation>
+        <translation type="unfinished">Receiver signature</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2842,8 +2852,7 @@ Allow to proceed? You can always update your choice in Settings later.</translat
     </message>
     <message id="general-wallet-signature">
         <source>Signature</source>
-        <oldsource>Endpoint</oldsource>
-        <translation type="unfinished">Endpoint</translation>
+        <translation type="unfinished">Signature</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -3859,28 +3868,18 @@ Please, restart the wallet and try again.</translation>
     <message id="receive-view-hw-wallet-disconnected">
         <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</translation>
     </message>
     <message id="approve-on-hw-wallet-title">
         <source>Transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Tapahtuma</translation>
     </message>
     <message id="approve-on-hw-wallet-text">
         <source>Transaction is in process.
 Connect your Hardware Wallet to finalize the transaction.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
 </context>
 </TS>

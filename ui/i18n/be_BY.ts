@@ -1014,6 +1014,10 @@ please review your settings and try again.</translation>
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
         <translation>Каб транзакцыя была завершана, атрымальнік павінен выйсці ў Інтэрнэт на працягу наступных 12 гадзін, а вы павінны ўвайсці ў Інтэрнэт на працягу 2 гадзін пасля гэтага.</translation>
     </message>
+    <message id="trezor-message">
+        <source>Please, look at your Trezor device to complete actions...</source>
+        <translation>Калі ласка, паглядзіце на ваш Trezor, каб выканаць дзеянні...</translation>
+    </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
         <translation>Стварыць кашалёк з Trezor</translation>
@@ -1271,7 +1275,7 @@ Please check the swap token and try again.</source>
     <message id="settings-swap-confirm-show-seed-title">
         <source>Show seed phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog title</extracomment>
-        <translation>Паказаць кантрольную фразу</translation>
+        <translation type="unfinished">Show seed phrase</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-message">
         <source>Enter your wallet password to see the phrase</source>
@@ -1325,6 +1329,14 @@ Please check the swap token and try again.</source>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
         <translation>Пасля прыняцця прапановы іншым бокам, збор за транзакцыю %1 будзе спаганяцца, нават калі прапанова будзе адменена.</translation>
+    </message>
+    <message id="app-close-title">
+        <source>Beam wallet close</source>
+        <translation>Зачынiць кашалёк Beam</translation>
+    </message>
+    <message id="app-close-text">
+        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+        <translation>Зараз ёсць %1 актыўных транзакцый, якія могуць пацярпець няўдачу, калі кашалёк выйдзе з сеткі. Вы сапраўды хочаце зачыніць кашалёк?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
@@ -1667,7 +1679,7 @@ Your version is: %2. Please, check for updates.</source>
     <message id="settings-remote-node-address">
         <source>Node address</source>
         <extracomment>settings tab, node section, address label</extracomment>
-        <translation>Адрас вузла</translation>
+        <translation type="unfinished">Node address</translation>
     </message>
     <message id="settings-peers-title">
         <source>Peers</source>
@@ -1863,8 +1875,8 @@ Your version is: %2. Please, check for updates.</source>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
 (use for CEX withdrawals)</source>
-        <oldsource>Online (SBBS) Address</oldsource>
-        <translation type="unfinished">Анлайн (SBBS) адрас </translation>
+        <translation type="unfinished">SBBS Address
+(use for CEX withdrawals)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2478,7 +2490,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation>Афлайн</translation>
+        <translation type="unfinished">Offline</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -2578,8 +2590,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender signature</source>
-        <oldsource>Sender Endpoint</oldsource>
-        <translation type="unfinished">Адпраўшчык</translation>
+        <translation type="unfinished">Sender signature</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
@@ -2587,8 +2598,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver signature</source>
-        <oldsource>Receiver Endpoint</oldsource>
-        <translation type="unfinished">Атрымальнік</translation>
+        <translation type="unfinished">Receiver signature</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2777,7 +2787,7 @@ Update your settings and try again.</source>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
-        <translation>Апавяшчэнні</translation>
+        <translation type="unfinished">Notifications</translation>
     </message>
     <message id="notifications-clear-all">
         <source>clear all</source>
@@ -2849,8 +2859,7 @@ Allow to proceed? You can always update your choice in Settings later.</source>
     </message>
     <message id="general-wallet-signature">
         <source>Signature</source>
-        <oldsource>Endpoint</oldsource>
-        <translation type="unfinished">Endpoint</translation>
+        <translation type="unfinished">Signature</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -2882,7 +2891,7 @@ Allow to proceed? You can always update your choice in Settings later.</source>
     </message>
     <message id="tx-online">
         <source>Online</source>
-        <translation>Анлайн</translation>
+        <translation type="unfinished">Online</translation>
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
@@ -3868,28 +3877,18 @@ Please, restart the wallet and try again.</source>
     <message id="receive-view-hw-wallet-disconnected">
         <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>QR-код няправільны.
+Апаратны кашалёк не падключаны. Калі ласка, падключыце кашалёк</translation>
     </message>
     <message id="approve-on-hw-wallet-title">
         <source>Transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакцыя</translation>
     </message>
     <message id="approve-on-hw-wallet-text">
         <source>Transaction is in process.
 Connect your Hardware Wallet to finalize the transaction.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation type="unfinished"></translation>
+        <translation>Транзакцыя ў працэсе.
+Падключыце апаратны кашалёк, каб завяршыць транзакцыю.</translation>
     </message>
 </context>
 </TS>
