@@ -1859,7 +1859,9 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">Address type</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
         <translation type="unfinished">Online (SBBS) Address</translation>
     </message>
     <message id="address-info-address">
@@ -2568,7 +2570,8 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <translation>Sender Adresse</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender Endpoint</source>
+        <source>Sender signature</source>
+        <oldsource>Sender Endpoint</oldsource>
         <translation type="unfinished">Sender Endpoint</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
@@ -2576,7 +2579,8 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <translation>Empfänger Adresse</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver Endpoint</source>
+        <source>Receiver signature</source>
+        <oldsource>Receiver Endpoint</oldsource>
         <translation type="unfinished">Receiver Endpoint</translation>
     </message>
     <message id="tx-details-amount-label">
@@ -2837,7 +2841,8 @@ Allow to proceed? You can always update your choice in Settings later.</translat
         <translation type="unfinished">General info</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Endpoint</source>
+        <source>Signature</source>
+        <oldsource>Endpoint</oldsource>
         <translation type="unfinished">Endpoint</translation>
     </message>
     <message id="settings-utilities-show-utxo">

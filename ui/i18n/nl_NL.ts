@@ -1857,8 +1857,10 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Adrestype</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation>Online (SBBS) adres</translation>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
+        <translation type="unfinished">Online (SBBS) adres</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2565,16 +2567,18 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Verzendadres</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender Endpoint</source>
-        <translation>Afzender Eindpunt</translation>
+        <source>Sender signature</source>
+        <oldsource>Sender Endpoint</oldsource>
+        <translation type="unfinished">Afzender Eindpunt</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>Ontvangstadres</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver Endpoint</source>
-        <translation>Ontvanger Eindpunt</translation>
+        <source>Receiver signature</source>
+        <oldsource>Receiver Endpoint</oldsource>
+        <translation type="unfinished">Ontvanger Eindpunt</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2834,8 +2838,9 @@ Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</transla
         <translation>Algemene informatie</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Endpoint</source>
-        <translation>Eindpunt</translation>
+        <source>Signature</source>
+        <oldsource>Endpoint</oldsource>
+        <translation type="unfinished">Eindpunt</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>

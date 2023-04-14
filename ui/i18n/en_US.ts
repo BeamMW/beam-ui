@@ -1870,8 +1870,10 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Address type</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation>Online (SBBS) Address</translation>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <translation>SBBS Address
+(use for CEX withdrawals)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2579,16 +2581,16 @@ Update your settings and try again.</translation>
         <translation>Sending address</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender Endpoint</source>
-        <translation>Sender Endpoint</translation>
+        <source>Sender signature</source>
+        <translation>Sender signature</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>Receiving address</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver Endpoint</source>
-        <translation>Receiver Endpoint</translation>
+        <source>Receiver signature</source>
+        <translation>Receiver signature</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2848,8 +2850,8 @@ Allow to proceed? You can always update your choice in Settings later.</translat
         <translation>General info</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Endpoint</source>
-        <translation>Endpoint</translation>
+        <source>Signature</source>
+        <translation>Signature</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>

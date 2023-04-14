@@ -1859,8 +1859,10 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
         <translation>Tipo de dirección</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation>Dirección En Línea (SBBS)</translation>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
+        <translation type="unfinished">Dirección En Línea (SBBS)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2567,16 +2569,18 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
         <translation>Enviando dirección</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender Endpoint</source>
-        <translation>Extremo del remitente</translation>
+        <source>Sender signature</source>
+        <oldsource>Sender Endpoint</oldsource>
+        <translation type="unfinished">Extremo del remitente</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>Recibiendo dirección</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver Endpoint</source>
-        <translation>Extremo del Destinatario</translation>
+        <source>Receiver signature</source>
+        <oldsource>Receiver Endpoint</oldsource>
+        <translation type="unfinished">Extremo del Destinatario</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2836,7 +2840,8 @@ Allow to proceed? You can always update your choice in Settings later.</source>
         <translation>Información general</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Endpoint</source>
+        <source>Signature</source>
+        <oldsource>Endpoint</oldsource>
         <translation type="unfinished">Endpoint</translation>
     </message>
     <message id="settings-utilities-show-utxo">

@@ -1862,8 +1862,10 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <translation>Typ adresy</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation>Online (SBBS) adresa</translation>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
+        <translation type="unfinished">Online (SBBS) adresa</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2574,7 +2576,8 @@ Aktualizujte nastavení a zkuste to znovu.</translation>
         <translation>Odesílací adresa</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender Endpoint</source>
+        <source>Sender signature</source>
+        <oldsource>Sender Endpoint</oldsource>
         <translation type="unfinished">Sender Endpoint</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
@@ -2582,7 +2585,8 @@ Aktualizujte nastavení a zkuste to znovu.</translation>
         <translation>Přijímací adresa</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver Endpoint</source>
+        <source>Receiver signature</source>
+        <oldsource>Receiver Endpoint</oldsource>
         <translation type="unfinished">Receiver Endpoint</translation>
     </message>
     <message id="tx-details-amount-label">
@@ -2843,7 +2847,8 @@ Allow to proceed? You can always update your choice in Settings later.</translat
         <translation type="unfinished">General info</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Endpoint</source>
+        <source>Signature</source>
+        <oldsource>Endpoint</oldsource>
         <translation type="unfinished">Endpoint</translation>
     </message>
     <message id="settings-utilities-show-utxo">

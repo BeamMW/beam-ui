@@ -1861,8 +1861,10 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Тып адраса</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation>Анлайн (SBBS) адрас </translation>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
+        <translation type="unfinished">Анлайн (SBBS) адрас </translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2575,16 +2577,18 @@ Update your settings and try again.</source>
         <translation>Адрас адпраўніка</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender Endpoint</source>
-        <translation>Адпраўшчык</translation>
+        <source>Sender signature</source>
+        <oldsource>Sender Endpoint</oldsource>
+        <translation type="unfinished">Адпраўшчык</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>Адрас атрымальніка</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver Endpoint</source>
-        <translation>Атрымальнік</translation>
+        <source>Receiver signature</source>
+        <oldsource>Receiver Endpoint</oldsource>
+        <translation type="unfinished">Атрымальнік</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2844,7 +2848,8 @@ Allow to proceed? You can always update your choice in Settings later.</source>
         <translation>Агульная інфармацыя</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Endpoint</source>
+        <source>Signature</source>
+        <oldsource>Endpoint</oldsource>
         <translation type="unfinished">Endpoint</translation>
     </message>
     <message id="settings-utilities-show-utxo">

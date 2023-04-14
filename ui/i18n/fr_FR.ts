@@ -1859,8 +1859,10 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
         <translation>Type d&apos;adresse</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation>Adresse en ligne (SBBS)</translation>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
+        <translation type="unfinished">Adresse en ligne (SBBS)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2568,16 +2570,18 @@ Mettez à jour vos paramètres et réessayez.</translation>
         <translation>Adresse d&apos;envoi</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender Endpoint</source>
-        <translation>Point de départ de l&apos;expéditeur</translation>
+        <source>Sender signature</source>
+        <oldsource>Sender Endpoint</oldsource>
+        <translation type="unfinished">Point de départ de l&apos;expéditeur</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>Adresse de réception</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver Endpoint</source>
-        <translation>Point d&apos;&apos;arrivée du destinataire</translation>
+        <source>Receiver signature</source>
+        <oldsource>Receiver Endpoint</oldsource>
+        <translation type="unfinished">Point d&apos;&apos;arrivée du destinataire</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2837,8 +2841,9 @@ Permettre de continuer ? Vous pourrez toujours mettre à jour votre choix dans l
         <translation>Informations générales</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Endpoint</source>
-        <translation>Point de terminaison</translation>
+        <source>Signature</source>
+        <oldsource>Endpoint</oldsource>
+        <translation type="unfinished">Point de terminaison</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
