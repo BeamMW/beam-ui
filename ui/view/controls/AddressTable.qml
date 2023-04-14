@@ -81,7 +81,7 @@ CustomTableView {
     TableViewColumn {
         id:   identityColumn
         role: viewModel.identityRole
-        //% "Endpoint"
+        //% "Signature"
         title: qsTrId("general-wallet-signature")
         width: rootControl.getAdjustedColumnWidth(identityColumn)//150 *  rootControl.columnResizeRatio
         resizable: false
