@@ -169,6 +169,27 @@ ColumnLayout {
                     }
 
                     Panel {
+                        //% "Receiver signature"
+                        title:            qsTrId("Receiver signature")
+                        Layout.fillWidth: true
+                        content: ColumnLayout {
+                            spacing: 0
+
+                            SFText {
+                                Layout.alignment:   Qt.AlignTop
+                                Layout.fillWidth:   true
+                                id:                 endpoint
+                                color:              Style.content_secondary
+                                font.italic:        true
+                                font.pixelSize:     12
+                                wrapMode:           Text.Wrap
+                                visible:            viewModel.endpointValid
+                                text:               viewModel.endpoint
+                            }
+                        }
+                    }
+
+                    Panel {
                         //% "Transaction type"
                         title: qsTrId("general-tx-type")
                         Layout.fillWidth: true
