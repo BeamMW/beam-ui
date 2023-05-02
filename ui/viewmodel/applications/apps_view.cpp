@@ -86,6 +86,7 @@ namespace
         const char kInstagramp[] = "instagram";
         const char kTelegram[] = "telegram";
         const char kDiscord[] = "discord";
+        const char kEnabled[] = "enabled";
     }
 
     namespace Actions
@@ -703,8 +704,8 @@ namespace beamui::applications
                             auto guid = parseStringField(item.value(), DApp::kId);
                             auto publisherKey = parseStringField(item.value(), DApp::kPublisherKey);
 
-                            // parse DApps only of the user publishers + own
-                            if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
+                            // parse DApps only of the user enabled publishers + own
+                            if (_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
                                 !(isPublisher() && publisherKey.compare(_publisherInfo[Publisher::kPubkey].toString(), Qt::CaseInsensitive) == 0))
                             {
                                 continue;
@@ -920,11 +921,29 @@ namespace beamui::applications
     {
         QList<QVariantMap> userPublishers;
 
+        // show only publishers that have at least one Dapp
         std::copy_if(_publishers.cbegin(), _publishers.cend(), std::back_inserter(userPublishers),
             [this](const auto& publisher) -> bool {
-                return _userPublishersKeys.contains(publisher[Publisher::kPubkey].toString(), Qt::CaseInsensitive);
+                auto publisherKey = publisher[Publisher::kPubkey].toString();
+                const auto appIt = std::find_if(_shaderApps.cbegin(), _shaderApps.cend(),
+                    [publisherKey](const auto& app) -> bool {
+                        const auto appDetailsIt = app.find(DApp::kPublisherKey);
+                        if (appDetailsIt == app.cend())
+                        {
+                            return false;
+                        }
+                        return appDetailsIt->toString().compare(publisherKey, Qt::CaseInsensitive);
+                    }
+                );
+                return appIt != _shaderApps.cend();
             }
         );
+
+        // set the 'enabled' flag
+        for (auto& publisher : userPublishers) {
+            bool enabled = !_userPublishersKeys.contains(publisher[Publisher::kPubkey].toString(), Qt::CaseInsensitive);
+            publisher[Publisher::kEnabled] = enabled;
+        }
 
         return userPublishers;
     }

@@ -20,6 +20,7 @@
 #include <QList>
 #include <QObject>
 #include <QString>
+#include <QVariant>
 
 
 class PublisherItem : public QObject
@@ -35,6 +36,7 @@ class PublisherItem : public QObject
         Q_PROPERTY(QString instagram    READ instagram    CONSTANT)
         Q_PROPERTY(QString telegram     READ telegram     CONSTANT)
         Q_PROPERTY(QString discord      READ discord      CONSTANT)
+        Q_PROPERTY(QString enabled      READ enabled      CONSTANT)
 
 public:
     PublisherItem() = default;
@@ -50,6 +52,7 @@ public:
     [[nodiscard]] QString instagram() const;
     [[nodiscard]] QString telegram() const;
     [[nodiscard]] QString discord() const;
+    [[nodiscard]] bool enabled() const;
 
 private:
     QString _publisherKey;
@@ -62,6 +65,7 @@ private:
     QString _instagram;
     QString _telegram;
     QString _discord;
+    bool _enabled;
 };
 
 class PublishersViewModel: public QObject
@@ -80,6 +84,7 @@ class PublishersViewModel: public QObject
     Q_PROPERTY(QString telegramRole                       READ getTelegramRole        CONSTANT)
     Q_PROPERTY(QString discordRole                        READ getDiscordRole         CONSTANT)
     Q_PROPERTY(QString publisherLinkRole                  READ getPublisherLinkRole   CONSTANT)
+    Q_PROPERTY(QString publisherStatusRole                READ getPublisherStatusRole CONSTANT)
 
     Q_PROPERTY(Qt::SortOrder sortOrder READ sortOrder  WRITE setSortOrder)
         
@@ -102,11 +107,12 @@ public:
     [[nodiscard]] QString getTelegramRole() const;
     [[nodiscard]] QString getDiscordRole() const;
     [[nodiscard]] QString getPublisherLinkRole() const;
+    [[nodiscard]] QString getPublisherStatusRole() const;
 
     [[nodiscard]] Qt::SortOrder sortOrder() const;
     void setSortOrder(Qt::SortOrder);
 
-    Q_INVOKABLE QString getRoleValue(const int row, QByteArray roleName);
+    Q_INVOKABLE QVariant getRoleValue(const int row, QByteArray roleName);
 
 signals:
     void publishersChanged();
