@@ -851,7 +851,7 @@ namespace beamui::applications
 
     void AppsViewModel::loadUserPublishers()
     {
-        _userPublishersKeys = AppSettings().getDappStoreUserPublishers();
+        _userPublishersKeys = AppSettings().getDappStoreUserUnwantedPublishers();
     }
 
     void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
@@ -1086,7 +1086,7 @@ namespace beamui::applications
         if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive))
         {
             _userPublishersKeys.append(publisherKey);
-            AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
+            AppSettings().setDappStoreUserUnwantedPublishers(_userPublishersKeys);
 
             emit userPublishersChanged();
             loadAppsFromStore();
@@ -1099,7 +1099,7 @@ namespace beamui::applications
     {
         if (_userPublishersKeys.removeOne(publisherKey))
         {
-            AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
+            AppSettings().setDappStoreUserUnwantedPublishers(_userPublishersKeys);
             
             emit userPublishersChanged();
             loadAppsFromStore();

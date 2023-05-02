@@ -101,6 +101,8 @@ public:
     std::string getDappStorePath() const;
     QStringList getDappStoreUserPublishers() const;
     void setDappStoreUserPublishers(const QStringList& publishersList);
+    QStringList getDappStoreUserUnwantedPublishers() const;
+    void setDappStoreUserUnwantedPublishers(const QStringList& publishersList);
 
     bool getDevMode() const;
     bool getAppsAllowed() const;
