@@ -932,7 +932,7 @@ namespace beamui::applications
                         {
                             return false;
                         }
-                        return appDetailsIt->toString().compare(publisherKey, Qt::CaseInsensitive);
+                        return !appDetailsIt->toString().compare(publisherKey, Qt::CaseInsensitive);
                     }
                 );
                 return appIt != _shaderApps.cend();
