@@ -357,7 +357,7 @@ Item {
 
         if (isPublisherAdminMode) {
             appMenu.addAction(removeAction)
-        } else if (!app.notInstalled && !app.isFromServer && !app.devApp) {
+        } else if (!app.notInstalled && !app.devApp) {
             appMenu.addAction(uninstallAction)
         } else {
             button.showAdditional = false

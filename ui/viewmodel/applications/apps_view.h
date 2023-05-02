@@ -126,7 +126,6 @@ namespace beamui::applications
         void loadApps();
         void loadLocalApps();
         void loadDevApps();
-        void loadAppsFromServer();
         void loadAppsFromStore();
         void loadPublishers();
         void loadUserPublishers();
@@ -149,7 +148,6 @@ namespace beamui::applications
         std::unique_ptr<AppsServer> _server;
         QList<QVariantMap> _localApps;
         QList<QVariantMap> _devApps;
-        QList<QVariantMap> _remoteApps;
         QList<QVariantMap> _shaderApps;
         QList<QVariantMap> _publishers;
         QStringList _userPublishersKeys;

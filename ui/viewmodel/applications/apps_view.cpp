@@ -63,7 +63,6 @@ namespace
         const char kMinor[] = "minor";
         const char kRelease[] = "release";
         const char kBuild[] = "build";
-        const char kFromServer[] = "isFromServer";
         const char kDevApp[] = "devApp";
         const char kHasUpdate[] = "hasUpdate";
         const char kReleaseDate[] = "release_date";
@@ -369,7 +368,6 @@ namespace beamui::applications
         {
             _runApp = true;
             loadLocalApps();
-            loadAppsFromServer();
         }
         else
         {
@@ -590,7 +588,6 @@ namespace beamui::applications
     {
         loadLocalApps();
         loadDevApps();
-        loadAppsFromServer();
         loadAppsFromStore();
     }
 
@@ -663,69 +660,6 @@ namespace beamui::applications
             _devApps = result;
             emit appsChanged();
         }
-    }
-
-    void AppsViewModel::loadAppsFromServer()
-    {
-        // load apps from server
-        QPointer<AppsViewModel> guard(this);
-        AppModel::getInstance().getWalletModel()->getAsync()->getAppsList(
-            [this, guard](bool isOk, const std::string& response)
-            {
-                if (!guard)
-                {
-                    return;
-                }
-
-                QList<QVariantMap> result;
-
-                try
-                {
-                    if (!isOk)
-                    {
-                        throw std::runtime_error("unsuccessful request");
-                    }
-
-                    auto json = nlohmann::json::parse(response);
-
-                    // parse & verify
-                    if (json.empty() || !json.is_array())
-                    {
-                        throw std::runtime_error("invalid response");
-                    }
-
-                    for (auto& item : json.items())
-                    {
-                        QVariantMap app;
-                        auto name = parseStringField(item.value(), DApp::kName);
-                        auto url = parseStringField(item.value(), DApp::kUrl);
-                        const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
-
-                        app.insert(DApp::kAppid, QString::fromStdString(appid));
-                        app.insert(DApp::kDescription, parseStringField(item.value(), DApp::kDescription));
-                        app.insert(DApp::kName, name);
-                        app.insert(DApp::kUrl, url);
-                        app.insert(DApp::kIcon, parseStringField(item.value(), DApp::kIcon));
-                        app.insert(DApp::kPublisherName, kBeamPublisherName);
-                        app.insert(DApp::kPublisherKey, kBeamPublisherKey);
-                        app.insert(DApp::kSupported, isAppSupported(app));
-                        app.insert(DApp::kFromServer, true);
-
-                        result.push_back(app);
-                    }
-                }
-                catch (const std::exception& err)
-                {
-                    // TODO: mb need to transfer the error to QML(errorMessage)
-                    LOG_ERROR() << "Failed to load remote applications list, " << err.what();
-                }
-
-                if (_runApp || result != _remoteApps)
-                {
-                    _remoteApps = result;
-                    emit appsChanged();
-                }
-            });
     }
 
     void AppsViewModel::loadAppsFromStore()
@@ -997,8 +931,8 @@ namespace beamui::applications
 
     QList<QVariantMap> AppsViewModel::getApps()
     {
-        // Apps order: Dev APP, remote apps, *.dapp files, installed from shader, not installed from shader
-        QList<QVariantMap> result = _devApps + _remoteApps;
+        // Apps order: Dev APP, *.dapp files, installed from shader, not installed from shader
+        QList<QVariantMap> result = _devApps;
         QList<QVariantMap> notInstalled, installed;
 
         for (const auto& app : _shaderApps)
