@@ -151,6 +151,7 @@ namespace beamui::applications
         QList<QVariantMap> _shaderApps;
         QList<QVariantMap> _publishers;
         QStringList _userPublishersKeys;
+        QSet<QString> _knownPublishersWithDapps;
         QVariantMap _publisherInfo;
 
         std::map<beam::wallet::TxID, Action> _activeTx;

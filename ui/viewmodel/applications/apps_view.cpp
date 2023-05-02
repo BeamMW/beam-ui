@@ -692,6 +692,7 @@ namespace beamui::applications
                         throw std::runtime_error("Invalid response of the view_dapps method");
                     }
 
+                    _knownPublishersWithDapps.clear();
                     QList<QVariantMap> result;
                     for (auto& item : json["dapps"].items())
                     {
@@ -703,6 +704,8 @@ namespace beamui::applications
                             }
                             auto guid = parseStringField(item.value(), DApp::kId);
                             auto publisherKey = parseStringField(item.value(), DApp::kPublisherKey);
+
+                            _knownPublishersWithDapps.insert(publisherKey);
 
                             // parse DApps only of the user enabled publishers + own
                             if (_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
@@ -925,17 +928,11 @@ namespace beamui::applications
         std::copy_if(_publishers.cbegin(), _publishers.cend(), std::back_inserter(userPublishers),
             [this](const auto& publisher) -> bool {
                 auto publisherKey = publisher[Publisher::kPubkey].toString();
-                const auto appIt = std::find_if(_shaderApps.cbegin(), _shaderApps.cend(),
-                    [publisherKey](const auto& app) -> bool {
-                        const auto appDetailsIt = app.find(DApp::kPublisherKey);
-                        if (appDetailsIt == app.cend())
-                        {
-                            return false;
-                        }
-                        return !appDetailsIt->toString().compare(publisherKey, Qt::CaseInsensitive);
-                    }
-                );
-                return appIt != _shaderApps.cend();
+                const auto it = std::find_if(_knownPublishersWithDapps.cbegin(), _knownPublishersWithDapps.cend(),
+                    [publisherKey](const auto& tmp) {
+                        return !tmp.compare(publisherKey, Qt::CaseInsensitive);
+                    });
+                return it != _knownPublishersWithDapps.cend();
             }
         );
 
