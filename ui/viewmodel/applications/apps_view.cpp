@@ -1089,6 +1089,7 @@ namespace beamui::applications
             AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
 
             emit userPublishersChanged();
+            loadAppsFromStore();
         }
 
         return (*it)[Publisher::kName].toString();
@@ -1101,6 +1102,7 @@ namespace beamui::applications
             AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
             
             emit userPublishersChanged();
+            loadAppsFromStore();
         }
     }
 
