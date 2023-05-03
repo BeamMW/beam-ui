@@ -3434,41 +3434,9 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
         <translation>Вось ваш асабісты ключ выдаўца. Любы карыстальнік можа выкарыстоўваць яго, каб дадаць вас у свой асабісты спіс і сачыць за вашымі аплікацыямі. Вы можаце дадаць яго на сваю асабістую старонку або сайт.</translation>
     </message>
-    <message id="dapps-store-publishers-page-title">
-        <source>Publishers that i follow</source>
-        <translation>Выдаўцы, за якімі я сачу</translation>
-    </message>
-    <message id="dapps-store-add-publisher">
-        <source>add publisher</source>
-        <translation>дадаць выдаўца</translation>
-    </message>
-    <message id="dapps-store-add-publisher-title">
-        <source>Add publisher</source>
-        <translation>Дадаць выдаўца</translation>
-    </message>
-    <message id="dapps-store-add-publisher-note">
-        <source>To add a publisher you need to paste his Publisher Key in the field below</source>
-        <translation>Каб дадаць выдаўца, трэба ўставіць яго ключ выдаўца ў поле ніжэй</translation>
-    </message>
-    <message id="dapps-store-add-publisher-error">
-        <source>Publisher with that Key is not found</source>
-        <translation>Выдавец з такім ключом не знойдзены</translation>
-    </message>
-    <message id="dapps-store-submit">
-        <source>Submit</source>
-        <translation>Даслаць</translation>
-    </message>
-    <message id="dapps-store-add-publisher-notification">
-        <source>&lt;b&gt;%1&lt;/b&gt; added to the list of publishers that you follow</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; дададзены ў спіс выдаўцоў, за якімі вы сочыце</translation>
-    </message>
     <message id="copy-publisher-key">
         <source>Copy publisher key</source>
         <translation>Скапіяваць ключ выдаўца</translation>
-    </message>
-    <message id="remove-from-list">
-        <source>Remove from my list</source>
-        <translation>Выдаліць з майго спісу</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
         <source>The transaction is sent</source>
@@ -3884,6 +3852,18 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publishers-page-main-title">
+        <source>Publishers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-show-dapps">
+        <source>Show DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-hide-dapps">
+        <source>Hide DApps</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
