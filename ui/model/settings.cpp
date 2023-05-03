@@ -68,6 +68,7 @@ namespace
     const char* kDappStoreCID = "dappstore/cid";
     const char* kDappStorePath = "dappstore/path";
     const char* kDappStoreUserPublishers = "dappstore/publishers";
+    const char* kDappStoreUserUnwantedPublishers = "dappstore/unwanted_publishers";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
@@ -818,6 +819,19 @@ void WalletSettings::setDappStoreUserPublishers(const QStringList& publishersLis
 {
     Lock lock(m_mutex);
     m_data.setValue(kDappStoreUserPublishers, QVariant::fromValue(publishersList));
+}
+
+QStringList WalletSettings::getDappStoreUserUnwantedPublishers() const
+{
+    Lock lock(m_mutex);
+    auto publishersList = m_data.value(kDappStoreUserUnwantedPublishers).value<QStringList>();
+    return publishersList;
+}
+
+void WalletSettings::setDappStoreUserUnwantedPublishers(const QStringList& publishersList)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kDappStoreUserUnwantedPublishers, QVariant::fromValue(publishersList));
 }
 
 QString WalletSettings::getAppsCachePath(const QString& appid) const
