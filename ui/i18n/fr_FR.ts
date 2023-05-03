@@ -3425,41 +3425,9 @@ Si vous souhaitez réutiliser une adresse normale précédemment créée, veuill
         <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
         <translation>Voici votre Clé de Publication personnelle. N&apos;importe quel utilisateur peut l&apos;utiliser pour vous ajouter à sa liste personnelle et suivre vos applications. Vous pouvez l&apos;ajouter sur votre page personnelle ou sur votre site Web.</translation>
     </message>
-    <message id="dapps-store-publishers-page-title">
-        <source>Publishers that i follow</source>
-        <translation>Éditeurs que je suis</translation>
-    </message>
-    <message id="dapps-store-add-publisher">
-        <source>add publisher</source>
-        <translation>ajouter un éditeur</translation>
-    </message>
-    <message id="dapps-store-add-publisher-title">
-        <source>Add publisher</source>
-        <translation>Ajouter un éditeur</translation>
-    </message>
-    <message id="dapps-store-add-publisher-note">
-        <source>To add a publisher you need to paste his Publisher Key in the field below</source>
-        <translation>Pour ajouter un éditeur, vous devez coller sa clé de publication dans le champ ci-dessous</translation>
-    </message>
-    <message id="dapps-store-add-publisher-error">
-        <source>Publisher with that Key is not found</source>
-        <translation>L&apos;éditeur avec cette clé est introuvable</translation>
-    </message>
-    <message id="dapps-store-submit">
-        <source>Submit</source>
-        <translation>Soumettre</translation>
-    </message>
-    <message id="dapps-store-add-publisher-notification">
-        <source>&lt;b&gt;%1&lt;/b&gt; added to the list of publishers that you follow</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; ajouté à la liste des éditeurs que vous suivez</translation>
-    </message>
     <message id="copy-publisher-key">
         <source>Copy publisher key</source>
         <translation>Copier la clé de publication</translation>
-    </message>
-    <message id="remove-from-list">
-        <source>Remove from my list</source>
-        <translation>Retirer de ma liste</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
         <source>The transaction is sent</source>
@@ -3875,6 +3843,18 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publishers-page-main-title">
+        <source>Publishers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-show-dapps">
+        <source>Show DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-hide-dapps">
+        <source>Hide DApps</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
