@@ -54,6 +54,7 @@ ColumnLayout {
         SFText {
             Layout.fillWidth:     true
             color:                Style.content_main
+            leftPadding:          -backButton.width
             horizontalAlignment:  Text.AlignHCenter
             font.pixelSize:       14
             font.weight:          Font.Bold
