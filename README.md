@@ -2,7 +2,7 @@
 [![Build](https://github.com/BeamMW/beam-ui/actions/workflows/build.yml/badge.svg)](https://github.com/BeamMW/beam-ui/actions/workflows/build.yml)
 [![Crowdin](https://badges.crowdin.net/beammw/localized.svg)](https://crowdin.com/project/beammw)
 
-![alt text](https://beam.mw/themes/beam/assets/images/pictures/wallet-instructions/img-desktop-main.png "Beam Wallet")
+![Beam Logo](https://pbs.twimg.com/profile_banners/1006569151413063680/1623676593/600x200 "Beam Logo")
 
 ### Beam Desktop GUI Wallet
 
