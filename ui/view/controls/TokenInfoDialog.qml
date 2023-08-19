@@ -203,7 +203,8 @@ CustomDialog {
                     Layout.alignment:       Qt.AlignTop
                     font.pixelSize:         14
                     color:                  Style.content_disabled
-                    //% "Online (SBBS) Address"
+                    /*% "SBBS Address
+(use for CEX withdrawals)"*/
                     text:                   qsTrId("address-info-sbbs-address") + ":"
                     visible:                sbbsAdrrCtrl.visible
                 }
@@ -211,7 +212,7 @@ CustomDialog {
                 RowLayout {
                     id: sbbsAdrrCtrl
                     Layout.fillWidth:  true
-                    visible:           false;//viewModel.address.length && !viewModel.isMaxPrivacy
+                    visible:           viewModel.address.length && !viewModel.isMaxPrivacy
 
                     SFLabel {
                         Layout.alignment:       Qt.AlignTop
@@ -240,12 +241,12 @@ CustomDialog {
                     }
                 }
 
-                // Endpoint
+                // Signature
                 SFText {
                     Layout.alignment:       Qt.AlignTop
                     font.pixelSize:         14
                     color:                  Style.content_disabled
-                    //% "Endpoint"
+                    //% "Signature"
                     text:                   qsTrId("general-wallet-signature") + ":"
                     visible:                endpointCtrl.visible
                 }

@@ -56,6 +56,8 @@ SendViewModel::SendViewModel()
     connect(_walletModel.get(),  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
     connect(_walletModel.get(),  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
 
+    _receiverIdentity = beam::Zero;
+
     //_walletModel->getAsync()->getPublicAddress(); ??!?
 }
 
@@ -255,7 +257,23 @@ void SendViewModel::setToken(const QString& value)
         emit tokenTipChanged();
         emit choiceChanged();
         emit canSendChanged();
+        emit endpointChanged();
     }
+}
+
+bool SendViewModel::getEndpointValid() const
+{
+    if ((_receiverWalletID.m_Pk == beam::Zero) && (_receiverIdentity == beam::Zero))
+        return false;
+
+    return getTokenValid();
+}
+
+QString SendViewModel::getEndpoint() const
+{
+    const beam::PeerID& pid = (_receiverIdentity != beam::Zero) ? _receiverIdentity : _receiverWalletID.m_Pk;
+    auto sTxt = std::to_base58(pid);
+    return QString::fromStdString(sTxt);
 }
 
 bool SendViewModel::getTokenValid() const

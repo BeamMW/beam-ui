@@ -102,7 +102,7 @@ void MessengerChatList::onChatList(const std::vector<std::pair<beam::wallet::Wal
 
     for (const auto& item : chats)
     {
-        std::string name = "Anounimus";
+        std::string name = "Anonymous";
         auto it = std::find_if(_contacts.begin(), _contacts.end(),
                                [&item] (const auto& addr) { return addr.m_BbsAddr == item.first;});
         if (it != _contacts.end())

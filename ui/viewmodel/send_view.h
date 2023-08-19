@@ -41,6 +41,8 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  maxSendAmount     READ getMaxSendAmount                                  NOTIFY balanceChanged)
     Q_PROPERTY(bool     tokenValid        READ getTokenValid                                     NOTIFY tokenChanged)
     Q_PROPERTY(QString  token             READ getToken             WRITE setToken               NOTIFY tokenChanged)
+    Q_PROPERTY(bool     endpointValid     READ getEndpointValid                                  NOTIFY endpointChanged)
+    Q_PROPERTY(QString  endpoint          READ getEndpoint                                       NOTIFY endpointChanged)
     Q_PROPERTY(QString  newTokenMsg       READ getNewTokenMsg                                    NOTIFY tokenChanged)
     Q_PROPERTY(bool     canChoose         READ getCanChoose                                      NOTIFY tokenChanged)
     Q_PROPERTY(bool     choiceOffline     READ getChoiceOffline     WRITE setChoiceOffline       NOTIFY choiceChanged)
@@ -66,6 +68,8 @@ public:
     [[nodiscard]] QString getToken() const;
     void setToken(const QString& value);
 
+    [[nodiscard]] QString getEndpoint() const;
+
     [[nodiscard]] bool getChoiceOffline() const;
     void setChoiceOffline(bool value);
 
@@ -86,6 +90,7 @@ public:
     [[nodiscard]] bool getIsEnoughAmount() const;
     [[nodiscard]] bool getIsEnoughFee() const;
     [[nodiscard]] bool getTokenValid() const;
+    [[nodiscard]] bool getEndpointValid() const;
     [[nodiscard]] bool canSend() const;
     [[nodiscard]] bool getSendTypeOnline() const;
     [[nodiscard]] bool getCanChoose() const;
@@ -103,6 +108,7 @@ signals:
     void commentChanged();
     void canSendChanged();
     void tokenChanged();
+    void endpointChanged();
     void tokenTipChanged();
     void choiceChanged();
     void sendMoneyVerified();
