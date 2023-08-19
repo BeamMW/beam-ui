@@ -931,20 +931,12 @@ QString StartViewModel::selectCustomWalletDB()
 
 QString StartViewModel::defaultPortToListen() const
 {
-#ifdef BEAM_TESTNET
-    return "11005";
-#else
-    return "10005";
-#endif  // BEAM_TESTNET
+    return AppModel::getInstance().getSettings().getLocalNodePort();
 }
 
 QString StartViewModel::defaultRemoteNodeAddr() const
 {
-#ifdef BEAM_TESTNET
-    return "127.0.0.1:11005";
-#else
-    return "127.0.0.1:10005";
-#endif // BEAM_TESTNET
+    return QString("127.0.0.1:%1").arg(defaultPortToListen());
 }
 
 void StartViewModel::checkCapsLock()

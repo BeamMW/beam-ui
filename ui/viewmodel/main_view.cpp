@@ -18,7 +18,7 @@
 #include <QClipboard>
 #include "qml_globals.h"
 #include "wallet/client/apps_api/apps_utils.h"
-
+using namespace beam;
 namespace
 {
     const int msInMinute = 60 * 1000;
@@ -134,18 +134,24 @@ int MainViewModel::getUnreadNotifications() const
 
 QString MainViewModel::getDaoCoreAppID() const
 {
+    using namespace beam;
     const std::string appName = "BeamX DAO";
     std::string appURL  = "";
-
-    #if defined(BEAM_TESTNET)
-    appURL = "https://apps-testnet.beam.mw/app/dao-core-app/index.html";
-    #elif defined(BEAM_MAINNET)
-    appURL = "https://apps.beam.mw/app/dao-core-app/index.html";
-    #elif defined(BEAM_DAPPNET)
-    appURL = "http://3.16.160.95:80/app/plugin-dao-core/index.html";
-    #else
-    appURL = "http://3.19.32.148:80/app/plugin-dao-core/index.html";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::testnet:
+        appURL = "https://apps-testnet.beam.mw/app/dao-core-app/index.html";
+        break;
+    case Rules::Network::mainnet:
+        appURL = "https://apps.beam.mw/app/dao-core-app/index.html";
+        break;
+    case Rules::Network::dappnet:
+        appURL = "http://3.16.160.95:80/app/plugin-dao-core/index.html";
+        break;
+    case Rules::Network::masternet:
+        appURL = "http://3.19.32.148:80/app/plugin-dao-core/index.html";
+        break;
+    }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);
@@ -155,16 +161,21 @@ QString MainViewModel::getVotingAppID() const
 {
     const std::string appName = "BeamX DAO Voting";
     std::string appURL  = "";
-
-#if defined(BEAM_TESTNET)
-    appURL = "https://apps-testnet.beam.mw/app/dao-voting-app/index.html";
-#elif defined(BEAM_MAINNET)
-    appURL = "https://apps.beam.mw/app/dao-voting-app/index.html";
-#elif defined(BEAM_DAPPNET)
-    appURL = "http://3.16.160.95:80/app-same-origin/dao-voting-app/index.html";
-#else
-    appURL = "http://3.19.32.148:80/app-same-origin/dao-voting-app/index.html";
-#endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::testnet:
+        appURL = "https://apps-testnet.beam.mw/app/dao-voting-app/index.html";
+        break;
+    case Rules::Network::mainnet:
+        appURL = "https://apps.beam.mw/app/dao-voting-app/index.html";
+        break;
+    case Rules::Network::dappnet:
+        appURL = "http://3.16.160.95:80/app-same-origin/dao-voting-app/index.html";
+        break;
+    case Rules::Network::masternet:
+        appURL = "http://3.19.32.148:80/app-same-origin/dao-voting-app/index.html";
+        break;
+    }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);
@@ -175,15 +186,21 @@ QString MainViewModel::getFaucetAppID() const
     const std::string appName = "BEAM Faucet";
     std::string appURL  = "";
 
-    #if defined(BEAM_TESTNET)
-    appURL = "https://apps-testnet.beam.mw/app/plugin-faucet/index.html";
-    #elif defined(BEAM_MAINNET)
-    appURL = "https://apps.beam.mw/app/plugin-faucet/index.html";
-    #elif defined(BEAM_DAPPNET)
-    appURL = "http://3.16.160.95:80/app/plugin-faucet/index.html";
-    #else
-    appURL = "http://3.19.32.148:80/app/plugin-faucet/index.html";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::testnet:
+        appURL = "https://apps-testnet.beam.mw/app/plugin-faucet/index.html";
+        break;
+    case Rules::Network::mainnet:
+        appURL = "https://apps.beam.mw/app/plugin-faucet/index.html";
+        break;
+    case Rules::Network::dappnet:
+        appURL = "http://3.16.160.95:80/app/plugin-faucet/index.html";
+        break;
+    case Rules::Network::masternet:
+        appURL = "http://3.19.32.148:80/app/plugin-faucet/index.html";
+        break;
+    }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);
@@ -194,16 +211,22 @@ QString MainViewModel::getEthBridgeAppID() const
     std::string appName = "Bridges app";
     std::string appURL = "";
 
-#if defined(BEAM_TESTNET)
-    appURL = "https://apps-testnet.beam.mw/app/beam-bridge-app/index.html";
-#elif defined(BEAM_MAINNET)
-    appURL = "https://apps.beam.mw/app/beam-bridge-app/index.html";
-#elif defined(BEAM_DAPPNET)
-    appURL = "http://3.16.160.95:80/app/beam-bridge-app/index.html";
-#else
-    appName = "Bridge app";
-    appURL = "http://3.19.32.148:80/app/beam-bridge-app/index.html";
-#endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::testnet:
+        appURL = "https://apps-testnet.beam.mw/app/beam-bridge-app/index.html";
+        break;
+    case Rules::Network::mainnet:
+        appURL = "https://apps.beam.mw/app/beam-bridge-app/index.html";
+        break;
+    case Rules::Network::dappnet:
+        appURL = "http://3.16.160.95:80/app/beam-bridge-app/index.html";
+        break;
+    case Rules::Network::masternet:
+        appName = "Bridge app";
+        appURL = "http://3.19.32.148:80/app/beam-bridge-app/index.html";
+        break;
+    }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
     return QString::fromStdString(appid);

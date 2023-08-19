@@ -200,6 +200,13 @@ int main (int argc, char* argv[])
             appDataDir.setPath(newPath);
         }
 
+        if (vm.count(cli::NETWORK) == 0)
+        {
+            auto& rules = Rules::get();
+            rules.m_Network = Rules::Network::BEAM_DEFAULT_NETWORK;
+            rules.SetNetworkParams();
+        }
+
         int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
         int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
 
