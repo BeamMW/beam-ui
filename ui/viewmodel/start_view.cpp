@@ -931,7 +931,7 @@ QString StartViewModel::selectCustomWalletDB()
 
 QString StartViewModel::defaultPortToListen() const
 {
-    return AppModel::getInstance().getSettings().getLocalNodePort();
+    return QString("%1").arg(AppModel::getInstance().getSettings().getLocalNodePort());
 }
 
 QString StartViewModel::defaultRemoteNodeAddr() const

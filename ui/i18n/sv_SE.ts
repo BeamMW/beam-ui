@@ -3857,5 +3857,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Hide DApps</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="Receiver signature">
+        <source>Receiver signature</source>
+        <translation type="unfinished">Receiver signature</translation>
+    </message>
 </context>
 </TS>

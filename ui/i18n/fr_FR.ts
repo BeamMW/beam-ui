@@ -3861,5 +3861,9 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>Hide DApps</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="Receiver signature">
+        <source>Receiver signature</source>
+        <translation type="unfinished">Signature du destinataire</translation>
+    </message>
 </context>
 </TS>
