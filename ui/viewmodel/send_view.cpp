@@ -56,7 +56,9 @@ SendViewModel::SendViewModel()
     connect(_walletModel.get(),  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
     connect(_walletModel.get(),  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
 
-    _walletModel->getAsync()->getPublicAddress();
+    _receiverIdentity = beam::Zero;
+
+    //_walletModel->getAsync()->getPublicAddress(); ??!?
 }
 
 beam::Amount SendViewModel::getTotalSpend() const
@@ -255,7 +257,23 @@ void SendViewModel::setToken(const QString& value)
         emit tokenTipChanged();
         emit choiceChanged();
         emit canSendChanged();
+        emit endpointChanged();
     }
+}
+
+bool SendViewModel::getEndpointValid() const
+{
+    if ((_receiverWalletID.m_Pk == beam::Zero) && (_receiverIdentity == beam::Zero))
+        return false;
+
+    return getTokenValid();
+}
+
+QString SendViewModel::getEndpoint() const
+{
+    const beam::PeerID& pid = (_receiverIdentity != beam::Zero) ? _receiverIdentity : _receiverWalletID.m_Pk;
+    auto sTxt = std::to_base58(pid);
+    return QString::fromStdString(sTxt);
 }
 
 bool SendViewModel::getTokenValid() const
@@ -385,12 +403,12 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
     else if (!_walletModel->isOwnAddress(_receiverWalletID))
     {
         WalletAddress address;
-        address.m_walletID   = _receiverWalletID;
+        address.m_BbsAddr   = _receiverWalletID;
         address.m_createTime = beam::getTimestamp();
-        address.m_Identity   = _receiverIdentity;
+        address.m_Endpoint   = _receiverIdentity;
         address.m_label      = trimmed.toStdString();
         address.m_duration   = WalletAddress::AddressExpirationNever;
-        address.m_Address    = _token.toStdString();
+        address.m_Token    = _token.toStdString();
         _walletModel->getAsync()->saveAddress(address);
     }
     else
@@ -406,7 +424,7 @@ void SendViewModel::saveReceiverAddress(const QString& comment)
         }
         else
         {
-            // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
+            // Max privacy & public offline tokens do not have valid PeerAddr (_receiverWalletID)
             _walletModel->getAsync()->getAddressByToken(_token.toStdString(), [trimmed](const boost::optional<WalletAddress>& addr, size_t c)
             {
                 WalletAddress address = *addr;
@@ -425,10 +443,10 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
     {
         setComment(QString::fromStdString(address->m_label));
 
-        [[maybe_unused]] const auto type = GetAddressType(address->m_Address);
+        [[maybe_unused]] const auto type = GetAddressType(address->m_Token);
         if (_receiverWalletID != beam::Zero)
         {
-            if (_receiverWalletID != address->m_walletID)
+            if (_receiverWalletID != address->m_BbsAddr)
             {
                 assert(!"unexpected wallet id in send::onGetAddressReturned");
                 throw std::runtime_error("unexpected walletID in send::onGetAddressReturned");
@@ -437,14 +455,14 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
         else
         {
             assert(type == TxAddressType::MaxPrivacy || type == TxAddressType::PublicOffline);
-            _receiverWalletID = address->m_walletID; // our maxprivacy will have id in db
+            _receiverWalletID = address->m_BbsAddr; // our maxprivacy will have id in db
         }
 
         if (_receiverIdentity != beam::Zero)
         {
-            if (address->m_Identity != beam::Zero)
+            if (address->m_Endpoint != beam::Zero)
             {
-                if (_receiverIdentity != address->m_Identity)
+                if (_receiverIdentity != address->m_Endpoint)
                 {
                     assert(!"unexpected identity in send::onGetAddressReturned");
                     throw std::runtime_error("unexpected identity in send::onGetAddressReturned");
@@ -458,9 +476,9 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
         }
         else
         {
-            if (address->m_Identity != beam::Zero)
+            if (address->m_Endpoint != beam::Zero)
             {
-                _receiverIdentity = address->m_Identity;
+                _receiverIdentity = address->m_Endpoint;
             }
             else
             {
@@ -496,9 +514,9 @@ void SendViewModel::extractParameters()
     _vouchersLeft     = 0;
     _newTokenMsg.clear();
 
-    if (auto peerID = _txParameters.GetParameter<WalletID>(TxParameterID::PeerID); peerID)
+    if (auto peerAddr = _txParameters.GetParameter<WalletID>(TxParameterID::PeerAddr); peerAddr)
     {
-        _receiverWalletID = *peerID;
+        _receiverWalletID = *peerAddr;
         if (_receiverWalletID != beam::Zero)
         {
             if(auto vouchers = _txParameters.GetParameter<ShieldedVoucherList>(TxParameterID::ShieldedVoucherList); vouchers)
@@ -512,9 +530,9 @@ void SendViewModel::extractParameters()
         }
     }
 
-    if (auto peerIdentity = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerWalletIdentity); peerIdentity)
+    if (auto peerEndpoint = _txParameters.GetParameter<beam::PeerID>(TxParameterID::PeerEndpoint); peerEndpoint)
     {
-        _receiverIdentity = *peerIdentity;
+        _receiverIdentity = *peerEndpoint;
     }
 
     if (auto amount = _txParameters.GetParameter<beam::Amount>(TxParameterID::Amount); amount && *amount > 0)
@@ -548,7 +566,7 @@ void SendViewModel::extractParameters()
     }
     else
     {
-        // Max privacy & public offline tokens do not have valid PeerID (_receiverWalletID)
+        // Max privacy & public offline tokens do not have valid PeerAddr (_receiverWalletID)
         QPointer<SendViewModel> guard(this);
         _walletModel->getAsync()->getAddressByToken(_token.toStdString(), [this, guard](const boost::optional<WalletAddress>& addr, size_t c)
         {
@@ -616,7 +634,6 @@ void SendViewModel::sendMoney()
             assert(false);
             return;
         }
-        CopyParameter(TxParameterID::PeerOwnID, _txParameters, params);
     }
     else
     {

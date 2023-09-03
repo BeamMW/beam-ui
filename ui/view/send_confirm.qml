@@ -79,16 +79,16 @@ ConfirmationDialog {
         //% "Send"
         qsTrId("general-send")
 
-    okButtonColor: control.isSpend ? Style.accent_outgoing : Style.accent_incoming
+    okButtonColor:  control.isReceive ? Style.accent_incoming : Style.accent_outgoing
+
     okButtonIconSource: {
         if (control.appMode) {
             if (control.isSpend && control.isReceive) {
                 return "qrc:/assets/icon-send-receive-blue.svg"
             }
-            if (control.isSpend) {
-                return "qrc:/assets/icon-send-blue.svg"
+            if (control.isReceive) {
+                return "qrc:/assets/icon-receive-blue.svg"
             }
-            return "qrc:/assets/icon-receive-blue.svg"
         }
         return "qrc:/assets/icon-send-blue.svg"
     }
@@ -231,18 +231,20 @@ ConfirmationDialog {
                     model: control.amounts
 
                     BeamAmount  {
+                        property var data:       assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData
                         amount:           modelData.amount
-                        unitName:         (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).unitName
-                        rate:             (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).rate
+                        unitName:         data.unitName
+                        assetId:          data.assetID != "0" ? data.assetID : ""
+                        rate:             data.rate
                         prefix:           control.showPrefix ? (modelData.spend ? "- " : "+ ") : ""
                         rateUnit:         control.rateUnit
                         maxPaintedWidth:  false
-                        maxUnitChars:     7
+                        maxUnitChars:     10
                         color:            modelData.spend ? Style.accent_outgoing : Style.accent_incoming
                         iconSize:         Qt.size(20, 20)
-                        iconSource:       (assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).icon || ""
+                        iconSource:       data.icon || ""
                         iconAnchorCenter: false
-                        verified:         !!(assetsProvider ? assetsProvider.assets[modelData.assetID] : modelData).verified
+                        verified:         !!data.verified
 
                         font.pixelSize:   14
                         font.styleName:   "DemiBold"

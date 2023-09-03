@@ -5,6 +5,7 @@
         <file>color_themes/Masternet.qml</file>
         <file>color_themes/Testnet.qml</file>
         <file>color_themes/BeamX.qml</file>
+        <file>color_themes/Dappnet.qml</file>
         <file>controls/Style.qml</file>
         <file>controls/qmldir</file>
         <file>controls/SvgImage.qml</file>
@@ -12,6 +13,7 @@
         <file>controls/SFLabel.qml</file>
         <file>controls/SFText.qml</file>
         <file>controls/SFTextInput.qml</file>
+        <file>controls/SFTextInputEx.qml</file>
         <file>controls/Led.qml</file>
         <file>controls/TxFilter.qml</file>
         <file>controls/TableItem.qml</file>
@@ -62,6 +64,7 @@
         <file>controls/ConfirmRefreshDialog.qml</file>
         <file>controls/OwnerKeyDialog.qml</file>
         <file>controls/SettingsFoldable.qml</file>
+        <file>controls/SettingsCA.qml</file>
         <file>controls/SettingsGeneral.qml</file>
         <file>controls/SettingsNotifications.qml</file>
         <file>controls/SettingsUtilities.qml</file>
@@ -100,6 +103,7 @@
         <file>controls/OpenInBlockchainExplorer.qml</file>
         <file>controls/CheckRecoveryPhrase.qml</file>
         <file>controls/GenerateRecoveryPhrase.qml</file>
+        <file>controls/MessengerAddReceiver.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>
         <file>wallet/AssetInfo.qml</file>
@@ -107,12 +111,19 @@
         <file>wallet/TransactionDetailsPopup.qml</file>
         <file>wallet/TransactionsSearchHighlighter.qml</file>
         <file>wallet/CoinsList.qml</file>
-        <file>dex/MarketPanel.qml</file>
-        <file>dex/MarketTable.qml</file>
+        <file>wallet/SeedValidationPanel.qml</file>
         <file>applications/applications.qml</file>
         <file>applications/applications_nofork.qml</file>
+        <file>applications/AppButton.qml</file>
+        <file>applications/AppPanel.qml</file>
         <file>applications/AppsList.qml</file>
         <file>applications/AppInfoPanel.qml</file>
+        <file>applications/BecomePublisher.qml</file>
+        <file>applications/PublisherDetails.qml</file>
+        <file>applications/PublishersList.qml</file>
+        <file>applications/TransactionIsSent.qml</file>
+        <file>applications/YouArePublisher.qml</file>
+        <file>applications/UploadDApp.qml</file>
         <file>popup_message.qml</file>
         <file>root.qml</file>
         <file>start.qml</file>
@@ -122,16 +133,21 @@
         <file>settings.qml</file>
         <file>addresses.qml</file>
         <file>atomic_swap.qml</file>
+        <file>assets_swap.qml</file>
+        <file>beam_messenger.qml</file>
+        <file>beam_chat.qml</file>
         <file>notifications.qml</file>
         <file>receive_regular.qml</file>
-        <file>receive_swap.qml</file>
+        <file>accept_asset_swap.qml</file>
+        <file>create_asset_swap.qml</file>
+        <file>create_atomic_swap.qml</file>
         <file>send.qml</file>
         <file>send_regular.qml</file>
         <file>send_swap.qml</file>
         <file>send_confirm.qml</file>
+        <file>assets_swap_confirm.qml</file>
         <file>swap_confirm.qml</file>
         <file>send_expired.qml</file>
-        <file>dex.qml</file>
         <file>assets/fonts/Proxima Nova Black Italic.otf</file>
         <file>assets/fonts/Proxima Nova Black.otf</file>
         <file>assets/fonts/Proxima Nova Bold Italic.otf</file>
@@ -154,10 +170,11 @@
         <file>assets/logo.svg</file>
         <file>assets/beamx-logo.svg</file>
         <file>assets/start-logo.svg</file>
-        <file>assets/icon.png</file>
+        <file>assets/icon_mainnet.png</file>
         <file>assets/icon_masternet.png</file>
         <file>assets/icon_testnet.png</file>
         <file>assets/icon_beamx.png</file>
+		<file>assets/icon_dappnet.png</file>
         <file>assets/bg.svg</file>
         <file>assets/b-grey.svg</file>
         <file>assets/b-red.svg</file>
@@ -171,6 +188,34 @@
         <file>assets/icon-defapp-active.svg</file>
         <file>assets/icon-applications.svg</file>
         <file>assets/icon-applications-active.svg</file>
+        <file>assets/icon-dapps_store.svg</file>
+        <file>assets/icon-dapps_store-active.svg</file>
+        <file>assets/icon-dapps_store-add-publisher.svg</file>
+        <file>assets/icon-dapps_store-dapp-file.svg</file>
+        <file>assets/icon-dapps_store-become-a-publisher.svg</file>
+        <file>assets/icon-dapps_store-empty-dapps-list.svg</file>
+        <file>assets/icon-dapps_store-publisher-edit.svg</file>
+        <file>assets/icon-dapps_store-publisher-show-key.svg</file>
+        <file>assets/icon-dapps_store-publisher-upload-dapp.svg</file>
+        <file>assets/icon-dapps_store-publishers.svg</file>
+        <file>assets/icon-dapps_store-update.svg</file>
+        <file>assets/icon-dapps-store-transaction-is-sent.svg</file>
+        <file>assets/icon-dapps-store-user.svg</file>
+        <file>assets/icon-dapps-store-website.svg</file>
+        <file>assets/icon-dapps-store-twitter.svg</file>
+        <file>assets/icon-dapps-store-linkedin.svg</file>
+        <file>assets/icon-dapps-store-instagram.svg</file>
+        <file>assets/icon-dapps-store-telegram.svg</file>
+        <file>assets/icon-dapps-store-discord.svg</file>
+        <file>assets/icon-dapps-store-website-green.svg</file>
+        <file>assets/icon-dapps-store-twitter-green.svg</file>
+        <file>assets/icon-dapps-store-linkedin-green.svg</file>
+        <file>assets/icon-dapps-store-instagram-green.svg</file>
+        <file>assets/icon-dapps-store-telegram-green.svg</file>
+        <file>assets/icon-dapps-store-discord-green.svg</file>
+        <file>assets/icon-dapps-store-install.svg</file>
+        <file>assets/icon-dapps-store-launch.svg</file>
+        <file>assets/icon-dapps-store-update.svg</file>
         <file>assets/icon-dex.svg</file>
         <file>assets/icon-dex-active.svg</file>
         <file>assets/icon-addresses.svg</file>
@@ -179,6 +224,11 @@
         <file>assets/icon-wallet-active.svg</file>
         <file>assets/icon-atomic_swap.svg</file>
         <file>assets/icon-atomic_swap-active.svg</file>
+        <file>assets/icon-beam_messenger.svg</file>
+        <file>assets/icon-beam_messenger-active.svg</file>
+        <file>assets/icon-messenger-new-chat.svg</file>
+        <file>assets/icon-assets_swap.svg</file>
+        <file>assets/icon-assets_swap-active.svg</file>
         <file>assets/icon-wallet-small.svg</file>
         <file>assets/icon-notifications.svg</file>
         <file>assets/icon-notifications-active.svg</file>
@@ -193,6 +243,7 @@
         <file>assets/icon-notifications-sent.svg</file>
         <file>assets/icon-notifications-update.svg</file>
         <file>assets/icon-notifications-videos.svg</file>
+        <file>assets/icon-chevron-down.svg</file>
         <file>assets/icon-contract-completed.svg</file>
         <file>assets/icon-contract-expired.svg</file>
         <file>assets/icon-contract-failed.svg</file>
@@ -241,6 +292,7 @@
         <file>assets/icon-add-green.svg</file>
         <file>assets/icon-copy.svg</file>
         <file>assets/icon-copy-gray.svg</file>
+        <file>assets/icon-copy-green.svg</file>
         <file>assets/icon-down.svg</file>
         <file>assets/icon-up.svg</file>
         <file>assets/icon-send.svg</file>
@@ -294,15 +346,12 @@
         <file>assets/icon-copy-blue.svg</file>
         <file>assets/icon-details.svg</file>
         <file>assets/icon-activate.svg</file>
-        <file>assets/beta-label.svg</file>
-        <file>assets/beta2-label.svg</file>
         <file>assets/icon-accept-offer.svg</file>
         <file>assets/icon-create-offer.svg</file>
         <file>assets/atomic-empty-state.svg</file>
         <file>assets/icon-trusted-node-status.svg</file>
         <file>assets/icon-delete-blue.svg</file>
         <file>utils.js</file>
-        <file>web_view_watcher.js</file>
         <file>qmldir</file>
         <file>assets/icon-notifications-swap-completed.svg</file>
         <file>assets/icon-notifications-swap-failed.svg</file>
@@ -372,6 +421,7 @@
         <file>assets/dapp-loading.svg</file>
         <file>assets/icon-verified-asset.svg</file>
         <file>assets/asset-beamx.svg</file>
+        <file>assets/asset-nephrite.svg</file>
         <file>assets/icon-refresh.svg</file>
         <file>assets/icon-help.svg</file>
         <file>assets/icon-help-active.svg</file>
@@ -382,5 +432,10 @@
         <file>assets/dnd-load-file.svg</file>
         <file>assets/icon-voting.svg</file>
         <file>assets/icon-voting-active.svg</file>
+        <file>assets/icon-no-transaction-filter.svg</file>
+        <file>assets/icon-offer-cancel.svg</file>
+        <file>assets/icon-offer-accept.svg</file>
+		<file>assets/icon-bridge.svg</file>
+		<file>assets/icon-bridge-active.svg</file>
     </qresource>
 </RCC>

@@ -13,31 +13,25 @@
 // limitations under the License.
 
 #include "theme.h"
+#include "core/block_crypt.h"
+
+using namespace beam;
 
 // static
 QString Theme::name()
 {
-#ifdef BEAM_BEAMX
-    return "beamx";
-#elif defined(BEAM_TESTNET)
-    return "testnet";
-#elif defined(BEAM_MAINNET)
-    return "mainnet";
-#else
-    return "masternet";
-#endif
+    return Rules::get().get_NetworkName();
 }
 
 // static
 QString Theme::iconPath() 
 {
-#ifdef BEAM_BEAMX
-    return ":/assets/icon_beamx.png";
-#elif BEAM_TESTNET
-    return ":/assets/icon_testnet.png";
-#elif defined(BEAM_MAINNET)
-    return ":/assets/icon.png";
-#else
-    return ":/assets/icon_masternet.png";
-#endif
+    switch (Rules::get().m_Network)
+    {
+#define THE_MACRO(name) case Rules::Network::name: return ":/assets/icon_" #name ".png";
+        RulesNetworks(THE_MACRO)
+#undef THE_MACRO
+    default:
+        return ":/assets/icon_mainnet.png";
+    }
 }

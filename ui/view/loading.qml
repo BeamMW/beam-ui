@@ -73,10 +73,7 @@ Item
     LoadingViewModel {
         id: viewModel 
         onSyncCompleted: {
-            if (isRecoveryMode || isCreating)
-                root.parent.source = "qrc:/main.qml";
-            else
-                rootLoading.parent.source = "qrc:/main.qml";
+            root.parent.source = "qrc:/main.qml";
         }
 
         onWalletError: {
@@ -85,7 +82,9 @@ Item
             confirmationDialog.okButtonVisible  = false;
             confirmationDialog.okButtonEnable   = false;
             confirmationDialog.closePolicy      = Popup.NoAutoClose;
-            confirmationDialog.rejectedCallback = isRecoveryMode ? changeNodeSettings : cancelCreating;
+            confirmationDialog.rejectedCallback = isRecoveryMode
+                ? changeNodeSettingsRecovery
+                : (isCreating ? cancelCreating : changeNodeSettings);
             confirmationDialog.open();
         }
 
@@ -100,8 +99,12 @@ Item
         viewModel.resetWallet();
     }
 
+    function changeNodeSettingsRecovery () {
+        rootLoading.parent.restoreProcessBadPortMode(true);
+    }
+
     function changeNodeSettings () {
-        rootLoading.parent.restoreProcessBadPortMode();
+        rootLoading.parent.restoreProcessBadPortMode(false);
     }
 
     StartLayout {

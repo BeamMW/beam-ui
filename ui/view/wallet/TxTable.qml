@@ -20,13 +20,34 @@ Control {
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
+    property alias     mainBackgroundRect: transactionsTable.mainBackgroundRect
+    property bool      dexFilter: false
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true
     readonly property  bool actionVisible: dappFilter !== undefined && dappFilter != "all"
     property var       owner
 
-    function showTxDetails (txid) {
-        transactionsTable.showDetails (txid)
+    function getStatusFilter (){
+        let f = ["none"];
+        if (tableViewModel.showInProgress) {
+            f.push("inProgress");
+        }
+        if (tableViewModel.showCompleted) {
+            f.push("completed");
+        }
+        if (tableViewModel.showCanceled) {
+            f.push("canceled");
+        }
+        if (tableViewModel.showFailed) {
+            f.push("failed");
+        }
+        console.log(f.join('|'))
+        return f.join('|')
+    }
+    property var       selectedFilters: getStatusFilter()
+
+    function showTxDetails(txid) {
+        transactionsTable.showDetails(txid)
     }
 
     state: "all"
@@ -34,9 +55,12 @@ Control {
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
-            PropertyChanges { target: emptyMessage;  
-                //% "Your transaction list is empty"
-                text: qsTrId("tx-empty")
+            PropertyChanges { target: emptyMessage; 
+                text: tableViewModel.showAll
+                    //% "Your transaction list is empty"
+                    ? qsTrId("tx-empty")
+                    //% "No transactions to show"
+                    : qsTrId("tx-no-transaction-filter")
             }
             
         },
@@ -85,20 +109,6 @@ Control {
         onAccepted: function () {
             tableViewModel.deleteTx(txID)
        }
-    }
-
-    PaymentInfoItem {
-        id: verifyInfo
-    }
-
-    PaymentInfoDialog {
-        id: paymentInfoVerifyDialog
-        shouldVerify: true
-
-        model:verifyInfo
-        onTextCopied: function(text) {
-            BeamGlobals.copyToClipboard(text);
-        }
     }
 
     TransactionDetailsPopup {
@@ -184,7 +194,6 @@ Control {
                     Layout.rightMargin: 20
                 }
                 MultiSelectComboBox {
-                    Layout.preferredWidth: 150
                     fontPixelSize:       14
                     model: [
                         //% "In progress"
@@ -237,7 +246,8 @@ Control {
                 //% "Verify payment"
                 ToolTip.text: qsTrId("wallet-verify-payment")
                 onClicked: {
-                    paymentInfoVerifyDialog.model.reset();
+                    var paymentInfoVerifyDialog =
+                        Qt.createComponent("../controls/PaymentInfoDialog.qml").createObject(control);
                     paymentInfoVerifyDialog.open();
                 }
             }
@@ -250,7 +260,7 @@ Control {
 
             SvgImage {
                 Layout.alignment: Qt.AlignHCenter
-                source: "qrc:/assets/icon-wallet-empty.svg"
+                source: tableViewModel.showAll ? "qrc:/assets/icon-wallet-empty.svg" : "qrc:/assets/icon-no-transaction-filter.svg" 
                 sourceSize: Qt.size(60, 60)
             }
 
@@ -263,8 +273,11 @@ Control {
                 color:                Style.content_main
                 opacity:              0.5
                 lineHeight:           1.43
-                //% "Your transaction list is empty"
-                text: qsTrId("tx-empty")
+                text: tableViewModel.showAll
+                    //% "Your transaction list is empty"
+                    ? qsTrId("tx-empty")
+                    //% "No transactions to show"
+                    : qsTrId("tx-no-transaction-filter")
             }
 
             Item {
@@ -339,9 +352,11 @@ Control {
                 var index = tableViewModel.transactions.index(0, 0);
                 var indexList = tableViewModel.transactions.match(index, TxObjectList.Roles.TxID, id);
                 if (indexList.length > 0) {
-                    index = dappFilterProxy.mapFromSource(indexList[0]);
+                    index = dexFilterProxy.mapFromSource(indexList[0]);
+                    index = dappFilterProxy.mapFromSource(index);
                     index = assetFilterProxy.mapFromSource(index);
                     index = searchProxyModel.mapFromSource(index);
+                    index = statusProxy.mapFromSource(index);
                     index = txProxyModel.mapFromSource(index);
                     transactionsTable.positionViewAtRow(index.row, ListView.Beginning);
 
@@ -396,25 +411,40 @@ Control {
                 id: txProxyModel
 
                 source: SortFilterProxyModel {
-                    id: searchProxyModel
-                    filterRole: "search"
-                    filterString: searchBox.text
-                    filterSyntax: SortFilterProxyModel.Wildcard
-                    filterCaseSensitivity: Qt.CaseInsensitive
+                    id: statusProxy
+                    filterRole: "filterStatus"
+                    filterString: control.selectedFilters
+                    filterSyntax: SortFilterProxyModel.RegExp
 
                     source: SortFilterProxyModel {
-                        id:           assetFilterProxy
-                        filterRole:   "assetFilter"
-                        filterString: control.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
-                        filterSyntax: SortFilterProxyModel.RegExp
+                        id: searchProxyModel
+                        filterRole: "search"
+                        filterString: searchBox.text
+                        filterSyntax: SortFilterProxyModel.Wildcard
+                        filterCaseSensitivity: Qt.CaseInsensitive
 
                         source: SortFilterProxyModel {
-                            id:           dappFilterProxy
-                            filterRole:   dappFilter ? (dappFilter == "all" ? "isDappTx" : "dappId") : ""
-                            filterString: dappFilter ? (dappFilter == "all" ? "true" : dappFilter) : ""
-                            filterSyntax: SortFilterProxyModel.FixedString
-                            filterCaseSensitivity: Qt.CaseInsensitive
-                            source: tableViewModel.transactions
+                            id:           assetFilterProxy
+                            filterRole:   "assetFilter"
+                            filterString: control.selectedAssets.reduce(function(sum, current) { return sum + ["|", "\\b", current, "\\b"].join(""); }, "").slice(1)
+                            filterSyntax: SortFilterProxyModel.RegExp
+
+                            source: SortFilterProxyModel {
+                                id:           dappFilterProxy
+                                filterRole:   dappFilter ? (dappFilter == "all" ? "isDappTx" : "dappId") : ""
+                                filterString: dappFilter ? (dappFilter == "all" ? "true" : dappFilter) : ""
+                                filterSyntax: SortFilterProxyModel.FixedString
+                                filterCaseSensitivity: Qt.CaseInsensitive
+
+                                source: SortFilterProxyModel {
+                                    id:           dexFilterProxy
+                                    filterRole:   dexFilter ? "isDexTx" : ""
+                                    filterString: dexFilter ? "true" : ""
+                                    filterSyntax: SortFilterProxyModel.FixedString
+                                    filterCaseSensitivity: Qt.CaseInsensitive
+                                    source: tableViewModel.transactions
+                                }
+                            }
                         }
                     }
                 }
@@ -430,15 +460,11 @@ Control {
                 collapsed:  true
                 rowInModel: styleData.row !== undefined && styleData.row >= 0 && styleData.row < txProxyModel.count
                 rowHeight:  transactionsTable.rowHeight
-                tableView:  transactionsTable
 
-                backgroundColor: !rowInModel ? "transparent":
-                                 styleData.selected ?
-                                 Style.row_selected :
-                                 hovered 
-                                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
-                                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
-                                                           : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
+                backgroundColor: hovered
+                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
+                    : (styleData.alternate ? (!collapsed || animating ? Style.background_row_details_even : Style.background_row_even)
+                                            : (!collapsed || animating ? Style.background_row_details_odd : Style.background_row_odd))
 
                 property var model: parent.model
                 property bool hideFiltered: true
@@ -493,6 +519,7 @@ Control {
             }
 
             itemDelegate: Item {
+                width: parent.width
                 Item {
                     width: parent.width
                     height: transactionsTable.rowHeight

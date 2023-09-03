@@ -28,9 +28,12 @@
 #include "viewmodel/utxo/utxo_view.h"
 #include "viewmodel/utxo/utxo_view_status.h"
 #include "viewmodel/utxo/utxo_view_type.h"
+#include "viewmodel/dex/dex_orders_model.h"
 #include "viewmodel/atomic_swap/swap_offers_view.h"
 #include "viewmodel/atomic_swap/swap_token_item.h"
 #include "viewmodel/address_book_view.h"
+#include "viewmodel/asset_swap_create_view.h"
+#include "viewmodel/asset_swap_accept_view.h"
 #include "viewmodel/wallet/wallet_view.h"
 #include "viewmodel/wallet/token_item.h"
 #include "viewmodel/wallet/assets_view.h"
@@ -64,7 +67,10 @@
 #include "model/translator.h"
 #include "viewmodel/applications/public.h"
 #include "model/qr.h"
-#include "viewmodel/dex/dex_view.h"
+#include "viewmodel/window_event_filter.h"
+#include "viewmodel/messenger_address_add.h"
+#include "viewmodel/messenger_chat.h"
+#include "viewmodel/messenger_chat_list.h"
 
 #if defined(BEAM_USE_STATIC_QT)
 
@@ -107,6 +113,7 @@ int main (int argc, char* argv[])
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 
     block_sigpipe();
 
@@ -193,6 +200,13 @@ int main (int argc, char* argv[])
             appDataDir.setPath(newPath);
         }
 
+        if (vm.count(cli::NETWORK) == 0)
+        {
+            auto& rules = Rules::get();
+            rules.m_Network = Rules::Network::BEAM_DEFAULT_NETWORK;
+            rules.SetNetworkParams();
+        }
+
         int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
         int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
 
@@ -216,7 +230,7 @@ int main (int argc, char* argv[])
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
             // even while being destroyed. Do not move engine above AppModel
-            WalletSettings settings(appDataDir);
+            WalletSettings settings(appDataDir, app.applicationDirPath());
             LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
 
             AppModel appModel(settings);
@@ -293,9 +307,17 @@ int main (int argc, char* argv[])
             qmlRegisterType<SortFilterProxyModel>("Beam.Wallet", 1, 0, "SortFilterProxyModel");
             qmlRegisterType<SeedValidationHelper>("Beam.Wallet", 1, 0, "SeedValidationHelper");
             qmlRegisterType<QR>("Beam.Wallet", 1, 0, "QR");
-            qmlRegisterType<beamui::dex::DexView>("Beam.Wallet", 1, 0, "DexViewModel");
             qmlRegisterType<AppNotificationHelper>("Beam.Wallet", 1, 0, "AppNotificationHelper");
+            qmlRegisterType<AssetSwapCreateViewModel>("Beam.Wallet", 1, 0, "AssetSwapCreateViewModel");
+            qmlRegisterType<DexOrdersModel>("Beam.Wallet", 1, 0, "DexOrdersModel");
+            qmlRegisterType<AssetSwapAcceptViewModel>("Beam.Wallet", 1, 0, "AssetSwapAcceptViewModel");
+            qmlRegisterType<MessengerAddressAdd>("Beam.Wallet", 1, 0, "MessengerAddressAdd");
+            qmlRegisterType<MessengerChat>("Beam.Wallet", 1, 0, "MessengerChat");
+            qmlRegisterType<MessengerChatList>("Beam.Wallet", 1, 0, "MessengerChatList");
             beamui::applications::RegisterQMLTypes();
+
+            WindowEventFilter filter;
+            app.installEventFilter(&filter);
 
             engine.load(QUrl("qrc:/root.qml"));
             if (engine.rootObjects().count() < 1)
@@ -303,6 +325,9 @@ int main (int argc, char* argv[])
                 LOG_ERROR() << "Problem with QT";
                 return -1;
             }
+
+            QObject::connect(&filter, SIGNAL(windowMoved()), engine.rootObjects().takeFirst(), SLOT(windowMoved()));
+            QObject::connect(&filter, SIGNAL(generalMouseEvent()), &settings, SIGNAL(generalMouseEvent()));
 
             auto topLevel = engine.rootObjects().value(0);
             auto window = qobject_cast<QQuickWindow*>(topLevel);

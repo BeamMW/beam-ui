@@ -12,8 +12,9 @@ BaseNotification {
     property alias  appname: titleCtrl.text
     property string appicon
     property string txid
-    property int    secondsFromBirth: 1
-    property double progress: 0.0
+    property bool   isLinkToWalletMainTxTable: false
+    property int    secondsFromBirth:          1
+    property double progress:                  0.0
 
     Timer {
         id: closeTimer
@@ -112,7 +113,11 @@ BaseNotification {
                     linkEnabled: true
                     textFormat: Text.RichText
                     onLinkActivated: function () {
-                        main.openDAppTransactionDetails(control.txid)
+                        if (isLinkToWalletMainTxTable) {
+                            main.openTransactionDetails(control.txid)
+                        } else {
+                            main.openDAppTransactionDetails(control.txid)
+                        }
                     }
                 }
             }

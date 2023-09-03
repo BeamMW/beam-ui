@@ -50,10 +50,12 @@ public:
     [[nodiscard]] QString getPaperUrl(beam::Asset::ID);
     [[nodiscard]] beam::Amount getRate(beam::Asset::ID);
     [[nodiscard]] QString getRateUnit();
+    [[nodiscard]] QList<QMap<QString, QVariant>> getAssetsListFull();
     [[nodiscard]] QList<QMap<QString, QVariant>> getAssetsList();
     [[nodiscard]] QMap<QString, QVariant> getAssetsMap(const std::set<beam::Asset::ID>& assets);
     [[nodiscard]] bool hasAsset(beam::Asset::ID) const;
     [[nodiscard]] bool isVerified(beam::Asset::ID) const;
+    [[nodiscard]] bool isKnownAsset(beam::Asset::ID) const;
 
 signals:
     void assetInfo(beam::Asset::ID assetId);
@@ -81,4 +83,8 @@ private:
 
     std::map<int, QColor>  _colors;
     std::map<int, QString> _icons;
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    QVector<beam::Asset::ID> _allowedAssets;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 };

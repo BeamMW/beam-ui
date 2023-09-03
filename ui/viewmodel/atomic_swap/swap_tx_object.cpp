@@ -19,8 +19,7 @@
 #include "viewmodel/ui_helpers.h"
 #include "model/app_model.h"
 #include "viewmodel/fee_helpers.h"
-
-#include <qdebug.h>
+#include "viewmodel/ui_helpers.h"
 
 using namespace beam;
 
@@ -297,7 +296,7 @@ QString SwapTxObject::getFailureReason() const
         return qtTrId("swap-tx-failure-refunded");
     }
     auto failureReason = m_swapTx.getFailureReason();
-    return failureReason ? getReasonString(*failureReason) : QString();
+    return failureReason ? beamui::getReasonString(*failureReason) : QString();
 }
 
 QString SwapTxObject::getStateDetails() const

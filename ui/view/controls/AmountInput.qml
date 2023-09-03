@@ -21,7 +21,9 @@ ColumnLayout {
     readonly property bool     isValid: error.length == 0
 
     property int                currencyIdx:   currCombo.currentIndex
-    readonly property string    currencyUnit:  currencies[currencyIdx].unitName
+    readonly property string    currencyUnitNoId:  currencies[currencyIdx].unitName
+    readonly property string    currencyUnit:  currencies[currencyIdx].unitName + 
+                                    ((currencies[currencyIdx].assetId > 0) ? " (%1)".arg(currencies[currencyIdx].assetId) : "")
     readonly property bool      isBeam:        !!currencies[currencyIdx].isBEAM
 
     property string   rate:     currencies[currencyIdx].rate
@@ -37,8 +39,9 @@ ColumnLayout {
     property bool     readOnlyA:    false
     property bool     resetAmount:  true
     property var      amountInput:  ainput
-    property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnit
+    property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnitNoId
     readonly property bool isExchangeRateAvailable: control.rate != "0"
+    property alias    filterAssets: currCombo.filterAssets
 
     SFText {
         font.pixelSize:   14
@@ -58,8 +61,8 @@ ColumnLayout {
             font.pixelSize:   36
             font.styleName:   "Light"
             font.weight:      Font.Light
-            color:            error.length ? Style.validator_error : control.color
-            backgroundColor:  error.length ? Style.validator_error : Style.content_main
+            color:            !isValid ? Style.validator_error : control.color
+            backgroundColor:  !isValid ? Style.validator_error : Style.content_main
             validator:        RegExpValidator {regExp: new RegExp(ainput.getRegExpPattern())}
             selectByMouse:    true
             text:             formatDisplayedAmount()
@@ -119,21 +122,26 @@ ColumnLayout {
             y: 10
             CustomComboBox {
                 id:                  currCombo
-                width:               140
                 dropSpacing:         18
                 spacing:             0
                 fontPixelSize:       20
                 dropFontPixelSize:   14
                 currentIndex:        control.currencyIdx
-                color:               error.length ? Style.validator_error : control.currColor
+                color:               !isValid ? Style.validator_error : control.currColor
                 underlineColor:      "transparent"
                 enabled:             multi
                 colorConst:          true
                 model:               control.currencies
-                textRole:            "unitName"
+                textRole:            "unitNameWithId"
                 textMaxLenDrop:      10
                 enableScroll:        true
                 showBackground:      false
+                leftPadding:         30
+                maxTextWidth:        100
+                dropDownIconSixe:    Qt.size(9, 5)
+                dropDownIconRightMargin: 14
+                //% "Enter asset name..."
+                searchPlaseholder: qsTrId("amount-input-asset-search")
 
                 onActivated: {
                     if (multi) {
@@ -189,7 +197,7 @@ ColumnLayout {
         color:                Style.validator_error
         font.pixelSize:       14
         font.italic:          true
-        visible:              error.length
+        visible:              !isValid
         wrapMode:             "WordWrap"
     }
 }

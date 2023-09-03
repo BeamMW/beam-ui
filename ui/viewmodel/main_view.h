@@ -27,6 +27,7 @@ class MainViewModel : public QObject
     Q_PROPERTY(QString daoCoreAppID     READ getDaoCoreAppID        CONSTANT)
     Q_PROPERTY(QString votingAppID      READ getVotingAppID         CONSTANT)
     Q_PROPERTY(QString faucetAppID      READ getFaucetAppID         CONSTANT)
+    Q_PROPERTY(QString ethBridgeAppID   READ getEthBridgeAppID      CONSTANT)
     Q_PROPERTY(bool isDevMode           READ getDevMode             CONSTANT)
 public:
     MainViewModel();
@@ -41,10 +42,13 @@ signals:
     void unsafeTxCountChanged();
     void unreadNotificationsChanged();
     void clipboardChanged(const QString& message);
+    void hwError(const QString& message);
 
 public slots:
     void lockWallet();
     void onLockTimeoutChanged();
+    void onGeneralMouseEvent();
+    void onDevStateChanged(const QString& sErr, int state);
 
 private slots:
     void onClipboardDataChanged();
@@ -55,6 +59,7 @@ private:
     [[nodiscard]] QString getDaoCoreAppID() const;
     [[nodiscard]] QString getVotingAppID() const;
     [[nodiscard]] QString getFaucetAppID() const;
+    [[nodiscard]] QString getEthBridgeAppID() const;
     [[nodiscard]] bool getDevMode() const;
 
 private:

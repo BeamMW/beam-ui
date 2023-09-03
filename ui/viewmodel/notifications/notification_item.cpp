@@ -52,9 +52,9 @@ namespace {
     bool getPeerID(const beam::wallet::TxParameters &p, beam::wallet::WalletID &result)
     {
         using namespace beam::wallet;
-        if (auto peerId = p.GetParameter<WalletID>(TxParameterID::PeerID))
+        if (auto peerAddr = p.GetParameter<WalletID>(TxParameterID::PeerAddr))
         {
-            result = *peerId;
+            result = *peerAddr;
             return true;
         } else
         {
@@ -133,7 +133,7 @@ namespace {
 
     QString getAddress(const beam::wallet::Notification& notification)
     {
-        return beamui::toString(getWalletAddressRaw(notification).m_walletID);
+        return beamui::toString(getWalletAddressRaw(notification).m_BbsAddr);
     }
 
     QString getTxCompletedMessage(const QString& amount, const QString& unitName, const QString& peer, bool isSender)
@@ -172,9 +172,9 @@ namespace {
                 return std::to_string(wid).c_str();
             }
         }
-        if (auto peerID = p.GetParameter<PeerID>(beam::wallet::TxParameterID::PeerWalletIdentity); peerID)
+        if (auto peerEndpoint = p.GetParameter<PeerID>(beam::wallet::TxParameterID::PeerEndpoint); peerEndpoint)
         {
-            return std::to_string(*peerID).c_str();
+            return std::to_base58(*peerEndpoint).c_str();
         }
 
         //% "shielded pool"
@@ -288,6 +288,9 @@ QString NotificationItem::title() const
             case TxType::Contract:
                 //% "DApp transaction completed"
                 return qtTrId("notification-contract-completed");
+            case TxType::DexSimpleSwap:
+                //% "Assets Swaps transaction completed"
+                return qtTrId("notification-dex-completed");
             default:
                 return "error";
             }
@@ -324,6 +327,12 @@ QString NotificationItem::title() const
                     qtTrId("notification-contract-expired") :
                     //% "DApp transaction failed"
                     qtTrId("notification-contract-failed");
+            case TxType::DexSimpleSwap:
+                return isExpired(p) ?
+                    //% "Assets Swaps transaction expired"
+                    qtTrId("notification-dex-expired") :
+                    //% "Assets Swaps transaction failed"
+                    qtTrId("notification-dex-failed");
             default:
                 return "error";
             }
@@ -407,6 +416,9 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             }
             case TxType::Contract:
                 return getContractMessage(p);
+            case TxType::DexSimpleSwap:
+                //% "Assets Swaps transaction completed"
+                return qtTrId("notification-dex-completed");
             default:
                 return "error";
             }
@@ -461,6 +473,14 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             }
             case TxType::Contract:
                 return getContractMessage(p);
+            case TxType::DexSimpleSwap:
+            {
+                TxDescription d(p);
+                return d.m_status == TxStatus::Canceled ?
+                    //% "Assets Swaps transaction canceled"
+                    qtTrId("notification-dex-canceled") :
+                    beamui::getReasonString(d.m_failureReason);
+            }
             default:
                 return "error";
             }
@@ -508,6 +528,8 @@ QString NotificationItem::type() const
                 return "swapCompleted";
             case TxType::Contract:
                 return "contractCompleted";
+            case TxType::DexSimpleSwap:
+                return "dexCompleted";
             default:
                 return "error";
             }
@@ -532,6 +554,8 @@ QString NotificationItem::type() const
                 return isSwapTxExpired(p) ? "swapExpired" : "swapFailed";
             case TxType::Contract:
                 return isExpired(p) ? "contractExpired" : "contractFailed";
+            case TxType::DexSimpleSwap:
+                return isExpired(p) ? "dexExpired" : "dexFailed";
             default:
                 return "error";
             }

@@ -50,6 +50,7 @@ WalletModel::WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::strin
     qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
     qRegisterMetaType<beam::wallet::CoinsSelectionInfo>("beam::wallet::CoinsSelectionInfo");
     qRegisterMetaType<vector<beam::wallet::DexOrder>>("std::vector<beam::wallet::DexOrder>");
+    qRegisterMetaType<beam::wallet::DexOrder>("beam::wallet::DexOrder");
 
     connect(this, &WalletModel::walletStatusInternal, this, &WalletModel::onWalletStatusInternal);
     connect(this, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),this, SLOT(setAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
@@ -164,12 +165,12 @@ void WalletModel::onAddressesChanged(beam::wallet::ChangeAction action, const st
         {
             if (action == beam::wallet::ChangeAction::Removed)
             {
-                m_myWalletIds.erase(item.m_walletID);
+                m_myWalletIds.erase(item.m_BbsAddr);
                 m_myAddrLabels.erase(item.m_label);
             }
             else
             {
-                m_myWalletIds.emplace(item.m_walletID);
+                m_myWalletIds.emplace(item.m_BbsAddr);
                 m_myAddrLabels.emplace(item.m_label);
             }
         }
@@ -191,6 +192,11 @@ void WalletModel::onSwapOffersChanged(beam::wallet::ChangeAction action, const s
 void WalletModel::onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers)
 {
     emit dexOrdersChanged(action, offers);
+}
+
+void WalletModel::onFindDexOrder(const beam::wallet::DexOrder& order)
+{
+    emit dexOrdersFinded(order);
 }
 
 void WalletModel::onCoinsByTx(const std::vector<beam::wallet::Coin>& coins)
@@ -228,6 +234,12 @@ void WalletModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
     emit swapParamsLoaded(params);
 }
 
+
+void WalletModel::onAssetSwapParamsLoaded(const beam::ByteBuffer& params)
+{
+    emit assetsSwapParamsLoaded(params);
+}
+
 void WalletModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr)
 {
     emit generatedNewAddress(walletAddr);
@@ -260,9 +272,38 @@ void WalletModel::onExportTxHistoryToCsv(const std::string& data)
     emit txHistoryExportedToCsv(QString::fromStdString(data));
 }
 
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+void WalletModel::onExportAtomicSwapTxHistoryToCsv(const std::string& data)
+{
+    emit atomicSwapTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+void WalletModel::onExportAssetsSwapTxHistoryToCsv(const std::string& data)
+{
+    emit assetsSwapTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
+void WalletModel::onExportContractTxHistoryToCsv(const std::string& data)
+{
+    emit contractTxHistoryExportedToCsv(QString::fromStdString(data));
+}
+
 void WalletModel::onNodeConnectionChanged(bool isNodeConnected)
 {
     emit nodeConnectionChanged(isNodeConnected);
+}
+
+void WalletModel::OnDevState(const std::string& sErr, beam::wallet::HidKeyKeeper::DevState state)
+{
+    emit devStateChanged(QString::fromStdString(sErr), static_cast<int>(state));
+}
+
+void WalletModel::OnDevReject(const beam::wallet::HidKeyKeeper::CallStats&)
+{
+    // ignore
 }
 
 #ifdef BEAM_IPFS_SUPPORT
@@ -332,6 +373,31 @@ void WalletModel::onAssetInfo(beam::Asset::ID assetId, const beam::wallet::Walle
     emit assetInfoChanged(assetId, info);
 }
 
+void WalletModel::onFullAssetsListLoaded()
+{
+    emit fullAssetsListLoaded();
+}
+
+void WalletModel::onInstantMessage(Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome)
+{
+    emit instantMessage(time, counterpart, message, isIncome);
+}
+
+void WalletModel::onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats)
+{
+    emit chatList(chats);
+}
+
+void WalletModel::onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages)
+{
+    emit chatMessages(messages);
+}
+
+void WalletModel::onChatRemoved(const beam::wallet::WalletID& counterpart)
+{
+    emit chatRemoved(counterpart);
+}
+
 beam::Version WalletModel::getLibVersion() const
 {
     beam::Version ver;
@@ -357,7 +423,7 @@ void WalletModel::setAddresses(bool own, const std::vector<beam::wallet::WalletA
 
         for (const auto& addr : addrs)
         {
-            m_myWalletIds.emplace(addr.m_walletID);
+            m_myWalletIds.emplace(addr.m_BbsAddr);
             m_myAddrLabels.emplace(addr.m_label);
         }
     }

@@ -195,7 +195,7 @@ CustomDialog {
             SFText {
                 font.pixelSize: 14
                 color: Style.content_secondary
-                //% "Sender's wallet signature"
+                //% "Sender signature"
                 text: qsTrId("tx-details-sender-identity") + ":"
                 visible: senderIdentityField.parent.visible
             }
@@ -252,7 +252,7 @@ CustomDialog {
             SFText {
                 font.pixelSize: 14
                 color: Style.content_secondary
-                //% "Receiver's wallet signature"
+                //% "Receiver signature"
                 text: qsTrId("tx-details-receiver-identity") + ":"
                 visible: receiverIdentityField.parent.visible
             }
@@ -315,13 +315,18 @@ CustomDialog {
                 visible:          dialog.minConfirmations && stm.state == "tx_info"
             }
 
-            SFText {
-                Layout.alignment: Qt.AlignTop
-                font.pixelSize: 14
-                color: Style.content_secondary
-                //% "Amount"
-                text: qsTrId("tx-details-amount-label") + ":"
-                visible: !dialog.feeOnly
+            ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 5
+                visible: amountsList.visible
+
+                SFText {
+                    Layout.alignment: Qt.AlignTop
+                    font.pixelSize: 14
+                    color: Style.content_secondary
+                    //% "Amount"
+                    text: qsTrId("tx-details-amount-label") + ":"
+                }
             }
 
             ColumnLayout {
@@ -352,11 +357,6 @@ CustomDialog {
                             prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
                             rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
                             rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
-                            ratePostfix:  this.rate != "0"
-                                //% "calculated with the exchange rate at the time of the transaction"
-                                ? "(" + qsTrId("tx-details-rate-notice") + ")"
-                                //% "exchange rate was not available at the time of the transaction"
-                                : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
                             rateFontSize:     12
                             showTip:          false
                             maxUnitChars:     25
@@ -399,6 +399,21 @@ CustomDialog {
                             }
                         }
                     }
+                }
+
+                SFLabel {
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 190
+                    id: detailsRateDescription
+                    font.pixelSize: 14
+                    color: Style.content_secondary
+                    text: dialog.assetRates.length ?
+                    //% "calculated with the exchange rate at the time of the transaction"
+                    "(" + qsTrId("tx-details-rate-notice") + ")"
+                    //% "exchange rate was not available at the time of the transaction"
+                    : "(" + qsTrId("tx-details-exchange-rate-not-available") + ")"
+                    wrapMode: Text.WordWrap
+                    elide: Text.ElideRight
                 }
             }
 
@@ -649,7 +664,7 @@ CustomDialog {
                     ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
                     ScrollBar.vertical.policy:    ScrollBar.AsNeeded
                     SFText {
-                        width:              450
+                        width:              425
                         wrapMode:           Text.Wrap
                         font.pixelSize:     14
                         text:               paymentInfo ? paymentInfo.paymentProof : ""

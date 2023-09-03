@@ -18,6 +18,10 @@
 #include <QSettings>
 #include <QQmlListProperty>
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+#include "model/assets_manager.h"
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
 #include "model/settings.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/client.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/settings.h"
@@ -67,6 +71,10 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(int maxPrivacyLockTimeLimit READ getMaxPrivacyLockTimeLimit WRITE setMaxPrivacyLockTimeLimit NOTIFY maxPrivacyLockTimeLimitChanged)
     Q_PROPERTY(QObject* ethSettings   READ getEthSettings   CONSTANT)
     Q_PROPERTY(QString currentHeight READ getCurrentHeight NOTIFY stateChanged)
+
+    #ifdef BEAM_ASSET_SWAP_SUPPORT
+    Q_PROPERTY(QList<QMap<QString, QVariant>> currenciesList READ getCurrenciesList NOTIFY currenciesListChanged)
+    #endif  // BEAM_ASSET_SWAP_SUPPORT
 
 public:
 
@@ -155,6 +163,10 @@ public:
     Q_INVOKABLE bool hasPeer(const QString& peer) const;
     Q_INVOKABLE void reportProblem();
     Q_INVOKABLE void changeWalletPassword(const QString& pass);
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    Q_INVOKABLE void allowAssetId(quint32 asset);
+    Q_INVOKABLE void disallowAssetId(quint32 asset);
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
 public slots:
     void applyNodeChanges();
@@ -168,6 +180,9 @@ public slots:
     void onNodeStopped();
     void onAddressChecked(const QString& addr, bool isValid);
     void onPublicAddressChanged(const QString& publicAddr);
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    void assetsListChanged();
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
 signals:
     void nodeAddressChanged();
@@ -197,10 +212,18 @@ signals:
     void IPFSSettingsChanged();
     #endif
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    void currenciesListChanged();
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
 protected:
     void timerEvent(QTimerEvent *event) override;
 
 private:
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    QList<QMap<QString, QVariant>> getCurrenciesList() const;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
     WalletSettings& m_settings;
     QList<QObject*> m_swapSettings;
     NotificationsSettings m_notificationsSettings;
@@ -232,4 +255,9 @@ private:
     mutable int m_mpLockTimeLimitIndex = 1;
     WalletModel::Ptr m_walletModel;
     const int CHECK_INTERVAL = 1000;
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    AssetsManager::Ptr m_amgr;
+    QList<QMap<QString, QVariant>> m_currenciesList;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 };

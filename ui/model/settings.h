@@ -29,7 +29,7 @@ class WalletSettings : public QObject
 {
     Q_OBJECT
 public:
-    explicit WalletSettings(const QDir& appDataDir);
+    explicit WalletSettings(const QDir& appDataDir, const QString& applicationDirPath);
 
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
@@ -94,6 +94,15 @@ public:
     QString getDevAppName() const;
     QString getDevAppApiVer() const;
     QString getDevAppMinApiVer() const;
+    uint32_t getShadersPrivilegeLvl() const;
+
+    // DappStore
+    std::string getDappStoreCID() const;
+    std::string getDappStorePath() const;
+    QStringList getDappStoreUserPublishers() const;
+    void setDappStoreUserPublishers(const QStringList& publishersList);
+    QStringList getDappStoreUserUnwantedPublishers() const;
+    void setDappStoreUserUnwantedPublishers(const QStringList& publishersList);
 
     bool getDevMode() const;
     bool getAppsAllowed() const;
@@ -118,6 +127,12 @@ public:
 
     IPFSLaunch getIPFSNodeLaunch() const;
     #endif
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    QVector<beam::Asset::ID> getAllowedAssets() const;
+    void addAllowedAsset(beam::Asset::ID asset);
+    void removeAllowedAsset(beam::Asset::ID asset);
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
@@ -161,6 +176,7 @@ public:
     static const char* LogsFolder;
     static const char* SettingsFile;
     static const char* WalletDBFile;
+    static const char* DappsStoreWasm;
 
     #if defined(BEAM_HW_WALLET)
     static const char* TrezorWalletDBFile;
@@ -184,14 +200,20 @@ signals:
     void secondCurrencyChanged();
     void dappsAllowedChanged();
     void IPFSSettingsChanged();
+    void generalMouseEvent();
 
 private:
     mutable QSettings m_data;
     QDir m_appDataDir;
+    QString m_applicationDirPath;
     uint8_t m_mpLockTimeLimit = 0;
     uint32_t m_minConfirmations = 0;
     mutable std::recursive_mutex m_mutex;
     using Lock = std::unique_lock<decltype(m_mutex)>;
     bool m_isActive = false;
     uint64_t m_activateTime = 0;
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    mutable QVector<beam::Asset::ID> m_allowedAssets;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 };

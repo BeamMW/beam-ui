@@ -10,13 +10,14 @@ AbstractTheme {
 		property AbstractTheme testnet: Testnet{}
 		property AbstractTheme mainnet: Mainnet{}
 		property AbstractTheme beamx: BeamX{}
+		property AbstractTheme dappnet: Dappnet{}
 	}
 
 	Component.onCompleted: {
 		var currentTheme = themes[Theme.name()]
 
 		if (!currentTheme) {
-			currentTheme = themes['masternet'];
+			currentTheme = themes['mainnet'];
 		}
 
 		for (var propName in this) {

@@ -49,7 +49,7 @@ public:
     explicit AppModel(WalletSettings& settings);
     ~AppModel() override;
 
-    bool createWallet(const beam::SecString& seed, const beam::SecString& pass, const std::string& rawSeed = "");
+    void createWalletThrow(const beam::SecString* pSeed, const beam::SecString& pass, const std::string& rawSeed = "");
 
 #if defined(BEAM_HW_WALLET)
     bool createTrezorWallet(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper);
@@ -57,7 +57,8 @@ public:
     beam::io::Reactor::Ptr getWalletReactor() const;
 #endif
 
-    void openWalletThrow(const beam::SecString& pass, beam::wallet::IPrivateKeyKeeper2::Ptr keyKeeper = {});
+    void openWalletThrow(const beam::SecString& pass);
+    void openWalletThrowWithReactor(const beam::SecString& pass);
     [[nodiscard]] bool checkWalletPassword(const beam::SecString& pass) const;
     void changeWalletPassword(const std::string& pass);
 

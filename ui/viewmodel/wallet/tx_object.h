@@ -45,7 +45,7 @@ public:
     virtual QString getFailureReason() const;
     virtual QString getStateDetails() const;
     QString getToken() const;
-    QString getSenderIdentity() const;
+    QString getSenderEndpoint() const;
     QString getReceiverIdentity() const;
     QString getFeeRate() const;
     QString getAmountSecondCurrency();
@@ -84,7 +84,6 @@ public:
 
 protected:
     [[nodiscard]] const beam::wallet::TxDescription& getTxDescription() const;
-    [[nodiscard]] QString getReasonString(beam::wallet::TxFailureReason reason) const;
 
     beam::wallet::TxDescription _tx;
     uint32_t _minConfirmations = 0;

@@ -10,14 +10,13 @@ Rectangle {
     property int  rowHeight: 10
     property color backgroundColor: Style.background_row_even
     property var onLeftClick: function() { return true; }
-    property var tableView
     default property Component delegate
-    property bool hovered: false
+    property alias hovered: rowMouseArea.containsMouse
 
     height:         rowHeight
     anchors.left:   parent.left
     anchors.right:  parent.right
-    color:          backgroundColor                          
+    color:          backgroundColor
 
     onCollapsedChanged: {
         rowItem.height = collapsed
@@ -27,13 +26,13 @@ Rectangle {
     }
 
     onRowInModelChanged: {
-        if (!rowInModel) {
-            collapsed = true
-        }
+        collapsed = !rowInModel;
+        rowMouseArea.hoverEnabled = false;
+        hoverEnabler.start();
     }
 
     function expand(animate) {
-        if (!rowInModel) return
+        if (!rowInModel) return;
 
         if (!txDetails.detailsPanel)
         {
@@ -42,19 +41,14 @@ Rectangle {
             txDetails.onDelegateImplicitHeightChanged();
         }
 
-        if (animate) {
-                    //console.log("onCollapsedChanged: " + collapsed)
-        
-            //transactionsTable.positionViewAtRow(styleData.row, ListView.Contain)
-            expandAnimation.start()
-        } else
-            collapsed = false
+        if (animate) expandAnimation.start();
+        else collapsed = false;
     }
 
     function collapse(animate) {
-        if (!rowInModel) return
-        if (animate) collapseAnimation.start()
-        else collapsed = true
+        if (!rowInModel) return;
+        if (animate) collapseAnimation.start();
+        else collapsed = true;
     }
 
     Item {
@@ -86,7 +80,7 @@ Rectangle {
         anchors.right:  parent.right
         height:         rowItem.rowHeight
         acceptedButtons:  Qt.LeftButton | Qt.RightButton
-        hoverEnabled:     true
+        hoverEnabled:     false
         propagateComposedEvents: true
 
         onClicked: {
@@ -105,13 +99,19 @@ Rectangle {
                 }
             }
         }
+    }
 
-        onEntered: {
-            rowItem.hovered = true;
-        }
+    Component.onCompleted: {
+        hoverEnabler.start();
+    }
 
-        onExited: {
-            rowItem.hovered = false;
+    Timer {
+        id: hoverEnabler
+        interval: 200
+        running: false
+        repeat: false
+        onTriggered: {
+            rowMouseArea.hoverEnabled = true;
         }
     }
 

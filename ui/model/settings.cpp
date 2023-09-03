@@ -16,6 +16,7 @@
 #include <map>
 #include <QDataStream>
 #include <QFileDialog>
+#include <QtGlobal>
 #include <QtQuick>
 #include "model/app_model.h"
 #include "wallet/core/default_peers.h"
@@ -29,7 +30,7 @@
 #ifdef BEAM_IPFS_SUPPORT
 #include "utility/cli/options.h"
 #endif
-
+using namespace beam;
 namespace
 {
     const char* kNodeAddressName = "node/address";
@@ -60,32 +61,49 @@ namespace
     const char* kDevAppApiVer    = "devapp/api_version";
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
+    const char* kShadersPrivLvl  = "apps/shaders_privilege";
     const char* kIPFSPrefix      = "ipfsnode/";
     const char* kIPFSNodeStart   = "ipfs_node_start";
+
+    const char* kDappStoreCID = "dappstore/cid";
+    const char* kDappStorePath = "dappstore/path";
+    const char* kDappStoreUserPublishers = "dappstore/publishers";
+    const char* kDappStoreUserUnwantedPublishers = "dappstore/unwanted_publishers";
 
     const char* kMpAnonymitySet = "max_privacy/anonymity_set";
     const uint8_t kDefaultMaxPrivacyAnonymitySet = 64;
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    const char* kAllowedAssets = "assets/allowed";
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
+    std::pair<QString, QString> MakeLanguageCodePair(QString languageCode)
+    {
+        return std::make_pair(languageCode, QLocale(languageCode).nativeLanguageName());
+    }
+
     const std::map<QString, QString> kSupportedLangs { 
-        { "zh_CN", "Chinese Simplified"},
-        { "en_US", "English" },
-        { "es_ES", "Español"},
-        { "be_BY", "Беларуская"},
-        { "cs_CZ", "Czech"},
-        { "de_DE", "Deutsch"},
-        { "nl_NL", "Dutch"},
-        { "fr_FR", "Française"},
-        { "id_ID", "Bahasa Indonesia"},
-        { "it_IT", "Italiano"},
-        { "ja_JP", "日本語"},
-        { "ru_RU", "Русский" },
-        { "sr_SR", "Српски" },
-        { "fi_FI", "Suomi" },
-        { "sv_SE", "Svenska"},
-        { "th_TH", "ภาษาไทย"},
-        { "tr_TR", "Türkçe"},
-        { "vi_VI", "Tiếng việt"},
-        { "ko_KR", "한국어"}
+        MakeLanguageCodePair("zh_CN"),
+        MakeLanguageCodePair("en_US"),
+        MakeLanguageCodePair("es_ES"),
+        MakeLanguageCodePair("be_BY"),
+        MakeLanguageCodePair("cs_CZ"),
+        MakeLanguageCodePair("de_DE"),
+        MakeLanguageCodePair("nl_NL"),
+        MakeLanguageCodePair("fr_FR"),
+        MakeLanguageCodePair("id_ID"),
+        MakeLanguageCodePair("it_IT"),
+        MakeLanguageCodePair("ja_JP"),
+        MakeLanguageCodePair("ru_RU"),
+        MakeLanguageCodePair("sr_SR"),
+        MakeLanguageCodePair("fi_FI"),
+        MakeLanguageCodePair("sv_SE"),
+        MakeLanguageCodePair("th_TH"),
+        MakeLanguageCodePair("tr_TR"),
+        MakeLanguageCodePair("vi_VI"),
+        MakeLanguageCodePair("ko_KR"),
+        MakeLanguageCodePair("uk_UA"),
+        MakeLanguageCodePair("pt_BR")
     };
 
     const char* kTxFilterInProgress = "tx_filter/inProgress";
@@ -115,6 +133,33 @@ namespace
         };
         return supportedUnits;
     }
+
+    uint getNetworkDefaultPort()
+    {
+        switch (Rules::get().m_Network)
+        {
+        case Rules::Network::masternet:
+        case Rules::Network::mainnet:
+            return 10005;
+        default:
+            return 11005;
+        }
+    }
+    const char* getNetworkDappStoreCID()
+    {
+        switch (Rules::get().m_Network)
+        {
+        case Rules::Network::testnet:
+            return "c673c2b940d4f6813901165c426ab084e401259c9794d61e1f5f80453ee80317";
+        case Rules::Network::dappnet:
+            return "59c7b485463eff35c361157038bad32f88a4ef9814f0891298a5e65099b6b50b";
+        case Rules::Network::masternet:
+            return "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3";
+        case Rules::Network::mainnet:
+        default:
+            return "e2d24b686e8d31a0fe97eade9cd23281e7059b74b5757bdb96c820ef9e2af41c";
+        }
+    }
 }
 
 const char* WalletSettings::WalletCfg = "beam-wallet.cfg";
@@ -122,14 +167,20 @@ const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
 const char* WalletSettings::WalletDBFile = "wallet.db";
 const char* WalletSettings::NodeDBFile = "node.db";
+#if defined(Q_OS_MACOS)
+const char* WalletSettings::DappsStoreWasm = "../Resources/dapps_store_app.wasm";
+#else
+const char* WalletSettings::DappsStoreWasm = "dapps_store_app.wasm";
+#endif
 
 #if defined(BEAM_HW_WALLET)
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 #endif
 
-WalletSettings::WalletSettings(const QDir& appDataDir)
+WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicationDirPath)
     : m_data{appDataDir.filePath(SettingsFile), QSettings::IniFormat}
     , m_appDataDir{appDataDir}
+    , m_applicationDirPath{applicationDirPath}
 {
     LOG_INFO () << "UI Settings file: " << m_data.fileName().toStdString();
     const auto devapp = m_data.value(kDevAppName).toString().toStdString();
@@ -301,11 +352,7 @@ void WalletSettings::setRunLocalNode(bool value)
 uint WalletSettings::getLocalNodePort() const
 {
     Lock lock(m_mutex);
-#ifdef BEAM_TESTNET
-    return m_data.value(kLocalNodePort, 11005).toUInt();
-#else
-    return m_data.value(kLocalNodePort, 10005).toUInt();
-#endif // BEAM_TESTNET
+    return m_data.value(kLocalNodePort, getNetworkDefaultPort()).toUInt();
 }
 
 void WalletSettings::setLocalNodePort(uint port)
@@ -675,41 +722,47 @@ void WalletSettings::applyNodeChanges()
 
 QString WalletSettings::getExplorerUrl() const
 {
-    #ifdef BEAM_BEAMX
-    return "https://beamx.explorer.beam.mw/";
-    #elif defined(BEAM_TESTNET)
-    return "https://testnet.explorer.beam.mw/";
-    #elif defined(BEAM_MAINNET)
-    return "https://explorer.beam.mw/";
-    #else
-    return "https://master-net.explorer.beam.mw/";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::dappnet:
+        return "https://dappnet.explorer.beam.mw/";
+    case Rules::Network::testnet:
+        return "https://testnet.explorer.beam.mw/";
+    case Rules::Network::masternet:
+        return "https://master-net.explorer.beam.mw/";
+    case Rules::Network::mainnet:
+    default:
+        return "https://explorer.beam.mw/";
+    }
 }
 
 QString WalletSettings::getFaucetUrl() const
 {
-    #ifdef BEAM_BEAMX
-    return "https://faucet.beamprivacy.community/";
-    #elif defined(BEAM_TESTNET)
-    return "https://faucet.beamprivacy.community/";
-    #elif defined(BEAM_MAINNET)
-    return "https://faucet.beamprivacy.community/";
-    #else
-    return "https://faucet.beamprivacy.community/";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::dappnet:
+    case Rules::Network::testnet:
+    case Rules::Network::masternet:
+    case Rules::Network::mainnet:
+    default:
+        return "https://faucet.beamprivacy.community/";
+    }
 }
 
 QString WalletSettings::getAppsUrl() const
 {
-    #ifdef BEAM_BEAMX
-    return "";
-    #elif defined(BEAM_TESTNET)
-    return "https://apps-testnet.beam.mw/appslist.json";
-    #elif defined(BEAM_MAINNET)
-    return "https://apps.beam.mw/appslist.json";
-    #else
-    return "http://3.19.141.112/app/appslist.json";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::dappnet:
+        return "https://apps-dappnet.beam.mw/app/appslist.json";
+    case Rules::Network::testnet:
+        return "https://apps-testnet.beam.mw/appslist.json";
+    case Rules::Network::masternet:
+        return "http://3.19.32.148/app/appslist.json";
+    case Rules::Network::mainnet:
+    default:
+        return "https://apps.beam.mw/appslist.json";
+    }
 }
 
 bool WalletSettings::showFaucetPromo() const
@@ -754,6 +807,54 @@ QString WalletSettings::getDevAppApiVer() const
 QString WalletSettings::getDevAppMinApiVer() const
 {
     return m_data.value(kDevAppMinApiVer).toString();
+}
+
+uint32_t WalletSettings::getShadersPrivilegeLvl() const
+{
+    return m_data.value(kShadersPrivLvl, 2).toUInt();
+}
+
+std::string WalletSettings::getDappStoreCID() const
+{
+    auto cid = m_data.value(kDappStoreCID).toString();
+    // TODO roman.strilets default cid value should be set for mainnet and testnet
+    // for masternet
+    return cid.isEmpty() ? getNetworkDappStoreCID()
+        : cid.toStdString();
+}
+
+std::string WalletSettings::getDappStorePath() const
+{
+    auto path = m_data.value(kDappStorePath).toString();
+    return path.isEmpty()
+        ? QDir(m_applicationDirPath).filePath(DappsStoreWasm).toStdString()
+        : path.toStdString();
+}
+
+QStringList WalletSettings::getDappStoreUserPublishers() const
+{
+    Lock lock(m_mutex);
+    auto publishersList = m_data.value(kDappStoreUserPublishers).value<QStringList>();
+    return publishersList;
+}
+
+void WalletSettings::setDappStoreUserPublishers(const QStringList& publishersList)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kDappStoreUserPublishers, QVariant::fromValue(publishersList));
+}
+
+QStringList WalletSettings::getDappStoreUserUnwantedPublishers() const
+{
+    Lock lock(m_mutex);
+    auto publishersList = m_data.value(kDappStoreUserUnwantedPublishers).value<QStringList>();
+    return publishersList;
+}
+
+void WalletSettings::setDappStoreUserUnwantedPublishers(const QStringList& publishersList)
+{
+    Lock lock(m_mutex);
+    m_data.setValue(kDappStoreUserUnwantedPublishers, QVariant::fromValue(publishersList));
 }
 
 QString WalletSettings::getAppsCachePath(const QString& appid) const
@@ -841,12 +942,11 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     cfg.auto_relay = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
     cfg.relay_hop = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
     cfg.storage_max = m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
-    cfg.api_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_PORT, cfg.api_port).toUInt();
-    cfg.gateway_port = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_PORT, cfg.gateway_port).toUInt();
+    cfg.api_address = m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_ADDR, QString::fromStdString(cfg.api_address)).toString().toStdString();
+    cfg.gateway_address = m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_ADDR, QString::fromStdString(cfg.gateway_address)).toString().toStdString();
     cfg.autonat = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
     cfg.autonat_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
     cfg.autonat_peer_limit = m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
-    cfg.swarm_key = m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY, QString::fromStdString(cfg.swarm_key)).toString().toStdString();
     cfg.routing_type = m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
     cfg.run_gc = m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
 
@@ -855,12 +955,31 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     {
         auto list = m_data.value(keyBootstrap).toStringList();
         decltype(cfg.bootstrap)().swap(cfg.bootstrap);
+        decltype(cfg.peering)().swap(cfg.peering);
 
-        std::vector<std::string> vlist;
         for (const auto& qsval : list)
         {
             cfg.bootstrap.push_back(qsval.toStdString());
+            cfg.peering.push_back(qsval.toStdString());
         }
+    }
+
+    const QString keyPeering = QString(kIPFSPrefix) + cli::IPFS_PEERING;
+    if (m_data.contains(keyPeering))
+    {
+        auto list = m_data.value(keyPeering).toStringList();
+        decltype(cfg.peering)().swap(cfg.peering);
+
+        for (const auto& qsval : list)
+        {
+            cfg.peering.push_back(qsval.toStdString());
+        }
+    }
+
+    const QString keySwarm = QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY;
+    if (m_data.contains(keySwarm))
+    {
+        cfg.swarm_key = m_data.value(keySwarm).toString().toStdString();
     }
 
     return cfg;
@@ -926,6 +1045,60 @@ WalletSettings::IPFSLaunch WalletSettings::getIPFSNodeLaunch() const
     return IPFSLaunch::Never;
 }
 #endif
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+QVector<beam::Asset::ID> WalletSettings::getAllowedAssets() const
+{
+    if (!m_allowedAssets.empty()) return m_allowedAssets;
+
+    Lock lock(m_mutex);
+
+    auto ser = m_data.value(kAllowedAssets).value<QByteArray>();
+    QDataStream in(&ser, QIODevice::ReadOnly);
+    in >> m_allowedAssets;
+
+    if (m_allowedAssets.empty())
+    {
+#ifdef BEAM_MAINNET
+        m_allowedAssets = {0, 2, 3, 4, 6, 7, 9, 10, 23};
+#else
+        for (int i = 0; i <100; ++i)
+            m_allowedAssets.push_back(i);
+#endif
+    }
+
+    return m_allowedAssets;
+}
+
+void WalletSettings::addAllowedAsset(beam::Asset::ID asset)
+{
+    Lock lock(m_mutex);
+
+    if (m_allowedAssets.contains(asset)) return;
+
+    m_allowedAssets.push_back(asset);
+    QByteArray ser;
+    QDataStream out(&ser, QIODevice::WriteOnly);
+    out << m_allowedAssets;
+
+    m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
+}
+
+void WalletSettings::removeAllowedAsset(beam::Asset::ID asset)
+{
+    Lock lock(m_mutex);
+
+    if (m_allowedAssets.contains(asset))
+    {
+        m_allowedAssets.removeOne(asset);
+        QByteArray ser;
+        QDataStream out(&ser, QIODevice::WriteOnly);
+        out << m_allowedAssets;
+
+        m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
+    }
+}
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
 int WalletSettings::getAppsServerPort() const
 {

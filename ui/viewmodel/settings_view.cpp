@@ -50,6 +50,9 @@ SettingsViewModel::SettingsViewModel()
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
     , m_rateCurrency(beam::wallet::Currency::UNKNOWN())
     , m_walletModel(AppModel::getInstance().getWalletModel())
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    , m_amgr(AppModel::getInstance().getAssets())
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 {
     undoChanges();
 
@@ -68,6 +71,12 @@ SettingsViewModel::SettingsViewModel()
     connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    m_currenciesList = m_amgr->getAssetsListFull();
+    connect(m_walletModel.get(), &WalletModel::fullAssetsListLoaded, this, &SettingsViewModel::assetsListChanged);
+    m_walletModel->getAsync()->loadFullAssetsList();
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 }
 
 SettingsViewModel::~SettingsViewModel()
@@ -110,6 +119,14 @@ void SettingsViewModel::onPublicAddressChanged(const QString& publicAddr)
         emit publicAddressChanged();
     }
 }
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+void SettingsViewModel::assetsListChanged()
+{
+    m_currenciesList = m_amgr->getAssetsListFull();
+    emit currenciesListChanged();
+}
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
 bool SettingsViewModel::isLocalNodeRunning() const
 {
@@ -527,6 +544,18 @@ void SettingsViewModel::changeWalletPassword(const QString& pass)
     AppModel::getInstance().changeWalletPassword(pass.toStdString());
 }
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+void SettingsViewModel::allowAssetId(quint32 asset)
+{
+    m_settings.addAllowedAsset(asset);
+}
+
+void SettingsViewModel::disallowAssetId(quint32 asset)
+{
+    m_settings.removeAllowedAsset(asset);
+}
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
 void SettingsViewModel::timerEvent(QTimerEvent *event)
 {
     if (m_isNeedToCheckAddress && !m_localNodeRun)
@@ -634,3 +663,10 @@ QObject* SettingsViewModel::getEthSettings()
 {
     return &m_ethSettings;
 }
+
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+QList<QMap<QString, QVariant>> SettingsViewModel::getCurrenciesList() const
+{
+    return m_currenciesList;
+}
+#endif  // BEAM_ASSET_SWAP_SUPPORT

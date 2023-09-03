@@ -23,7 +23,7 @@ ComboBox {
     property bool enableScroll: false
     property int textMaxLenDrop: 0
 
-    property var modelWidth: control.width
+    property var modelWidth: 140
     property var calculatedWidth: Math.max(control.width, modelWidth)
     property var transformText: undefined
 
@@ -32,8 +32,15 @@ ComboBox {
     property color controlColor: control.enabled || control.colorConst ? control.color : Style.content_secondary
     property bool showBackground: true
 
+    property int maxTextWidth: 400 
+    property var dropDownIconSixe: Qt.size(5, 3)
+    property int dropDownIconRightMargin: 0
+
     property alias backgroundColor : backgroundRect.color
     backgroundColor: Style.content_main
+    property string searchPlaseholder: ""
+    property alias searchText: searchInput.text
+    property bool filterAssets: false
 
     TextMetrics {
         id: textMetrics
@@ -46,18 +53,38 @@ ComboBox {
         }
     }
 
+    property var containSearchSubStr: function(text) {
+        if (!control.searchText.length) return true;
+        return text.toLowerCase().includes(control.searchText.toLowerCase());
+    }
+
     delegate: ItemDelegate {
         id: itemDelegate
         width: calculatedWidth
         padding: 0
+        leftPadding: control.leftPadding
+        bottomPadding: control.dropSpacing
+        topPadding: 2
 
-        property var  iconW:    (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
-        property var  iconH:    (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
-        property var  iconS:    (Array.isArray(control.model)  ? modelData["icon"]       : model["icon"]) || ""
-        property bool verified: (Array.isArray(control.model)  ? modelData["verified"]   : model["verified"]) || false
+        property var myModel : Array.isArray(control.model)  ? modelData : model
+
+        property var  iconW:    myModel["iconWidth"] || 0
+        property var  iconH:    myModel["iconHeight"] || 0
+        property var  iconS:    myModel["icon"] || ""
+        property bool verified: myModel["verified"] || false
 
         contentItem: RowLayout {
+            id: contentRow
             spacing: 0
+            property int parentHeight: 0
+            property bool showRow: control.filterAssets
+                ? containSearchSubStr(myModel[control.textRole]) && myModel["allowed"]
+                : containSearchSubStr(myModel[control.textRole])
+
+            visible: showRow
+            onVisibleChanged: {
+                parent.height = visible ? parentHeight : 0;
+            }
 
             SvgImage {
                 source: iconS
@@ -80,24 +107,29 @@ ComboBox {
             }
 
             SFText {
+                id: textLabel
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignVCenter
 
                 text: {
                     var text = modelData
                     if (control.textRole) {
-                        text = Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
+                        text = myModel[control.textRole]
                     }
                     return (transformText && typeof(transformText) == "function")
                         ? transformText(text)
                         : text;
                 }
                 color: highlighted ? Style.active : Style.content_main
-                elide: Text.ElideRight
+                elide: Text.ElideMiddle
                 font.pixelSize: dropFontPixelSize
                 font.letterSpacing: fontLetterSpacing
                 font.styleName: highlighted ? "DemiBold" : "Normal"
                 font.weight: highlighted ? Font.DemiBold : Font.Normal
+            }
+
+            Component.onCompleted: {
+                contentRow.parentHeight = contentRow.parent.height
             }
         }
 
@@ -105,27 +137,7 @@ ComboBox {
         background: Item {}
     }
 
-    function recalcSize() {
-        if (model) {
-            for(var i = 0; i < model.length; i++) {
-                var modelText = control.textRole ? model[i][control.textRole] : model[i];
-                if (transformText && typeof(transformText) == "function")
-                    modelText = transformText(modelText);
-                textMetrics.text = Utils.limitText(modelText, control.textMaxLenDrop)
-
-                var iconW = model[i]["iconWidth"] || 0
-                modelWidth = Math.max(textMetrics.width +
-                                      iconW + 10, // spacing between icon & text
-                                      modelWidth)
-            }
-        }
-    }
-
-    onModelChanged: recalcSize()
     indicator: Item {}
-    onDownChanged: {
-        recalcSize();
-    }
 
     property var  iconW:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
     property var  iconH:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
@@ -157,6 +169,7 @@ ComboBox {
         SFText  {
             Layout.fillWidth:   true
             Layout.alignment:   Qt.AlignVCenter
+            Layout.maximumWidth: control.maxTextWidth
             Layout.rightMargin: control.enabled ? 10 : 0
 
             clip: true
@@ -172,15 +185,17 @@ ComboBox {
             id: imgDown
             source: "qrc:/assets/icon-down.svg"
             Layout.alignment: Qt.AlignVCenter
+            Layout.rightMargin: control.dropDownIconRightMargin
             visible: control.enabled && !control.down
-            sourceSize: Qt.size(5, 3)
+            sourceSize: control.dropDownIconSixe
         }
         SvgImage {
             id: imgUp
             source: "qrc:/assets/icon-up.svg"
             Layout.alignment: Qt.AlignVCenter
+            Layout.rightMargin: control.dropDownIconRightMargin
             visible: control.enabled && control.down
-            sourceSize: Qt.size(5, 3)
+            sourceSize: control.dropDownIconSixe
         }
     }
 
@@ -197,7 +212,6 @@ ComboBox {
 
    popup: Popup {
         id: comboPopup
-        onAboutToShow: recalcSize
 
         y: control.height + 7
         x: {
@@ -209,21 +223,30 @@ ComboBox {
 
         topPadding:    20
         bottomPadding: 20
-        leftPadding:   20
-        rightPadding:  20
+        leftPadding:   0
+        rightPadding:  0
 
         contentItem: ColumnLayout {
             spacing: 0
+            SearchBox {
+               id: searchInput
+               Layout.fillWidth:     true
+               Layout.bottomMargin: 15
+               Layout.rightMargin:  15
+               Layout.leftMargin:   15
+               visible:             control.delegateModel.count > 12
+               alwaysVisibleInput:  true
+               placeholderText:     searchPlaseholder
+            }
             ListView {
                 id: listView
                 Layout.fillWidth: true
                 clip: true
-                spacing: control.dropSpacing
-                implicitHeight: contentHeight
+                implicitHeight: control.delegateModel.count > 12 ? Math.min(250, contentHeight) : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
                 ScrollBar.vertical: ScrollBar {
-                    policy: enableScroll && listView.contentHeight > listView.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+                    policy: ScrollBar.AsNeeded
                 }
             }
         }

@@ -37,16 +37,38 @@ ColumnLayout {
             text: qsTrId("settings-title")
         }
 
-        SFText {
+        RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignCenter | Qt.AlignRight
-            horizontalAlignment: Text.AlignRight
-            font.pixelSize: 14
-            color: Style.content_secondary
-            //: settings tab, version label
-            //% "v"
-            text: qsTrId("settings-version") + " " + viewModel.version
+            SFText {
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+                //% "Blockchain height"
+                text: qsTrId("settings-blockchain-height")
+                color: Style.content_secondary
+                font.pixelSize: 14
+            }
+
+            SFLabel {
+                horizontalAlignment: Text.AlignRight
+                color: Style.content_main
+                text: viewModel.currentHeight
+                font.pixelSize: 14
+                font.styleName:      "Bold"
+                font.weight:         Font.Bold
+            }
+
+            SFText {
+                horizontalAlignment: Text.AlignRight
+                Layout.leftMargin: 20
+                font.pixelSize: 14
+                color: Style.content_secondary
+                //: settings tab, version label
+                //% "v"
+                text: qsTrId("settings-version") + " " + viewModel.version
+            }
         }
+
         PrimaryButton {
             Layout.alignment: Qt.AlignCenter
             Layout.leftMargin: 20
@@ -111,6 +133,12 @@ ColumnLayout {
                 SettingsApps {
                     id: appsBlock
                     viewModel: viewModel
+                }
+
+                SettingsCA {
+                    id: caBlock
+                    viewModel: viewModel
+                    folded: unfoldSection != "CA"
                 }
 
                 SettingsTitle {

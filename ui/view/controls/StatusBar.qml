@@ -13,6 +13,8 @@ Item {
     property var model
 
     function getStatus() {
+        if (model.isFailedHww)
+            return "error_hww";
         if (model.isCoinClientFailed || model.ipfsError)
             return "error_3rd";
         if (model.isFailedStatus)
@@ -133,7 +135,7 @@ Item {
         width: main.width - 70
         height: 24
         color: "transparent"
-        visible: !onlineTrusted.visible || !model.isExchangeRatesUpdated
+        visible: !onlineTrusted.visible || !model.isExchangeRatesUpdated || model.isFailedHww
         property color gradientColor: online_indicator.color
 
         LinearGradient {
@@ -152,15 +154,23 @@ Item {
             spacing: 0
             anchors.fill: parent
 
-            Row {
-                Layout.alignment: Qt.AlignHCenter
+            RowLayout {
+                width: rowBackground.width
                 spacing: 7
 
+                Item {
+                    Layout.fillWidth: true
+                }
+
                 SFText {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.maximumWidth: parent.width - parent.spacing * 2 - 14
+                                         - (progressText.visible ? progressText.width + parent.spacing : 0)
+                                         - (settingsBtn.visible ? settingsBtn.width + parent.spacing : 0)
                     id: status_text
                     color: Style.content_main
                     font.pixelSize: 15
-                    elide: Text.ElideLeft
+                    elide: Text.ElideRight
                 }
 
                 SFText {
@@ -172,6 +182,7 @@ Item {
                 }
 
                 LinkButton {
+                    id: settingsBtn
                     //% "Change settings"
                     text: qsTrId("status-change-settings")
                     visible: model.ipfsError || model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
@@ -191,6 +202,10 @@ Item {
                         main.openSettings("BEAM_NODE")
                         return
                     }
+                }
+
+                Item {
+                    Layout.fillWidth: true
                 }
             }
 
@@ -263,6 +278,15 @@ Item {
                     online_indicator.color = Style.accent_fail;
                     rootControl.setIndicator(online_indicator);
                 }
+            }
+        },
+        State {
+            name: "error_hww"
+            PropertyChanges {
+                target: status_text;
+                text: model.hwwError;
+                color: Style.accent_fail;
+                font.pixelSize: 20
             }
         },
         State {

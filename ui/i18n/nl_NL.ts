@@ -235,7 +235,6 @@
     </message>
     <message id="settings-version">
         <source>v</source>
-        <oldsource>Version</oldsource>
         <extracomment>settings tab, version label</extracomment>
         <translation>v</translation>
     </message>
@@ -245,9 +244,10 @@
         <translation>Poort</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>Herscan synchroniseert transactie en UTXO gegevens met de meest recente informatie op de blockchain. Dit proces kan lang duren.</translation>
+        <translation type="unfinished">Herscan synchroniseert transactie en UTXO gegevens met de meest recente informatie op de blockchain. Dit proces kan lang duren.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -358,10 +358,6 @@
         <source>Copy details</source>
         <translation>Kopieer details</translation>
     </message>
-    <message id="payment-info-copy-code-button">
-        <source>Copy code</source>
-        <translation>Kopieer code</translation>
-    </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
         <translation>Probeer opnieuw</translation>
@@ -422,14 +418,12 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v </source>
-        <oldsource>Your wallet will be migrated to v.</oldsource>
         <translation>Uw wallet wordt gemigreerd naar v </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
-        <oldsource>Start auto migration</oldsource>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation type="unfinished">Start automatische migratie</translation>
+        <translation>automatische migratie starten</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
@@ -502,7 +496,6 @@
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
-        <oldsource>Password confrimation</oldsource>
         <translation>Wachtwoord bevestiging</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
@@ -555,7 +548,6 @@
     </message>
     <message id="appmodel-failed-start-node">
         <source>Failed to start node. Please save wallet logs and contact support.</source>
-        <oldsource>Failed to start node. Please check your node configuration</oldsource>
         <translation>Kan node niet starten. Sla de wallet logbestanden op en neem contact op met de supportdesk.</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
@@ -781,16 +773,19 @@
 (om exchanges- en transactiegegevens op te halen)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Klik op &quot;wallet logs opslaan&quot; en kies een doelmap voor het log archief</translation>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
+        <translation type="unfinished">1. Klik op &quot;wallet logs opslaan&quot; en kies een doelmap voor het log archief</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. Stuur e-mail naar%1 of open een ticket in%2</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. Stuur e-mail naar%1 of open een ticket in%2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. Vergeet het log archief niet bij te sluiten</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">3. Vergeet het log archief niet bij te sluiten</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -1307,7 +1302,6 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
     </message>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
-        <oldsource>Paste token here</oldsource>
         <translation>Plak token of adres hier</translation>
     </message>
     <message id="swap-tx-state-initial">
@@ -1484,7 +1478,6 @@ deploy the key at the node you trust completely.</source>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet updates</source>
-        <oldsource>Wallet update</oldsource>
         <translation>Wallet updates</translation>
     </message>
     <message id="settings-notifications-tx-status">
@@ -1726,7 +1719,6 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="tx-regular">
         <source>Online</source>
-        <oldsource>Regular</oldsource>
         <translation>Online</translation>
     </message>
     <message id="tx-max-privacy">
@@ -1881,8 +1873,10 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Adrestype</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation>Online (SBBS) adres</translation>
+        <source>SBBS Address
+(use for CEX withdrawals)</source>
+        <translation>SBBS Adres
+(gebruik voor CEX opnames)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -1974,7 +1968,7 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="tx-address-max-privacy">
         <source>Maximum anonymity</source>
-        <translation type="unfinished">Maximale anonimiteit</translation>
+        <translation>Maximale anonimiteit</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
@@ -2070,7 +2064,7 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
         <translation>
-            <numerusform>%n uur</numerusform>
+            <numerusform>%n uur(en)</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -2088,7 +2082,6 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="general-ethereum">
         <source>Ethereum</source>
-        <oldsource>ETHEREUM</oldsource>
         <translation>Ethereum</translation>
     </message>
     <message id="settings-swap-ethereum-node">
@@ -2131,63 +2124,12 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <translation>Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>DApp Store</source>
-        <translation>DApp Store</translation>
-    </message>
-    <message id="apps-run">
-        <source>launch</source>
-        <translation>starten</translation>
+        <source>My DApp Store</source>
+        <translation>Mijn DApp Winkel</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
         <translation>Dit is uw ontwikkelaar applicatie</translation>
-    </message>
-    <message id="dex-all-tab">
-        <source>All orders</source>
-        <oldsource>All offers</oldsource>
-        <translation>Alle orders</translation>
-    </message>
-    <message id="dex-my-tab">
-        <source>Opened by me</source>
-        <translation>Door mij geopend</translation>
-    </message>
-    <message id="dex-other-tab">
-        <source>Opened by other users</source>
-        <translation>Geopend door andere gebruikers</translation>
-    </message>
-    <message id="dex-type">
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message id="dex-price">
-        <source>Price</source>
-        <translation>Prijs</translation>
-    </message>
-    <message id="dex-size">
-        <source>Size</source>
-        <translation>Grootte</translation>
-    </message>
-    <message id="dex-total">
-        <source>Total</source>
-        <translation>Totaal</translation>
-    </message>
-    <message id="dex-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
-    </message>
-    <message id="dex-accept-order">
-        <source>Accept Order</source>
-        <translation>Order accepteren</translation>
-    </message>
-    <message id="dex-no-orders">
-        <source>There are no active orders at the moment.
-Please try again later or create an offer yourself.</source>
-        <translation>Er zijn op dit moment geen actieve orders.
-Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
-    </message>
-    <message id="dex-title">
-        <source>Order Book</source>
-        <translation>Orderboek</translation>
     </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
@@ -2195,7 +2137,6 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
     </message>
     <message id="notification-contract-no-message">
         <source>No description provided by the contract</source>
-        <oldsource>Contract: no description provided</oldsource>
         <translation>Geen beschrijving in het contract</translation>
     </message>
     <message id="notification-contract-completed">
@@ -2278,14 +2219,6 @@ Probeer het later opnieuw of maak zelf een aanbieding aan.</translation>
         <source>Connect more currencies</source>
         <translation>Verbind meer currencies</translation>
     </message>
-    <message id="atomic-swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>Actieve aanbiedingen</translation>
-    </message>
-    <message id="atomic-swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>Mijn aanbiedingen</translation>
-    </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
         <translation>Transacties</translation>
@@ -2308,25 +2241,9 @@ Please try again later or create an offer yourself.</source>
         <translation>Er zijn momenteel geen actieve aanbiedingen.
 Probeer het later opnieuw of maak zelf een aanbieding.</translation>
     </message>
-    <message id="atomic-swap-time-created">
-        <source>Created on</source>
-        <translation>Gemaakt op</translation>
-    </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
         <translation>Verzend</translation>
-    </message>
-    <message id="atomic-swap-amount-receive">
-        <source>Receive</source>
-        <translation>Ontvang</translation>
-    </message>
-    <message id="atomic-swap-rate">
-        <source>Rate</source>
-        <translation>Rate</translation>
-    </message>
-    <message id="atomic-swap-expiration">
-        <source>Expiration</source>
-        <translation>Vervaltijd</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -2377,10 +2294,6 @@ Probeer het later opnieuw of maak zelf een aanbieding.</translation>
 Update your settings and try again.</source>
         <translation>U heeft geen 3rd-party valuta gekoppeld.
 Update uw instellingen en probeer opnieuw.</translation>
-    </message>
-    <message id="wallet-receive-swap-title">
-        <source>Create a Swap Offer</source>
-        <translation>Swap aanbieding aanmaken</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
@@ -2435,7 +2348,7 @@ Update uw instellingen en probeer opnieuw.</translation>
         <translation>Aanmaken van trezor wallet mislukt</translation>
     </message>
     <message id="start-hw-not-connected">
-        <source>Hardwate wallet is not connected</source>
+        <source>Hardware wallet is not connected</source>
         <translation>Hardware wallet is niet verbonden</translation>
     </message>
     <message id="general-locked">
@@ -2504,8 +2417,6 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="apps-bad-api-version">
         <source>Unsupported API version requested: %1</source>
-        <oldsource>Unsupported API version requested: %1
-</oldsource>
         <translation>Niet-ondersteunde API-versie aangevraagd: %1</translation>
     </message>
     <message id="can-not-generate-new-address-message">
@@ -2541,7 +2452,6 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
-        <oldsource>Max Privacy transaction can last indefinitely.</oldsource>
         <translation>Transactie kan onbepaalde tijd duren.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
@@ -2582,7 +2492,6 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="amount-input-add-max">
         <source>max</source>
-        <oldsource>add max</oldsource>
         <translation>max</translation>
     </message>
     <message id="send-amount-label">
@@ -2665,21 +2574,25 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>Whitepaper</source>
         <translation>Whitepaper</translation>
     </message>
+    <message id="tx-details-date-label">
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
         <translation>Verzendadres</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender&apos;s wallet signature</source>
-        <translation>Ondertekening wallet van afzender</translation>
+        <source>Sender signature</source>
+        <translation>Handtekening afzender</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
         <translation>Ontvangstadres</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver&apos;s wallet signature</source>
-        <translation>Ondertekening wallet van ontvanger</translation>
+        <source>Receiver signature</source>
+        <translation>Handtekening ontvanger</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2806,22 +2719,6 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>Confirmed (%1)</source>
         <translation>Bevestigd (%1)</translation>
     </message>
-    <message id="dex-order-expired">
-        <source>Expired</source>
-        <translation>Verlopen</translation>
-    </message>
-    <message id="dex-order-active">
-        <source>Active</source>
-        <translation>Actief</translation>
-    </message>
-    <message id="dex-order-fulfilled">
-        <source>Fulfilled</source>
-        <translation>Vervuld</translation>
-    </message>
-    <message id="dex-progress">
-        <source>Progress</source>
-        <translation>Voortgang</translation>
-    </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>
         <translation>kopieer en sluit</translation>
@@ -2916,8 +2813,7 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="notifications-open-dapp">
         <source>open the DApp</source>
-        <oldsource>open the dapp</oldsource>
-        <translation type="unfinished">open de dapp</translation>
+        <translation>open de DApp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
@@ -2929,17 +2825,13 @@ Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy Warning</source>
-        <oldsource>DApps Privacy</oldsource>
-        <translation type="unfinished">DApps Privacy</translation>
+        <translation>DApps privacywaarschuwing</translation>
     </message>
     <message id="dapps-privacy-warning">
         <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
 Allow to proceed? You can always update your choice in Settings later.</source>
-        <oldsource>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP addres to 3rd-party web servers and/or contracts.
-
-Allow to proceed ? You can always update your choice in Settings later.</oldsource>
-        <translation type="unfinished">Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP-adres, blootstellen aan webservers en/of contracten van derden.
+        <translation>Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP adres, blootstellen aan webservers en/of contracten van derden.
 
 Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</translation>
     </message>
@@ -2960,8 +2852,8 @@ Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</transla
         <translation>Algemene informatie</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Wallet&apos;s signature</source>
-        <translation>Wallet&apos;s ondertekening</translation>
+        <source>Signature</source>
+        <translation>Signatuur</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -3172,7 +3064,6 @@ cannot be canceled.</source>
     </message>
     <message id="apps-uninstall-confirm">
         <source>Are you sure you want to uninstall %1 DApp?</source>
-        <oldsource>Are you sure you want to cancel %1 DApp?</oldsource>
         <translation>Weet u zeker dat u %1 DApp wilt verwijderen?</translation>
     </message>
     <message id="app-uninstall-title">
@@ -3198,18 +3089,6 @@ cannot be canceled.</source>
             <numerusform>%n DApp(s) zijn niet beschikbaar</numerusform>
         </translation>
     </message>
-    <message id="apps-uninstall-success">
-        <source>&apos;%1&apos; DApp is successfully uninstalled.</source>
-        <translation>%1 DApp is succesvol verwijderd.</translation>
-    </message>
-    <message id="apps-uninstall-fail">
-        <source>Failed to uninstall &apos;%1&apos; DApp.</source>
-        <translation>Verwijderen van %1 DApp mislukt.</translation>
-    </message>
-    <message id="apps-load-error">
-        <source>Failed to load applications list, %1</source>
-        <translation>Laden van applicatielijst %1 mislukt</translation>
-    </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
         <translation>Update Wallet om %1 applicatie te starten</translation>
@@ -3219,10 +3098,6 @@ cannot be canceled.</source>
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
         <translation>Om een betere privacy te garanderen wordt er elke keer een nieuw adres gegenereerd.
 Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan het adresboek.</translation>
-    </message>
-    <message id="app-install-title">
-        <source>Install DApp</source>
-        <translation>DApp installeren</translation>
     </message>
     <message id="address-details">
         <source>Address details</source>
@@ -3255,7 +3130,6 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     </message>
     <message id="status-online-stale-rates">
         <source>(exchange rate to %1 was not updated since %2)</source>
-        <oldsource> (exchange rate to %1 was not updated since %2)</oldsource>
         <translation>(wisselkoers naar %1 is niet bijgewerkt sinds %2)</translation>
     </message>
     <message id="loading-view-restoring">
@@ -3288,171 +3162,726 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     </message>
     <message id="settings-ipfsnode-title">
         <source>IPFS Integrated Node</source>
-        <translation type="unfinished"></translation>
+        <translation>IPFS geïntegreerde node</translation>
     </message>
     <message id="settings-ipfs-swarm-port">
         <source>Swarm Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Swarm Port</translation>
     </message>
     <message id="wallet-txs-status-in-progress-pub-offline-to-own">
         <source>sending to own address
 (public offline)</source>
-        <translation type="unfinished"></translation>
+        <translation>verzenden naar eigen adres
+(openbaar offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-pub-offline-to-own">
         <source>sent to own address
 (public offline)</source>
-        <translation type="unfinished"></translation>
+        <translation>verzonden naar eigen adres
+(openbaar offline)</translation>
     </message>
     <message id="start-migration-manual-button">
         <source>start manual migration</source>
         <extracomment>migration screen, select db file button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>handmatige migratie starten</translation>
     </message>
     <message id="restore-find-db">
         <source>Find the wallet database file manually</source>
-        <translation type="unfinished"></translation>
+        <translation>Wallet database bestand handmatig selecteren</translation>
     </message>
     <message id="settings-ipfs-location">
         <source>IPFS repository location</source>
-        <translation type="unfinished"></translation>
+        <translation>IPFS opslagplaats</translation>
     </message>
     <message id="settings-ipfs-start">
         <source>Run node on</source>
-        <oldsource>Start IPFS node on:</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Node uitvoeren op</translation>
     </message>
     <message id="tx-empty">
         <source>Your transaction list is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Uw transactielijst is leeg</translation>
     </message>
     <message id="tx-sent-empty">
         <source>There are no sent transactions yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn nog geen verzonden transacties.</translation>
     </message>
     <message id="tx-received-empty">
         <source>There are no received transactions yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn nog geen ontvangen transacties.</translation>
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
         <source>In progress</source>
-        <translation type="unfinished">Bezig</translation>
+        <translation>Bezig</translation>
     </message>
     <message id="wallet-transactions-sent-tab">
         <source>Sent</source>
-        <translation type="unfinished">Verzonden</translation>
+        <translation>Verzonden</translation>
     </message>
     <message id="wallet-transactions-received-tab">
         <source>Received</source>
-        <translation type="unfinished">Ontvangen</translation>
+        <translation>Ontvangen</translation>
     </message>
     <message id="tx-table-filter-in-progress">
         <source>In progress</source>
-        <translation type="unfinished">Bezig</translation>
+        <translation>Bezig</translation>
     </message>
     <message id="tx-table-filter-completed">
         <source>Completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Voltooid</translation>
     </message>
     <message id="tx-table-filter-canceled">
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Geannuleerd</translation>
     </message>
     <message id="tx-table-filter-failed">
         <source>Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Mislukt</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
         <source>Enter search text...</source>
-        <translation type="unfinished"></translation>
+        <translation>Voer zoekterm in...</translation>
     </message>
     <message id="wallet-verify-payment">
         <source>Verify payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Verifieer betaling</translation>
     </message>
     <message id="general-multiple-assets">
         <source>Multiple assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Meerdere assets</translation>
     </message>
     <message id="general-value">
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Waarde</translation>
     </message>
     <message id="wallet-txs-source">
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Bron</translation>
     </message>
     <message id="wallet-txs-action">
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Actie</translation>
     </message>
     <message id="wallet-txs-date-time">
         <source>Created on</source>
-        <translation type="unfinished">Gemaakt op</translation>
+        <translation>Gemaakt op</translation>
     </message>
     <message id="tx-table-filter-label">
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Weergeven</translation>
     </message>
     <message id="multiselect-none">
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen</translation>
     </message>
     <message id="multiselect-all">
         <source>All</source>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message id="wallet-remove-filter-button">
-        <source>Remove filter</source>
-        <translation type="unfinished"></translation>
+        <source>remove filter</source>
+        <translation>verwijder filter</translation>
     </message>
     <message id="wallet-assets-title">
         <source>Assets</source>
-        <translation type="unfinished"></translation>
+        <translation>Assets</translation>
     </message>
     <message id="wallet-selected-assets-checkbox">
         <source>Selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Geselecteerd</translation>
     </message>
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message id="dnd-app-install-title">
         <source>Install DApp</source>
-        <translation type="unfinished">DApp installeren</translation>
+        <translation>DApp installeren</translation>
     </message>
     <message id="dnd-load-a-file">
         <source>load a file</source>
-        <translation type="unfinished"></translation>
+        <translation>een bestand laden</translation>
     </message>
     <message id="dnd-jus-drop">
         <source>or just drop it here</source>
-        <translation type="unfinished"></translation>
+        <translation>of plaats het hier</translation>
     </message>
     <message id="dnd-install-success">
         <source>The &quot;%1&quot; DApp is installed successfully</source>
-        <oldsource>The &quot;%1&quot; DApp is installed successfully.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>De &quot;%1&quot; DApp is succesvol geïnstalleerd</translation>
     </message>
     <message id="dnd-install-fail">
         <source>The DApp installation error.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="tx-details-date-label">
-        <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>De DApp installatiefout.</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1 actief)</translation>
     </message>
     <message id="wallet-balance-title">
         <source>Wallet Balance</source>
+        <translation>Wallet Saldo</translation>
+    </message>
+    <message id="tx-no-transaction-filter">
+        <source>No transactions to show</source>
+        <translation>Geen transacties om weer te geven</translation>
+    </message>
+    <message id="apps-become-a-publisher">
+        <source>become a publisher</source>
+        <translation>word een uitgever</translation>
+    </message>
+    <message id="dapps-store-install">
+        <source>install</source>
+        <translation>installeren</translation>
+    </message>
+    <message id="dapps-store-update">
+        <source>update</source>
+        <translation>bijwerken</translation>
+    </message>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
+        <translation>dapp verwijderen</translation>
+    </message>
+    <message id="dapps-store-become-publisher">
+        <source>Become a publisher</source>
+        <translation>Word een uitgever</translation>
+    </message>
+    <message id="dapps-store-edit-publisher-info">
+        <source>Edit publisher info</source>
+        <translation>Uitgever info bewerken</translation>
+    </message>
+    <message id="dapps-store-become-publisher-text">
+        <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
+ be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
+        <translation>Om een uitgever te worden moet u een gebruikersnaam aan maken. ID-nummer en Uitgevers Sleutel zullen automatisch aan u worden gegeven. Registratie stelt u in staat om een DApp te publiceren, bij te werken en te verwijderen.</translation>
+    </message>
+    <message id="dapps-store-nickname">
+        <source>Nickname</source>
+        <translation>Bijnaam</translation>
+    </message>
+    <message id="dapps-store-short-title">
+        <source>Short title</source>
+        <translation>Korte titel</translation>
+    </message>
+    <message id="dapps-store-50-character-max">
+        <source>50 characters max</source>
+        <translation>Max. 50 tekens</translation>
+    </message>
+    <message id="dapps-store-about-me">
+        <source>About me</source>
+        <translation>Over mij</translation>
+    </message>
+    <message id="dapps-store-150-character-max">
+        <source>150 characters max</source>
+        <translation>Max. 150 tekens</translation>
+    </message>
+    <message id="dapps-store-social-networks">
+        <source>Social networks</source>
+        <translation>Sociale netwerken</translation>
+    </message>
+    <message id="dapps-store-website">
+        <source>Website</source>
+        <translation>Website</translation>
+    </message>
+    <message id="dapps-store-twitter">
+        <source>Twitter</source>
+        <translation>Twitter</translation>
+    </message>
+    <message id="dapps-store-linkedin">
+        <source>LinkedIn</source>
+        <translation>LinkedIn</translation>
+    </message>
+    <message id="dapps-store-instagram">
+        <source>Instagram</source>
+        <translation>Instagram</translation>
+    </message>
+    <message id="dapps-store-telegram">
+        <source>Telegram</source>
+        <translation>Telegram</translation>
+    </message>
+    <message id="dapps-store-discord">
+        <source>Discord</source>
+        <translation>Discord</translation>
+    </message>
+    <message id="dapps-store-create-account">
+        <source>create account</source>
+        <translation>account aanmaken</translation>
+    </message>
+    <message id="dapps-store-save-changes">
+        <source>save changes</source>
+        <translation>wijzigingen opslaan</translation>
+    </message>
+    <message id="dapps-store-publisher-page">
+        <source>Publisher&apos;s page</source>
+        <translation>Uitgever&apos;s pagina</translation>
+    </message>
+    <message id="dapps-store-my-dapps">
+        <source>My DAPPs - admin panel</source>
+        <translation>Mijn DAPP&apos;s - beheeromgeving</translation>
+    </message>
+    <message id="dapps-store-publisher-have-not-dapps">
+        <source>You have no published DApps yet</source>
+        <translation>U heeft nog geen gepubliceerde DApps</translation>
+    </message>
+    <message id="dapps-store-publisher-upload-first-dapp">
+        <source>upload your first dapp</source>
+        <translation>upload je eerste dapp</translation>
+    </message>
+    <message id="dapps-store-publisher-key">
+        <source>Publisher Key</source>
+        <translation>Publisher Key</translation>
+    </message>
+    <message id="dapps-store-publisher-key-dialog-note">
+        <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
+        <translation>Hier is je persoonlijke Publisher Key. Elke gebruiker kan deze gebruiken om je toe te voegen aan zijn persoonlijke lijst en je apps te volgen. U kunt het toevoegen aan uw persoonlijke pagina of website.</translation>
+    </message>
+    <message id="copy-publisher-key">
+        <source>Copy publisher key</source>
+        <translation>Kopieer publisher key</translation>
+    </message>
+    <message id="dapps-store-transacton-is-sent">
+        <source>The transaction is sent</source>
+        <translation>De transactie is verzonden</translation>
+    </message>
+    <message id="dapps-store-creation-of-account">
+        <source>Creation of the personal publisher account takes time.
+ You can continue as soon as transaction is completed.</source>
+        <translation>Aanmaken van het persoonlijke publisher account kost tijd.
+ U kunt doorgaan zodra de transactie is voltooid.</translation>
+    </message>
+    <message id="dapps-store-changes-takes-time">
+        <source>Changes take time. You can continue as soon as transaction is completed.</source>
+        <translation>Wijzigingen kosten tijd. U kunt doorgaan zodra de transactie is voltooid.</translation>
+    </message>
+    <message id="dapps-store-upload-choose-file-title">
+        <source>Select application to upload</source>
+        <translation>Selecteer applicatie om te installeren</translation>
+    </message>
+    <message id="dapps-store-update-dapp-title">
+        <source>Update DApp</source>
+        <translation>DApp bijwerken</translation>
+    </message>
+    <message id="dapps-store-upload-new-dapp-title">
+        <source>Upload new DApp</source>
+        <translation>Nieuwe DApp uploaden</translation>
+    </message>
+    <message id="dapps-store-update-dapp-text">
+        <source>To update %1, please add the new version of the file below</source>
+        <translation>Om %1 te updaten voegt u de nieuwe versie van het bestand hieronder toe</translation>
+    </message>
+    <message id="dapps-store-upload-new-dapp-text">
+        <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
+        <translation>Om uw eigen DApp in de DApp Store te uploaden gebruikt u enkel bestanden in het &lt;b&gt;&lt;i&gt;.dapp formaat&lt;/i&gt;&lt;/b&gt;</translation>
+    </message>
+    <message id="dapps-store-upload-common-error">
+        <source>Something went wrong, please check your file and to try upload it again</source>
+        <translation>Er is iets fout gegaan. Controleer je bestand en probeer het opnieuw te uploaden</translation>
+    </message>
+    <message id="dapp-store-load-file">
+        <source>load .dapp file</source>
+        <translation>.dapp bestand laden</translation>
+    </message>
+    <message id="dapps-store-drop-text">
+        <source>or just drop it here</source>
+        <translation>of plaats het hier</translation>
+    </message>
+    <message id="general-continue">
+        <source>continue</source>
+        <translation>doorgaan</translation>
+    </message>
+    <message id="dapps-store-upload-check-details-text">
+        <source>Check the information below and select &quot;publish&quot;.
+If something is wrong, please cancel the uploading,
+change the information in your file and upload your file again.</source>
+        <translation>Controleer onderstaande informatie en selecteer &quot;publiceren&quot;.
+Als er iets fout gaat, annuleer dan de uploading,
+verander de informatie in uw bestand en upload opnieuw.</translation>
+    </message>
+    <message id="dapps-store-dapp-release-date">
+        <source>Release date:</source>
+        <translation>Verschijningsdatum:</translation>
+    </message>
+    <message id="dapps-store-dapp-version">
+        <source>Version:</source>
+        <translation>Versie:</translation>
+    </message>
+    <message id="dapps-store-dapp-api-version">
+        <source>Api version:</source>
+        <translation>Api versie:</translation>
+    </message>
+    <message id="dapps-store-dapp-min-api-version">
+        <source>Minimal api version:</source>
+        <translation>Minimale api versie:</translation>
+    </message>
+    <message id="dapps-store-dapp-guid">
+        <source>Guid:</source>
+        <translation>Handleiding:</translation>
+    </message>
+    <message id="dapps-store-publish">
+        <source>publish</source>
+        <translation>publiceer</translation>
+    </message>
+    <message id="dapps-store-you-now-are-publisher">
+        <source>You now are a publisher!</source>
+        <translation>U bent nu een publisher!</translation>
+    </message>
+    <message id="dapps-store-congratulations">
+        <source>Congratulations %1!
+
+We are glad to see you at our DApp Store as a Publisher.
+Below you will see your personal Publisher Key. Any user can use it to add you to their personal
+list and follow your apps. You can add it on your personal page or website.
+All the time you have access to it in yout personal publisher account.
+
+Let&apos;s start!</source>
+        <translation>Gefeliciteerd %1!
+
+We zijn blij u in onze DApp Store te ontvangen als uitgever.
+Hieronder ziet u uw persoonlijke Publisher Key. Elke gebruiker kan deze gebruiken om u toe te voegen aan zijn persoonlijke
+lijst en uw apps te volgen. U kunt het toevoegen aan uw persoonlijke pagina of website.
+U heeft altijd toegang tot de key in uw persoonlijke publisher account.
+
+Laten we beginnen!</translation>
+    </message>
+    <message id="dapps-store-to-to-my-account">
+        <source>go to my account</source>
+        <translation>ga naar mijn account</translation>
+    </message>
+    <message id="apps-title-no-fork">
+        <source>DApp Store</source>
+        <translation>DApp Store</translation>
+    </message>
+    <message id="publishers-list-nickname">
+        <source>Nickname</source>
+        <translation>Bijnaam</translation>
+    </message>
+    <message id="publishers-list-about">
+        <source>About</source>
+        <translation>Over</translation>
+    </message>
+    <message id="publishers-list-social-net">
+        <source>Social networks</source>
+        <translation>Sociale netwerken</translation>
+    </message>
+    <message id="publishers-list-publisher-link">
+        <source>Publisher link</source>
+        <translation>Publisher link</translation>
+    </message>
+    <message id="dapps-store-launch">
+        <source>launch</source>
+        <translation>starten</translation>
+    </message>
+    <message id="app-failed-create-publisher">
+        <source>Oops... Failed to create Publisher.
+Please check the log and try again.</source>
+        <translation>Oeps... Aanmaken van publisher is mislukt.
+Controleer het logboek en probeer het opnieuw.</translation>
+    </message>
+    <message id="app-failed-edit-publisher">
+        <source>Oops... Failed to edit Publisher.
+Please check the log and try again.</source>
+        <translation>Oeps... Bewerken van publisher is mislukt.
+Controleer het logboek en probeer het opnieuw.</translation>
+    </message>
+    <message id="app-failed-publish-dapp">
+        <source>Oops... Failed to publish DApp.
+Please check the log and try again.</source>
+        <translation>Oeps... Publiceren van DApp is mislukt.
+Controleer het logboek en probeer het opnieuw.</translation>
+    </message>
+    <message id="app-failed-remove-dapp">
+        <source>Oops... Failed to remove DApp.
+Please check the log and try again.</source>
+        <translation>Oeps... Verwijderen van DApp is mislukt.
+Controleer het logboek en probeer het opnieuw.</translation>
+    </message>
+    <message id="dapps-store-ipfs-unavailable">
+        <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
+        <translation>IPFS Service is niet actief of is niet verbonden met de peers. Controleer de instellingen.</translation>
+    </message>
+    <message id="app-uninstall-success">
+        <source>Everything worked out.
+&apos;%1&apos; DApp is uninstalled.</source>
+        <translation>Alles is gelukt.
+&apos;%1&apos; DApp is gedeïnstalleerd.</translation>
+    </message>
+    <message id="app-uninstall-fail">
+        <source>Something went wrong.
+Uninstall failed. Please try again later.</source>
+        <translation>Er is iets fout gegaan.
+Verwijderen mislukt. Probeer het later opnieuw.</translation>
+    </message>
+    <message id="app-install-success">
+        <source>Congratulations!
+&apos;%1&apos; DApp is successfully installed.</source>
+        <translation>Gefeliciteerd!
+&apos;%1&apos; DApp is succesvol geïnstalleerd.</translation>
+    </message>
+    <message id="app-install-fail">
+        <source>Sorry, the installation failed.
+Please, check the file and try again.</source>
+        <translation>Sorry, de installatie is mislukt.
+Controleer het bestand en probeer het opnieuw.</translation>
+    </message>
+    <message id="dapp-store-dialog-title">
+        <source>Dapp Store</source>
+        <translation>Dapp Store</translation>
+    </message>
+    <message id="settings-blockchain-height">
+        <source>Blockchain height</source>
+        <translation>Blockchain height</translation>
+    </message>
+    <message id="assets-swap-title">
+        <source>Assets Swaps</source>
+        <translation>Assets Swaps</translation>
+    </message>
+    <message id="wallet-atomic-swap-title">
+        <source>Create Atomic Swap Offer</source>
+        <translation>Creëer Atomic swap aanbieding</translation>
+    </message>
+    <message id="app-install-timeout-fail">
+        <source>Sorry, the installation failed.
+Please, restart the wallet and try again.</source>
+        <translation>Sorry, de installatie is mislukt.
+Herstart de wallet en probeer het opnieuw.</translation>
+    </message>
+    <message id="app-update-fail">
+        <source>Sorry, the update failed.
+Please, check the file and try again.</source>
+        <translation>Sorry, de update is mislukt.
+Controleer het bestand en probeer het opnieuw.</translation>
+    </message>
+    <message id="app-update-timeout-fail">
+        <source>Sorry, the update failed.
+Please, restart the wallet and try again.</source>
+        <translation>Sorry, de update is mislukt.
+Herstart de wallet en probeer het opnieuw.</translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation>installeren</translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation>bijwerken</translation>
+    </message>
+    <message id="general-receive">
+        <source>Receive</source>
+        <translation>Ontvang</translation>
+    </message>
+    <message id="swap-rate">
+        <source>Rate</source>
+        <translation>Rate</translation>
+    </message>
+    <message id="swap-time-created">
+        <source>Created on</source>
+        <translation>Gemaakt op</translation>
+    </message>
+    <message id="swap-expiration">
+        <source>Expiration</source>
+        <translation>Vervaltijd</translation>
+    </message>
+    <message id="swap-cancel-offer">
+        <source>cancel offer</source>
+        <translation>aanbod annuleren</translation>
+    </message>
+    <message id="swap-accept-offer">
+        <source>accept offer</source>
+        <translation>aanbod accepteren</translation>
+    </message>
+    <message id="wallet-accept-asset-swap-title">
+        <source>Accept an Asset Swap Offer</source>
+        <translation>Een Asset Swap Aanbod accepteren</translation>
+    </message>
+    <message id="wallet-create-asset-swap-title">
+        <source>Create an Asset Swap Offer</source>
+        <translation>Een Asset Swap Aanbod aanmaken</translation>
+    </message>
+    <message id="asset-swap-fee">
+        <source>Transaction fee</source>
+        <translation>Transactiekosten</translation>
+    </message>
+    <message id="amount-input-asset-search">
+        <source>Enter asset name...</source>
+        <translation>Voer asset naam in...</translation>
+    </message>
+    <message id="swap-active-offers-tab">
+        <source>Active offers</source>
+        <translation>Actieve aanbiedingen</translation>
+    </message>
+    <message id="swap-my-offers-tab">
+        <source>My offers</source>
+        <translation>Mijn aanbiedingen</translation>
+    </message>
+    <message id="assets-same-accept">
+        <source>You can&apos;t accept offer with identical assets on both sides</source>
+        <translation>U kunt geen aanbod accepteren met aan beide kanten identieke assets</translation>
+    </message>
+    <message id="assets-same-create">
+        <source>You can&apos;t create offer with identical assets on both sides</source>
+        <translation>U kunt geen aanbod aanmaken met aan beide kanten identieke assets</translation>
+    </message>
+    <message id="notification-dex-completed">
+        <source>Assets Swaps transaction completed</source>
+        <translation>Assets swaps transactie voltooid</translation>
+    </message>
+    <message id="notification-dex-expired">
+        <source>Assets Swaps transaction expired</source>
+        <translation>Assets Swaps transactie verlopen</translation>
+    </message>
+    <message id="notification-dex-failed">
+        <source>Assets Swaps transaction failed</source>
+        <translation>Assets Swaps transactie mislukt</translation>
+    </message>
+    <message id="notification-dex-canceled">
+        <source>Assets Swaps transaction canceled</source>
+        <translation>Assets Swaps transactie geannuleerd</translation>
+    </message>
+    <message id="tx-asset-swap-default-comment">
+        <source>Assets Swaps transaction</source>
+        <translation>Assets Swaps transactie</translation>
+    </message>
+    <message id="assets-swap-create-confirm-dialog-title">
+        <source>Create asset swap</source>
+        <translation>Maak asset swap</translation>
+    </message>
+    <message id="assets-swap-accept-confirm-dialog-title">
+        <source>Accept asset swap</source>
+        <translation>Accepteer asset swap</translation>
+    </message>
+    <message id="asset-swap-confirmation-create">
+        <source>Confirm asset swap creation</source>
+        <translation>Bevestig aanmaken van asset swap</translation>
+    </message>
+    <message id="asset-swap-confirmation-accept">
+        <source>Accept asset swap</source>
+        <translation>Accepteer asset swap</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-send-amount">
+        <source>Send amount</source>
+        <translation>Verzend bedrag</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-receive-amount">
+        <source>Receive amount</source>
+        <translation>Ontvang bedrag</translation>
+    </message>
+    <message id="assets-swap-confirm-dialog-fee-label">
+        <source>Asset swap fee</source>
+        <translation>Asset swap kosten</translation>
+    </message>
+    <message id="settings-ca">
+        <source>Confidential assets</source>
+        <translation>Confidential assets</translation>
+    </message>
+    <message id="settings-ca-descr">
+        <source>Confidential assets allowed to receive</source>
+        <translation>Confidential assets toegestaan te ontvangen</translation>
+    </message>
+    <message id="assets-settings">
+        <source>Assets settings</source>
+        <translation>Assets instellingen</translation>
+    </message>
+    <message id="messenger-title">
+        <source>Beam Messenger</source>
+        <translation>Beam Messenger</translation>
+    </message>
+    <message id="messenger-new-chat">
+        <source>New chat</source>
+        <translation>Nieuwe chat</translation>
+    </message>
+    <message id="chat-title">
+        <source>Chat with %1</source>
+        <translation>Chat met %1</translation>
+    </message>
+    <message id="chat-message-placeholder">
+        <source>[ctrl + enter] to send</source>
+        <translation>[ctrl + enter] om te verzenden</translation>
+    </message>
+    <message id="messenger-add-receiver-address-dialog-title">
+        <source>Add receiver address</source>
+        <translation>Voeg ontvanger adres toe</translation>
+    </message>
+    <message id="messenger-add-receiver-address-address">
+        <source>Address</source>
+        <translation>Adres</translation>
+    </message>
+    <message id="messenger-add-receiver-address-name">
+        <source>Name</source>
+        <translation>Naam</translation>
+    </message>
+    <message id="messenger-add-receiver-address-save">
+        <source>add receiver address</source>
+        <translation>voeg ontvanger adres toe</translation>
+    </message>
+    <message id="chat-title-anon">
+        <source>anonymous</source>
+        <translation>anoniem</translation>
+    </message>
+    <message id="chat-message-placeholder-osx">
+        <source>[command + enter] to send</source>
+        <translation>[command + enter] om te verzenden</translation>
+    </message>
+    <message id="verify-on-hw-wallet">
+        <source>Verify on HW wallet</source>
+        <translation>Verifieer op HW wallet</translation>
+    </message>
+    <message id="messenger-add-receiver-address-my">
+        <source>My address</source>
+        <translation>Mijn adres</translation>
+    </message>
+    <message id="receive-view-hw-wallet-disconnected">
+        <source>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</source>
+        <translation>QR code is niet juist
+Er is geen hardware wallet verbonden. Maak verbinding met de wallet</translation>
+    </message>
+    <message id="approve-on-hw-wallet-title">
+        <source>Transaction</source>
+        <translation>Transactie</translation>
+    </message>
+    <message id="approve-on-hw-wallet-text">
+        <source>Transaction is in process.
+Connect your Hardware Wallet to finalize the transaction.</source>
+        <translation>Transactie wordt uitgevoerd.
+Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
+    </message>
+    <message id="dapps-store-publishers-page-main-title">
+        <source>Publishers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-show-dapps">
+        <source>Show DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-publisher-hide-dapps">
+        <source>Hide DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="Receiver signature">
+        <source>Receiver signature</source>
+        <translation type="unfinished">Handtekening ontvanger</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">Nooit</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

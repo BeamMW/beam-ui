@@ -85,25 +85,27 @@ elseif(APPLE)
     set(SYSTEM_TYPE MACOSX_BUNDLE)
 endif()
 
-list(APPEND SUPPORTED_LANGS "en_US")
-list(APPEND SUPPORTED_LANGS "ru_RU")
-list(APPEND SUPPORTED_LANGS "es_ES")
 list(APPEND SUPPORTED_LANGS "be_BY")
 list(APPEND SUPPORTED_LANGS "cs_CZ")
 list(APPEND SUPPORTED_LANGS "de_DE")
-list(APPEND SUPPORTED_LANGS "vi_VI")
-list(APPEND SUPPORTED_LANGS "zh_CN")
+list(APPEND SUPPORTED_LANGS "en_US")
+list(APPEND SUPPORTED_LANGS "es_ES")
 list(APPEND SUPPORTED_LANGS "fi_FI")
 list(APPEND SUPPORTED_LANGS "fr_FR")
 list(APPEND SUPPORTED_LANGS "id_ID")
 list(APPEND SUPPORTED_LANGS "it_IT")
 list(APPEND SUPPORTED_LANGS "ja_JP")
 list(APPEND SUPPORTED_LANGS "ko_KR")
+list(APPEND SUPPORTED_LANGS "nl_NL")
+list(APPEND SUPPORTED_LANGS "pt_BR")
+list(APPEND SUPPORTED_LANGS "ru_RU")
+list(APPEND SUPPORTED_LANGS "sr_SR")
 list(APPEND SUPPORTED_LANGS "sv_SE")
 list(APPEND SUPPORTED_LANGS "th_TH")
 list(APPEND SUPPORTED_LANGS "tr_TR")
-list(APPEND SUPPORTED_LANGS "nl_NL")
-list(APPEND SUPPORTED_LANGS "sr_SR")
+list(APPEND SUPPORTED_LANGS "uk_UA")
+list(APPEND SUPPORTED_LANGS "vi_VI")
+list(APPEND SUPPORTED_LANGS "zh_CN")
 
 set(UI_SRC
     ui.cpp
@@ -116,6 +118,8 @@ set(UI_SRC
     viewmodel/applications/apps_api_ui.cpp
     viewmodel/applications/public.cpp
     viewmodel/applications/public.h
+    viewmodel/applications/publishers_view.h
+    viewmodel/applications/publishers_view.cpp
     viewmodel/helpers/list_model.h
     viewmodel/helpers/sortfilterproxymodel.h
     viewmodel/helpers/sortfilterproxymodel.cpp
@@ -162,8 +166,14 @@ set(UI_SRC
     viewmodel/help_view.cpp
     viewmodel/settings_view.h
     viewmodel/settings_view.cpp
+    viewmodel/address_item.h
+    viewmodel/address_item.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
+    viewmodel/asset_swap_accept_view.h
+    viewmodel/asset_swap_accept_view.cpp
+    viewmodel/asset_swap_create_view.h
+    viewmodel/asset_swap_create_view.cpp
     viewmodel/fee_helpers.h
     viewmodel/fee_helpers.cpp
     viewmodel/ui_helpers.h
@@ -202,10 +212,18 @@ set(UI_SRC
         model/assets_manager.h
         model/assets_manager.cpp
     viewmodel/applications/webapi_creator.cpp
-    viewmodel/dex/dex_view.h
-    viewmodel/dex/dex_view.cpp
-    viewmodel/dex/dex_order_object.cpp
+    viewmodel/window_event_filter.h
+    viewmodel/window_event_filter.cpp
+    viewmodel/dex/dex_orders_model.h
+    viewmodel/dex/dex_orders_model.cpp
+    viewmodel/dex/dex_orders_list.h
     viewmodel/dex/dex_orders_list.cpp
+    viewmodel/messenger_address_add.h
+    viewmodel/messenger_address_add.cpp
+    viewmodel/messenger_chat.h
+    viewmodel/messenger_chat.cpp
+    viewmodel/messenger_chat_list.h
+    viewmodel/messenger_chat_list.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp
@@ -261,6 +279,8 @@ elseif(BEAM_MAINNET)
     set(BEAM_ICON_SUFFIX "mainnet")
 elseif(BEAM_BEAMX)
     set(BEAM_ICON_SUFFIX "beamx")
+elseif(BEAM_DAPPNET)
+    set(BEAM_ICON_SUFFIX "dappnet")
 endif()
 
 add_definitions(-DAPP_NAME=\"${APP_NAME}\")
@@ -288,7 +308,11 @@ if(BEAM_USE_STATIC AND LINUX)
     set(CMAKE_C_FLAGS "-no-pie ${CMAKE_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
 endif()
-add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+if (APPLE)
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm")
+else()
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
+endif()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})
 
 if(BEAM_HW_WALLET)
@@ -481,6 +505,7 @@ endif()
 
 if(LINUX)
     install(TARGETS ${TARGET_NAME} DESTINATION bin)
+    install(FILES dapps_store_app.wasm DESTINATION bin)
 
     SET(BEAM_DESKTOP_DIR     "${CMAKE_INSTALL_PREFIX}/share/applications/")
     SET(BEAM_PIXMAPS_DIR     "${CMAKE_INSTALL_PREFIX}/share/icons/")
@@ -491,6 +516,7 @@ elseif(APPLE)
     #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
     set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
@@ -557,6 +583,7 @@ else()
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
+        install(FILES dapps_store_app.wasm DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()
 
@@ -576,5 +603,12 @@ if (BEAM_IPFS_SUPPORT AND WIN32)
     add_custom_command(
             TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${IPFS_DLL} ${CMAKE_CURRENT_BINARY_DIR}
+    )
+endif()
+
+if(NOT APPLE)
+    add_custom_command(
+        TARGET ${TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm ${CMAKE_CURRENT_BINARY_DIR}
     )
 endif()

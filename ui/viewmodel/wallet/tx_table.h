@@ -23,12 +23,13 @@
 
 class TxTableViewModel: public QObject {
     Q_OBJECT
-    Q_PROPERTY(QAbstractItemModel*  transactions READ   getTransactions     NOTIFY transactionsChanged)
+    Q_PROPERTY(QAbstractItemModel*  transactions READ getTransactions NOTIFY transactionsChanged)
     Q_PROPERTY(QString rateUnit     READ getRateUnit    NOTIFY rateChanged)
     Q_PROPERTY(bool showInProgress  READ getShowInProgress WRITE setShowInProgress NOTIFY showInProgressChanged)
     Q_PROPERTY(bool showCompleted   READ getShowCompleted  WRITE setShowCompleted  NOTIFY showCompletedChanged)
     Q_PROPERTY(bool showCanceled    READ getShowCanceled   WRITE setShowCanceled   NOTIFY showCanceledChanged)
     Q_PROPERTY(bool showFailed      READ getShowFailed     WRITE setShowFailed     NOTIFY showFailedCanged)
+    Q_PROPERTY(bool showAll         READ getShowAll                                NOTIFY showAllChanged)
 
 public:
     TxTableViewModel();
@@ -46,6 +47,7 @@ public:
     void setShowCanceled(bool value);
     bool getShowFailed() const;
     void setShowFailed(bool value);
+    bool getShowAll() const;
 
     Q_INVOKABLE void exportTxHistoryToCsv();
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
@@ -54,6 +56,13 @@ public:
 
 public slots:
     void onTxHistoryExportedToCsv(const QString& data);
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    void onAtomicSwapTxHistoryExportedToCsv(const QString& data);
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    void onAssetsSwapTxHistoryExportedToCsv(const QString& data);
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+    void onContractTxHistoryExportedToCsv(const QString& data);
     void onTransactionsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::TxDescription>& items);
 
 signals:
@@ -63,11 +72,15 @@ signals:
     void showCompletedChanged();
     void showCanceledChanged();
     void showFailedCanged();
+    void showAllChanged();
 
 private:
+    void writeArchiveWithExportedTxData();
+
     WalletModel::Ptr     _model;
     QQueue<QString>      _txHistoryToCsvPaths;
     TxObjectList         _transactionsList;
+    TxObjectList         _transactionsListRejectedByFilter;
     ExchangeRatesManager::Ptr _rates;
     WalletSettings&      _settings;
 
@@ -75,4 +88,9 @@ private:
     bool _showCompleted = true;
     bool _showCanceled = true;
     bool _showFailed = true;
+
+    QString _txHistoryData;
+    QString _atomicSwapTxHistoryData;
+    QString _assetsSwapTxHistoryData;
+    QString _contractTxHistoryData;
 };

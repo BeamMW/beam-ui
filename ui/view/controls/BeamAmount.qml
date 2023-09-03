@@ -13,6 +13,7 @@ Control {
     property string  amount:              "0"
     property string  lockedAmount:        "0"
     property string  unitName:            BeamGlobals.beamUnit
+    property string  assetId:             ""
     property string  rateUnit:            ""
     property string  rate:                "0"
     property string  ratePostfix:         ""
@@ -152,26 +153,26 @@ Control {
     }
 
     onAmountChanged: {
-        amountText.text = fitText()
+        amountText.text = fitText() + (assetId ? "(" + assetId + ")" : "")
     }
 
     onLockedAmountChanged: {
-        lockedText.text = fitLocked()
+        lockedText.text = fitLocked() + (assetId ? "(" + assetId + ")" : "")
     }
 
     onUnitNameChanged: {
-        amountText.text = fitText()
-        lockedText.text = fitLocked()
+        amountText.text = fitText() + (assetId ? "(" + assetId + ")" : "")
+        lockedText.text = fitLocked() + (assetId ? "(" + assetId + ")" : "")
     }
 
     onMaxPaintedWidthChanged: {
-        amountText.text = fitText()
-        lockedText.text = fitLocked()
+        amountText.text = fitText() + (assetId ? "(" + assetId + ")" : "")
+        lockedText.text = fitLocked() + (assetId ? "(" + assetId + ")" : "")
     }
 
     onWidthChanged: {
-        amountText.text = fitText()
-        lockedText.text = fitLocked()
+        amountText.text = fitText() + (assetId ? "(" + assetId + ")" : "")
+        lockedText.text = fitLocked() + (assetId ? "(" + assetId + ")" : "")
     }
 
     property bool hasTip: tipText.text != amountText.text
@@ -246,7 +247,7 @@ Control {
                     color:            control.error ? Style.validator_error : control.color
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
-                    text:             fitText()
+                    text:             fitText() + (assetId ? "(" + assetId + ")" : "")
 
                     MouseArea {
                         id:               amountTextArea
@@ -333,7 +334,7 @@ Control {
                     color:            control.error ? Style.validator_error : Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.5)
                     onCopyText:       BeamGlobals.copyToClipboard(amount)
                     copyMenuEnabled:  true
-                    text:             fitLocked()
+                    text:             fitLocked() + (assetId ? "(" + assetId + ")" : "")
                 }
             }
         }

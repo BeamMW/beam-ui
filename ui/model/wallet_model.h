@@ -24,6 +24,11 @@
 
 #include <set>
 
+namespace beam::wallet
+{
+    struct InstantMessage;
+}
+
 class WalletModel
     : public QObject
     , public beam::wallet::WalletClient
@@ -68,11 +73,14 @@ signals:
     void addressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& addresses);
     void addressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addresses);
     void swapOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::SwapOffer>& offers);
-    void dexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers);
+    void dexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& orders);
+    void dexOrdersFinded(const beam::wallet::DexOrder& order);
     void generatedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void swapParamsLoaded(const beam::ByteBuffer& params);
+    void assetsSwapParamsLoaded(const beam::ByteBuffer& params);
     void newAddressFailed();
     void nodeConnectionChanged(bool isNodeConnected);
+    void devStateChanged(const QString& sErr, int);
     void walletError(beam::wallet::ErrorType error);
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -80,6 +88,19 @@ signals:
     void addressChecked(const QString& addr, bool isValid);
     void functionPosted(const std::function<void()>&);
     void txHistoryExportedToCsv(const QString& data);
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    void atomicSwapTxHistoryExportedToCsv(const QString& data);
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    void assetsSwapTxHistoryExportedToCsv(const QString& data);
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+    void contractTxHistoryExportedToCsv(const QString& data);
+
+    void fullAssetsListLoaded();
+    void instantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
+    void chatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats);
+    void chatMessages(const std::vector<beam::wallet::InstantMessage>& messages);
+    void chatRemoved(const beam::wallet::WalletID& counterpart);
 
     #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -107,6 +128,7 @@ private:
     void onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>& items) override;
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addrs) override;
     void onDexOrdersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::DexOrder>& offers) override;
+    void onFindDexOrder(const beam::wallet::DexOrder& order) override;
 
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     void onSwapOffersChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::SwapOffer>& offers) override;
@@ -114,9 +136,12 @@ private:
 
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr) override;
     void onSwapParamsLoaded(const beam::ByteBuffer& token) override;
+    void onAssetSwapParamsLoaded(const beam::ByteBuffer& params) override;
     void onNewAddressFailed() override;
     void onNodeConnectionChanged(bool isNodeConnected) override;
     void onWalletError(beam::wallet::ErrorType error) override;
+    void OnDevState(const std::string& sErr, beam::wallet::HidKeyKeeper::DevState) override;
+    void OnDevReject(const beam::wallet::HidKeyKeeper::CallStats&) override;
     void FailedToStartWallet() override;
     void onSendMoneyVerified() override;
     void onCantSendToExpired() override;
@@ -128,11 +153,23 @@ private:
     void onImportDataFromJson(bool isOk) override;
     void onExportDataToJson(const std::string& data) override;
     void onExportTxHistoryToCsv(const std::string& data) override;
+#ifdef BEAM_ATOMIC_SWAP_SUPPORT
+    void onExportAtomicSwapTxHistoryToCsv(const std::string& data) override;
+#endif // BEAM_ATOMIC_SWAP_SUPPORT
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    void onExportAssetsSwapTxHistoryToCsv(const std::string& data) override;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+    void onExportContractTxHistoryToCsv(const std::string& data) override;
     void onExchangeRates(const std::vector<beam::wallet::ExchangeRate>&) override;
     void onVerificationInfo(const std::vector<beam::wallet::VerificationInfo>&) override;
     void onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&) override;
     void onPublicAddress(const std::string& publicAddr) override;
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
+    void onFullAssetsListLoaded() override;
+    void onInstantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome) override;
+    void onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats) override;
+    void onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages) override;
+    void onChatRemoved(const beam::wallet::WalletID& counterpart) override;
 
     #ifdef BEAM_IPFS_SUPPORT
     virtual void onIPFSStatus(bool running, const std::string& error, unsigned int peercnt) override;

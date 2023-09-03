@@ -14,17 +14,27 @@
 #include "assets_manager.h"
 #include "viewmodel/ui_helpers.h"
 
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+#include "model/app_model.h"
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+
 namespace
 {
     const unsigned char ACAlpha = 252;
 
-    #ifdef BEAM_MAINNET
-    const beam::Asset::ID BeamXID = 7;
-    #elif defined(BEAM_TESTNET)
-    const beam::Asset::ID BeamXID = 12;
-    #else
-    const beam::Asset::ID BeamXID = 31;
-    #endif
+    beam::Asset::ID GetBeamXID()
+    {
+        using namespace beam;
+        switch (Rules::get().m_Network)
+        {
+        case Rules::Network::mainnet:
+            return 7;
+        case Rules::Network::testnet:
+            return 12;
+        default:
+            return 31;
+        }
+    }
 }
 
 AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr rates)
@@ -261,7 +271,7 @@ QString AssetsManager::getShortDesc(beam::Asset::ID id)
         desc = meta->GetShortDesc().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "BeamX DAO governance token";
     }
@@ -282,7 +292,7 @@ QString AssetsManager::getLongDesc(beam::Asset::ID id)
         desc = meta->GetLongDesc().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "BEAMX token is a Confidential Asset issued on top of the Beam blockchain with a fixed emission of 100,000,000 units (except for the lender of a \"last resort\" scenario). BEAMX is the governance token for the BeamX DAO, managed by the BeamX DAO Core contract. Holders can earn BeamX tokens by participating in the DAO activities: providing liquidity to the DeFi applications governed by the DAO or participating in the governance process.";
     }
@@ -303,7 +313,7 @@ QString AssetsManager::getSiteUrl(beam::Asset::ID id)
         desc = meta->GetSiteUrl().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "https://www.beamxdao.org/";
     }
@@ -324,7 +334,7 @@ QString AssetsManager::getPaperUrl(beam::Asset::ID id)
         desc = meta->GetPaperUrl().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "https://documentation.beam.mw/overview/beamx-tokenomics";
     }
@@ -393,9 +403,10 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
 
     beam::wallet::Currency assetCurr(assetId);
     const bool isBEAM = assetId == beam::Asset::s_BeamID;
-
+    auto unitName = getUnitName(assetId, AssetsManager::NoShorten);
     asset.insert("isBEAM",     isBEAM);
-    asset.insert("unitName",   getUnitName(assetId, AssetsManager::NoShorten));
+    asset.insert("unitName",   unitName);
+    asset.insert("unitNameWithId", isBEAM ? unitName : QString("%1 <font color='#8da1ad'>(%2)</font>").arg(unitName).arg(assetId));
     asset.insert("rate",       beamui::AmountToUIString(_rates->getRate(assetCurr)));
     asset.insert("rateUnit",   getRateUnit());
     asset.insert("assetId",    static_cast<int>(assetId));
@@ -404,8 +415,34 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     asset.insert("iconHeight", 22);
     asset.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
     asset.insert("verified",   isVerified(assetId));
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    asset.insert("allowed", _allowedAssets.contains(assetId));
+    if (assetId)
+    {
+        const auto it = _info.find(assetId);
+        asset.insert("emission", 
+                     beamui::AmountBigToUIString(it != _info.end() ? _info[assetId].first->m_Value : beam::Zero));
+    }
+#endif  // BEAM_ASSET_SWAP_SUPPORT
 
     return asset;
+}
+
+QList<QMap<QString, QVariant>> AssetsManager::getAssetsListFull()
+{
+    const auto assets = _wallet->getAssetsFull();
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+    auto& settings = AppModel::getInstance().getSettings();
+    _allowedAssets = settings.getAllowedAssets();
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+    QList<QMap<QString, QVariant>> result;
+
+    for(auto assetId: assets)
+    {
+        result.push_back(getAssetProps(assetId));
+    }
+
+    return result;
 }
 
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsList()
@@ -450,4 +487,10 @@ bool AssetsManager::isVerified(beam::Asset::ID assetId) const
         return it->second.m_verified;
     }
     return false;
+}
+
+bool AssetsManager::isKnownAsset(beam::Asset::ID assetId) const
+{
+    const auto assets = _wallet->getAssetsFull();
+    return assets.find(assetId) != assets.end();
 }

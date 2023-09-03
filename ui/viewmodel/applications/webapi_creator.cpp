@@ -31,6 +31,11 @@ namespace beamui::applications
             return false;
             #endif
         }
+
+        uint32_t getPrivilegeLvl()
+        {
+            return AppModel::getInstance().getSettings().getShadersPrivilegeLvl();
+        }
     }
 
     WebAPICreator::WebAPICreator(QObject *parent)
@@ -71,9 +76,10 @@ namespace beamui::applications
 
         QPointer<WebAPICreator> guard = this;
         const auto appid = beam::wallet::GenerateAppID(appName.toStdString(), appUrl.toStdString());
-        const bool ipfsnode = getUseIPFSNode();
+        const auto ipfsnode = getUseIPFSNode();
+        const auto privilegeLvl = getPrivilegeLvl();
 
-        AppsApiUI::ClientThread_Create(getWalletModel().get(), version, appid, appName.toStdString(), ipfsnode,
+        AppsApiUI::ClientThread_Create(getWalletModel().get(), version, appid, appName.toStdString(), privilegeLvl, ipfsnode,
             [this, guard, version, appName, appid] (AppsApiUI::Ptr api) {
                 if (guard)
                 {

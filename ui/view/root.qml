@@ -5,15 +5,17 @@ import QtQuick.Window 2.9
 import "controls"
 import Beam.Wallet 1.0
 
-Window  {
+Window {
     id: appWindow
     property alias source: rootLoader.source
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
     title: BeamGlobals.getAppName()
+    property int displayHeight: Screen.height
+    property bool isFullscreen: appWindow.width >= Screen.width
 
     function setMinMax () {
         var wlimit = appWindow.screen.width
-        var hlimit = appWindow.screen.height - 80
+        var hlimit = appWindow.screen.height - (isFullscreen ? 0 : 100)
         var wmin = Math.min(1024, wlimit)
         var hmin = Math.min(852, hlimit)
 
@@ -32,82 +34,90 @@ Window  {
         appWindow.setMinMax()
     }
 
+    onDisplayHeightChanged: {
+        appWindow.setMinMax()
+    }
+
+    function windowMoved() {
+        appWindow.setMinMax()
+    }
+
     Component.onCompleted: function() {
         appWindow.setMinMax();
     }
 
     SFFontLoader {}
     
-    Popup {
-        id: notifications
-        closePolicy: Popup.NoAutoClose
-        palette.window : Style.background_main
-		MessagesViewModel {id: viewModel}
+    // Popup {
+    //     id: notifications
+    //     closePolicy: Popup.NoAutoClose
+    //     palette.window : Style.background_main
+    //     MessagesViewModel {id: viewModel}
 
-        parent: Overlay.overlay
-        width: parent.width
-        height: Math.min(100, viewModel.messages.length * 30 + 10)
-        clip: true
-        visible:  viewModel.messages.length > 0
-        background: Item {
-            anchors.fill: parent
-            Rectangle {
-                color: "red"
-                opacity: 0.4
-                anchors.fill: parent
-            }
-            ListView {
-                id: sampleListView
-                anchors.fill: parent
-                anchors.topMargin: 5
-                anchors.bottomMargin: 5
-                //spacing: 4
-                clip: true
-                model: viewModel.messages
+    //     parent: Overlay.overlay
+    //     width: parent.width
+    //     height: Math.min(100, viewModel.messages.length * 30 + 10)
+    //     clip: true
+    //     visible:  true//viewModel.messages.length > 0
+    //     background: Item {
+    //         anchors.fill: parent
+    //         Rectangle {
+    //             color: "red"
+    //             opacity: 0.4
+    //             anchors.fill: parent
+    //         }
+    //         ListView {
+    //             id: sampleListView
+    //             anchors.fill: parent
+    //             anchors.topMargin: 5
+    //             anchors.bottomMargin: 5
+    //             //spacing: 4
+    //             clip: true
+    //             model: viewModel.messages
 
-                delegate: RowLayout {
-                    width: parent.width
-                    height: 30
+    //             delegate: RowLayout {
+    //                 width: parent.width
+    //                 height: 30
 
-                    SFText {
-                        Layout.fillWidth: true
-                        Layout.leftMargin: 30
-                        Layout.minimumWidth: 100
-                        Layout.alignment: Qt.AlignVCenter
-                        text: modelData
-                        font.pixelSize: 14
-                        color: Style.content_main
-                        height: 16
-                    }
-                    CustomToolButton {
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.minimumHeight: 20
-                        Layout.minimumWidth: 20
-                        Layout.rightMargin: 30
-                        icon.source: "qrc:/assets/icon-save.svg"
-                        text: qsTrId("settings-report-problem-save-log-button")
-                        onClicked: viewModel.saveLogs()
-                        font { 
-                            family: "Proxima Nova"
-                            pixelSize: 14
-                            weight: Font.Bold
-                            capitalization: Font.AllLowercase
-                        }
-                        visible: viewModel.enableSaveReport(index)
-                    }
-                    CustomToolButton {
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.minimumHeight: 20
-                        Layout.minimumWidth: 20
-                        Layout.rightMargin: 30
-                        icon.source: "qrc:/assets/icon-cancel.svg"
-                        onClicked: viewModel.deleteMessage(index)
-                        visible: viewModel.enableCloseMessage(index)
-                    }
-                }
-            }
-        }
-    }
+    //                 SFText {
+    //                     Layout.fillWidth: true
+    //                     Layout.leftMargin: 30
+    //                     Layout.minimumWidth: 100
+    //                     Layout.alignment: Qt.AlignVCenter
+    //                     text: modelData
+    //                     font.pixelSize: 14
+    //                     color: Style.content_main
+    //                     height: 16
+    //                 }
+    //                 CustomToolButton {
+    //                     Layout.alignment: Qt.AlignVCenter
+    //                     Layout.minimumHeight: 20
+    //                     Layout.minimumWidth: 20
+    //                     Layout.rightMargin: 30
+    //                     icon.source: "qrc:/assets/icon-save.svg"
+    //                     text: qsTrId("settings-report-problem-save-log-button")
+    //                     onClicked: viewModel.saveLogs()
+    //                     font { 
+    //                         family: "Proxima Nova"
+    //                         pixelSize: 14
+    //                         weight: Font.Bold
+    //                         capitalization: Font.AllLowercase
+    //                     }
+    //                     visible: viewModel.enableSaveReport(index)
+    //                 }
+    //                 CustomToolButton {
+    //                     Layout.alignment: Qt.AlignVCenter
+    //                     Layout.minimumHeight: 20
+    //                     Layout.minimumWidth: 20
+    //                     Layout.rightMargin: 30
+    //                     icon.source: "qrc:/assets/icon-cancel.svg"
+    //                     onClicked: viewModel.deleteMessage(index)
+    //                     visible: viewModel.enableCloseMessage(index)
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     Loader {
         id: rootLoader

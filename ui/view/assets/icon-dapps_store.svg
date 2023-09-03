@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g transform="translate(-62 -20) translate(62 20)">
+                <rect width="10" height="10" x="1" y="1" stroke="#8DA1AD" stroke-width="2" rx="3"/>
+                <rect width="10" height="10" x="1" y="17" stroke="#8DA1AD" stroke-width="2" rx="3"/>
+                <rect width="10" height="10" x="17" y="1" stroke="#8DA1AD" stroke-width="2" rx="3"/>
+                <rect width="2" height="12" x="21" y="16" fill="#8DA1AD" rx="1"/>
+                <rect width="2" height="12" x="21" y="16" fill="#8DA1AD" rx="1" transform="rotate(90 22 22)"/>
+            </g>
+        </g>
+    </g>
+</svg>
