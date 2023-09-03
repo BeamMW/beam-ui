@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es-ES" sourcelanguage="en">
+<TS version="2.1" language="pt-BR" sourcelanguage="en">
 <context>
     <name></name>
     <message id="general-beam">
@@ -13,27 +13,27 @@
     </message>
     <message id="general-comment">
         <source>Comment</source>
-        <translation>Comentario</translation>
+        <translation>Comentário</translation>
     </message>
     <message id="general-actions">
         <source>Actions</source>
-        <translation>Acciones</translation>
+        <translation>Ações</translation>
     </message>
     <message id="general-address">
         <source>Address</source>
-        <translation>Dirección</translation>
+        <translation>Endereço</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
-        <translation>Enviar</translation>
+        <translation>Mandar</translation>
     </message>
     <message id="general-amount">
         <source>Amount</source>
-        <translation>Cantidad</translation>
+        <translation>Quantidade</translation>
     </message>
     <message id="general-status">
         <source>Status</source>
-        <translation>Estado</translation>
+        <translation>SItuação</translation>
     </message>
     <message id="general-cancel">
         <source>Cancel</source>
@@ -41,39 +41,39 @@
     </message>
     <message id="general-delete">
         <source>Delete</source>
-        <translation>Borrar</translation>
+        <translation>Excluir</translation>
     </message>
     <message id="general-rescan">
         <source>Rescan</source>
-        <translation>Vuelve a buscar</translation>
+        <translation>Reescanear</translation>
     </message>
     <message id="general-change-pwd">
         <source>Change wallet password</source>
-        <translation>Cambia la contraseña del wallet</translation>
+        <translation>Alterar senha da carteira</translation>
     </message>
     <message id="general-pwd-empty-error">
         <source>Please, enter password</source>
-        <translation>Por favor, introduce la contraseña</translation>
+        <translation>Por favor, digite a senha</translation>
     </message>
     <message id="general-pwd-invalid">
         <source>Invalid password provided</source>
-        <translation>La contraseña introducida es errónea</translation>
+        <translation>Senha inválida fornecida</translation>
     </message>
     <message id="general-payment-proof">
         <source>Payment proof</source>
-        <translation>Prueba de pago</translation>
+        <translation>Prova de pagamento</translation>
     </message>
     <message id="general-close">
         <source>Close</source>
-        <translation>Cerrar</translation>
+        <translation>Fechar</translation>
     </message>
     <message id="general-details">
         <source>Details</source>
-        <translation>Detalles</translation>
+        <translation>Detalhes</translation>
     </message>
     <message id="general-kernel-id">
         <source>Kernel ID</source>
-        <translation>ID del Kernel</translation>
+        <translation>Id do kernel</translation>
     </message>
     <message id="general-copy">
         <source>Copy</source>
@@ -81,102 +81,102 @@
     </message>
     <message id="general-paste">
         <source>Paste</source>
-        <translation>Pegar</translation>
+        <translation>Colar</translation>
     </message>
     <message id="general-fee">
         <source>Transaction fee</source>
         <extracomment>UTXO type fee</extracomment>
-        <translation>Tarifa de la transacción</translation>
+        <translation>Taxa de transação</translation>
     </message>
     <message id="general-ok">
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message id="general-invalid-address">
         <source>Invalid address</source>
-        <translation>Dirección erronea</translation>
+        <translation>Endereço inválido</translation>
     </message>
     <message id="general-change">
         <source>Change</source>
         <extracomment>UTXO type Change</extracomment>
-        <translation>Cambiar</translation>
+        <translation>Troca</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
-        <translation>Volver</translation>
+        <translation>Anterior</translation>
     </message>
     <message id="general-next">
         <source>Next</source>
-        <translation>Siguiente</translation>
+        <translation>Próximo</translation>
     </message>
     <message id="general-create-wallet">
         <source>Create new wallet</source>
-        <translation>Crear nuevo wallet</translation>
+        <translation>Criar nova carteira</translation>
     </message>
     <message id="general-restore-or-create-wallet">
         <source>Restore wallet or create a new one</source>
-        <translation>Restaure wallet o cree una nueva</translation>
+        <translation>Restaurar carteira ou criar uma nova</translation>
     </message>
     <message id="general-select-db">
         <source>Select the wallet database file</source>
-        <translation>Selecciona el archivo de base de datos del wallet</translation>
+        <translation>Selecione o arquivo de banco de dados da carteira</translation>
     </message>
     <message id="general-restore-wallet">
         <source>Restore wallet</source>
-        <translation>Restaura wallet</translation>
+        <translation>Restaurar carteira</translation>
     </message>
     <message id="general-start-using">
         <source>Start using your wallet</source>
-        <translation>Empieza a usar tu wallet</translation>
+        <translation>Comece a usar sua carteira</translation>
     </message>
     <message id="general-open-wallet">
         <source>Open my wallet</source>
-        <translation>Abrir mi wallet</translation>
+        <translation>Abrir minha carteira</translation>
     </message>
     <message id="general-proceed">
         <source>Proceed</source>
         <extracomment>confirm password dialog, ok button</extracomment>
-        <translation>Proceder</translation>
+        <translation>Continuar</translation>
     </message>
     <message id="general-show-in-folder">
         <source>Show in folder</source>
-        <translation>Mostrar en carpeta</translation>
+        <translation>Mostrar na pasta</translation>
     </message>
     <message id="general-addr-comment-error">
         <source>Address with the same comment already exists</source>
-        <translation>La dirección con el mismo comentario ya existe</translation>
+        <translation>O endereço com o mesmo comentário já existe</translation>
     </message>
     <message id="wallet-receive-button">
         <source>Receive</source>
-        <translation>Recibir</translation>
+        <translation>Receber</translation>
     </message>
     <message id="wallet-transactions-title">
         <source>Transactions</source>
-        <translation>Transacciones</translation>
+        <translation>Transações</translation>
     </message>
     <message id="wallet-txs-delete-message">
         <source>The transaction will be deleted. This operation can not be undone</source>
-        <translation>La transacción será eliminada. Esta operación no se puede deshacer</translation>
+        <translation>A transação será excluída. Esta operação não pode ser desfeita</translation>
     </message>
     <message id="wallet-txs-status-pending">
         <source>pending</source>
-        <translation>pendiente</translation>
+        <translation>pendente</translation>
     </message>
     <message id="wallet-txs-status-waiting-sender">
         <source>waiting for sender</source>
-        <translation>esperando remitente</translation>
+        <translation>esperando o remetente</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver">
         <source>waiting for receiver</source>
-        <translation>esperando destinatario</translation>
+        <translation>esperando pelo destinatário</translation>
     </message>
     <message id="wallet-txs-status-completed">
         <source>completed</source>
-        <translation>completado</translation>
+        <translation>concluído</translation>
     </message>
     <message id="wallet-txs-status-received">
         <source>received</source>
-        <translation>recibido</translation>
+        <translation>recebido</translation>
     </message>
     <message id="wallet-txs-status-sent">
         <source>sent</source>
@@ -188,31 +188,31 @@
     </message>
     <message id="wallet-txs-status-expired">
         <source>expired</source>
-        <translation>caducado</translation>
+        <translation>expirado</translation>
     </message>
     <message id="wallet-txs-status-failed">
         <source>failed</source>
-        <translation>fallido</translation>
+        <translation>falha</translation>
     </message>
     <message id="wallet-txs-status-unknown">
         <source>unknown</source>
-        <translation>desconocido</translation>
+        <translation>desconhecido</translation>
     </message>
     <message id="addresses-tittle">
         <source>Address Book</source>
-        <translation>Libreta de Direcciones</translation>
+        <translation>Lista de Endereços</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
-        <translation>Mis direcciones activas</translation>
+        <translation>Meus endereços ativos</translation>
     </message>
     <message id="addresses-tab-expired">
         <source>My expired addresses</source>
-        <translation>Mis direcciones caducadas</translation>
+        <translation>Meus endereços expirados</translation>
     </message>
     <message id="addresses-tab-contacts">
         <source>Contacts</source>
-        <translation>Contactos</translation>
+        <translation>Contatos</translation>
     </message>
     <message id="address-table-cm-show-qr">
         <source>Show QR code</source>
@@ -222,16 +222,16 @@
     <message id="address-table-cm-edit">
         <source>Edit address</source>
         <extracomment>Entry in address table context menu to edit</extracomment>
-        <translation>Editar dirección</translation>
+        <translation>Editar endereço</translation>
     </message>
     <message id="address-table-cm-delete">
         <source>Delete address</source>
         <extracomment>Entry in address table context menu to delete</extracomment>
-        <translation>Borrar dirección</translation>
+        <translation>Excluir endereço</translation>
     </message>
     <message id="address-table-cm-delete-contact">
         <source>Delete contact</source>
-        <translation>Borrar contacto</translation>
+        <translation>Excluir contato</translation>
     </message>
     <message id="settings-version">
         <source>v</source>
@@ -241,105 +241,105 @@
     <message id="settings-local-node-port">
         <source>Port</source>
         <extracomment>settings tab, node section, port label</extracomment>
-        <translation>Puerto</translation>
+        <translation>Porta</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>La nueva búsqueda sincronizará los datos UTXO con la información más reciente en la blockchain. El proceso puede llevar mucho tiempo.</translation>
+        <translation>Reescanear irá sincronizar os dados das transações e de UTXO com as últimas informações na blockchain. O processo pode levar bastante tempo.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
         <extracomment>settings tab, general section, title</extracomment>
-        <translation>General</translation>
+        <translation>Gerais</translation>
     </message>
     <message id="settings-general-lock-screen">
         <source>Lock screen</source>
         <extracomment>settings tab, general section, lock screen label</extracomment>
-        <translation>Bloquear pantalla</translation>
+        <translation>Tela de bloqueio</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send label</extracomment>
-        <translation>Preguntar contraseña en cada envío</translation>
+        <translation>Pedir senha a cada Envio</translation>
     </message>
     <message id="settings-report-problem-title">
         <source>Report a problem</source>
-        <translation>Informar de un problema</translation>
+        <translation>Reportar um problema</translation>
     </message>
     <message id="settings-wallet-location-label">
         <source>Wallet folder location</source>
         <extracomment>settings tab, general section, wallet data folder location label</extracomment>
-        <translation>Ubicación de la carpeta del wallet</translation>
+        <translation>Localização da pasta da carteira</translation>
     </message>
     <message id="settings-apply">
         <source>Apply changes</source>
         <extracomment>settings tab, node section, apply button</extracomment>
-        <translation>Realizar cambios</translation>
+        <translation>Aplicar as alterações</translation>
     </message>
     <message id="logo-description">
         <source>Confidential DeFi Platform and Cryptocurrency</source>
-        <translation>Plataforma Confidencial DeFi y Criptomoneda</translation>
+        <translation>Criptomoeda e Plataforma DeFi\nConfidenciais</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
-        <translation>Por favor, introduce la contraseña antigua</translation>
+        <translation>Por favor, insira a senha antiga</translation>
     </message>
     <message id="change-pwd-new-empty">
         <source>Please, enter new password</source>
-        <translation>Por favor, introduce la nueva contraseña</translation>
+        <translation>Por favor, digite a nova senha</translation>
     </message>
     <message id="change-pwd-confirm-empty">
         <source>Please, confirm new password</source>
-        <translation>Por favor, confirma la nueva contraseña</translation>
+        <translation>Por favor, confirme a nova senha</translation>
     </message>
     <message id="change-pwd-new-same-as-old">
         <source>New password cannot be the same as old</source>
-        <translation>La nueva contraseña no puede ser la misma que la anterior</translation>
+        <translation>A nova senha não pode ser igual à antiga</translation>
     </message>
     <message id="change-pwd-confirm-fail">
         <source>New password doesn&apos;t match the confirm password</source>
-        <translation>La nueva contraseña no coincide con la contraseña confirmada</translation>
+        <translation>A nova senha não corresponde à senha confirmada</translation>
     </message>
     <message id="change-pwd-old-fail">
         <source>The old password you have entered is incorrect</source>
-        <translation>La antigua contraseña que has introducido no es correcta</translation>
+        <translation>A senha antiga que você digitou está incorreta</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
         <source>Enter old password</source>
-        <translation>Introduce la contraseña antigua</translation>
+        <translation>Digite a senha antiga</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
-        <translation>Introduce la nueva contraseña</translation>
+        <translation>Digite a nova senha</translation>
     </message>
     <message id="change-pwd-confirm-pwd-label">
         <source>Confirm new password</source>
-        <translation>Confirma la nueva contraseña</translation>
+        <translation>Confirme a nova senha</translation>
     </message>
     <message id="change-pwd-ok">
         <source>Change password</source>
-        <translation>Cambia la contraseña</translation>
+        <translation>Mudar Senha</translation>
     </message>
     <message id="start-open-pwd-invitation">
         <source>Enter your password to access the wallet</source>
-        <translation>Introduce tu contraseña para acceder al wallet</translation>
+        <translation>Digite sua senha para acessar a carteira</translation>
     </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
-        <translation>Mostrar mi wallet</translation>
+        <translation>Mostrar minha carteira</translation>
     </message>
     <message id="payment-info-proof-verification">
         <source>Payment proof verification</source>
-        <translation>Verificación de prueba de pago</translation>
+        <translation>Verificação de prova de pagamento</translation>
     </message>
     <message id="payment-info-proof-label">
         <source>Paste your payment proof here</source>
-        <translation>Pega tu comprobante de pago aquí</translation>
+        <translation>Cole a sua prova de pagamento aqui</translation>
     </message>
     <message id="payment-info-proof-decode-fail">
         <source>Cannot decode a proof, illegal sequence.</source>
-        <translation>No se puede descodificar la prueba, secuencia ilegal.</translation>
+        <translation>Não é possível decodificar a prova, sequência ilegal.</translation>
     </message>
     <message id="payment-info-proof-code-label">
         <source>Code</source>
@@ -347,19 +347,19 @@
     </message>
     <message id="payment-info-proof-sender-label">
         <source>Sender</source>
-        <translation>Remitente</translation>
+        <translation>Remetente</translation>
     </message>
     <message id="payment-info-proof-receiver-label">
         <source>Receiver</source>
-        <translation>Destinatario</translation>
+        <translation>Destinatário</translation>
     </message>
     <message id="payment-info-copy-details-button">
         <source>Copy details</source>
-        <translation>Copia los detalles</translation>
+        <translation>Copiar detalhes</translation>
     </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
-        <translation>Prueba de nuevo</translation>
+        <translation>Tente novamente</translation>
     </message>
     <message id="status-connecting">
         <source>connecting</source>
@@ -367,70 +367,70 @@
     </message>
     <message id="status-online">
         <source>online</source>
-        <translation>conectado</translation>
+        <translation>online</translation>
     </message>
     <message id="status-updating">
         <source>updating</source>
-        <translation>actualizando</translation>
+        <translation>atualizando</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
         <extracomment>settings tab, report problem section, save logs button</extracomment>
-        <translation>Guardar registros del wallet</translation>
+        <translation>Salvar logs da carteira</translation>
     </message>
     <message id="settings-rescan-confirmation-message-line-2">
         <source>Are you sure?</source>
         <extracomment>settings tab, confirm rescan dialog additional message</extracomment>
-        <translation>¿Estás seguro?</translation>
+        <translation>Você tem certeza?</translation>
     </message>
     <message id="settings-title">
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation>Confirgurações</translation>
     </message>
     <message id="cant-send-to-expired-message">
         <source>Can&apos;t send to the expired address.</source>
-        <translation>No se puede enviar a la dirección caducada.</translation>
+        <translation>Não pode enviar para endereço expirado.</translation>
     </message>
     <message id="send-confirmation-title">
         <source>Confirm transaction details</source>
-        <translation>Confirmar los detalles de la transacción</translation>
+        <translation>Confirmar detalhes da transação</translation>
     </message>
     <message id="send-confirmation-recipient-label">
         <source>Recipient</source>
-        <translation>Destinatario</translation>
+        <translation>Destinatário</translation>
     </message>
     <message id="send-confirmation-pwd-require-message">
         <source>To approve the transaction please enter your password</source>
-        <translation>Introduzca su contraseña para aprobar la transacción</translation>
+        <translation>Para aprovar a transação, digite sua senha</translation>
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
-        <translation>Wallet</translation>
+        <translation>Carteira</translation>
     </message>
     <message id="start-restore-confirm-button">
         <source>I agree</source>
-        <translation>Estoy de acuerdo</translation>
+        <translation>Eu concordo</translation>
     </message>
     <message id="start-restore-message-line">
         <source>You are trying to restore an existing Beam Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</source>
-        <translation>Está intentando restaurar un monedero de Beam existente. Tenga en cuenta que si usa su monedero en otro dispositivo, su saldo estará actualizado, pero el historial de transacciones y las direcciones se guardarán por separado en cada dispositivo.</translation>
+        <translation>Você está tentando restaurar uma Carteira de Beam existente. Por favor, note que se você usar sua carteira em outro dispositivo, seu saldo estará atualizado, mas o histórico de transações e endereços serão mantidos separadamente em cada dispositivo.</translation>
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v </source>
-        <translation>Su wallet se migrará a v </translation>
+        <translation>Sua carteira será migrada para v </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
         <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>iniciar migración automática</translation>
+        <translation>iniciar migração automática</translation>
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>Nome</translation>
     </message>
     <message id="start-select-db-thead-size">
         <source>Size</source>
-        <translation>Tamaño</translation>
+        <translation>Tamanho</translation>
     </message>
     <message id="kb-unit">
         <source>kb</source>
@@ -439,79 +439,79 @@
     <message id="start-select-db-thead-modified">
         <source>Date modified</source>
         <extracomment>start screen, select db for migration, Date modified column title</extracomment>
-        <translation>Fecha modificada</translation>
+        <translation>Data de modificação</translation>
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create new wallet with generating seed phrase.</source>
-        <translation>Crear nuevo wallet generando la frase semilla.</translation>
+        <translation>Criar uma nova carteira com geração de palavras-chave.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
-        <translation>Si alguna vez pierde su dispositivo, necesitará esta frase para recuperar su wallet!</translation>
+        <translation>Se você perder seu dispositivo, você precisará destas palavras-chave para recuperar sua carteira!</translation>
     </message>
     <message id="start-create-new-securiry-note-1">
         <source>Do not let anyone see your seed phrase</source>
-        <translation>No dejes que nadie vea tu frase semilla</translation>
+        <translation>Não deixe ninguém ver suas palavras-chave</translation>
     </message>
     <message id="start-create-new-securiry-note-2">
         <source>Never type your seed phrase into password managers or elsewhere</source>
-        <translation>Nunca escriba su frase semilla en los administradores de contraseñas o en otro lugar</translation>
+        <translation>Nunca digite suas palavras-chave em gerenciadores de senhas ou em outro lugar</translation>
     </message>
     <message id="start-create-new-securiry-note-3">
         <source>Keep the copies of your seed phrase in a safe place</source>
-        <translation>Guarde las copias de su frase semilla en un lugar seguro</translation>
+        <translation>Guarde as cópias de suas palavras-chave em um lugar seguro</translation>
     </message>
     <message id="start-generate-seed-phrase-button">
         <source>Generate seed phrase</source>
-        <translation>Generar frase semilla</translation>
+        <translation>Gerar palavras-chave</translation>
     </message>
     <message id="start-generate-seed-phrase-message">
         <source>Your seed phrase is the access key to all the cryptocurrencies in your wallet. Write down the phrase to keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
-        <translation>Su frase semilla es la clave de acceso a todas las criptomonedas en su wallet. Escriba la frase para guardarla en un lugar seguro o caja de seguridad. Sin la frase no podrás recuperar tu dinero.</translation>
+        <translation>Suas palavras-chave é a chave de acesso para todas as criptomoedas da sua carteira. Anote as palavras-chave para mantê-las em um cofre seguro ou em um lugar trancado. Sem as palavras-chave, você não poderá recuperar seu dinheiro.</translation>
     </message>
     <message id="start-confirm-seed-phrase-button">
         <source>I understand</source>
-        <translation>Lo entiendo</translation>
+        <translation>Entendi</translation>
     </message>
     <message id="start-confirm-seed-phrase-message">
         <source>It is strictly recommended to write down the seed phrase on a paper. Storing it in a file makes it prone to cyber attacks and, therefore, less secure.</source>
-        <translation>Se recomienda estrictamente anotar la frase semilla en un papel. Almacenarla en un archivo digital lo hace propenso a ataques cibernéticos y, por lo tanto, menos seguro.</translation>
+        <translation>É estritamente recomendado que as palavras-chave sejam escritas num papel. Armazená-las em um arquivo as torna propensas a ataques cibernéticos e, portanto, menos seguras.</translation>
     </message>
     <message id="start-check-seed-phrase-message">
         <source>To ensure the seed phrase is written down, please fill-in the specific words below</source>
-        <translation>Para asegurarse de que la frase semilla esté bien escrita, complete las palabras específicas a continuación</translation>
+        <translation>Para garantir que as palavras-chave sejam bem anotadas, preencha as palavras específicas abaixo</translation>
     </message>
     <message id="start-restore-message">
         <source>Type in or paste your seed phrase</source>
-        <translation>Escribe o pega tu frase semilla</translation>
+        <translation>Digite ou cole suas palavras-chave</translation>
     </message>
     <message id="start-create-pwd-message">
         <source>Create password to access your wallet</source>
-        <translation>Crea la contraseña para acceder a tu wallet</translation>
+        <translation>Criar senha para acessar sua carteira</translation>
     </message>
     <message id="start-pwd-label">
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>Senha</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
-        <translation>Confirmación de contraseña</translation>
+        <translation>Confirmação de senha</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>
-        <translation>Las contraseñas no coinciden</translation>
+        <translation>As senhas não coincidem</translation>
     </message>
     <message id="start-node-title">
         <source>Setup node connectivity</source>
-        <translation>Configuración de conectividad del nodo</translation>
+        <translation>Configurar conectividade do nó</translation>
     </message>
     <message id="start-node-integrated-radio">
         <source>Run integrated node (recommended)</source>
-        <translation>Ejecutar nodo integrado (recomendado)</translation>
+        <translation>Executar nó integrado (recomendado)</translation>
     </message>
     <message id="start-node-port-label">
         <source>Enter port to listen</source>
-        <translation>Introduce puerto para escuchar</translation>
+        <translation>Digite a porta a ouvir</translation>
     </message>
     <message id="start-node-peer-label">
         <source>Peer</source>
@@ -519,155 +519,155 @@
     </message>
     <message id="start-node-random-radio">
         <source>Connect to random remote node</source>
-        <translation>Conectar al nodo remoto aleatorio</translation>
+        <translation>Conectar a um nó remoto aleatório</translation>
     </message>
     <message id="start-node-remote-radio">
         <source>Connect to specific remote node</source>
-        <translation>Conectar al nodo remoto específico</translation>
+        <translation>Conectar a um nó remoto específico</translation>
     </message>
     <message id="start-node-port-empty-error">
         <source>Please specify port</source>
-        <translation>Por favor, especifique el número de puerto para escucharlo</translation>
+        <translation>Por favor, especifique porta</translation>
     </message>
     <message id="start-node-port-value-error">
         <source>Port must be a number between 1 and 65535</source>
-        <translation>El puerto debe ser un número entre 1 y 65535</translation>
+        <translation>A porta deve ser um número entre 1 e 65535</translation>
     </message>
     <message id="start-node-peer-empty-error">
         <source>Please specify peer</source>
-        <translation>Por favor, especifica el par</translation>
+        <translation>Por favor, especifique o par</translation>
     </message>
     <message id="start-node-peer-error">
         <source>Incorrect address</source>
-        <translation>Dirección incorrecta</translation>
+        <translation>Endereço incorreto</translation>
     </message>
     <message id="start-node-empty-error">
         <source>Please specify address of the remote node</source>
-        <translation>Por favor, especifica la dirección del nodo remoto</translation>
+        <translation>Por favor, especifique o endereço do nó remoto</translation>
     </message>
     <message id="appmodel-failed-start-node">
         <source>Failed to start node. Please save wallet logs and contact support.</source>
-        <translation>Fallo al iniciar el nodo. Favor guarde los registros del wallet y contacte a soporte.</translation>
+        <translation>Falha ao iniciar o nó. Salve os logs da carteira e entre em contato com o suporte.</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
         <source>Node protocol error!</source>
-        <translation>Error del protocolo del nodo!</translation>
+        <translation>Erro de protocolo de nó!</translation>
     </message>
     <message id="wallet-model-incompatible-peer-error">
         <source>You are trying to connect to incompatible peer.</source>
-        <translation>Estás tratando de conectarte con un par incompatible.</translation>
+        <translation>Você está tentando se conectar a um par incompatível.</translation>
     </message>
     <message id="wallet-model-connection-base-error">
         <source>Connection error</source>
-        <translation>Error de conexión</translation>
+        <translation>Erro de conexão</translation>
     </message>
     <message id="wallet-model-connection-time-out-error">
         <source>Connection timed out</source>
-        <translation>Tiempo de conexión agotado</translation>
+        <translation>A conexão expirou</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
         <source>Connection to %1 node lost</source>
-        <translation>Perdida la conexión al nodo %1</translation>
+        <translation>Conexão com o nó %1 perdida</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
-        <translation>El nodo es inalcanzable</translation>
+        <translation>O nó está inacessível</translation>
     </message>
     <message id="wallet-model-connection-addr-in-use-error">
         <source>The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings.</source>
-        <translation>El puerto 1% ya está en uso. Compruebe si ya se está ejecutando una wallet en esta máquina o cambie la configuración del puerto.</translation>
+        <translation>A porta %1 já está em uso. Verifique se uma carteira já está em execução nesta máquina ou altere as configurações da porta.</translation>
     </message>
     <message id="wallet-model-time-sync-error">
         <source>System time not synchronized</source>
-        <translation>La hora del sistema no está sincronizada</translation>
+        <translation>Hora do sistema não sincronizada</translation>
     </message>
     <message id="wallet-model-host-unresolved-error">
         <source>Incorrect node name or no Internet connection.</source>
-        <translation>Nombre de nodo incorrecto o sin conexión a Internet.</translation>
+        <translation>Nome de nó incorreto ou sem conexão internet.</translation>
     </message>
     <message id="wallet-model-undefined-error">
         <source>Unexpected error!</source>
-        <translation>¡Error inesperado!</translation>
+        <translation>Erro inesperado!</translation>
     </message>
     <message id="wallet-model-data-location-error">
         <source>Failed to start wallet. Please check your wallet data location</source>
-        <translation>No se pudo iniciar el wallet. Por favor, compruebe la ubicación de los datos de su wallet</translation>
+        <translation>Falha ao iniciar a carteira. Por favor, verifique a localização de dados da sua carteira</translation>
     </message>
     <message id="loading-view-download-blocks">
         <source>Syncing with the blockchain: </source>
-        <translation>Sincronizando la blockchain: </translation>
+        <translation>Sincronizando com a blockchain: </translation>
     </message>
     <message id="loading-view-protocol-error">
         <source>Incompatible peer</source>
-        <translation>Par incompatible</translation>
+        <translation>Par incompatível</translation>
     </message>
     <message id="loading-view-connection-error">
         <source>Connection error</source>
-        <translation>Error de conexión</translation>
+        <translation>Erro de conexão</translation>
     </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
-        <translation>SQLite archivo de la base de datos (*.db)</translation>
+        <translation>Arquivo de banco de dados SQLite (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
         <source>Connection to %1 nodes lost</source>
-        <translation>Perdida la conexión a %1 nodos</translation>
+        <translation>Conexão com nós %1 perdida</translation>
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>
-        <translation>Razón inesperada, envíe registros de la wallet al soporte de Beam</translation>
+        <translation>Razão inesperada, por favor envie os logs da carteira para o suporte</translation>
     </message>
     <message id="tx-failure-cancelled">
         <source>Transaction cancelled</source>
-        <translation>Transacción cancelada</translation>
+        <translation>Transação cancelada</translation>
     </message>
     <message id="tx-failure-receiver-signature-invalid">
         <source>Receiver signature in not valid, please send wallet logs to Beam support</source>
-        <translation>La firma del destinatario no es válida, envíe los registros del wallet al soporte de Beam</translation>
+        <translation>Assinatura do destinatário não é válida, por favor, envie os logs da carteira para o suporte</translation>
     </message>
     <message id="tx-failure-not-registered-in-blockchain">
         <source>Failed to register transaction with the blockchain, see node logs for details</source>
-        <translation>Error al registrar la transacción con la blockchain, consulte los registros del nodo para obtener más detalles</translation>
+        <translation>Falha ao registrar a transação na blockchain, ver logs do nó para obter detalhes</translation>
     </message>
     <message id="tx-failure-not-valid">
         <source>Transaction is not valid, please send wallet logs to Beam support</source>
-        <translation>La transacción no es válida, envíe los registros del wallet al soporte de Beam</translation>
+        <translation>Transação não é válida, por favor envie os logs da carteira para o suporte</translation>
     </message>
     <message id="tx-failure-kernel-invalid">
         <source>Invalid kernel proof provided</source>
-        <translation>La prueba proporcionada del kernel es inválida</translation>
+        <translation>Prova de kernel fornecida inválida</translation>
     </message>
     <message id="tx-failure-parameters-not-sended">
         <source>Failed to send Transaction parameters</source>
-        <translation>Error al enviar los parámetros de transacción</translation>
+        <translation>Falha ao enviar parâmetros da transação</translation>
     </message>
     <message id="tx-failure-no-inputs">
         <source>Not enough inputs to process the transaction</source>
-        <translation>No hay suficientes inputs para procesar la transacción</translation>
+        <translation>Não há entradas suficientes para processar a transação</translation>
     </message>
     <message id="tx-failure-addr-expired">
         <source>Address is expired</source>
-        <translation>La dirección ha caducado</translation>
+        <translation>Endereço expirado</translation>
     </message>
     <message id="tx-failure-parameters-not-readed">
         <source>Failed to get transaction parameters</source>
-        <translation>Error al obtener los parámetros de transacción</translation>
+        <translation>Falha ao obter parâmetros de transação</translation>
     </message>
     <message id="tx-failure-time-out">
         <source>Transaction timed out</source>
-        <translation>Transacción expirada</translation>
+        <translation>Tempo limite da transação</translation>
     </message>
     <message id="tx-failure-not-signed-by-receiver">
         <source>Payment not signed by the receiver, please send wallet logs to Beam support</source>
-        <translation>El pago no está firmado por el destinatario, por favor envíe los registros del wallet al soporte de Beam</translation>
+        <translation>Pagamento não assinado pelo destinatário, por favor, envie os logs da carteira para o suporte</translation>
     </message>
     <message id="tx-failure-max-height-to-high">
         <source>Kernel maximum height is too high</source>
-        <translation>La altura máxima del Kernel es demasiado alta</translation>
+        <translation>A altura máxima do kernel é muito alta</translation>
     </message>
     <message id="tx-failure-invalid-state">
         <source>Transaction has invalid state</source>
-        <translation>La transacción tiene un estado inválido</translation>
+        <translation>Transação tem estado inválido</translation>
     </message>
     <message id="utxo-utxo">
         <source>UTXO</source>
@@ -699,7 +699,7 @@
     </message>
     <message id="appmodel-failed-time-not-synced">
         <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
-        <translation>Error al iniciar el nodo integrado: la configuración de la zona horaria de su máquina no está sincronizada. Por favor, corríjalo y reinicie el wallet.</translation>
+        <translation>Falha ao iniciar o nó integrado: as configurações de fuso horário da sua máquina não estão sincronizadas. Por favor, corrija-as e reinicie a carteira.</translation>
     </message>
     <message id="settings-general-language">
         <source>Language</source>
@@ -708,35 +708,35 @@
     </message>
     <message id="open-external-open">
         <source>open</source>
-        <translation>abierta</translation>
+        <translation>abrir</translation>
     </message>
     <message id="open-external-title">
         <source>External link</source>
-        <translation>Enlace externo</translation>
+        <translation>Link externo</translation>
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
-        <translation>La aplicación Beam Wallet requiere de su permiso para abrir un enlace externo en el navegador. Esta acción expondrá su IP al servidor web. Para evitarlo, elija &quot;Cancelar&quot;. Puede cambiar su elección en la configuración de la aplicación en cualquier momento.</translation>
+        <translation>O aplicativo Beam Wallet requer permissão para abrir um link externo no navegador. Esta ação irá expor seu IP ao servidor web. Para evitar isso, escolha &quot;Cancelar&quot;. Você pode alterar sua escolha na configuração do aplicativo a qualquer momento.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
-        <translation>Si restaura un wallet, se perderán todas las direcciones y el historial de transacciones.</translation>
+        <translation>Se você restaurará uma carteira todo o histórico de transações e endereços serão perdidos.</translation>
     </message>
     <message id="loading-restore-message-line1">
         <source>Please wait for synchronization and do not close or minimize the application.</source>
-        <translation>Por favor espere a la sincronización y no cierre ni minimice la aplicación.</translation>
+        <translation>Por favor aguarde a sincronização e não feche ou minimize o aplicativo.</translation>
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
-        <translation>Solo se puede restaurar el saldo del wallet (UTXO), la información de las transacciones siempre es privada y nunca se mantiene en la blockchain.</translation>
+        <translation>Apenas o saldo da carteira (UTXO) pode ser restaurado, as informações da transação e endereços são sempre privados e nunca mantidos na blockchain.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
-        <translation>Introduce la nueva contraseña</translation>
+        <translation>Criar nova senha</translation>
     </message>
     <message id="start-recovery-pwd-message">
         <source>Create new password to access your wallet</source>
-        <translation>Crea una nueva contraseña para acceder a tu wallet</translation>
+        <translation>Criar nova senha para acessar sua carteira</translation>
     </message>
     <message id="start-create-pwd-strength-message">
         <source>Strong password needs to meet the following requirements:
@@ -744,15 +744,15 @@
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
 •  must contain at least one number</source>
-        <translation>La contraseña segura debe cumplir los siguientes requisitos:
-• la longitud debe ser de al menos 10 caracteres
-• debe contener al menos una letra minúscula
-• debe contener al menos una letra mayúscula
-• debe contener al menos un número</translation>
+        <translation>A senha forte precisa atender aos seguintes requisitos:
+• deve ter pelo menos 10 caracteres
+• deve conter pelo menos uma letra minúscula
+• deve conter pelo menos uma letra maiúscula
+• deve conter pelo menos um número</translation>
     </message>
     <message id="start-open-caps-warning">
         <source>Caps lock is on!</source>
-        <translation>¡La tecla de mayúsculas está activada!</translation>
+        <translation>Caps Lock está ligado!</translation>
     </message>
     <message id="show-qr-title">
         <source>QR code</source>
@@ -762,30 +762,30 @@
     <message id="show-qr-tx-token-label">
         <source>Your address</source>
         <extracomment>show qr dialog address label</extracomment>
-        <translation>Tu dirección</translation>
+        <translation>Seu endereço</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
         <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation>Permitir el acceso a %1 y %2
-(para obtener intercambios y datos de transacción)</translation>
+        <translation>Permitir acesso a %1 e %2
+(para buscar dados das transações e câmbio)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Haga clic en “Guardar registros de wallet” y elija una carpeta de destino para el archivo de registro</translation>
+        <translation>1. Clique em &quot;Salvar logs de carteira&quot; e escolha uma pasta de destino para o arquivo de log</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. Enviar email a %1 o abrir ticket en %2</translation>
+        <translation>2. Envie e-mail para %1 ou abra um ticket em %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. No olvide adjuntar los archivos de registro</translation>
+        <translation>3. Não se esqueça de anexar os arquivos de logs</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
-        <translation>explorador de la blockchain</translation>
+        <translation>Explorador de blockchain</translation>
     </message>
     <message id="time-never">
         <source>Never</source>
@@ -794,112 +794,112 @@
     <message id="start-pwd-difficulty-very-weak">
         <source>Very weak password</source>
         <extracomment>set passwort, difficulty message, very weak</extracomment>
-        <translation>Contraseña muy débil</translation>
+        <translation>Senha muito fraca</translation>
     </message>
     <message id="start-pwd-difficulty-weak">
         <source>Weak password</source>
         <extracomment>set passwort, difficulty message, weak</extracomment>
-        <translation>Contraseña débil</translation>
+        <translation>Senha fraca</translation>
     </message>
     <message id="start-pwd-difficulty-medium">
         <source>Medium strength password</source>
         <extracomment>set passwort, difficulty message, medium</extracomment>
-        <translation>Contraseña de resistencia media</translation>
+        <translation>Senha de força média</translation>
     </message>
     <message id="start-pwd-difficulty-strong">
         <source>Strong password</source>
         <extracomment>set passwort, difficulty message, strong</extracomment>
-        <translation>Contraseña segura</translation>
+        <translation>Senha forte</translation>
     </message>
     <message id="start-pwd-difficulty-very-strong">
         <source>Very strong password</source>
         <extracomment>set passwort, difficulty message, very strong</extracomment>
-        <translation>Contraseña muy segura</translation>
+        <translation>Senha muito forte</translation>
     </message>
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
         <extracomment>start screen, select db for migration, best match label</extracomment>
-        <translation>(mejor juego)</translation>
+        <translation>(melhor correspondência)</translation>
     </message>
     <message id="start-select-db-thead-created">
         <source>Date created</source>
         <extracomment>start screen, select db for migration, Date created column title</extracomment>
-        <translation>Hecha de creación</translation>
+        <translation>Data de criação</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-title">
         <source>Don&apos;t ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if checked</extracomment>
-        <translation>No preguntar contraseña en cada envío</translation>
+        <translation>Não perguntar a senha a cada Envio</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-message">
         <source>Password verification is required to change that setting</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
-        <translation>Hay que verificar la contraseña para cambiar esa configuración</translation>
+        <translation>Verificação de senha é necessária para alterar essa configuração</translation>
     </message>
     <message id="restore-finish-alert-button">
         <source>I understand</source>
-        <translation>Lo entiendo</translation>
+        <translation>Eu entendo</translation>
     </message>
     <message id="restore-finish-alert-title">
         <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>No ejecutar simultáneamente dos wallets iniciados desde la misma frase de semilla</translation>
+        <translation>Não execute simultaneamente duas carteiras iniciadas a partir das mesmas palavras-chave</translation>
     </message>
     <message id="restore-finish-alert-message-line">
         <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>No utilice la misma frase de semilla en varios dispositivos, su saldo y la lista de transacciones no se sincronizarán.</translation>
+        <translation>Não use as mesmas palavras-chave em vários dispositivos, seu saldo e sua lista de transações não serão sincronizados.</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
-        <translation>La Subtransacción ha fallado</translation>
+        <translation>Subtransação falhou</translation>
     </message>
     <message id="tx-failure-invalid-contract-amount">
         <source>Contract&apos;s amount is not valid</source>
-        <translation>El monto del contrato no es válido</translation>
+        <translation>Valor do contrato não é válido</translation>
     </message>
     <message id="tx-failure-invalid-sidechain-contract">
         <source>Side chain has invalid contract</source>
-        <translation>La Sidechain tiene un contrato inválido</translation>
+        <translation>A sidechain tem um contrato inválido</translation>
     </message>
     <message id="tx-failure-sidechain-internal-error">
         <source>Side chain bridge has internal error</source>
-        <translation>El puente de la Sidechain tiene un error interno</translation>
+        <translation>A ponte de sidechain tem um erro interno</translation>
     </message>
     <message id="tx-failure-sidechain-network-error">
         <source>Side chain bridge has network error</source>
-        <translation>El puente de la Sidechain tiene un error de red</translation>
+        <translation>A ponte de sidechain tem erro de rede</translation>
     </message>
     <message id="tx-failure-invalid-sidechain-response-format">
         <source>Side chain bridge has response format error</source>
-        <translation>El puente de Sidechain tiene un error en el formato de respuesta</translation>
+        <translation>Ponte de sidechain tem erro no formato de resposta</translation>
     </message>
     <message id="tx-failure-invalid-side-chain-credentials">
         <source>Invalid credentials of Side chain</source>
-        <translation>Credenciales no válidas de la Side Chain</translation>
+        <translation>Credenciais inválidas da sidechain</translation>
     </message>
     <message id="tx-failure-not-enough-time-btc-lock">
         <source>Not enough time to finish btc lock transaction</source>
-        <translation>No hay suficiente tiempo para terminar la transacción de bloqueo btc</translation>
+        <translation>Não há tempo suficiente para terminar a transação de bloqueio btc</translation>
     </message>
     <message id="tx-failure-create-multisig">
         <source>Failed to create multi-signature</source>
-        <translation>Error al crear la firma múltiple</translation>
+        <translation>Falha ao criar multi-assinatura</translation>
     </message>
     <message id="tx-failure-fee-too-small">
         <source>Fee is too small</source>
-        <translation>La tarifa es demasiado baja</translation>
+        <translation>A taxa é muito pequena</translation>
     </message>
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
-        <translation>
+        <translation type="unfinished">
             <numerusform>%n minuto(s)</numerusform>
-            <numerusform>%n minuto(s)</numerusform>
+            <numerusform>%n minute(s)</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
-        <translation>
+        <translation type="unfinished">
             <numerusform>%n segundo(s)</numerusform>
-            <numerusform>%n segundo(s)</numerusform>
+            <numerusform>%n second(s)</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-time">
@@ -908,51 +908,51 @@
     </message>
     <message id="general-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>%1 Tarifa de transacción</translation>
+        <translation>Taxa de transação %1</translation>
     </message>
     <message id="general-change-settings">
         <source>Change settings</source>
-        <translation>Cambiar ajustes</translation>
+        <translation>Alterar configurações</translation>
     </message>
     <message id="general-swap">
         <source>Swap</source>
-        <translation>Intercambiar</translation>
+        <translation>Swap</translation>
     </message>
     <message id="settings-node-address">
         <source>Node address</source>
-        <translation>Dirección del nodo</translation>
+        <translation>Endereço do nó</translation>
     </message>
     <message id="settings-username">
         <source>Username</source>
-        <translation>Nombre de usuario</translation>
+        <translation>Usuário</translation>
     </message>
     <message id="settings-password">
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>Senha</translation>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
-        <translation>Recibir cantidad</translation>
+        <translation>Receber valor</translation>
     </message>
     <message id="sent-amount-label">
         <source>Send amount</source>
-        <translation>Enviar cantidad</translation>
+        <translation>Enviar valor</translation>
     </message>
     <message id="general-rate">
         <source>Exchange rate</source>
-        <translation>Tipo de cambio</translation>
+        <translation>Taxa de Câmbio</translation>
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Swap Offer</source>
-        <translation>Cambiar monedas</translation>
+        <translation>Aceitar Oferta de Swap</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
-        <translation>Token de intercambio inválido</translation>
+        <translation>Token de swap inválido</translation>
     </message>
     <message id="general-comment-local">
         <source>Comments are local and won&apos;t be shared</source>
-        <translation>Los comentarios son locales y no se compartirán</translation>
+        <translation>Comentários são locais e não serão compartilhados</translation>
     </message>
     <message id="general-bitcoin">
         <source>Bitcoin</source>
@@ -973,24 +973,24 @@
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
 please review your settings and try again</source>
-        <translation>%1 no está conectado,
-por favor revise su configuración e inténtelo de nuevo.</translation>
+        <translation>%1 não está conectado, 
+por favor, verifique suas configurações e tente novamente</translation>
     </message>
     <message id="send-not-enough">
         <source>There is not enough funds to complete the transaction</source>
-        <translation>No hay suficientes fondos para completar la transacción</translation>
+        <translation>Não há fundos suficientes para concluir a transação</translation>
     </message>
     <message id="wallet-send-swap-offered-label">
         <source>Offered on</source>
-        <translation>Ofrecido en</translation>
+        <translation>Oferecido em</translation>
     </message>
     <message id="wallet-send-swap-expires-label">
         <source>Expires on</source>
-        <translation>Caduca en</translation>
+        <translation>Expira em</translation>
     </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating estimated time</source>
-        <translation>calculando el tiempo estimado</translation>
+        <translation>calculando tempo estimado</translation>
     </message>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
@@ -1001,35 +1001,35 @@ por favor revise su configuración e inténtelo de nuevo.</translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
-        <translation>Puede tardar más de lo habitual. Por favor, compruebe su red.</translation>
+        <translation>Pode demorar mais do que o habitual. Por favor, verifique a sua rede.</translation>
     </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
-        <translation>Crear nueva wallet Trezor</translation>
+        <translation>Criar nova carteira Trezor</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Para que la transacción se complete, el destinatario debe conectarse dentro de las próximas 12 horas y usted debe conectarse dentro de las 2 horas posteriores.</translation>
+        <translation>Para que a transação seja concluída, o beneficiário deve pasar online nas próximas 12 horas e você deve aparecer online dentro de 2 horas depois.</translation>
     </message>
     <message id="trezor-message">
         <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>Por favor, mire su dispositivo Trezor para completar las acciones...</translation>
+        <translation>Por favor, olhe o seu dispositivo Trezor para concluir as ações...</translation>
     </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
-        <translation>Wallet de inicio con Trezor</translation>
+        <translation>Carteira inicial com Trezor</translation>
     </message>
     <message id="start-import-trezor-owner-key">
         <source>Import Trezor Owner Key</source>
-        <translation>Importar Clave Propietaria de Trezor</translation>
+        <translation>Importar Chave de Proprietário Trezor</translation>
     </message>
     <message id="start-owner-key-imported">
         <source>Owner Key imported. Please, enter the password you saw on device to decrypt your Owner Key.</source>
-        <translation>Clave de propietario importada. Por favor, introduzca la contraseña que ha visto en el dispositivo para descifrar su Clave Propietaria.</translation>
+        <translation>Chave de proprietário importada. Por favor, digite a senha que você viu no dispositivo para descriptografar a chave de proprietário.</translation>
     </message>
     <message id="start-look-at-trezor-to-complete-actions">
         <source>Please, look at your Trezor to complete actions...</source>
-        <translation>Por favor, mire su Trezor para completar las acciones...</translation>
+        <translation>Por favor, olhe o seu Trezor para concluir as ações...</translation>
     </message>
     <message id="start-found-trezor-device">
         <source>Found device:</source>
@@ -1037,146 +1037,145 @@ por favor revise su configuración e inténtelo de nuevo.</translation>
     </message>
     <message id="start-no-trezor-device-connected">
         <source>There is no device connected, please, connect your hardware wallet.</source>
-        <translation>No hay dispositivo conectado, por favor, conecte el dispositivo físico de su wallet.</translation>
+        <translation>Não há nenhum dispositivo conectado, por favor, conecte sua carteira física.</translation>
     </message>
     <message id="wallet-model-device-not-connected">
         <source>There is no Trezor device connected. Please, connect and try again.</source>
-        <translation>No hay ningún dispositivo Trezor conectado. Por favor, conéctate e inténtalo de nuevo.</translation>
+        <translation>Não há nenhum dispositivo Trezor conectado. Por favor, conecte-se e tente novamente.</translation>
     </message>
     <message id="send-less-than-fee">
         <source>The swap amount must be greater than the transaction fee</source>
-        <translation>La cantidad de intercambio debe ser mayor que la tarifa de reembolso.</translation>
+        <translation>O valor de swap deve ser maior do que a taxa de transação</translation>
     </message>
     <message id="wallet-txs-status-in-progress">
         <source>in progress</source>
-        <translation>en curso</translation>
+        <translation>em andamento</translation>
     </message>
     <message id="wallet-txs-status-own-sent">
         <source>sent to own address</source>
-        <translation>enviado a tu dirección</translation>
+        <translation>enviado para endereço próprio</translation>
     </message>
     <message id="wallet-txs-status-own-sending">
         <source>sending to own address</source>
-        <translation>enviando a dirección propia</translation>
+        <translation>enviando para endereço próprio</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
-        <translation>Nodo</translation>
+        <translation>Nó</translation>
     </message>
     <message id="wallet-clear-search">
         <source>Clear search</source>
-        <translation>Borrar búsqueda</translation>
+        <translation>Limpar pesquisa</translation>
     </message>
     <message id="wallet-search">
         <source>Search</source>
-        <translation>Buscar</translation>
+        <translation>Pesquisa</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
-        <translation>Lo entiendo</translation>
+        <translation>Eu entendo</translation>
     </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
-        <translation>No se acepta la oferta propia</translation>
+        <translation>Você não pode aceitar a sua própria oferta</translation>
     </message>
     <message id="accept-own-offer-allert-body">
         <source>The swap token was generated by you, and therefore cannot be accepted.</source>
-        <translation>El token de transacción fue generado por usted, por lo tanto no está permitido aceptar su propia oferta.
-Por favor, compruebe el token de intercambio e inténtelo de nuevo.</translation>
+        <translation>O token de swap foi gerado por você e, portanto, não pode ser aceito.</translation>
     </message>
     <message id="swap-details-lock-tx-id">
         <source>lock transaction ID</source>
-        <translation>bloquear ID de transacción</translation>
+        <translation>ID de transação de bloqueio</translation>
     </message>
     <message id="swap-details-lock-tx-conf">
         <source>lock transaction confirmations</source>
-        <translation>bloquear confirmaciones de transacciones</translation>
+        <translation>confirmações de transação de bloqueio</translation>
     </message>
     <message id="swap-details-beam-lock-kernel-id">
         <source>BEAM lock transaction kernel ID</source>
-        <translation>BEAM bloquea la transacción del ID del kernel</translation>
+        <translation>ID do kernel de transação de bloqueio de BEAM</translation>
     </message>
     <message id="swap-details-beam-redeem-kernel-id">
         <source>BEAM redeem transaction kernel ID</source>
-        <translation>Redimir transacción del Kernel ID de BEAM</translation>
+        <translation>ID do kernel de transação de resgate de BEAM</translation>
     </message>
     <message id="swap-details-redeem-tx-id">
         <source>redeem transaction ID</source>
-        <translation>redimir ID de transacción</translation>
+        <translation>ID de transação de resgate</translation>
     </message>
     <message id="swap-details-redeem-tx-conf">
         <source>redeem transaction confirmations</source>
-        <translation>redimir confirmación de transacción</translation>
+        <translation>confirmações de transação de resgate</translation>
     </message>
     <message id="swap-details-beam-refund-kernel-id">
         <source>BEAM refund transaction kernel ID</source>
-        <translation>BEAM devolución de la transacción del ID del kernel</translation>
+        <translation>ID do kernel de transação de reembolso de BEAM</translation>
     </message>
     <message id="swap-details-refund-tx-id">
         <source>refund transaction ID</source>
-        <translation>reembolso ID de transacción</translation>
+        <translation>ID de transação de reembolso</translation>
     </message>
     <message id="swap-details-refund-tx-conf">
         <source>refund transaction confirmations</source>
-        <translation>reembolsar confirmaciones de transacciones</translation>
+        <translation>confirmações de transação de reembolso</translation>
     </message>
     <message id="swap-details-tx-id">
         <source>Transaction ID</source>
-        <translation>ID de la transacción</translation>
+        <translation>ID da transação</translation>
     </message>
     <message id="swap-details-tx-fee">
         <source>BEAM Transaction fee</source>
-        <translation>Tarifa de la transacción</translation>
+        <translation>Taxa de Transação BEAM</translation>
     </message>
     <message id="swap-details-tx-comment">
         <source>Comment</source>
-        <translation>Comentario</translation>
+        <translation>Comentário</translation>
     </message>
     <message id="swap-details-tx-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>%1 Tarifa de transacción</translation>
+        <translation>Taxa de transação %1</translation>
     </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
-        <translation>Nodo Bitcoin</translation>
+        <translation>Nó Bitcoin</translation>
     </message>
     <message id="settings-swap-litecoin-node">
         <source>Litecoin node</source>
-        <translation>Nodo litecoin</translation>
+        <translation>Nó Litecoin</translation>
     </message>
     <message id="settings-swap-qtum-node">
         <source>Qtum node</source>
-        <translation>Nodo de Qtum</translation>
+        <translation>Nó Qtum</translation>
     </message>
     <message id="settings-swap-bitcoin-electrum">
         <source>Bitcoin electrum</source>
-        <translation>Bitcoin electrum</translation>
+        <translation>Electrum Bitcoin</translation>
     </message>
     <message id="settings-swap-litecoin-electrum">
         <source>Litecoin electrum</source>
-        <translation>Litecoin electrum</translation>
+        <translation>Electrum Litecoin</translation>
     </message>
     <message id="settings-swap-qtum-electrum">
         <source>Qtum electrum</source>
-        <translation>Qtum electrum</translation>
+        <translation>Electrum Qtum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
         <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <translation>La oferta con este token de transacción ya está aceptada.
-Por favor, comprueba el token de intercambio e inténtalo de nuevo.</translation>
+        <translation>A oferta com esse token de transação já é aceita.
+Por favor, verifique o token de swap e tente novamente.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
         <source>Offer is already accepted</source>
-        <translation>Ya la oferta está aceptada</translation>
+        <translation>Oferta já é aceita</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
         <source>ok</source>
-        <translation>ok</translation>
+        <translation>Ok</translation>
     </message>
     <message id="swap-details-failure-reason">
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Erro</translation>
     </message>
     <message id="swap-tx-failure-refunded">
         <source>Refunded</source>
@@ -1184,500 +1183,500 @@ Por favor, comprueba el token de intercambio e inténtalo de nuevo.</translation
     </message>
     <message id="settings-swap-edit-seed">
         <source>Edit your seed phrase</source>
-        <translation>Edita tu frase semilla</translation>
+        <translation>Edite suas palavras-chave</translation>
     </message>
     <message id="settings-swap-enter-seed">
         <source>Enter your seed phrase</source>
-        <translation>Introduce tu frase semilla</translation>
+        <translation>Digite suas palavras-chave</translation>
     </message>
     <message id="settings-swap-label-or">
         <source>or</source>
-        <translation>o</translation>
+        <translation>ou</translation>
     </message>
     <message id="settings-swap-new-seed">
         <source>Generate new seed phrase</source>
-        <translation>Genera nueva frase semilla</translation>
+        <translation>Gerar novas palavras-chave</translation>
     </message>
     <message id="settings-swap-show-seed">
         <source>Show seed phrase</source>
-        <translation>Mostrar frase semilla</translation>
+        <translation>Mostrar palavras-chave</translation>
     </message>
     <message id="settings-swap-show-addresses">
         <source>Show wallet addresses</source>
-        <translation>Mostrar direcciones del wallet</translation>
+        <translation>Mostrar endereços da carteira</translation>
     </message>
     <message id="swap-seed-info-message">
         <source>Your seed phrase is the access key to all the funds! Print or write down the phrase and keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
-        <translation>¡Su frase de semilla es la clave de acceso a todos los fondos! Imprime o escribe la frase y guárdala en una caja fuerte o en una bóveda bloqueada. Sin la frase usted no podrá recuperar su dinero.</translation>
+        <translation>Suas palavras-chave são a chave de acesso para todos os fundos! Imprima ou escreva as palavras-chave e mantenha-as em um cofre seguro ou em um lugar trancado. Sem as palavras-chave, você não poderá recuperar seu dinheiro.</translation>
     </message>
     <message id="settings-swap-seed-generate">
         <source>generate another seed phrase</source>
-        <translation>generar otra frase de semilla</translation>
+        <translation>gerar outras palavras-chave</translation>
     </message>
     <message id="swap-seed-new">
         <source>New seed phrase</source>
-        <translation>Nueva frase semilla</translation>
+        <translation>Novas palavras-chave</translation>
     </message>
     <message id="swap-seed-edit">
         <source>Enter your seed phrase</source>
-        <translation>Introduce tu frase semilla</translation>
+        <translation>Digite suas palavras-chave</translation>
     </message>
     <message id="bitcoin-show-seed-title">
         <source>Bitcoin seed phrase</source>
-        <translation>Frase semilla Bitcoin</translation>
+        <translation>Palavras-chave Bitcoin</translation>
     </message>
     <message id="litecoin-show-seed-title">
         <source>Litecoin seed phrase</source>
-        <translation>Frase semilla de Litecoin</translation>
+        <translation>Palavras-chave Litecoin</translation>
     </message>
     <message id="qtum-show-seed-title">
         <source>Qtum seed phrase</source>
-        <translation>Frase semilla de Qtum</translation>
+        <translation>Palavras-chave Qtum</translation>
     </message>
     <message id="bitcoin-show-addresses-title">
         <source>Bitcoin wallet addresses</source>
-        <translation>Direcciones de wallet Bitcoin</translation>
+        <translation>Endereços de carteira Bitcoin</translation>
     </message>
     <message id="litecoin-show-addresses-title">
         <source>Litecoin wallet addresses</source>
-        <translation>Direcciones del wallet Litecoin</translation>
+        <translation>Endereços de carteira Litecoin</translation>
     </message>
     <message id="qtum-show-addresses-title">
         <source>Qtum wallet addresses</source>
-        <translation>Direcciones del wallet Qtum</translation>
+        <translation>Endereços de carteira Qtum</translation>
     </message>
     <message id="settings-swap-copy-address">
         <source>Copy address</source>
-        <translation>Copiar dirección</translation>
+        <translation>Copiar endereço</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-title">
         <source>Edit seed phrase</source>
         <extracomment>electrum settings, ask password to edit seed phrase, dialog title</extracomment>
-        <translation>Editar frase semilla</translation>
+        <translation>Editar palavras-chave</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-message">
         <source>Enter your wallet password to edit the phrase</source>
         <extracomment>electrum settings, ask password to edit seed phrase, dialog message</extracomment>
-        <translation>Introduzca la contraseña de su wallet para editar la frase</translation>
+        <translation>Digite sua senha de carteira para editar as palavras-chave</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-title">
         <source>Generate new seed phrase</source>
         <extracomment>electrum settings, ask password to generate new seed phrase, dialog title</extracomment>
-        <translation>Genera nueva frase semilla</translation>
+        <translation>Gerar novas palavras-chave</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-message">
         <source>Enter your wallet password to generate new seed phrase</source>
         <extracomment>electrum settings, ask password to generate new seed phrase, dialog message</extracomment>
-        <translation>Introduzca la contraseña de su wallet para generar una nueva frase semilla</translation>
+        <translation>Digite sua senha de carteira para gerar umas novas palavras-chave</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-title">
         <source>Show seed phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog title</extracomment>
-        <translation>Mostrar frase semilla</translation>
+        <translation>Mostrar palavras-chave</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-message">
         <source>Enter your wallet password to see the phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
-        <translation>Introduzca la contraseña de su wallet para ver la frase</translation>
+        <translation>Digite sua senha de carteira para ver as palavras-chave</translation>
     </message>
     <message id="send-swap-confirmation-title">
         <source>Confirm atomic swap</source>
-        <translation>Confirmar intercambio atómico</translation>
+        <translation>Confirmar Swap Atômico</translation>
     </message>
     <message id="send-swap-sconfirmation-online-time">
         <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <translation>Mantenga su wallet en línea. El intercambio normalmente tarda alrededor de 1 hora en completarse.</translation>
+        <translation>Mantenha sua carteira online. O swap normalmente leva cerca de 1 hora para ser concluído.</translation>
     </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
-        <translation>Tarifa de la transacción</translation>
+        <translation>Taxa de Transação BEAM</translation>
     </message>
     <message id="send-swap-token">
         <source>Swap token</source>
-        <translation>Token de intercambio</translation>
+        <translation>Trocar token</translation>
     </message>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
-        <translation>Pegue token o dirección aquí</translation>
+        <translation>Cole o token ou endereço aqui</translation>
     </message>
     <message id="swap-tx-state-initial">
         <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
-        <translation>Si nadie acepta la oferta en %1 como máximo, la oferta se cancelará automáticamente</translation>
+        <translation>Se ninguém aceitar a oferta em %1 no máximo, a oferta será automaticamente cancelada</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
         <source>The swap is expected to complete in %1 at most.</source>
-        <translation>Se espera que el intercambio se complete en %1 como máximo.</translation>
+        <translation>Espera-se que o Swap termine no máximo em %1.</translation>
     </message>
     <message id="swap-tx-state-in-progress-refunding">
         <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
-        <translation>Ha fallado el intercambio: el reembolso de su %2 comenzará en %1. La duración del reembolso depende de la cuota de transacción que haya especificado para %2.</translation>
+        <translation>Falha do Swap: o reembolso do seu %2 começará em %1. A duração do reembolso depende da taxa de transação que você especificou para %2.</translation>
     </message>
     <message id="atomic-swap-tx-yes-button">
         <source>yes</source>
-        <translation>si</translation>
+        <translation>sim</translation>
     </message>
     <message id="atomic-swap-no-button">
         <source>no</source>
-        <translation>no</translation>
+        <translation>não</translation>
     </message>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
-        <translation>Ha fallado el intercambio, el dinero está siendo liberado de vuelta a tu wallet</translation>
+        <translation>Falha do Swap, o dinheiro está sendo liberado de volta para sua carteira</translation>
     </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
-        <translation> Una vez que la oferta sea aceptada por el otro lado, se cobrará la cuota de transacción de %1 incluso si la oferta es cancelada.</translation>
+        <translation> Uma vez que a oferta é aceita pelo outro lado, a taxa de transação %1 será cobrada mesmo se a oferta for cancelada.</translation>
     </message>
     <message id="app-close-title">
         <source>Beam wallet close</source>
-        <translation>Wallet de Beam cerrada</translation>
+        <translation>Fechameno da carteira Beam</translation>
     </message>
     <message id="app-close-text">
         <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation>Hay %1 transacciones activas que pueden fallar si el wallet se desconectara. ¿Está seguro de cerrar el wallet ahora?</translation>
+        <translation>Existem %1 transações ativas que podem falhar se a carteira passar offline. Você tem certeza que deseja fechar a carteira agora?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exportar historial de transacciones</translation>
+        <translation>Exportar histórico de transações</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
-        <translation>Borrar dirección</translation>
+        <translation>Excluir endereço</translation>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
-        <translation>Hay una transacción activa que utiliza esta dirección, por lo tanto la dirección no se puede eliminar.</translation>
+        <translation>Existe uma transação ativa que utiliza este endereço, por isso o endereço não pode ser excluído.</translation>
     </message>
     <message id="general-fee-total">
         <source>%1 Transaction fee (est)</source>
-        <translation>%1 Comisión por transacción (est)</translation>
+        <translation>Taxa de transação %1 (est)</translation>
     </message>
     <message id="settings-fee-rate-note">
         <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
-        <translation>Recuerda validar la tasa de comisión esperada para el blockchain (ya que varía con el tiempo).</translation>
+        <translation>Lembre-se de validar a taxa esperada para a blockchain (já que ela varia com o tempo).</translation>
     </message>
     <message id="settings-swap-seed-segwit-warning">
         <source>Segwit seed phrase is not supported yet.</source>
-        <translation>La frase de semilla de segwit no está soportada todavía.</translation>
+        <translation>As palavras-chave Segwit ainda não são suportadas.</translation>
     </message>
     <message id="settings-swap-seed-invali-warning">
         <source>Invalid seed phrase. Please check again and resubmit.</source>
-        <translation>Frase de semilla no válida. Por favor, compruebe de nuevo y vuelva a enviar.</translation>
+        <translation>Palavras-chave inválidas. Verifique e tente novamente.</translation>
     </message>
     <message id="swap-details-tx-fee-estimated">
         <source>%1 Estimated transaction fee</source>
-        <translation>%1 Cuota estimada de transacción</translation>
+        <translation>%1 Taxa de transação estimada</translation>
     </message>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
         <extracomment>settings tab, show owner key dialog title</extracomment>
-        <translation>Clave de propietario</translation>
+        <translation>Chave de proprietário</translation>
     </message>
     <message id="settings-show-owner-key-message">
         <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</source>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation>Tenga en cuenta que conocer su clave de propietario permite
-conocer todos sus fondos (UTXO). Asegúrese de que
-despliegue la clave en el nodo en el que confía completamente.</translation>
+        <translation>Por favor note que conhecer a sua chave de proprietário permite
+saber todos os seus fundos (UTXO). Certifique-se de que você
+implante a sua chave apenas em nó em que você confia completamente.</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
         <extracomment>settings tab, general section, Show owner key button and dialog title</extracomment>
-        <translation>Mostrar la clave de propietario</translation>
+        <translation>Mostrar chave de proprietário</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key-message">
         <source>Password verification is required to see the owner key</source>
         <extracomment>settings tab, general section, ask password to Show owner key, message</extracomment>
-        <translation>La verificación de contraseña es necesaria para ver la clave del propietario</translation>
+        <translation>Verificação de senha é necessária para ver a Chave de Proprietário</translation>
     </message>
     <message id="swap-tx-state-in-progress-negotiation">
         <source>If the other side will not sign the transaction in %1, the offer will be canceled automatically.</source>
-        <translation>Si el otro lado no firmará la transacción en %1, la oferta se cancelará automáticamente.</translation>
+        <translation>Se o outro lado não assinar a transação em %1, a oferta será cancelada automaticamente.</translation>
     </message>
     <message id="swap-invalid-credentials-error">
         <source>Cannot connect to node. Invalid credentials</source>
-        <translation>No se puede conectar al nodo. Credenciales inválidas</translation>
+        <translation>Não é possível conectar ao nó. Credenciais inválidos</translation>
     </message>
     <message id="swap-connection-error">
         <source>Cannot connect to node. Please check your network connection.</source>
-        <translation>No se puede conectar al nodo. Por favor, compruebe la conexión red.</translation>
+        <translation>Não é possível conectar ao nó. Verifique sua conexão de rede.</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
         <source>Cannot connect to node. Invalid genesis block</source>
-        <translation>No se puede conectar al nodo. Bloque genesis inválido</translation>
+        <translation>Não é possível conectar ao nó. Bloco de gênesis inválido</translation>
     </message>
     <message id="tx-state-initial-sender">
         <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation>Si el receptor no se conecta en %1, la transacción será cancelada</translation>
+        <translation>Se o destinatário não aparecer online em %1, a transação será cancelada</translation>
     </message>
     <message id="tx-state-initial-receiver">
         <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation>Si el remitente no se conecta en %1, la transacción será cancelada</translation>
+        <translation>Se o remetente não aparecer online em %1, a transação será cancelada</translation>
     </message>
     <message id="tx-state-in-progress-normal">
         <source>The transaction is usually expected to complete in a few minutes.</source>
-        <translation>Se espera que la transacción se complete en unos minutos.</translation>
+        <translation>Normalmente, é esperado que a transação termine em alguns minutos.</translation>
     </message>
     <message id="tx-state-in-progress-long">
         <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
-        <translation>Está tomando más tiempo de lo habitual. En caso de que la transacción no se haya podido completar, se cancelará automáticamente en %1.</translation>
+        <translation>Está demorando mais do que o habitual. Caso a transação não possa ser concluída, ela será cancelada automaticamente em %1.</translation>
     </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
-        <translation>Preguntar contraseña en cada envío</translation>
+        <translation>Pedir senha a cada Envio</translation>
     </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
-        <translation>La altura mínima del Kernel es inaceptable</translation>
+        <translation>A altura mínima do kernel é inaceitável</translation>
     </message>
     <message id="tx-failure-loopback">
         <source>Not a loopback transaction</source>
-        <translation>No es una transacción de bucle</translation>
+        <translation>Não é uma transação loopback</translation>
     </message>
     <message id="tx-failure-key-keeper-no-initialized">
         <source>Key keeper is not initialized</source>
-        <translation>El guardián de las claves no está inicializado</translation>
+        <translation>O Key keeper não foi inicializado</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
         <source>No valid asset id/asset owner id</source>
-        <translation>Id del activo/id del dueño del activo digital inválido</translation>
+        <translation>Nenhum ID de ativo o de proprietário de ativo válido</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
         <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
-        <translation>No se puede emitir/consumir más de MAX_INT64 en una transacción</translation>
+        <translation>Não é possível emitir/consumir mais do que MAX_INT64 GROTH de ativo em uma transação</translation>
     </message>
     <message id="tx-failure-invalid-data-for-payment-proof">
         <source>Some mandatory data for payment proof is missing</source>
-        <translation>Faltan algunos datos obligatorios para la prueba de pago</translation>
+        <translation>Alguns dados obrigatórios para a prova de pagamento estão faltando</translation>
     </message>
     <message id="tx-failure-there-is-no-master-key">
         <source>Master key is needed for this transaction, but unavailable</source>
-        <translation>La clave maestra es necesaria para esta transacción, pero no está disponible</translation>
+        <translation>A chave mestre é necessária para esta transação, mas indisponível</translation>
     </message>
     <message id="tx-failure-keeper-malfunctioned">
         <source>Key keeper malfunctioned</source>
-        <translation>El guardián de las claves no funciona correctamente</translation>
+        <translation>O Key keeper mal funcionou</translation>
     </message>
     <message id="tx-failure-aborted-by-user">
         <source>Aborted by the user</source>
-        <translation>Abortado por el usuario</translation>
+        <translation>Cancelado pelo usuário</translation>
     </message>
     <message id="tx-failure-asset-small-fee">
         <source>Asset registration fee is too small</source>
-        <translation>La cuota de registro de activos es demasiado pequeña</translation>
+        <translation>A taxa de registro de ativos é muito pequena</translation>
     </message>
     <message id="settings-notifications-title">
         <source>Notifications</source>
-        <translation>Notificaciones</translation>
+        <translation>Notificações</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet updates</source>
-        <translation>Actualizaciones del wallet</translation>
+        <translation>Atualizações da carteira</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
-        <translation>Estado de la transacción</translation>
+        <translation>Status da transação</translation>
     </message>
     <message id="tx-failure-fee-too-large">
         <source>Fee is too large</source>
-        <translation>La tarifa es demasiado grande</translation>
+        <translation>A taxa é muito grande</translation>
     </message>
     <message id="tx-failure-asset-invalid-info">
         <source>No asset info or asset info is not valid</source>
-        <translation>No hay información de activos o información de activos no es válida</translation>
+        <translation>Nenhuma informação de ativo ou informação inválida</translation>
     </message>
     <message id="tx-failure-asset-invalid-metadata">
         <source>No asset metadata or asset metadata is not valid</source>
-        <translation>No hay metadatos activos o los metadatos activos no son válidos</translation>
+        <translation>Nenhum metadado, ou metadados de ativos inválido</translation>
     </message>
     <message id="tx-failure-asset-invalid-id">
         <source>Invalid asset id</source>
-        <translation>Invalid asset id</translation>
+        <translation>Id de ativo inválido</translation>
     </message>
     <message id="tx-failure-asset-confirmation">
         <source>Failed to receive asset confirmation</source>
-        <translation>Error al recibir confirmación del recurso</translation>
+        <translation>Falha ao receber a confirmação de ativo</translation>
     </message>
     <message id="tx-failure-asset-in-use">
         <source>Asset is still in use (issued amount &gt; 0)</source>
-        <translation>El activo todavía está en uso (monto emitido &gt; 0)</translation>
+        <translation>O ativo ainda está em uso (montante emitido &gt; 0)</translation>
     </message>
     <message id="tx-failure-asset-locked">
         <source>Asset is still locked</source>
-        <translation>Activo todavía está bloqueado</translation>
+        <translation>O ativo ainda está bloqueado</translation>
     </message>
     <message id="settings-general-amounts-unit">
         <source>Show amounts in</source>
         <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>Mostrar cantidades en</translation>
+        <translation>Mostrar valores em</translation>
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
-        <translation>La nueva versión v %1 está disponible</translation>
+        <translation>Nova versão v %1 está disponível</translation>
     </message>
     <message id="notification-address-expired">
         <source>Address expired</source>
-        <translation>Dirección caducada</translation>
+        <translation>Endereço expirado</translation>
     </message>
     <message id="notification-transaction-received">
         <source>Transaction was received</source>
-        <translation>La transacción fue recibida</translation>
+        <translation>Transação foi recebida</translation>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation>Ha enviado &lt;b&gt;%1 %2&lt;/b&gt; a &lt;b&gt;%3&lt;/b&gt;.</translation>
+        <translation>Você enviou &lt;b&gt;%1 %2&lt;/b&gt; para &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
-        <translation>Transacción fallada</translation>
+        <translation>Falha na transação</translation>
     </message>
     <message id="notification-news">
         <source>BEAM in the press</source>
-        <translation>BEAM en la prensa</translation>
+        <translation>BEAM na imprensa</translation>
     </message>
     <message id="notification-address-expired-message">
         <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; dirección caducada.</translation>
+        <translation>Endereço &lt;b&gt;%1&lt;/b&gt; expirou.</translation>
     </message>
     <message id="notification-transaction-received-message">
         <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation>Ha recibido &lt;b&gt;%1 %2&lt;/b&gt; de &lt;b&gt;%3&lt;/b&gt;.</translation>
+        <translation>Você recebeu &lt;b&gt;%1 %2&lt;/b&gt; de &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
         <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation>El envío de &lt;b&gt;%1 %2&lt;/b&gt; a &lt;b&gt;%3&lt;/b&gt; falló.</translation>
+        <translation>Envio de &lt;b&gt;%1 %2&lt;/b&gt;para &lt;b&gt;%3&lt;/b&gt; falhou.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
         <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation>El recibo de &lt;b&gt;%1 %2&lt;/b&gt; desde &lt;b&gt;%3&lt;/b&gt; falló.</translation>
+        <translation>Recebimento de &lt;b&gt;%1 %2&lt;/b&gt; de &lt;b&gt;%3&lt;/b&gt; falhou.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
-        <translation>La transacción fue enviada</translation>
+        <translation>Transação enviada</translation>
     </message>
     <message id="settings-update-wallet">
         <source>update wallet</source>
         <extracomment>settings update wallet button</extracomment>
-        <translation>actualizar wallet</translation>
+        <translation>atualizar carteira</translation>
     </message>
     <message id="general-exchange-rate-not-available">
         <source>Exchange rate to %1 is not available</source>
-        <translation>El tipo de cambio a %1 no está disponible</translation>
+        <translation>Taxa de câmbio para %1 não está disponível</translation>
     </message>
     <message id="notification-swap-completed">
         <source>Atomic Swap offer completed</source>
-        <translation>Oferta de intercambio atómico completada</translation>
+        <translation>Oferta de Swap Atômico concluída</translation>
     </message>
     <message id="notification-swap-beam-completed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation>Oferta de &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; con ID de la transacción &lt;b&gt;%4&lt;/b&gt; completada.</translation>
+        <translation>Oferta &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; com ID de transação &lt;b&gt;%4&lt;/b&gt; concluída.</translation>
     </message>
     <message id="notification-swap-completed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation>Oferta &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; con ID de la transacción &lt;b&gt;%4&lt;/b&gt; completada.</translation>
+        <translation>Oferta &lt;b&gt;%1 %3 %2 BEAM&lt;/b&gt; com ID de transação &lt;b&gt;%4&lt;/b&gt; concluída.</translation>
     </message>
     <message id="notification-swap-beam-failed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation>Oferta &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; con ID de la transacción &lt;b&gt;%4&lt;/b&gt; fallida.</translation>
+        <translation>Falha na oferta &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; com ID de transação &lt;b&gt;%4&lt;/b&gt;.</translation>
     </message>
     <message id="notification-swap-failed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation>Oferta &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; con ID de la transacción &lt;b&gt;%4&lt;/b&gt; fallida.</translation>
+        <translation>Falha na oferta &lt;b&gt;%1 %3 %2 BEAM&lt;/b&gt; com ID de transação &lt;b&gt;%4&lt;/b&gt;.</translation>
     </message>
     <message id="notification-swap-failed">
         <source>Atomic Swap offer failed</source>
-        <translation>Oferta de intercambio atómico fallida</translation>
+        <translation>Oferta de Swap Atômico falhou</translation>
     </message>
     <message id="notification-swap-expired">
         <source>Atomic Swap offer expired</source>
-        <translation>Oferta de intercambio atómico caducada</translation>
+        <translation>Oferta de Swap Atômico expirada</translation>
     </message>
     <message id="notification-swap-beam-expired-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation>Oferta &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; con ID de la transacción &lt;b&gt;%4&lt;/b&gt; caducada.</translation>
+        <translation>Oferta &lt;b&gt;%1 BEAM, %2 %3&lt;/b&gt; com o ID de transação &lt;b&gt;%4&lt;/b&gt; expirada.</translation>
     </message>
     <message id="notification-swap-expired-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation>Oferta &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; con ID de la transacción &lt;b&gt;%4&lt;/b&gt; caducada.</translation>
+        <translation>Oferta &lt;b&gt;%1 %3 %2 BEAM&lt;/b&gt; com ID de transação &lt;b&gt;%4&lt;/b&gt; expirada.</translation>
     </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
-        <translation>El recurso ya ha sido registrado</translation>
+        <translation>O ativo já foi registrado</translation>
     </message>
     <message id="tx-failure-asset-invalid-owner-id">
         <source>Invalid asset owner id</source>
-        <translation>Id de propietario de activo inválido</translation>
+        <translation>Id de proprietário de ativo inválido</translation>
     </message>
     <message id="tx-failure-assets-disabled">
         <source>Asset transactions are disabled in the wallet</source>
-        <translation>Las transacciones de activos están desactivadas en el wallet</translation>
+        <translation>As transações de ativos estão desabilitadas na carteira</translation>
     </message>
     <message id="tx-failure-no-vouchers">
         <source>No voucher, no address to receive it</source>
-        <translation>Voucher no encontrado, no existe la dirección de recibo</translation>
+        <translation>Sem cupom, sem endereço para recebê-lo</translation>
     </message>
     <message id="tx-failure-assets-fork2">
         <source>Asset transactions are not available until fork2</source>
-        <translation>Las transacciones de activos no están disponibles hasta fork2</translation>
+        <translation>Transações de ativos não estão disponíveis até o fork2</translation>
     </message>
     <message id="address-newer-lib">
         <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>Dirección generada por la nueva versión de librería Beam (%1)
-Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
+        <translation>Este endereço gerado pela versão mais recente da biblioteca Beam (%1)
+Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
     </message>
     <message id="address-newer-client">
         <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>Dirección generada por la versión más reciente de cliente Beam (%1)
-Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
+        <translation>Este endereço gerado pela versão mais recente do cliente Beam (%1)
+Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
-        <translation>Wallet</translation>
+        <translation>Carteira</translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
-        <translation>Conectividad</translation>
+        <translation>Conectividade</translation>
     </message>
     <message id="settings-troubleshooting-title">
         <source>Troubleshooting</source>
-        <translation>Solución de problemas</translation>
+        <translation>Solução de problemas</translation>
     </message>
     <message id="settings-get-beam">
         <source>Get Beams from Beam Community Faucet</source>
-        <translation>Obtener Beams del grifo de la Comunidad de Beam</translation>
+        <translation>Obter Beams através do faucet da comunidade</translation>
     </message>
     <message id="settings-privacy-title">
         <source>Privacy</source>
-        <translation>Privacidad</translation>
+        <translation>Privacidade</translation>
     </message>
     <message id="settings-resources-title">
         <source>Resources</source>
-        <translation>Rescursos</translation>
+        <translation>Recursos</translation>
     </message>
     <message id="settings-utilities-title">
         <source>Utilities</source>
-        <translation>Utilidades</translation>
+        <translation>Serviços</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
         <source>Integrated node</source>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation>Nodo integrado</translation>
+        <translation>Nó integrado</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
         <extracomment>settings tab, node section, port error label</extracomment>
-        <translation>El puerto es obligatorio</translation>
+        <translation>Porta é obrigatória</translation>
     </message>
     <message id="settings-remote-node-address">
         <source>Node address</source>
         <extracomment>settings tab, node section, address label</extracomment>
-        <translation>Dirección del nodo</translation>
+        <translation>Endereço do nó</translation>
     </message>
     <message id="settings-peers-title">
         <source>Peers</source>
@@ -1685,31 +1684,31 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="settings-integrated-node-title">
         <source>Beam Integrated Node</source>
-        <translation>Nodo Integrado de Beam</translation>
+        <translation>Nó Integrado de Beam</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Remote Node</source>
-        <translation>Nodo remoto de Beam</translation>
+        <translation>Nó Remoto Beam</translation>
     </message>
     <message id="settings-run-remote-node">
         <source>Remote node</source>
-        <translation>Nodo remoto</translation>
+        <translation>Nó remoto</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
-        <translation>Mostrar mi wallet con Trezor</translation>
+        <translation>Mostrar minha carteira com Trezor</translation>
     </message>
     <message id="specific_node">
         <source>Specific node</source>
-        <translation>Nodo específico</translation>
+        <translation>Nó específico</translation>
     </message>
     <message id="random_node">
         <source>Random node</source>
-        <translation>Nodo aleatorio</translation>
+        <translation>Nó aleatório</translation>
     </message>
     <message id="token-info-title">
         <source>Transaction token</source>
-        <translation>Token de transacción</translation>
+        <translation>Token de transação</translation>
     </message>
     <message id="token-info-token">
         <source>Token</source>
@@ -1717,7 +1716,7 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="tx-regular">
         <source>Online</source>
-        <translation>Conectado</translation>
+        <translation>Online</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Maximum anonymity</source>
@@ -1725,12 +1724,12 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="error-peer-exists">
         <source>Peer already exists</source>
-        <translation>Este título ya existe</translation>
+        <translation>Par já existe</translation>
     </message>
     <message id="address-table-cm-receive">
         <source>receive</source>
         <extracomment>Entry in address table context menu to get receive token</extracomment>
-        <translation>recibir</translation>
+        <translation>receber</translation>
     </message>
     <message id="format-small-amount">
         <source>&lt; 1 %1</source>
@@ -1742,29 +1741,29 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="send-regular-fee">
         <source>Fee</source>
-        <translation>Comisión</translation>
+        <translation>Taxa</translation>
     </message>
     <message id="settings-swap-clear">
         <source>clear</source>
-        <translation>borrar</translation>
+        <translation>limpar</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-title">
         <source>Clear seed phrase</source>
         <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>Borrar frase semilla</translation>
+        <translation>Limpar palavras-chave</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-message">
         <source>Enter your wallet password to clear seed phrase</source>
         <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>Introduzca la contraseña de su wallet para borrar la frase semilla</translation>
+        <translation>Digite sua senha de carteira para limpar as palavras-chave</translation>
     </message>
     <message id="settings-swap-connect-to-electrum">
         <source>connect to electrum node</source>
-        <translation>conectarse al nodo electrum</translation>
+        <translation>conectar ao nó electrum</translation>
     </message>
     <message id="settings-swap-connect-to-node">
         <source>connect to node</source>
-        <translation>conectarse al nodo</translation>
+        <translation>conectar ao nó</translation>
     </message>
     <message id="settings-swap-disconnect">
         <source>disconnect</source>
@@ -1772,19 +1771,19 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="swap-expiration-time">
         <source>Expiration time</source>
-        <translation>Fecha de expiración</translation>
+        <translation>Tempo de expiração</translation>
     </message>
     <message id="send-confirmation-type-label">
         <source>Address type</source>
-        <translation>Tipo de dirección</translation>
+        <translation>Tipo de endereço</translation>
     </message>
     <message id="swap-expired">
         <source>Expired.</source>
-        <translation>Caducado.</translation>
+        <translation>Expirado.</translation>
     </message>
     <message id="from-shielded-pool">
         <source>shielded pool</source>
-        <translation>pool blindado</translation>
+        <translation>pool protegido</translation>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
@@ -1793,7 +1792,7 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
 (maximum anonymity)</source>
-        <translation>en progreso
+        <translation>em andamento
 (anonimato máximo)</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
@@ -1805,12 +1804,12 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     <message id="wallet-txs-status-received-max">
         <source>received
 (maximum anonymity)</source>
-        <translation>recibido
+        <translation>recebido
 (anonimato máximo)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
         <source>in progress (offline)</source>
-        <translation>en progreso (offline)</translation>
+        <translation>em andamento (offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
         <source>sent (offline)</source>
@@ -1818,91 +1817,91 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
         <source>received (offline)</source>
-        <translation>recibido (offline)</translation>
+        <translation>recebido (offline)</translation>
     </message>
     <message id="tx-failure-out-of-slots">
         <source>Key keeper out of slots</source>
-        <translation>Llavero completo</translation>
+        <translation>Key keeper fora dos slots</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is too big.</source>
-        <translation>No se puede extraer monedas blindadas, la comisión es demasiado grande.</translation>
+        <translation>Não é possível extrair moeda protegida, a taxa é muito grande.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
-        <translation>Las transacciones de activos están desactivadas en el wallet del destinatario</translation>
+        <translation>Transações de ativos estão desativadas na carteira do destinatário</translation>
     </message>
     <message id="tx-failure-assets-disabled-blockchain">
         <source>Asset transactions are disabled in blockchain configuration</source>
-        <translation>Las transacciones de activos están desactivadas en la configuración de la blockchain</translation>
+        <translation>Transações de ativos estão desabilitadas na configuração da blockchain</translation>
     </message>
     <message id="tx-failure-identity-required">
         <source>Peer wallet&apos;s signature required</source>
-        <translation>Se requiere firma del wallet del par</translation>
+        <translation>Assinatura da carteira do par é necessária</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
         <source>The sender cannot get vouchers for max privacy transaction</source>
-        <translation>El remitente no puede obtener el vale para la transacción de privacidad máxima</translation>
+        <translation>O remetente não pode obter cupons para transações de privacidade máxima</translation>
     </message>
     <message id="settings-random-node-text">
         <source>Random node address and port will be displayed 
 when connection is established</source>
-        <translation>La dirección y el puerto del nodo aleatorio se mostrarán
-cuando la conexión esté establecida</translation>
+        <translation>Porta e endereço de nó aleatório serão exibidos 
+quando a conexão for estabelecida</translation>
     </message>
     <message id="swap-token-newer-lib">
         <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>Dirección generada por la nueva versión de librería Beam (%1)
-Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
+        <translation>Este endereço gerado pela versão mais recente da biblioteca Beam (%1)
+Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
     </message>
     <message id="swap-swap-token-newer-client">
         <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>Dirección generada por la versión más reciente de cliente Beam (%1)
-Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
+        <translation>Este endereço gerado pela versão mais recente do cliente Beam (%1)
+Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
     </message>
     <message id="address-info-title">
         <source>address details</source>
-        <translation>detalles de dirección</translation>
+        <translation>detalhes do endereço</translation>
     </message>
     <message id="address-info-type">
         <source>Address type</source>
-        <translation>Tipo de dirección</translation>
+        <translation>Tipo de endereço</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
 (use for CEX withdrawals)</source>
-        <translation>Dirección SBBS
-(usar para retiros CEX)</translation>
+        <translation>Endereço SBBS
+(use para saques de CEX)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
-        <translation>Dirección</translation>
+        <translation>Endereço</translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
-        <translation>Frase semilla de Dogecoin</translation>
+        <translation>Palavras-chave Dogecoin</translation>
     </message>
     <message id="bitcoin-cash-show-seed-phrase">
         <source>Bitcoin Cash seed phrase</source>
-        <translation>Frase semilla de Bitcoin efectivo</translation>
+        <translation>Palavras-chave Bitcoin Cash</translation>
     </message>
     <message id="dash-show-seed-phrase">
         <source>Dash seed phrase</source>
-        <translation>Frase semilla de Dash</translation>
+        <translation>Palavras-chave Dash</translation>
     </message>
     <message id="dogecoin-show-addresses-title">
         <source>Dogecoin wallet addresses</source>
-        <translation>Direcciones de wallet Dogecoin</translation>
+        <translation>Endereços de carteira Dogecoin</translation>
     </message>
     <message id="bitcoin-cash-show-addresses-title">
         <source>Bitcoin Cash wallet addresses</source>
-        <translation>Direcciones de wallet Bitcoin Cash</translation>
+        <translation>Endereços de carteira Bitcoin Cash</translation>
     </message>
     <message id="dash-show-addresses-title">
         <source>Dash wallet addresses</source>
-        <translation>Direcciones de wallet Dash</translation>
+        <translation>Endereços de carteira Dash</translation>
     </message>
     <message id="general-dogecoin">
         <source>Dogecoin</source>
@@ -1910,7 +1909,7 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="general-bitcoin-cash">
         <source>Bitcoin Cash</source>
-        <translation>Bitcoin Efectivo</translation>
+        <translation>Bitcoin Cash</translation>
     </message>
     <message id="general-dash">
         <source>DASH</source>
@@ -1918,47 +1917,47 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="settings-swap-dogecoin-node">
         <source>Dogecoin node</source>
-        <translation>Nodo Dogecoin</translation>
+        <translation>Nó Dogecoin</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-node">
         <source>Bitcoin Cash node</source>
-        <translation>Nodo Bitcoin Efectivo</translation>
+        <translation>Nó Bitcoin Cash</translation>
     </message>
     <message id="settings-swap-dash-node">
         <source>Dash node</source>
-        <translation>Nodo Dash</translation>
+        <translation>Nó Dash</translation>
     </message>
     <message id="settings-swap-dogecoin-electrum">
         <source>Dogecoin electrum</source>
-        <translation>Dogecoin electrum</translation>
+        <translation>Electrum Dogecoin</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-electrum">
         <source>Bitcoin Cash electrum</source>
-        <translation>Bitcoin Efectivo electrum</translation>
+        <translation>Electrum Bitcoin Cash</translation>
     </message>
     <message id="settings-swap-dash-electrum">
         <source>Dash electrum</source>
-        <translation>Dash electrum</translation>
+        <translation>Electrum Dash</translation>
     </message>
     <message id="settings-show-public-offline-address">
         <source>Show public offline address</source>
-        <translation>Mostrar dirección pública offline</translation>
+        <translation>Mostrar o endereço offline público</translation>
     </message>
     <message id="public-address-title">
         <source>Public offline address</source>
-        <translation>Dirección pública offline</translation>
+        <translation>Endereço offline público</translation>
     </message>
     <message id="public-offline-address-note">
         <source>Publishing this address will allow you to be identified</source>
-        <translation>Publicar esta dirección le permitirá ser identificado</translation>
+        <translation>Publicar este endereço permitirá que você seja identificado</translation>
     </message>
     <message id="more-details">
         <source>More details</source>
-        <translation>Más detalles</translation>
+        <translation>Mais detalhes</translation>
     </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
-        <translation>Pública offline</translation>
+        <translation>Offline público</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
@@ -1971,20 +1970,20 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
 (public offline)</source>
-        <translation>en proceso
-(pública offline)</translation>
+        <translation>em progresso
+(offline público)</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
         <source>sent
 (public offline)</source>
         <translation>enviado
-(pública offline)</translation>
+(offline público)</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
         <source>received
 (public offline)</source>
-        <translation>recibido
-(pública offline)</translation>
+        <translation>recebido
+(offline público)</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
         <source>canceled
@@ -1995,16 +1994,16 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     <message id="wallet-txs-status-failed-public-offline">
         <source>failed
 (public offline)</source>
-        <translation>fallido
-(pública offline)</translation>
+        <translation>falhou
+(offline público)</translation>
     </message>
     <message id="settings-node-progress">
         <source>Swap in progress, cannot disconnect or switch connection type.</source>
-        <translation>Intercambio en progreso, no se puede desconectar o cambiar el tipo de conexión.</translation>
+        <translation>Swap em progresso, não é possível desconectar ou alternar tipo de conexão.</translation>
     </message>
     <message id="settings-doge-node-progress">
         <source>Swap in progress, cannot disconnect.</source>
-        <translation>El intercambio está en progreso, no se puede desconectar.</translation>
+        <translation>Swap em andamento, não foi possível desconectar.</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
         <source>canceled
@@ -2019,12 +2018,12 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     <message id="wallet-txs-status-failed-max">
         <source>failed
 (maximum anonymity)</source>
-        <translation>fallido
-(máximo anonimato)</translation>
+        <translation>falhou
+(anonimato máximo)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
         <source>failed (offline)</source>
-        <translation>fallo (offline)</translation>
+        <translation>falhou (offline)</translation>
     </message>
     <message id="max-privacy-dialog-header">
         <source>Maximum anonymity</source>
@@ -2036,27 +2035,27 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="max-privacy-dialog-amount">
         <source>Amount</source>
-        <translation>Cantidad</translation>
+        <translation>Quantidade</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
         <source>Unlock Time</source>
-        <translation>Tiempo de Desbloqueo</translation>
+        <translation>Tempo de desbloqueio</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
         <source>Maximum anonymity set size</source>
-        <translation>Ajuste de anonimato máximo</translation>
+        <translation>Tamanho do conjunto de anonimato máximo</translation>
     </message>
     <message id="settings-privacy-mp-notice">
         <source>Received coins can be spent immediately.</source>
-        <translation>Los fondos recibidos pueden ser gastados inmediatamente.</translation>
+        <translation>Moedas recebidas podem ser gastas imediatamente.</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
         <source>Longest transaction time for maximum anonymity</source>
-        <translation>Tiempo de transacción más largo para el máximo anonimato</translation>
+        <translation>Tempo de transação mais longo para anonimato máximo</translation>
     </message>
     <message id="remote-node-lelantus-warning">
         <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation>Para soportar las transacciones de anonimato máximo y las transacciones offline, por favor, conéctese al nodo integrado o a un nodo propio configurado con su clave de propietario.</translation>
+        <translation>Para suportar o anonimato máximo e transações offline, por favor, conecte-se a um nó integrado ou a um nó próprio configurado com a Chave de Proprietário.</translation>
     </message>
     <message id="time-hour" numerus="yes">
         <source>%n hour(s)</source>
@@ -2070,13 +2069,13 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
         <source>%n day(s)</source>
         <extracomment>time &quot;day&quot; string</extracomment>
         <translation>
-            <numerusform>%n día(s)</numerusform>
-            <numerusform>%n día(s)</numerusform>
+            <numerusform>%n dia(s)</numerusform>
+            <numerusform>%n dia(s)</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
         <source>No limit</source>
-        <translation>Sin límite</translation>
+        <translation>Sem limite</translation>
     </message>
     <message id="general-ethereum">
         <source>Ethereum</source>
@@ -2084,78 +2083,78 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="settings-swap-ethereum-node">
         <source>Ethereum node</source>
-        <translation>Nodo de Ethereum</translation>
+        <translation>Nó Ethereum</translation>
     </message>
     <message id="ethereum-show-seed-title">
         <source>Ethereum seed phrase</source>
-        <translation>Frase semilla de Ethereum</translation>
+        <translation>Palavras-chave Ethereum</translation>
     </message>
     <message id="settings-account-index">
         <source>Account index</source>
-        <translation>Índice de cuenta</translation>
+        <translation>Índice de conta</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
-        <translation>La comisión mínima recomendada es %1 %2</translation>
+        <translation>A taxa mínima recomendada é %1 %2</translation>
     </message>
     <message id="general-fee-fail">
         <source>The minimum fee is %1 %2</source>
-        <translation>La tarifa mínima es %1 %2</translation>
+        <translation>A taxa mínima é %1 %2</translation>
     </message>
     <message id="general-max-fee-fail">
         <source>The maximum fee is %1 %2</source>
-        <translation>La tarifa máxima es %1 %2</translation>
+        <translation>A taxa máxima é %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
         <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
-        <translation>Error en conexión: no se puede calcular la tarifa recomendada. 
-Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más en completar una transacción.</translation>
+        <translation>Erro de conexão: não pode calcular a taxa recomendada. 
+Verifique a blockchain %1 por su própria conta. Taxas baixas podem levar muito mais tempo para que a transação seja concluída.</translation>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
-        <translation>Direcciones de wallet Ethereum</translation>
+        <translation>Endereços de carteira Ethereum</translation>
     </message>
     <message id="settings-infura-project-id">
         <source>Infura project ID</source>
-        <translation>ID del proyecto Infura</translation>
+        <translation>ID do projeto Infura</translation>
     </message>
     <message id="apps-title">
         <source>My DApp Store</source>
-        <translation>Mi tienda de DApp</translation>
+        <translation>Meu DApp Store</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
-        <translation>Esta es tu aplicación de dev</translation>
+        <translation>Esta é a sua aplicação de desenvolvimento</translation>
     </message>
     <message id="send-flat-fee">
         <source>%1 Transaction fee</source>
-        <translation>Tarifa por transacción de %1</translation>
+        <translation>Taxa de transação %1</translation>
     </message>
     <message id="notification-contract-no-message">
         <source>No description provided by the contract</source>
-        <translation>No hay descripción proporcionada por el contrato</translation>
+        <translation>Nenhuma descrição fornecida pelo contrato</translation>
     </message>
     <message id="notification-contract-completed">
         <source>DApp transaction completed</source>
-        <translation>Transacción del DApp completada</translation>
+        <translation>Transação de DApp concluída</translation>
     </message>
     <message id="notification-contract-expired">
         <source>DApp transaction expired</source>
-        <translation>Transacción del DApp caducada</translation>
+        <translation>Transação de DApp expirada</translation>
     </message>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
-        <translation>Transacción de contrato</translation>
+        <translation>Transação de contrato</translation>
     </message>
     <message id="swap-beta-title">
         <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap está en BETA</translation>
+        <translation>Os Swaps Atômicos estão em BETA</translation>
     </message>
     <message id="swap-beta-message">
         <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>La función Atomic Swaps está en Beta por ahora. Recomendamos no enviar montos altos.</translation>
+        <translation>A funcionalidade de Swaps Atômicos é Beta no momento. Recomendamos que não envie grandes quantidades.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
@@ -2163,7 +2162,7 @@ Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más
     </message>
     <message id="atomic-swap-cancel-text">
         <source>Are you sure you want to cancel your offer?</source>
-        <translation>¿Está seguro de que desea cancelar su oferta?</translation>
+        <translation>Tem certeza de que deseja cancelar sua oferta?</translation>
     </message>
     <message id="atomic-swap-cancel-button">
         <source>cancel offer</source>
@@ -2171,39 +2170,39 @@ Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más
     </message>
     <message id="atomic-swap-back-button">
         <source>back</source>
-        <translation>volver</translation>
+        <translation>voltar</translation>
     </message>
     <message id="atomic-swap-tx-cancel">
         <source>Cancel atomic swap</source>
-        <translation>Cancelar intercambio atómico</translation>
+        <translation>Cancelar Swap Atômico</translation>
     </message>
     <message id="atomic-swap-tx-cancel-text">
         <source>Are you sure you want to cancel?</source>
-        <translation>¿Está seguro de que desea cancelar?</translation>
+        <translation>Tem certeza que deseja cancelar?</translation>
     </message>
     <message id="atomic-swap-title">
         <source>Atomic Swaps</source>
-        <translation>Swap atómico</translation>
+        <translation>Swaps Atômicos</translation>
     </message>
     <message id="atomic-swap-accept">
         <source>Accept offer</source>
-        <translation>Aceptar oferta</translation>
+        <translation>Aceitar oferta</translation>
     </message>
     <message id="atomic-swap-create">
         <source>Create offer</source>
-        <translation>Crear oferta</translation>
+        <translation>Criar oferta</translation>
     </message>
     <message id="atomic-swap-1active-tx-count">
         <source>1 active transaction</source>
-        <translation>1 transacción activa</translation>
+        <translation>1 transação ativa</translation>
     </message>
     <message id="atomic-swap-active-tx-count">
         <source>%1 active transactions</source>
-        <translation>%1 transacciones activas</translation>
+        <translation>%1 transações ativas</translation>
     </message>
     <message id="swap-beta-tx-in-progress">
         <source>Transaction is in progress</source>
-        <translation>La transacción está en curso</translation>
+        <translation>Transação em andamento</translation>
     </message>
     <message id="swap-connecting">
         <source>Connecting...</source>
@@ -2211,57 +2210,57 @@ Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más
     </message>
     <message id="swap-beta-connection-error">
         <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
-        <translation>No se puede conectar con el par. Por favor, compruebe la dirección en la configuración y vuelva a intentarlo.</translation>
+        <translation>Não foi possível conectar-se ao par. Por favor, verifique o endereço em Configurações e tente novamente.</translation>
     </message>
     <message id="atomic-swap-more-currency">
         <source>Connect more currencies</source>
-        <translation>Añadir más monedas</translation>
+        <translation>Conectar mais moedas</translation>
     </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
-        <translation>Transacciones</translation>
+        <translation>Transações</translation>
     </message>
     <message id="atomic-swap-fit-current-balance">
         <source>Fit my current balance</source>
-        <translation>Ajustar mi saldo actual</translation>
+        <translation>Ajustar a meu saldo atual</translation>
     </message>
     <message id="atomic-swap-currency">
         <source>Currency</source>
-        <translation>Moneda</translation>
+        <translation>Moeda</translation>
     </message>
     <message id="atomic-offers-loading">
         <source>Please wait, offers are loading.</source>
-        <translation>Por favor espere, las ofertas se están cargando.</translation>
+        <translation>Por favor, aguarde, as ofertas estão carregando.</translation>
     </message>
     <message id="atomic-no-offers">
         <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <translation>No hay ofertas activas en este momento.
-Por favor, inténtalo de nuevo más tarde o crea una oferta usted mismo.</translation>
+        <translation>Não há ofertas ativas no momento.
+Por favor, tente novamente mais tarde ou crie uma oferta.</translation>
     </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
-        <translation>Enviar</translation>
+        <translation>Mandar</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Tudo</translation>
     </message>
     <message id="atomic-swap-in-progress-transactions-tab">
         <source>In progress</source>
-        <translation>En progreso</translation>
+        <translation>Em execução</translation>
     </message>
     <message id="atomic-swap-tx-table-created">
         <source>Created on</source>
-        <translation>Creado en</translation>
+        <translation>Criado em</translation>
     </message>
     <message id="atomic-swap-tx-table-from">
         <source>From</source>
-        <translation>Desde</translation>
+        <translation>De</translation>
     </message>
     <message id="atomic-swap-tx-table-to">
         <source>To</source>
-        <translation>A</translation>
+        <translation>Para</translation>
     </message>
     <message id="atomic-swap-tx-table-sent">
         <source>Sent</source>
@@ -2269,11 +2268,11 @@ Por favor, inténtalo de nuevo más tarde o crea una oferta usted mismo.</transl
     </message>
     <message id="atomic-swap-tx-table-received">
         <source>Received</source>
-        <translation>Recibido</translation>
+        <translation>Recebido</translation>
     </message>
     <message id="atomic-swap-tx-table-status">
         <source>Status</source>
-        <translation>Estado</translation>
+        <translation>Status</translation>
     </message>
     <message id="swap-copy-token">
         <source>Copy token</source>
@@ -2281,21 +2280,21 @@ Por favor, inténtalo de nuevo más tarde o crea una oferta usted mismo.</transl
     </message>
     <message id="wallet-txs-status-waiting-peer">
         <source>waiting for counterparty</source>
-        <translation>esperando a contraparte</translation>
+        <translation>esperando pela contraparte</translation>
     </message>
     <message id="wallet-txs-status-failing">
         <source>failing</source>
-        <translation>fallando</translation>
+        <translation>falhando</translation>
     </message>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <translation>No tienes ninguna moneda de terceros conectada.
-Actualiza tus ajustes e inténtalo de nuevo.</translation>
+        <translation>Você não tem nenhuma moeda de terceiros conectada.
+Atualize suas configurações e tente novamente.</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
         <source>Offer expiration time</source>
-        <translation>Tiempo de caducidad de oferta</translation>
+        <translation>Tempo de expiração da oferta</translation>
     </message>
     <message id="wallet-receive-expires-30m">
         <source>30 minutes</source>
@@ -2319,11 +2318,11 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="overtop-beam-supply">
         <source>Amount overtop total Beam supply.</source>
-        <translation>Monto sobrepasa el suministro total de Beam.</translation>
+        <translation>Quantidade acima do total de Beam existente.</translation>
     </message>
     <message id="swap-invalid-rate">
         <source>Invalid rate</source>
-        <translation>Tasa inválida</translation>
+        <translation>Taxa inválida</translation>
     </message>
     <message id="wallet-receive-swap-publish">
         <source>publish offer</source>
@@ -2331,23 +2330,23 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="appmodel-already-opened">
         <source>Wallet database is already opened</source>
-        <translation>La base de datos del wallet ya está abierta</translation>
+        <translation>O banco de dados da carteira já está aberto</translation>
     </message>
     <message id="general-open-failed">
         <source>Failed to open wallet, please check logs</source>
-        <translation>Error al abrir el wallet, por favor compruebe los registros</translation>
+        <translation>Falha ao abrir a carteira, por favor, verifique os logs</translation>
     </message>
     <message id="start-no-hwkeeper">
         <source>Hardware keykeeper is not initialized</source>
-        <translation>El keykeeper del dispositivo físico no está inicializado</translation>
+        <translation>O Key keeper de hardware não foi inicializado</translation>
     </message>
     <message id="start-trezor-error">
         <source>Failed to create trezor wallet</source>
-        <translation>Fallo al crear el trezor wallet</translation>
+        <translation>Falha ao criar carteira trezor</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <translation>El Wallet Físico no está conectado</translation>
+        <translation>A carteira física não está conectada</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -2355,43 +2354,43 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="utxo-head-maturity">
         <source>Maturity</source>
-        <translation>Madurez</translation>
+        <translation>Maturidade</translation>
     </message>
     <message id="utxo-status-available">
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation>Disponível</translation>
     </message>
     <message id="utxo-status-maturing">
         <source>Maturing%1(till block height %2)</source>
-        <translation>Maduración %1 (hasta la altura del bloque %2)</translation>
+        <translation>Amadurecendo%1(até a altura de bloco %2)</translation>
     </message>
     <message id="utxo-status-unavailable">
         <source>Unavailable%1(mining result rollback)</source>
-        <translation>No disponible %1 (reversión de los resultados de minería)</translation>
+        <translation>Indisponível%1 (reversão do resultado da mineração)</translation>
     </message>
     <message id="utxo-status-outgoing">
         <source>In progress%1(outgoing)</source>
-        <translation>En progreso %1 (saliente)</translation>
+        <translation>Em andamento%1(saída)</translation>
     </message>
     <message id="utxo-status-change">
         <source>In progress%1(change)</source>
-        <translation>En progreso %1 (cambiar)</translation>
+        <translation>Em progresso%1(troca)</translation>
     </message>
     <message id="utxo-status-incoming">
         <source>In progress%1(incoming)</source>
-        <translation>En progreso %1 (entrante)</translation>
+        <translation>Em andamento%1(entrando)</translation>
     </message>
     <message id="utxo-status-spent">
         <source>Spent</source>
-        <translation>Agotado</translation>
+        <translation>Gasto</translation>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(maximum anonymity %2% unlinked)</source>
-        <translation>Maduración%1(anonimato máximo %2% desvinculado)</translation>
+        <translation>Amadurecendo%1 (anonimato máximo %2% desvinculado)</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
-        <translation>Escriba</translation>
+        <translation>Tipo</translation>
     </message>
     <message id="general-coinbase">
         <source>Coinbase</source>
@@ -2406,36 +2405,36 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     <message id="general-treasury">
         <source>Treasury</source>
         <extracomment>UTXO type Treasury</extracomment>
-        <translation>Tesorería</translation>
+        <translation>Tesouro</translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
-        <translation>Blindado</translation>
+        <translation>Protegido</translation>
     </message>
     <message id="apps-bad-api-version">
         <source>Unsupported API version requested: %1</source>
-        <translation>Versión de API solicitada no soportada: %1</translation>
+        <translation>Versão de API não suportada solicitada: %1</translation>
     </message>
     <message id="can-not-generate-new-address-message">
         <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>No puedes generar una nueva dirección. Su wallet no tiene una llave maestra.</translation>
+        <translation>Você não pode gerar um novo endereço. Sua carteira não possui chave mestre.</translation>
     </message>
     <message id="wallet-receive-title">
         <source>Receive</source>
-        <translation>Recibir</translation>
+        <translation>Receber</translation>
     </message>
     <message id="general-tx-type">
         <source>Transaction type</source>
-        <translation>Tipo de transacción</translation>
+        <translation>Tipo de transação</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Conéctese a un nodo integrado o propio para permitir anonimato máximo y transacciones offline.</translation>
+        <translation>Conecte-se a um nó integrado ou nó próprio para permitir o recebimento de anonimato máximo e transações offline.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
-        <translation>Cantidad solicitada</translation>
+        <translation>Valor solicitado</translation>
     </message>
     <message id="receive-request-optional">
         <source>(optional)</source>
@@ -2444,41 +2443,41 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     <message id="wallet-receive-addr-message-mp" numerus="yes">
         <source>Transaction can last at most %n hour(s).</source>
         <translation>
-            <numerusform>La transacción puede durar como máximo %n hora(s).</numerusform>
-            <numerusform>La transacción puede durar como máximo %n hora(s).</numerusform>
+            <numerusform>Transação pode durar no máximo %n hora(s).</numerusform>
+            <numerusform>Transação pode durar no máximo %n hora(s).</numerusform>
         </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
-        <translation>La transacción puede durar indefinidamente.</translation>
+        <translation>A transação pode durar indefinidamente.</translation>
     </message>
     <message id="wallet-receive-text-online-time">
         <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>El remitente tendrá la opción de elegir entre el pago online y offline.</translation>
+        <translation>O remetente terá uma escolha entre pagamento online e offline.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
-        <translation>Dirección pública offline.</translation>
+        <translation>Endereço offline público.</translation>
     </message>
     <message id="send-unknown-token">
         <source>Unknown address.</source>
-        <translation>Dirección desconocida.</translation>
+        <translation>Endereço desconhecido.</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
-        <translation>Enviar</translation>
+        <translation>Mandar</translation>
     </message>
     <message id="general-send-to">
         <source>Send to</source>
-        <translation>Enviar a</translation>
+        <translation>Enviar para</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
-        <translation>Pegar la dirección del destinatario aquí</translation>
+        <translation>Cole o endereço do destinatário aqui</translation>
     </message>
     <message id="wallet-send-invalid-address-or-token">
         <source>Invalid wallet address</source>
-        <translation>Dirección de wallet inválida</translation>
+        <translation>Endereço inválido da carteira</translation>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
@@ -2486,7 +2485,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
-        <translation>Fondos insuficientes para completar la transacción. La cantidad máxima es %1 %2.</translation>
+        <translation>Fundos insuficientes para concluir a transação. O valor máximo é %1 %2.</translation>
     </message>
     <message id="amount-input-add-max">
         <source>max</source>
@@ -2494,7 +2493,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
-        <translation>Cantidad a enviar</translation>
+        <translation>Valor a ser enviado</translation>
     </message>
     <message id="send-remaining-label">
         <source>Remaining</source>
@@ -2502,19 +2501,19 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="send-remaining-beam-label">
         <source>BEAM Remaining</source>
-        <translation>BEAM Remanente</translation>
+        <translation>BEAM Restante</translation>
     </message>
     <message id="general-balance">
         <source>Balance</source>
-        <translation>Balance</translation>
+        <translation>Saldo</translation>
     </message>
     <message id="general-asset-info">
         <source>Asset Info</source>
-        <translation>Información del Activo</translation>
+        <translation>Info de Ativo</translation>
     </message>
     <message id="balance-available">
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation>Disponível</translation>
     </message>
     <message id="balance-regular">
         <source>Regular</source>
@@ -2522,7 +2521,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="balance-shielded">
         <source>Shielded</source>
-        <translation>Blindado</translation>
+        <translation>Protegido</translation>
     </message>
     <message id="balance-locked">
         <source>Locked</source>
@@ -2530,11 +2529,11 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="balance-maturing">
         <source>Maturing</source>
-        <translation>Madurando</translation>
+        <translation>Amadurecendo</translation>
     </message>
     <message id="balance-change">
         <source>Change</source>
-        <translation>Cambiar</translation>
+        <translation>Troca</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
@@ -2542,172 +2541,173 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
-        <translation>ID del Activo</translation>
+        <translation>Asset ID</translation>
     </message>
     <message id="info-asset-name">
         <source>Asset name</source>
-        <translation>Nombre del activo</translation>
+        <translation>Nome do Ativo</translation>
     </message>
     <message id="info-asset-unit">
         <source>Unit name</source>
-        <translation>Nombre de unidad</translation>
+        <translation>Nome da unidade</translation>
     </message>
     <message id="info-asset-smallest">
         <source>Smallest unit name</source>
-        <translation>Nombre de la unidad más pequeña</translation>
+        <translation>Menor nome da unidade</translation>
     </message>
     <message id="info-asset-short">
         <source>Short description</source>
-        <translation>Breve descripción</translation>
+        <translation>Breve descrição</translation>
     </message>
     <message id="info-asset-long">
         <source>Long description</source>
-        <translation>Descripcion extensa</translation>
+        <translation>Descrição Longa</translation>
     </message>
     <message id="info-asset-site">
         <source>Website</source>
-        <translation>Sitio web</translation>
+        <translation>Site</translation>
     </message>
     <message id="info-asset-paper">
         <source>Whitepaper</source>
-        <translation>Documento técnico</translation>
+        <translation>Whitepaper</translation>
     </message>
     <message id="tx-details-date-label">
         <source>Date</source>
-        <translation>Fecha</translation>
+        <translation>Data</translation>
     </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
-        <translation>Enviando dirección</translation>
+        <translation>Endereço de envio</translation>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender signature</source>
-        <translation>Firma del remitente</translation>
+        <translation>Assinatura do remetente</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
-        <translation>Recibiendo dirección</translation>
+        <translation>Endereço de recebimento</translation>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver signature</source>
-        <translation>Firma del receptor</translation>
+        <translation>Assinatura do destinatário</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
-        <translation>Cantidad</translation>
+        <translation>Quantidade</translation>
     </message>
     <message id="tx-details-rate-notice">
         <source>calculated with the exchange rate at the time of the transaction</source>
-        <translation>calculado con el tipo de cambio al momento de la transacción</translation>
+        <translation>calculado com a taxa de câmbio no momento da transação</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
         <source>exchange rate was not available at the time of the transaction</source>
-        <translation>el tipo de cambio no estaba disponible en el momento de la transacción</translation>
+        <translation>taxa de câmbio não estava disponível no momento da transação</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
-        <translation>ID de la transacción</translation>
+        <translation>ID da transação</translation>
     </message>
     <message id="open-in-explorer">
         <source>Open in Blockchain Explorer</source>
-        <translation>Abrir en el Explorador de Blockchain</translation>
+        <translation>Abrir no Blockchain Explorer</translation>
     </message>
     <message id="tx-details-error-label">
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>Erro</translation>
     </message>
     <message id="utxo-empty">
         <source>Your UTXO list is empty</source>
-        <translation>Tu lista de UTXO está vacía</translation>
+        <translation>Sua lista de UTXO está vazia</translation>
     </message>
     <message id="tx-in-progress-empty">
         <source>There are no in progress transactions yet.</source>
-        <translation>Todavía no hay transacciones en progreso.</translation>
+        <translation>Ainda não há transações em andamento.</translation>
     </message>
     <message id="receive-addr">
         <source>Address</source>
-        <translation>Dirección</translation>
+        <translation>Endereço</translation>
     </message>
     <message id="edit-addr-title">
         <source>Edit address</source>
-        <translation>Editar dirección</translation>
+        <translation>Editar endereço</translation>
     </message>
     <message id="edit-addr-addr">
         <source>Address</source>
-        <translation>Dirección</translation>
+        <translation>Endereço</translation>
     </message>
     <message id="edit-addr-expires-label">
         <source>Expires on</source>
-        <translation>Caduca en</translation>
+        <translation>Expira em</translation>
     </message>
     <message id="edit-addr-expire-now">
         <source>Expire now</source>
-        <translation>Caducar ahora</translation>
+        <translation>Expirar agora</translation>
     </message>
     <message id="edit-addr-extend">
         <source>Extend</source>
-        <translation>Prorrogar</translation>
+        <translation>Estender</translation>
     </message>
     <message id="edit-addr-activate">
         <source>Activate</source>
-        <translation>Activar</translation>
+        <translation>Ativar</translation>
     </message>
     <message id="edit-addr-save-button">
         <source>Save</source>
-        <translation>Salvar</translation>
+        <translation>Guardar</translation>
     </message>
     <message id="edit-addr-no-expire">
         <source>There is an active transaction for this address, therefore it cannot be expired.</source>
-        <translation>Hay una transacción activa para esta dirección, por lo tanto no puede expirarse.</translation>
+        <translation>Há uma transação ativa para este endereço, portanto ele não pode ser expirado.</translation>
     </message>
     <message id="edit-addr-never-expires">
         <source>This address never expires</source>
-        <translation>Esta dirección nunca expira</translation>
+        <translation>Este endereço nunca expira</translation>
     </message>
     <message id="edit-addr-expired">
         <source>This address is already expired</source>
-        <translation>Esta dirección ya ha caducado</translation>
+        <translation>Este endereço já está expirado</translation>
     </message>
     <message id="notification-contract-failed">
         <source>DApp transaction failed</source>
-        <translation>Transacción DApp fallida</translation>
+        <translation>Falha na transação de DApp</translation>
     </message>
     <message id="contacts-empty">
         <source>Your contact list is empty</source>
-        <translation>Tu lista de contactos está vacía</translation>
+        <translation>Sua lista de contatos está vazia</translation>
     </message>
     <message id="addressbook-empty">
         <source>Your address book is empty</source>
-        <translation>Tu libreta de direcciones está vacía</translation>
+        <translation>Sua Lista de Endereços está vazia
+</translation>
     </message>
     <message id="atomic-no-my-offers">
         <source>There are no offers yet.</source>
-        <translation>Todavía no hay ofertas.</translation>
+        <translation>Ainda não há ofertas.</translation>
     </message>
     <message id="swap-tx-empty">
         <source>There are no transactions yet.</source>
-        <translation>Todavía no hay transacciones.</translation>
+        <translation>Ainda não há nenhuma transação.</translation>
     </message>
     <message id="apps-fork-warning">
         <source>DAPPs will be available in your wallet after the Hard Fork</source>
-        <translation>Los DApps estarán disponibles en su wallet después de la actualización</translation>
+        <translation>DApps estarão disponíveis em sua carteira após o Hard Fork</translation>
     </message>
     <message id="address-info-cid">
         <source>Application shader ID</source>
-        <translation>Identificación de aplicación Shader</translation>
+        <translation>ID de shader aplicativo</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
-        <translation>Wallet</translation>
+        <translation>Carteira</translation>
     </message>
     <message id="settings-general-confirmations">
         <source>Minimum confirmations</source>
         <extracomment>settings tab, general section, minimum confirmations</extracomment>
-        <translation>Mínimo de confirmaciones</translation>
+        <translation>Confirmações mínimas</translation>
     </message>
     <message id="tx-details-confirmation-status-label">
         <source>Confirmation status</source>
-        <translation>Estado de la confirmación</translation>
+        <translation>Status da confirmação</translation>
     </message>
     <message id="wallet-txs-status-confirming">
         <source>confirming</source>
@@ -2715,143 +2715,143 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="tx-details-confirmation-progress-label">
         <source>Confirmed (%1)</source>
-        <translation>Confirmada (%1)</translation>
+        <translation>Confirmado (%1)</translation>
     </message>
     <message id="general-copy-and-close">
         <source>copy and close</source>
-        <translation>copiar y cerrar</translation>
+        <translation>copiar e fechar</translation>
     </message>
     <message id="settings-remote-node-address-placeholder">
         <source>Please enter the address</source>
-        <translation>Por favor ingrese la dirección</translation>
+        <translation>Por favor, insira o endereço</translation>
     </message>
     <message id="settings-local-node-port-placeholder">
         <source>Please enter the port</source>
-        <translation>Por favor, introduzca el puerto</translation>
+        <translation>Por favor, indique a porta</translation>
     </message>
     <message id="settings-export">
         <source>Export wallet data</source>
-        <translation>Exportar datos del wallet</translation>
+        <translation>Exportar dados da carteira</translation>
     </message>
     <message id="settings-import">
         <source>Import wallet data</source>
-        <translation>Importar datos del wallet</translation>
+        <translation>Importar dados de carteira</translation>
     </message>
     <message id="send-available">
         <source>Available</source>
-        <translation>Disponible</translation>
+        <translation>Disponível</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
         <source>Maximum anonymity transaction sent</source>
-        <translation>Transacción de máximo anonimato enviada</translation>
+        <translation>Transação de anonimato máximo enviada</translation>
     </message>
     <message id="notification-maxp-transaction-received">
         <source>Maximum anonymity transaction received</source>
-        <translation>Transacción de máximo anonimato recibida</translation>
+        <translation>Transação de anonimato máximo recebida</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
-        <translation>Transacción enviada a fuera de línea</translation>
+        <translation>Transação enviada para offline</translation>
     </message>
     <message id="notification-offline-transaction-received">
         <source>Transaction received from offline</source>
-        <translation>Transacción recibida desde offline</translation>
+        <translation>Transação recebida de offline</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
         <source>Maximum anonymity transaction failed</source>
-        <translation>Transacción de máximo anonimato fallida</translation>
+        <translation>Transação de anonimato máximo falhou</translation>
     </message>
     <message id="notification-offline-transaction-failed">
         <source>Offline transaction failed</source>
-        <translation>Transacción offline fallida</translation>
+        <translation>Falha na transação offline</translation>
     </message>
     <message id="notification-address-copied">
         <source>Address copied to clipboard</source>
-        <translation>La dirección ha sido copiada al portapapeles</translation>
+        <translation>Endereço copiado para o clipboard</translation>
     </message>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
-        <translation>ID de activos confidenciales</translation>
+        <translation>ID de ativo Confidencial</translation>
     </message>
     <message id="address-info-copy-and-close">
         <source>copy address and close</source>
-        <translation>copiar dirección y cerrar</translation>
+        <translation>copiar endereço e fechar</translation>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
-        <translation>Notificaciones</translation>
+        <translation>Notificações</translation>
     </message>
     <message id="notifications-clear-all">
         <source>clear all</source>
-        <translation>borrar todo</translation>
+        <translation>limpar tudo</translation>
     </message>
     <message id="notifications-empty">
         <source>There are no notifications yet.</source>
-        <translation>Aún no hay notificaciones.</translation>
+        <translation>Ainda não há notificações.</translation>
     </message>
     <message id="notifications-read">
         <source>read</source>
-        <translation>leer</translation>
+        <translation>lidos</translation>
     </message>
     <message id="notifications-update-now">
         <source>update now</source>
-        <translation>actualizar ahora</translation>
+        <translation>atualizar agora</translation>
     </message>
     <message id="notifications-activate">
         <source>activate</source>
-        <translation>activar</translation>
+        <translation>ativar</translation>
     </message>
     <message id="notifications-activated">
         <source>activated</source>
-        <translation>activado</translation>
+        <translation>ativado</translation>
     </message>
     <message id="notifications-details">
         <source>details</source>
-        <translation>detalles</translation>
+        <translation>detalhes</translation>
     </message>
     <message id="notifications-open-dapp">
         <source>open the DApp</source>
-        <translation>abrir el DApp</translation>
+        <translation>abra o DApp</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
-        <translation>Descripción</translation>
+        <translation>Descrição</translation>
     </message>
     <message id="address-info-dapp">
         <source>DApp name</source>
-        <translation>Nombre del DApp</translation>
+        <translation>Nome do DApp</translation>
     </message>
     <message id="dapps-privacy-title">
         <source>DApps Privacy Warning</source>
-        <translation>Aviso de Privacidad de DApps</translation>
+        <translation>Aviso de privacidade dos DApps</translation>
     </message>
     <message id="dapps-privacy-warning">
         <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
 
 Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet requiere permiso para lanzar aplicaciones distribuidas. Esta acción puede exponer tu información, incluyendo pero no limitado a la dirección IP, hacia servidores web y/o contratos de terceros.
+        <translation>O Beam Wallet requer uma permissão para iniciar aplicações distribuídas. Esta ação pode expor suas informações, incluindo mas não limitado ao endereço IP de servidores web de terceiros e/ou contratos.
 
-¿Permites continuar? Siempre puedes actualizar tu elección en Configuración más tarde.</translation>
+Permitir continuar? Você pode atualizar sua escolha mais tarde nas Configurações.</translation>
     </message>
     <message id="settings-dapps-allowed">
         <source>Allow to launch DApps</source>
-        <translation>Permiso para lanzar DApps</translation>
+        <translation>Permitir iniciar DApps</translation>
     </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
-        <translation>Información de la transacción</translation>
+        <translation>Informação de transação</translation>
     </message>
     <message id="send-no-funds-for-fee">
         <source>Insufficient funds to pay transaction fee.</source>
-        <translation>Fondos insuficientes para pagar la tarifa de transacción.</translation>
+        <translation>Fundos insuficientes para pagar taxa de transação.</translation>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
-        <translation>Información general</translation>
+        <translation>Informação geral</translation>
     </message>
     <message id="general-wallet-signature">
         <source>Signature</source>
-        <translation>Firma</translation>
+        <translation>Assinatura</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -2859,202 +2859,202 @@ Allow to proceed? You can always update your choice in Settings later.</source>
     </message>
     <message id="general-coin">
         <source>Coin</source>
-        <translation>Moneda</translation>
+        <translation>Moeda</translation>
     </message>
     <message id="general-show-tx-details">
         <source>Show details</source>
-        <translation>Mostrar detalles</translation>
+        <translation>Exibir detalhes</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>Avançado</translation>
     </message>
     <message id="receive-max-set">
         <source>Maximum anonymity set</source>
-        <translation>Ajuste de anonimato máximo</translation>
+        <translation>Conjunto de anonimato máximo</translation>
     </message>
     <message id="address-info-title-mp">
         <source>Address details with max anonymity set</source>
-        <translation>Detalles de la dirección con el ajuste de máximo anonimato</translation>
+        <translation>Detalhes do endereço com anonimato máximo</translation>
     </message>
     <message id="address-info-regular-notice">
         <source>Regular address includes both online and offline addresses.</source>
-        <translation>La dirección regular incluye direcciones tanto online como offline.</translation>
+        <translation>Endereço regular inclui ambos endereços online e offline.</translation>
     </message>
     <message id="tx-online">
         <source>Online</source>
-        <translation>Conectado</translation>
+        <translation>Online</translation>
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
-        <translation>Pide al receptor que se conecte en línea para apoyar más transacciones sin conexión.</translation>
+        <translation>Peça ao destinatário para aparecer online e oferecer suporte a mais transações offline.</translation>
     </message>
     <message id="send-offline-refund">
         <source>Make sure the address is correct as offline transactions
 cannot be canceled.</source>
-        <translation>Asegúrese de que la dirección es correcta ya que
-las transacciones offline no se pueden cancelar.</translation>
+        <translation>Certifique-se de que o endereço está correto, pois
+as transações offline não podem ser canceladas.</translation>
     </message>
     <message id="send-online-address">
         <source>Online address.</source>
-        <translation>Dirección online.</translation>
+        <translation>Endereço online.</translation>
     </message>
     <message id="send-anon-set">
         <source>Guarantees maximum anonymity set of up to 64K.</source>
-        <translation>Ajuste de anonimato máximo de hasta 64K garantizado.</translation>
+        <translation>Garante um conjunto de anonimato máximo de até 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>El destinatario debe conectarse dentro de las próximas 12 horas y usted debe conectarse dentro de las 2 horas posteriores.</translation>
+        <translation>O destinatário deve aparecer online dentro das próximas 12 horas e você deve aparecer online dentro de 2 horas depois.</translation>
     </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
-        <translation>La transacción puede durar hasta 72 horas.</translation>
+        <translation>A transação pode durar até 72 horas.</translation>
     </message>
     <message id="send-app-twoway-confirmation-title">
         <source>Confirm withdraw &amp; deposit</source>
-        <translation>Confirmar retiro y depósito</translation>
+        <translation>Confirmar saque e depósito</translation>
     </message>
     <message id="send-app-spend-confirmation-title">
         <source>Confirm deposit from the wallet</source>
-        <translation>Confirmar depósito desde el wallet</translation>
+        <translation>Confirmar o depósito da carteira</translation>
     </message>
     <message id="send-app-receive-confirmation-title">
         <source>Confirm withdraw to the wallet</source>
-        <translation>Confirmar retiro hacia el wallet</translation>
+        <translation>Confirme o saque para a carteira</translation>
     </message>
     <message id="send-app-confirmation-title">
         <source>Confirm application transaction</source>
-        <translation>Confirmar transacción de aplicación</translation>
+        <translation>Confirmar aplicação de transação</translation>
     </message>
     <message id="general-confirm">
         <source>Confirm</source>
-        <translation>Confirme</translation>
+        <translation>Confirmar</translation>
     </message>
     <message id="send-type-label">
         <source>Transaction type</source>
-        <translation>Tipo de transacción</translation>
+        <translation>Tipo de transação</translation>
     </message>
     <message id="send-twoway-warning">
         <source>%1 will change the balances of your wallet</source>
-        <translation>%1 cambiará los balances de su wallet</translation>
+        <translation>%1 irá alterar os saldos da sua carteira</translation>
     </message>
     <message id="send-dapp-spend-warning">
         <source>%1 will take the funds from your wallet</source>
-        <translation>%1 tomará los fondos de su wallet</translation>
+        <translation>%1 receberá os fundos da sua carteira</translation>
     </message>
     <message id="send-dapp-receive-warning">
         <source>%1 will send the funds to your wallet</source>
-        <translation>%1 enviará los fondos a su wallet</translation>
+        <translation>%1 enviará os fundos para sua carteira</translation>
     </message>
     <message id="send-contract-only-fee">
         <source>The transaction fee would be deducted from your balance</source>
-        <translation>El cargo por transacción se deduciría de su saldo</translation>
+        <translation>A taxa de transação seria deduzida de seu saldo</translation>
     </message>
     <message id="status-online-remote">
         <source>connected node supports online transactions only</source>
-        <translation>el nodo conectado sólo soporta transacciones online</translation>
+        <translation>nó conectado suporta apenas transações online</translation>
     </message>
     <message id="address-info-title-online">
         <source>Online (SBBS) address details</source>
-        <translation>Detalles de la dirección online (SBBS)</translation>
+        <translation>Detalhes do endereço online (SBBS)</translation>
     </message>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
-        <translation>Actualmente está conectado al nodo que sólo soporta transacciones online.</translation>
+        <translation>Você está atualmente conectado a um nó que suporta apenas transações online.</translation>
     </message>
     <message id="wallet-receive-stay-online">
         <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Para que la transacción se complete, debe conectarse durante las 12 horas posteriores al envío de los Beams.</translation>
+        <translation>Para um pagamento online concluir, você deve aparecer online dentro das 12 horas após o envio das moedas.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
-        <translation>Puerto del servidor local</translation>
+        <translation>Porta do servidor local</translation>
     </message>
     <message id="apps-install-from-file">
         <source>Install DApp from file</source>
-        <translation>Instalar la aplicación DApp desde archivo</translation>
+        <translation>Instalar DApp a partir de arquivo</translation>
     </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
-        <translation>Seleccione aplicaciones para instalarse</translation>
+        <translation>Selecione o aplicativo para instalar</translation>
     </message>
     <message id="faucet-promo">
         <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Vea el wallet en acción. Obtenga una pequeña cantidad de Beams del la aplicación Faucet DApp.</translation>
+        <translation>Veja a carteira em ação. Obtenha uma pequena quantidade de Beams do Faucet DApp.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
-        <translation>obtenga monedas Beams</translation>
+        <translation>obter moedas</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
-        <translation>Frase semilla</translation>
+        <translation>Palavras-chave</translation>
     </message>
     <message id="general-do-later">
         <source>I will do it later</source>
-        <translation>lo haré más tarde</translation>
+        <translation>Farei isso mais tarde</translation>
     </message>
     <message id="general-complete-verification">
         <source>Complete wallet verification</source>
-        <translation>Completar verificación del wallet</translation>
+        <translation>Completar verificação da carteira</translation>
     </message>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
-        <translation>Verificación completa</translation>
+        <translation>Completar verificação</translation>
     </message>
     <message id="seed-validation-promo">
         <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation>Escribe y valida tu frase semilla para que siempre puedas recuperar tus fondos.</translation>
+        <translation>Anote e valide suas palavras-chave para que você sempre possa recuperar seus fundos.</translation>
     </message>
     <message id="seed-validation-link">
         <source>Secure your phrase</source>
-        <translation>Asegura tu frase</translation>
+        <translation>Proteja suas palavras-chave</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
         <translation>
-            <numerusform>Dirección offline: quedan %n transacción(es).</numerusform>
-            <numerusform>Direcciones fuera de línea: %n de transacción (es) que quedan.</numerusform>
+            <numerusform>Endereço offline: %n transações restantes.</numerusform>
+            <numerusform>Endereço offline: %n transação(ões) restante(s).</numerusform>
         </translation>
     </message>
     <message id="source-dex">
         <source>Assets Swap</source>
-        <translation>Intercambio de Activos</translation>
+        <translation>Troca de Ativos</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
         <source>sending to own address
 (maximum anonymity)</source>
-        <translation>Enviando a su propia dirección
-(máximo anonimato)</translation>
+        <translation>enviando para o próprio endereço
+(anonimato máximo)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
         <source>sending to own address
 (offline)</source>
-        <translation>enviando a su propia dirección
+        <translation>enviando para o próprio endereço
 (offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
         <source>sent to own address
 (maximum anonymity)</source>
-        <translation>enviando a su propia dirección
-(máximo anonimato)</translation>
+        <translation>enviado para o próprio endereço
+(anonimato máximo)</translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
         <source>sent to own address
 (offline)</source>
-        <translation>enviado a su propia dirección
+        <translation>enviado para o próprio endereço
 (offline)</translation>
     </message>
     <message id="apps-version-error">
         <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation>Esta DApp requiere la versión %1 del wallet Beam o superior. Por favor, actualice su wallet.</translation>
+        <translation>Este DApp requer versão %1 da Beam Wallet ou superior. Por favor, atualize sua carteira.</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
-        <translation>esperando al receptor
+        <translation>esperando pelo destinatário
 (offline)</translation>
     </message>
     <message id="apps-uninstall">
@@ -3063,7 +3063,7 @@ las transacciones offline no se pueden cancelar.</translation>
     </message>
     <message id="apps-uninstall-confirm">
         <source>Are you sure you want to uninstall %1 DApp?</source>
-        <translation>¿Confirmas que deseas desinstalar %1 DApp?</translation>
+        <translation>Tem certeza que deseja desinstalar %1 DApp?</translation>
     </message>
     <message id="app-uninstall-title">
         <source>Uninstall DApp</source>
@@ -3071,46 +3071,46 @@ las transacciones offline no se pueden cancelar.</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
-        <translation>Por favor espere, %1 está cargando</translation>
+        <translation>Aguarde, %1 está carregando</translation>
     </message>
     <message id="apps-loading">
         <source>Loading...</source>
-        <translation>Cargando...</translation>
+        <translation>Carregando...</translation>
     </message>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
-        <translation>No hay aplicaciones en este momento</translation>
+        <translation>Não há aplicações no momento</translation>
     </message>
     <message id="apps-err-cnt" numerus="yes">
         <source>%n DApp(s) is not available</source>
         <translation>
-            <numerusform>%n DApp(s) no está disponible</numerusform>
-            <numerusform>%n La aplicación DApp(s) no está disponible</numerusform>
+            <numerusform>DApp(s) %n não está disponível</numerusform>
+            <numerusform>DApp(s) %n não está disponível</numerusform>
         </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
-        <translation>Actualizar el Wallet para lanzar la aplicación %1</translation>
+        <translation>Atualize a Carteira para iniciar a aplicação %1</translation>
     </message>
     <message id="wallet-receive-regular-address-message">
         <source>To ensure a better privacy, new address is generated every time.
 In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <translation>Para asegurar una mejor privacidad, se genera una nueva dirección cada vez.
-En caso de que desee volver a utilizar una dirección normal creada anteriormente, por favor utilice la Libreta de Direcciones.</translation>
+        <translation>Para garantir melhor privacidade, um novo endereço é gerado a cada vez.
+Caso você queira reutilizar um endereço regular criado anteriormente, use a Lista de Endereços.</translation>
     </message>
     <message id="address-details">
         <source>Address details</source>
-        <translation>Detalles de la dirección</translation>
+        <translation>Detalhes do endereço</translation>
     </message>
     <message id="swap-token-details">
         <source>Token details</source>
-        <translation>Detalles del token</translation>
+        <translation>Detalhes de token</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
         <source>No limit
 (transaction can last indefinitely)</source>
-        <translation>Sin límite
-(la transacción puede durar indefinidamente)</translation>
+        <translation>Nenhum limite
+(a transação pode durar indefinidamente)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
@@ -3125,96 +3125,96 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     </message>
     <message id="wallet-receive-addr-message-min-fee">
         <source>Min transaction fee is 0.01 BEAM.</source>
-        <translation>Tarifa mínima de transacción es 0.01 BEAM.</translation>
+        <translation>A taxa mínima de transação é de 0,01 BEAM.</translation>
     </message>
     <message id="status-online-stale-rates">
         <source>(exchange rate to %1 was not updated since %2)</source>
-        <translation>(la tasa de cambio a %1 no se ha actualizado desde %2)</translation>
+        <translation>(a taxa de câmbio para %1 não foi atualizada desde %2)</translation>
     </message>
     <message id="loading-view-restoring">
         <source>Restoring wallet from the blockchain: </source>
-        <translation>Restaurando el wallet desde la blockchain: </translation>
+        <translation>Restaurando a carteira a partir da blockchain: </translation>
     </message>
     <message id="loading-view-creating">
         <source>Downloading blockchain data: </source>
-        <translation>Descargando datos de la blockchain: </translation>
+        <translation>Baixando dados da blockchain: </translation>
     </message>
     <message id="loading-view-less-than-minute">
         <source>less than a minute</source>
-        <translation>menos de un minuto</translation>
+        <translation>menos de um minuto</translation>
     </message>
     <message id="loading-view-rebuild-utxos">
         <source>Rebuilding wallet data: </source>
-        <translation>Reconstruyendo datos del wallet: </translation>
+        <translation>Recriando dados da carteira: </translation>
     </message>
     <message id="status-change-settings">
         <source>Change settings</source>
-        <translation>Cambiar ajustes</translation>
+        <translation>Alterar configurações</translation>
     </message>
     <message id="start-create-password">
         <source>Create password</source>
-        <translation>Crear contraseña</translation>
+        <translation>Criar senha</translation>
     </message>
     <message id="start-second-copy-error">
         <source>The wallet is already started. Close all running wallets and start again.</source>
-        <translation>El wallet ha comenzado. Cierre todos los wallets en ejecución y reinicie.</translation>
+        <translation>A carteira já foi iniciada. Feche todas as carteiras em execução e comece novamente.</translation>
     </message>
     <message id="settings-ipfsnode-title">
         <source>IPFS Integrated Node</source>
-        <translation>Nodo Integrado IPFS</translation>
+        <translation>Nó integrado do IPFS</translation>
     </message>
     <message id="settings-ipfs-swarm-port">
         <source>Swarm Port</source>
-        <translation>Puerto Swarm</translation>
+        <translation>Porta do Swarm</translation>
     </message>
     <message id="wallet-txs-status-in-progress-pub-offline-to-own">
         <source>sending to own address
 (public offline)</source>
-        <translation>enviando a su propia dirección
-(pública offline)</translation>
+        <translation>enviando para o próprio endereço
+(offline público)</translation>
     </message>
     <message id="wallet-txs-status-sent-pub-offline-to-own">
         <source>sent to own address
 (public offline)</source>
-        <translation>enviado a su propia dirección
-(pública offline)</translation>
+        <translation>enviado para o próprio endereço
+(offline público)</translation>
     </message>
     <message id="start-migration-manual-button">
         <source>start manual migration</source>
         <extracomment>migration screen, select db file button</extracomment>
-        <translation>iniciar migración manual</translation>
+        <translation>iniciar a migração manual</translation>
     </message>
     <message id="restore-find-db">
         <source>Find the wallet database file manually</source>
-        <translation>Buscar el archivo de base de datos del wallet manualmente</translation>
+        <translation>Encontre o arquivo de banco de dados da carteira manualmente</translation>
     </message>
     <message id="settings-ipfs-location">
         <source>IPFS repository location</source>
-        <translation>Ubicación del repositorio IPFS</translation>
+        <translation>Localização do repositório IPFS</translation>
     </message>
     <message id="settings-ipfs-start">
         <source>Run node on</source>
-        <translation>Ejecutar nodo en</translation>
+        <translation>Executar nó em</translation>
     </message>
     <message id="tx-empty">
         <source>Your transaction list is empty</source>
-        <translation>Tu lista de transacciones está vacía</translation>
+        <translation>Sua lista de transações está vazia</translation>
     </message>
     <message id="tx-sent-empty">
         <source>There are no sent transactions yet.</source>
-        <translation>Todavía no hay transacciones enviadas.</translation>
+        <translation>Ainda não há transações enviadas.</translation>
     </message>
     <message id="tx-received-empty">
         <source>There are no received transactions yet.</source>
-        <translation>Todavía no hay transacciones recibidas.</translation>
+        <translation>Ainda não há nenhuma transação recebida.</translation>
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Tudo</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
         <source>In progress</source>
-        <translation>En progreso</translation>
+        <translation>Em execução</translation>
     </message>
     <message id="wallet-transactions-sent-tab">
         <source>Sent</source>
@@ -3222,15 +3222,15 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     </message>
     <message id="wallet-transactions-received-tab">
         <source>Received</source>
-        <translation>Recibido</translation>
+        <translation>Recebido</translation>
     </message>
     <message id="tx-table-filter-in-progress">
         <source>In progress</source>
-        <translation>En progreso</translation>
+        <translation>Em execução</translation>
     </message>
     <message id="tx-table-filter-completed">
         <source>Completed</source>
-        <translation>Completado</translation>
+        <translation>Concluído</translation>
     </message>
     <message id="tx-table-filter-canceled">
         <source>Canceled</source>
@@ -3238,19 +3238,19 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     </message>
     <message id="tx-table-filter-failed">
         <source>Failed</source>
-        <translation>Fallado</translation>
+        <translation>Falhou</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
         <source>Enter search text...</source>
-        <translation>Introduzca texto de búsqueda...</translation>
+        <translation>Inserir texto de pesquisa...</translation>
     </message>
     <message id="wallet-verify-payment">
         <source>Verify payment</source>
-        <translation>Verificar pago</translation>
+        <translation>Verificar pagamento</translation>
     </message>
     <message id="general-multiple-assets">
         <source>Multiple assets</source>
-        <translation>Múltiples activos monedas</translation>
+        <translation>Múltiplos ativos</translation>
     </message>
     <message id="general-value">
         <source>Value</source>
@@ -3258,79 +3258,79 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     </message>
     <message id="wallet-txs-source">
         <source>Source</source>
-        <translation>Fuente</translation>
+        <translation>Fonte</translation>
     </message>
     <message id="wallet-txs-action">
         <source>Action</source>
-        <translation>Acción</translation>
+        <translation>Acão</translation>
     </message>
     <message id="wallet-txs-date-time">
         <source>Created on</source>
-        <translation>Creado en</translation>
+        <translation>Criado em</translation>
     </message>
     <message id="tx-table-filter-label">
         <source>Show</source>
-        <translation>Mostrar</translation>
+        <translation>Apresentar</translation>
     </message>
     <message id="multiselect-none">
         <source>None</source>
-        <translation>Ninguno</translation>
+        <translation>Nenhum</translation>
     </message>
     <message id="multiselect-all">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Tudo</translation>
     </message>
     <message id="wallet-remove-filter-button">
         <source>remove filter</source>
-        <translation>eliminar filtro</translation>
+        <translation>remover filtro</translation>
     </message>
     <message id="wallet-assets-title">
         <source>Assets</source>
-        <translation>Activos</translation>
+        <translation>Ativos</translation>
     </message>
     <message id="wallet-selected-assets-checkbox">
         <source>Selected</source>
-        <translation>Seleccionado</translation>
+        <translation>Selecionado</translation>
     </message>
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Tudo</translation>
     </message>
     <message id="dnd-app-install-title">
         <source>Install DApp</source>
-        <translation>Instalar DApp</translation>
+        <translation>Installar DApp</translation>
     </message>
     <message id="dnd-load-a-file">
         <source>load a file</source>
-        <translation>cargar un archivo</translation>
+        <translation>carrega um arquivo</translation>
     </message>
     <message id="dnd-jus-drop">
         <source>or just drop it here</source>
-        <translation>o solo arrástralo hasta aquí</translation>
+        <translation>ou apenas solte-a aqui</translation>
     </message>
     <message id="dnd-install-success">
         <source>The &quot;%1&quot; DApp is installed successfully</source>
-        <translation>El &quot;%1&quot; DApp está instalado correctamente</translation>
+        <translation>O DApp &quot;%1&quot; foi instalado com sucesso</translation>
     </message>
     <message id="dnd-install-fail">
         <source>The DApp installation error.</source>
-        <translation>Error de instalación del DApp.</translation>
+        <translation>Erro de instalação do DApp</translation>
     </message>
     <message id="apps-inprogress-tip">
         <source>(%1 active)</source>
-        <translation>(%1 activo)</translation>
+        <translation>(%1 ativo)</translation>
     </message>
     <message id="wallet-balance-title">
         <source>Wallet Balance</source>
-        <translation>Saldo del wallet</translation>
+        <translation>Saldo da carteira</translation>
     </message>
     <message id="tx-no-transaction-filter">
         <source>No transactions to show</source>
-        <translation>No hay transacciones para mostrar</translation>
+        <translation>Nenhuma transação para mostrar</translation>
     </message>
     <message id="apps-become-a-publisher">
         <source>become a publisher</source>
-        <translation>convertirse en editor</translation>
+        <translation>se tornar um editor</translation>
     </message>
     <message id="dapps-store-install">
         <source>install</source>
@@ -3338,53 +3338,52 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     </message>
     <message id="dapps-store-update">
         <source>update</source>
-        <translation>actualizar</translation>
+        <translation>atualizar</translation>
     </message>
     <message id="dapps-store-remove-dapp">
         <source>remove dapp</source>
-        <translation>eliminar dapp</translation>
+        <translation>remover DApp</translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
-        <translation>Convertirse en editor</translation>
+        <translation>Se tornar um editor</translation>
     </message>
     <message id="dapps-store-edit-publisher-info">
         <source>Edit publisher info</source>
-        <translation>Editar información del editor</translation>
+        <translation>Editar informações do editor</translation>
     </message>
     <message id="dapps-store-become-publisher-text">
         <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation>Para convertirte en un editor, necesitas configurar un nombre de usuario. El número de identificación y la clave personal de publicación te serán proporcionados
- automáticamente. El registrarse le permitirá publicar, actualizar y eliminar DApps.</translation>
+        <translation>Para se tornar um editor, você precisa configurar um nome de usuário. O número de identificação e a chave pessoal do Editor serão dados a você automaticamente. O registro permitirá que você publique, atualize e exclua DApps.</translation>
     </message>
     <message id="dapps-store-nickname">
         <source>Nickname</source>
-        <translation>Seudónimo</translation>
+        <translation>Apelido</translation>
     </message>
     <message id="dapps-store-short-title">
         <source>Short title</source>
-        <translation>Título corto</translation>
+        <translation>Título curto</translation>
     </message>
     <message id="dapps-store-50-character-max">
         <source>50 characters max</source>
-        <translation>Máximo 50 caracteres</translation>
+        <translation>Máximo de 50 caracteres</translation>
     </message>
     <message id="dapps-store-about-me">
         <source>About me</source>
-        <translation>Acerca de mí</translation>
+        <translation>Sobre mim</translation>
     </message>
     <message id="dapps-store-150-character-max">
         <source>150 characters max</source>
-        <translation>Máximo 150 caracteres</translation>
+        <translation>Máximo de 150 caracteres</translation>
     </message>
     <message id="dapps-store-social-networks">
         <source>Social networks</source>
-        <translation>Redes sociales</translation>
+        <translation>Redes sociais</translation>
     </message>
     <message id="dapps-store-website">
         <source>Website</source>
-        <translation>Sitio web</translation>
+        <translation>Site</translation>
     </message>
     <message id="dapps-store-twitter">
         <source>Twitter</source>
@@ -3408,85 +3407,85 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     </message>
     <message id="dapps-store-create-account">
         <source>create account</source>
-        <translation>crear cuenta</translation>
+        <translation>criar conta</translation>
     </message>
     <message id="dapps-store-save-changes">
         <source>save changes</source>
-        <translation>guardar cambios</translation>
+        <translation>salvar alterações</translation>
     </message>
     <message id="dapps-store-publisher-page">
         <source>Publisher&apos;s page</source>
-        <translation>Página del editor</translation>
+        <translation>Página de Editor</translation>
     </message>
     <message id="dapps-store-my-dapps">
         <source>My DAPPs - admin panel</source>
-        <translation>Mis DAPPs - panel de administración</translation>
+        <translation>Meus DApps - Painel de administração</translation>
     </message>
     <message id="dapps-store-publisher-have-not-dapps">
         <source>You have no published DApps yet</source>
-        <translation>Aún no tienes DApps publicados</translation>
+        <translation>Você ainda não tem DApps publicados</translation>
     </message>
     <message id="dapps-store-publisher-upload-first-dapp">
         <source>upload your first dapp</source>
-        <translation>sube tu primer dapp</translation>
+        <translation>carregue seu primeiro DApp</translation>
     </message>
     <message id="dapps-store-publisher-key">
         <source>Publisher Key</source>
-        <translation>Llave del Editor</translation>
+        <translation>Chave de Editor</translation>
     </message>
     <message id="dapps-store-publisher-key-dialog-note">
         <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
-        <translation>Aquí está tu Llave de Editor personal. Cualquier usuario puede usarla para añadirte a su lista personal y seguir tus aplicaciones. Puede añadirlo en su página personal o en su sitio web.</translation>
+        <translation>Aqui está a sua chave pessoal de Editor. Qualquer usuário pode usá-la para adicionar você à lista pessoal deles e seguir os seus aplicativos. Você pode adicioná-lo em sua página pessoal ou site.</translation>
     </message>
     <message id="copy-publisher-key">
         <source>Copy publisher key</source>
-        <translation>Copiar llave de editor</translation>
+        <translation>Copiar chave do editor</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
         <source>The transaction is sent</source>
-        <translation>La transacción fue enviada</translation>
+        <translation>A transação foi enviada</translation>
     </message>
     <message id="dapps-store-creation-of-account">
         <source>Creation of the personal publisher account takes time.
  You can continue as soon as transaction is completed.</source>
-        <translation>La creación de la cuenta del editor personal toma su tiempo.
- Puede continuar tan pronto como se complete la transacción.</translation>
+        <translation>A criação da conta pessoal de Editor leva tempo.
+Você poderá continuar assim que a transação for concluída.</translation>
     </message>
     <message id="dapps-store-changes-takes-time">
         <source>Changes take time. You can continue as soon as transaction is completed.</source>
-        <translation>Los cambios demoran. Puede continuar tan pronto como la transacción se haya completado.</translation>
+        <translation>Alterações levam tempo. Você pode continuar assim que a transação for concluída.</translation>
     </message>
     <message id="dapps-store-upload-choose-file-title">
         <source>Select application to upload</source>
-        <translation>Seleccione la aplicación a subir</translation>
+        <translation>Selecione o aplicativo para upload</translation>
     </message>
     <message id="dapps-store-update-dapp-title">
         <source>Update DApp</source>
-        <translation>Actualizar DApp</translation>
+        <translation>Atualizar DApp</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-title">
         <source>Upload new DApp</source>
-        <translation>Subir nuevo DApp</translation>
+        <translation>Enviar novo DApp</translation>
     </message>
     <message id="dapps-store-update-dapp-text">
         <source>To update %1, please add the new version of the file below</source>
-        <translation>Para actualizar %1, por favor agregue la nueva versión del archivo de abajo</translation>
+        <translation>Para atualizar o %1, por favor adicione a nova versão do arquivo abaixo</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-text">
         <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
-        <translation>Para subir tu propio DApp en la DApp Store, por favor usa archivos en el formato &lt;b&gt;&lt;i&gt;.dapp solamente&lt;/i&gt;&lt;/b&gt;</translation>
+        <translation>Para enviar seu próprio DApp no DApp Store, por favor, use &lt;b&gt;&lt;i&gt;apenas arquivos no formato .dapp&lt;/i&gt;&lt;/b&gt;</translation>
     </message>
     <message id="dapps-store-upload-common-error">
         <source>Something went wrong, please check your file and to try upload it again</source>
-        <translation>Algo salió mal, por favor revisa tu archivo e intenta cargarlo de nuevo</translation>
+        <translation>Algo deu errado, por favor, verifique o seu arquivo e tente fazer o upload novamente</translation>
     </message>
     <message id="dapp-store-load-file">
         <source>load .dapp file</source>
-        <translation>cargar archivo .dapp</translation>
+        <translation>carregar arquivo .dapp</translation>
     </message>
     <message id="dapps-store-drop-text">
         <source>or just drop it here</source>
-        <translation>o solo arrástralo hasta aquí</translation>
+        <translation>ou apenas solte-a aqui</translation>
     </message>
     <message id="general-continue">
         <source>continue</source>
@@ -3496,25 +3495,25 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
         <source>Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
 change the information in your file and upload your file again.</source>
-        <translation>Revisa la información de abajo y selecciona &quot;publicar&quot;.
-Si algo está mal, por favor cancele la subida,
-cambie la información en su archivo y vuelva a subir el archivo.</translation>
+        <translation>Verifique as informações abaixo e selecione &quot;publicar&quot;.
+Se algo estiver errado, por favor cancele o upload,
+altere as informações no seu arquivo e faça o upload do seu arquivo novamente.</translation>
     </message>
     <message id="dapps-store-dapp-release-date">
         <source>Release date:</source>
-        <translation>Fecha de lanzamiento:</translation>
+        <translation>Data de lançamento:</translation>
     </message>
     <message id="dapps-store-dapp-version">
         <source>Version:</source>
-        <translation>Versión:</translation>
+        <translation>Versão:</translation>
     </message>
     <message id="dapps-store-dapp-api-version">
         <source>Api version:</source>
-        <translation>Versión del Api:</translation>
+        <translation>Versão da Api:</translation>
     </message>
     <message id="dapps-store-dapp-min-api-version">
         <source>Minimal api version:</source>
-        <translation>Versión mínima de api:</translation>
+        <translation>Versão mínima da api:</translation>
     </message>
     <message id="dapps-store-dapp-guid">
         <source>Guid:</source>
@@ -3526,7 +3525,7 @@ cambie la información en su archivo y vuelva a subir el archivo.</translation>
     </message>
     <message id="dapps-store-you-now-are-publisher">
         <source>You now are a publisher!</source>
-        <translation>¡Ahora eres un editor!</translation>
+        <translation>Você agora é um editor!</translation>
     </message>
     <message id="dapps-store-congratulations">
         <source>Congratulations %1!
@@ -3537,17 +3536,17 @@ list and follow your apps. You can add it on your personal page or website.
 All the time you have access to it in yout personal publisher account.
 
 Let&apos;s start!</source>
-        <translation>¡Enhorabuena %1!
+        <translation>Parabéns %1!
 
-Nos complace verte en nuestra DApp Store como Editor.
-A continuación verá su Clave de Editor personal. Cualquier usuario puede usarlo para añadirte a su lista personal y seguir tus aplicaciones. Puede añadirlo en su página personal o en su sitio web.
-Todo el tiempo tienes acceso a ella en su cuenta personal de editor.
+Estamos felizes em vê-lo em nosso DApp Store como Editor.
+Abaixo você verá sua Chave de Editor pessoal. Qualquer usuário pode usá-lo para adicionar você à sua lista pessoal e seguir seus aplicativos. Você pode adicioná-la em sua página pessoal ou site.
+O tempo todo você tem acesso a ela em sua conta pessoal de editor.
 
-¡Empecemos!</translation>
+Vamos começar!</translation>
     </message>
     <message id="dapps-store-to-to-my-account">
         <source>go to my account</source>
-        <translation>ir a mi cuenta</translation>
+        <translation>ir para minha conta</translation>
     </message>
     <message id="apps-title-no-fork">
         <source>DApp Store</source>
@@ -3555,109 +3554,109 @@ Todo el tiempo tienes acceso a ella en su cuenta personal de editor.
     </message>
     <message id="publishers-list-nickname">
         <source>Nickname</source>
-        <translation>Seudónimo</translation>
+        <translation>Apelido</translation>
     </message>
     <message id="publishers-list-about">
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation>Sobre</translation>
     </message>
     <message id="publishers-list-social-net">
         <source>Social networks</source>
-        <translation>Redes sociales</translation>
+        <translation>Redes sociais</translation>
     </message>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
-        <translation>Enlace del editor</translation>
+        <translation>Link do editor</translation>
     </message>
     <message id="dapps-store-launch">
         <source>launch</source>
-        <translation>emitir</translation>
+        <translation>iniciar</translation>
     </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
-        <translation>Ups... Error al crear el Editor.
-Por favor, compruebe el registro e inténtelo de nuevo.</translation>
+        <translation>Ops... Falha ao criar o Editor.
+Por favor, verifique o log e tente novamente.</translation>
     </message>
     <message id="app-failed-edit-publisher">
         <source>Oops... Failed to edit Publisher.
 Please check the log and try again.</source>
-        <translation>Ups... Error al editar el Editor.
-Por favor, comprueba el registro y vuelva a intentarlo.</translation>
+        <translation>Ops... Falha ao editar o Editor.
+Por favor, verifique o log e tente novamente.</translation>
     </message>
     <message id="app-failed-publish-dapp">
         <source>Oops... Failed to publish DApp.
 Please check the log and try again.</source>
-        <translation>Ups... Error al publicar la DApp.
-Por favor, comprueba el registro y vuelva a intentarlo.</translation>
+        <translation>Oops... Falha ao publicar o DApp.
+Por favor, verifique o log e tente novamente.</translation>
     </message>
     <message id="app-failed-remove-dapp">
         <source>Oops... Failed to remove DApp.
 Please check the log and try again.</source>
-        <translation>Uy... Error al eliminar la DApp.
-Por favor, comprueba el registro y vuelva a intentarlo.</translation>
+        <translation>Oops... Falha ao remover o DApp.
+Por favor, verifique o log e tente novamente.</translation>
     </message>
     <message id="dapps-store-ipfs-unavailable">
         <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
-        <translation>El Servicio IPFS no se está ejecutando o no está conectado a los demás. Por favor, comprueba la configuración.</translation>
+        <translation>O serviço IPFS não está executado ou não está conectado aos pares. Por favor, verifique as configurações.</translation>
     </message>
     <message id="app-uninstall-success">
         <source>Everything worked out.
 &apos;%1&apos; DApp is uninstalled.</source>
-        <translation>Todo ha funcionado.
-&apos;%1&apos; DApp desinstalado.</translation>
+        <translation>Tudo deu certo.
+&apos;%1&apos; DApp foi desinstalado.</translation>
     </message>
     <message id="app-uninstall-fail">
         <source>Something went wrong.
 Uninstall failed. Please try again later.</source>
-        <translation>Algo salió mal.
-La desinstalación falló. Inténtelo de nuevo más tarde.</translation>
+        <translation>Algo deu errado.
+Falha na desinstalação. Por favor, tente novamente mais tarde.</translation>
     </message>
     <message id="app-install-success">
         <source>Congratulations!
 &apos;%1&apos; DApp is successfully installed.</source>
-        <translation>¡Felicitaciones!
-&apos;%1&apos; DApp instalado correctamente.</translation>
+        <translation>Parabéns!
+&apos;%1&apos; DApp instalado com sucesso.</translation>
     </message>
     <message id="app-install-fail">
         <source>Sorry, the installation failed.
 Please, check the file and try again.</source>
-        <translation>Lo sentimos, la instalación falló.
-Por favor, comprueba el archivo e inténtelo de nuevo.</translation>
+        <translation>Desculpe, a instalação falhou.
+Por favor, verifique o arquivo e tente novamente.</translation>
     </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
-        <translation>Tienda Dapp</translation>
+        <translation>DApp Store</translation>
     </message>
     <message id="settings-blockchain-height">
         <source>Blockchain height</source>
-        <translation>Altura de la blockchain</translation>
+        <translation>Altura de blockchain</translation>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
-        <translation>Intercambio de Activos</translation>
+        <translation>Troca de Ativos</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Atomic Swap Offer</source>
-        <translation>Crear Oferta de Intercambio Atómico</translation>
+        <translation>Criar Oferta de Swap Atômico</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
 Please, restart the wallet and try again.</source>
-        <translation>Lo sentimos, la instalación falló.
-Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
+        <translation>Desculpe, a instalação falhou.
+Por favor, reinicie a carteira e tente novamente.</translation>
     </message>
     <message id="app-update-fail">
         <source>Sorry, the update failed.
 Please, check the file and try again.</source>
-        <translation>Lo sentimos, la actualización falló.
-Por favor, comprueba el archivo e inténtalo de nuevo.</translation>
+        <translation>Desculpe, a atualização falhou.
+Por favor, verifique o arquivo e tente novamente.</translation>
     </message>
     <message id="app-update-timeout-fail">
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
-        <translation>Lo sentimos, la actualización falló.
-Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
+        <translation>Desculpe, a atualização falhou.
+Por favor, reinicie a carteira e tente novamente.</translation>
     </message>
     <message id="dapps-store-installing">
         <source>installing</source>
@@ -3665,23 +3664,23 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="dapps-store-updating">
         <source>updating</source>
-        <translation>actualizando</translation>
+        <translation>atualizando</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
-        <translation>Recibir</translation>
+        <translation>Receber</translation>
     </message>
     <message id="swap-rate">
         <source>Rate</source>
-        <translation>Valorar</translation>
+        <translation>Taxa</translation>
     </message>
     <message id="swap-time-created">
         <source>Created on</source>
-        <translation>Creado en</translation>
+        <translation>Criado em</translation>
     </message>
     <message id="swap-expiration">
         <source>Expiration</source>
-        <translation>Caducidad</translation>
+        <translation>Vencimento</translation>
     </message>
     <message id="swap-cancel-offer">
         <source>cancel offer</source>
@@ -3689,111 +3688,111 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="swap-accept-offer">
         <source>accept offer</source>
-        <translation>aceptar oferta</translation>
+        <translation>aceitar oferta</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept an Asset Swap Offer</source>
-        <translation>Aceptar una Oferta de Intercambio de Activos</translation>
+        <translation>Aceitar uma oferta de Troca de Ativos</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create an Asset Swap Offer</source>
-        <translation>Crear una Oferta de Intercambio de Activos</translation>
+        <translation>Criar uma oferta de Troca de Ativos</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
-        <translation>Tarifa de la transacción</translation>
+        <translation>Taxa de transação</translation>
     </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
-        <translation>Introduce el nombre del activo...</translation>
+        <translation>Insira o nome do ativo...</translation>
     </message>
     <message id="swap-active-offers-tab">
         <source>Active offers</source>
-        <translation>Ofertas activas</translation>
+        <translation>Ofertas ativas</translation>
     </message>
     <message id="swap-my-offers-tab">
         <source>My offers</source>
-        <translation>Mis ofertas</translation>
+        <translation>Minhas ofertas</translation>
     </message>
     <message id="assets-same-accept">
         <source>You can&apos;t accept offer with identical assets on both sides</source>
-        <translation>No puedes crear oferta con activos idénticos en ambos lados</translation>
+        <translation>Não pode aceitar uma oferta com ativos idênticos de ambos os lados</translation>
     </message>
     <message id="assets-same-create">
         <source>You can&apos;t create offer with identical assets on both sides</source>
-        <translation>No puedes crear oferta con activos idénticos en ambos lados</translation>
+        <translation>Não pode criar uma oferta com ativos idênticos em ambos os lados</translation>
     </message>
     <message id="notification-dex-completed">
         <source>Assets Swaps transaction completed</source>
-        <translation>Transacción de intercambios de activos completada</translation>
+        <translation>Transação de Troca de Ativos concluída</translation>
     </message>
     <message id="notification-dex-expired">
         <source>Assets Swaps transaction expired</source>
-        <translation>Transacción de intercambios de activos caducada</translation>
+        <translation>Transação de Troca de Ativos expirada</translation>
     </message>
     <message id="notification-dex-failed">
         <source>Assets Swaps transaction failed</source>
-        <translation>Transacción de intercambio de activos fallida</translation>
+        <translation>Falha na transação de Troca de Ativos</translation>
     </message>
     <message id="notification-dex-canceled">
         <source>Assets Swaps transaction canceled</source>
-        <translation>Transacción de intercambios de activos cancelada</translation>
+        <translation>Transação de Troca de Ativos cancelada</translation>
     </message>
     <message id="tx-asset-swap-default-comment">
         <source>Assets Swaps transaction</source>
-        <translation>Transacción de intercambios de activos</translation>
+        <translation>Transação de Troca de Ativos</translation>
     </message>
     <message id="assets-swap-create-confirm-dialog-title">
         <source>Create asset swap</source>
-        <translation>Crear intercambio de activos</translation>
+        <translation>Criar Swap de ativos</translation>
     </message>
     <message id="assets-swap-accept-confirm-dialog-title">
         <source>Accept asset swap</source>
-        <translation>Aceptar intercambio de activos</translation>
+        <translation>Aceitar troca de ativos</translation>
     </message>
     <message id="asset-swap-confirmation-create">
         <source>Confirm asset swap creation</source>
-        <translation>Confirmar creación de intercambio de activos</translation>
+        <translation>Confirmar criação de troca de ativos</translation>
     </message>
     <message id="asset-swap-confirmation-accept">
         <source>Accept asset swap</source>
-        <translation>Aceptar intercambio de activos</translation>
+        <translation>Aceitar troca de ativos</translation>
     </message>
     <message id="assets-swap-confirm-dialog-send-amount">
         <source>Send amount</source>
-        <translation>Enviar cantidad</translation>
+        <translation>Enviar valor</translation>
     </message>
     <message id="assets-swap-confirm-dialog-receive-amount">
         <source>Receive amount</source>
-        <translation>Recibir cantidad</translation>
+        <translation>Receber valor</translation>
     </message>
     <message id="assets-swap-confirm-dialog-fee-label">
         <source>Asset swap fee</source>
-        <translation>Tarifa de intercambio de activos</translation>
+        <translation>Taxa de troca de ativos</translation>
     </message>
     <message id="settings-ca">
         <source>Confidential assets</source>
-        <translation>Activos confidenciales</translation>
+        <translation>Ativos confidenciais</translation>
     </message>
     <message id="settings-ca-descr">
         <source>Confidential assets allowed to receive</source>
-        <translation>Activos confidenciales permitidos para recibir</translation>
+        <translation>Ativos confidenciais autorizados a receber</translation>
     </message>
     <message id="assets-settings">
         <source>Assets settings</source>
-        <translation>Configuración de activos</translation>
+        <translation>Configurações de ativos</translation>
     </message>
     <message id="messenger-title">
         <source>Beam Messenger</source>
-        <translation>Mensajero Beam</translation>
+        <translation>Beam Messenger</translation>
     </message>
     <message id="messenger-new-chat">
         <source>New chat</source>
-        <translation>Nueva conversación</translation>
+        <translation>Novo bate-papo</translation>
     </message>
     <message id="chat-title">
         <source>Chat with %1</source>
-        <translation>Converse con %1</translation>
+        <translation>Bate-papo com %1</translation>
     </message>
     <message id="chat-message-placeholder">
         <source>[ctrl + enter] to send</source>
@@ -3801,51 +3800,51 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="messenger-add-receiver-address-dialog-title">
         <source>Add receiver address</source>
-        <translation>Añadir dirección del receptor</translation>
+        <translation>Adicionar endereço do destinatário</translation>
     </message>
     <message id="messenger-add-receiver-address-address">
         <source>Address</source>
-        <translation>Dirección</translation>
+        <translation>Endereço</translation>
     </message>
     <message id="messenger-add-receiver-address-name">
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>Nome</translation>
     </message>
     <message id="messenger-add-receiver-address-save">
         <source>add receiver address</source>
-        <translation>añadir dirección del receptor</translation>
+        <translation>adicionar endereço do destinatário</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonymous</source>
-        <translation>anónimos</translation>
+        <translation>anônimo</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
-        <translation>[Comando + enter] para enviar</translation>
+        <translation>[comando + enter] para enviar</translation>
     </message>
     <message id="verify-on-hw-wallet">
         <source>Verify on HW wallet</source>
-        <translation>Verificar en el Wallet Físico</translation>
+        <translation>Verificar na carteira HW</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
-        <translation>Mi dirección</translation>
+        <translation>Meu endereço</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
         <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <translation>El código QR está erróneo.
-El Wallet Físico no está conectado. Por favor, conecte el wallet</translation>
+        <translation>O código QR está errado.
+A carteira física não está conectada. Por favor, conectar a carteira.</translation>
     </message>
     <message id="approve-on-hw-wallet-title">
         <source>Transaction</source>
-        <translation>Transacción</translation>
+        <translation>Transação</translation>
     </message>
     <message id="approve-on-hw-wallet-text">
         <source>Transaction is in process.
 Connect your Hardware Wallet to finalize the transaction.</source>
-        <translation>La transacción está en proceso.
-Conecte el Wallet Físico para finalizar la transacción.</translation>
+        <translation>Transação está em processo.
+Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
@@ -3861,7 +3860,7 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Firma del receptor</translation>
+        <translation type="unfinished">Assinatura do destinatário</translation>
     </message>
 </context>
 </TS>

@@ -77,26 +77,33 @@ namespace
     const char* kAllowedAssets = "assets/allowed";
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 
+    std::pair<QString, QString> MakeLanguageCodePair(QString languageCode)
+    {
+        return std::make_pair(languageCode, QLocale(languageCode).nativeLanguageName());
+    }
+
     const std::map<QString, QString> kSupportedLangs { 
-        { "zh_CN", "Chinese Simplified"},
-        { "en_US", "English" },
-        { "es_ES", "Español"},
-        { "be_BY", "Беларуская"},
-        { "cs_CZ", "Czech"},
-        { "de_DE", "Deutsch"},
-        { "nl_NL", "Dutch"},
-        { "fr_FR", "Française"},
-        { "id_ID", "Bahasa Indonesia"},
-        { "it_IT", "Italiano"},
-        { "ja_JP", "日本語"},
-        { "ru_RU", "Русский" },
-        { "sr_SR", "Српски" },
-        { "fi_FI", "Suomi" },
-        { "sv_SE", "Svenska"},
-        { "th_TH", "ภาษาไทย"},
-        { "tr_TR", "Türkçe"},
-        { "vi_VI", "Tiếng việt"},
-        { "ko_KR", "한국어"}
+        MakeLanguageCodePair("zh_CN"),
+        MakeLanguageCodePair("en_US"),
+        MakeLanguageCodePair("es_ES"),
+        MakeLanguageCodePair("be_BY"),
+        MakeLanguageCodePair("cs_CZ"),
+        MakeLanguageCodePair("de_DE"),
+        MakeLanguageCodePair("nl_NL"),
+        MakeLanguageCodePair("fr_FR"),
+        MakeLanguageCodePair("id_ID"),
+        MakeLanguageCodePair("it_IT"),
+        MakeLanguageCodePair("ja_JP"),
+        MakeLanguageCodePair("ru_RU"),
+        MakeLanguageCodePair("sr_SR"),
+        MakeLanguageCodePair("fi_FI"),
+        MakeLanguageCodePair("sv_SE"),
+        MakeLanguageCodePair("th_TH"),
+        MakeLanguageCodePair("tr_TR"),
+        MakeLanguageCodePair("vi_VI"),
+        MakeLanguageCodePair("ko_KR"),
+        MakeLanguageCodePair("uk_UA"),
+        MakeLanguageCodePair("pt_BR")
     };
 
     const char* kTxFilterInProgress = "tx_filter/inProgress";

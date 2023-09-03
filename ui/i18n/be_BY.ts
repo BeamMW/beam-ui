@@ -1275,7 +1275,7 @@ Please check the swap token and try again.</source>
     <message id="settings-swap-confirm-show-seed-title">
         <source>Show seed phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog title</extracomment>
-        <translation type="unfinished">Show seed phrase</translation>
+        <translation>Паказаць кантрольную фразу</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-message">
         <source>Enter your wallet password to see the phrase</source>
@@ -1679,7 +1679,7 @@ Your version is: %2. Please, check for updates.</source>
     <message id="settings-remote-node-address">
         <source>Node address</source>
         <extracomment>settings tab, node section, address label</extracomment>
-        <translation type="unfinished">Node address</translation>
+        <translation>Адрас вузла</translation>
     </message>
     <message id="settings-peers-title">
         <source>Peers</source>
@@ -1875,8 +1875,8 @@ Your version is: %2. Please, check for updates.</source>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
 (use for CEX withdrawals)</source>
-        <translation type="unfinished">SBBS Address
-(use for CEX withdrawals)</translation>
+        <translation>SBBS адрас
+(выкарыстоўвайце для зняцця з CEX)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2490,7 +2490,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation type="unfinished">Offline</translation>
+        <translation>Афлайн</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -2590,7 +2590,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender signature</source>
-        <translation type="unfinished">Sender signature</translation>
+        <translation>Сігнатура адпраўніка</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
@@ -2598,7 +2598,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver signature</source>
-        <translation type="unfinished">Receiver signature</translation>
+        <translation>Сігнатура атрымальніка</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2787,7 +2787,7 @@ Update your settings and try again.</source>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
-        <translation type="unfinished">Notifications</translation>
+        <translation>Апавяшчэнні</translation>
     </message>
     <message id="notifications-clear-all">
         <source>clear all</source>
@@ -2859,7 +2859,7 @@ Allow to proceed? You can always update your choice in Settings later.</source>
     </message>
     <message id="general-wallet-signature">
         <source>Signature</source>
-        <translation type="unfinished">Signature</translation>
+        <translation>Сігнатура</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -2891,7 +2891,7 @@ Allow to proceed? You can always update your choice in Settings later.</source>
     </message>
     <message id="tx-online">
         <source>Online</source>
-        <translation type="unfinished">Online</translation>
+        <translation>Анлайн</translation>
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
@@ -3872,7 +3872,7 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Receiver signature</translation>
+        <translation type="unfinished">Сігнатура атрымальніка</translation>
     </message>
 </context>
 </TS>

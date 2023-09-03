@@ -1878,8 +1878,8 @@ Your version is: %2. Please, check for updates.</source>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
 (use for CEX withdrawals)</source>
-        <translation type="unfinished">SBBS Address
-(use for CEX withdrawals)</translation>
+        <translation>SBBS адрес
+(используется для снятия из CEX)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
@@ -2591,7 +2591,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender signature</source>
-        <translation type="unfinished">Sender signature</translation>
+        <translation>Сигнатура отправителя</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
@@ -2599,7 +2599,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver signature</source>
-        <translation type="unfinished">Receiver signature</translation>
+        <translation>Сигнатура получателя</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
@@ -2860,7 +2860,7 @@ Allow to proceed? You can always update your choice in Settings later.</source>
     </message>
     <message id="general-wallet-signature">
         <source>Signature</source>
-        <translation type="unfinished">Signature</translation>
+        <translation>Сигнатура</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
@@ -3874,7 +3874,7 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Receiver signature</translation>
+        <translation type="unfinished">Сигнатура получателя</translation>
     </message>
 </context>
 </TS>
