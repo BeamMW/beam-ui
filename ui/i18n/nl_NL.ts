@@ -244,9 +244,10 @@
         <translation>Poort</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>Herscan synchroniseert transactie en UTXO gegevens met de meest recente informatie op de blockchain. Dit proces kan lang duren.</translation>
+        <translation type="unfinished">Herscan synchroniseert transactie en UTXO gegevens met de meest recente informatie op de blockchain. Dit proces kan lang duren.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -772,16 +773,19 @@
 (om exchanges- en transactiegegevens op te halen)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Klik op &quot;wallet logs opslaan&quot; en kies een doelmap voor het log archief</translation>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
+        <translation type="unfinished">1. Klik op &quot;wallet logs opslaan&quot; en kies een doelmap voor het log archief</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. Stuur e-mail naar%1 of open een ticket in%2</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. Stuur e-mail naar%1 of open een ticket in%2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. Vergeet het log archief niet bij te sluiten</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">3. Vergeet het log archief niet bij te sluiten</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3859,6 +3863,26 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     <message id="Receiver signature">
         <source>Receiver signature</source>
         <translation type="unfinished">Handtekening ontvanger</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">Nooit</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

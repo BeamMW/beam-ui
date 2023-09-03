@@ -244,9 +244,10 @@
         <translation>포트</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>다시 스캔하기를 실행하면 거래와 UTXO 데이터를 블록체인의 최신 정보로 업데이트 합니다. 이는 약간의 시간이 소요될 수 있습니다.</translation>
+        <translation type="unfinished">다시 스캔하기를 실행하면 거래와 UTXO 데이터를 블록체인의 최신 정보로 업데이트 합니다. 이는 약간의 시간이 소요될 수 있습니다.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -772,16 +773,19 @@
 (거래소 정보 및 거래 데이터 가져오기)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. &quot;지갑 로그 정보 저장&quot;을 클릭한 후 로그 저장 폴더를 선택하시오.</translation>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
+        <translation type="unfinished">1. &quot;지갑 로그 정보 저장&quot;을 클릭한 후 로그 저장 폴더를 선택하시오.</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. %1에게 이메일을 보내거나 %2에서 티켓을 여십시오</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. %1에게 이메일을 보내거나 %2에서 티켓을 여십시오</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. 로그 아카이브에 첨부하는 것을 잊지 마십시오</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">3. 로그 아카이브에 첨부하는 것을 잊지 마십시오</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3854,6 +3858,26 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="Receiver signature">
         <source>Receiver signature</source>
         <translation type="unfinished">Receiver signature</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">안함</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -244,9 +244,10 @@
         <translation>Portti</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>Uudelleenskannaus synkronoi tapahtuma- ja UTXO-tiedot lohkoketjun viimeisimpien tietojen kanssa. Skannaus voi kestää pitkään.</translation>
+        <translation type="unfinished">Uudelleenskannaus synkronoi tapahtuma- ja UTXO-tiedot lohkoketjun viimeisimpien tietojen kanssa. Skannaus voi kestää pitkään.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -772,16 +773,19 @@
 (to fetch exchanges and transaction data)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
         <translation type="unfinished">1. Click “Save wallet logs” and choose a destination folder for log archive</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. Lähetä sähköpostia osoitteeseen %1 tai avaa korjausehdotustiketti osoitteessa %2</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. Lähetä sähköpostia osoitteeseen %1 tai avaa korjausehdotustiketti osoitteessa %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. Huom. kirjoita viestisi ainoastaan englanniksi ja älä unohda liittää viestiisi lompakon lokitiedostoja</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">3. Huom. kirjoita viestisi ainoastaan englanniksi ja älä unohda liittää viestiisi lompakon lokitiedostoja</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3864,6 +3868,26 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="Receiver signature">
         <source>Receiver signature</source>
         <translation type="unfinished">Receiver signature</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">Ei koskaan</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

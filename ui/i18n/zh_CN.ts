@@ -245,9 +245,10 @@
         <translation>端口</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>重新扫描会将交易和UTXO数据与区块链上的最新信息同步
+        <translation type="unfinished">重新扫描会将交易和UTXO数据与区块链上的最新信息同步
 这个过程可能需要很长时间</translation>
     </message>
     <message id="settings-general-title">
@@ -782,16 +783,19 @@
 (获取交易和交易数据)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. 点击“保存钱包日志”并选择目标文件夹进行日志存档</translation>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
+        <translation type="unfinished">1. 点击“保存钱包日志”并选择目标文件夹进行日志存档</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. 向%1发送邮件或者在%2中打开工单</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. 向%1发送邮件或者在%2中打开工单</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. 不要忘了上传日志记录</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">3. 不要忘了上传日志记录</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3868,6 +3872,26 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="Receiver signature">
         <source>Receiver signature</source>
         <translation type="unfinished">Receiver signature</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">永不</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

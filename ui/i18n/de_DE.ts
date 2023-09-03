@@ -244,9 +244,10 @@
         <translation>Port</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>Erneutes scannen wird die Transaktionen und UTXO-Daten mit den aktuellen Blockchain-Daten synchronisieren. Der Prozess kann lange dauern.</translation>
+        <translation type="unfinished">Erneutes scannen wird die Transaktionen und UTXO-Daten mit den aktuellen Blockchain-Daten synchronisieren. Der Prozess kann lange dauern.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -771,16 +772,19 @@
         <translation>Erlaube Zugriff auf %1 und %2 (zum Abrufen von Exchange- und Transaktionsdaten)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Klicken Sie auf &quot;Wallet-Logs speichern&quot; und wählen Sie einen Zielordner für das Protokollarchiv</translation>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
+        <translation type="unfinished">1. Klicken Sie auf &quot;Wallet-Logs speichern&quot; und wählen Sie einen Zielordner für das Protokollarchiv</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. Sende Email zu %1 oder öffne ein Ticket in %2</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. Sende Email zu %1 oder öffne ein Ticket in %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. Anhängen des Log Archivs nicht vergessen</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">3. Anhängen des Log Archivs nicht vergessen</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3858,6 +3862,26 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     <message id="Receiver signature">
         <source>Receiver signature</source>
         <translation type="unfinished">Empfängersignatur</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">Niemals</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

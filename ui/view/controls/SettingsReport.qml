@@ -19,7 +19,7 @@ SettingsFoldable {
         SFText {
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
-            //% "1. Click “Save wallet logs” and choose a destination folder for log archive"
+            //% "1. Click on “Save wallet logs” and choose a destination folder for the log files."
             property string rpm1: qsTrId("settings-report-problem-message-l1")
             text: rpm1
             wrapMode:   Text.WordWrap
@@ -31,7 +31,7 @@ SettingsFoldable {
             Layout.fillWidth: true
             property string beamEmail: "<a href='mailto:support@beam.mw'>support@beam.mw</a>"
             property string beamGithub: "<a href='https://github.com/BeamMW'>Github</a>"
-            //% "2. Send email to %1 or open a ticket in %2"
+            //% "2. Send an email to %1 or open a ticket on %2"
             property string rpm2: qsTrId("settings-report-problem-message-l2").arg(beamEmail).arg(beamGithub)
             text: Style.linkStyle + rpm2
             textFormat: Text.RichText
@@ -46,7 +46,7 @@ SettingsFoldable {
         SFText {
             Layout.alignment: Qt.AlignTop
             Layout.fillWidth: true
-            //% "3. Don’t forget to attach logs archive"
+            //% "3. Don't forget to attach the log files."
             property string rpm3: qsTrId("settings-report-problem-message-l3")
             text: rpm3
             wrapMode:   Text.WordWrap

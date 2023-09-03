@@ -244,9 +244,10 @@
         <translation>ポート</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>再スキャンにより、トランザクションとUTXOデータがブロックチェーンの最新情報と同期されます。この処理には時間がかかる場合があります。</translation>
+        <translation type="unfinished">再スキャンにより、トランザクションとUTXOデータがブロックチェーンの最新情報と同期されます。この処理には時間がかかる場合があります。</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -771,16 +772,19 @@
         <translation>%1および%2へのアクセスを許可する（取引所とトランザクションのデータを取得するため）</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1.「ウォレットログを保存」をクリックし、ログのアーカイブ先フォルダを選択します。</translation>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
+        <translation type="unfinished">1.「ウォレットログを保存」をクリックし、ログのアーカイブ先フォルダを選択します。</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. %1に電子メールを送信するか、%2のチケットを開きます。</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. %1に電子メールを送信するか、%2のチケットを開きます。</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>3. 忘れずにログアーカイブを添付してください。</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">3. 忘れずにログアーカイブを添付してください。</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3830,6 +3834,26 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="Receiver signature">
         <source>Receiver signature</source>
         <translation type="unfinished">受信者の署名</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">無期限</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

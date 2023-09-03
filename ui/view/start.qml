@@ -304,7 +304,8 @@ Item
                     SFText {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 40
-                        text: "Use Hardware Wallet"
+                        //% "Use Hardware Wallet"
+                        text: qsTrId("general-use-hw-wallet")
                         color: Style.active
                         font.pixelSize: 14
                         MouseArea {

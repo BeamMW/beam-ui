@@ -244,9 +244,10 @@
         <translation>Port</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</source>
+        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>Scanningen kommer att synka transaktioner och UTXO data med den senast tillgängliga informationen på block-kedjan. Processen kan ta lång tid.</translation>
+        <translation type="unfinished">Scanningen kommer att synka transaktioner och UTXO data med den senast tillgängliga informationen på block-kedjan. Processen kan ta lång tid.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -771,16 +772,19 @@
         <translation>Tillåt åtkomst till %1 och %2(för att hämta exchanges och transaktions-data)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click “Save wallet logs” and choose a destination folder for log archive</source>
-        <translation>1. Klicka på &quot;Spara plånbokens loggar&quot; och välj destinationskatalog för logg-arkivet</translation>
+        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
+        <translation type="unfinished">1. Klicka på &quot;Spara plånbokens loggar&quot; och välj destinationskatalog för logg-arkivet</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send email to %1 or open a ticket in %2</source>
-        <translation>2. Skicka ett e-mail till %1 eller skapa ett ärende i %2</translation>
+        <source>2. Send an email to %1 or open a ticket on %2</source>
+        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
+        <translation type="unfinished">2. Skicka ett e-mail till %1 eller skapa ett ärende i %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don’t forget to attach logs archive</source>
-        <translation>Glöm inte att bifoga logg-arkiv</translation>
+        <source>3. Don&apos;t forget to attach the log files.</source>
+        <oldsource>3. Don’t forget to attach logs archive</oldsource>
+        <translation type="unfinished">Glöm inte att bifoga logg-arkiv</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3860,6 +3864,26 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="Receiver signature">
         <source>Receiver signature</source>
         <translation type="unfinished">Receiver signature</translation>
+    </message>
+    <message id="atomic-swap-all-coins">
+        <source>(all)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation type="unfinished">Aldrig</translation>
+    </message>
+    <message id="general-use-hw-wallet">
+        <source>Use Hardware Wallet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
