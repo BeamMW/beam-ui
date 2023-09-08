@@ -245,9 +245,8 @@
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">Le nouveau scan a pour fonction de synchroniser les données de transaction et d&apos;UTXO avec les dernières informations disponibles sur la blockchain. Cette opération peut prendre du temps.</translation>
+        <translation>Le rescan synchronisera les données de transaction et d&apos;UTXO avec les dernières informations disponibles sur la blockchain. Cette opération peut prendre du temps.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -774,18 +773,15 @@
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
-        <translation type="unfinished">1. Cliquez sur “Sauvegarder les logs du portefeuille” et choisissez un dossier de destination pour l&apos;archivage des logs</translation>
+        <translation>1. Cliquez sur “Sauvegarder les logs du portefeuille” et choisissez un dossier de destination pour les enregistrer.</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send an email to %1 or open a ticket on %2</source>
-        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
-        <translation type="unfinished">2. Envoyez un email à %1 ou ouvrez un ticket dans %2</translation>
+        <translation>2. Envoyez un email à %1 ou ouvrez un ticket dans %2.</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <oldsource>3. Don’t forget to attach logs archive</oldsource>
-        <translation type="unfinished">3. N&apos;oubliez pas de joindre l&apos;archive des logs</translation>
+        <translation>3. N&apos;oubliez pas de joindre les fichiers de logs.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -1346,7 +1342,7 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
-        <translation>Supprimer l&apos;adresse</translation>
+        <translation>Supprimer adresse</translation>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
@@ -2349,7 +2345,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <translation>Le portefeuille physique n&apos;est pas connecté</translation>
+        <translation>Le portefeuille matériel n&apos;est pas connecté</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -2536,7 +2532,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="balance-change">
         <source>Change</source>
-        <translation>Change</translation>
+        <translation>Changer</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
@@ -2632,7 +2628,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="edit-addr-title">
         <source>Edit address</source>
-        <translation>Modifier l&apos;adresse</translation>
+        <translation>Modifier adresse</translation>
     </message>
     <message id="edit-addr-addr">
         <source>Address</source>
@@ -3357,7 +3353,7 @@ peut durer indéfiniment)</translation>
     <message id="dapps-store-become-publisher-text">
         <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation>Pour devenir un éditeur, vous devez configurer un nom d&apos;utilisateur. Un numéro d&apos;identification et une clé de publication personnelle
+        <translation>Pour devenir un éditeur, vous devez configurer un nom d&apos;utilisateur. Un numéro d&apos;identification et une Clé de Publication personnelle
  vous seront automatiquement attribués. L&apos;inscription vous permettra de publier, de mettre à jour et de supprimer des DApps.</translation>
     </message>
     <message id="dapps-store-nickname">
@@ -3541,8 +3537,8 @@ All the time you have access to it in yout personal publisher account.
 Let&apos;s start!</source>
         <translation>Félicitations %1!
 
-Nous sommes heureux de vous voir dans notre magasin de DApp en tant qu&apos;éditeur.
-Vous trouverez ci-dessous votre clé de publication personnelle. N&apos;importe quel utilisateur peut l&apos;utiliser pour vous ajouter à sa liste
+Nous sommes heureux de vous voir dans le DApp Store en tant qu&apos;éditeur.
+Vous trouverez ci-dessous votre Clé de Publication personnelle. N&apos;importe quel utilisateur peut l&apos;utiliser pour vous ajouter à sa liste
 personnelle et suivre vos applications. Vous pouvez l&apos;ajouter sur votre page personnelle ou sur votre site Web.
 Vous y avez accès à tout moment dans votre compte personnel d&apos;édition.
 
@@ -3668,7 +3664,7 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
     </message>
     <message id="dapps-store-updating">
         <source>updating</source>
-        <translation>en cours de mis à jour</translation>
+        <translation>mise à jour en cours</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
@@ -3852,39 +3848,39 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeurs</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Occulter les DApps</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Signature du destinataire</translation>
+        <translation>Signature du destinataire</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-start-switch">
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-never-switch">
-        <source>Never</source>
-        <translation type="unfinished">Jamais</translation>
+        <translation>(toutes)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser un portefeuille physique</translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation>Démarrage</translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation>DApps</translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation>Jamais</translation>
     </message>
 </context>
 </TS>

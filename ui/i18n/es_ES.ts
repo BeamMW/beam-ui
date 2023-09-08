@@ -245,9 +245,8 @@
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">La nueva búsqueda sincronizará los datos UTXO con la información más reciente en la blockchain. El proceso puede llevar mucho tiempo.</translation>
+        <translation>La nueva búsqueda sincronizará los datos UTXO con la información más reciente en la blockchain. El proceso puede llevar mucho tiempo.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -382,7 +381,7 @@
     <message id="settings-rescan-confirmation-message-line-2">
         <source>Are you sure?</source>
         <extracomment>settings tab, confirm rescan dialog additional message</extracomment>
-        <translation>¿Estás seguro?</translation>
+        <translation>¿Está seguro?</translation>
     </message>
     <message id="settings-title">
         <source>Settings</source>
@@ -774,18 +773,15 @@
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
-        <translation type="unfinished">1. Haga clic en “Guardar registros de wallet” y elija una carpeta de destino para el archivo de registro</translation>
+        <translation>1. Haga clic en “Guardar registros de wallet” y elija una carpeta de destino para los archivos de registro.</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send an email to %1 or open a ticket on %2</source>
-        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
-        <translation type="unfinished">2. Enviar email a %1 o abrir ticket en %2</translation>
+        <translation>2. Enviar email a %1 o abrir ticket en %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <oldsource>3. Don’t forget to attach logs archive</oldsource>
-        <translation type="unfinished">3. No olvide adjuntar los archivos de registro</translation>
+        <translation>3. No olvide adjuntar los archivos de registro.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -2486,7 +2482,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation>Offline</translation>
+        <translation>Desconectado</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -3359,8 +3355,8 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     <message id="dapps-store-become-publisher-text">
         <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation>Para convertirte en un editor, necesitas configurar un nombre de usuario. El número de identificación y la clave personal de publicación te serán proporcionados
- automáticamente. El registrarse le permitirá publicar, actualizar y eliminar DApps.</translation>
+        <translation>Para convertirte en un editor, necesitas configurar un nombre de usuario. El número de identificación y la Clave de Editor personal te serán proporcionados automáticamente.
+El registrarse le permitirá publicar, actualizar y eliminar DApps.</translation>
     </message>
     <message id="dapps-store-nickname">
         <source>Nickname</source>
@@ -3436,15 +3432,15 @@ En caso de que desee volver a utilizar una dirección normal creada anteriorment
     </message>
     <message id="dapps-store-publisher-key">
         <source>Publisher Key</source>
-        <translation>Llave del Editor</translation>
+        <translation>Clave de Editor</translation>
     </message>
     <message id="dapps-store-publisher-key-dialog-note">
         <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
-        <translation>Aquí está tu Llave de Editor personal. Cualquier usuario puede usarla para añadirte a su lista personal y seguir tus aplicaciones. Puede añadirlo en su página personal o en su sitio web.</translation>
+        <translation>Aquí está tu Clave de Editor personal. Cualquier usuario puede usarla para añadirte a su lista personal y seguir tus aplicaciones. Puede añadirlo en su página personal o en su sitio web.</translation>
     </message>
     <message id="copy-publisher-key">
         <source>Copy publisher key</source>
-        <translation>Copiar llave de editor</translation>
+        <translation>Copiar Clave de Editor</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
         <source>The transaction is sent</source>
@@ -3673,7 +3669,7 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
-        <translation>Recibir</translation>
+        <translation>Recibe</translation>
     </message>
     <message id="swap-rate">
         <source>Rate</source>
@@ -3853,39 +3849,39 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished"></translation>
+        <translation>Editores</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Esconder DApps</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Firma del receptor</translation>
+        <translation>Firma del receptor</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-start-switch">
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-never-switch">
-        <source>Never</source>
-        <translation type="unfinished">Nunca</translation>
+        <translation>(todas)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizar un Wallet Físico</translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation>Inicio</translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation>DApps</translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation>Nunca</translation>
     </message>
 </context>
 </TS>

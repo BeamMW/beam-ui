@@ -245,9 +245,8 @@
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">再スキャンにより、トランザクションとUTXOデータがブロックチェーンの最新情報と同期されます。この処理には時間がかかる場合があります。</translation>
+        <translation>再スキャンにより、トランザクションとUTXOデータがブロックチェーンの最新情報と同期されます。この処理には時間がかかる場合があります。</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -773,18 +772,15 @@
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
-        <translation type="unfinished">1.「ウォレットログを保存」をクリックし、ログのアーカイブ先フォルダを選択します。</translation>
+        <translation>1.「ウォレットログを保存」をクリックし、ログのアーカイブ先フォルダを選択します。</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send an email to %1 or open a ticket on %2</source>
-        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
-        <translation type="unfinished">2. %1に電子メールを送信するか、%2のチケットを開きます。</translation>
+        <translation>2. %1に電子メールを送信するか、%2のチケットを開きます。</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <oldsource>3. Don’t forget to attach logs archive</oldsource>
-        <translation type="unfinished">3. 忘れずにログアーカイブを添付してください。</translation>
+        <translation>3. 忘れずにログアーカイブを添付してください。</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -1261,7 +1257,7 @@ Please check the swap token and try again.</source>
     <message id="settings-swap-confirm-generate-seed-title">
         <source>Generate new seed phrase</source>
         <extracomment>electrum settings, ask password to generate new seed phrase, dialog title</extracomment>
-        <translation>新しいシードフレーズを生成</translation>
+        <translation>新しいシードフレーズを生成する</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-message">
         <source>Enter your wallet password to generate new seed phrase</source>
@@ -3821,39 +3817,39 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publishers</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Show DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hide DApps</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">受信者の署名</translation>
+        <translation>受信者の署名</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-start-switch">
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-never-switch">
-        <source>Never</source>
-        <translation type="unfinished">無期限</translation>
+        <translation type="unfinished">(all)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Use Hardware Wallet</translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation type="unfinished">Start</translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation>DApps</translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation>無期限</translation>
     </message>
 </context>
 </TS>

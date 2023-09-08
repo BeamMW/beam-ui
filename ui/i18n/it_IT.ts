@@ -245,9 +245,8 @@
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">Rescan sincronizzerà i dati di transazione e UTXO con le informazioni più recenti sulla blockchain. Il processo potrebbe richiedere molto tempo.</translation>
+        <translation>Rescan sincronizzerà i dati di transazione e UTXO con le informazioni più recenti sulla blockchain. Il processo potrebbe richiedere molto tempo.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -774,18 +773,15 @@
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
-        <translation type="unfinished">1. Fare clic su “Salva registri wallet” e scegliere una cartella di destinazione per l&apos;archivio di registro</translation>
+        <translation>1. Fare clic su “Salva registri wallet” e scegliere una cartella di destinazione per l&apos;archivio di registro.</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send an email to %1 or open a ticket on %2</source>
-        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
-        <translation type="unfinished">2. Invia email a %1 o apri un ticket in %2</translation>
+        <translation>2. Invia email a %1 o apri un ticket in %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <oldsource>3. Don’t forget to attach logs archive</oldsource>
-        <translation type="unfinished">3. Non dimenticare di allegare l&apos;archivio dei log</translation>
+        <translation>3. Non dimenticare di allegare l&apos;archivio dei log.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -1077,7 +1073,7 @@ controlla le tue impostazioni e riprova</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
-        <translation>Capisco</translation>
+        <translation>Io capisco</translation>
     </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
@@ -1137,7 +1133,7 @@ controlla le tue impostazioni e riprova</translation>
     </message>
     <message id="swap-details-tx-fee-rate">
         <source>%1 Transaction fee rate</source>
-        <translation>%1 Tasso di commissione della transazione</translation>
+        <translation>%1 Tasso di commissione di transazione</translation>
     </message>
     <message id="settings-swap-bitcoin-node">
         <source>Bitcoin node</source>
@@ -1293,7 +1289,7 @@ Si prega di controllare il token di swap e riprovare.</translation>
     </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
-        <translation>BEAM Commissione di transazione</translation>
+        <translation>Commissione di transazione</translation>
     </message>
     <message id="send-swap-token">
         <source>Swap token</source>
@@ -2543,7 +2539,7 @@ Aggiorna le tue impostazioni e riprova.</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
-        <translation>Massimo anonimato</translation>
+        <translation>Massima anonimità</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
@@ -3154,7 +3150,7 @@ Nel caso in cui si desideri riutilizzare un indirizzo regolare precedentemente c
     </message>
     <message id="status-change-settings">
         <source>Change settings</source>
-        <translation>Modifica impostazioni</translation>
+        <translation>Modifica impostazione</translation>
     </message>
     <message id="start-create-password">
         <source>Create password</source>
@@ -3853,39 +3849,39 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished"></translation>
+        <translation>Editori</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondere DApps</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Firma destinatario</translation>
+        <translation>Firma destinatario</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-start-switch">
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-never-switch">
-        <source>Never</source>
-        <translation type="unfinished">Mai</translation>
+        <translation>(tutto)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa Hardware Wallet</translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation>Inizio</translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation>DApps</translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation>Mai</translation>
     </message>
 </context>
 </TS>

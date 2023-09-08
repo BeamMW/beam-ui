@@ -245,9 +245,8 @@
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">Сканирование обновит информацию о транзакциях и UTXO в соответствии с последним состоянием цепочки блоков. Процесс может занять некоторое время.</translation>
+        <translation>Сканирование обновит информацию о транзакциях и UTXO в соответствии с последним состоянием цепочки блоков. Процесс может занять некоторое время.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -774,18 +773,15 @@
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
-        <translation type="unfinished">1. Нажмите кнопку «Сохранить журналы кошельков» и выберите папку назначения для архива журнала</translation>
+        <translation>1. Нажмите кнопку «Сохранить журналы кошельков» и выберите папку назначения для архива журнала.</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send an email to %1 or open a ticket on %2</source>
-        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
-        <translation type="unfinished">2. Отправьте письмо на %1 или сообщите на %2</translation>
+        <translation>2. Отправьте письмо на %1 или сообщите на %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <oldsource>3. Don’t forget to attach logs archive</oldsource>
-        <translation type="unfinished">3. Не забудьте прикрепить архив</translation>
+        <translation>3. Не забудьте прикрепить файлы журнала.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3866,39 +3862,39 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished"></translation>
+        <translation>Издатели</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрыть DApps</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Сигнатура получателя</translation>
+        <translation>Сигнатура получателя</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-start-switch">
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-never-switch">
-        <source>Never</source>
-        <translation type="unfinished">Никогда</translation>
+        <translation>(все)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать аппаратный кошелек</translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation>При запуске</translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation>DАpps</translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation>Никогда</translation>
     </message>
 </context>
 </TS>

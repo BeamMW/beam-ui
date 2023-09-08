@@ -245,9 +245,8 @@
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">Reescanear irá sincronizar os dados das transações e de UTXO com as últimas informações na blockchain. O processo pode levar bastante tempo.</translation>
+        <translation>Reescanear irá sincronizar os dados das transações e de UTXO com as últimas informações na blockchain. O processo pode levar bastante tempo.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -774,18 +773,15 @@
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
-        <translation type="unfinished">1. Clique em &quot;Salvar logs de carteira&quot; e escolha uma pasta de destino para o arquivo de log</translation>
+        <translation>1. Clique em &quot;Salvar logs de carteira&quot; e escolha uma pasta de destino para os arquivos de log</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send an email to %1 or open a ticket on %2</source>
-        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
-        <translation type="unfinished">2. Envie e-mail para %1 ou abra um ticket em %2</translation>
+        <translation>2. Envie e-mail para %1 ou abra um ticket em %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <oldsource>3. Don’t forget to attach logs archive</oldsource>
-        <translation type="unfinished">3. Não se esqueça de anexar os arquivos de logs</translation>
+        <translation>3. Não se esqueça de anexar os arquivos de logs.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -2276,7 +2272,7 @@ Por favor, tente novamente mais tarde ou crie uma oferta.</translation>
     </message>
     <message id="atomic-swap-tx-table-status">
         <source>Status</source>
-        <translation>Status</translation>
+        <translation>SItuação</translation>
     </message>
     <message id="swap-copy-token">
         <source>Copy token</source>
@@ -3359,7 +3355,7 @@ Caso você queira reutilizar um endereço regular criado anteriormente, use a Li
     <message id="dapps-store-become-publisher-text">
         <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation>Para se tornar um editor, você precisa configurar um nome de usuário. O número de identificação e a chave pessoal do Editor serão dados a você automaticamente. O registro permitirá que você publique, atualize e exclua DApps.</translation>
+        <translation>Para se tornar um editor, você precisa configurar um nome de usuário. O número de identificação e a chave pessoal de Editor serão dados a você automaticamente. O registro permitirá que você publique, atualize e exclua DApps.</translation>
     </message>
     <message id="dapps-store-nickname">
         <source>Nickname</source>
@@ -3443,7 +3439,7 @@ Caso você queira reutilizar um endereço regular criado anteriormente, use a Li
     </message>
     <message id="copy-publisher-key">
         <source>Copy publisher key</source>
-        <translation>Copiar chave do editor</translation>
+        <translation>Copiar chave de editor</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
         <source>The transaction is sent</source>
@@ -3852,39 +3848,39 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished"></translation>
+        <translation>Editores</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar DApps</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Assinatura do destinatário</translation>
+        <translation>Assinatura do destinatário</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-start-switch">
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-never-switch">
-        <source>Never</source>
-        <translation type="unfinished">Nunca</translation>
+        <translation>(todas)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar carteira física</translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation>Inicio</translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation>DApps</translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation>Nunca</translation>
     </message>
 </context>
 </TS>

@@ -245,9 +245,8 @@
     </message>
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <oldsource>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time.</oldsource>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">Erneutes scannen wird die Transaktionen und UTXO-Daten mit den aktuellen Blockchain-Daten synchronisieren. Der Prozess kann lange dauern.</translation>
+        <translation>Erneutes scannen wird die Transaktionen und UTXO-Daten mit den aktuellen Blockchain-Daten synchronisieren. Der Prozess kann lange dauern.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
@@ -773,18 +772,15 @@
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <oldsource>1. Click “Save wallet logs” and choose a destination folder for log archive</oldsource>
-        <translation type="unfinished">1. Klicken Sie auf &quot;Wallet-Logs speichern&quot; und wählen Sie einen Zielordner für das Protokollarchiv</translation>
+        <translation>1. Klicken Sie auf „Wallet-Logs speichern“ und wählen Sie einen Zielordner für die Log-Dateien.</translation>
     </message>
     <message id="settings-report-problem-message-l2">
         <source>2. Send an email to %1 or open a ticket on %2</source>
-        <oldsource>2. Send email to %1 or open a ticket in %2</oldsource>
-        <translation type="unfinished">2. Sende Email zu %1 oder öffne ein Ticket in %2</translation>
+        <translation>2. Sende eine Email an %1 oder öffne ein Ticket in %2</translation>
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <oldsource>3. Don’t forget to attach logs archive</oldsource>
-        <translation type="unfinished">3. Anhängen des Log Archivs nicht vergessen</translation>
+        <translation>3. Don&apos;t vergessen die Logdateien anzuhängen.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -3849,39 +3845,39 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished"></translation>
+        <translation>Veröffentlicher</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>DApps anzeigen</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished"></translation>
+        <translation>DApps ausblenden</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Empfängersignatur</translation>
+        <translation>Empfängersignatur</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-start-switch">
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="settings-never-switch">
-        <source>Never</source>
-        <translation type="unfinished">Niemals</translation>
+        <translation>(alle)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Hardware-Wallet verwenden</translation>
+    </message>
+    <message id="settings-start-switch">
+        <source>Start</source>
+        <translation>Starten</translation>
+    </message>
+    <message id="settings-dapps-switch">
+        <source>DApps</source>
+        <translation>DApps</translation>
+    </message>
+    <message id="settings-never-switch">
+        <source>Never</source>
+        <translation>Niemals</translation>
     </message>
 </context>
 </TS>
