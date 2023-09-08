@@ -243,7 +243,7 @@ private:
     bool m_validateDictionary = true;
     QJSValue m_callback;
 
-    bool m_useHWWallet;
+    bool m_useHWWallet = false;
     bool m_saveSeed = false;
 
 #if defined(BEAM_HW_WALLET)

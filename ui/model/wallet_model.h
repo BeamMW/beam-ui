@@ -24,6 +24,11 @@
 
 #include <set>
 
+namespace beam::wallet
+{
+    struct InstantMessage;
+}
+
 class WalletModel
     : public QObject
     , public beam::wallet::WalletClient
@@ -75,6 +80,7 @@ signals:
     void assetsSwapParamsLoaded(const beam::ByteBuffer& params);
     void newAddressFailed();
     void nodeConnectionChanged(bool isNodeConnected);
+    void devStateChanged(const QString& sErr, int);
     void walletError(beam::wallet::ErrorType error);
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -91,6 +97,10 @@ signals:
     void contractTxHistoryExportedToCsv(const QString& data);
 
     void fullAssetsListLoaded();
+    void instantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
+    void chatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats);
+    void chatMessages(const std::vector<beam::wallet::InstantMessage>& messages);
+    void chatRemoved(const beam::wallet::WalletID& counterpart);
 
     #if defined(BEAM_HW_WALLET)
     void showTrezorMessage();
@@ -130,6 +140,8 @@ private:
     void onNewAddressFailed() override;
     void onNodeConnectionChanged(bool isNodeConnected) override;
     void onWalletError(beam::wallet::ErrorType error) override;
+    void OnDevState(const std::string& sErr, beam::wallet::HidKeyKeeper::DevState) override;
+    void OnDevReject(const beam::wallet::HidKeyKeeper::CallStats&) override;
     void FailedToStartWallet() override;
     void onSendMoneyVerified() override;
     void onCantSendToExpired() override;
@@ -154,6 +166,10 @@ private:
     void onPublicAddress(const std::string& publicAddr) override;
     void onAssetInfo(beam::Asset::ID, const beam::wallet::WalletAsset&) override;
     void onFullAssetsListLoaded() override;
+    void onInstantMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome) override;
+    void onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats) override;
+    void onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages) override;
+    void onChatRemoved(const beam::wallet::WalletID& counterpart) override;
 
     #ifdef BEAM_IPFS_SUPPORT
     virtual void onIPFSStatus(bool running, const std::string& error, unsigned int peercnt) override;

@@ -513,7 +513,7 @@ ColumnLayout {
 
                 Layout.fillHeight:   true
                 Layout.fillWidth:    true
-                Layout.bottomMargin: txPanel.folded ? 10 : 0
+                Layout.bottomMargin: 90
                 Layout.topMargin:    20
                 visible:             false
                 opacity:             txPanel.folded ? 1.0 : 0.25
@@ -622,7 +622,7 @@ ColumnLayout {
                 Layout.topMargin:    unsupportedCnt ? 0 : 20
                 Layout.fillHeight:   true
                 Layout.fillWidth:    true
-                Layout.bottomMargin: txPanel.folded ? 10 : 0
+                Layout.bottomMargin: 90
                 opacity:             txPanel.folded ? 1.0 : 0.25
                 visible:             control.hasApps && !control.activeApp
                 appsList:            control.appsList
@@ -680,20 +680,25 @@ ColumnLayout {
                 }
             }
 
-            AppInfoPanel {
-                id:                  txPanel
-                folded:              !control.openedTxID
-                state:               control.openedTxID ? "transactions" : "balance"
-                Layout.fillWidth:    true
-                Layout.bottomMargin: 10
-                contentItemHeight:   control.height * 0.36
-                bottomPadding:       folded ? 20 : 5
-                foldsUp:             false
-                visible:             appsListView.visible || webLayout.visible
-                bkColor:             Style.background_appstx
-                dappName:            (control.activeApp || {}).name || ""
-                dappFilter:          (control.activeApp || {}).appid || "all"
-                tableOwner:          control
+            Item {
+                width: dappsLayout.width
+                height: dappsLayout.height
+                z: 42
+                AppInfoPanel {
+                    id:                  txPanel
+                    folded:              !control.openedTxID
+                    state:               control.openedTxID ? "transactions" : "balance"
+                    width:               parent.width
+                    anchors.bottom:      parent.bottom
+                    anchors.bottomMargin: 10
+                    contentItemHeight:   parent.height * (txPanel.maximized ? 0.79 : 0.36)
+                    foldsUp:             false
+                    visible:             appsListView.visible || webLayout.visible
+                    bkColor:             Style.background_appstx
+                    dappName:            (control.activeApp || {}).name || ""
+                    dappFilter:          (control.activeApp || {}).appid || "all"
+                    tableOwner:          control
+                }
             }
 
             function loadAppsList () {

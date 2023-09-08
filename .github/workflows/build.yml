@@ -5,6 +5,7 @@ on: [push]
 env:
   BUILD_TYPE: Release
   BUILD_CONFIG: RelWithDebInfo
+  BEAM_DEFAULT_NETWORK: testnet
 
 jobs:
   ###############################################################################
@@ -15,7 +16,7 @@ jobs:
     strategy:
       matrix:
         #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
-        os: [macos-11, ubuntu-18.04, windows-2019]
+        os: [macos-11, ubuntu-20.04, windows-2019]
 
     steps:
       - uses: actions/checkout@v2
@@ -117,18 +118,18 @@ jobs:
         if: matrix.os == 'macos-11'
         run: |
           #cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
-          cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
+          cmake $GITHUB_WORKSPACE -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
 
       - name: Configure CMake [ununtu all]
         if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         run: |
-          cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+          cmake $GITHUB_WORKSPACE  -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
       - name: Configure CMake [windows]
         shell: bash
         if: matrix.os == 'windows-2019'
         run: |
-          cmake -G "Visual Studio 16 2019" -A x64  -DOPENSSL_ROOT_DIR=/c/beam-libs/openssl -DCMAKE_CONFIGURATION_TYPES:STRING=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+          cmake -G "Visual Studio 16 2019" -A x64  -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DOPENSSL_ROOT_DIR=/c/beam-libs/openssl -DCMAKE_CONFIGURATION_TYPES:STRING=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
       - name: Save version info
         shell: bash
@@ -165,16 +166,8 @@ jobs:
         if: matrix.os != 'windows-2019'
         run: cpack
 
-      - name: LinuxQtDeployTool [ubuntu-16.04]
-        if: matrix.os == 'ubuntu-16.04'
-        run: echo "LINUX_QT_DEPLOY_TOOL=linuxdeployqt-7" >> $GITHUB_ENV
-
-      - name: LinuxQtDeployTool [ubuntu-18.04]
-        if: matrix.os == 'ubuntu-18.04'
-        run: echo "LINUX_QT_DEPLOY_TOOL=linuxdeployqt" >> $GITHUB_ENV
-
-      - name: AppImage [ubuntu-16.04 || ubuntu-18.04]
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
+      - name: AppImage [ubuntu-16.04 || ubuntu-18.04 || ubuntu-20.04]
+        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         run: |
           echo "Creating AppImage deploy tree"
           mkdir -p ./deploy/usr/bin
@@ -191,10 +184,11 @@ jobs:
           cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
           cp ui/beam-wallet.cfg deploy/usr/bin/
           echo "Creating AppImage"
-          chmod a+x ui/3rdparty/${{env.LINUX_QT_DEPLOY_TOOL}}
+          wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" 
+          chmod a+x linuxdeployqt*.AppImage
           export VERSION=${{env.BEAM_VERSION}}
           # Below -exclude-libs is a work around for https://github.com/probonopd/linuxdeployqt/issues/35
-          ./ui/3rdparty/${{env.LINUX_QT_DEPLOY_TOOL}} ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files -exclude-libs="libnss3.so,libnssutil3.so"
+          ./linuxdeployqt*.AppImage ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files -exclude-libs="libnss3.so,libnssutil3.so"
 
       - name: CPack [windows]
         shell: bash
@@ -258,7 +252,6 @@ jobs:
           cp Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
           sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
           chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
-          tar -cvf Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
 
       - name: Collect [windows]
         shell: bash
@@ -280,10 +273,10 @@ jobs:
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v2
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
+        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
-          path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.tar
+          path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v2

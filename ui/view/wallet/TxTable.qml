@@ -20,6 +20,7 @@ Control {
     property int       emptyMessageMargin: 90
     property int       activeTxCnt: 0
     property alias     headerShaderVisible: transactionsTable.headerShaderVisible
+    property alias     mainBackgroundRect: transactionsTable.mainBackgroundRect
     property bool      dexFilter: false
     property var       dappFilter: undefined
     readonly property  bool sourceVisible: dappFilter ? dappFilter == "all" : true

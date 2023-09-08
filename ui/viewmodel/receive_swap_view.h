@@ -132,7 +132,7 @@ private:
     QList<QMap<QString, QVariant>> getCurrList() const;
 
 private slots:
-    void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
+    //void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onSwapParamsLoaded(const beam::ByteBuffer& token);
     void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&);
 
@@ -149,7 +149,7 @@ private:
     QString   _token;
     bool      _saveParamsAllowed;
 
-    beam::wallet::WalletAddress _receiverAddress;
+    //beam::wallet::WalletAddress _receiverAddress;
     WalletModel::Ptr _walletModel;
     ExchangeRatesManager::Ptr _rates;
     beam::wallet::TxParameters _txParameters;

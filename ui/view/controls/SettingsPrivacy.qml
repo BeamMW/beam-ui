@@ -180,7 +180,7 @@ SettingsFoldable {
                 CustomComboBox {
                     id: mpLockTimeLimit
                     fontPixelSize: 14
-                    Layout.preferredWidth: 100
+                    Layout.preferredWidth: 200
                     currentIndex: viewModel.maxPrivacyLockTimeLimit
                     model: [
                         //% "No limit"

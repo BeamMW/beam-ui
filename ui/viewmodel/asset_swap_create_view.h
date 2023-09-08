@@ -62,6 +62,7 @@ class AssetSwapCreateViewModel: public QObject
     void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onCoinsSelected(const beam::wallet::CoinsSelectionInfo&);
     void onAssetsSwapParamsLoaded(const beam::ByteBuffer& params);
+    void onAddressesChanged(bool own, const std::vector<beam::wallet::WalletAddress>& addrs);
 
   private:
     QList<QMap<QString, QVariant>> getCurrenciesList() const;

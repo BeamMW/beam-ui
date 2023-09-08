@@ -66,22 +66,20 @@ ComboBox {
         bottomPadding: control.dropSpacing
         topPadding: 2
 
-        property var  iconW:    (Array.isArray(control.model)  ? modelData["iconWidth"]  : model["iconWidth"]) || 0
-        property var  iconH:    (Array.isArray(control.model)  ? modelData["iconHeight"] : model["iconHeight"]) || 0
-        property var  iconS:    (Array.isArray(control.model)  ? modelData["icon"]       : model["icon"]) || ""
-        property bool verified: (Array.isArray(control.model)  ? modelData["verified"]   : model["verified"]) || false
+        property var myModel : Array.isArray(control.model)  ? modelData : model
+
+        property var  iconW:    myModel["iconWidth"] || 0
+        property var  iconH:    myModel["iconHeight"] || 0
+        property var  iconS:    myModel["icon"] || ""
+        property bool verified: myModel["verified"] || false
 
         contentItem: RowLayout {
             id: contentRow
             spacing: 0
             property int parentHeight: 0
             property bool showRow: control.filterAssets
-                ? ((Array.isArray(control.model) 
-                    ? containSearchSubStr(modelData[control.textRole]) && modelData["allowed"] 
-                    : containSearchSubStr(model[control.textRole]) && model["allowed"]))
-                : ((Array.isArray(control.model) 
-                    ? containSearchSubStr(modelData[control.textRole])
-                    : containSearchSubStr(model[control.textRole])))
+                ? containSearchSubStr(myModel[control.textRole]) && myModel["allowed"]
+                : containSearchSubStr(myModel[control.textRole])
 
             visible: showRow
             onVisibleChanged: {
@@ -116,7 +114,7 @@ ComboBox {
                 text: {
                     var text = modelData
                     if (control.textRole) {
-                        text = Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]
+                        text = myModel[control.textRole]
                     }
                     return (transformText && typeof(transformText) == "function")
                         ? transformText(text)
@@ -139,27 +137,7 @@ ComboBox {
         background: Item {}
     }
 
-    function recalcSize() {
-        if (model) {
-            for(var i = 0; i < model.length; i++) {
-                var modelText = control.textRole ? model[i][control.textRole] : model[i];
-                if (transformText && typeof(transformText) == "function")
-                    modelText = transformText(modelText);
-                textMetrics.text = Utils.limitText(modelText, control.textMaxLenDrop)
-
-                var iconW = model[i]["iconWidth"] || 0
-                modelWidth = Math.max(textMetrics.width +
-                                      iconW + 10, // spacing between icon & text
-                                      modelWidth)
-            }
-        }
-    }
-
-    onModelChanged: recalcSize()
     indicator: Item {}
-    onDownChanged: {
-        recalcSize();
-    }
 
     property var  iconW:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconWidth"] : 0) || 0
     property var  iconH:    (control.model && control.model[currentIndex] ? control.model[currentIndex]["iconHeight"] : 0) || 0
@@ -234,7 +212,6 @@ ComboBox {
 
    popup: Popup {
         id: comboPopup
-        onAboutToShow: recalcSize
 
         y: control.height + 7
         x: {
@@ -266,7 +243,7 @@ ComboBox {
                 Layout.fillWidth: true
                 clip: true
                 implicitHeight: control.delegateModel.count > 12 ? Math.min(250, contentHeight) : contentHeight
-                model: control.delegateModel
+                model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
                 ScrollBar.vertical: ScrollBar {
                     policy: ScrollBar.AsNeeded

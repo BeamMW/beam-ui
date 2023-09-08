@@ -80,7 +80,7 @@ SettingsFoldable {
                     Layout.alignment: Qt.AlignLeft
                     height: 16
                     SFText {
-                        text: modelData["emission"]
+                        text: modelData["emission"] ? modelData["emission"] : 0
                         font.pixelSize: 12
                         color: Style.content_secondary
                         height: parent.height

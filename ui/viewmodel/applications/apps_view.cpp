@@ -63,7 +63,6 @@ namespace
         const char kMinor[] = "minor";
         const char kRelease[] = "release";
         const char kBuild[] = "build";
-        const char kFromServer[] = "isFromServer";
         const char kDevApp[] = "devApp";
         const char kHasUpdate[] = "hasUpdate";
         const char kReleaseDate[] = "release_date";
@@ -87,6 +86,7 @@ namespace
         const char kInstagramp[] = "instagram";
         const char kTelegram[] = "telegram";
         const char kDiscord[] = "discord";
+        const char kEnabled[] = "enabled";
     }
 
     namespace Actions
@@ -369,7 +369,6 @@ namespace beamui::applications
         {
             _runApp = true;
             loadLocalApps();
-            loadAppsFromServer();
         }
         else
         {
@@ -590,7 +589,6 @@ namespace beamui::applications
     {
         loadLocalApps();
         loadDevApps();
-        loadAppsFromServer();
         loadAppsFromStore();
     }
 
@@ -665,69 +663,6 @@ namespace beamui::applications
         }
     }
 
-    void AppsViewModel::loadAppsFromServer()
-    {
-        // load apps from server
-        QPointer<AppsViewModel> guard(this);
-        AppModel::getInstance().getWalletModel()->getAsync()->getAppsList(
-            [this, guard](bool isOk, const std::string& response)
-            {
-                if (!guard)
-                {
-                    return;
-                }
-
-                QList<QVariantMap> result;
-
-                try
-                {
-                    if (!isOk)
-                    {
-                        throw std::runtime_error("unsuccessful request");
-                    }
-
-                    auto json = nlohmann::json::parse(response);
-
-                    // parse & verify
-                    if (json.empty() || !json.is_array())
-                    {
-                        throw std::runtime_error("invalid response");
-                    }
-
-                    for (auto& item : json.items())
-                    {
-                        QVariantMap app;
-                        auto name = parseStringField(item.value(), DApp::kName);
-                        auto url = parseStringField(item.value(), DApp::kUrl);
-                        const auto appid = beam::wallet::GenerateAppID(name.toStdString(), url.toStdString());
-
-                        app.insert(DApp::kAppid, QString::fromStdString(appid));
-                        app.insert(DApp::kDescription, parseStringField(item.value(), DApp::kDescription));
-                        app.insert(DApp::kName, name);
-                        app.insert(DApp::kUrl, url);
-                        app.insert(DApp::kIcon, parseStringField(item.value(), DApp::kIcon));
-                        app.insert(DApp::kPublisherName, kBeamPublisherName);
-                        app.insert(DApp::kPublisherKey, kBeamPublisherKey);
-                        app.insert(DApp::kSupported, isAppSupported(app));
-                        app.insert(DApp::kFromServer, true);
-
-                        result.push_back(app);
-                    }
-                }
-                catch (const std::exception& err)
-                {
-                    // TODO: mb need to transfer the error to QML(errorMessage)
-                    LOG_ERROR() << "Failed to load remote applications list, " << err.what();
-                }
-
-                if (_runApp || result != _remoteApps)
-                {
-                    _remoteApps = result;
-                    emit appsChanged();
-                }
-            });
-    }
-
     void AppsViewModel::loadAppsFromStore()
     {
         ContractArgs args(Actions::kViewDapps);
@@ -757,6 +692,7 @@ namespace beamui::applications
                         throw std::runtime_error("Invalid response of the view_dapps method");
                     }
 
+                    _knownPublishersWithDapps.clear();
                     QList<QVariantMap> result;
                     for (auto& item : json["dapps"].items())
                     {
@@ -769,8 +705,10 @@ namespace beamui::applications
                             auto guid = parseStringField(item.value(), DApp::kId);
                             auto publisherKey = parseStringField(item.value(), DApp::kPublisherKey);
 
-                            // parse DApps only of the user publishers + own
-                            if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
+                            _knownPublishersWithDapps.insert(publisherKey);
+
+                            // parse DApps only of the user enabled publishers + own
+                            if (_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
                                 !(isPublisher() && publisherKey.compare(_publisherInfo[Publisher::kPubkey].toString(), Qt::CaseInsensitive) == 0))
                             {
                                 continue;
@@ -913,7 +851,7 @@ namespace beamui::applications
 
     void AppsViewModel::loadUserPublishers()
     {
-        _userPublishersKeys = AppSettings().getDappStoreUserPublishers();
+        _userPublishersKeys = AppSettings().getDappStoreUserUnwantedPublishers();
     }
 
     void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
@@ -986,19 +924,31 @@ namespace beamui::applications
     {
         QList<QVariantMap> userPublishers;
 
+        // show only publishers that have at least one Dapp
         std::copy_if(_publishers.cbegin(), _publishers.cend(), std::back_inserter(userPublishers),
             [this](const auto& publisher) -> bool {
-                return _userPublishersKeys.contains(publisher[Publisher::kPubkey].toString(), Qt::CaseInsensitive);
+                auto publisherKey = publisher[Publisher::kPubkey].toString();
+                const auto it = std::find_if(_knownPublishersWithDapps.cbegin(), _knownPublishersWithDapps.cend(),
+                    [publisherKey](const auto& tmp) {
+                        return !tmp.compare(publisherKey, Qt::CaseInsensitive);
+                    });
+                return it != _knownPublishersWithDapps.cend();
             }
         );
+
+        // set the 'enabled' flag
+        for (auto& publisher : userPublishers) {
+            bool enabled = !_userPublishersKeys.contains(publisher[Publisher::kPubkey].toString(), Qt::CaseInsensitive);
+            publisher[Publisher::kEnabled] = enabled;
+        }
 
         return userPublishers;
     }
 
     QList<QVariantMap> AppsViewModel::getApps()
     {
-        // Apps order: Dev APP, remote apps, *.dapp files, installed from shader, not installed from shader
-        QList<QVariantMap> result = _devApps + _remoteApps;
+        // Apps order: Dev APP, *.dapp files, installed from shader, not installed from shader
+        QList<QVariantMap> result = _devApps;
         QList<QVariantMap> notInstalled, installed;
 
         for (const auto& app : _shaderApps)
@@ -1136,9 +1086,10 @@ namespace beamui::applications
         if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive))
         {
             _userPublishersKeys.append(publisherKey);
-            AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
+            AppSettings().setDappStoreUserUnwantedPublishers(_userPublishersKeys);
 
             emit userPublishersChanged();
+            loadAppsFromStore();
         }
 
         return (*it)[Publisher::kName].toString();
@@ -1148,9 +1099,10 @@ namespace beamui::applications
     {
         if (_userPublishersKeys.removeOne(publisherKey))
         {
-            AppSettings().setDappStoreUserPublishers(_userPublishersKeys);
+            AppSettings().setDappStoreUserUnwantedPublishers(_userPublishersKeys);
             
             emit userPublishersChanged();
+            loadAppsFromStore();
         }
     }
 
@@ -1670,12 +1622,6 @@ namespace beamui::applications
 
             const auto comment = contractInvokeData.get_FullComment();
             const auto fee = contractInvokeData.get_FullFee(AppModel::getInstance().getWalletModel()->getCurrentHeight());
-            const auto fullSpend = contractInvokeData.get_FullSpend();
-
-            if (!fullSpend.empty())
-            {
-                throw std::runtime_error("Unexpected fullSpend amounts");
-            }
 
             const auto assetsManager = AppModel::getInstance().getAssets();
             const auto feeRate = beamui::AmountToUIString(assetsManager->getRate(beam::Asset::s_BeamID));

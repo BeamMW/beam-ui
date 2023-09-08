@@ -11,10 +11,11 @@ Window {
     flags: Qt.Window | Qt.WindowFullscreenButtonHint
     title: BeamGlobals.getAppName()
     property int displayHeight: Screen.height
+    property bool isFullscreen: appWindow.width >= Screen.width
 
     function setMinMax () {
         var wlimit = appWindow.screen.width
-        var hlimit = appWindow.screen.height
+        var hlimit = appWindow.screen.height - (isFullscreen ? 0 : 100)
         var wmin = Math.min(1024, wlimit)
         var hmin = Math.min(852, hlimit)
 

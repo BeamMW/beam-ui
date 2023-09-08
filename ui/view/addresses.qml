@@ -242,7 +242,7 @@ ColumnLayout {
                 TableViewColumn {
                     id: identityColumn
                     role: viewModel.identityRole
-                    //% "Wallet's signature"
+                    //% "Signature"
                     title: qsTrId("general-wallet-signature")
                     width: contactsView.getAdjustedColumnWidth(identityColumn)
                     movable: false

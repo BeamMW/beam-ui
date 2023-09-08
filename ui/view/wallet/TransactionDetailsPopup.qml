@@ -195,7 +195,7 @@ CustomDialog {
             SFText {
                 font.pixelSize: 14
                 color: Style.content_secondary
-                //% "Sender's wallet signature"
+                //% "Sender signature"
                 text: qsTrId("tx-details-sender-identity") + ":"
                 visible: senderIdentityField.parent.visible
             }
@@ -252,7 +252,7 @@ CustomDialog {
             SFText {
                 font.pixelSize: 14
                 color: Style.content_secondary
-                //% "Receiver's wallet signature"
+                //% "Receiver signature"
                 text: qsTrId("tx-details-receiver-identity") + ":"
                 visible: receiverIdentityField.parent.visible
             }

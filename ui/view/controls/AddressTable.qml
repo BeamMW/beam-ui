@@ -81,7 +81,7 @@ CustomTableView {
     TableViewColumn {
         id:   identityColumn
         role: viewModel.identityRole
-        //% "Wallet's signature"
+        //% "Signature"
         title: qsTrId("general-wallet-signature")
         width: rootControl.getAdjustedColumnWidth(identityColumn)//150 *  rootControl.columnResizeRatio
         resizable: false
@@ -245,6 +245,16 @@ CustomTableView {
             enabled:     contextMenu.addressItem && !contextMenu.addressItem.isExpired
             onTriggered: {
                 main.openReceiveDialog(contextMenu.addressItem.token)
+            }
+        }
+
+        Action {
+            id: verifyOnHWAction
+            //% "Verify on HW wallet"
+            text:        qsTrId("verify-on-hw-wallet")
+            enabled:     contextMenu.addressItem && !contextMenu.addressItem.isExpired
+            onTriggered: {
+                viewModel.verifyOnHw(contextMenu.addressItem.token)
             }
         }
 

@@ -35,6 +35,64 @@ Item
             }
         });
     }
+
+
+
+
+
+    ConfirmationDialog {
+        id: errorDlg
+
+        okButtonText: "Ok"
+        okButtonIconSource: "qrc:/assets/icon-done.svg"
+        cancelButtonVisible: false
+        width: 460
+        height: contentItem.implicitHeight + footer.implicitHeight + 60
+        padding: 0
+
+        property alias text: messageText.text
+
+
+        contentItem: Column {
+            width: parent.width
+            height: seedPhraseSubmitAllertTitle.implicitHeight + seedPhraseSubmitAllertMessage.implicitHeight
+
+            Item {
+                height: 30
+                width: parent.width
+            }
+
+            SFText {
+                id: messageText
+                padding: 30
+                bottomPadding: 0
+                anchors.horizontalCenter: parent.horizontalCenter
+                horizontalAlignment : Text.AlignHCenter
+                width: parent.width
+                height: 32
+                text: ""
+                color: Style.content_main
+                font.pixelSize: 14
+                wrapMode: Text.Wrap
+            }
+        }
+    }
+
+
+
+    function createWallet()
+    {
+        viewModel.createWallet(function (errMsg)
+        {
+            if (errMsg == "") { 
+                startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : true, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+            }
+            else {
+                errorDlg.text = errMsg;
+                errorDlg.open();
+            }
+        });
+    }
     
     ConfirmationDialog {
         id: restoreWalletConfirmation
@@ -80,7 +138,11 @@ Item
         onAccepted: {
             onClicked: {
                 viewModel.isRecoveryMode = true;
-                startWizzardView.push(restoreWallet);
+
+                if (viewModel.useHWWallet)
+                    startWizzardView.push(create);
+                else
+                    startWizzardView.push(restoreWallet);
             }
         }
     }
@@ -137,6 +199,7 @@ Item
         }
         onAccepted: {
             onClicked: {
+                viewModel.useHWWallet = false;
                 viewModel.isRecoveryMode = true;
                 startWizzardView.push(create);
             }
@@ -231,6 +294,26 @@ Item
                             acceptedButtons: Qt.LeftButton
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
+                                viewModel.useHWWallet = false;
+                                restoreWalletConfirmation.open();
+                            }
+                            hoverEnabled: true
+                        }
+                    }
+
+                    SFText {
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.topMargin: 40
+                        //% "Use Hardware Wallet"
+                        text: qsTrId("general-use-hw-wallet")
+                        color: Style.active
+                        font.pixelSize: 14
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                viewModel.useHWWallet = true;
                                 restoreWalletConfirmation.open();
                             }
                             hoverEnabled: true
@@ -1114,14 +1197,7 @@ Item
                         viewModel.setPassword(password.text);
                         if (viewModel.isRecoveryMode) {
                             viewModel.setupLocalNode(parseInt(viewModel.defaultPortToListen()), viewModel.chooseRandomNode());
-                            viewModel.createWallet(function (created) {
-                                if (created) { 
-                                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : true, "isCreating" : true, "cancelCallback": startWizzardView.pop});
-                                }
-                                else {
-                                    // TODO(alex.starun): error message if wallet not created
-                                }
-                            });
+                            createWallet();
                         } else {
                             startWizzardView.push(nodeSetup);
                         }
@@ -1597,15 +1673,8 @@ Item
                                     viewModel.onNodeSettingsChanged();
                                     startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
                                } else {
-                                    viewModel.createWallet(function (created) {
-                                        if (created) { 
-                                            startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
-                                        }
-                                        else {
-                                            // TODO(alex.starun): error message if wallet not created
-                                        }
-                                    })
-                                }
+                                    createWallet();
+                               }
                             }
                         }
                     }

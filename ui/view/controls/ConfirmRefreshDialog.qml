@@ -42,7 +42,7 @@ ConfirmationDialog {
                 wrapMode: Text.Wrap
                 horizontalAlignment : Text.AlignHCenter
                 //: settings tab, confirm rescan dialog message
-                //% "Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take long time."
+                //% "Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time."
                 text: qsTrId("settings-rescan-confirmation-message")
             }
             SFText {

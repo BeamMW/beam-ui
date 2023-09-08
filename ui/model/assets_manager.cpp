@@ -22,13 +22,19 @@ namespace
 {
     const unsigned char ACAlpha = 252;
 
-    #ifdef BEAM_MAINNET
-    const beam::Asset::ID BeamXID = 7;
-    #elif defined(BEAM_TESTNET)
-    const beam::Asset::ID BeamXID = 12;
-    #else
-    const beam::Asset::ID BeamXID = 31;
-    #endif
+    beam::Asset::ID GetBeamXID()
+    {
+        using namespace beam;
+        switch (Rules::get().m_Network)
+        {
+        case Rules::Network::mainnet:
+            return 7;
+        case Rules::Network::testnet:
+            return 12;
+        default:
+            return 31;
+        }
+    }
 }
 
 AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr rates)
@@ -265,7 +271,7 @@ QString AssetsManager::getShortDesc(beam::Asset::ID id)
         desc = meta->GetShortDesc().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "BeamX DAO governance token";
     }
@@ -286,7 +292,7 @@ QString AssetsManager::getLongDesc(beam::Asset::ID id)
         desc = meta->GetLongDesc().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "BEAMX token is a Confidential Asset issued on top of the Beam blockchain with a fixed emission of 100,000,000 units (except for the lender of a \"last resort\" scenario). BEAMX is the governance token for the BeamX DAO, managed by the BeamX DAO Core contract. Holders can earn BeamX tokens by participating in the DAO activities: providing liquidity to the DeFi applications governed by the DAO or participating in the governance process.";
     }
@@ -307,7 +313,7 @@ QString AssetsManager::getSiteUrl(beam::Asset::ID id)
         desc = meta->GetSiteUrl().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "https://www.beamxdao.org/";
     }
@@ -328,7 +334,7 @@ QString AssetsManager::getPaperUrl(beam::Asset::ID id)
         desc = meta->GetPaperUrl().c_str();
     }
 
-    if (desc.isEmpty() && id == BeamXID)
+    if (desc.isEmpty() && id == GetBeamXID())
     {
         desc = "https://documentation.beam.mw/overview/beamx-tokenomics";
     }
@@ -413,7 +419,9 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     asset.insert("allowed", _allowedAssets.contains(assetId));
     if (assetId)
     {
-        asset.insert("emission", beamui::AmountBigToUIString(_info[assetId].first->m_Value));
+        const auto it = _info.find(assetId);
+        asset.insert("emission", 
+                     beamui::AmountBigToUIString(it != _info.end() ? _info[assetId].first->m_Value : beam::Zero));
     }
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 

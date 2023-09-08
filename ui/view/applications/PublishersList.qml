@@ -22,10 +22,6 @@ ColumnLayout {
         appsViewModel.removePublisherByKey(publisherKey)
     }
 
-    function showAddPublisherDialog() {
-        addPublisherDialog.open()
-    }
-
     function checkVisibilityOfSocialNetwork(row, socialNetwork) {
         return !!viewModel.getRoleValue(row, socialNetwork)
     }
@@ -58,148 +54,15 @@ ColumnLayout {
         SFText {
             Layout.fillWidth:     true
             color:                Style.content_main
+            leftPadding:          -backButton.width
             horizontalAlignment:  Text.AlignHCenter
             font.pixelSize:       14
             font.weight:          Font.Bold
             font.capitalization:  Font.AllUppercase
-            //% "Publishers that i follow"
-            text: qsTrId("dapps-store-publishers-page-title")
-        }
-
-        CustomButton {
-            Layout.alignment: Qt.AlignRight
-            palette.button:   Qt.rgba(255, 255, 255, 0.1)
-            //% "add publisher"
-            text: qsTrId("dapps-store-add-publisher")
-            icon.source:      "qrc:/assets/icon-dapps_store-add-publisher.svg"
-            icon.color:       Style.content_main
-            onClicked:        showAddPublisherDialog()
+            //% "Publishers"
+            text: qsTrId("dapps-store-publishers-page-main-title")
         }
     }
-
-    CustomDialog {
-        id:      addPublisherDialog
-        modal:   true
-        x:       (parent.width - width) / 2
-        y:       (parent.height - height) / 2
-        parent:  Overlay.overlay
-
-        onOpened: {
-            forceActiveFocus()
-        }
-
-        onClosed: {
-            publisherKeyInput.text = ""
-        }
-
-        contentItem: ColumnLayout {
-            spacing: 0
-
-            // title
-            SFText {
-                Layout.fillWidth:    true
-                Layout.topMargin:    40
-                Layout.bottomMargin: 30
-                horizontalAlignment: Text.AlignHCenter
-                font.pixelSize:      18
-                font.weight:         Font.Bold
-                color:               Style.content_main
-                //% "Add publisher"
-                text:                qsTrId("dapps-store-add-publisher-title")
-            }
-
-            // Note
-            SFText {
-                id:                  addressField
-                Layout.bottomMargin: 20
-                Layout.fillWidth:    true
-                horizontalAlignment: Text.AlignHCenter
-                font.pixelSize:      14
-                color:               Style.content_main
-                //% "To add a publisher you need to paste his Publisher Key in the field below"
-                text:                qsTrId("dapps-store-add-publisher-note")
-            }
-
-            // input
-            SFTextInput {
-                id:                     publisherKeyInput
-                Layout.bottomMargin:    publisherKeyError.visible ? 6 : 30
-                Layout.leftMargin:      100
-                Layout.rightMargin:     100
-                Layout.fillWidth:       true
-                Layout.preferredWidth:  560
-                Layout.preferredHeight: 45
-                height:                 45
-                font.pixelSize:         14
-                color:                  publisherKeyError.visible ? Style.validator_error : Style.content_main
-                backgroundColor:        publisherKeyError.visible ? Style.validator_error : Style.content_main
-                leftPadding:            15
-                rightPadding:           15
-                validator:              RegExpValidator { regExp: /[0-9a-fA-F]{66}/ }
-
-                background: Rectangle {
-                    color:   publisherKeyError.visible ? Style.validator_error : Style.white
-                    opacity: 0.1
-                    radius:  10
-                }
-                onTextChanged: resetError()
-
-                function resetError() {
-                    publisherKeyError.visible = false
-                }
-            }
-
-            SFText {
-                id:                  publisherKeyError
-                visible:             false
-                Layout.bottomMargin: 10
-                Layout.leftMargin:   100
-                color:               Style.validator_error
-                font.pixelSize:      12
-                font.italic:         true
-                //% "Publisher with that Key is not found"
-                text:                qsTrId("dapps-store-add-publisher-error")
-            }
-
-            Row {
-                id:                  buttonsLayout
-                Layout.fillHeight:   true
-                Layout.bottomMargin: 30
-                Layout.alignment:    Qt.AlignHCenter
-                spacing:             30
-
-                CustomButton {
-                    icon.source: "qrc:/assets/icon-cancel-16.svg"
-                    //% "Close"
-                    text:        qsTrId("general-close")
-                    onClicked: {
-                        addPublisherDialog.close()
-                    }
-                }
-
-                PrimaryButton {
-                    enabled:     !publisherKeyError.visible && publisherKeyInput.acceptableInput
-                    icon.source: "qrc:/assets/icon-next-blue.svg"
-                    //% "Submit"
-                    text:        qsTrId("dapps-store-submit")
-                    onClicked: {
-                        var publisherName = addPublisherByKey(publisherKeyInput.text)
-                        if (publisherName) {
-                            // TODO: Do we need to create a specific notification popup?
-
-                            //% "<b>%1</b> added to the list of publishers that you follow"
-                            main.showSimplePopup(qsTrId("dapps-store-add-publisher-notification").arg(publisherName))
-                            addPublisherDialog.close()
-                            return
-                        }
-                        
-                        publisherKeyError.visible = true
-                    }
-                }
-            }
-        }
-    }
-
 
 
     //
@@ -301,7 +164,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_main
-                        text:                viewModel.getRoleValue(styleData.row, viewModel.nicknameRole)
+                        text:                viewModel.getRoleValue(styleData.row, viewModel.nicknameRole) || ''
                     }
 
                     SFLabel {
@@ -311,7 +174,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_secondary
-                        text:                viewModel.getRoleValue(styleData.row, viewModel.shortTitleRole)
+                        text:                viewModel.getRoleValue(styleData.row, viewModel.shortTitleRole) || ''
                     }
                 }
             }
@@ -334,7 +197,7 @@ ColumnLayout {
                     elide:                Text.ElideRight
                     wrapMode:             Text.WrapAtWordBoundaryOrAnywhere
                     color:                Style.content_main
-                    text:                 viewModel.getRoleValue(styleData.row, viewModel.aboutRole)
+                    text:                 viewModel.getRoleValue(styleData.row, viewModel.aboutRole) || ''
                 }                         
             }
         }
@@ -426,8 +289,9 @@ ColumnLayout {
                     anchors.right:       parent.right
                     anchors.rightMargin: 12
                     icon.source:         "qrc:/assets/icon-actions.svg"
-                    onClicked: {            
+                    onClicked: {
                         publisherInfoContextMenu.publisherKey = viewModel.getRoleValue(styleData.row, viewModel.publisherLinkRole);
+                        publisherInfoContextMenu.publisherEnabled = viewModel.getRoleValue(styleData.row, viewModel.publisherStatusRole);
                         publisherInfoContextMenu.popup();
                     }
                 }
@@ -438,9 +302,10 @@ ColumnLayout {
             modal: true
             dim:   false
             property var publisherKey
+            property bool publisherEnabled
 
             Action {
-                             //% "Copy publisher key"
+                                //% "Copy publisher key"
                 text:        qsTrId("copy-publisher-key")
                 icon.source: "qrc:/assets/icon-copy.svg"
                 onTriggered: {
@@ -448,12 +313,19 @@ ColumnLayout {
                 }
             }
 
-            Action {
-                             //% "Remove from my list"
-                text:        qsTrId("remove-from-list")
-                icon.source: "qrc:/assets/icon-delete.svg"
+            Action {                                  
+                text:        !publisherInfoContextMenu.publisherEnabled ? 
+                                //% "Show DApps"
+                                qsTrId("dapps-store-publisher-show-dapps") : 
+                                //% "Hide DApps"
+                                qsTrId("dapps-store-publisher-hide-dapps")
+                icon.source: "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/check.png"
                 onTriggered: {
-                    control.removePublisherByKey(publisherInfoContextMenu.publisherKey)
+                    if (publisherInfoContextMenu.publisherEnabled) {
+                        control.addPublisherByKey(publisherInfoContextMenu.publisherKey)
+                    } else {
+                        control.removePublisherByKey(publisherInfoContextMenu.publisherKey)
+                    }
                 }
             }
         }

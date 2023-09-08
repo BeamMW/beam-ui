@@ -85,25 +85,27 @@ elseif(APPLE)
     set(SYSTEM_TYPE MACOSX_BUNDLE)
 endif()
 
-list(APPEND SUPPORTED_LANGS "en_US")
-list(APPEND SUPPORTED_LANGS "ru_RU")
-list(APPEND SUPPORTED_LANGS "es_ES")
 list(APPEND SUPPORTED_LANGS "be_BY")
 list(APPEND SUPPORTED_LANGS "cs_CZ")
 list(APPEND SUPPORTED_LANGS "de_DE")
-list(APPEND SUPPORTED_LANGS "vi_VI")
-list(APPEND SUPPORTED_LANGS "zh_CN")
+list(APPEND SUPPORTED_LANGS "en_US")
+list(APPEND SUPPORTED_LANGS "es_ES")
 list(APPEND SUPPORTED_LANGS "fi_FI")
 list(APPEND SUPPORTED_LANGS "fr_FR")
 list(APPEND SUPPORTED_LANGS "id_ID")
 list(APPEND SUPPORTED_LANGS "it_IT")
 list(APPEND SUPPORTED_LANGS "ja_JP")
 list(APPEND SUPPORTED_LANGS "ko_KR")
+list(APPEND SUPPORTED_LANGS "nl_NL")
+list(APPEND SUPPORTED_LANGS "pt_BR")
+list(APPEND SUPPORTED_LANGS "ru_RU")
+list(APPEND SUPPORTED_LANGS "sr_SR")
 list(APPEND SUPPORTED_LANGS "sv_SE")
 list(APPEND SUPPORTED_LANGS "th_TH")
 list(APPEND SUPPORTED_LANGS "tr_TR")
-list(APPEND SUPPORTED_LANGS "nl_NL")
-list(APPEND SUPPORTED_LANGS "sr_SR")
+list(APPEND SUPPORTED_LANGS "uk_UA")
+list(APPEND SUPPORTED_LANGS "vi_VI")
+list(APPEND SUPPORTED_LANGS "zh_CN")
 
 set(UI_SRC
     ui.cpp
@@ -164,6 +166,8 @@ set(UI_SRC
     viewmodel/help_view.cpp
     viewmodel/settings_view.h
     viewmodel/settings_view.cpp
+    viewmodel/address_item.h
+    viewmodel/address_item.cpp
     viewmodel/address_book_view.h
     viewmodel/address_book_view.cpp
     viewmodel/asset_swap_accept_view.h
@@ -214,6 +218,12 @@ set(UI_SRC
     viewmodel/dex/dex_orders_model.cpp
     viewmodel/dex/dex_orders_list.h
     viewmodel/dex/dex_orders_list.cpp
+    viewmodel/messenger_address_add.h
+    viewmodel/messenger_address_add.cpp
+    viewmodel/messenger_chat.h
+    viewmodel/messenger_chat.cpp
+    viewmodel/messenger_chat_list.h
+    viewmodel/messenger_chat_list.cpp
 
     model/wallet_model.h
     model/wallet_model.cpp

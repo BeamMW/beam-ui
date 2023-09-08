@@ -14,6 +14,7 @@ PublisherItem::PublisherItem(const QVariantMap& publisherInfo)
     _instagram = publisherInfo["instagram"].toString();
     _telegram = publisherInfo["telegram"].toString();
     _discord = publisherInfo["discord"].toString();
+    _enabled = publisherInfo["enabled"].toBool();
 }
 
 QString PublisherItem::publisherKey() const
@@ -66,6 +67,11 @@ QString PublisherItem::discord() const
     return _discord;
 }
 
+bool PublisherItem::enabled() const
+{
+    return _enabled;
+}
+
 
 PublishersViewModel::PublishersViewModel()
 {
@@ -78,6 +84,7 @@ PublishersViewModel::PublishersViewModel()
         info["about_me"] = "Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years, ever since his remarkable disappearance and unexpected return. The riches he had brought back from his travels had now become a local legend, and it was popularly believed, whatever the old folk might say.";
         info["website"] = "https://website.org";
         info["pubkey"] = "128dhwue8yfhy7f9fy9e3hfouf";
+        info["enabled"] = true;
         m_publishersInfo.append(info);
     }
 
@@ -172,6 +179,11 @@ QString PublishersViewModel::getPublisherLinkRole() const
     return "publisherLink";
 }
 
+QString PublishersViewModel::getPublisherStatusRole() const
+{
+    return "enabled";
+}
+
 Qt::SortOrder PublishersViewModel::sortOrder() const
 {
     return m_sortOrder;
@@ -212,12 +224,12 @@ void PublishersViewModel::updatePublishers()
     sortPublishers();
 }
 
-QString PublishersViewModel::getRoleValue(const int row, QByteArray roleName)
+QVariant PublishersViewModel::getRoleValue(const int row, QByteArray roleName)
 {
     // TODO: redo
     if (row < 0 || row > m_publishers.size())
     {
-        return QString();
+        return QVariant();
     }
 
     if (roleName == getNicknameRole())
@@ -240,6 +252,8 @@ QString PublishersViewModel::getRoleValue(const int row, QByteArray roleName)
         return m_publishers.at(row)->discord();
     else if (roleName == getPublisherLinkRole())
         return m_publishers.at(row)->publisherKey();
+    else if (roleName == getPublisherStatusRole())
+        return m_publishers.at(row)->enabled();
 
-    return QString();
+    return QVariant();
 }
