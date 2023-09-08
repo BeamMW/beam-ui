@@ -37,7 +37,14 @@ SettingsFoldable {
                 height:  22
                 width:   280
                 choices: ["clientstart", "dapps", "never"]
-                labels:  ["Start", "DApps", "Never"]
+                labels:  [
+                    //% "Start"
+                    qsTrId("settings-start-switch"),
+                    //% "DApps"
+                    qsTrId("settings-dapps-switch"),
+                    //% "Never"
+                    qsTrId("settings-never-switch"),
+                    ]
                 state:   viewModel.ipfsNodeStart
 
                 Binding {

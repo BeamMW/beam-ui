@@ -465,7 +465,11 @@ Item {
                             color: Style.content_main
                             textRole: 'text'
                             model: [
-                                {text: "ALL",  pair: ""},
+                                {
+                                    //% "(all)"
+                                    text: qsTrId("atomic-swap-all-coins"),
+                                    pair: ""
+                                },
                                 {text: "BTC",  pair: "^(btc-)|(-btc)$"}, // We need a separator '-' to distinguish 'btc' and 'wbtc' 
                                 {text: "DAI",  pair: "^(dai-)|(-dai)$"},
                                 {text: "DASH", pair: "^(dash-)|(-dash)$"},

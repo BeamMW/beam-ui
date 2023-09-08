@@ -5,7 +5,7 @@
         <file>color_themes/Masternet.qml</file>
         <file>color_themes/Testnet.qml</file>
         <file>color_themes/BeamX.qml</file>
-		<file>color_themes/Dappnet.qml</file>
+        <file>color_themes/Dappnet.qml</file>
         <file>controls/Style.qml</file>
         <file>controls/qmldir</file>
         <file>controls/SvgImage.qml</file>
@@ -170,7 +170,7 @@
         <file>assets/logo.svg</file>
         <file>assets/beamx-logo.svg</file>
         <file>assets/start-logo.svg</file>
-        <file>assets/icon.png</file>
+        <file>assets/icon_mainnet.png</file>
         <file>assets/icon_masternet.png</file>
         <file>assets/icon_testnet.png</file>
         <file>assets/icon_beamx.png</file>

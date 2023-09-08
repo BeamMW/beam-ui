@@ -30,7 +30,7 @@
 #ifdef BEAM_IPFS_SUPPORT
 #include "utility/cli/options.h"
 #endif
-
+using namespace beam;
 namespace
 {
     const char* kNodeAddressName = "node/address";
@@ -77,26 +77,33 @@ namespace
     const char* kAllowedAssets = "assets/allowed";
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 
+    std::pair<QString, QString> MakeLanguageCodePair(QString languageCode)
+    {
+        return std::make_pair(languageCode, QLocale(languageCode).nativeLanguageName());
+    }
+
     const std::map<QString, QString> kSupportedLangs { 
-        { "zh_CN", "Chinese Simplified"},
-        { "en_US", "English" },
-        { "es_ES", "Español"},
-        { "be_BY", "Беларуская"},
-        { "cs_CZ", "Czech"},
-        { "de_DE", "Deutsch"},
-        { "nl_NL", "Dutch"},
-        { "fr_FR", "Française"},
-        { "id_ID", "Bahasa Indonesia"},
-        { "it_IT", "Italiano"},
-        { "ja_JP", "日本語"},
-        { "ru_RU", "Русский" },
-        { "sr_SR", "Српски" },
-        { "fi_FI", "Suomi" },
-        { "sv_SE", "Svenska"},
-        { "th_TH", "ภาษาไทย"},
-        { "tr_TR", "Türkçe"},
-        { "vi_VI", "Tiếng việt"},
-        { "ko_KR", "한국어"}
+        MakeLanguageCodePair("zh_CN"),
+        MakeLanguageCodePair("en_US"),
+        MakeLanguageCodePair("es_ES"),
+        MakeLanguageCodePair("be_BY"),
+        MakeLanguageCodePair("cs_CZ"),
+        MakeLanguageCodePair("de_DE"),
+        MakeLanguageCodePair("nl_NL"),
+        MakeLanguageCodePair("fr_FR"),
+        MakeLanguageCodePair("id_ID"),
+        MakeLanguageCodePair("it_IT"),
+        MakeLanguageCodePair("ja_JP"),
+        MakeLanguageCodePair("ru_RU"),
+        MakeLanguageCodePair("sr_SR"),
+        MakeLanguageCodePair("fi_FI"),
+        MakeLanguageCodePair("sv_SE"),
+        MakeLanguageCodePair("th_TH"),
+        MakeLanguageCodePair("tr_TR"),
+        MakeLanguageCodePair("vi_VI"),
+        MakeLanguageCodePair("ko_KR"),
+        MakeLanguageCodePair("uk_UA"),
+        MakeLanguageCodePair("pt_BR")
     };
 
     const char* kTxFilterInProgress = "tx_filter/inProgress";
@@ -125,6 +132,33 @@ namespace
             beam::wallet::Currency::ETH()
         };
         return supportedUnits;
+    }
+
+    uint getNetworkDefaultPort()
+    {
+        switch (Rules::get().m_Network)
+        {
+        case Rules::Network::masternet:
+        case Rules::Network::mainnet:
+            return 10005;
+        default:
+            return 11005;
+        }
+    }
+    const char* getNetworkDappStoreCID()
+    {
+        switch (Rules::get().m_Network)
+        {
+        case Rules::Network::testnet:
+            return "c673c2b940d4f6813901165c426ab084e401259c9794d61e1f5f80453ee80317";
+        case Rules::Network::dappnet:
+            return "59c7b485463eff35c361157038bad32f88a4ef9814f0891298a5e65099b6b50b";
+        case Rules::Network::masternet:
+            return "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3";
+        case Rules::Network::mainnet:
+        default:
+            return "e2d24b686e8d31a0fe97eade9cd23281e7059b74b5757bdb96c820ef9e2af41c";
+        }
     }
 }
 
@@ -318,11 +352,7 @@ void WalletSettings::setRunLocalNode(bool value)
 uint WalletSettings::getLocalNodePort() const
 {
     Lock lock(m_mutex);
-#ifdef BEAM_TESTNET
-    return m_data.value(kLocalNodePort, 11005).toUInt();
-#else
-    return m_data.value(kLocalNodePort, 10005).toUInt();
-#endif // BEAM_TESTNET
+    return m_data.value(kLocalNodePort, getNetworkDefaultPort()).toUInt();
 }
 
 void WalletSettings::setLocalNodePort(uint port)
@@ -692,45 +722,47 @@ void WalletSettings::applyNodeChanges()
 
 QString WalletSettings::getExplorerUrl() const
 {
-    #ifdef BEAM_BEAMX
-    return "https://beamx.explorer.beam.mw/";
-    #elif defined(BEAM_DAPPNET)
-    return "https://dappnet.explorer.beam.mw/";
-    #elif defined(BEAM_TESTNET)
-    return "https://testnet.explorer.beam.mw/";
-    #elif defined(BEAM_MAINNET)
-    return "https://explorer.beam.mw/";
-    #else
-    return "https://master-net.explorer.beam.mw/";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::dappnet:
+        return "https://dappnet.explorer.beam.mw/";
+    case Rules::Network::testnet:
+        return "https://testnet.explorer.beam.mw/";
+    case Rules::Network::masternet:
+        return "https://master-net.explorer.beam.mw/";
+    case Rules::Network::mainnet:
+    default:
+        return "https://explorer.beam.mw/";
+    }
 }
 
 QString WalletSettings::getFaucetUrl() const
 {
-    #ifdef BEAM_BEAMX
-    return "https://faucet.beamprivacy.community/";
-    #elif defined(BEAM_DAPPNET)
-    return "https://faucet.beamprivacy.community/";
-    #elif defined(BEAM_TESTNET)
-    return "https://faucet.beamprivacy.community/";
-    #elif defined(BEAM_MAINNET)
-    return "https://faucet.beamprivacy.community/";
-    #else
-    return "https://faucet.beamprivacy.community/";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::dappnet:
+    case Rules::Network::testnet:
+    case Rules::Network::masternet:
+    case Rules::Network::mainnet:
+    default:
+        return "https://faucet.beamprivacy.community/";
+    }
 }
 
 QString WalletSettings::getAppsUrl() const
 {
-    #ifdef BEAM_DAPPNET
-    return "https://apps-dappnet.beam.mw/app/appslist.json";
-    #elif defined(BEAM_TESTNET)
-    return "https://apps-testnet.beam.mw/appslist.json";
-    #elif defined(BEAM_MAINNET)
-    return "https://apps.beam.mw/appslist.json";
-    #else
-    return "http://3.19.32.148/app/appslist.json";
-    #endif
+    switch (Rules::get().m_Network)
+    {
+    case Rules::Network::dappnet:
+        return "https://apps-dappnet.beam.mw/app/appslist.json";
+    case Rules::Network::testnet:
+        return "https://apps-testnet.beam.mw/appslist.json";
+    case Rules::Network::masternet:
+        return "http://3.19.32.148/app/appslist.json";
+    case Rules::Network::mainnet:
+    default:
+        return "https://apps.beam.mw/appslist.json";
+    }
 }
 
 bool WalletSettings::showFaucetPromo() const
@@ -787,16 +819,7 @@ std::string WalletSettings::getDappStoreCID() const
     auto cid = m_data.value(kDappStoreCID).toString();
     // TODO roman.strilets default cid value should be set for mainnet and testnet
     // for masternet
-    return cid.isEmpty() ?
-#ifdef BEAM_TESTNET
-        "c673c2b940d4f6813901165c426ab084e401259c9794d61e1f5f80453ee80317"
-#elif defined(BEAM_MAINNET)
-        "e2d24b686e8d31a0fe97eade9cd23281e7059b74b5757bdb96c820ef9e2af41c"
-#elif defined(BEAM_DAPPNET)
-        "59c7b485463eff35c361157038bad32f88a4ef9814f0891298a5e65099b6b50b"
-#else
-        "b76ca089082e38b23d5e68feeb8b6f459ae74f5012eb520c87169f88ced307e3"
-#endif
+    return cid.isEmpty() ? getNetworkDappStoreCID()
         : cid.toStdString();
 }
 

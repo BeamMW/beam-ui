@@ -17,7 +17,7 @@ AbstractTheme {
 		var currentTheme = themes[Theme.name()]
 
 		if (!currentTheme) {
-			currentTheme = themes['masternet'];
+			currentTheme = themes['mainnet'];
 		}
 
 		for (var propName in this) {
