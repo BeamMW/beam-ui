@@ -272,16 +272,7 @@ if(WIN32)
     add_definitions(-DWIN32_LEAN_AND_MEAN)
 endif()
 
-set(BEAM_ICON_SUFFIX "masternet")
-if(BEAM_TESTNET)
-    set(BEAM_ICON_SUFFIX "testnet")
-elseif(BEAM_MAINNET)
-    set(BEAM_ICON_SUFFIX "mainnet")
-elseif(BEAM_BEAMX)
-    set(BEAM_ICON_SUFFIX "beamx")
-elseif(BEAM_DAPPNET)
-    set(BEAM_ICON_SUFFIX "dappnet")
-endif()
+set(BEAM_ICON_SUFFIX ${BEAM_SUFFIX_LOWER_CASE})
 
 add_definitions(-DAPP_NAME=\"${APP_NAME}\")
 
