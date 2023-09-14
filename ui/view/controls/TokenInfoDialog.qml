@@ -80,6 +80,10 @@ CustomDialog {
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
                         ToolTip.text:           qsTrId("general-copy")
+                        ToolTip.visible: hovered
+                        ToolTip.delay: 500
+                        ToolTip.timeout: 2000
+                        hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.address)
                         }
@@ -183,6 +187,10 @@ CustomDialog {
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
                         ToolTip.text:           qsTrId("general-copy")
+                        ToolTip.visible: hovered
+                        ToolTip.delay: 500
+                        ToolTip.timeout: 2000
+                        hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.token)
                         }
@@ -235,6 +243,10 @@ CustomDialog {
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
                         ToolTip.text:           qsTrId("general-copy")
+                        ToolTip.visible: hovered
+                        ToolTip.delay: 500
+                        ToolTip.timeout: 2000
+                        hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.address)
                         }
@@ -277,6 +289,10 @@ CustomDialog {
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
                         ToolTip.text:           qsTrId("general-copy")
+                        ToolTip.visible: hovered
+                        ToolTip.delay: 500
+                        ToolTip.timeout: 2000
+                        hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.identity)
                         }

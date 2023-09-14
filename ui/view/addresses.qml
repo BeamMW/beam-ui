@@ -325,6 +325,9 @@ ColumnLayout {
                                     icon.source: "qrc:/assets/icon-actions.svg"
                                     //% "Actions"
                                     ToolTip.text: qsTrId("general-actions")
+                                    ToolTip.visible: hovered
+                                    ToolTip.delay: 1000
+                                    hoverEnabled: true
                                     onClicked: {
                                         contextMenu.walletID = contactsView.model[styleData.row].walletID;
                                         contextMenu.token = contactsView.model[styleData.row].token;

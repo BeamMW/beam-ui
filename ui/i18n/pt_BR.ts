@@ -3882,5 +3882,10 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>Never</source>
         <translation>Nunca</translation>
     </message>
+    <message id="receive-generate-new">
+        <source>Generate new address</source>
+        <extracomment>receive screen, button to generate new address</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

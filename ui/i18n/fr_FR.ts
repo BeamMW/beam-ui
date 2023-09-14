@@ -3882,5 +3882,10 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>Never</source>
         <translation>Jamais</translation>
     </message>
+    <message id="receive-generate-new">
+        <source>Generate new address</source>
+        <extracomment>receive screen, button to generate new address</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

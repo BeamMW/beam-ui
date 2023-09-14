@@ -220,6 +220,10 @@ CustomTableView {
                         icon.source: "qrc:/assets/icon-actions.svg"
                         //% "Actions"
                         ToolTip.text: qsTrId("general-actions")
+                        ToolTip.visible: hovered
+                        ToolTip.delay: 500
+                        ToolTip.timeout: 2000
+                        hoverEnabled: true
                         onClicked: {
                             contextMenu.addressItem = rootControl.model[styleData.row]
                             contextMenu.popup()

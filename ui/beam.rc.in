@@ -21,7 +21,7 @@ BEGIN
 			VALUE "FileDescription", "Beam Wallet@BEAM_DISPLAY_SUFFIX@"
 			VALUE "FileVersion", "@PROJECT_VERSION@"
 			VALUE "InternalName", "Beam Wallet@BEAM_DISPLAY_SUFFIX@.exe"
-			VALUE "LegalCopyright", "https://beam.mw (C) 2018"
+			VALUE "LegalCopyright", "https://beam.mw (C) 2023"
 			VALUE "OriginalFilename", "Beam Wallet@BEAM_DISPLAY_SUFFIX@.exe"
 			VALUE "ProductName", "Beam"
 			VALUE "ProductVersion", "@PROJECT_VERSION@"
