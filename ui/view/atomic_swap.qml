@@ -1133,6 +1133,10 @@ Please try again later or create an offer yourself."
                                         icon.source: "qrc:/assets/icon-actions.svg"
                                         //% "Actions"
                                         ToolTip.text: qsTrId("general-actions")
+                                        ToolTip.visible: hovered
+                                        ToolTip.delay: 500
+                                        ToolTip.timeout: 2000
+                                        hoverEnabled: true
                                         onClicked: {
                                             transactionsTable.showContextMenu(styleData.row);
                                         }

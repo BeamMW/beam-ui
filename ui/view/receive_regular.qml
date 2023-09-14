@@ -304,21 +304,32 @@ ColumnLayout {
                                     }
                                 }
 
-                                SvgImage {
+                                CustomToolButton {
                                     Layout.alignment: Qt.AlignVCenter
                                     Layout.bottomMargin: 27
-
-                                    source: "qrc:/assets/icon-copy.svg"
-                                    sourceSize: Qt.size(16, 16)
-                                    opacity: control.isValid() ? 1.0 : 0.45
-
-                                    MouseArea {
-                                    anchors.fill: parent
-                                    acceptedButtons: Qt.LeftButton
-                                    cursorShape: control.isValid() ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                    onClicked: function () {
-                                            control.copyAndSave()
-                                        }
+                                    icon.source: "qrc:/assets/icon-copy.svg"
+                                    ToolTip.text: qsTrId("settings-swap-copy-address")
+                                    ToolTip.visible: hovered
+                                    ToolTip.delay: 500
+                                    ToolTip.timeout: 2000
+                                    enabled: control.isValid()
+                                    onClicked: {
+                                        control.copyAndSave()
+                                    }
+                                }
+                                CustomToolButton {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Layout.bottomMargin: 27
+                                    icon.source: "qrc:/assets/icon-refresh.svg"
+                                    //: receive screen, button to generate new address
+                                    //% "Generate new address"
+                                    ToolTip.text: qsTrId("receive-generate-new")
+                                    ToolTip.visible: hovered
+                                    ToolTip.delay: 500
+                                    ToolTip.timeout: 2000
+                                    hoverEnabled: true
+                                    onClicked: {
+                                        viewModel.generateNewAddress()
                                     }
                                 }
                             }

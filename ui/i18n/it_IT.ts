@@ -3883,5 +3883,10 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>Never</source>
         <translation>Mai</translation>
     </message>
+    <message id="receive-generate-new">
+        <source>Generate new address</source>
+        <extracomment>receive screen, button to generate new address</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

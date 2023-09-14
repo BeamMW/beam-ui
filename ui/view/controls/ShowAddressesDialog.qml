@@ -74,6 +74,10 @@ CustomDialog {
                             icon.source: "qrc:/assets/icon-copy.svg"
                             //% "Copy address"
                             ToolTip.text: qsTrId("settings-swap-copy-address")
+                            ToolTip.visible: hovered
+                            ToolTip.delay: 500
+                            ToolTip.timeout: 2000
+                            hoverEnabled: true
                             onClicked: BeamGlobals.copyToClipboard(addressId.text)
                         }
                     }
