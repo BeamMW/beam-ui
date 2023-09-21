@@ -1342,7 +1342,7 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
-        <translation>Supprimer adresse</translation>
+        <translation>Supprimer l&apos;adresse</translation>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
@@ -2532,7 +2532,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="balance-change">
         <source>Change</source>
-        <translation>Changer</translation>
+        <translation>Change</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
@@ -2628,7 +2628,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="edit-addr-title">
         <source>Edit address</source>
-        <translation>Modifier adresse</translation>
+        <translation>Modifier l&apos;adresse</translation>
     </message>
     <message id="edit-addr-addr">
         <source>Address</source>
@@ -3208,7 +3208,7 @@ peut durer indéfiniment)</translation>
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
-        <translation>Toutes</translation>
+        <translation>Tous</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
         <source>In progress</source>
@@ -3216,11 +3216,11 @@ peut durer indéfiniment)</translation>
     </message>
     <message id="wallet-transactions-sent-tab">
         <source>Sent</source>
-        <translation>Envoyées</translation>
+        <translation>Envoyé</translation>
     </message>
     <message id="wallet-transactions-received-tab">
         <source>Received</source>
-        <translation>Reçues</translation>
+        <translation>Reçu</translation>
     </message>
     <message id="tx-table-filter-in-progress">
         <source>In progress</source>
@@ -3664,7 +3664,7 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
     </message>
     <message id="dapps-store-updating">
         <source>updating</source>
-        <translation>mise à jour en cours</translation>
+        <translation>en cours de mis à jour</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
@@ -3885,7 +3885,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generate new address</translation>
     </message>
 </context>
 </TS>

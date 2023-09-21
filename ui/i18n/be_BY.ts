@@ -1640,7 +1640,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
-        <translation>Кашалёк</translation>
+        <translation>Гаманец</translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
@@ -3229,11 +3229,11 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-transactions-sent-tab">
         <source>Sent</source>
-        <translation>Дасланыя</translation>
+        <translation>Адпраўлена</translation>
     </message>
     <message id="wallet-transactions-received-tab">
         <source>Received</source>
-        <translation>Атрыманыя</translation>
+        <translation>Атрымана</translation>
     </message>
     <message id="tx-table-filter-in-progress">
         <source>In progress</source>
@@ -3289,7 +3289,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="multiselect-all">
         <source>All</source>
-        <translation>Усе</translation>
+        <translation>Усё</translation>
     </message>
     <message id="wallet-remove-filter-button">
         <source>remove filter</source>
@@ -3305,7 +3305,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
-        <translation>Усё</translation>
+        <translation>Усе</translation>
     </message>
     <message id="dnd-app-install-title">
         <source>Install DApp</source>
@@ -3897,7 +3897,7 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Стварыць новы адрас</translation>
     </message>
 </context>
 </TS>

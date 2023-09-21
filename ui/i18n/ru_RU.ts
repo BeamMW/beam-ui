@@ -2491,7 +2491,7 @@ Update your settings and try again.</source>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation>Отключен от сети</translation>
+        <translation>Оффлайн</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -2543,7 +2543,7 @@ Update your settings and try again.</source>
     </message>
     <message id="balance-change">
         <source>Change</source>
-        <translation>Изменить</translation>
+        <translation>Сдача</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
@@ -3899,7 +3899,7 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Создать новый адрес</translation>
     </message>
 </context>
 </TS>

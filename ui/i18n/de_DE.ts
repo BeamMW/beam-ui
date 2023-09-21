@@ -3882,7 +3882,7 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generate new address</translation>
     </message>
 </context>
 </TS>

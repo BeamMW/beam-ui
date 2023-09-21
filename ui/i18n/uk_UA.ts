@@ -3894,7 +3894,7 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generate new address</translation>
     </message>
 </context>
 </TS>
