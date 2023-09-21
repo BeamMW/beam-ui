@@ -2482,7 +2482,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation>Desconectado</translation>
+        <translation>Offline</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -3669,7 +3669,7 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
-        <translation>Recibe</translation>
+        <translation>Recibir</translation>
     </message>
     <message id="swap-rate">
         <source>Rate</source>
@@ -3886,7 +3886,7 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generate new address</translation>
     </message>
 </context>
 </TS>

@@ -838,7 +838,7 @@
     </message>
     <message id="restore-finish-alert-button">
         <source>I understand</source>
-        <translation>Capisco</translation>
+        <translation>capisco</translation>
     </message>
     <message id="restore-finish-alert-title">
         <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
@@ -1073,7 +1073,7 @@ controlla le tue impostazioni e riprova</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
-        <translation>Io capisco</translation>
+        <translation>Capisco</translation>
     </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
@@ -1965,7 +1965,7 @@ La tua versione è: %2. Per favore, controlla gli aggiornamenti.</translation>
     </message>
     <message id="tx-address-max-privacy">
         <source>Maximum anonymity</source>
-        <translation>Massimo anonimato</translation>
+        <translation>Massima anonimità</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
@@ -2539,7 +2539,7 @@ Aggiorna le tue impostazioni e riprova.</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
-        <translation>Massima anonimità</translation>
+        <translation>Massimo anonimato</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
@@ -2884,7 +2884,7 @@ Consentire di procedere? Puoi sempre aggiornare la tua scelta in Impostazioni in
     </message>
     <message id="tx-online">
         <source>Online</source>
-        <translation>In linea</translation>
+        <translation>Online</translation>
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
@@ -3701,7 +3701,7 @@ Riavviare il wallet e riprovare.</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
-        <translation>Commissione di transazione</translation>
+        <translation>Costo della transazione</translation>
     </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
@@ -3886,7 +3886,7 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generate new address</translation>
     </message>
 </context>
 </TS>

@@ -838,7 +838,7 @@
     </message>
     <message id="restore-finish-alert-button">
         <source>I understand</source>
-        <translation>Eu entendo</translation>
+        <translation>Entendi</translation>
     </message>
     <message id="restore-finish-alert-title">
         <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
@@ -3808,7 +3808,7 @@ Por favor, reinicie a carteira e tente novamente.</translation>
     </message>
     <message id="messenger-add-receiver-address-name">
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Nome:</translation>
     </message>
     <message id="messenger-add-receiver-address-save">
         <source>add receiver address</source>
@@ -3885,7 +3885,7 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generate new address</translation>
     </message>
 </context>
 </TS>
