@@ -272,7 +272,7 @@ if(WIN32)
     add_definitions(-DWIN32_LEAN_AND_MEAN)
 endif()
 
-set(BEAM_ICON_SUFFIX ${BEAM_SUFFIX_LOWER_CASE})
+set(BEAM_ICON_SUFFIX ${BEAM_DEFAULT_NETWORK})
 
 add_definitions(-DAPP_NAME=\"${APP_NAME}\")
 
