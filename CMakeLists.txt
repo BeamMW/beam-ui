@@ -99,7 +99,7 @@ if(BEAM_USE_STATIC_QT)
 endif()
 
 if (NOT DEFINED BEAM_DEFAULT_NETWORK)
-    set(BEAM_DEFAULT_NETWORK "masternet")
+    set(BEAM_DEFAULT_NETWORK "mainnet")
 endif()
 
 add_definitions(-DBEAM_DEFAULT_NETWORK=${BEAM_DEFAULT_NETWORK})
