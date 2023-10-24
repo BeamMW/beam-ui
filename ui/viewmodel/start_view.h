@@ -139,6 +139,9 @@ class StartViewModel : public QObject
     Q_PROPERTY(QString remoteNodeAddress READ getRemoteNodeAddress CONSTANT)
     Q_PROPERTY(QString localNodePeer READ getLocalNodePeer CONSTANT)
     Q_PROPERTY(QList<QObject*> walletDBpaths READ getWalletDBpaths CONSTANT)
+    Q_PROPERTY(QList<QVariantMap> networks READ getNetworks CONSTANT)
+    Q_PROPERTY(QString currentNetwork READ getCurrentNetwork WRITE setCurrentNetwork NOTIFY currentNetworkChanged)
+    Q_PROPERTY(int currentNetworkIndex READ getCurrentNetworkIndex NOTIFY currentNetworkChanged)
     Q_PROPERTY(bool isCapsLockOn READ isCapsLockOn NOTIFY capsLockStateMayBeChanged)
     Q_PROPERTY(bool validateDictionary READ getValidateDictionary WRITE setValidateDictionary NOTIFY validateDictionaryChanged)
     Q_PROPERTY(bool isOnlyOneInstanceStarted READ isOnlyOneInstanceStarted CONSTANT)
@@ -170,10 +173,14 @@ public:
     QString getRemoteNodeAddress() const;
     QString getLocalNodePeer() const;
     const QList<QObject*>& getWalletDBpaths();
+    QList<QVariantMap> getNetworks() const;
+    int getCurrentNetworkIndex() const;
     bool isCapsLockOn() const;
     bool getValidateDictionary() const;
     void setValidateDictionary(bool value);
     bool isOnlyOneInstanceStarted() const;
+    QString getCurrentNetwork() const;
+    void setCurrentNetwork(const QString& network);
 
     Q_INVOKABLE void setupLocalNode(int port, const QString& localNodePeer);
     Q_INVOKABLE void setupRemoteNode(const QString& nodeAddress);
@@ -208,6 +215,7 @@ signals:
     void validateDictionaryChanged();
     void isUseHWWalletChanged();
     void saveSeedChanged();
+    void currentNetworkChanged();
 
 #if defined(BEAM_HW_WALLET)
     void isTrezorConnectedChanged();

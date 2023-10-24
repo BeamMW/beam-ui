@@ -13,19 +13,24 @@ AbstractTheme {
 		property AbstractTheme dappnet: Dappnet{}
 	}
 
+	property var currentTheme : themes[Theme.name]
+
 	Component.onCompleted: {
-		var currentTheme = themes[Theme.name()]
-
-		if (!currentTheme) {
-			currentTheme = themes['mainnet'];
-		}
-
 		for (var propName in this) {
 			if (typeof this[propName] != "function"
 				&& propName != "objectName"
-				&& propName != "themes") {
-				this[propName] = currentTheme[propName]
+				&& propName != "themes"
+				&& propName != "currentTheme"
+				&& propName != "currentThemeChanged") {
+				this[propName] = Qt.binding(makeBinding(propName))
 			}
+		}
+	}
+
+	function makeBinding(prop) {
+		const p = prop;
+		return function () {
+			return currentTheme[p]
 		}
 	}
 }

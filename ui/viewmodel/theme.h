@@ -15,9 +15,14 @@
 #pragma once
 #include <QObject>
 
-class Theme : public QObject {
+class Theme final : public QObject  {
     Q_OBJECT
+    Q_PROPERTY(QString name READ getName NOTIFY themeChanged)
 public:
-    Q_INVOKABLE static QString name();
+    virtual ~Theme() noexcept {}
+    Q_INVOKABLE void update();
+    QString getName();
     static QString iconPath();
+signals:
+    void themeChanged();
 };

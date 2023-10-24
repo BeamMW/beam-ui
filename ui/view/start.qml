@@ -36,10 +36,6 @@ Item
         });
     }
 
-
-
-
-
     ConfirmationDialog {
         id: errorDlg
 
@@ -227,6 +223,21 @@ Item
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     spacing: 0
+
+                    CustomComboBox {
+                        id: networkSelector
+                        Layout.alignment:   Qt.AlignHCenter
+                        fontPixelSize: 14
+                        enableScroll: false
+                        textRole: "name"
+
+                        model: viewModel.networks
+                        currentIndex: viewModel.currentNetworkIndex
+                        onActivated: {
+                            viewModel.currentNetwork = currentText;
+                            Theme.update();
+                        }
+                    }
 
                     RowLayout {
                         Layout.alignment:   Qt.AlignHCenter

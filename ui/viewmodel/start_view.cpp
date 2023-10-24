@@ -49,6 +49,24 @@ namespace
     const QChar PHRASES_SEPARATOR = ';';
     const uint8_t kPhraseSize = 12;
 
+    namespace Network
+    {
+        const char Name[] = "name";
+        const char Icon[] = "icon";
+        const char IconWidth[] = "iconWidth";
+        const char IconHeight[] = "iconHeight";
+    }
+
+
+    Rules::Network getNetworkFromString(const QString& network)
+    {
+#define MACRO(name) if (network == #name) return Rules::Network::name;
+
+        RulesNetworks(MACRO)
+#undef MACRO
+            return Rules::Network::mainnet;
+    }
+
     boost::filesystem::path pathFromStdString(const std::string& path)
     {
 #ifdef WIN32
@@ -633,6 +651,22 @@ const QList<QObject*>& StartViewModel::getWalletDBpaths()
     return *&m_walletDBpaths;
 }
 
+QList<QVariantMap> StartViewModel::getNetworks() const
+{
+    QList<QVariantMap> networks;
+#define MACRO(name) \
+    { QVariantMap network; \
+    network[Network::Name] = #name; \
+    network[Network::Icon] = "qrc:/assets/icon_" #name ".png"; \
+    network[Network::IconWidth] = 16; \
+    network[Network::IconHeight] = 16; \
+    networks.push_back(network); }
+
+    RulesNetworks(MACRO)
+#undef MACRO
+    return networks;
+}
+
 bool StartViewModel::isCapsLockOn() const
 {
     return keyboard::isCapsLockOn();
@@ -1010,3 +1044,24 @@ QString StartViewModel::getPhrases() const
     }
     return phrases;
 }
+
+QString StartViewModel::getCurrentNetwork() const
+{
+    return Rules::get().get_NetworkName();
+}
+
+void StartViewModel::setCurrentNetwork(const QString& network)
+{
+    auto value = getNetworkFromString(network);
+    if (value == Rules::get().m_Network)
+        return;
+
+    Rules::get().m_Network = value;
+    emit currentNetworkChanged();
+}
+
+int StartViewModel::getCurrentNetworkIndex() const
+{
+    return (int)Rules::get().m_Network;
+}
+

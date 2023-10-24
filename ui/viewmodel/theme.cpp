@@ -18,12 +18,6 @@
 using namespace beam;
 
 // static
-QString Theme::name()
-{
-    return Rules::get().get_NetworkName();
-}
-
-// static
 QString Theme::iconPath() 
 {
     switch (Rules::get().m_Network)
@@ -34,4 +28,14 @@ QString Theme::iconPath()
     default:
         return ":/assets/icon_mainnet.png";
     }
+}
+
+void Theme::update()
+{
+    emit themeChanged();
+}
+
+QString Theme::getName()
+{
+    return Rules::get().get_NetworkName();
 }

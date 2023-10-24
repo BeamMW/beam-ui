@@ -8,20 +8,14 @@ ColumnLayout
 {
     property bool isSqueezedHeight: false
 
-    function themeName() {
-        return Theme.name();
-    }
-
-    function isMainNet() {
-        return themeName() == "mainnet";
-    }
+    property bool isMainNet : Theme.name == "mainnet"
 
     spacing: 0
 
     Item {
         Layout.fillWidth:       true
         Layout.preferredHeight: 60
-        visible: isMainNet()
+        visible: isMainNet
     }
 
     SvgImage
@@ -51,12 +45,12 @@ ColumnLayout
 
     SFText
     {
-        visible: !isMainNet()
+        visible: !isMainNet
         Layout.alignment: Qt.AlignHCenter
         Layout.preferredHeight: 20
         Layout.topMargin: isSqueezedHeight ? 10 : 30
         color: Style.content_secondary
-        text: themeName()
+        text: Theme.name
 
         font {
             styleName:      "DemiBold"

@@ -29,7 +29,7 @@ class WalletSettings : public QObject
 {
     Q_OBJECT
 public:
-    explicit WalletSettings(const QDir& appDataDir, const QString& applicationDirPath);
+    WalletSettings(const QDir& appDataDir, const QString& applicationDirPath);
 
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
