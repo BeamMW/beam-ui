@@ -407,7 +407,7 @@ Rectangle {
             selectedItem = typeof(indexOrID) == "string" ? indexByName(indexOrID) : indexOrID;
             controls.itemAt(selectedItem).focus = true;
             Utils.openExternalWithConfirmation(
-                "https://documentation.beam.mw/",
+                "https://beam.mw/docs",
                 function () {
                     selectedItem = previoslySelected;
                     controls.itemAt(selectedItem).focus = true;
