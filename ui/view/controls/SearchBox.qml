@@ -60,6 +60,10 @@ FocusScope {
             visible:     input.text.length > 0
             //% "Clear search"
             ToolTip.text: qsTrId("wallet-clear-search")
+            ToolTip.visible: hovered
+            ToolTip.delay: 500
+            ToolTip.timeout: 2000
+            hoverEnabled: true
             onClicked: {
                 input.text = "";
             }
@@ -72,6 +76,10 @@ FocusScope {
             visible:     input.text.length == 0
             //% "Search"
             ToolTip.text: qsTrId("wallet-search")
+            ToolTip.visible: hovered
+            ToolTip.delay: 500
+            ToolTip.timeout: 2000
+            hoverEnabled: true
             onClicked: {
                 if (control.alwaysVisibleInput) return;
 

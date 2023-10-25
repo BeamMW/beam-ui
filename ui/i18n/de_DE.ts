@@ -3879,5 +3879,10 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
         <source>Never</source>
         <translation>Niemals</translation>
     </message>
+    <message id="receive-generate-new">
+        <source>Generate new address</source>
+        <extracomment>receive screen, button to generate new address</extracomment>
+        <translation type="unfinished">Generate new address</translation>
+    </message>
 </context>
 </TS>

@@ -47,6 +47,7 @@ signals:
 
 public:
     Q_INVOKABLE void saveAddress();
+    Q_INVOKABLE void generateNewAddress();
 
 private:
     void setAssetId(int id);
@@ -81,4 +82,5 @@ private:
     WalletModel::Ptr      _walletModel;
     ExchangeRatesManager::Ptr _rates;
     AssetsManager::Ptr    _amgr;
+    bool _newAddress = false;
 };

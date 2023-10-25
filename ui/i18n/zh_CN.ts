@@ -3888,5 +3888,10 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Never</source>
         <translation>永不</translation>
     </message>
+    <message id="receive-generate-new">
+        <source>Generate new address</source>
+        <extracomment>receive screen, button to generate new address</extracomment>
+        <translation type="unfinished">Generate new address</translation>
+    </message>
 </context>
 </TS>

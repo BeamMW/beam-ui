@@ -59,6 +59,10 @@ CustomDialog {
                     icon.source: "qrc:/assets/icon-cancel-16.svg"
                     //% "Close"
                     ToolTip.text: qsTrId("general-close")
+                    ToolTip.visible: hovered
+                    ToolTip.delay: 500
+                    ToolTip.timeout: 2000
+                    hoverEnabled: true
                     onClicked: {
                         dialog.close();
                     }

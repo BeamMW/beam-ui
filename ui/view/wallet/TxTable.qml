@@ -235,6 +235,10 @@ Control {
                 //: transactions history screen, export button tooltip and open file dialog
                 //% "Export transactions history"
                 ToolTip.text: qsTrId("wallet-export-tx-history")
+                ToolTip.visible: hovered
+                ToolTip.delay: 500
+                ToolTip.timeout: 2000
+                hoverEnabled: true
                 onClicked: {
                     tableViewModel.exportTxHistoryToCsv();
                 }
@@ -245,6 +249,10 @@ Control {
                 icon.source: "qrc:/assets/icon-proof.svg"
                 //% "Verify payment"
                 ToolTip.text: qsTrId("wallet-verify-payment")
+                ToolTip.visible: hovered
+                ToolTip.delay: 500
+                ToolTip.timeout: 2000
+                hoverEnabled: true
                 onClicked: {
                     var paymentInfoVerifyDialog =
                         Qt.createComponent("../controls/PaymentInfoDialog.qml").createObject(control);
@@ -804,6 +812,10 @@ Control {
                             icon.source: "qrc:/assets/icon-actions.svg"
                             //% "Actions"
                             ToolTip.text: qsTrId("general-actions")
+                            ToolTip.visible: hovered
+                            ToolTip.delay: 500
+                            ToolTip.timeout: 2000
+                            hoverEnabled: true
                             onClicked: {
                                 transactionsTable.showContextMenu(styleData.row);
                             }

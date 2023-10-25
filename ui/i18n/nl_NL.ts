@@ -2060,7 +2060,7 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
         <translation>
-            <numerusform>%n uur(en)</numerusform>
+            <numerusform>%n uur</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -3112,7 +3112,7 @@ Als u een eerder aangemaakt standaard adres opnieuw wilt gebruiken, gebruik dan 
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>%n uur</numerusform>
+            <numerusform>%n uur(en)</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -3879,6 +3879,11 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     <message id="settings-never-switch">
         <source>Never</source>
         <translation>Nooit</translation>
+    </message>
+    <message id="receive-generate-new">
+        <source>Generate new address</source>
+        <extracomment>receive screen, button to generate new address</extracomment>
+        <translation type="unfinished">Generate new address</translation>
     </message>
 </context>
 </TS>

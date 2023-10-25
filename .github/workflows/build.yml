@@ -5,7 +5,7 @@ on: [push]
 env:
   BUILD_TYPE: Release
   BUILD_CONFIG: RelWithDebInfo
-  BEAM_DEFAULT_NETWORK: masternet
+  BEAM_DEFAULT_NETWORK: mainnet
 
 jobs:
   ###############################################################################
@@ -135,11 +135,11 @@ jobs:
         shell: bash
         run: |
           echo "BEAM_VERSION=$(cat beam_version.gen)" >> $GITHUB_ENV
-          echo "BEAM_TARGET_SUFFIX=-masternet" >> $GITHUB_ENV
-          echo "BEAM_DISPLAY_SUFFIX=Masternet" >> $GITHUB_ENV
-          echo "BEAM_DISPLAY_SUFFIX2=-Masternet" >> $GITHUB_ENV
-          echo "BEAM_DISPLAY_SUFFIX3= Masternet" >> $GITHUB_ENV
-          echo "BEAM_DISPLAY_SUFFIX4=_Masternet" >> $GITHUB_ENV
+          echo "BEAM_TARGET_SUFFIX=" >> $GITHUB_ENV
+          echo "BEAM_DISPLAY_SUFFIX=" >> $GITHUB_ENV
+          echo "BEAM_DISPLAY_SUFFIX2=" >> $GITHUB_ENV
+          echo "BEAM_DISPLAY_SUFFIX3=" >> $GITHUB_ENV
+          echo "BEAM_DISPLAY_SUFFIX4=" >> $GITHUB_ENV
           rm beam_version.gen
 
       ###############################################################################

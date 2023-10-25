@@ -26,7 +26,7 @@ ReceiveViewModel::ReceiveViewModel()
 
     connect(_walletModel.get(), &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &ReceiveViewModel::assetsListChanged);
-    updateToken();
+    updateToken(); // default address
 }
 
 void ReceiveViewModel::updateToken()
@@ -71,9 +71,12 @@ void ReceiveViewModel::updateToken()
     };
 
     bool isShieldedSupported = _walletModel->isConnectionTrusted();
-    
+    if (_newAddress)
+    {
+        _walletModel->getAsync()->deleteAddressByToken(_originalToken.toStdString());
+    }
     auto tokenType = isShieldedSupported ? (_maxp ? TokenType::MaxPrivacy : TokenType::Offline) : TokenType::RegularNewStyle;
-    _walletModel->getAsync()->generateToken(tokenType, _amount, _assetId, AppModel::getMyVersion(), std::move(onTokenGenerated));
+    _walletModel->getAsync()->generateToken(tokenType, _amount, _assetId, AppModel::getMyVersion(), _newAddress, std::move(onTokenGenerated));
 /*
     if (!_receiverAddress)
     {
@@ -239,6 +242,16 @@ void ReceiveViewModel::saveAddress()
     //        _walletModel->getAsync()->saveAddress(*_receiverAddress);
     //    }
     //}
+}
+
+void ReceiveViewModel::generateNewAddress()
+{
+    if (_newAddress == false)
+    {
+        _originalToken.clear();
+    }
+    _newAddress = true;
+    updateToken();
 }
 
 bool ReceiveViewModel::getIsMaxPrivacy() const
