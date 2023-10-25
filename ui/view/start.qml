@@ -236,6 +236,7 @@ Item
                         onActivated: {
                             viewModel.currentNetwork = currentText;
                             Theme.update();
+                            root.parent.setSource("qrc:/start.qml");
                         }
                     }
 
@@ -1755,6 +1756,21 @@ Item
                     Layout.fillWidth: true
                     spacing: 0
 
+                    CustomComboBox {
+                        id: networkSelector2
+                        Layout.alignment:   Qt.AlignHCenter
+                        fontPixelSize: 14
+                        enableScroll: false
+                        textRole: "name"
+
+                        model: viewModel.networks
+                        currentIndex: viewModel.currentNetworkIndex
+                        onActivated: {
+                            viewModel.currentNetwork = currentText;
+                            Theme.update();
+                            root.parent.setSource("qrc:/start.qml");
+                        }
+                    }
 
                     SFText {
                         Layout.alignment:       Qt.AlignHCenter

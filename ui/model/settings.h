@@ -31,14 +31,15 @@ class WalletSettings : public QObject
 public:
     WalletSettings(const QDir& appDataDir, const QString& applicationDirPath);
 
+    void changeUser();
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
 
     int getLockTimeout() const;
     void setLockTimeout(int value);
 
-    bool isPasswordReqiredToSpendMoney() const;
-    void setPasswordReqiredToSpendMoney(bool value);
+    bool isPasswordRequiredToSpendMoney() const;
+    void setPasswordRequiredToSpendMoney(bool value);
 
     bool isAllowedBeamMWLinks() const;
     void setAllowedBeamMWLinks(bool value);
@@ -53,6 +54,7 @@ public:
     std::string getWalletStorage() const;
     std::string getWalletFolder() const;
     std::string getAppDataPath() const;
+    std::string getUserDataPath() const;
     void reportProblem();
 
     bool getRunLocalNode() const;
@@ -144,6 +146,7 @@ public:
     QString getExplorerUrl() const;
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
+    QDir getUserDataDir() const;
 
     bool showFaucetPromo() const;
     void setShowFacetPromo(bool value);
@@ -203,8 +206,19 @@ signals:
     void generalMouseEvent();
 
 private:
-    mutable QSettings m_data;
+    struct UserSettings
+    {
+        QSettings m_data;
+#ifdef BEAM_ASSET_SWAP_SUPPORT
+        QVector<beam::Asset::ID> m_allowedAssets;
+#endif  // BEAM_ASSET_SWAP_SUPPORT
+        explicit UserSettings(QString userSettingsPath);
+    };
+
     QDir m_appDataDir;
+    mutable UserSettings m_userSettings;
+    mutable QSettings m_globalData;
+
     QString m_applicationDirPath;
     uint8_t m_mpLockTimeLimit = 0;
     uint32_t m_minConfirmations = 0;
@@ -212,8 +226,4 @@ private:
     using Lock = std::unique_lock<decltype(m_mutex)>;
     bool m_isActive = false;
     uint64_t m_activateTime = 0;
-
-#ifdef BEAM_ASSET_SWAP_SUPPORT
-    mutable QVector<beam::Asset::ID> m_allowedAssets;
-#endif  // BEAM_ASSET_SWAP_SUPPORT
 };

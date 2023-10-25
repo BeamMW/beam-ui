@@ -207,6 +207,16 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
+                LinkButton {
+                    id: logoutBtn
+                    //% "Logout"
+                    text: qsTrId("status-logout")
+                    fontSize: 15
+
+                    onClicked: function () {
+                        main.parent.setSource("qrc:/start.qml")
+                    }
+                }
             }
 
             CustomProgressBar {

@@ -151,7 +151,7 @@ int QMLGlobals::maxCommentLength()
 
 bool QMLGlobals::needPasswordToSpend()
 {
-    return AppModel::getInstance().getSettings().isPasswordReqiredToSpendMoney();
+    return AppModel::getInstance().getSettings().isPasswordRequiredToSpendMoney();
 }
 
 bool QMLGlobals::isFork3()

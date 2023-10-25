@@ -832,7 +832,7 @@ void StartViewModel::findExistingWalletDB()
 {
     std::set<std::string> pathsToCheck;
 
-    auto appDataPath = AppModel::getInstance().getSettings().getAppDataPath();
+    auto appDataPath = AppModel::getInstance().getSettings().getUserDataPath();
     pathsToCheck.insert(appDataPath);
 
     auto defaultAppDataPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
@@ -1057,6 +1057,7 @@ void StartViewModel::setCurrentNetwork(const QString& network)
         return;
 
     Rules::get().m_Network = value;
+    AppModel::resetInstance(AppModel::getInstance().getSettings());
     emit currentNetworkChanged();
 }
 

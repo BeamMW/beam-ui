@@ -42,7 +42,7 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(int          lockTimeout                     READ getLockTimeout                 WRITE  setLockTimeout NOTIFY lockTimeoutChanged)
     Q_PROPERTY(QString      walletLocation                  READ getWalletLocation              CONSTANT)
     Q_PROPERTY(bool         isLocalNodeRunning              READ isLocalNodeRunning             NOTIFY localNodeRunningChanged)
-    Q_PROPERTY(bool         isPasswordReqiredToSpendMoney   READ isPasswordReqiredToSpendMoney  WRITE   setPasswordReqiredToSpendMoney NOTIFY passwordReqiredToSpendMoneyChanged)
+    Q_PROPERTY(bool         isPasswordRequiredToSpendMoney  READ isPasswordRequiredToSpendMoney WRITE   setPasswordRequiredToSpendMoney NOTIFY passwordRequiredToSpendMoneyChanged)
     Q_PROPERTY(bool         isAllowedBeamMWLinks            READ isAllowedBeamMWLinks           WRITE   allowBeamMWLinks NOTIFY beamMWLinksPermissionChanged)
     Q_PROPERTY(QStringList  supportedLanguages              READ getSupportedLanguages          NOTIFY  currentLanguageIndexChanged)
     Q_PROPERTY(int          currentLanguageIndex            READ getCurrentLanguageIndex        NOTIFY  currentLanguageIndexChanged)
@@ -105,8 +105,8 @@ public:
     void setRemoteNodePort(const QString& value);
     int getLockTimeout() const;
     void setLockTimeout(int value);
-    bool isPasswordReqiredToSpendMoney() const;
-    void setPasswordReqiredToSpendMoney(bool value);
+    bool isPasswordRequiredToSpendMoney() const;
+    void setPasswordRequiredToSpendMoney(bool value);
     bool isAllowedBeamMWLinks();
     void allowBeamMWLinks(bool value);
     QStringList getSupportedLanguages() const;
@@ -193,7 +193,7 @@ signals:
     void nodeSettingsChanged();
     void lockTimeoutChanged();
     void localNodeRunningChanged();
-    void passwordReqiredToSpendMoneyChanged();
+    void passwordRequiredToSpendMoneyChanged();
     void validNodeAddressChanged();
     void currentLanguageIndexChanged();
     void secondCurrencyChanged();
@@ -241,7 +241,7 @@ private:
 
     QStringList m_localNodePeers;
     int m_lockTimeout;
-    bool m_isPasswordReqiredToSpendMoney;
+    bool m_isPasswordRequiredToSpendMoney;
     bool m_isAllowedBeamMWLinks;
     bool m_isValidNodeAddress;
     bool m_isNeedToCheckAddress;

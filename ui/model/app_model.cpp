@@ -48,6 +48,7 @@
 #endif
 
 #include "keykeeper/hid_key_keeper.h"
+#include "version.h"
 
 using namespace beam;
 using namespace ECC;
@@ -67,6 +68,14 @@ AppModel& AppModel::getInstance()
 {
     assert(s_instance != nullptr);
     return *s_instance;
+}
+
+void AppModel::resetInstance(WalletSettings& settings)
+{
+    assert(s_instance != nullptr);
+    settings.changeUser();
+    s_instance->~AppModel();
+    s_instance = new(s_instance) AppModel(settings);
 }
 
 // static
@@ -93,7 +102,14 @@ AppModel::AppModel(WalletSettings& settings)
     , m_memLock(m_key, 1, QSystemSemaphore::Create)
     , m_memAppGuard(m_memKey)
 {
-    assert(s_instance == nullptr);
+    Rules::get().SetNetworkParams();
+    Rules::get().UpdateChecksum();
+    LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+    LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
+    LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
+    LOG_INFO() << "AppData folder: " << QDir(QString::fromStdString(settings.getUserDataPath())).absolutePath().toStdString();
+    LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
+
     s_instance = this;
 
     m_memLock.acquire();
@@ -116,7 +132,6 @@ AppModel::AppModel(WalletSettings& settings)
 
 AppModel::~AppModel()
 {
-    s_instance = nullptr;
     release();
 }
 

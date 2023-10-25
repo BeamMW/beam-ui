@@ -71,16 +71,16 @@ SettingsFoldable {
         }
 
         CustomSwitch {
-            id: isPasswordReqiredToSpendMoney
+            id: isPasswordRequiredToSpendMoney
             //: settings tab, general section, ask password to send label
             //% "Ask password on every Send"
             text: qsTrId("settings-general-require-pwd-to-spend")
-            checked: viewModel.isPasswordReqiredToSpendMoney
+            checked: viewModel.isPasswordRequiredToSpendMoney
             Layout.fillWidth: true
             font.styleName:   "Regular"
             font.weight:      Font.Normal
             function onDialogAccepted() {
-                viewModel.isPasswordReqiredToSpendMoney = checked;
+                viewModel.isPasswordRequiredToSpendMoney = checked;
             }
 
             function onDialogRejected() {
@@ -88,7 +88,7 @@ SettingsFoldable {
             }
 
             onClicked: {
-                confirmPasswordDialog.dialogTitle = viewModel.isPasswordReqiredToSpendMoney
+                confirmPasswordDialog.dialogTitle = viewModel.isPasswordRequiredToSpendMoney
                     //: settings tab, general section, ask password to send, confirm password dialog, title if checked
                     //% "Don't ask password on every Send"
                     ? qsTrId("settings-general-require-pwd-to-spend-confirm-pwd-title")

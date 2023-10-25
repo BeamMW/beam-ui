@@ -57,7 +57,7 @@ SettingsViewModel::SettingsViewModel()
     undoChanges();
 
     m_lockTimeout = m_settings.getLockTimeout();
-    m_isPasswordReqiredToSpendMoney = m_settings.isPasswordReqiredToSpendMoney();
+    m_isPasswordRequiredToSpendMoney = m_settings.isPasswordRequiredToSpendMoney();
     m_isAllowedBeamMWLinks = m_settings.isAllowedBeamMWLinks();
     m_currentLanguageIndex = m_supportedLanguages.indexOf(m_settings.getLanguageName());
     m_rateCurrency = m_settings.getRateCurrency();
@@ -311,18 +311,18 @@ void SettingsViewModel::setLockTimeout(int value)
     }
 }
 
-bool SettingsViewModel::isPasswordReqiredToSpendMoney() const
+bool SettingsViewModel::isPasswordRequiredToSpendMoney() const
 {
-    return m_isPasswordReqiredToSpendMoney;
+    return m_isPasswordRequiredToSpendMoney;
 }
 
-void SettingsViewModel::setPasswordReqiredToSpendMoney(bool value)
+void SettingsViewModel::setPasswordRequiredToSpendMoney(bool value)
 {
-    if (value != m_isPasswordReqiredToSpendMoney)
+    if (value != m_isPasswordRequiredToSpendMoney)
     {
-        m_isPasswordReqiredToSpendMoney = value;
-        m_settings.setPasswordReqiredToSpendMoney(m_isPasswordReqiredToSpendMoney);
-        emit passwordReqiredToSpendMoneyChanged();
+        m_isPasswordRequiredToSpendMoney = value;
+        m_settings.setPasswordRequiredToSpendMoney(m_isPasswordRequiredToSpendMoney);
+        emit passwordRequiredToSpendMoneyChanged();
     }
 }
 
@@ -501,7 +501,7 @@ void SettingsViewModel::setLocalNodePeers(const QStringList& localNodePeers)
 
 QString SettingsViewModel::getWalletLocation() const
 {
-    return QString::fromStdString(m_settings.getAppDataPath());
+    return QString::fromStdString(m_settings.getUserDataPath());
 }
 
 void SettingsViewModel::undoChanges()

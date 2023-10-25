@@ -64,6 +64,8 @@ bool NodeModel::isNodeRunning() const
 
 void NodeModel::onInitProgressUpdated(uint64_t done, uint64_t total)
 {
+    if (done > total)
+        return;
     emit initProgressUpdated(
         static_cast<quint64>(done), static_cast<quint64>(total));
 }
