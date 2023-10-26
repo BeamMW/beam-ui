@@ -3886,5 +3886,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <extracomment>receive screen, button to generate new address</extracomment>
         <translation type="unfinished">Generate new address</translation>
     </message>
+    <message id="status-logout">
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

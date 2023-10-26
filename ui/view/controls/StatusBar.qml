@@ -207,16 +207,6 @@ Item {
                 Item {
                     Layout.fillWidth: true
                 }
-                LinkButton {
-                    id: logoutBtn
-                    //% "Logout"
-                    text: qsTrId("status-logout")
-                    fontSize: 15
-
-                    onClicked: function () {
-                        main.parent.setSource("qrc:/start.qml")
-                    }
-                }
             }
 
             CustomProgressBar {
@@ -226,6 +216,24 @@ Item {
 
                 visible: model.nodeSyncProgress > 0 && update_indicator.visible
                 value: model.nodeSyncProgress / 100
+            }
+        }
+    }
+    RowLayout {
+        width: rowBackground.width
+        height: rowBackground.height
+        Item {
+            Layout.fillWidth: true
+        }
+        LinkButton {
+            Layout.rightMargin: 20
+            id: logoutBtn
+            //% "Logout"
+            text: qsTrId("status-logout")
+            fontSize: 15
+
+            onClicked: function () {
+                main.parent.setSource("qrc:/start.qml")
             }
         }
     }

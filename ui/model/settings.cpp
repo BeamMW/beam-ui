@@ -181,7 +181,7 @@ const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 WalletSettings::UserSettings::UserSettings(QString settingsPath)
     : m_data{ settingsPath, QSettings::IniFormat }
 {
-    LOG_INFO() << "UI user Settings file: " << m_data.fileName().toStdString();
+    LOG_INFO() << "User UI Settings file: " << m_data.fileName().toStdString();
     const auto devapp = m_data.value(kDevAppName).toString().toStdString();
     if (!devapp.empty())
     {
@@ -195,7 +195,7 @@ WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicatio
     , m_globalData{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_applicationDirPath{applicationDirPath}
 {
-    LOG_INFO () << "UI global Settings file: " << m_globalData.fileName().toStdString();
+    LOG_INFO () << "Global UI Settings file: " << m_globalData.fileName().toStdString();
 }
 
 void WalletSettings::changeUser()
