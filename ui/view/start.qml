@@ -15,6 +15,7 @@ Item
     anchors.fill: parent
     property bool isLockedMode: false
     property bool isBadPortMode: false
+    property bool isLogoutMode: false
 
     StartViewModel { id: viewModel }
     SeedValidationHelper { id: seedValidationHelper }
@@ -1996,6 +1997,11 @@ Item
                     })
             }
             else if (viewModel.walletExists) {
+                if (isLogoutMode) {
+                    BeamGlobals.resetModel()
+                    //root.parent.setSource("qrc:/start.qml");
+                    //return;
+                }
                 startWizzardView.push(open);
             }
             else if (viewModel.isFindExistingWalletDB())

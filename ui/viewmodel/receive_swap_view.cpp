@@ -75,11 +75,11 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     , _isBeamSide(false)
     , _minimalBeamFeeGrothes(minimalFee(OldWalletCurrency::OldCurrency::CurrBeam, false))
 {
-    //connect(_walletModel.get(),  &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
-    connect(_walletModel.get(),  &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
-    connect(_walletModel.get(),  &WalletModel::newAddressFailed, this, &ReceiveSwapViewModel::newAddressFailed);
-    connect(_walletModel.get(),  &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
-    connect(_walletModel.get(),  &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSelected);
+    //connect(_walletModel,  &WalletModel::generatedNewAddress, this, &ReceiveSwapViewModel::onGeneratedNewAddress);
+    connect(_walletModel,  &WalletModel::swapParamsLoaded, this, &ReceiveSwapViewModel::onSwapParamsLoaded);
+    connect(_walletModel,  &WalletModel::newAddressFailed, this, &ReceiveSwapViewModel::newAddressFailed);
+    connect(_walletModel,  &WalletModel::walletStatusChanged, this, &ReceiveSwapViewModel::updateTransactionToken);
+    connect(_walletModel,  &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSelected);
     connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &ReceiveSwapViewModel::secondCurrencyUnitNameChanged);
     connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &ReceiveSwapViewModel::secondCurrencyRateChanged);
 

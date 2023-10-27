@@ -34,10 +34,10 @@ AssetSwapCreateViewModel::AssetSwapCreateViewModel()
     , _sendAssetSname(kBeamAssetSName)
     , _offerExpires(kExpireOptions[0])
 {
-    connect(_walletModel.get(), SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
+    connect(_walletModel, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             this,               SLOT(onAddressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)));
-    connect(_walletModel.get(), &WalletModel::coinsSelected,          this, &AssetSwapCreateViewModel::onCoinsSelected);
-    connect(_walletModel.get(), &WalletModel::assetsSwapParamsLoaded, this, &AssetSwapCreateViewModel::onAssetsSwapParamsLoaded);
+    connect(_walletModel, &WalletModel::coinsSelected,          this, &AssetSwapCreateViewModel::onCoinsSelected);
+    connect(_walletModel, &WalletModel::assetsSwapParamsLoaded, this, &AssetSwapCreateViewModel::onAssetsSwapParamsLoaded);
 
     _myCurrenciesList = _amgr->getAssetsList();
     _currenciesList = _amgr->getAssetsListFull();

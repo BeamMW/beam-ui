@@ -24,7 +24,7 @@ ReceiveViewModel::ReceiveViewModel()
 {
     using namespace beam::wallet;
 
-    connect(_walletModel.get(), &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
+    connect(_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &ReceiveViewModel::assetsListChanged);
     updateToken(); // default address
 }

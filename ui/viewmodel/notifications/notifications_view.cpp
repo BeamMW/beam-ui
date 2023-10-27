@@ -20,7 +20,7 @@
 NotificationsViewModel::NotificationsViewModel()
     : m_walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(m_walletModel.get(),
+    connect(m_walletModel,
             SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)),
             SLOT(onNotificationsDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)));
     m_walletModel->getAsync()->getNotifications();

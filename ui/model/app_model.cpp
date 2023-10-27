@@ -325,8 +325,6 @@ void AppModel::openWalletThrow(const beam::SecString& pass)
 
 void AppModel::openWalletThrowWithReactor(const beam::SecString& pass)
 {
-
-
     if (m_db != nullptr)
     {
         assert(false);
@@ -476,7 +474,6 @@ void AppModel::onResetWallet()
     m_rates.reset();
 
     assert(m_wallet);
-    assert(m_wallet.use_count() == 1);
     m_wallet.reset();
 
     resetSwapClients();
@@ -675,10 +672,10 @@ void AppModel::start()
 
     initSwapClients();
 
-    m_wallet   = std::make_shared<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
-    m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet, m_settings);
-    m_assets   = std::make_shared<AssetsManager>(m_wallet, m_rates);
-    m_myAssets = std::make_shared<AssetsList>(m_wallet, m_assets, m_rates);
+    m_wallet   = std::make_unique<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet.get(), m_settings);
+    m_assets   = std::make_shared<AssetsManager>(m_wallet.get(), m_rates);
+    m_myAssets = std::make_shared<AssetsList>(m_wallet.get(), m_assets, m_rates);
 
     if (m_settings.getRunLocalNode())
     {
@@ -724,7 +721,7 @@ void AppModel::changeWalletPassword(const std::string& pass)
 
 WalletModel::Ptr AppModel::getWalletModel() const
 {
-    if (m_wallet) return m_wallet;
+    if (m_wallet) return m_wallet.get();
 
     assert(false);
     throw std::runtime_error("getWalletModel for empty model");
@@ -732,7 +729,7 @@ WalletModel::Ptr AppModel::getWalletModel() const
 
 WalletModel::Ptr AppModel::getWalletModelUnsafe() const
 {
-    return m_wallet;
+    return m_wallet.get();
 }
 
 AssetsList::Ptr AppModel::getMyAssets() const

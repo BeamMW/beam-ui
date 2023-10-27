@@ -20,7 +20,7 @@ namespace beamui::applications
 {
     namespace
     {
-        WalletModel::Ptr getWalletModel() {
+        WalletModel* getWalletModel() {
             return AppModel::getInstance().getWalletModel();
         }
 
@@ -79,7 +79,7 @@ namespace beamui::applications
         const auto ipfsnode = getUseIPFSNode();
         const auto privilegeLvl = getPrivilegeLvl();
 
-        AppsApiUI::ClientThread_Create(getWalletModel().get(), version, appid, appName.toStdString(), privilegeLvl, ipfsnode,
+        AppsApiUI::ClientThread_Create(getWalletModel(), version, appid, appName.toStdString(), privilegeLvl, ipfsnode,
             [this, guard, version, appName, appid] (AppsApiUI::Ptr api) {
                 if (guard)
                 {

@@ -28,10 +28,10 @@ AssetSwapAcceptViewModel::AssetSwapAcceptViewModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
     , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(_walletModel.get(), SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
+    connect(_walletModel, SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             this,               SLOT(onAddressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)));
-    connect(_walletModel.get(), &WalletModel::dexOrdersFinded,     this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
-    connect(_walletModel.get(), &WalletModel::coinsSelected,       this, &AssetSwapAcceptViewModel::onCoinsSelected);
+    connect(_walletModel, &WalletModel::dexOrdersFinded,     this, &AssetSwapAcceptViewModel::onDexOrdersFinded);
+    connect(_walletModel, &WalletModel::coinsSelected,       this, &AssetSwapAcceptViewModel::onCoinsSelected);
 
     _walletModel->getAsync()->getAddresses(true);
 }

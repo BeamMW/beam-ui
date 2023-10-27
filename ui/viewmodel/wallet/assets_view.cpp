@@ -19,8 +19,8 @@ AssetsViewModel::AssetsViewModel()
     , _assets(AppModel::getInstance().getMyAssets())
     , _settings (AppModel::getInstance().getSettings())
 {
-    connect(_wallet.get(), &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
-    connect(_wallet.get(), &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
+    connect(_wallet, &WalletModel::normalCoinsChanged,  this, &AssetsViewModel::onNormalCoinsChanged);
+    connect(_wallet, &WalletModel::shieldedCoinChanged, this, &AssetsViewModel::onShieldedCoinChanged);
     emit selectedAssetChanged();
 }
 

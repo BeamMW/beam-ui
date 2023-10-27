@@ -64,17 +64,17 @@ SettingsViewModel::SettingsViewModel()
 
     connect(&AppModel::getInstance().getNode(), SIGNAL(startedNode()), SLOT(onNodeStarted()));
     connect(&AppModel::getInstance().getNode(), SIGNAL(stoppedNode()), SLOT(onNodeStopped()));
-    connect(m_walletModel.get(), SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
-    connect(m_walletModel.get(), SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
+    connect(m_walletModel, SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
+    connect(m_walletModel, SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
     connect(&m_settings, &WalletSettings::dappsAllowedChanged, this, &SettingsViewModel::dappsAllowedChanged);
-    connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
+    connect(m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     m_currenciesList = m_amgr->getAssetsListFull();
-    connect(m_walletModel.get(), &WalletModel::fullAssetsListLoaded, this, &SettingsViewModel::assetsListChanged);
+    connect(m_walletModel, &WalletModel::fullAssetsListLoaded, this, &SettingsViewModel::assetsListChanged);
     m_walletModel->getAsync()->loadFullAssetsList();
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 }

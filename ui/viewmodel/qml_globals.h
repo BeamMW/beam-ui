@@ -76,6 +76,7 @@ public:
 
     Q_INVOKABLE static bool isAppActive();
     Q_INVOKABLE static void setAppActive(bool value);
+    Q_INVOKABLE static void resetModel();
 
 private:
     QQmlEngine& _engine;

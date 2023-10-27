@@ -21,7 +21,7 @@
 DexOrdersModel::DexOrdersModel()
     : _walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(_walletModel.get(), &WalletModel::dexOrdersChanged, this, &DexOrdersModel::onDexOrdersChanged);
+    connect(_walletModel, &WalletModel::dexOrdersChanged, this, &DexOrdersModel::onDexOrdersChanged);
 
     _walletModel->getAsync()->getDexOrders();
 }

@@ -29,7 +29,7 @@ ExchangeRatesManager::ExchangeRatesManager(WalletModel::Ptr wallet, WalletSettin
 
     qRegisterMetaType<std::vector<beam::wallet::ExchangeRate>>("std::vector<beam::wallet::ExchangeRate>");
 
-    connect(_wallet.get(),
+    connect(_wallet,
             SIGNAL(exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&)),
             SLOT(onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&)));
 

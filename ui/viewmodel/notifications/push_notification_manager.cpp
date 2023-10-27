@@ -20,11 +20,11 @@
 PushNotificationManager::PushNotificationManager()
     : m_walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(m_walletModel.get(),
+    connect(m_walletModel,
             SIGNAL(notificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)),
             SLOT(onNotificationsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Notification>&)));
 
-    connect(m_walletModel.get(),
+    connect(m_walletModel,
             SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)),
             SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
 

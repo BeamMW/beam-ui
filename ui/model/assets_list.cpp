@@ -18,7 +18,7 @@ AssetsList::AssetsList(WalletModel::Ptr wallet, AssetsManager::Ptr assets, Excha
 {
     connect(_rates.get(),  &ExchangeRatesManager::rateUnitChanged, this,  &AssetsList::onNewRates);
     connect(_rates.get(),  &ExchangeRatesManager::activeRateChanged, this,  &AssetsList::onNewRates);
-    connect(_wallet.get(), &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
+    connect(_wallet, &WalletModel::walletStatusChanged, this, &AssetsList::onWalletStatus);
     connect(_amgr.get(),   &AssetsManager::assetInfo, this,  &AssetsList::onAssetInfo);
     _wallet->getAsync()->getWalletStatus();
     // Transactions table would be created later and get this for us

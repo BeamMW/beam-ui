@@ -41,10 +41,10 @@ AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr 
     : _wallet(std::move(wallet))
     , _rates(std::move(rates))
 {
-    connect(_wallet.get(), &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
+    connect(_wallet, &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
     connect(_rates.get(),  &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsManager::assetsListChanged);
     connect(_rates.get(),  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
-    connect(_wallet.get(), &WalletModel::verificationInfoUpdate, this, &AssetsManager::onAssetVerification);
+    connect(_wallet, &WalletModel::verificationInfoUpdate, this, &AssetsManager::onAssetVerification);
     _wallet->getAsync()->getVerificationInfo();
 
     _icons[0]  = "qrc:/assets/asset-0.svg";

@@ -38,7 +38,7 @@ class WalletModel
 {
     Q_OBJECT
 public:
-    using Ptr = std::shared_ptr<WalletModel>;
+    using Ptr = WalletModel*;
     WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::string& nodeAddr, beam::io::Reactor::Ptr reactor);
     ~WalletModel() override;
 

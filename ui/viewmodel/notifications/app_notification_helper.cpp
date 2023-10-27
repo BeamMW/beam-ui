@@ -18,7 +18,7 @@
 
 AppNotificationHelper::AppNotificationHelper()
 {
-    auto walletPtr = AppModel::getInstance().getWalletModel().get();
+    auto walletPtr = AppModel::getInstance().getWalletModel();
 
     const auto averageBlockTime = walletPtr->getAverageBlockTime();
     const auto now = beam::getTimestamp();

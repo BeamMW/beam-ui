@@ -233,7 +233,7 @@ Item {
             fontSize: 15
 
             onClicked: function () {
-                main.parent.setSource("qrc:/start.qml")
+                main.parent.setSource("qrc:/start.qml", {"isLogoutMode": true});
             }
         }
     }

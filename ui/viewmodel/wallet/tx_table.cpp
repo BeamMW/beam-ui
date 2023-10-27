@@ -42,15 +42,15 @@ TxTableViewModel::TxTableViewModel()
     , _rates(AppModel::getInstance().getRates())
     , _settings{AppModel::getInstance().getSettings()}
 {
-    connect(_model.get(), SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
-    connect(_model.get(), SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
+    connect(_model, SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)), SLOT(onTransactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
+    connect(_model, SIGNAL(txHistoryExportedToCsv(const QString&)), this, SLOT(onTxHistoryExportedToCsv(const QString&)));
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
-    connect(_model.get(), SIGNAL(atomicSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAtomicSwapTxHistoryExportedToCsv(const QString&)));
+    connect(_model, SIGNAL(atomicSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAtomicSwapTxHistoryExportedToCsv(const QString&)));
 #endif // BEAM_ATOMIC_SWAP_SUPPORT
 #ifdef BEAM_ASSET_SWAP_SUPPORT
-    connect(_model.get(), SIGNAL(assetsSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAssetsSwapTxHistoryExportedToCsv(const QString&)));
+    connect(_model, SIGNAL(assetsSwapTxHistoryExportedToCsv(const QString&)), this, SLOT(onAssetsSwapTxHistoryExportedToCsv(const QString&)));
 #endif  // BEAM_ASSET_SWAP_SUPPORT
-    connect(_model.get(), SIGNAL(contractTxHistoryExportedToCsv(const QString&)), this, SLOT(onContractTxHistoryExportedToCsv(const QString&)));
+    connect(_model, SIGNAL(contractTxHistoryExportedToCsv(const QString&)), this, SLOT(onContractTxHistoryExportedToCsv(const QString&)));
     connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &TxTableViewModel::rateChanged);
     connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &TxTableViewModel::rateChanged);
 

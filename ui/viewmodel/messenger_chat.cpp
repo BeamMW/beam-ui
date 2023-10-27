@@ -60,19 +60,19 @@ QHash<int, QByteArray> MessengesList::roleNames() const
 MessengerChat::MessengerChat() :
     _walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(_walletModel.get(),
+    connect(_walletModel,
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
 
-    connect(_walletModel.get(),
+    connect(_walletModel,
             SIGNAL(instantMessage(beam::Timestamp, const beam::wallet::WalletID&, const std::string&, bool)),
             SLOT(onMessage(beam::Timestamp, const beam::wallet::WalletID&, const std::string&, bool)));
 
-    connect(_walletModel.get(),
+    connect(_walletModel,
             SIGNAL(chatMessages(const std::vector<beam::wallet::InstantMessage>&)),
             SLOT(onMessages(const std::vector<beam::wallet::InstantMessage>&)));
 
-    connect(_walletModel.get(),
+    connect(_walletModel,
             SIGNAL(chatRemoved(const beam::wallet::WalletID&)),
             SLOT(onChatRemoved(const beam::wallet::WalletID&)));
 

@@ -72,13 +72,13 @@ QString ContactItem::getToken() const
 AddressBookViewModel::AddressBookViewModel()
     : m_model(AppModel::getInstance().getWalletModel())
 {
-    connect(m_model.get(),
+    connect(m_model,
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
-    connect(m_model.get(),
+    connect(m_model,
             SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)),
             SLOT(onTransactions(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
-    connect(m_model.get(),
+    connect(m_model,
             SIGNAL(addressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddressesChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::WalletAddress>&)));
 

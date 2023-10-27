@@ -41,7 +41,7 @@ MainViewModel::MainViewModel()
 {
     m_timer.setSingleShot(true);
     
-    auto walletModelPtr = AppModel::getInstance().getWalletModel().get();
+    auto walletModelPtr = AppModel::getInstance().getWalletModel();
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(lockWallet()));
     connect(&m_settings, SIGNAL(lockTimeoutChanged()), this, SLOT(onLockTimeoutChanged()));

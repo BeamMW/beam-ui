@@ -201,12 +201,12 @@ SwapOffersViewModel::SwapOffersViewModel()
 {
     InitSwapClientWrappers();
 
-    connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &SwapOffersViewModel::beamAvailableChanged);
-    connect(m_walletModel.get(),
+    connect(m_walletModel, &WalletModel::walletStatusChanged, this, &SwapOffersViewModel::beamAvailableChanged);
+    connect(m_walletModel,
             SIGNAL(transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)),
             SLOT(onTransactionsDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>&)));
 
-    connect(m_walletModel.get(),
+    connect(m_walletModel,
             SIGNAL(swapOffersChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::SwapOffer>&)),
             SLOT(onSwapOffersDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::SwapOffer>&)));
 

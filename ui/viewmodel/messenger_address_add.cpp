@@ -20,7 +20,7 @@
 MessengerAddressAdd::MessengerAddressAdd() :
     _walletModel(AppModel::getInstance().getWalletModel())
 {
-    connect(_walletModel.get(),
+    connect(_walletModel,
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
 

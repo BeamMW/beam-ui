@@ -22,7 +22,7 @@ TokenBootstrapManager::TokenBootstrapManager()
     : _wallet_model(AppModel::getInstance().getWalletModel())
 {
     connect(
-        _wallet_model.get(),
+        _wallet_model,
         SIGNAL(transactionsChanged(beam::wallet::ChangeAction,
                         const std::vector<beam::wallet::TxDescription>&)),
         SLOT(onTransactionsChanged(beam::wallet::ChangeAction,

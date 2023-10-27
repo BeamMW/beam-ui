@@ -373,14 +373,14 @@ namespace beamui::applications
         else
         {
             _runApp = false;
-            connect(m_walletModel.get(), &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
-            connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
-            connect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
+            connect(m_walletModel, &WalletModel::transactionsChanged, this, &AppsViewModel::onTransactionsChanged);
+            connect(m_walletModel, &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
+            connect(m_walletModel, &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
             // update the application info because the list of tracked publishers has changed
             connect(this, &AppsViewModel::userPublishersChanged, this, &AppsViewModel::onUserPublishersChanged);
 
 #ifdef BEAM_IPFS_SUPPORT
-            connect(m_walletModel.get(), &WalletModel::IPFSStatusChanged, this, &AppsViewModel::onIPFSStatus);
+            connect(m_walletModel, &WalletModel::IPFSStatusChanged, this, &AppsViewModel::onIPFSStatus);
             m_walletModel->getAsync()->getIPFSStatus();
 #endif
 
@@ -401,8 +401,8 @@ namespace beamui::applications
     {
         // temporary hack. Wallet does not support working with multiple shaders at once,
         // so turn off the update to avoid polling the Dapp Store contract
-        disconnect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
-        disconnect(m_walletModel.get(), &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
+        disconnect(m_walletModel, &WalletModel::walletStatusChanged, this, &AppsViewModel::loadPublishers);
+        disconnect(m_walletModel, &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
     }
 
     QString AppsViewModel::getAppsUrl() const

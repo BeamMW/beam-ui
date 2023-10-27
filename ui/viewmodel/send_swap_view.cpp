@@ -36,9 +36,9 @@ SendSwapViewModel::SendSwapViewModel()
     , _isBeamSide(true)
     , _minimalBeamFeeGrothes(minimalFee(OldWalletCurrency::OldCurrency::CurrBeam, false))
 {
-    connect(_walletModel.get(), &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
-    connect(_walletModel.get(), &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
-    connect(_walletModel.get(), &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSelected);
+    connect(_walletModel, &WalletModel::changeCalculated,  this,  &SendSwapViewModel::onChangeCalculated);
+    connect(_walletModel, &WalletModel::walletStatusChanged, this, &SendSwapViewModel::recalcAvailable);
+    connect(_walletModel, &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSelected);
     connect(_rates.get(), SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
     connect(_rates.get(), SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
 }

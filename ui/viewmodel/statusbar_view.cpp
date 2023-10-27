@@ -42,10 +42,10 @@ StatusbarViewModel::StatusbarViewModel()
     connectEthClient();
     #endif
 
-    connect(m_model.get(), SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
-    connect(m_model.get(), SIGNAL(devStateChanged(const QString&, int)), SLOT(onDevStateChanged(const QString&, int)));
-    connect(m_model.get(), SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
-    connect(m_model.get(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
+    connect(m_model, SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
+    connect(m_model, SIGNAL(devStateChanged(const QString&, int)), SLOT(onDevStateChanged(const QString&, int)));
+    connect(m_model, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    connect(m_model, SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
     connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onNodeSyncProgressUpdated(int,int)));
     connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
@@ -56,7 +56,7 @@ StatusbarViewModel::StatusbarViewModel()
     connect(&settings, &WalletSettings::IPFSSettingsChanged, this, &StatusbarViewModel::onIPFSSettingsChanged);
 
     #ifdef BEAM_IPFS_SUPPORT
-    connect(m_model.get(), &WalletModel::IPFSStatusChanged, this, &StatusbarViewModel::onIPFSStatus);
+    connect(m_model, &WalletModel::IPFSStatusChanged, this, &StatusbarViewModel::onIPFSStatus);
     m_model->getAsync()->getIPFSStatus();
     #endif
 }

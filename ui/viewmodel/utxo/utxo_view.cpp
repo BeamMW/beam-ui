@@ -22,9 +22,9 @@ using namespace beamui;
 UtxoViewModel::UtxoViewModel()
     : m_model(AppModel::getInstance().getWalletModel())
 {
-    connect(m_model.get(), &WalletModel::normalCoinsChanged,  this, &UtxoViewModel::onNormalCoinsChanged);
-    connect(m_model.get(), &WalletModel::shieldedCoinChanged, this, &UtxoViewModel::onShieldedCoinChanged);
-    connect(m_model.get(), &WalletModel::walletStatusChanged, this, &UtxoViewModel::stateChanged);
+    connect(m_model, &WalletModel::normalCoinsChanged,  this, &UtxoViewModel::onNormalCoinsChanged);
+    connect(m_model, &WalletModel::shieldedCoinChanged, this, &UtxoViewModel::onShieldedCoinChanged);
+    connect(m_model, &WalletModel::walletStatusChanged, this, &UtxoViewModel::stateChanged);
     m_model->getAsync()->getAllUtxosStatus();
 }
 

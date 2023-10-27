@@ -47,14 +47,14 @@ SendViewModel::SendViewModel()
     , _settings(AppModel::getInstance().getSettings())
     , _amgr(AppModel::getInstance().getAssets())
 {
-    connect(_walletModel.get(),  &WalletModel::walletStatusChanged,        this,  &SendViewModel::balanceChanged);
+    connect(_walletModel,  &WalletModel::walletStatusChanged,        this,  &SendViewModel::balanceChanged);
     connect(_rates.get(),        &ExchangeRatesManager::rateUnitChanged,   this,  &SendViewModel::feeRateChanged);
     connect(_rates.get(),        &ExchangeRatesManager::activeRateChanged, this,  &SendViewModel::feeRateChanged);
     connect(_amgr.get(),         &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
-    connect(_walletModel.get(),  &WalletModel::coinsSelected,              this,  &SendViewModel::onCoinsSelected);
-    connect(_walletModel.get(),  &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
-    connect(_walletModel.get(),  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
-    connect(_walletModel.get(),  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
+    connect(_walletModel,  &WalletModel::coinsSelected,              this,  &SendViewModel::onCoinsSelected);
+    connect(_walletModel,  &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
+    connect(_walletModel,  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
+    connect(_walletModel,  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
 
     _receiverIdentity = beam::Zero;
 

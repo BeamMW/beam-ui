@@ -33,7 +33,7 @@ DexOrdersList::DexOrdersList()
     : m_amgr(AppModel::getInstance().getAssets())
     , m_wallet(AppModel::getInstance().getWalletModel())
 {
-    connect(m_wallet.get(), &WalletModel::fullAssetsListLoaded, this, &DexOrdersList::assetsListChanged);
+    connect(m_wallet, &WalletModel::fullAssetsListLoaded, this, &DexOrdersList::assetsListChanged);
     m_wallet->getAsync()->loadFullAssetsList();
 }
 

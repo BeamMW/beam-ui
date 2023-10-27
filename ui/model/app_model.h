@@ -130,7 +130,7 @@ private:
     SwapEthClientModel::Ptr m_swapEthClient;
     beam::ethereum::IBridgeHolder::Ptr m_swapEthBridgeHolder;
 
-    WalletModel::Ptr m_wallet;
+    std::unique_ptr<WalletModel> m_wallet;
     NodeModel m_nodeModel;
     WalletSettings& m_settings;
     ExchangeRatesManager::Ptr m_rates;

@@ -60,9 +60,9 @@ LoadingViewModel::LoadingViewModel()
     , m_estimate{0}
     , m_bpsRecessionCount{0}
 {
-    connect(m_walletModel.get(), SIGNAL(syncProgressUpdated(int, int)), SLOT(onSyncProgressUpdated(int, int)));
-    connect(m_walletModel.get(), SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
-    connect(m_walletModel.get(), SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    connect(m_walletModel, SIGNAL(syncProgressUpdated(int, int)), SLOT(onSyncProgressUpdated(int, int)));
+    connect(m_walletModel, SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
+    connect(m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
     if (AppModel::getInstance().getSettings().getRunLocalNode())
     {
@@ -98,10 +98,10 @@ void LoadingViewModel::onNodeSyncProgressUpdated(int done, int total)
 
 void LoadingViewModel::resetWallet()
 {
-    disconnect(m_walletModel.get(), SIGNAL(syncProgressUpdated(int, int)), this, SLOT(onSyncProgressUpdated(int, int)));
-    disconnect(m_walletModel.get(), SIGNAL(nodeConnectionChanged(bool)), this, SLOT(onNodeConnectionChanged(bool)));
-    disconnect(m_walletModel.get(), SIGNAL(walletError(beam::wallet::ErrorType)), this, SLOT(onGetWalletError(beam::wallet::ErrorType)));
-    m_walletModel.reset();
+    disconnect(m_walletModel, SIGNAL(syncProgressUpdated(int, int)), this, SLOT(onSyncProgressUpdated(int, int)));
+    disconnect(m_walletModel, SIGNAL(nodeConnectionChanged(bool)), this, SLOT(onNodeConnectionChanged(bool)));
+    disconnect(m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), this, SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    m_walletModel = nullptr;
 
     connect(&AppModel::getInstance(), SIGNAL(walletResetCompleted()), this, SIGNAL(walletResetCompleted()));
     AppModel::getInstance().resetWallet();
