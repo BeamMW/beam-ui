@@ -322,10 +322,6 @@
         <source>Change password</source>
         <translation type="unfinished">Change password</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation type="unfinished">Enter your password to access the wallet</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Прикажи мој новчаник</translation>
@@ -491,7 +487,8 @@
         <translation type="unfinished">Create password to access your wallet</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
         <translation type="unfinished">Password</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
@@ -3905,6 +3902,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

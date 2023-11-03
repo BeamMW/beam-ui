@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.12
 import "."
 
 Component {
-    id: checkRecoveryPhrase
+    id: checkRecoveryPhrasePage
     Rectangle {
         color: Style.background_main
         property Item defaultFocusItem: null
@@ -168,7 +168,7 @@ Component {
                             seedValidationHelper.validate();
                             rootLoader.setSource("qrc:/main.qml");
                         } else {
-                            startWizzardView.push(create);
+                            startWizzardView.push(createPasswordPage);
                         }
                     }
                 }

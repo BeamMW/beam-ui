@@ -43,7 +43,7 @@ class AppModel final: public QObject
     Q_OBJECT
 public:
     static AppModel& getInstance();
-    static void resetInstance(WalletSettings& settings);
+    static void resetInstance(WalletSettings& settings, int accountIndex);
     static std::string getMyName();
     static const std::string& getMyVersion();
 

@@ -31,7 +31,7 @@ class WalletSettings : public QObject
 public:
     WalletSettings(const QDir& appDataDir, const QString& applicationDirPath);
 
-    void changeUser();
+    void changeAccount(int accountIndex);
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
 
@@ -146,7 +146,7 @@ public:
     QString getExplorerUrl() const;
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
-    QDir getUserDataDir() const;
+    QDir getAccountDataDir() const;
 
     bool showFaucetPromo() const;
     void setShowFacetPromo(bool value);
@@ -173,6 +173,8 @@ public:
 
     bool isAppActive() const;
     void setAppActive(bool value);
+    QString getAccountLabel() const;
+    void setAccountLabel(const QString& label);
 
 public:
     static const char* WalletCfg;
@@ -206,17 +208,17 @@ signals:
     void generalMouseEvent();
 
 private:
-    struct UserSettings
+    struct AccountSettings
     {
         QSettings m_data;
 #ifdef BEAM_ASSET_SWAP_SUPPORT
         QVector<beam::Asset::ID> m_allowedAssets;
 #endif  // BEAM_ASSET_SWAP_SUPPORT
-        explicit UserSettings(QString userSettingsPath);
+        explicit AccountSettings(QString accountSettingsPath);
     };
-
+    int m_accountIndex;
     QDir m_appDataDir;
-    mutable UserSettings m_userSettings;
+    mutable AccountSettings m_accountSettings;
     mutable QSettings m_globalData;
 
     QString m_applicationDirPath;

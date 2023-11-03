@@ -321,10 +321,6 @@
         <source>Change password</source>
         <translation>Byt lösenord</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>Mata in ditt lösenord för att få tillgång till plånboken</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Visa min plånbok</translation>
@@ -490,8 +486,9 @@
         <translation>Skapa lösenord för åtkomst av din plånbok</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>Lösenord</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">Lösenord</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3888,6 +3885,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

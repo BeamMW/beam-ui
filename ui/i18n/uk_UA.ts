@@ -321,10 +321,6 @@
         <source>Change password</source>
         <translation>Змінити пароль</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>Введіть пароль для доступу до гаманця</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Відкрити мій гаманець</translation>
@@ -490,8 +486,9 @@
         <translation>Створити пароль для доступу до Вашого гаманця</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>Пароль</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">Пароль</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3898,6 +3895,14 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

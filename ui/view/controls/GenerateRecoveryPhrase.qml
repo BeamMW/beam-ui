@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.12
 import "."
 
 Component {
-    id: generateRecoveryPhrase
+    id: generateRecoveryPhrasePage
 
     Rectangle {
         color: Style.background_main
@@ -50,7 +50,7 @@ Component {
                 //% "It is strictly recommended to write down the seed phrase on a paper. Storing it in a file makes it prone to cyber attacks and, therefore, less secure."
                 text: qsTrId("start-confirm-seed-phrase-message")
                 onAccepted: {
-                    onClicked: startWizzardView.push(checkRecoveryPhrase);
+                    onClicked: startWizzardView.push(checkRecoveryPhrasePage);
                 }
             }
             SeedValidationHelper {
@@ -136,7 +136,7 @@ Component {
                     visible: !seedValidationHelper.isSeedValidatiomMode
                     onClicked: {
                         viewModel.saveSeed = true;
-                        startWizzardView.push(create);
+                        startWizzardView.push(createPasswordPage);
                     }
                 }
 

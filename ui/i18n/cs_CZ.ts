@@ -321,10 +321,6 @@
         <source>Change password</source>
         <translation>Změnit heslo</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>Zadejte své heslo pro přístup k peněžence</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Zobrazit mou peněženku</translation>
@@ -490,8 +486,9 @@
         <translation>Vytvořte heslo pro přístup k Vaší peněžence</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>Heslo</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">Heslo</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3901,6 +3898,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

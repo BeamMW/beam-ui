@@ -321,10 +321,6 @@
         <source>Change password</source>
         <translation>Vaihda salasana</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>Kirjoita salasanasi avataksesi lompakon</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Näytä lompakko</translation>
@@ -490,8 +486,9 @@
         <translation>Luo lompakkoosi uusi salasana</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>Salasana</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">Salasana</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3892,6 +3889,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

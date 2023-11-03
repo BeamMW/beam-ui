@@ -49,9 +49,12 @@ Rectangle
             Layout.fillHeight:  true
             Layout.alignment:   Qt.AlignHCenter
         }
+    }
 
-        VersionFooter {
-            Layout.bottomMargin:   50
-        }
+    VersionFooter {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.rightMargin: 20
+        anchors.topMargin: 40
     }
 }

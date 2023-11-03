@@ -525,5 +525,5 @@ void QMLGlobals::fatal(const QString& message)
 
 void QMLGlobals::resetModel()
 {
-    AppModel::resetInstance(AppModel::getInstance().getSettings());
+    AppModel::resetInstance(AppModel::getInstance().getSettings(), 0);
 }

@@ -321,10 +321,6 @@
         <source>Change password</source>
         <translation>Passwort ändern</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>Geben Sie Ihr Passwort ein, um auf die Wallet zuzugreifen</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Dein Wallet öffnen</translation>
@@ -490,8 +486,9 @@
         <translation>Passwort anlegen, um auf Ihre Brieftasche zuzugreifen</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>Passwort</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">Passwort</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3886,6 +3883,14 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

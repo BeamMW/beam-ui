@@ -70,10 +70,10 @@ AppModel& AppModel::getInstance()
     return *s_instance;
 }
 
-void AppModel::resetInstance(WalletSettings& settings)
+void AppModel::resetInstance(WalletSettings& settings, int accountIndex)
 {
     assert(s_instance != nullptr);
-    settings.changeUser();
+    settings.changeAccount(accountIndex);
     s_instance->~AppModel();
     s_instance = new(s_instance) AppModel(settings);
 }

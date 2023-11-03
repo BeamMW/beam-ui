@@ -8,14 +8,11 @@ ColumnLayout
 {
     property bool isSqueezedHeight: false
 
-    property bool isMainNet : Theme.name == "mainnet"
-
     spacing: 0
 
     Item {
         Layout.fillWidth:       true
         Layout.preferredHeight: 60
-        visible: isMainNet
     }
 
     SvgImage
@@ -43,25 +40,8 @@ ColumnLayout
         }
     }
 
-    SFText
-    {
-        visible: !isMainNet
-        Layout.alignment: Qt.AlignHCenter
-        Layout.preferredHeight: 20
-        Layout.topMargin: isSqueezedHeight ? 10 : 30
-        color: Style.content_secondary
-        text: Theme.name
-
-        font {
-            styleName:      "DemiBold"
-            weight:         Font.DemiBold
-            pixelSize:      18
-            capitalization: Font.AllUppercase
-        }
-    }
-
     Item {
         Layout.fillWidth:       true
-        Layout.preferredHeight: isSqueezedHeight ? 10 : 30 
+        Layout.preferredHeight: isSqueezedHeight ? 10 : 40 
     }
 }

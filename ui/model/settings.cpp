@@ -34,6 +34,7 @@
 using namespace beam;
 namespace
 {
+    const char* kAccountLabel = "account/label";
     const char* kNodeAddressName = "node/address";
     const char* kLocaleName = "locale";
     const char* kLockTimeoutName = "lock_timeout";
@@ -178,7 +179,7 @@ const char* WalletSettings::DappsStoreWasm = "dapps_store_app.wasm";
 const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 #endif
 
-WalletSettings::UserSettings::UserSettings(QString settingsPath)
+WalletSettings::AccountSettings::AccountSettings(QString settingsPath)
     : m_data{ settingsPath, QSettings::IniFormat }
 {
     LOG_INFO() << "User UI Settings file: " << m_data.fileName().toStdString();
@@ -190,18 +191,21 @@ WalletSettings::UserSettings::UserSettings(QString settingsPath)
 }
 
 WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicationDirPath)
-    : m_appDataDir{appDataDir}
-    , m_userSettings{getUserDataDir().filePath(SettingsFile)}
+    : m_accountIndex{0}
+    , m_appDataDir{appDataDir}
+    , m_accountSettings{getAccountDataDir().filePath(SettingsFile)}
     , m_globalData{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_applicationDirPath{applicationDirPath}
 {
     LOG_INFO () << "Global UI Settings file: " << m_globalData.fileName().toStdString();
 }
 
-void WalletSettings::changeUser()
+void WalletSettings::changeAccount(int accountIndex)
 {
-    m_userSettings.~UserSettings();
-    new(&m_userSettings) UserSettings(getUserDataDir().filePath(SettingsFile));
+    Lock lock(m_mutex);
+    m_accountSettings.~AccountSettings();
+    m_accountIndex = accountIndex;
+    new(&m_accountSettings) AccountSettings(getAccountDataDir().filePath(SettingsFile));
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -218,7 +222,7 @@ std::string WalletSettings::getWalletStorage() const
 
 std::string WalletSettings::getWalletFolder() const
 {
-    QDir rootDir = getUserDataDir();
+    QDir rootDir = getAccountDataDir();
 
     auto version = QString::fromStdString(PROJECT_VERSION);
     if (!rootDir.exists(version))
@@ -237,22 +241,28 @@ std::string WalletSettings::getAppDataPath() const
 
 std::string WalletSettings::getUserDataPath() const
 {
-    return getUserDataDir().path().toStdString();
+    return getAccountDataDir().path().toStdString();
 }
 
-QDir WalletSettings::getUserDataDir() const
+QDir WalletSettings::getAccountDataDir() const
 {
     QDir temp(m_appDataDir);
     const char* networkName = Rules::get().get_NetworkName();
     temp.mkdir(networkName);
     temp.cd(networkName);
+
+    ///
+    QString accountName(QString("Account%1").arg(m_accountIndex+1));
+    temp.mkdir(accountName);
+    temp.cd(accountName);
+
     return temp;
 }
 
 QString WalletSettings::getNodeAddress() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kNodeAddressName).toString();
+    return m_accountSettings.m_data.value(kNodeAddressName).toString();
 }
 
 void WalletSettings::setNodeAddress(const QString& addr)
@@ -266,7 +276,7 @@ void WalletSettings::setNodeAddress(const QString& addr)
         }
         {
             Lock lock(m_mutex);
-            m_userSettings.m_data.setValue(kNodeAddressName, addr);
+            m_accountSettings.m_data.setValue(kNodeAddressName, addr);
         }
         
         emit nodeAddressChanged();
@@ -277,7 +287,7 @@ void WalletSettings::setNodeAddress(const QString& addr)
 int WalletSettings::getLockTimeout() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kLockTimeoutName, 0).toInt();
+    return m_accountSettings.m_data.value(kLockTimeoutName, 0).toInt();
 }
 
 void WalletSettings::setLockTimeout(int value)
@@ -286,7 +296,7 @@ void WalletSettings::setLockTimeout(int value)
     {
         {
             Lock lock(m_mutex);
-            m_userSettings.m_data.setValue(kLockTimeoutName, value);
+            m_accountSettings.m_data.setValue(kLockTimeoutName, value);
         }
         emit lockTimeoutChanged();
     }
@@ -295,26 +305,26 @@ void WalletSettings::setLockTimeout(int value)
 bool WalletSettings::isPasswordRequiredToSpendMoney() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kRequirePasswordToSpendMoney, false).toBool();
+    return m_accountSettings.m_data.value(kRequirePasswordToSpendMoney, false).toBool();
 }
 
 void WalletSettings::setPasswordRequiredToSpendMoney(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kRequirePasswordToSpendMoney, value);
+    m_accountSettings.m_data.setValue(kRequirePasswordToSpendMoney, value);
 }
 
 bool WalletSettings::isAllowedBeamMWLinks() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kIsAlowedBeamMWLink, false).toBool();
+    return m_accountSettings.m_data.value(kIsAlowedBeamMWLink, false).toBool();
 }
 
 void WalletSettings::setAllowedBeamMWLinks(bool value)
 {
     {
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kIsAlowedBeamMWLink, value);
+        m_accountSettings.m_data.setValue(kIsAlowedBeamMWLink, value);
     }
     emit beamMWLinksChanged();
 }
@@ -322,13 +332,13 @@ void WalletSettings::setAllowedBeamMWLinks(bool value)
 bool WalletSettings::getAppsAllowed() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kDAppsAllowed, false).toBool();
+    return m_accountSettings.m_data.value(kDAppsAllowed, false).toBool();
 }
 
 bool WalletSettings::getDevMode() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kDevMode, false).toBool();
+    return m_accountSettings.m_data.value(kDevMode, false).toBool();
 }
 
 void WalletSettings::setAppsAllowed(bool value)
@@ -337,9 +347,9 @@ void WalletSettings::setAppsAllowed(bool value)
 
     {
         Lock lock(m_mutex);
-        if (m_userSettings.m_data.value(kDAppsAllowed, false).toBool() != value)
+        if (m_accountSettings.m_data.value(kDAppsAllowed, false).toBool() != value)
         {
-            m_userSettings.m_data.setValue(kDAppsAllowed, value);
+            m_accountSettings.m_data.setValue(kDAppsAllowed, value);
             changed = true;
         }
     }
@@ -353,26 +363,26 @@ void WalletSettings::setAppsAllowed(bool value)
 bool WalletSettings::showSwapBetaWarning()
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kshowSwapBetaWarning, true).toBool();
+    return m_accountSettings.m_data.value(kshowSwapBetaWarning, true).toBool();
 }
 
 void WalletSettings::setShowSwapBetaWarning(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kshowSwapBetaWarning, value);
+    m_accountSettings.m_data.setValue(kshowSwapBetaWarning, value);
 }
 
 bool WalletSettings::getRunLocalNode() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kLocalNodeRun, false).toBool();
+    return m_accountSettings.m_data.value(kLocalNodeRun, false).toBool();
 }
 
 void WalletSettings::setRunLocalNode(bool value)
 {
     {
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kLocalNodeRun, value);
+        m_accountSettings.m_data.setValue(kLocalNodeRun, value);
     }
     emit localNodeRunChanged();
 }
@@ -380,26 +390,26 @@ void WalletSettings::setRunLocalNode(bool value)
 uint WalletSettings::getLocalNodePort() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kLocalNodePort, getNetworkDefaultPort()).toUInt();
+    return m_accountSettings.m_data.value(kLocalNodePort, getNetworkDefaultPort()).toUInt();
 }
 
 void WalletSettings::setLocalNodePort(uint port)
 {
     {
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kLocalNodePort, port);
+        m_accountSettings.m_data.setValue(kLocalNodePort, port);
     }
     emit localNodePortChanged();
 }
 
 std::string WalletSettings::getLocalNodeStorage() const
 {
-    return getUserDataDir().filePath(NodeDBFile).toStdString();
+    return getAccountDataDir().filePath(NodeDBFile).toStdString();
 }
 
 std::string WalletSettings::getTempDir() const
 {
-    return getUserDataDir().filePath("./temp").toStdString();
+    return getAccountDataDir().filePath("./temp").toStdString();
 }
 
 static void zipLocalFile(QuaZip& zip, const QString& path, const QString& folder = QString())
@@ -419,7 +429,7 @@ static void zipLocalFile(QuaZip& zip, const QString& path, const QString& folder
 QStringList WalletSettings::getLocalNodePeers()
 {
     Lock lock(m_mutex);
-    auto peers = m_userSettings.m_data.value(kLocalNodePeers).value<QStringList>();
+    auto peers = m_accountSettings.m_data.value(kLocalNodePeers).value<QStringList>();
 
     size_t outDatedCount = std::count_if(
         peers.begin(),
@@ -438,7 +448,7 @@ QStringList WalletSettings::getLocalNodePeers()
         {
             peers << QString::fromStdString(it);
         }
-        m_userSettings.m_data.setValue(kLocalNodePeers, QVariant::fromValue(peers));
+        m_accountSettings.m_data.setValue(kLocalNodePeers, QVariant::fromValue(peers));
     }
 
     return peers;
@@ -448,7 +458,7 @@ void WalletSettings::setLocalNodePeers(const QStringList& qPeers)
 {
     {
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kLocalNodePeers, QVariant::fromValue(qPeers));
+        m_accountSettings.m_data.setValue(kLocalNodePeers, QVariant::fromValue(qPeers));
     }
     emit localNodePeersChanged();
 }
@@ -456,7 +466,7 @@ void WalletSettings::setLocalNodePeers(const QStringList& qPeers)
 bool WalletSettings::getPeersPersistent() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kLocalNodePeersPersistent, false).toBool();
+    return m_accountSettings.m_data.value(kLocalNodePeersPersistent, false).toBool();
 }
 
 QString WalletSettings::getLocale() const
@@ -509,7 +519,7 @@ beam::wallet::Currency WalletSettings::getRateCurrency() const
     const auto& supportedUnits = getSupportedRateUnits();
     Lock lock(m_mutex);
 
-    auto rawUnitValue = m_userSettings.m_data.value(kRateUnit, QString::fromStdString(defaultUnit.m_value)).toString();
+    auto rawUnitValue = m_accountSettings.m_data.value(kRateUnit, QString::fromStdString(defaultUnit.m_value)).toString();
     beam::wallet::Currency savedAmountUnit(rawUnitValue.toStdString());
 
     const auto it = find(std::begin(supportedUnits), std::cend(supportedUnits), savedAmountUnit);
@@ -532,7 +542,7 @@ void WalletSettings::setRateCurrency(const beam::wallet::Currency& curr)
 
     {
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kRateUnit, QString::fromStdString(unit.m_value));
+        m_accountSettings.m_data.setValue(kRateUnit, QString::fromStdString(unit.m_value));
         emit secondCurrencyChanged();
     }
 }
@@ -540,19 +550,19 @@ void WalletSettings::setRateCurrency(const beam::wallet::Currency& curr)
 bool WalletSettings::isNewVersionActive() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kNewVersionActive, true).toBool();
+    return m_accountSettings.m_data.value(kNewVersionActive, true).toBool();
 }
 
 bool WalletSettings::isBeamNewsActive() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kBeamNewsActive, true).toBool();
+    return m_accountSettings.m_data.value(kBeamNewsActive, true).toBool();
 }
 
 bool WalletSettings::isTxStatusActive() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kTxStatusActive, true).toBool();
+    return m_accountSettings.m_data.value(kTxStatusActive, true).toBool();
 }
 
 void WalletSettings::setNewVersionActive(bool isActive)
@@ -567,7 +577,7 @@ void WalletSettings::setNewVersionActive(bool isActive)
                 isActive);
         }
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kNewVersionActive, isActive);
+        m_accountSettings.m_data.setValue(kNewVersionActive, isActive);
     }
 }
 
@@ -583,7 +593,7 @@ void WalletSettings::setBeamNewsActive(bool isActive)
                 isActive);
         }
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kBeamNewsActive, isActive);
+        m_accountSettings.m_data.setValue(kBeamNewsActive, isActive);
     }
 }
 
@@ -603,20 +613,20 @@ void WalletSettings::setTxStatusActive(bool isActive)
                 isActive);
         }
         Lock lock(m_mutex);
-        m_userSettings.m_data.setValue(kTxStatusActive, isActive);
+        m_accountSettings.m_data.setValue(kTxStatusActive, isActive);
     }
 }
 
 uint8_t WalletSettings::getMaxPrivacyAnonymitySet() const
 {
     Lock lock(m_mutex);
-    return static_cast<uint8_t>(m_userSettings.m_data.value(kMpAnonymitySet, kDefaultMaxPrivacyAnonymitySet).toUInt());
+    return static_cast<uint8_t>(m_accountSettings.m_data.value(kMpAnonymitySet, kDefaultMaxPrivacyAnonymitySet).toUInt());
 }
 
 void WalletSettings::setMaxPrivacyAnonymitySet(uint8_t anonymitySet)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kMpAnonymitySet, anonymitySet);
+    m_accountSettings.m_data.setValue(kMpAnonymitySet, anonymitySet);
 }
 
 void WalletSettings::maxPrivacyLockTimeLimitInit()
@@ -678,7 +688,7 @@ void WalletSettings::reportProblem()
 {
     auto logsFolder = QString::fromStdString(LogsFolder) + "/";
 
-    QDir dataDir = getUserDataDir();
+    QDir dataDir = getAccountDataDir();
 
     QFile zipFile = dataDir.filePath("beam v" + QString::fromStdString(PROJECT_VERSION)
         + " " + QSysInfo::productType().toLower() + " report.zip");
@@ -796,55 +806,55 @@ QString WalletSettings::getAppsUrl() const
 bool WalletSettings::showFaucetPromo() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kShowFaucetPromo, true).toBool();
+    return m_accountSettings.m_data.value(kShowFaucetPromo, true).toBool();
 }
 
 void WalletSettings::setShowFacetPromo(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kShowFaucetPromo, value);
+    m_accountSettings.m_data.setValue(kShowFaucetPromo, value);
 }
 
 bool WalletSettings::hideSeedValidationPromo() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kHideSeedValidationPromo, false).toBool();
+    return m_accountSettings.m_data.value(kHideSeedValidationPromo, false).toBool();
 }
 
 void WalletSettings::setHideSeedValidationPromo(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kHideSeedValidationPromo, value);
+    m_accountSettings.m_data.setValue(kHideSeedValidationPromo, value);
 }
 
 QString WalletSettings::getDevAppUrl() const
 {
-    return m_userSettings.m_data.value(kDevAppURL).toString();
+    return m_accountSettings.m_data.value(kDevAppURL).toString();
 }
 
 QString WalletSettings::getDevAppName() const
 {
-    return m_userSettings.m_data.value(kDevAppName).toString();
+    return m_accountSettings.m_data.value(kDevAppName).toString();
 }
 
 QString WalletSettings::getDevAppApiVer() const
 {
-    return m_userSettings.m_data.value(kDevAppApiVer).toString();
+    return m_accountSettings.m_data.value(kDevAppApiVer).toString();
 }
 
 QString WalletSettings::getDevAppMinApiVer() const
 {
-    return m_userSettings.m_data.value(kDevAppMinApiVer).toString();
+    return m_accountSettings.m_data.value(kDevAppMinApiVer).toString();
 }
 
 uint32_t WalletSettings::getShadersPrivilegeLvl() const
 {
-    return m_userSettings.m_data.value(kShadersPrivLvl, 2).toUInt();
+    return m_accountSettings.m_data.value(kShadersPrivLvl, 2).toUInt();
 }
 
 std::string WalletSettings::getDappStoreCID() const
 {
-    auto cid = m_userSettings.m_data.value(kDappStoreCID).toString();
+    auto cid = m_accountSettings.m_data.value(kDappStoreCID).toString();
     // TODO roman.strilets default cid value should be set for mainnet and testnet
     // for masternet
     return cid.isEmpty() ? getNetworkDappStoreCID()
@@ -853,7 +863,7 @@ std::string WalletSettings::getDappStoreCID() const
 
 std::string WalletSettings::getDappStorePath() const
 {
-    auto path = m_userSettings.m_data.value(kDappStorePath).toString();
+    auto path = m_accountSettings.m_data.value(kDappStorePath).toString();
     return path.isEmpty()
         ? QDir(m_applicationDirPath).filePath(DappsStoreWasm).toStdString()
         : path.toStdString();
@@ -862,27 +872,27 @@ std::string WalletSettings::getDappStorePath() const
 QStringList WalletSettings::getDappStoreUserPublishers() const
 {
     Lock lock(m_mutex);
-    auto publishersList = m_userSettings.m_data.value(kDappStoreUserPublishers).value<QStringList>();
+    auto publishersList = m_accountSettings.m_data.value(kDappStoreUserPublishers).value<QStringList>();
     return publishersList;
 }
 
 void WalletSettings::setDappStoreUserPublishers(const QStringList& publishersList)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kDappStoreUserPublishers, QVariant::fromValue(publishersList));
+    m_accountSettings.m_data.setValue(kDappStoreUserPublishers, QVariant::fromValue(publishersList));
 }
 
 QStringList WalletSettings::getDappStoreUserUnwantedPublishers() const
 {
     Lock lock(m_mutex);
-    auto publishersList = m_userSettings.m_data.value(kDappStoreUserUnwantedPublishers).value<QStringList>();
+    auto publishersList = m_accountSettings.m_data.value(kDappStoreUserUnwantedPublishers).value<QStringList>();
     return publishersList;
 }
 
 void WalletSettings::setDappStoreUserUnwantedPublishers(const QStringList& publishersList)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kDappStoreUserUnwantedPublishers, QVariant::fromValue(publishersList));
+    m_accountSettings.m_data.setValue(kDappStoreUserUnwantedPublishers, QVariant::fromValue(publishersList));
 }
 
 QString WalletSettings::getAppsCachePath(const QString& appid) const
@@ -896,7 +906,7 @@ QString WalletSettings::getAppsCachePath(const QString& appid) const
             QDir::separator() + QString::fromStdString(rawAppID)
     );
 
-    auto adir = getUserDataDir();
+    auto adir = getAccountDataDir();
     adir.mkpath(cachePath);
 
     return cachePath;
@@ -907,7 +917,7 @@ QString WalletSettings::getAppsStoragePath(const QString& appid) const
     Lock lock(m_mutex);
     const char* kStorageFolder = "appstorage";
     auto rawAppID = beam::wallet::StripAppIDPrefix(appid.toStdString());
-    auto dataDir = getUserDataDir();
+    auto dataDir = getAccountDataDir();
     QString storagePath = QDir::cleanPath(
             dataDir.path() +
             QDir::separator() + kStorageFolder +
@@ -921,7 +931,7 @@ QString WalletSettings::getAppsStoragePath(const QString& appid) const
 
 QString WalletSettings::getLocalAppsPath() const
 {
-    QDir dataDir = getUserDataDir();
+    QDir dataDir = getAccountDataDir();
     const char* kLocalAppsFolder = "localapps";
     QString localAppsPath = QDir::cleanPath(
             dataDir.path() +
@@ -943,14 +953,14 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
 {
     namespace cli = beam::cli;
 
-    QDir dataDir = getUserDataDir();
+    QDir dataDir = getAccountDataDir();
     Lock lock(m_mutex);
     asio_ipfs::config cfg(asio_ipfs::config::Mode::Desktop);
 
     const QString keyStorage = QString(kIPFSPrefix) + cli::IPFS_STORAGE;
-    if (m_userSettings.m_data.contains(keyStorage))
+    if (m_accountSettings.m_data.contains(keyStorage))
     {
-        cfg.repo_root = m_userSettings.m_data.value(keyStorage).toString().toStdString();
+        cfg.repo_root = m_accountSettings.m_data.value(keyStorage).toString().toStdString();
     }
     else
     {
@@ -960,25 +970,25 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
         ).dirName()).toStdString();
     }
 
-    cfg.low_water = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
-    cfg.high_water = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
-    cfg.grace_period = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
-    cfg.swarm_port = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.swarm_port).toUInt();
-    cfg.auto_relay = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
-    cfg.relay_hop = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
-    cfg.storage_max = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
-    cfg.api_address = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_ADDR, QString::fromStdString(cfg.api_address)).toString().toStdString();
-    cfg.gateway_address = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_ADDR, QString::fromStdString(cfg.gateway_address)).toString().toStdString();
-    cfg.autonat = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
-    cfg.autonat_limit = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
-    cfg.autonat_peer_limit = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
-    cfg.routing_type = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
-    cfg.run_gc = m_userSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
+    cfg.low_water = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
+    cfg.high_water = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
+    cfg.grace_period = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
+    cfg.swarm_port = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.swarm_port).toUInt();
+    cfg.auto_relay = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
+    cfg.relay_hop = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
+    cfg.storage_max = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
+    cfg.api_address = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_ADDR, QString::fromStdString(cfg.api_address)).toString().toStdString();
+    cfg.gateway_address = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_ADDR, QString::fromStdString(cfg.gateway_address)).toString().toStdString();
+    cfg.autonat = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
+    cfg.autonat_limit = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
+    cfg.autonat_peer_limit = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
+    cfg.routing_type = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
+    cfg.run_gc = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
 
     const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
-    if (m_userSettings.m_data.contains(keyBootstrap))
+    if (m_accountSettings.m_data.contains(keyBootstrap))
     {
-        auto list = m_userSettings.m_data.value(keyBootstrap).toStringList();
+        auto list = m_accountSettings.m_data.value(keyBootstrap).toStringList();
         decltype(cfg.bootstrap)().swap(cfg.bootstrap);
         decltype(cfg.peering)().swap(cfg.peering);
 
@@ -990,9 +1000,9 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     }
 
     const QString keyPeering = QString(kIPFSPrefix) + cli::IPFS_PEERING;
-    if (m_userSettings.m_data.contains(keyPeering))
+    if (m_accountSettings.m_data.contains(keyPeering))
     {
-        auto list = m_userSettings.m_data.value(keyPeering).toStringList();
+        auto list = m_accountSettings.m_data.value(keyPeering).toStringList();
         decltype(cfg.peering)().swap(cfg.peering);
 
         for (const auto& qsval : list)
@@ -1002,9 +1012,9 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     }
 
     const QString keySwarm = QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY;
-    if (m_userSettings.m_data.contains(keySwarm))
+    if (m_accountSettings.m_data.contains(keySwarm))
     {
-        cfg.swarm_key = m_userSettings.m_data.value(keySwarm).toString().toStdString();
+        cfg.swarm_key = m_accountSettings.m_data.value(keySwarm).toString().toStdString();
     }
 
     return cfg;
@@ -1016,11 +1026,11 @@ void WalletSettings::setIPFSPort(uint32_t port)
     const QString keySwarmPort = QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT;
 
     Lock lock(m_mutex);
-    if (m_userSettings.m_data.contains(keySwarmPort) && m_userSettings.m_data.value(keySwarmPort).toUInt() == port) {
+    if (m_accountSettings.m_data.contains(keySwarmPort) && m_accountSettings.m_data.value(keySwarmPort).toUInt() == port) {
         return;
     }
 
-    m_userSettings.m_data.setValue(keySwarmPort, port);
+    m_accountSettings.m_data.setValue(keySwarmPort, port);
     emit IPFSSettingsChanged();
 }
 
@@ -1029,11 +1039,11 @@ void WalletSettings::setIPFSNodeStart(const QString& start)
     const QString keyNodeStart = QString(kIPFSPrefix) + kIPFSNodeStart;
 
     Lock lock(m_mutex);
-    if (m_userSettings.m_data.contains(keyNodeStart) && m_userSettings.m_data.value(keyNodeStart).toString() == start) {
+    if (m_accountSettings.m_data.contains(keyNodeStart) && m_accountSettings.m_data.value(keyNodeStart).toString() == start) {
         return;
     }
 
-    m_userSettings.m_data.setValue(keyNodeStart, start);
+    m_accountSettings.m_data.setValue(keyNodeStart, start);
     emit IPFSSettingsChanged();
 }
 
@@ -1043,12 +1053,12 @@ QString WalletSettings::getIPFSNodeStart() const
     Lock lock(m_mutex);
 
     QString defStart("clientstart");
-    auto start = m_userSettings.m_data.value(keyNodeStart, defStart).toString();
+    auto start = m_accountSettings.m_data.value(keyNodeStart, defStart).toString();
 
     if (start != "clientstart" && start != "dapps" && start != "never") {
         LOG_WARNING() << "Unknown IPFS start setting '" << start.toStdString()
                       << "'. Defaulting to '" << defStart.toStdString() << "'";
-        m_userSettings.m_data.setValue(keyNodeStart, defStart);
+        m_accountSettings.m_data.setValue(keyNodeStart, defStart);
         return defStart;
     }
 
@@ -1074,56 +1084,56 @@ WalletSettings::IPFSLaunch WalletSettings::getIPFSNodeLaunch() const
 #ifdef BEAM_ASSET_SWAP_SUPPORT
 QVector<beam::Asset::ID> WalletSettings::getAllowedAssets() const
 {
-    if (!m_userSettings.m_allowedAssets.empty()) return m_userSettings.m_allowedAssets;
+    if (!m_accountSettings.m_allowedAssets.empty()) return m_accountSettings.m_allowedAssets;
 
     Lock lock(m_mutex);
 
-    auto ser = m_userSettings.m_data.value(kAllowedAssets).value<QByteArray>();
+    auto ser = m_accountSettings.m_data.value(kAllowedAssets).value<QByteArray>();
     QDataStream in(&ser, QIODevice::ReadOnly);
-    in >> m_userSettings.m_allowedAssets;
+    in >> m_accountSettings.m_allowedAssets;
 
-    if (m_userSettings.m_allowedAssets.empty())
+    if (m_accountSettings.m_allowedAssets.empty())
     {
         if (Rules::get().m_Network == Rules::Network::mainnet)
         {
-            m_userSettings.m_allowedAssets = { 0, 2, 3, 4, 6, 7, 9, 10, 23 };
+            m_accountSettings.m_allowedAssets = { 0, 2, 3, 4, 6, 7, 9, 10, 23 };
         }
         else
         {
             for (int i = 0; i <100; ++i)
-                m_userSettings.m_allowedAssets.push_back(i);
+                m_accountSettings.m_allowedAssets.push_back(i);
         }
     }
 
-    return m_userSettings.m_allowedAssets;
+    return m_accountSettings.m_allowedAssets;
 }
 
 void WalletSettings::addAllowedAsset(beam::Asset::ID asset)
 {
     Lock lock(m_mutex);
 
-    if (m_userSettings.m_allowedAssets.contains(asset)) return;
+    if (m_accountSettings.m_allowedAssets.contains(asset)) return;
 
-    m_userSettings.m_allowedAssets.push_back(asset);
+    m_accountSettings.m_allowedAssets.push_back(asset);
     QByteArray ser;
     QDataStream out(&ser, QIODevice::WriteOnly);
-    out << m_userSettings.m_allowedAssets;
+    out << m_accountSettings.m_allowedAssets;
 
-    m_userSettings.m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
+    m_accountSettings.m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
 }
 
 void WalletSettings::removeAllowedAsset(beam::Asset::ID asset)
 {
     Lock lock(m_mutex);
 
-    if (m_userSettings.m_allowedAssets.contains(asset))
+    if (m_accountSettings.m_allowedAssets.contains(asset))
     {
-        m_userSettings.m_allowedAssets.removeOne(asset);
+        m_accountSettings.m_allowedAssets.removeOne(asset);
         QByteArray ser;
         QDataStream out(&ser, QIODevice::WriteOnly);
-        out << m_userSettings.m_allowedAssets;
+        out << m_accountSettings.m_allowedAssets;
 
-        m_userSettings.m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
+        m_accountSettings.m_data.setValue(kAllowedAssets, QVariant::fromValue<QByteArray>(ser));
     }
 }
 #endif  // BEAM_ASSET_SWAP_SUPPORT
@@ -1131,13 +1141,13 @@ void WalletSettings::removeAllowedAsset(beam::Asset::ID asset)
 int WalletSettings::getAppsServerPort() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kLocalAppsPort, 34700).toInt();
+    return m_accountSettings.m_data.value(kLocalAppsPort, 34700).toInt();
 }
 
 void WalletSettings::setAppsServerPort(int port)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kLocalAppsPort, port);
+    m_accountSettings.m_data.setValue(kLocalAppsPort, port);
 }
 
 void WalletSettings::minConfirmationsInit()
@@ -1179,7 +1189,7 @@ QVector<beam::Asset::ID> WalletSettings::getLastAssetSelection() const
 {
     Lock lock(m_mutex);
 
-    auto ser = m_userSettings.m_data.value(kLastAssetSelection).value<QByteArray>();
+    auto ser = m_accountSettings.m_data.value(kLastAssetSelection).value<QByteArray>();
     QDataStream in(&ser, QIODevice::ReadOnly);
     QVector<beam::Asset::ID> res;
     in >> res;
@@ -1195,55 +1205,55 @@ void WalletSettings::setLastAssetSelection(QVector<beam::Asset::ID> selection)
     QDataStream out(&ser, QIODevice::WriteOnly);
     out << selection;
 
-    m_userSettings.m_data.setValue(kLastAssetSelection, QVariant::fromValue<QByteArray>(ser));
+    m_accountSettings.m_data.setValue(kLastAssetSelection, QVariant::fromValue<QByteArray>(ser));
 }
 
 bool WalletSettings::getShowInProgress() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kTxFilterInProgress, true).toBool();
+    return m_accountSettings.m_data.value(kTxFilterInProgress, true).toBool();
 }
 
 void WalletSettings::setShowInProgress(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kTxFilterInProgress, value);
+    m_accountSettings.m_data.setValue(kTxFilterInProgress, value);
 }
 
 bool WalletSettings::getShowCompleted() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kTxFilterCompleted, true).toBool();
+    return m_accountSettings.m_data.value(kTxFilterCompleted, true).toBool();
 }
 
 void WalletSettings::setShowCompleted(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kTxFilterCompleted, value);
+    m_accountSettings.m_data.setValue(kTxFilterCompleted, value);
 }
 
 bool WalletSettings::getShowCanceled() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kTxFilterCanceled, true).toBool();
+    return m_accountSettings.m_data.value(kTxFilterCanceled, true).toBool();
 }
 
 void WalletSettings::setShowCanceled(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kTxFilterCanceled, value);
+    m_accountSettings.m_data.setValue(kTxFilterCanceled, value);
 }
 
 bool WalletSettings::getShowFailed() const
 {
     Lock lock(m_mutex);
-    return m_userSettings.m_data.value(kTxFilterFailed, true).toBool();
+    return m_accountSettings.m_data.value(kTxFilterFailed, true).toBool();
 }
 
 void WalletSettings::setShowFailed(bool value)
 {
     Lock lock(m_mutex);
-    m_userSettings.m_data.setValue(kTxFilterFailed, value);
+    m_accountSettings.m_data.setValue(kTxFilterFailed, value);
 }
 
 bool WalletSettings::isAppActive() const
@@ -1262,4 +1272,20 @@ void WalletSettings::setAppActive(bool value)
         ? std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::system_clock::now().time_since_epoch()).count()
         : 0;
+}
+
+
+QString WalletSettings::getAccountLabel() const
+{
+    Lock lock(m_mutex);
+    return m_accountSettings.m_data.value(kAccountLabel, 0).toInt();
+}
+
+void  WalletSettings::setAccountLabel(const QString& label)
+{
+    if (getAccountLabel() == label)
+        return;
+
+    Lock lock(m_mutex);
+    m_accountSettings.m_data.setValue(kAccountLabel, label);
 }

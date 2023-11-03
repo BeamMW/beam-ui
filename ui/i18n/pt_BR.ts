@@ -321,10 +321,6 @@
         <source>Change password</source>
         <translation>Mudar Senha</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>Digite sua senha para acessar a carteira</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Mostrar minha carteira</translation>
@@ -490,8 +486,9 @@
         <translation>Criar senha para acessar sua carteira</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>Senha</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">Senha</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3889,6 +3886,14 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

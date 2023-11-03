@@ -43,11 +43,12 @@
 using namespace beam;
 using namespace ECC;
 using namespace std;
-
+namespace fs = boost::filesystem;
 namespace
 {
     const QChar PHRASES_SEPARATOR = ';';
     const uint8_t kPhraseSize = 12;
+    const char kAccountLabel[] = "account/label";
 
     namespace Network
     {
@@ -56,7 +57,6 @@ namespace
         const char IconWidth[] = "iconWidth";
         const char IconHeight[] = "iconHeight";
     }
-
 
     Rules::Network getNetworkFromString(const QString& network)
     {
@@ -67,29 +67,29 @@ namespace
             return Rules::Network::mainnet;
     }
 
-    boost::filesystem::path pathFromStdString(const std::string& path)
+    fs::path pathFromStdString(const std::string& path)
     {
 #ifdef WIN32
-        boost::filesystem::path boostPath{ Utf8toUtf16(path.c_str()) };
+        fs::path boostPath{ Utf8toUtf16(path.c_str()) };
 #else
-        boost::filesystem::path boostPath{ path };
+        fs::path boostPath{ path };
 #endif
         return boostPath;
     }
 
-    std::vector<boost::filesystem::path> findAllWalletDB(const std::string& appPath)
+    std::vector<fs::path> findAllWalletDB(const std::string& appPath)
     {
-        std::vector<boost::filesystem::path> walletDBs;
+        std::vector<fs::path> walletDBs;
         try
         {
             auto appDataPath = pathFromStdString(appPath);
 
-            if (!boost::filesystem::exists(appDataPath))
+            if (!fs::exists(appDataPath))
             {
                 return {};
             }
 
-            for (boost::filesystem::recursive_directory_iterator endDirIt, it{ appDataPath }; it != endDirIt; ++it)
+            for (fs::recursive_directory_iterator endDirIt, it{ appDataPath }; it != endDirIt; ++it)
             {
                 if (it.level() > 1)
                 {
@@ -99,7 +99,6 @@ namespace
                         break;
                     }
                 }
-
                 if (it->path().filename() == WalletSettings::WalletDBFile 
 #if defined(BEAM_HW_WALLET)
                     || it->path().filename() == WalletSettings::TrezorWalletDBFile
@@ -116,6 +115,39 @@ namespace
         }
 
         return walletDBs;
+    }
+
+    int getNewAccountIndex()
+    {
+        QDir dir(AppModel::getInstance().getSettings().getAppDataPath().c_str());
+        if (!dir.cd(Rules::get().get_NetworkName()))
+            return 1;
+
+        int index = 0;
+        const char accountName[] = "Account";
+        for (const auto& subDirInfo : dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::SortFlag::Name))
+        {
+            auto name = subDirInfo.fileName();
+            if (!name.startsWith(accountName))
+                continue;
+
+            auto suffix = name.mid((int)std::size(accountName));
+            bool ok = false;
+            int accountIndex = suffix.toInt(&ok);
+            if (!ok || accountIndex == 0)
+                continue;
+            accountIndex -= 1;
+
+            auto paths = findAllWalletDB(subDirInfo.absoluteFilePath().toStdString());
+            if (paths.empty())
+                continue;
+            
+            if (index != accountIndex)
+                break;
+
+            ++index;
+        }
+        return index;
     }
 
 
@@ -844,7 +876,7 @@ void StartViewModel::findExistingWalletDB()
         // As of 6.0 this is fixed, but we need to take care of these
         auto checkAlso = [&] (const std::string& spath)
         {
-            boost::filesystem::path path(spath);
+            fs::path path(spath);
             if (path.empty()) return;
 
             auto dirname = path.filename().string();
@@ -860,7 +892,7 @@ void StartViewModel::findExistingWalletDB()
     }
     #endif
 
-    std::vector<boost::filesystem::path> walletDBs;
+    std::vector<fs::path> walletDBs;
     for(const auto& path: pathsToCheck)
     {
         auto additionnalWalletDBs = findAllWalletDB(path);
@@ -919,15 +951,15 @@ void StartViewModel::deleteCurrentWalletDB()
     {
         {
             auto pathToDB = pathFromStdString(AppModel::getInstance().getSettings().getWalletStorage());
-            if (boost::filesystem::exists(pathToDB))
-                boost::filesystem::remove(pathToDB);
+            if (fs::exists(pathToDB))
+                fs::remove(pathToDB);
         }
 
 #if defined(BEAM_HW_WALLET)
         {
             auto pathToDB = pathFromStdString(AppModel::getInstance().getSettings().getTrezorWalletStorage());
-            if (boost::filesystem::exists(pathToDB))
-                boost::filesystem::remove(pathToDB);
+            if (fs::exists(pathToDB))
+                fs::remove(pathToDB);
         }
 #endif
     }
@@ -943,7 +975,7 @@ void StartViewModel::migrateWalletDB(const QString& path)
     {
         auto pathSrc = pathFromStdString(path.toStdString());
         auto pathDst = pathFromStdString(AppModel::getInstance().getSettings().getWalletFolder() + "/" + pathSrc.filename().string());
-        boost::filesystem::copy_file(pathSrc, pathDst);
+        fs::copy_file(pathSrc, pathDst);
     }
     catch (std::exception& e)
     {
@@ -1057,12 +1089,67 @@ void StartViewModel::setCurrentNetwork(const QString& network)
         return;
 
     Rules::get().m_Network = value;
-    AppModel::resetInstance(AppModel::getInstance().getSettings());
+    AppModel::resetInstance(AppModel::getInstance().getSettings(), 0);
     emit currentNetworkChanged();
 }
 
 int StartViewModel::getCurrentNetworkIndex() const
 {
     return (int)Rules::get().m_Network;
+}
+
+QList<QVariantMap> StartViewModel::getAccounts() const
+{
+    QList<QVariantMap> accounts;
+    QDir dir(AppModel::getInstance().getSettings().getAppDataPath().c_str());
+    if (!dir.cd(Rules::get().get_NetworkName()))
+        return accounts;
+
+    for (const auto& subDirInfo : dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+    {
+        auto paths = findAllWalletDB(subDirInfo.absoluteFilePath().toStdString());
+        if (paths.empty())
+            continue;
+        QString accountDir = subDirInfo.fileName();
+        QSettings settings(subDirInfo.dir().filePath(WalletSettings::SettingsFile));
+        auto label = settings.value(kAccountLabel, accountDir).toString();
+        QVariantMap account;
+        account["name"] = label;
+        account["dir"] = accountDir;
+        accounts.push_back(account);
+    }
+
+    return accounts;
+}
+
+int StartViewModel::getCurrentAccountIndex() const
+{
+    return m_accountIndex;
+}
+
+void StartViewModel::setCurrentAccountIndex(int value)
+{
+    if (value == -1)
+    {
+        m_accountIndex = getNewAccountIndex();
+    }
+    if (m_accountIndex == value)
+        return;
+    m_accountIndex = value;
+    AppModel::resetInstance(AppModel::getInstance().getSettings(), m_accountIndex);
+    emit currentAccountChanged();
+}
+
+QString StartViewModel::getNewAccountLabel() const
+{
+    return m_newAccountLabel;
+}
+
+void StartViewModel::setNewAccountLabel(const QString& value)
+{
+    if (m_newAccountLabel == value)
+        return;
+    m_newAccountLabel = value;
+    emit newAccountLabelChanged();
 }
 

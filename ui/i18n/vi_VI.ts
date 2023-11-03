@@ -322,10 +322,6 @@
         <source>Change password</source>
         <translation>Thay đổi mật khẩu</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>Nhập mật khẩu của bạn để truy cập ví</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>Xem ví của tôi</translation>
@@ -491,8 +487,9 @@
         <translation>Tạo mật khẩu mới để truy cập vào ví của bạn</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>Mật khẩu</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">Mật khẩu</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3886,6 +3883,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

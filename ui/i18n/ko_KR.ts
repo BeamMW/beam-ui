@@ -321,10 +321,6 @@
         <source>Change password</source>
         <translation>비밀번호 바꾸기</translation>
     </message>
-    <message id="start-open-pwd-invitation">
-        <source>Enter your password to access the wallet</source>
-        <translation>지갑에 접근하려면 비밀번호를 입력하세요</translation>
-    </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
         <translation>내 지갑 보기</translation>
@@ -490,8 +486,9 @@
         <translation>지갑에 접근하기 위해서 비밀번호를 생성해야합니다.</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>비밀번호</translation>
+        <source>Account password</source>
+        <oldsource>Password</oldsource>
+        <translation type="unfinished">비밀번호</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -3882,6 +3879,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-network-label">
+        <source>Network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-label">
+        <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

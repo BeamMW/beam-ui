@@ -16,15 +16,84 @@ Item
     property bool isLockedMode: false
     property bool isBadPortMode: false
     property bool isLogoutMode: false
+    property int currentAccountIndex: 0
 
-    StartViewModel { id: viewModel }
+    StartViewModel { 
+        id: viewModel 
+        currentAccountIndex: root.currentAccountIndex
+    }
     SeedValidationHelper { id: seedValidationHelper }
+
+    component AccountSetup : RowLayout {
+        property bool createNewAccount: false
+        property alias accountLabelText: accountLabel.text
+        spacing: 20
+        ColumnLayout {
+            Layout.alignment:   Qt.AlignHCenter
+            SFText {
+                //% "Network"
+                text: qsTrId("start-network-label")
+                color: Style.content_main
+                font.pixelSize: 14
+                font.styleName: "Bold"; font.weight: Font.Bold
+            }
+            CustomComboBox {
+                id: networkSelector
+                Layout.fillWidth: true
+                Layout.maximumWidth: 190
+                fontPixelSize: 14
+                enableScroll: false
+                textRole: "name"
+
+                model: viewModel.networks
+                currentIndex: viewModel.currentNetworkIndex
+                onActivated: {
+                    viewModel.currentNetwork = currentText;
+                    Theme.update();
+                    root.parent.setSource("qrc:/start.qml");
+                }
+            }
+        }
+        ColumnLayout {
+            visible:     viewModel.accounts.length > 1 || createNewAccount
+            SFText {
+                //% "Account"
+                text: qsTrId("start-account-label")
+                color: Style.content_main
+                font.pixelSize: 14
+                font.styleName: "Bold"; font.weight: Font.Bold
+            }
+            SFTextInput {
+                id:                 accountLabel
+                Layout.fillWidth:   true
+                Layout.maximumWidth:190
+                font.pixelSize:     14
+                color:              Style.content_main
+                visible:            createNewAccount
+            }
+            CustomComboBox {
+                id:                 accountSelector
+                Layout.fillWidth:   true
+                Layout.maximumWidth:190
+                fontPixelSize:      14
+                enableScroll:       false
+                textRole:           "name"
+                visible:            !createNewAccount
+                model:              viewModel.accounts
+                currentIndex:       viewModel.currentAccountIndex
+                onActivated: {
+                    viewModel.currentAccountIndex = currentIndex;
+                    root.parent.setSource("qrc:/start.qml", {currentAccountIndex = currentIndex});
+                }
+            }
+        }
+    }
 
     function migrateWalletDB(path) {
         // copy wallet.db                         
         viewModel.migrateWalletDB(path);
         viewModel.isRecoveryMode = false;
-        startWizzardView.push(open, {
+        startWizzardView.push(openWalletPage, {
             "firstButtonVisible": true,
             //% "Back"
             "firstButtonText": qsTrId("general-back"), 
@@ -137,9 +206,9 @@ Item
                 viewModel.isRecoveryMode = true;
 
                 if (viewModel.useHWWallet)
-                    startWizzardView.push(create);
+                    startWizzardView.push(createPasswordPage);
                 else
-                    startWizzardView.push(restoreWallet);
+                    startWizzardView.push(reatoreWalletPage);
             }
         }
     }
@@ -198,7 +267,7 @@ Item
             onClicked: {
                 viewModel.useHWWallet = false;
                 viewModel.isRecoveryMode = true;
-                startWizzardView.push(create);
+                startWizzardView.push(createPasswordPage);
             }
         }
     }
@@ -214,9 +283,8 @@ Item
         }
 
         Component {
-            id: start
-            StartLayout
-            {
+            id: walletStartPage
+            StartLayout {
                 property Item defaultFocusItem: createNewWallet
 
                 ColumnLayout {
@@ -225,20 +293,12 @@ Item
                     Layout.fillWidth: true
                     spacing: 0
 
-                    CustomComboBox {
-                        id: networkSelector
-                        Layout.alignment:   Qt.AlignHCenter
-                        fontPixelSize: 14
-                        enableScroll: false
-                        textRole: "name"
-
-                        model: viewModel.networks
-                        currentIndex: viewModel.currentNetworkIndex
-                        onActivated: {
-                            viewModel.currentNetwork = currentText;
-                            Theme.update();
-                            root.parent.setSource("qrc:/start.qml");
-                        }
+                    AccountSetup {
+                        id:                     accountSetup
+                        Layout.alignment:       Qt.AlignHCenter
+                        Layout.minimumWidth:    400
+                        Layout.maximumWidth:    400
+                        createNewAccount:       true
                     }
 
                     RowLayout {
@@ -256,10 +316,7 @@ Item
                             }
                         }
 
-                        Item {
-                            Layout.preferredWidth: 30
-                            visible: startWizzardView.depth > 1
-                        }
+                        spacing: 30
 
                         Row {
                             spacing: 20
@@ -271,10 +328,12 @@ Item
                                 Layout.preferredHeight: 38
                                 Layout.alignment: Qt.AlignHCenter
                                 icon.source: "qrc:/assets/icon-add-blue.svg"
-                                onClicked: 
-                                {
+                                //enabled: accountSetup.accountLabelText.length > 0
+                                onClicked: {
                                     viewModel.isRecoveryMode = false;
-                                    startWizzardView.push(createWalletEntry);
+                                   // viewModel.newAccountLabel = accountSetup.accountLabelText;
+                                   // viewModel.currentAccountIndex = -1;
+                                    startWizzardView.push(createNewWalletPage);
                                 }
                             }
 
@@ -286,50 +345,36 @@ Item
                                 Layout.preferredHeight: 38
                                 Layout.alignment: Qt.AlignHCenter
                                 icon.source: "qrc:/assets/icon-add-blue.svg"
-                                onClicked: 
-                                {
+                                onClicked: {
                                     viewModel.isRecoveryMode = false;
-                                    startWizzardView.push(createTrezorWalletEntry);
+                                    startWizzardView.push(createTrezorWalletPage);
                                 }
                             }
                         }
                     }
-
-                    SFText {
+                    Row {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 40
-                        //% "Restore wallet"
-                        text: qsTrId("general-restore-wallet")
-                        color: Style.active
-                        font.pixelSize: 14
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
+                        spacing: 20
+                        LinkButton {
+                            
+                            //% "Restore wallet"
+                            text: qsTrId("general-restore-wallet")
+                            fontSize: 14
                             onClicked: {
                                 viewModel.useHWWallet = false;
                                 restoreWalletConfirmation.open();
                             }
-                            hoverEnabled: true
                         }
-                    }
 
-                    SFText {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: 40
-                        //% "Use Hardware Wallet"
-                        text: qsTrId("general-use-hw-wallet")
-                        color: Style.active
-                        font.pixelSize: 14
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
+                        LinkButton {
+                            //% "Use Hardware Wallet"
+                            text: qsTrId("general-use-hw-wallet")
+                            fontSize: 14
                             onClicked: {
                                 viewModel.useHWWallet = true;
                                 restoreWalletConfirmation.open();
                             }
-                            hoverEnabled: true
                         }
                     }
 
@@ -343,9 +388,8 @@ Item
         }
 
         Component {
-            id: migrate
-            StartLayout
-            {
+            id: migrateWalletPage
+            StartLayout {
                 property Item defaultFocusItem: startMigration
 
                 ColumnLayout {
@@ -417,28 +461,21 @@ Item
                             icon.source: "qrc:/assets/icon-folder.svg"
                             enabled: viewModel.isOnlyOneInstanceStarted
                             onClicked: {
-                                startWizzardView.push(selectWalletDBView);
+                                startWizzardView.push(selectWalletDBPage);
                             }
                         }
                     }
 
-                    SFText {
+                    LinkButton {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 64
                         //% "Restore wallet or create a new one"
                         text: qsTrId("general-restore-or-create-wallet")
-                        color: Style.active
-                        font.pixelSize: 14
+                        fontSize: 14
                         visible: viewModel.isOnlyOneInstanceStarted
-                
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                startWizzardView.push(start);
-                            }
-                            hoverEnabled: true
+
+                        onClicked: {
+                            startWizzardView.push(walletStartPage);
                         }
                     }
 
@@ -451,7 +488,7 @@ Item
         }
 
         Component {
-            id: selectWalletDBView
+            id: selectWalletDBPage
             Item {
                 function next() {
                     if (nextButton.enabled) {
@@ -607,22 +644,16 @@ Item
                                 height: tableView.rowHeight
                                 clip:true
 
-                                SFLabel {
-                                    font.pixelSize: 14
+                                LinkButton {
+                                    fontSize: 14
                                     anchors.left: parent.left
                                     anchors.leftMargin: tableView.textLeftMargin
                                     anchors.right: parent.right
                                     anchors.verticalCenter: parent.verticalCenter
                                     //% "Show in folder"
                                     text: qsTrId("general-show-in-folder")
-                                    color: Style.active
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        acceptedButtons: Qt.LeftButton
-                                        cursorShape: Qt.PointingHandCursor
-                                        onClicked: {
-                                            viewModel.openFolder(styleData.value);
-                                        }
+                                    onClicked: {
+                                        viewModel.openFolder(styleData.value);
                                     }
                                 }
                             }
@@ -661,25 +692,16 @@ Item
                         Layout.minimumHeight: 16
                     }
 
-                    SFText {
+                    LinkButton {
                         Layout.alignment: Qt.AlignHCenter
                         //% "Find the wallet database file manually"
                         text: qsTrId("restore-find-db")
-                        color: Style.active
-                        font.pixelSize: 14
-
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                var path = viewModel.selectCustomWalletDB();
-
-                                if (path.length > 0) {
-                                    migrateWalletDB(path);
-                                }
+                        fontSize: 14
+                        onClicked: {
+                            var path = viewModel.selectCustomWalletDB();
+                            if (path.length > 0) {
+                                migrateWalletDB(path);
                             }
-                            hoverEnabled: true
                         }
                     }
 
@@ -731,9 +753,8 @@ Item
         }
 
         Component {
-            id: createWalletEntry
-            Rectangle
-            {
+            id: createNewWalletPage
+            Rectangle {
                 color: Style.background_main
                 property Item defaultFocusItem: generateRecoveryPhraseButton
 
@@ -815,7 +836,7 @@ Item
                             //% "Generate seed phrase"
                             text: qsTrId("start-generate-seed-phrase-button")
                             icon.source: "qrc:/assets/icon-recovery.svg"
-                            onClicked: startWizzardView.push(generateRecoveryPhrase);
+                            onClicked: startWizzardView.push(generateRecoveryPhrasePage);
                         }
                     }
 
@@ -831,9 +852,8 @@ Item
         }
 
         Component {
-            id: createTrezorWalletEntry
-            Rectangle
-            {
+            id: createTrezorWalletPage
+            Rectangle {
                 color: Style.background_main
                 ColumnLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -890,8 +910,8 @@ Item
                             icon.source: "qrc:/assets/icon-next-blue.svg"
                             onClicked: {
                                 //viewModel.startOwnerKeyImporting();
-                                //startWizzardView.push(importTrezorOwnerKey);
-                                startWizzardView.push(create);
+                                //startWizzardView.push(importTrezorOwnerKeyPage);
+                                startWizzardView.push(createPasswordPage);
                             }
                         }
                     }
@@ -907,11 +927,11 @@ Item
             }
         }
 
-        GenerateRecoveryPhrase { id: generateRecoveryPhrase }
-        CheckRecoveryPhrase { id: checkRecoveryPhrase }
+        GenerateRecoveryPhrase { id: generateRecoveryPhrasePage }
+        CheckRecoveryPhrase { id: checkRecoveryPhrasePage }
 
         Component {
-            id: importTrezorOwnerKey
+            id: importTrezorOwnerKeyPage
             Rectangle {
                 color: Style.background_main
                 property Item defaultFocusItem: null
@@ -984,7 +1004,7 @@ Item
                             icon.source: "qrc:/assets/icon-next-blue.svg"
                             onClicked: {
                                 viewModel.setOwnerKeyPassword(trezorPassword.text)
-                                startWizzardView.push(create)
+                                startWizzardView.push(createPasswordPage)
                             }
                         }
                     }
@@ -1001,7 +1021,7 @@ Item
         }
 
         Component {
-            id: restoreWallet
+            id: reatoreWalletPage
             Rectangle {
                 color: Style.background_main
                 property Item defaultFocusItem: null
@@ -1187,9 +1207,8 @@ Item
         }
 
         Component {
-            id: create
-            Rectangle
-            {
+            id: createPasswordPage
+            Rectangle {
                 color: Style.background_main
 
                 property Item defaultFocusItem: password
@@ -1212,7 +1231,7 @@ Item
                             viewModel.setupLocalNode(parseInt(viewModel.defaultPortToListen()), viewModel.chooseRandomNode());
                             createWallet();
                         } else {
-                            startWizzardView.push(nodeSetup);
+                            startWizzardView.push(nodeSetupPage);
                         }
                     }
                 }
@@ -1262,7 +1281,7 @@ Item
                             spacing: 10
 
                             SFText {
-                                //% "Password"
+                                //% "Account password"
                                 text: qsTrId("start-pwd-label")
                                 color: Style.content_main
                                 font.pixelSize: 14
@@ -1448,10 +1467,9 @@ Item
         }
 
         Component {
-            id: nodeSetup
+            id: nodeSetupPage
 
-            Rectangle
-            {   
+            Rectangle {
                 id: nodeSetupRectangle
                 color: Style.background_main
                 property Item defaultFocusItem: localNodeButton
@@ -1703,10 +1721,9 @@ Item
         }
 
         Component {
-            id: open
+            id: openWalletPage
 
-            StartLayout
-            {
+            StartLayout {
                 id:    startLayout
                 property Item defaultFocusItem: openPassword
 
@@ -1722,7 +1739,7 @@ Item
                     viewModel.checkCapsLock();
                     // OSX hack, to handle capslock shutdonw
                     if (Qt.platform.os == "osx" && viewModel.isCapsLockOn) {
-                        var timer = Qt.createQmlObject('import QtQml 2.11; Timer {}', open, "osxCapsTimer");
+                        var timer = Qt.createQmlObject('import QtQml 2.11; Timer {}', openWalletPage, "osxCapsTimer");
                         timer.interval = 500;
                         timer.repeat = true;
                         timer.triggered.connect(viewModel.checkCapsLock);
@@ -1735,7 +1752,7 @@ Item
                 Keys.onPressed: {
                     // Linux hack, X11 return caps state with delay
                     if (Qt.platform.os == "linux") {
-                        var timer = Qt.createQmlObject('import QtQml 2.11; Timer {}', open, "linuxCapsTimer");
+                        var timer = Qt.createQmlObject('import QtQml 2.11; Timer {}', openWalletPage, "linuxCapsTimer");
                         timer.interval = 500;
                         timer.repeat = false;
                         timer.triggered.connect(viewModel.checkCapsLock);
@@ -1757,30 +1774,11 @@ Item
                     Layout.fillWidth: true
                     spacing: 0
 
-                    CustomComboBox {
-                        id: networkSelector2
-                        Layout.alignment:   Qt.AlignHCenter
-                        fontPixelSize: 14
-                        enableScroll: false
-                        textRole: "name"
-
-                        model: viewModel.networks
-                        currentIndex: viewModel.currentNetworkIndex
-                        onActivated: {
-                            viewModel.currentNetwork = currentText;
-                            Theme.update();
-                            root.parent.setSource("qrc:/start.qml");
-                        }
-                    }
-
-                    SFText {
+                    AccountSetup {
                         Layout.alignment:       Qt.AlignHCenter
-                        Layout.preferredHeight: 16
+                        Layout.minimumWidth:    400
+                        Layout.maximumWidth:    400
                         Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 10 : 20
-                        //% "Enter your password to access the wallet"
-                        text: qsTrId("start-open-pwd-invitation")
-                        color: Style.content_main
-                        font.pixelSize: 14
                     }
 
                     ColumnLayout {
@@ -1790,7 +1788,7 @@ Item
                         Layout.alignment: Qt.AlignHCenter
 
                         SFText {
-                            //% "Password"
+                            //% "Account password"
                             text: qsTrId("start-pwd-label")
                             color: Style.content_main
                             font.pixelSize: 14
@@ -1897,21 +1895,14 @@ Item
                         }
                     }
 
-                    SFText {
+                    LinkButton {
                         Layout.alignment: Qt.AlignHCenter
                         //% "Restore wallet or create a new one"
                         text: qsTrId("general-restore-or-create-wallet")
-                        color: Style.active
-                        font.pixelSize: 14
+                        fontSize: 14
                         visible: viewModel.isOnlyOneInstanceStarted
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                confirmChangeWalletDialog.open();
-                            }
-                            hoverEnabled: true
+                        onClicked: {
+                            confirmChangeWalletDialog.open();
                         }
                     }
 
@@ -1957,7 +1948,7 @@ Item
                         }
                         onAccepted: {
                             viewModel.isRecoveryMode = false;
-                            startWizzardView.push(start);
+                            startWizzardView.push(walletStartPage);
                         }
                     }
                 }
@@ -1966,20 +1957,20 @@ Item
 
         function restoreProcessBadPortMode(isRecoveryMode) {
             startWizzardView.pop();
-            startWizzardView.push(nodeSetup);
+            startWizzardView.push(nodeSetupPage);
             root.isBadPortMode = true;
             viewModel.isRecoveryMode = isRecoveryMode;
         }
 
         Component.onCompleted: {
             if (seedValidationHelper.isSeedValidatiomMode) {
-                startWizzardView.push(generateRecoveryPhrase);
+                startWizzardView.push(generateRecoveryPhrasePage);
             }
             else if (isBadPortMode) {
-                startWizzardView.push(nodeSetup)
+                startWizzardView.push(nodeSetupPage)
             }
             else if (isLockedMode) {
-                startWizzardView.push(open,
+                startWizzardView.push(openWalletPage,
                     { "openWallet": function (pass, callback) {
                         if (viewModel.checkWalletPassword(pass))
                         {
@@ -1999,17 +1990,15 @@ Item
             else if (viewModel.walletExists) {
                 if (isLogoutMode) {
                     BeamGlobals.resetModel()
-                    //root.parent.setSource("qrc:/start.qml");
-                    //return;
                 }
-                startWizzardView.push(open);
+                startWizzardView.push(openWalletPage);
             }
             else if (viewModel.isFindExistingWalletDB())
             {
-                startWizzardView.push(migrate);
+                startWizzardView.push(migrateWalletPage);
             }
             else {
-                startWizzardView.push(start);
+                startWizzardView.push(walletStartPage);
             }
         }
     }
