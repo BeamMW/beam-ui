@@ -4,6 +4,7 @@ import QtQuick.Controls 2.4
 import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import "controls"
+import "start_wizzard"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
 import QtQuick.Layouts 1.12
@@ -26,7 +27,6 @@ Item
 
     component AccountSetup : RowLayout {
         property bool createNewAccount: false
-        property alias accountLabelText: accountLabel.text
         spacing: 20
         ColumnLayout {
             Layout.alignment:   Qt.AlignHCenter
@@ -55,7 +55,7 @@ Item
             }
         }
         ColumnLayout {
-            visible:     viewModel.accounts.length > 1 || createNewAccount
+            visible:     viewModel.accounts.length > 1 && !createNewAccount
             SFText {
                 //% "Account"
                 text: qsTrId("start-account-label")
@@ -63,14 +63,7 @@ Item
                 font.pixelSize: 14
                 font.styleName: "Bold"; font.weight: Font.Bold
             }
-            SFTextInput {
-                id:                 accountLabel
-                Layout.fillWidth:   true
-                Layout.maximumWidth:190
-                font.pixelSize:     14
-                color:              Style.content_main
-                visible:            createNewAccount
-            }
+
             CustomComboBox {
                 id:                 accountSelector
                 Layout.fillWidth:   true
@@ -78,11 +71,9 @@ Item
                 fontPixelSize:      14
                 enableScroll:       false
                 textRole:           "name"
-                visible:            !createNewAccount
                 model:              viewModel.accounts
                 currentIndex:       viewModel.currentAccountIndex
                 onActivated: {
-                    viewModel.currentAccountIndex = currentIndex;
                     root.parent.setSource("qrc:/start.qml", {currentAccountIndex = currentIndex});
                 }
             }
@@ -206,9 +197,9 @@ Item
                 viewModel.isRecoveryMode = true;
 
                 if (viewModel.useHWWallet)
-                    startWizzardView.push(createPasswordPage);
+                    startWizzardView.push(accountLabelPage);
                 else
-                    startWizzardView.push(reatoreWalletPage);
+                    startWizzardView.push(restoreWalletPage);
             }
         }
     }
@@ -267,7 +258,7 @@ Item
             onClicked: {
                 viewModel.useHWWallet = false;
                 viewModel.isRecoveryMode = true;
-                startWizzardView.push(createPasswordPage);
+                startWizzardView.push(accountLabelPage);
             }
         }
     }
@@ -328,11 +319,8 @@ Item
                                 Layout.preferredHeight: 38
                                 Layout.alignment: Qt.AlignHCenter
                                 icon.source: "qrc:/assets/icon-add-blue.svg"
-                                //enabled: accountSetup.accountLabelText.length > 0
                                 onClicked: {
                                     viewModel.isRecoveryMode = false;
-                                   // viewModel.newAccountLabel = accountSetup.accountLabelText;
-                                   // viewModel.currentAccountIndex = -1;
                                     startWizzardView.push(createNewWalletPage);
                                 }
                             }
@@ -911,7 +899,7 @@ Item
                             onClicked: {
                                 //viewModel.startOwnerKeyImporting();
                                 //startWizzardView.push(importTrezorOwnerKeyPage);
-                                startWizzardView.push(createPasswordPage);
+                                startWizzardView.push(accountLabelPage);
                             }
                         }
                     }
@@ -1004,7 +992,7 @@ Item
                             icon.source: "qrc:/assets/icon-next-blue.svg"
                             onClicked: {
                                 viewModel.setOwnerKeyPassword(trezorPassword.text)
-                                startWizzardView.push(createPasswordPage)
+                                startWizzardView.push(accountLabelPage)
                             }
                         }
                     }
@@ -1021,7 +1009,13 @@ Item
         }
 
         Component {
-            id: reatoreWalletPage
+            id: accountLabelPage
+            AccountLabelPage{
+            }
+        }
+
+        Component {
+            id: restoreWalletPage
             Rectangle {
                 color: Style.background_main
                 property Item defaultFocusItem: null

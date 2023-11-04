@@ -168,7 +168,7 @@ Component {
                             seedValidationHelper.validate();
                             rootLoader.setSource("qrc:/main.qml");
                         } else {
-                            startWizzardView.push(createPasswordPage);
+                            startWizzardView.push(accountLabelPage);
                         }
                     }
                 }

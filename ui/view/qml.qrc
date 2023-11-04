@@ -174,7 +174,7 @@
         <file>assets/icon_masternet.png</file>
         <file>assets/icon_testnet.png</file>
         <file>assets/icon_beamx.png</file>
-		<file>assets/icon_dappnet.png</file>
+        <file>assets/icon_dappnet.png</file>
         <file>assets/bg.svg</file>
         <file>assets/b-grey.svg</file>
         <file>assets/b-red.svg</file>
@@ -435,7 +435,9 @@
         <file>assets/icon-no-transaction-filter.svg</file>
         <file>assets/icon-offer-cancel.svg</file>
         <file>assets/icon-offer-accept.svg</file>
-		<file>assets/icon-bridge.svg</file>
-		<file>assets/icon-bridge-active.svg</file>
+        <file>assets/icon-bridge.svg</file>
+        <file>assets/icon-bridge-active.svg</file>
+        <file>start_wizzard/AccountLabelPage.qml</file>
+        <file>start_wizzard/WizzardPage.qml</file>
     </qresource>
 </RCC>

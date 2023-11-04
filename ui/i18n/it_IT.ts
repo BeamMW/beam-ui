@@ -3897,5 +3897,13 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="start-new-account-label">
+        <source>Account label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="new-account-label">
+        <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

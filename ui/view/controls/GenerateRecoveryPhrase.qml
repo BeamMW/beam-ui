@@ -136,7 +136,7 @@ Component {
                     visible: !seedValidationHelper.isSeedValidatiomMode
                     onClicked: {
                         viewModel.saveSeed = true;
-                        startWizzardView.push(createPasswordPage);
+                        startWizzardView.push(accountLabelPage);
                     }
                 }
 

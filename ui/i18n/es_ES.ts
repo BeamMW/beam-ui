@@ -3897,5 +3897,13 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="start-new-account-label">
+        <source>Account label</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="new-account-label">
+        <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

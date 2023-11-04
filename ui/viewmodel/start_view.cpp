@@ -131,19 +131,19 @@ namespace
             if (!name.startsWith(accountName))
                 continue;
 
-            auto suffix = name.mid((int)std::size(accountName));
+            auto suffix = name.mid((int)std::size(accountName) - 1); // ignore \0
             bool ok = false;
             int accountIndex = suffix.toInt(&ok);
             if (!ok || accountIndex == 0)
                 continue;
             accountIndex -= 1;
 
-            auto paths = findAllWalletDB(subDirInfo.absoluteFilePath().toStdString());
-            if (paths.empty())
-                continue;
-            
             if (index != accountIndex)
                 break;
+
+            auto paths = findAllWalletDB(subDirInfo.absoluteFilePath().toStdString());
+            if (paths.empty())
+                break; // folder exists but empty
 
             ++index;
         }
@@ -797,6 +797,8 @@ void StartViewModel::createWallet(const QJSValue& callback)
 
     if (AppModel::getInstance().isOnlyOneInstanceStarted())
     {
+        AppModel::resetInstance(AppModel::getInstance().getSettings(), getNewAccountIndex());
+        AppModel::getInstance().getSettings().setAccountLabel(getNewAccountLabel());
         try
         {
             AppModel::getInstance().createWalletThrow(m_useHWWallet ? nullptr : &secretSeed, secretPass, rawSeed);
@@ -1129,10 +1131,6 @@ int StartViewModel::getCurrentAccountIndex() const
 
 void StartViewModel::setCurrentAccountIndex(int value)
 {
-    if (value == -1)
-    {
-        m_accountIndex = getNewAccountIndex();
-    }
     if (m_accountIndex == value)
         return;
     m_accountIndex = value;
@@ -1142,6 +1140,13 @@ void StartViewModel::setCurrentAccountIndex(int value)
 
 QString StartViewModel::getNewAccountLabel() const
 {
+    if (m_newAccountLabel.isEmpty())
+    {
+        int accountIndex = getNewAccountIndex();
+        //% "Account %1"
+        return qtTrId("new-account-label").arg(accountIndex + 1);
+    }
+
     return m_newAccountLabel;
 }
 
