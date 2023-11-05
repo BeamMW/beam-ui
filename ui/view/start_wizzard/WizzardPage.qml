@@ -19,12 +19,12 @@ Rectangle {
         ColumnLayout {
             id: contentLayout
             Layout.fillWidth:   true
-            Layout.fillHeight:  true
             Layout.alignment:   Qt.AlignHCenter
         }
         Item {
             Layout.fillHeight: true
             Layout.fillWidth:  true
+            Layout.minimumHeight: 50
         }
 
         Row {

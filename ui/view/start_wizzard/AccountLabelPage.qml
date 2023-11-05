@@ -8,9 +8,10 @@ import "../controls"
 import "../utils.js" as Utils
 
 WizzardPage {
-    Layout.fillWidth:   true
     ColumnLayout {
-        Layout.alignment:   Qt.AlignHCenter
+        Layout.alignment:       Qt.AlignHCenter
+        Layout.fillWidth:       false
+        Layout.preferredWidth:  730
         SFText {
             Layout.alignment:   Qt.AlignHCenter
             //% "Create new wallet"
@@ -18,22 +19,28 @@ WizzardPage {
             color: Style.content_main
             font.pixelSize: 36
         }
-        SFText {
-            //% "Account label"
-            text: qsTrId("start-new-account-label")
-            color: Style.content_main
-            font.pixelSize: 14
-            font.styleName: "Bold"; font.weight: Font.Bold
-        }
+        ColumnLayout {
+            Layout.topMargin:       50
+            Layout.alignment:       Qt.AlignHCenter
+            Layout.fillWidth:       false
+            Layout.preferredWidth:  400
+            spacing:                10
+            SFText {
+                //% "Account label"
+                text:                   qsTrId("start-new-account-label")
+                color:                  Style.content_main
+                font.pixelSize:         14
+                font.styleName:        "Bold"; font.weight: Font.Bold
+            }
 
-        SFTextInput {
-            id:                 accountLabel
-            Layout.fillWidth:   true
-            Layout.maximumWidth:190
-            font.pixelSize:     14
-            color:              Style.content_main
-            text:               viewModel.newAccountLabel
-        }
+            SFTextInput {
+                id:                    accountLabel
+                Layout.fillWidth:      true
+                font.pixelSize:        14
+                color:                 Style.content_main
+                text:                  viewModel.newAccountLabel
+            }
+         }
     }
 
     buttons: [
