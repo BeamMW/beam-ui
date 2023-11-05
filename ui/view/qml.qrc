@@ -93,7 +93,7 @@
         <file>controls/ShowAddressesDialog.qml</file>
         <file>controls/LoadingSpinner.qml</file>
         <file>controls/CustomDialog.qml</file>
-        <file>controls/StartLayout.qml</file>
+        <file>start_wizzard/StartLayout.qml</file>
         <file>controls/BaseNotification.qml</file>
         <file>controls/UpdateNotification.qml</file>
         <file>controls/SimpleNotification.qml</file>

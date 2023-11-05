@@ -4,6 +4,7 @@ import Beam.Wallet 1.0
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.12
 import "../utils.js" as Utils
+import "../controls"
 import "."
 
 Rectangle
