@@ -439,5 +439,16 @@
         <file>assets/icon-bridge-active.svg</file>
         <file>start_wizzard/AccountLabelPage.qml</file>
         <file>start_wizzard/WizzardPage.qml</file>
+        <file>start_wizzard/RestoreWalletPage.qml</file>
+        <file>start_wizzard/CreatePasswordPage.qml</file>
+        <file>start_wizzard/NodeSetupPage.qml</file>
+        <file>start_wizzard/WalletStartPage.qml</file>
+        <file>start_wizzard/MigrateWalletPage.qml</file>
+        <file>start_wizzard/CreateNewWalletPage.qml</file>
+        <file>start_wizzard/OpenWalletPage.qml</file>
+        <file>start_wizzard/AccountSetup.qml</file>
+        <file>start_wizzard/ImportTrezorOwnerKeyPage.qml</file>
+        <file>start_wizzard/SelectWalletDBPage.qml</file>
+        <file>start_wizzard/CreateTrezorWalletPage.qml</file>
     </qresource>
 </RCC>

@@ -13,7 +13,7 @@ Rectangle
     readonly property bool isSqueezedHeight : Utils.isSqueezedHeight(root.height)
 
     color: Style.background_main
-    default property alias content: contentLayout.children
+    default property alias content: contentLayout.data
 
     Image {
         fillMode: Image.PreserveAspectCrop
