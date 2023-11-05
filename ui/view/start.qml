@@ -50,7 +50,6 @@ Item
                 onActivated: {
                     viewModel.currentNetwork = currentText;
                     Theme.update();
-                    root.parent.setSource("qrc:/start.qml");
                 }
             }
         }
@@ -74,14 +73,14 @@ Item
                 model:              viewModel.accounts
                 currentIndex:       viewModel.currentAccountIndex
                 onActivated: {
-                    root.parent.setSource("qrc:/start.qml", {currentAccountIndex = currentIndex});
+                    viewModel.currentAccountIndex = currentIndex
                 }
             }
         }
     }
 
     function migrateWalletDB(path) {
-        // copy wallet.db                         
+        // copy wallet.db
         viewModel.migrateWalletDB(path);
         viewModel.isRecoveryMode = false;
         startWizzardView.push(openWalletPage, {

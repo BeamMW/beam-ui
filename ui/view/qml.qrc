@@ -101,8 +101,8 @@
         <file>controls/SettingsApps.qml</file>
         <file>controls/SettingsIPFS.qml</file>
         <file>controls/OpenInBlockchainExplorer.qml</file>
-        <file>controls/CheckRecoveryPhrase.qml</file>
-        <file>controls/GenerateRecoveryPhrase.qml</file>
+        <file>start_wizzard/CheckRecoveryPhrase.qml</file>
+        <file>start_wizzard/GenerateRecoveryPhrase.qml</file>
         <file>controls/MessengerAddReceiver.qml</file>
         <file>wallet/TxTable.qml</file>
         <file>wallet/AssetsPanel.qml</file>

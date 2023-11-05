@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.0
 import Beam.Wallet 1.0
 import QtQuick.Layouts 1.12
+import "../controls"
 import "."
 
 Component {
