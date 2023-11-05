@@ -80,7 +80,7 @@ StartLayout {
         RowLayout {
             Layout.alignment:   Qt.AlignHCenter
             Layout.fillWidth:   true
-            Layout.topMargin:   53
+            Layout.topMargin:   30
 
             CustomButton {
                 text: qsTrId("general-back")
@@ -125,12 +125,17 @@ StartLayout {
                 }
             }
         }
+        
+        Item {
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+        }
         Row {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 40
+            Layout.bottomMargin: 37
             spacing: 20
             LinkButton {
-                            
                 //% "Restore wallet"
                 text: qsTrId("general-restore-wallet")
                 fontSize: 14
@@ -138,6 +143,15 @@ StartLayout {
                     viewModel.useHWWallet = false;
                     restoreWalletConfirmation.open();
                 }
+            }
+
+            Rectangle {
+                id:      separator
+                anchors.verticalCenter: parent.verticalCenter
+                height:  10
+                width:   1
+                color:   Style.active
+                opacity: 0.3
             }
 
             LinkButton {
@@ -149,12 +163,6 @@ StartLayout {
                     restoreWalletConfirmation.open();
                 }
             }
-        }
-
-        Item {
-            Layout.fillWidth:       true
-            Layout.fillHeight:      true
-            Layout.minimumHeight:   41
         }
     }
 }

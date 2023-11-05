@@ -6,10 +6,16 @@ import QtQuick.Window 2.12
 import "../utils.js" as Utils
 import "../controls"
 
-Rectangle {
-    color: Style.background_main
+Item {
     default property alias content: contentLayout.data
     property alias buttons: buttonsRow.data
+    property alias background: backgroundRect
+
+    Rectangle {
+        id: backgroundRect
+        color: Style.background_main
+        anchors.fill: parent
+    }
 
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
@@ -39,7 +45,11 @@ Rectangle {
             Layout.minimumHeight: 67
             Layout.maximumHeight: 143
         }
-
-        VersionFooter {}
+    }
+    VersionFooter {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.rightMargin: 20
+        anchors.topMargin: 40
     }
 }

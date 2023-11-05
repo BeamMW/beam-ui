@@ -897,9 +897,9 @@ void StartViewModel::findExistingWalletDB()
     std::vector<fs::path> walletDBs;
     for(const auto& path: pathsToCheck)
     {
-        auto additionnalWalletDBs = findAllWalletDB(path);
-        walletDBs.reserve(walletDBs.size() + additionnalWalletDBs.size());
-        walletDBs.insert(std::end(walletDBs), std::begin(additionnalWalletDBs), std::end(additionnalWalletDBs));
+        auto additionalWalletDBs = findAllWalletDB(path);
+        walletDBs.reserve(walletDBs.size() + additionalWalletDBs.size());
+        walletDBs.insert(std::end(walletDBs), std::begin(additionalWalletDBs), std::end(additionalWalletDBs));
     }
 
     QList<WalletDBPathItem*> walletDBpaths;
@@ -1113,11 +1113,10 @@ QList<QVariantMap> StartViewModel::getAccounts() const
         if (paths.empty())
             continue;
         QString accountDir = subDirInfo.fileName();
-        QSettings settings(subDirInfo.dir().filePath(WalletSettings::SettingsFile));
+        QSettings settings(QDir(subDirInfo.absoluteFilePath()).filePath(WalletSettings::SettingsFile), QSettings::IniFormat);
         auto label = settings.value(kAccountLabel, accountDir).toString();
         QVariantMap account;
         account["name"] = label;
-        account["dir"] = accountDir;
         accounts.push_back(account);
     }
 
