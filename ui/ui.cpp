@@ -106,6 +106,73 @@ Q_IMPORT_PLUGIN(QtQuickTemplates2Plugin)
 using namespace beam;
 using namespace std;
 using namespace ECC;
+namespace
+{
+
+    void MigrateFolder(QDir& oldDataDir, QDir& newDataDir, const QString& folder)
+    {
+        auto filePath = oldDataDir.filePath(folder);
+        if (!QFile::exists(filePath))
+        {
+            return;
+        }
+        LOG_INFO() << "*MIGRATION* Moving \"" << folder.toStdString() << "\" ...";
+        oldDataDir.rename(folder, newDataDir.filePath(folder));
+    }
+
+    void MigrateFile(QDir& oldDataDir, QDir& newDataDir, const QString& fileName, bool removeOld)
+    {
+        auto filePath = oldDataDir.filePath(fileName);
+        if (!QFile::exists(filePath))
+        {
+            return;
+        }
+        if (removeOld)
+        {
+            LOG_INFO() << "*MIGRATION* Moving \"" << filePath.toStdString() << "\" ...";
+            if (!QFile::rename(filePath, newDataDir.absoluteFilePath(fileName)))
+            {
+                LOG_WARNING() << "*MIGRATION* Failed to move \"" << filePath.toStdString() << "\" ...";
+            }
+            return;
+        }
+        LOG_INFO() << "*MIGRATION* Copying \"" << filePath.toStdString() << "\" ...";
+        if (!QFile::copy(filePath, newDataDir.absoluteFilePath(fileName)))
+        {
+            LOG_WARNING() << "*MIGRATION* Failed to copy \"" << filePath.toStdString() << "\" ...";
+        }
+    }
+
+    // migration for 7.5
+    void MigrateWalletData75(QDir oldDataDir)
+    {
+        QString newPath = Rules::get().get_NetworkName();
+        newPath.append("/Account1");
+
+        QDir newDataDir(oldDataDir.filePath(newPath));
+        if (!newDataDir.exists())
+        {
+            LOG_INFO() << "*MIGRATION* Creating \"" << newPath.toStdString() << "\" ...";
+            oldDataDir.mkpath(newPath);
+        }
+        for (const auto& dir : oldDataDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+        {
+            auto filePath = dir.filePath();
+            QDir subDir(filePath);
+            if (QFile(subDir.filePath(WalletSettings::WalletDBFile)).exists())
+            {
+                MigrateFolder(oldDataDir, newDataDir, dir.fileName());
+            }
+        }
+
+        MigrateFile(oldDataDir, newDataDir, WalletSettings::SettingsFile, false);
+        MigrateFile(oldDataDir, newDataDir, WalletSettings::NodeDBFile, true);
+        MigrateFile(oldDataDir, newDataDir, "node-utxo-image.bin", true);
+        MigrateFolder(oldDataDir, newDataDir, "ipfs-repo");
+        MigrateFolder(oldDataDir, newDataDir, "appstorage");
+        MigrateFolder(oldDataDir, newDataDir, "localapps");
+    }
+}
 
 int main (int argc, char* argv[])
 {
@@ -221,6 +288,7 @@ int main (int argc, char* argv[])
 
         try
         {
+            MigrateWalletData75(appDataDir);
             // AppModel Model MUST BE created before the UI engine and destroyed after.
             // AppModel serves the UI and UI should be able to access AppModel at any time
             // even while being destroyed. Do not move engine above AppModel
