@@ -486,8 +486,8 @@
         <translation>Créer un mot de passe pour accéder à votre portefeuille</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Account password</source>
-        <oldsource>Password</oldsource>
+        <source>Password</source>
+        <oldsource>Account password</oldsource>
         <translation type="unfinished">Mot de passe</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
@@ -3902,6 +3902,10 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-password-label">
+        <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

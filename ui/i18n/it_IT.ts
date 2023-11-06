@@ -486,8 +486,8 @@
         <translation>Crea una password per accedere al tuo portafoglio</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Account password</source>
-        <oldsource>Password</oldsource>
+        <source>Password</source>
+        <oldsource>Account password</oldsource>
         <translation type="unfinished">Password</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
@@ -3903,6 +3903,10 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-password-label">
+        <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

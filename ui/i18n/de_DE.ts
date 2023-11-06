@@ -486,8 +486,8 @@
         <translation>Passwort anlegen, um auf Ihre Brieftasche zuzugreifen</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Account password</source>
-        <oldsource>Password</oldsource>
+        <source>Password</source>
+        <oldsource>Account password</oldsource>
         <translation type="unfinished">Passwort</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
@@ -3899,6 +3899,10 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-password-label">
+        <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

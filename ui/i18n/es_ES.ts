@@ -486,8 +486,8 @@
         <translation>Crea la contraseña para acceder a tu wallet</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Account password</source>
-        <oldsource>Password</oldsource>
+        <source>Password</source>
+        <oldsource>Account password</oldsource>
         <translation type="unfinished">Contraseña</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
@@ -3903,6 +3903,10 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-password-label">
+        <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

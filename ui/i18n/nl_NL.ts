@@ -486,8 +486,8 @@
         <translation>Maak een wachtwoord aan om toegang te krijgen tot uw wallet</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Account password</source>
-        <oldsource>Password</oldsource>
+        <source>Password</source>
+        <oldsource>Account password</oldsource>
         <translation type="unfinished">Wachtwoord</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
@@ -3900,6 +3900,10 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-password-label">
+        <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

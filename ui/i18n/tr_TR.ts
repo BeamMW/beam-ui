@@ -486,8 +486,8 @@
         <translation>Cüzdanınıza erişmek için bir şifre oluşturun</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Account password</source>
-        <oldsource>Password</oldsource>
+        <source>Password</source>
+        <oldsource>Account password</oldsource>
         <translation type="unfinished">Şifre</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
@@ -3895,6 +3895,10 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="start-account-password-label">
+        <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
