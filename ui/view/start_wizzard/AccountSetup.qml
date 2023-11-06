@@ -52,7 +52,7 @@ RowLayout {
             Layout.maximumWidth:190
             fontPixelSize:      14
             enableScroll:       false
-            textRole:           "name"
+            textRole:           "label"
             model:              viewModel.accounts
             currentIndex:       viewModel.currentAccountIndex
             onActivated: {

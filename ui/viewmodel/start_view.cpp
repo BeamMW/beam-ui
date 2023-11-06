@@ -58,6 +58,11 @@ namespace
         const char IconHeight[] = "iconHeight";
     }
 
+    namespace Account
+    {
+        const char Label[] = "label";
+    }
+
     Rules::Network getNetworkFromString(const QString& network)
     {
 #define MACRO(name) if (network == #name) return Rules::Network::name;
@@ -1091,6 +1096,7 @@ void StartViewModel::setCurrentNetwork(const QString& network)
         return;
 
     Rules::get().m_Network = value;
+    m_accounts.clear();
     AppModel::resetInstance(AppModel::getInstance().getSettings(), 0);
     emit currentNetworkChanged();
 }
@@ -1100,12 +1106,14 @@ int StartViewModel::getCurrentNetworkIndex() const
     return (int)Rules::get().m_Network;
 }
 
-QList<QVariantMap> StartViewModel::getAccounts() const
+const QList<QVariantMap>& StartViewModel::getAccounts() const
 {
-    QList<QVariantMap> accounts;
+    if (!m_accounts.isEmpty())
+        return m_accounts;
+
     QDir dir(AppModel::getInstance().getSettings().getAppDataPath().c_str());
     if (!dir.cd(Rules::get().get_NetworkName()))
-        return accounts;
+        return m_accounts;
 
     for (const auto& subDirInfo : dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
     {
@@ -1116,11 +1124,11 @@ QList<QVariantMap> StartViewModel::getAccounts() const
         QSettings settings(QDir(subDirInfo.absoluteFilePath()).filePath(WalletSettings::SettingsFile), QSettings::IniFormat);
         auto label = settings.value(kAccountLabel, accountDir).toString();
         QVariantMap account;
-        account["name"] = label;
-        accounts.push_back(account);
+        account[Account::Label] = label;
+        m_accounts.push_back(account);
     }
 
-    return accounts;
+    return m_accounts;
 }
 
 int StartViewModel::getCurrentAccountIndex() const
@@ -1153,7 +1161,31 @@ void StartViewModel::setNewAccountLabel(const QString& value)
 {
     if (m_newAccountLabel == value)
         return;
+
+    const auto& accounts = getAccounts();
+    auto it = find_if(std::begin(accounts), std::end(accounts),
+        [&value](const auto& account)
+    {
+        return account[Account::Label] == value;
+    });
+    if (it != std::end(accounts))
+    {
+        setAccountLabelExists(true);
+        return;
+    }
     m_newAccountLabel = value;
     emit newAccountLabelChanged();
 }
 
+bool StartViewModel::getAccountLabelExists() const
+{
+    return m_accountLabelExists;
+}
+
+void StartViewModel::setAccountLabelExists(bool value)
+{
+    if (m_accountLabelExists == value)
+        return;
+    m_accountLabelExists = value;
+    emit accountLabelExistsChanged();
+}

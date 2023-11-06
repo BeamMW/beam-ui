@@ -39,6 +39,19 @@ WizzardPage {
                 font.pixelSize:        14
                 color:                 Style.content_main
                 text:                  viewModel.newAccountLabel
+                onTextChanged: {
+                    viewModel.accountLabelExists = false;
+                    viewModel.newAccountLabel = accountLabel.text
+                }
+            }
+
+            SFText {
+                id: accountLabelError
+                visible: viewModel.accountLabelExists
+                //% "An account with the same label already exists."
+                text: qsTrId("account-label-exists-error")
+                color: Style.validator_error
+                font.pixelSize: 14
             }
          }
     }
@@ -56,10 +69,9 @@ WizzardPage {
             id: checkRecoveryNextButton
             //% "Next"
             text: qsTrId("general-next")
-            enabled: accountLabel.text.length >0
+            enabled: accountLabel.text.length > 0 && !viewModel.accountLabelExists
             icon.source: "qrc:/assets/icon-next-blue.svg"
             onClicked: {
-                viewModel.newAccountLabel = accountLabel.text
                 startWizzardView.push(createPasswordPage)
             }
         }

@@ -3906,5 +3906,9 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="account-label-exists-error">
+        <source>An account with the same label already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -3909,5 +3909,9 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>Account password</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="account-label-exists-error">
+        <source>An account with the same label already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

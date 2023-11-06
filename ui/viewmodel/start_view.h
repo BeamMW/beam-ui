@@ -145,6 +145,7 @@ class StartViewModel : public QObject
     Q_PROPERTY(int currentNetworkIndex READ getCurrentNetworkIndex NOTIFY currentNetworkChanged)
     Q_PROPERTY(QList<QVariantMap> accounts READ getAccounts NOTIFY currentNetworkChanged)
     Q_PROPERTY(int currentAccountIndex READ getCurrentAccountIndex WRITE setCurrentAccountIndex NOTIFY currentAccountChanged)
+    Q_PROPERTY(bool accountLabelExists READ getAccountLabelExists WRITE setAccountLabelExists NOTIFY accountLabelExistsChanged)
     Q_PROPERTY(bool isCapsLockOn READ isCapsLockOn NOTIFY capsLockStateMayBeChanged)
     Q_PROPERTY(bool validateDictionary READ getValidateDictionary WRITE setValidateDictionary NOTIFY validateDictionaryChanged)
     Q_PROPERTY(bool isOnlyOneInstanceStarted READ isOnlyOneInstanceStarted CONSTANT)
@@ -184,11 +185,13 @@ public:
     bool isOnlyOneInstanceStarted() const;
     QString getCurrentNetwork() const;
     void setCurrentNetwork(const QString& network);
-    QList<QVariantMap> getAccounts() const;
+    const QList<QVariantMap>& getAccounts() const;
     int getCurrentAccountIndex() const;
     void setCurrentAccountIndex(int value);
     QString getNewAccountLabel() const;
     void setNewAccountLabel(const QString& value);
+    bool getAccountLabelExists() const;
+    void setAccountLabelExists(bool value);
 
     Q_INVOKABLE void setupLocalNode(int port, const QString& localNodePeer);
     Q_INVOKABLE void setupRemoteNode(const QString& nodeAddress);
@@ -225,6 +228,7 @@ signals:
     void currentNetworkChanged();
     void currentAccountChanged();
     void newAccountLabelChanged();
+    void accountLabelExistsChanged();
 
 #if defined(BEAM_HW_WALLET)
     void isTrezorConnectedChanged();
@@ -264,6 +268,8 @@ private:
     bool m_saveSeed = false;
     int m_accountIndex = 0;
     QString m_newAccountLabel;
+    mutable QList<QVariantMap> m_accounts;
+    bool m_accountLabelExists = false;
 
 #if defined(BEAM_HW_WALLET)
     std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
