@@ -55,7 +55,7 @@ Rectangle
     VersionFooter {
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.rightMargin: 20
+        anchors.rightMargin: 40
         anchors.topMargin: 40
     }
 }

@@ -33,6 +33,11 @@ StartLayout {
     Component.onCompleted: root.parent.activated.connect(checkCapsLockOnActivation)
     Component.onDestruction: root.parent.activated.disconnect(checkCapsLockOnActivation)
 
+    function clearPassword() {
+        openPassword.clear()
+        openPasswordError.text = ""
+    }
+
     Keys.onPressed: {
         // Linux hack, X11 return caps state with delay
         if (Qt.platform.os == "linux") {
@@ -65,6 +70,16 @@ StartLayout {
             Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 10 : 20
         }
 
+        Connections {
+            target: viewModel
+            function onCurrentAccountChanged() {
+                clearPassword()
+            }
+            function onCurrentNetworkChanged() {
+                clearPassword()
+            }
+        }
+
         ColumnLayout {
             Layout.maximumWidth: 400
             Layout.minimumWidth: 400
@@ -73,7 +88,7 @@ StartLayout {
 
             SFText {
                 //% "Account password"
-                text: qsTrId("start-pwd-label")
+                text: qsTrId("start-account-password-label")
                 color: Style.content_main
                 font.pixelSize: 14
                 font.styleName: "Bold"; font.weight: Font.Bold

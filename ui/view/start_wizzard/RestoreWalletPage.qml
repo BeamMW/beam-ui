@@ -1,4 +1,4 @@
-import QtQuick 2.11
+ï»¿import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
@@ -53,7 +53,7 @@ WizzardPage {
                 horizontalAlignment : Text.AlignHCenter
                 width: parent.width
                 height: 32
-                //% "Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized."
+                //% "Donâ€™t use same seed phrase on several devices, your balance and transaction list wonâ€™t be synchronized."
                 text: qsTrId("restore-finish-alert-message-line")
                 color: Style.content_main
                 font.pixelSize: 14
