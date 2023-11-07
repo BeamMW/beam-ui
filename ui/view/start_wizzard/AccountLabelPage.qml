@@ -8,6 +8,9 @@ import "../controls"
 import "../utils.js" as Utils
 
 WizzardPage {
+    function getPictureByIndex(i) { 
+        return viewModel.getAccountPictureByIndex(i)
+    }
     ColumnLayout {
         Layout.alignment:       Qt.AlignHCenter
         Layout.fillWidth:       false
@@ -26,7 +29,7 @@ WizzardPage {
             Layout.preferredWidth:  400
             spacing:                10
             SFText {
-                //% "Account label"
+                //% "Account name"
                 text:                   qsTrId("start-new-account-label")
                 color:                  Style.content_main
                 font.pixelSize:         14
@@ -41,7 +44,11 @@ WizzardPage {
                 text:                  viewModel.newAccountLabel
                 onTextChanged: {
                     viewModel.accountLabelExists = false;
-                    viewModel.newAccountLabel = accountLabel.text
+                }
+                Binding {
+                    target: viewModel
+                    property: "newAccountLabel"
+                    value: accountLabel.text
                 }
             }
 
@@ -53,7 +60,56 @@ WizzardPage {
                 color: Style.validator_error
                 font.pixelSize: 14
             }
-         }
+        }
+        Grid {
+            id: picturesView
+            property int currentIndex: 0
+            Layout.topMargin:       40
+            Layout.alignment:       Qt.AlignHCenter
+            Layout.fillWidth:       false
+            Layout.fillHeight:      false
+            columnSpacing:          20
+            columns:                3
+            rowSpacing:             4
+            Repeater {
+                anchors.fill: parent
+                model:        9
+                delegate: Item {
+                    width: 100
+                    height: 100
+
+                    Item {
+                        anchors.fill: parent
+                        visible: picturesView.currentIndex == index
+                        Rectangle {
+                            id:             itemBorder
+                            anchors.fill:   parent
+                            border.color:   Style.active
+                            border.width:   3
+                            color:          "transparent"
+                            radius:         50
+                        }
+                        DropShadow {
+                            anchors.fill: parent
+                            radius: 5
+                            samples: 9
+                            color: Style.active
+                            source: itemBorder
+                        }
+                    }
+
+                    SvgImage {
+                        anchors.fill: parent
+                        source: getPictureByIndex(index)
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: picturesView.currentIndex = index
+                    }
+
+                }
+            }
+        }
     }
 
     buttons: [
@@ -72,6 +128,7 @@ WizzardPage {
             enabled: accountLabel.text.length > 0 && !viewModel.accountLabelExists
             icon.source: "qrc:/assets/icon-next-blue.svg"
             onClicked: {
+                viewModel.setNewAccountPicture(getPictureByIndex(picturesView.currentIndex))
                 startWizzardView.push(createPasswordPage)
             }
         }

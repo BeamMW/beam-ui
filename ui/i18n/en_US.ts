@@ -3898,7 +3898,7 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message id="start-new-account-label">
-        <source>Account label</source>
+        <source>Account name</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="new-account-label">

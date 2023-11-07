@@ -49,19 +49,14 @@ namespace
     const QChar PHRASES_SEPARATOR = ';';
     const uint8_t kPhraseSize = 12;
     const char kAccountLabel[] = "account/label";
+    const char kAccountPicture[] = "account/picture";
 
-    namespace Network
-    {
-        const char Name[] = "name";
-        const char Icon[] = "icon";
-        const char IconWidth[] = "iconWidth";
-        const char IconHeight[] = "iconHeight";
-    }
+    const char kName[] = "name";
+    const char kIcon[] = "icon";
+    const char kIconWidth[] = "iconWidth";
+    const char kIconHeight[] = "iconHeight";
+    const char kLabel[] = "label";
 
-    namespace Account
-    {
-        const char Label[] = "label";
-    }
 
     Rules::Network getNetworkFromString(const QString& network)
     {
@@ -693,10 +688,10 @@ QList<QVariantMap> StartViewModel::getNetworks() const
     QList<QVariantMap> networks;
 #define MACRO(name) \
     { QVariantMap network; \
-    network[Network::Name] = #name; \
-    network[Network::Icon] = "qrc:/assets/icon_" #name ".png"; \
-    network[Network::IconWidth] = 16; \
-    network[Network::IconHeight] = 16; \
+    network[kName] = #name; \
+    network[kIcon] = "qrc:/assets/icon_" #name ".png"; \
+    network[kIconWidth] = 16; \
+    network[kIconHeight] = 16; \
     networks.push_back(network); }
 
     RulesNetworks(MACRO)
@@ -804,6 +799,7 @@ void StartViewModel::createWallet(const QJSValue& callback)
     {
         AppModel::resetInstance(AppModel::getInstance().getSettings(), getNewAccountIndex());
         AppModel::getInstance().getSettings().setAccountLabel(getNewAccountLabel());
+        AppModel::getInstance().getSettings().setAccountPictureIndex(m_newAccountPictureIndex);
         try
         {
             AppModel::getInstance().createWalletThrow(m_useHWWallet ? nullptr : &secretSeed, secretPass, rawSeed);
@@ -1124,7 +1120,11 @@ const QList<QVariantMap>& StartViewModel::getAccounts() const
         QSettings settings(QDir(subDirInfo.absoluteFilePath()).filePath(WalletSettings::SettingsFile), QSettings::IniFormat);
         auto label = settings.value(kAccountLabel, accountDir).toString();
         QVariantMap account;
-        account[Account::Label] = label;
+        account[kLabel] = label;
+        account[kIcon] = getAccountPictureByIndex(settings.value(kAccountPicture, 0).toInt());
+        account[kIconWidth] = 16;
+        account[kIconHeight] = 16;
+
         m_accounts.push_back(account);
     }
 
@@ -1166,7 +1166,7 @@ void StartViewModel::setNewAccountLabel(const QString& value)
     auto it = find_if(std::begin(accounts), std::end(accounts),
         [&value](const auto& account)
     {
-        return account[Account::Label] == value;
+        return account[kLabel] == value;
     });
     if (it != std::end(accounts))
     {
@@ -1188,4 +1188,14 @@ void StartViewModel::setAccountLabelExists(bool value)
         return;
     m_accountLabelExists = value;
     emit accountLabelExistsChanged();
+}
+
+void StartViewModel::setNewAccountPictureIndex(int value)
+{
+    m_newAccountPictureIndex = value;
+}
+
+QString StartViewModel::getAccountPictureByIndex(int value) const
+{
+    return QString("qrc:/assets/asset-%1.svg").arg(value);
 }

@@ -35,6 +35,7 @@ using namespace beam;
 namespace
 {
     const char* kAccountLabel = "account/label";
+    const char* kAccountPicture = "account/picture";
     const char* kNodeAddressName = "node/address";
     const char* kLocaleName = "locale";
     const char* kLockTimeoutName = "lock_timeout";
@@ -1278,7 +1279,7 @@ void WalletSettings::setAppActive(bool value)
 QString WalletSettings::getAccountLabel() const
 {
     Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kAccountLabel, 0).toInt();
+    return m_accountSettings.m_data.value(kAccountLabel).toString();
 }
 
 void  WalletSettings::setAccountLabel(const QString& label)
@@ -1288,4 +1289,19 @@ void  WalletSettings::setAccountLabel(const QString& label)
 
     Lock lock(m_mutex);
     m_accountSettings.m_data.setValue(kAccountLabel, label);
+}
+
+int WalletSettings::getAccountPictureIndex() const
+{
+    Lock lock(m_mutex);
+    return m_accountSettings.m_data.value(kAccountPicture).toInt();
+}
+
+void  WalletSettings::setAccountPictureIndex(int value)
+{
+    if (getAccountPictureIndex() == value)
+        return;
+
+    Lock lock(m_mutex);
+    m_accountSettings.m_data.setValue(kAccountPicture, value);
 }

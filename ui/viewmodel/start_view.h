@@ -211,6 +211,8 @@ public:
     Q_INVOKABLE void checkCapsLock();
     Q_INVOKABLE void openFolder(const QString& path) const;
     Q_INVOKABLE void loadRecoveryPhraseForValidation();
+    Q_INVOKABLE void setNewAccountPictureIndex(int value);
+    Q_INVOKABLE QString getAccountPictureByIndex(int value) const;
 
 #if defined(BEAM_HW_WALLET)
     Q_INVOKABLE void startOwnerKeyImporting(bool creating);
@@ -270,6 +272,7 @@ private:
     QString m_newAccountLabel;
     mutable QList<QVariantMap> m_accounts;
     bool m_accountLabelExists = false;
+    int m_newAccountPictureIndex = 0;
 
 #if defined(BEAM_HW_WALLET)
     std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;

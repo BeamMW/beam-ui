@@ -175,6 +175,8 @@ public:
     void setAppActive(bool value);
     QString getAccountLabel() const;
     void setAccountLabel(const QString& label);
+    int getAccountPictureIndex() const;
+    void setAccountPictureIndex(int value);
 
 public:
     static const char* WalletCfg;
