@@ -7,7 +7,7 @@ import QtQuick.Window 2.11
 import "."
 
 T.Menu {
-	id: control
+    id: control
     topPadding: 16
     bottomPadding: 16
     implicitWidth: Math.max(background ? background.implicitWidth : 0,
@@ -20,29 +20,29 @@ T.Menu {
 
     delegate: MenuItem {
         id: itemControl
-		icon.color: Style.content_main
-		icon.width: 16
-		icon.height: 16
-		font.pixelSize: 14
+        icon.color: Style.content_main
+        icon.width: 16
+        icon.height: 16
+        font.pixelSize: 14
         font.capitalization: Font.AllLowercase
         padding: 0
-		spacing: 14
+        spacing: 14
 
-		contentItem: IconLabel {
-			leftPadding: 20
-			rightPadding: 20
+        contentItem: IconLabel {
+            leftPadding: 20
+            rightPadding: 20
 
-			spacing: itemControl.spacing
-			mirrored: itemControl.mirrored
-			display: itemControl.display
-			alignment: Qt.AlignLeft
+            spacing: itemControl.spacing
+            mirrored: itemControl.mirrored
+            display: itemControl.display
+            alignment: Qt.AlignLeft
 
-			icon: itemControl.icon
-			text: itemControl.text
-			font: itemControl.font
-			color: Style.content_main
-			opacity: enabled ? 1.0 : 0.3
-		}
+            icon: itemControl.icon
+            text: itemControl.text
+            font: itemControl.font
+            color: Style.content_main
+            opacity: enabled ? 1.0 : 0.3
+        }
 
         background: Rectangle {
             implicitWidth: 130

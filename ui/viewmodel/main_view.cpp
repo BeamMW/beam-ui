@@ -236,3 +236,13 @@ bool MainViewModel::getDevMode() const
 {
     return m_settings.getDevMode();
 }
+
+QString MainViewModel::getAccountLabel() const
+{
+    return m_settings.getAccountLabel();
+}
+
+QString MainViewModel::getAccountPicture() const
+{
+    return WalletSettings::getAccountPictureByIndex(m_settings.getAccountPictureIndex());
+}

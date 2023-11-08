@@ -178,6 +178,8 @@ public:
     int getAccountPictureIndex() const;
     void setAccountPictureIndex(int value);
 
+    static QString getAccountPictureByIndex(int index);
+
 public:
     static const char* WalletCfg;
     static const char* LogsFolder;

@@ -225,16 +225,10 @@ Item {
         Item {
             Layout.fillWidth: true
         }
-        LinkButton {
-            Layout.rightMargin: 20
-            id: logoutBtn
-            //% "Logout"
-            text: qsTrId("status-logout")
-            fontSize: 15
 
-            onClicked: function () {
-                main.parent.setSource("qrc:/start.qml", {"isLogoutMode": true});
-            }
+        LogoutButton{
+            Layout.topMargin:      30
+            Layout.rightMargin:    20
         }
     }
 

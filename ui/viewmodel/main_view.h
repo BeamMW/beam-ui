@@ -29,6 +29,8 @@ class MainViewModel : public QObject
     Q_PROPERTY(QString faucetAppID      READ getFaucetAppID         CONSTANT)
     Q_PROPERTY(QString ethBridgeAppID   READ getEthBridgeAppID      CONSTANT)
     Q_PROPERTY(bool isDevMode           READ getDevMode             CONSTANT)
+    Q_PROPERTY(QString accountLabel     READ getAccountLabel        CONSTANT)
+    Q_PROPERTY(QString accountPicture   READ getAccountPicture      CONSTANT)
 public:
     MainViewModel();
 
@@ -61,6 +63,9 @@ private:
     [[nodiscard]] QString getFaucetAppID() const;
     [[nodiscard]] QString getEthBridgeAppID() const;
     [[nodiscard]] bool getDevMode() const;
+    [[nodiscard]] QString getAccountLabel() const;
+    [[nodiscard]] QString getAccountPicture() const;
+
 
 private:
     WalletSettings& m_settings;

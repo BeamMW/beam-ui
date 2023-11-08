@@ -212,7 +212,7 @@ public:
     Q_INVOKABLE void openFolder(const QString& path) const;
     Q_INVOKABLE void loadRecoveryPhraseForValidation();
     Q_INVOKABLE void setNewAccountPictureIndex(int value);
-    Q_INVOKABLE QString getAccountPictureByIndex(int value) const;
+    Q_INVOKABLE QString getAccountPictureByIndex(int index) const;
 
 #if defined(BEAM_HW_WALLET)
     Q_INVOKABLE void startOwnerKeyImporting(bool creating);

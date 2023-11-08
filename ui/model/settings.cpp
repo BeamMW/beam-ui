@@ -1279,7 +1279,7 @@ void WalletSettings::setAppActive(bool value)
 QString WalletSettings::getAccountLabel() const
 {
     Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kAccountLabel).toString();
+    return m_accountSettings.m_data.value(kAccountLabel, qtTrId("new-account-label").arg(1)).toString();
 }
 
 void  WalletSettings::setAccountLabel(const QString& label)
@@ -1304,4 +1304,9 @@ void  WalletSettings::setAccountPictureIndex(int value)
 
     Lock lock(m_mutex);
     m_accountSettings.m_data.setValue(kAccountPicture, value);
+}
+
+QString WalletSettings::getAccountPictureByIndex(int index)
+{
+    return QString("qrc:/assets/asset-%1.svg").arg(index);
 }

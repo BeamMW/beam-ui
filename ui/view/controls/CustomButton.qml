@@ -28,11 +28,10 @@ Button {
         capitalization: allLowercase && !control.checkable ? Font.AllLowercase : Font.MixedCase
     }
 
-    height: 38
-    Layout.preferredHeight: 38
-    leftPadding: 30
-    rightPadding: 30
-    activeFocusOnTab: true
+    implicitHeight:     38
+    leftPadding:        30
+    rightPadding:       30
+    activeFocusOnTab:   true
 
     spacing:     15
     icon.width:  16

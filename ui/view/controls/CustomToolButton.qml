@@ -12,9 +12,9 @@ ToolButton {
                              contentItem.implicitHeight + topPadding + bottomPadding)
     baselineOffset: contentItem.y + contentItem.baselineOffset
 
-	palette.buttonText: Style.content_main
-	palette.highlight: Style.content_main
-	palette.button: "transparent"
+    palette.buttonText: Style.content_main
+    palette.highlight: Style.content_main
+    palette.button: "transparent"
     padding: 8
     spacing: 8
 
@@ -23,7 +23,7 @@ ToolButton {
     icon.color: visualFocus ? control.palette.highlight : control.palette.buttonText
 
     contentItem: IconLabel {
-		id: icon
+        id: icon
         spacing: control.spacing
         mirrored: control.mirrored
         display: control.display
@@ -35,21 +35,21 @@ ToolButton {
     }
 
     background: Rectangle {
-		id: rect
+        id: rect
         implicitWidth: 32
         implicitHeight: 32
-		radius:16
+        radius:16
 
         opacity: control.down ? 1.0 : 0.5
         color: "transparent"// control.down || control.checked || control.highlighted || control.hovered ? control.palette.mid : control.palette.button
     }
 
-	DropShadow {
-		anchors.fill: icon
-		radius: 7
-		samples: 9
-		color: "white"
-		source: icon
-		visible: control.visualFocus || control.hovered
-	}
+    DropShadow {
+        anchors.fill: icon
+        radius: 7
+        samples: 9
+        color: "white"
+        source: icon
+        visible: control.visualFocus || control.hovered
+    }
 }

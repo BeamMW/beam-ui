@@ -16,6 +16,8 @@ Rectangle {
     property var    notificationOffset: 0
     property alias  hasNewerVersion : notificationManager.hasNewerVersion
     readonly property bool devMode: viewModel.isDevMode
+    readonly property string accountLabel: viewModel.accountLabel
+    readonly property string accountPicture: viewModel.accountPicture
     anchors.fill:   parent
 
     function increaseNotificationOffset(popup) {
@@ -101,7 +103,7 @@ Rectangle {
         closePolicy:            Popup.NoAutoClose
     }
 
-	MainViewModel {
+    MainViewModel {
         id: viewModel
         onClipboardChanged: function(message) {
             showSimplePopup(message)

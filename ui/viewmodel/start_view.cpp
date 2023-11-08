@@ -1195,7 +1195,7 @@ void StartViewModel::setNewAccountPictureIndex(int value)
     m_newAccountPictureIndex = value;
 }
 
-QString StartViewModel::getAccountPictureByIndex(int value) const
+QString StartViewModel::getAccountPictureByIndex(int index) const
 {
-    return QString("qrc:/assets/asset-%1.svg").arg(value);
+    return WalletSettings::getAccountPictureByIndex(index);
 }

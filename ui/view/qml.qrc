@@ -450,5 +450,6 @@
         <file>start_wizzard/ImportTrezorOwnerKeyPage.qml</file>
         <file>start_wizzard/SelectWalletDBPage.qml</file>
         <file>start_wizzard/CreateTrezorWalletPage.qml</file>
+        <file>controls/LogoutButton.qml</file>
     </qresource>
 </RCC>

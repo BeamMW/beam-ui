@@ -345,7 +345,7 @@ void AppModel::openWalletThrowWithReactor(const beam::SecString& pass)
 
     if (!m_db)
     {
-        throw std::runtime_error("");
+        throw std::runtime_error("Wallet file does not exist");
     }
 
     onWalledOpened(pass);

@@ -194,8 +194,15 @@ StartLayout {
             }
         }
 
+        Item {
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+        }
+
         LinkButton {
             Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 40
+            Layout.bottomMargin: 37
             //% "Restore wallet or create a new one"
             text: qsTrId("general-restore-or-create-wallet")
             fontSize: 14
@@ -203,11 +210,6 @@ StartLayout {
             onClicked: {
                 confirmChangeWalletDialog.open();
             }
-        }
-
-        Item {
-            Layout.fillWidth:       true
-            Layout.fillHeight:      true
         }
 
         ConfirmationDialog {

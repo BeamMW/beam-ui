@@ -128,7 +128,7 @@ WizzardPage {
             enabled: accountLabel.text.length > 0 && !viewModel.accountLabelExists
             icon.source: "qrc:/assets/icon-next-blue.svg"
             onClicked: {
-                viewModel.setNewAccountPicture(getPictureByIndex(picturesView.currentIndex))
+                viewModel.setNewAccountPictureIndex(picturesView.currentIndex)
                 startWizzardView.push(createPasswordPage)
             }
         }

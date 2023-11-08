@@ -134,7 +134,7 @@ StartLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 40
             Layout.bottomMargin: 37
-            spacing: 20
+            spacing: 40
             LinkButton {
                 //% "Restore wallet"
                 text: qsTrId("general-restore-wallet")
