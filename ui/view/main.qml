@@ -18,6 +18,7 @@ Rectangle {
     readonly property bool devMode: viewModel.isDevMode
     readonly property string accountLabel: viewModel.accountLabel
     readonly property string accountPicture: viewModel.accountPicture
+    property alias statusBar: statusBarInternal
     anchors.fill:   parent
 
     function increaseNotificationOffset(popup) {
@@ -168,16 +169,15 @@ Rectangle {
         }
     }
 
-    property color topColor: Style.background_main_top
-    property color topGradientColor: Qt.rgba(Style.background_main_top.r, Style.background_main_top.g, Style.background_main_top.b, 0)
-
-
     StatusbarViewModel {
         id: statusbarModel
     }
 
+    property color topColor:            Style.background_main_top
+    property color topGradientColor:    Qt.rgba(Style.background_main_top.r, Style.background_main_top.g, Style.background_main_top.b, 0)
     property var backgroundRect: mainBackground
     property var backgroundLogo: mainBackgroundLogo
+
 
     Rectangle {
         id: mainBackground
@@ -231,6 +231,16 @@ Rectangle {
     ]
 
     property int selectedItem: -1
+
+    StatusBar {
+        id:              statusBarInternal
+        model:           statusbarModel
+        anchors.right:   parent.right
+        anchors.left:    parent.left
+        anchors.top:     parent.top
+        height:          24
+        z:               33
+    }
 
     Item {
         id:              sidebar
@@ -446,8 +456,12 @@ Rectangle {
         updateItem("wallet", {"openReceive": true, "token" : token})
     }
 
-    function openSettings(section) {
-        updateItem("settings", {"unfoldSection": section})
+    function openSettings(section = "") {
+        if (section == "") {
+            updateItem("settings")
+        } else {
+            updateItem("settings", {"unfoldSection": section})
+        }
     }
 
     function openSwapActiveTransactionsList() {

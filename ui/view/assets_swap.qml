@@ -14,40 +14,30 @@ Item {
     Layout.fillWidth: true
     Layout.fillHeight: true
 
-    Title {
-        //% "Assets Swaps"
-        text: qsTrId("assets-swap-title")
-    }
-
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
-        z: 33
-    }
-
     Component {
         id: assetsSwapComponent
 
         ColumnLayout {
             id: assetsSwapLayout
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.fillWidth:   true
+            Layout.fillHeight:  true
             spacing: 0
 
             function onClosed() {
                 assetsSwapStackView.pop();
             }
 
-            RowLayout {
-                Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                Layout.topMargin: 30
-                spacing: 20
-
+            Title {
+                //% "Assets Swaps"
+                text: qsTrId("assets-swap-title")
+                Item {
+                    Layout.fillWidth:   true
+                    Layout.fillHeight:  true
+                }
                 CustomButton {
                     id: sendOfferButton
-                    Layout.minimumWidth: 172
+                    Layout.minimumWidth:    172
                     Layout.preferredHeight: 32
-                    Layout.maximumHeight: 32
                     palette.button: Style.accent_incoming
                     palette.buttonText: Style.content_opposite
                     icon.source: "qrc:/assets/icon-create-offer.svg"
@@ -66,23 +56,15 @@ Item {
                 }
             }
 
-            SFText {
-                z: 42
-                Layout.leftMargin: 90
-                Layout.topMargin: 25
-                font.pixelSize: 14
-                color: Style.active
+            LinkButton {
+                z:                  33
+                Layout.leftMargin:  90
+                Layout.topMargin:   20
                 visible: control.showText
                 //% "Assets settings"
                 text: qsTrId("assets-settings")
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        main.openSettings("CA");
-                    }
-                    hoverEnabled: true
+                onClicked: {
+                    main.openSettings("CA");
                 }
             }
 
@@ -562,7 +544,6 @@ Please try again later or create an offer yourself."
         id: assetsSwapStackView
 
         anchors.fill: parent
-        anchors.topMargin: -27
         initialItem: assetsSwapComponent
 
         pushEnter: Transition {

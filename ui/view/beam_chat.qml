@@ -66,13 +66,14 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
+    Title {
+        text: qsTrId("messenger-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-
         //% "anonymous"
         readonly property string kanon: qsTrId("chat-title-anon")
 

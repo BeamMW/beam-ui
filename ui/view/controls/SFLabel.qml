@@ -12,14 +12,14 @@ Label {
 
     signal copyText()
 
-	font { 
-		family: "Proxima Nova"
-		styleName: "Regular"
-		weight: Font.Normal
-	}
+    font { 
+        family: "Proxima Nova"
+        styleName: "Regular"
+        weight: Font.Normal
+    }
 
     background: Rectangle {
-	    id: backgroundRect
+        id: backgroundRect
         visible: false// enableBackgroundRect & contextMenu.opened
         anchors.left: control.left
         anchors.top: control.top

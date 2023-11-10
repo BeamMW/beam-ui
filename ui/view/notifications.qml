@@ -19,25 +19,22 @@ ColumnLayout {
     Title {
         //% "Notifications"
         text: qsTrId("notifications-title")
-    }
-
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
-    }
-    
-    CustomButton {
-        Layout.alignment: Qt.AlignRight | Qt.AlignTop
-        Layout.preferredHeight: 38
-        Layout.bottomMargin: 10
-        palette.button: Style.background_second
-        palette.buttonText : Style.content_main
-        icon.source: "qrc:/assets/icon-cancel-white.svg"
-        //% "clear all"
-        text: qsTrId('notifications-clear-all')
-        visible: notificationList.model.count > 0
-        onClicked: {
-            viewModel.clearAll();
+        Item {
+            Layout.fillWidth:   true
+            Layout.fillHeight:  true
+        }
+        CustomButton {
+            Layout.alignment: Qt.AlignRight
+            Layout.preferredHeight: 38
+            palette.button: Style.background_second
+            palette.buttonText : Style.content_main
+            icon.source: "qrc:/assets/icon-cancel-white.svg"
+            //% "clear all"
+            text: qsTrId('notifications-clear-all')
+            visible: notificationList.model.count > 0
+            onClicked: {
+                viewModel.clearAll();
+            }
         }
     }
 

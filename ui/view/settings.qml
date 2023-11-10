@@ -26,16 +26,9 @@ ColumnLayout {
         id: viewModel
     }
 
-    RowLayout {
-        id: mainColumn
-        Layout.fillWidth:     true
-        Layout.minimumHeight: 40
-        Layout.alignment:     Qt.AlignTop
-
-        Title {
-            //% "Settings"
-            text: qsTrId("settings-title")
-        }
+    Title {
+        //% "Settings"
+        text: qsTrId("settings-title")
 
         RowLayout {
             Layout.fillWidth: true
@@ -80,11 +73,6 @@ ColumnLayout {
             visible: main.hasNewerVersion
             onClicked: Utils.navigateToDownloads()
         }
-    }
-
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
     }
 
     ScrollView {
@@ -174,11 +162,11 @@ ColumnLayout {
 
                     showStatus: true
                     connectionStatus: getStatus()
-                    connectionError:  statusBar.walletError
+                    connectionError:  main.statusBar.walletError
                     folded: unfoldSection != "BEAM_NODE"
 
                     function getStatus() {
-                        var sbar = statusBar.model
+                        var sbar = main.statusBar.model
                         if (sbar.isFailedStatus) return "error"
                         else if (sbar.isSyncInProgress || sbar.isOnline) return "connected"
                         else return "disconnected";
@@ -192,8 +180,8 @@ ColumnLayout {
                     folded: unfoldSection != "IPFS_NODE"
 
                     showStatus: true
-                    connectionStatus: statusBar.model.ipfsStatus
-                    connectionError: statusBar.model.ipfsError
+                    connectionStatus: main.statusBar.model.ipfsStatus
+                    connectionError: main.statusBar.model.ipfsError
                 }
 
                 Repeater {

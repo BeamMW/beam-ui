@@ -21,6 +21,13 @@ Item {
         }
         MenuSeparator{}
         Action {
+            text:           qsTrId("settings-title")
+            icon.source:    "qrc:/assets/icon-settings.svg"
+            onTriggered: {
+                main.openSettings();
+            }
+        }
+        Action {
             //% "Logout"
             text: qsTrId("status-logout")
             icon.source: "qrc:/assets/icon-back.svg"
@@ -33,10 +40,11 @@ Item {
         id:                     logoutButton
         Layout.rightMargin:     20
         leftPadding:            4
+        rightPadding:           0
         verticalPadding:        0
         icon.source:            main.accountPicture
-        icon.width:             38
-        icon.height:            38
+        icon.width:             32
+        icon.height:            32
         icon.color:             "transparent"
         onClicked: {
             accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height))

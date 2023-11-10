@@ -208,11 +208,6 @@ ColumnLayout {
         }
     }
 
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
-    }
-
     SettingsViewModel {
         id: settings
     }

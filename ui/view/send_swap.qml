@@ -10,7 +10,7 @@ import "./utils.js" as Utils
 
 ColumnLayout {
     id: sendSwapView
-    
+    spacing: 0
     property var defaultFocusItem: commentInput
     property var predefinedTxParams: undefined
     property alias swapToken: viewModel.token
@@ -108,14 +108,14 @@ please review your settings and try again"
         }
     }
 
+    Title {
+        text: qsTrId("atomic-swap-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-        Layout.bottomMargin: 30
-
         //% "Accept Swap Offer"
         text: qsTrId("wallet-send-swap-title")
         onBack: function () {

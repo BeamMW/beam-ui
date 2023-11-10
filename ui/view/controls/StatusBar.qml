@@ -7,8 +7,6 @@ import "."
 
 Item {
     id: rootControl
-    x: -20
-    y: -30
 
     property var model
 
@@ -38,7 +36,7 @@ Item {
     property string statusOnline: qsTrId("status-online")
     //% "connected node supports online transactions only"
     property string statusOnlineRemote: qsTrId("status-online-remote")
-    property var indicatorX: -20
+    property var indicatorX: 50
     property var indicatorY: 50
 
     function setIndicator(indicator) {
@@ -53,7 +51,8 @@ Item {
         id: online_indicator
         x: rootControl.indicatorX
         y: rootControl.indicatorY
-        width: childrenRect.width
+        width:  childrenRect.width
+        height: childrenRect.height
 
         property color color: Style.online
         property int radius: rootControl.indicator_radius
@@ -101,9 +100,9 @@ Item {
         y: rootControl.indicatorY
         visible: false
 
-        property color color: Style.online
-        property int circle_line_width: 2
-        property int animation_duration: 2000
+        property color color:               Style.online
+        property int circle_line_width:     2
+        property int animation_duration:    2000
 
         width: 2 * rootControl.indicator_radius + circle_line_width
         height: 2 * rootControl.indicator_radius + circle_line_width
@@ -131,11 +130,13 @@ Item {
     }
     
     Rectangle {
-        id: rowBackground
-        width: main.width - 70
-        height: 24
-        color: "transparent"
-        visible: !onlineTrusted.visible || !model.isExchangeRatesUpdated || model.isFailedHww
+        id:                     rowBackground
+        anchors.leftMargin:     70
+        anchors.left:           parent.left
+        anchors.right:          parent.right
+        height:                 24
+        color:                  "transparent"
+        visible:                !onlineTrusted.visible || !model.isExchangeRatesUpdated || model.isFailedHww
         property color gradientColor: online_indicator.color
 
         LinearGradient {
@@ -217,18 +218,6 @@ Item {
                 visible: model.nodeSyncProgress > 0 && update_indicator.visible
                 value: model.nodeSyncProgress / 100
             }
-        }
-    }
-    RowLayout {
-        width: rowBackground.width
-        height: rowBackground.height
-        Item {
-            Layout.fillWidth: true
-        }
-
-        LogoutButton{
-            Layout.topMargin:      30
-            Layout.rightMargin:    20
         }
     }
 

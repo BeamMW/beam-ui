@@ -60,14 +60,14 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
+    Title {
+        text: qsTrId("wallet-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-        Layout.bottomMargin: 30
-
         //% "Send"
         text:   qsTrId("send-title")
         onBack: control.onClosed

@@ -10,7 +10,7 @@ import "./utils.js" as Utils
 
 ColumnLayout {
     id: thisView
-
+    spacing: 0
     // callbacks set by parent
     property var onClosed: undefined
 
@@ -23,14 +23,14 @@ ColumnLayout {
         topColor: Style.accent_incoming
     }
 
+    Title {
+        text: qsTrId("assets-swap-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-        Layout.bottomMargin: 30
-
         //% "Create an Asset Swap Offer"
         text: qsTrId("wallet-create-asset-swap-title")
         onBack: function () {

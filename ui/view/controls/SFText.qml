@@ -2,11 +2,12 @@ import QtQuick 2.15
 import QtQuick.Window 2.2
 
 Text {
-	font { 
-		family:    "Proxima Nova"
-		styleName: "Regular"
-		weight:    Font.Normal
-	}
+    font { 
+        family:     "Proxima Nova"
+        styleName:  "Regular"
+        weight:     Font.Normal
+        pixelSize:  14
+    }
     property alias linkEnabled: linkMouseArea.enabled
     MouseArea {
         id: linkMouseArea

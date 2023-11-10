@@ -10,6 +10,7 @@ import "./utils.js" as Utils
 
 ColumnLayout {
     id: thisView
+    spacing: 0
 
     property var  defaultFocusItem: sentAmountInput.amountInput
     property bool addressSaved: false
@@ -81,14 +82,14 @@ Update your settings and try again."
         text:       qsTrId("swap-na-message")
     }
 
+    Title {
+        text: qsTrId("atomic-swap-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-        Layout.bottomMargin: 30
-
         //% "Create Atomic Swap Offer"
         text: qsTrId("wallet-atomic-swap-title")
         onBack: function () {

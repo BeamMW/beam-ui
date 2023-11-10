@@ -9,6 +9,7 @@ import "controls"
 
 ColumnLayout {
     id: sendView
+    spacing: 0
     property var    defaultFocusItem: receiverTAInput
     property bool isValid: !receiverTAInput.text || BeamGlobals.isSwapToken(receiverTAInput.text)
 
@@ -21,14 +22,14 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
+    Title {
+        text: qsTrId("atomic-swap-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-        Layout.bottomMargin: 30
-
         //% "Accept Swap Offer"
         text: qsTrId("wallet-send-swap-title")
         onBack: function () {

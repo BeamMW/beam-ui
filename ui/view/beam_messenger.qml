@@ -13,17 +13,6 @@ Item {
     Layout.fillWidth: true
     Layout.fillHeight: true
 
-    Title {
-        //% "Beam Messenger"
-        text: qsTrId("messenger-title")
-    }
-
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
-        z: 33
-    }
-
     MessengerChatList {
         id: chatList
     }
@@ -56,23 +45,29 @@ Item {
             Layout.fillHeight: true
             spacing:           0
 
-            RowLayout {
-                spacing:          20
-                Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                Layout.topMargin: 50
+            Title {
+                //% "Beam Messenger"
+                text: qsTrId("messenger-title")
+                Item {
+                    Layout.fillWidth:   true
+                    Layout.fillHeight:  true
+                }
+                RowLayout {
+                    spacing:          20
 
-                PrimaryButton {
-                    id:           newChatButton
-                                  //% "New chat"
-                    text:         qsTrId("messenger-new-chat")
-                    icon.source:  "qrc:/assets/icon-messenger-new-chat.svg"
-                    allLowercase: false
-                    onClicked:    {
-                        messengerRoot.openChat();
+                    PrimaryButton {
+                        id:           newChatButton
+                        height:       32
+                                      //% "New chat"
+                        text:         qsTrId("messenger-new-chat")
+                        icon.source:  "qrc:/assets/icon-messenger-new-chat.svg"
+                        allLowercase: false
+                        onClicked:    {
+                            messengerRoot.openChat();
+                        }
                     }
                 }
             }
-
             ListView {
                 id: chatsList
                 Layout.fillWidth: true

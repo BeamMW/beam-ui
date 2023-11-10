@@ -237,8 +237,9 @@ SettingsFoldable {
         }
 
         RowLayout {
-            Layout.topMargin: 15
-            Layout.bottomMargin: 5
+            Layout.topMargin:       15
+            Layout.bottomMargin:    5
+            Layout.rightMargin:     8   
             spacing: 0
             visible: viewModel.localNodeRun
 
@@ -274,32 +275,17 @@ SettingsFoldable {
                 Layout.fillWidth: true
             }
 
-            Image {
+            CustomToolButton {
                 Layout.alignment: Qt.AlignRight
-                Layout.preferredHeight: 16
-                Layout.preferredWidth: 16
                 Layout.bottomMargin: 12
-                source: "qrc:/assets/icon-add-green.svg"
-                MouseArea {
-                    anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton
-                    cursorShape: newLocalNodePeer.canAddPeer() ? Qt.PointingHandCursor : Qt.ArrowCursor
-                    onClicked: {
-                        if (newLocalNodePeer.canAddPeer()) {
-                            viewModel.addLocalNodePeer(newLocalNodePeer.text.trim());
-                            newLocalNodePeer.clear();
-                        }
+                icon.source: "qrc:/assets/icon-add-green.svg"
+                enabled:    newLocalNodePeer.canAddPeer()
+                onClicked: {
+                    if (newLocalNodePeer.canAddPeer()) {
+                        viewModel.addLocalNodePeer(newLocalNodePeer.text.trim());
+                        newLocalNodePeer.clear();
                     }
                 }
-                Colorize {
-                    anchors.fill: parent
-                    source: parent
-                    saturation: -0.5
-                    visible: !newLocalNodePeer.canAddPeer()
-                }
-            }
-            Item {
-                width: 8
             }
         }
 

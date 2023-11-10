@@ -25,14 +25,14 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
+    Title {
+        text: qsTrId("assets-swap-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-        Layout.bottomMargin: 30
-
         //% "Accept an Asset Swap Offer"
         text: qsTrId("wallet-accept-asset-swap-title")
         onBack: function () {

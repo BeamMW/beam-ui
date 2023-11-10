@@ -19,11 +19,6 @@ ColumnLayout {
         text: qsTrId("apps-title-no-fork")
     }
 
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
-    }
-
     SvgImage {
         Layout.topMargin: 80
         Layout.alignment: Qt.AlignHCenter

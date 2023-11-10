@@ -86,14 +86,14 @@ ColumnLayout {
          }
     }
 
+    Title {
+        text: qsTrId("wallet-title")
+    }
+
     //
-    // Title row
+    // Subtitle row
     //
     SubtitleRow {
-        Layout.fillWidth:    true
-        Layout.topMargin:    100
-        Layout.bottomMargin: 30
-
         //% "Receive"
         text: qsTrId("wallet-receive-title")
         onBack: function () {
@@ -272,11 +272,11 @@ ColumnLayout {
                                 }
                             }
 
-                            RowLayout {
+                            ColumnLayout {
                                 spacing: 0
                                 visible: !control.hasHwError
 
-                                ColumnLayout {
+                                RowLayout {
                                     spacing: 0
 
                                     Layout.fillWidth:   true
@@ -291,45 +291,41 @@ ColumnLayout {
                                         color: Style.content_main
                                         elide: Text.ElideMiddle
                                     }
-
-                                    LinkButton {
-                                        Layout.alignment: Qt.AlignHCenter
-                                        Layout.topMargin: 10
-                                        //% "Address details"
-                                        text:       qsTrId("address-details")
-                                        linkColor:  Style.accent_incoming
-                                        onClicked:  function () {
-                                            tokenInfoDialog.open()
+                                    CustomToolButton {
+                                        Layout.alignment: Qt.AlignVCenter
+                                        icon.source: "qrc:/assets/icon-copy.svg"
+                                        ToolTip.text: qsTrId("settings-swap-copy-address")
+                                        ToolTip.visible: hovered
+                                        ToolTip.delay: 500
+                                        ToolTip.timeout: 2000
+                                        enabled: control.isValid()
+                                        onClicked: {
+                                            control.copyAndSave()
+                                        }
+                                    }
+                                    CustomToolButton {
+                                        Layout.alignment: Qt.AlignVCenter
+                                        icon.source: "qrc:/assets/icon-refresh.svg"
+                                        //: receive screen, button to generate new address
+                                        //% "Generate new address"
+                                        ToolTip.text: qsTrId("receive-generate-new")
+                                        ToolTip.visible: hovered
+                                        ToolTip.delay: 500
+                                        ToolTip.timeout: 2000
+                                        hoverEnabled: true
+                                        onClicked: {
+                                            viewModel.generateNewAddress()
                                         }
                                     }
                                 }
 
-                                CustomToolButton {
-                                    Layout.alignment: Qt.AlignVCenter
-                                    Layout.bottomMargin: 27
-                                    icon.source: "qrc:/assets/icon-copy.svg"
-                                    ToolTip.text: qsTrId("settings-swap-copy-address")
-                                    ToolTip.visible: hovered
-                                    ToolTip.delay: 500
-                                    ToolTip.timeout: 2000
-                                    enabled: control.isValid()
-                                    onClicked: {
-                                        control.copyAndSave()
-                                    }
-                                }
-                                CustomToolButton {
-                                    Layout.alignment: Qt.AlignVCenter
-                                    Layout.bottomMargin: 27
-                                    icon.source: "qrc:/assets/icon-refresh.svg"
-                                    //: receive screen, button to generate new address
-                                    //% "Generate new address"
-                                    ToolTip.text: qsTrId("receive-generate-new")
-                                    ToolTip.visible: hovered
-                                    ToolTip.delay: 500
-                                    ToolTip.timeout: 2000
-                                    hoverEnabled: true
-                                    onClicked: {
-                                        viewModel.generateNewAddress()
+                                LinkButton {
+                                    Layout.alignment: Qt.AlignHCenter
+                                    //% "Address details"
+                                    text:       qsTrId("address-details")
+                                    linkColor:  Style.accent_incoming
+                                    onClicked:  function () {
+                                        tokenInfoDialog.open()
                                     }
                                 }
                             }

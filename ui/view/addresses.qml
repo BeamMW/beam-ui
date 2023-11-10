@@ -10,24 +10,19 @@ ColumnLayout {
     id: control
     anchors.fill: parent
 
-	AddressBookViewModel {
-	    id: viewModel
+    AddressBookViewModel {
+        id: viewModel
     }
 
-	Title {
+    Title {
         //% "Address Book"
         text: qsTrId("addresses-tittle")
-    }
-
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
     }
 
     property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
     ConfirmationDialog {
-		id: confirmationDialog
+        id: confirmationDialog
         property bool isOwn
     }
 

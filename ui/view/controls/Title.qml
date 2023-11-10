@@ -1,10 +1,29 @@
-import QtQuick 2.11
-import QtQuick.Window 2.2
+import QtQuick 2
+import QtQuick.Window 2
+import QtQuick.Layouts 1
 import "."
 
-SFText {
-    x: 10
-    y: 0
-    font.pixelSize: 36
-    color: Style.content_main
+RowLayout {
+    default property alias content: contentLayout.data
+    property alias text: title.text
+
+    Layout.fillHeight:   false
+
+    implicitWidth:       title.implicitWidth + logoutButton.implicitWidth
+    implicitHeight:      title.implicitHeight + logoutButton.implicitHeight
+
+    SFText {
+        id:                 title
+        Layout.leftMargin:  10
+        font.pixelSize:     36
+        color:              Style.content_main
+    }
+    RowLayout {
+        id:                 contentLayout
+        Layout.fillWidth:   true
+        Layout.alignment:   Qt.AlignVCenter
+    }
+    LogoutButton{
+        id: logoutButton
+    }
 }

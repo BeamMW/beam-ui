@@ -1,17 +1,18 @@
-import QtQuick 2.11
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
-import Beam.Wallet 1.0
+import QtQuick 2
+import QtQuick.Controls 1
+import QtQuick.Controls 2
+import QtQuick.Controls.Styles 1
+import QtGraphicalEffects 1
+import QtQuick.Layouts 1
+import Beam.Wallet 1
 import "controls"
 import "wallet"
 import "utils.js" as Utils
 
-Item {
-    id: root
+ColumnLayout {
+    id:           root
     anchors.fill: parent
+    spacing:      0
 
     property string openedTxID: ""
     
@@ -60,25 +61,14 @@ Item {
             }
         }
     }
-    
-    Title {
-        //% "Wallet"
-        text: qsTrId("wallet-title")
-    }
-
-    StatusBar {
-        id: status_bar
-        model: statusbarModel
-        z: 33
-    }
 
     Component {
         id: walletLayout
 
         ColumnLayout {
             id: transactionsLayout
-            Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.fillWidth:   true
+            Layout.fillHeight:  true
             spacing: 0
 
             function navigateSend(assetId) {
@@ -107,35 +97,43 @@ Item {
                 token = ""
             }
 
-            Row {
-                Layout.alignment: Qt.AlignTop | Qt.AlignRight
-                Layout.topMargin: 30
-                spacing: 20
+            Title {
+                //% "Wallet"
+                text: qsTrId("wallet-title")
 
-                CustomButton {
-                    id: sendButton
-                    height: 32
-                    palette.button: Style.accent_outgoing
-                    palette.buttonText: Style.content_opposite
-                    icon.source: "qrc:/assets/icon-send-blue.svg"
-                    //% "Send"
-                    text: qsTrId("general-send")
-                    font.pixelSize: 12
-                    onClicked: {
-                        navigateSend(assets.selectedId);
-                    }
+                Item {
+                    Layout.fillWidth:   true
+                    Layout.fillHeight:  true
                 }
 
-                CustomButton {
-                    height: 32
-                    palette.button: Style.accent_incoming
-                    palette.buttonText: Style.content_opposite
-                    icon.source: "qrc:/assets/icon-receive-blue.svg"
-                    //% "Receive"
-                    text: qsTrId("wallet-receive-button")
-                    font.pixelSize: 12
-                    onClicked: {
-                        navigateReceive(assets.selectedId);
+                Row {
+                    spacing: 20
+
+                    CustomButton {
+                        id: sendButton
+                        height: 32
+                        palette.button: Style.accent_outgoing
+                        palette.buttonText: Style.content_opposite
+                        icon.source: "qrc:/assets/icon-send-blue.svg"
+                        //% "Send"
+                        text: qsTrId("general-send")
+                        font.pixelSize: 12
+                        onClicked: {
+                            navigateSend(assets.selectedId);
+                        }
+                    }
+
+                    CustomButton {
+                        height: 32
+                        palette.button: Style.accent_incoming
+                        palette.buttonText: Style.content_opposite
+                        icon.source: "qrc:/assets/icon-receive-blue.svg"
+                        //% "Receive"
+                        text: qsTrId("wallet-receive-button")
+                        font.pixelSize: 12
+                        onClicked: {
+                            navigateReceive(assets.selectedId);
+                        }
                     }
                 }
             }
@@ -182,9 +180,9 @@ Item {
 
     StackView {
         id: walletStackView
-        anchors.fill: parent
-        anchors.topMargin: -27
-        initialItem: walletLayout
+        Layout.fillWidth:   true
+        Layout.fillHeight:  true
+        initialItem:        walletLayout
         pushEnter: Transition {
             enabled: false
         }

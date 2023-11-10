@@ -89,7 +89,6 @@ StartLayout {
             Layout.topMargin: 64
             //% "Restore wallet or create a new one"
             text: qsTrId("general-restore-or-create-wallet")
-            fontSize: 14
             visible: viewModel.isOnlyOneInstanceStarted
 
             onClicked: {

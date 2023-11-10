@@ -85,18 +85,6 @@ Item {
         }
     }
 
-    Title {
-        //% "Atomic Swaps"
-        text: qsTrId("atomic-swap-title")
-    }
-
-
-    StatusBar {
-        id: statusBar
-        model: statusbarModel
-        z: 33
-    }
-
     Component {
         id: offersViewComponent
 
@@ -159,47 +147,52 @@ Item {
                 }
             }
 
-            RowLayout {
-                Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                Layout.topMargin: 30
-                spacing: 20
-
-                CustomButton {
-                    id: acceptOfferButton
-                    Layout.minimumWidth: 172
-                    Layout.preferredHeight: 32
-                    Layout.maximumHeight: 32
-                    palette.button: Style.accent_outgoing
-                    palette.buttonText: Style.content_opposite
-                    icon.source: "qrc:/assets/icon-accept-offer.svg"
-                    //% "Accept offer"
-                    text: qsTrId("atomic-swap-accept")
-                    font.pixelSize: 12
-                    onClicked: {
-                        offersStackView.push(Qt.createComponent("send.qml"),
-                                             {
-                                                "onClosed":    onClosed,
-                                                "onSwapToken": onSwapToken
-                                             });
-                    }
+            Title {
+                //% "Atomic Swaps"
+                text: qsTrId("atomic-swap-title")
+                Item {
+                    Layout.fillWidth:   true
+                    Layout.fillHeight:  true
                 }
-                
-                CustomButton {
-                    id: sendOfferButton
-                    Layout.minimumWidth: 172
-                    Layout.preferredHeight: 32
-                    Layout.maximumHeight: 32
-                    palette.button: Style.accent_incoming
-                    palette.buttonText: Style.content_opposite
-                    icon.source: "qrc:/assets/icon-create-offer.svg"
-                    //% "Create offer"
-                    text: qsTrId("atomic-swap-create")
-                    font.pixelSize: 12
-                    //font.capitalization: Font.AllUppercase
+                RowLayout {
+                    spacing: 20
 
-                    onClicked: {
-                        function onClosed() {offersStackView.pop();}
-                        offersStackView.push(Qt.createComponent("create_atomic_swap.qml"), {"onClosed": onClosed});
+                    CustomButton {
+                        id: acceptOfferButton
+                        Layout.minimumWidth: 172
+                        Layout.preferredHeight: 32
+                        Layout.maximumHeight: 32
+                        palette.button: Style.accent_outgoing
+                        palette.buttonText: Style.content_opposite
+                        icon.source: "qrc:/assets/icon-accept-offer.svg"
+                        //% "Accept offer"
+                        text: qsTrId("atomic-swap-accept")
+                        font.pixelSize: 12
+                        onClicked: {
+                            offersStackView.push(Qt.createComponent("send.qml"),
+                                                 {
+                                                    "onClosed":    onClosed,
+                                                    "onSwapToken": onSwapToken
+                                                 });
+                        }
+                    }
+                    CustomButton {
+                        id: sendOfferButton
+                        Layout.minimumWidth: 172
+                        Layout.preferredHeight: 32
+                        Layout.maximumHeight: 32
+                        palette.button: Style.accent_incoming
+                        palette.buttonText: Style.content_opposite
+                        icon.source: "qrc:/assets/icon-create-offer.svg"
+                        //% "Create offer"
+                        text: qsTrId("atomic-swap-create")
+                        font.pixelSize: 12
+                        //font.capitalization: Font.AllUppercase
+
+                        onClicked: {
+                            function onClosed() {offersStackView.pop();}
+                            offersStackView.push(Qt.createComponent("create_atomic_swap.qml"), {"onClosed": onClosed});
+                        }
                     }
                 }
             }
@@ -1209,7 +1202,6 @@ Please try again later or create an offer yourself."
         id: offersStackView
 
         anchors.fill: parent
-        anchors.topMargin: -27
         initialItem: offersViewComponent
 
         pushEnter: Transition {
