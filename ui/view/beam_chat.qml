@@ -96,25 +96,17 @@ ColumnLayout {
             wrapMode: Text.Wrap
         }
 
-        SvgImage {
+        CustomToolButton {
             id: editIcon
             Layout.leftMargin: 12
             Layout.rightMargin: 12
             Layout.alignment: Qt.AlignRight
-            source: "qrc:/assets/icon-edit.svg"
-            sourceSize: Qt.size(16, 16)
+            icon.source: "qrc:/assets/icon-edit.svg"
 
-            MouseArea {
-                z: 42
-                anchors.fill:            parent
-                hoverEnabled:            true
-                propagateComposedEvents: true
-                cursorShape:             Qt.PointingHandCursor
-                onClicked: {
-                    receiverAddrDialog.nameEditMode = true;
-                    receiverAddrDialog.peerAddr = thisView.receiverAddr;
-                    receiverAddrDialog.open();
-                }
+            onClicked: {
+                receiverAddrDialog.nameEditMode = true;
+                receiverAddrDialog.peerAddr = thisView.receiverAddr;
+                receiverAddrDialog.open();
             }
         }
         ColorOverlay {
@@ -123,22 +115,13 @@ ColumnLayout {
             color: Style.content_main
         }
 
-        SvgImage {
+        CustomToolButton {
             Layout.leftMargin: 12
             Layout.rightMargin: 12
             Layout.alignment: Qt.AlignRight
-            source: "qrc:/assets/icon-delete.svg"
-            sourceSize: Qt.size(16, 16)
-
-            MouseArea {
-                z: 42
-                anchors.fill:            parent
-                hoverEnabled:            true
-                propagateComposedEvents: true
-                cursorShape:             Qt.PointingHandCursor
-                onClicked: {
-                    chatModel.removeChat();
-                }
+            icon.source: "qrc:/assets/icon-delete.svg"
+            onClicked: {
+                chatModel.removeChat();
             }
         }
     }

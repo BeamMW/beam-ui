@@ -1,7 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
+import QtQuick 2
+import QtQuick.Controls 2
+import QtQuick.Layouts 1
+import QtGraphicalEffects 1
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -47,8 +47,8 @@ StartLayout {
 
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
-            Layout.fillWidth: true
-                        
+            spacing: 20
+
             PrimaryButton {
                 id: startMigration
 
@@ -68,10 +68,6 @@ StartLayout {
                 }
             }
 
-            Item {
-                Layout.preferredWidth: 20
-            }
-
             CustomButton {
                 //: migration screen, select db file button
                 //% "start manual migration"
@@ -84,9 +80,15 @@ StartLayout {
             }
         }
 
+        Item {
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+        }
+
         LinkButton {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 64
+            Layout.bottomMargin: 37
             //% "Restore wallet or create a new one"
             text: qsTrId("general-restore-or-create-wallet")
             visible: viewModel.isOnlyOneInstanceStarted
@@ -94,11 +96,6 @@ StartLayout {
             onClicked: {
                 startWizzardView.push(walletStartPage);
             }
-        }
-
-        Item {
-            Layout.fillWidth:       true
-            Layout.preferredHeight:   68
         }
     }
 }

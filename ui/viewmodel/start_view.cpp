@@ -306,11 +306,7 @@ StartViewModel::StartViewModel()
 #endif
 
 {
-    if (!walletExists())
-    {
-        // find all wallet.db in appData and defaultAppData
-        findExistingWalletDB();
-    }
+    findExistingWalletDBIfNeeded();
 
 #if defined(BEAM_HW_WALLET)
     connect(&m_trezorThread, SIGNAL(ownerKeyImported()), this, SLOT(onTrezorOwnerKeyImported()));
@@ -863,6 +859,15 @@ void StartViewModel::onNodeSettingsChanged()
     AppModel::getInstance().nodeSettingsChanged();
 }
 
+void StartViewModel::findExistingWalletDBIfNeeded()
+{
+    if (walletExists() || isFoundExistingWalletDB())
+        return;
+
+    // find all wallet.db in appData and defaultAppData
+    findExistingWalletDB();
+}
+
 void StartViewModel::findExistingWalletDB()
 {
     std::set<std::string> pathsToCheck;
@@ -943,7 +948,7 @@ void StartViewModel::findExistingWalletDB()
     std::copy(walletDBpaths.begin(), walletDBpaths.end(), std::back_inserter(m_walletDBpaths));
 }
 
-bool StartViewModel::isFindExistingWalletDB()
+bool StartViewModel::isFoundExistingWalletDB()
 {
     return !m_walletDBpaths.empty();
 }
@@ -1093,7 +1098,7 @@ void StartViewModel::setCurrentNetwork(const QString& network)
 
     Rules::get().m_Network = value;
     m_accounts.clear();
-    AppModel::resetInstance(AppModel::getInstance().getSettings(), 0);
+    setCurrentAccountIndexForced(0);
     emit currentNetworkChanged();
 }
 
@@ -1140,9 +1145,18 @@ void StartViewModel::setCurrentAccountIndex(int value)
 {
     if (m_accountIndex == value)
         return;
+
+    setCurrentAccountIndexForced(value);
+}
+
+void StartViewModel::setCurrentAccountIndexForced(int value)
+{
     m_accountIndex = value;
-    AppModel::resetInstance(AppModel::getInstance().getSettings(), m_accountIndex);
+    m_walletDBpaths.clear();
+    AppModel::resetInstance(AppModel::getInstance().getSettings(), value);
+    findExistingWalletDBIfNeeded();
     emit currentAccountChanged();
+    emit walletExistsChanged();
 }
 
 QString StartViewModel::getNewAccountLabel() const

@@ -9,13 +9,13 @@ ConfirmationDialog {
     property bool canRefresh: true
 
     property var settingsViewModel: function() {
-		return {
-			refreshWallet: function() {
-				console.log("settingsViewModel::refreshWallet undefined")
-				return false
-			}
-		}
-	}
+        return {
+            refreshWallet: function() {
+                console.log("settingsViewModel::refreshWallet undefined")
+                return false
+            }
+        }
+    }
 
     //% "Rescan"
     title: qsTrId("general-rescan")

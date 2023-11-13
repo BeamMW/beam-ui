@@ -9,13 +9,13 @@ ConfirmationDialog {
     property string pwd: ""
 
     property var settingsViewModel: function() {
-		return {
-			getOwnerKey: function() {
-				console.log("settingsViewModel::getOwnerKey undefined")
-				return false
-			}
-		}
-	}
+        return {
+            getOwnerKey: function() {
+                console.log("settingsViewModel::getOwnerKey undefined")
+                return false
+            }
+        }
+    }
 
     //: settings tab, show owner key dialog title
     //% "Owner key"

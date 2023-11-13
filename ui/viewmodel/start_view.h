@@ -188,6 +188,7 @@ public:
     const QList<QVariantMap>& getAccounts() const;
     int getCurrentAccountIndex() const;
     void setCurrentAccountIndex(int value);
+    void setCurrentAccountIndexForced(int value);
     QString getNewAccountLabel() const;
     void setNewAccountLabel(const QString& value);
     bool getAccountLabelExists() const;
@@ -202,7 +203,7 @@ public:
     Q_INVOKABLE bool getIsRunLocalNode() const;
     Q_INVOKABLE QString chooseRandomNode() const;
     Q_INVOKABLE QString walletVersion() const;
-    Q_INVOKABLE bool isFindExistingWalletDB();
+    Q_INVOKABLE bool isFoundExistingWalletDB();
     Q_INVOKABLE void deleteCurrentWalletDB();
     Q_INVOKABLE void migrateWalletDB(const QString& path);
     Q_INVOKABLE QString selectCustomWalletDB();
@@ -251,7 +252,7 @@ public slots:
 #endif
 
 private:
-
+    void findExistingWalletDBIfNeeded();
     void findExistingWalletDB();
     QString getPhrases() const;
 

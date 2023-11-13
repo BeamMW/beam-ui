@@ -211,6 +211,11 @@ WizzardPage {
         }
     }
 
+    Item {
+        Layout.fillWidth:   true
+        Layout.fillHeight:  true
+    }
+
     buttons: [
         CustomButton {
             text: qsTrId("general-back")

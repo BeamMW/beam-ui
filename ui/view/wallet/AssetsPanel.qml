@@ -281,24 +281,13 @@ Control {
                         Item {
                             Layout.fillWidth: true
                         }
-                        Item {
-                            width:  16
-                            height: 16
-                            Layout.topMargin: -50
-                            Layout.rightMargin: -9
-                            SvgImage {
-                                anchors.left: parent.left
-                                anchors.top: parent.top
-                                source: "qrc:/assets/icon-cancel-white.svg"
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                acceptedButtons: Qt.LeftButton
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: function () {
-                                    viewModel.showFaucetPromo = false;
-                                }
-                                hoverEnabled: true
+
+                        CustomToolButton {
+                            Layout.topMargin:   -50
+                            Layout.rightMargin: -17
+                            icon.source: "qrc:/assets/icon-cancel-white.svg"
+                            onClicked: {
+                                viewModel.showFaucetPromo = false;
                             }
                         }
                     }

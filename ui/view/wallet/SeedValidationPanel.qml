@@ -31,52 +31,31 @@ Panel {
             wrapMode:            Text.WordWrap
         }
 
-        SFText {
+        LinkButton {
             Layout.topMargin:    -22
             Layout.fillWidth:    !showFaucetPromo
-            Layout.leftMargin:   10
-            font.pixelSize:      14
-            color:               Style.active
             //% "Secure your phrase"
             text:                qsTrId("seed-validation-link")
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.LeftButton
-                cursorShape: Qt.PointingHandCursor
-                onClicked: {
-                    seedValidationHelper.isSeedValidatiomMode = true;
-                    seedValidationHelper.isTriggeredFromSettings = false;
-                    main.parent.setSource("qrc:/start.qml");
-                }
-                hoverEnabled: true
+            onClicked: {
+                seedValidationHelper.isSeedValidatiomMode = true;
+                seedValidationHelper.isTriggeredFromSettings = false;
+                main.parent.setSource("qrc:/start.qml");
             }
         }
 
         Item {
-            height: 16
-            Layout.fillWidth: true
+            Layout.preferredHeight: 16
+            Layout.fillWidth:       true
             Layout.minimumWidth: control.showFaucetPromo ? 0 : 25
         }
 
-        Item {
-            width:  16
-            height: 16
-            Layout.topMargin:   -55
-            Layout.rightMargin: -9
+        CustomToolButton {
+            Layout.topMargin:   -63
+            Layout.rightMargin: -17
             visible: control.canHideValidationPromo
-            SvgImage {
-                anchors.left: parent.left
-                anchors.top: parent.top
-                source: "qrc:/assets/icon-cancel-white.svg"
-            }
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.LeftButton
-                cursorShape: Qt.PointingHandCursor
-                onClicked: function () {
-                    control.onShowSeedValidationPromoOff()
-                }
-                hoverEnabled: true
+            icon.source: "qrc:/assets/icon-cancel-white.svg"
+            onClicked: {
+                control.onShowSeedValidationPromoOff()
             }
         }
     }

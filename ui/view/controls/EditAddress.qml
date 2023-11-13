@@ -6,11 +6,11 @@ import "../utils.js" as Utils
 import "."
 
 CustomDialog {
-	id:      control
-	modal:   true
-	x:       (parent.width - width) / 2
-	y:       (parent.height - height) / 2
-	padding: 30
+    id:      control
+    modal:   true
+    x:       (parent.width - width) / 2
+    y:       (parent.height - height) / 2
+    padding: 30
 
     property var  viewModel
     property var  addressItem
@@ -30,24 +30,24 @@ CustomDialog {
         spacing: 0
 
         SFText {
-			Layout.alignment: Qt.AlignHCenter
-			//% "Edit address"
-			text: qsTrId("edit-addr-title")
-			color: Style.content_main
-			font.pixelSize: 18
-			font.weight:    Font.Bold
-		}
+            Layout.alignment: Qt.AlignHCenter
+            //% "Edit address"
+            text: qsTrId("edit-addr-title")
+            color: Style.content_main
+            font.pixelSize: 18
+            font.weight:    Font.Bold
+        }
 
-    	SFText {
-    		Layout.topMargin: 20
-    		//% "Address"
-	    	text: qsTrId("edit-addr-addr")
-		    color: Style.content_main
-			font.pixelSize: 14
-			font.weight: Font.Bold
-		}
+        SFText {
+            Layout.topMargin: 20
+            //% "Address"
+            text: qsTrId("edit-addr-addr")
+            color: Style.content_main
+            font.pixelSize: 14
+            font.weight: Font.Bold
+        }
 
-		ScrollView {
+        ScrollView {
             Layout.maximumHeight:         200
             Layout.topMargin:             10
             Layout.preferredWidth:        control.isOldAddr ? 510: 582
@@ -192,25 +192,25 @@ CustomDialog {
             spacing: 15
 
             CustomButton {
-				Layout.preferredHeight: 40
+                Layout.preferredHeight: 40
 
-				//% "Cancel"
-				text:        qsTrId("general-cancel")
+                //% "Cancel"
+                text:        qsTrId("general-cancel")
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 icon.color:  Style.content_main
 
-				onClicked: {
+                onClicked: {
                     control.destroy()
                 }
-			}
+            }
 
-			PrimaryButton {
-				id: saveButton
-				Layout.preferredHeight: 40
-				Layout.alignment: Qt.AlignHCenter
+            PrimaryButton {
+                id: saveButton
+                Layout.preferredHeight: 40
+                Layout.alignment: Qt.AlignHCenter
 
-				//% "Save"
-				text: qsTrId("edit-addr-save-button")
+                //% "Save"
+                text: qsTrId("edit-addr-save-button")
                 icon.source: "qrc:/assets/icon-done.svg"
                 enabled: control.commentValid &&
                          (

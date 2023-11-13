@@ -108,6 +108,7 @@ CustomDialog {
                 color:            addressAddModel.error ? Style.validator_error : Style.content_main
                 backgroundColor:  addressAddModel.error ? Style.validator_error : Style.content_main
                 text:             addressAddModel.address
+                font.pixelSize:   14
                 focus:            !control.nameEditMode
                 validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
                 Binding {
@@ -140,6 +141,7 @@ CustomDialog {
                 id: nameInput
                 width: 335
                 height: 45
+                font.pixelSize: 14
                 color: Style.content_main
                 text: addressAddModel.name
                 focus: control.nameEditMode

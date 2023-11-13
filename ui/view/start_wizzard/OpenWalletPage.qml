@@ -18,7 +18,7 @@ StartLayout {
     property var loadWallet: function () {
         startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
     }
-                
+
     property var checkCapsLockOnActivation: function () {
         viewModel.checkCapsLock();
         // OSX hack, to handle capslock shutdonw
@@ -74,6 +74,14 @@ StartLayout {
             target: viewModel
             function onCurrentAccountChanged() {
                 clearPassword()
+                if (viewModel.walletExists) {
+                    return;
+                }
+                if (viewModel.isFoundExistingWalletDB()) {
+                    startWizzardView.replace(migrateWalletPage);
+                } else {
+                    startWizzardView.replace(walletStartPage);
+                }
             }
             function onCurrentNetworkChanged() {
                 clearPassword()
@@ -180,7 +188,7 @@ StartLayout {
                 height: 36
                 radius: 6
                 opacity: 0.2
-                visible: viewModel.isCapsLockOn    
+                visible: viewModel.isCapsLockOn
             }
             SFText {
                 anchors.centerIn: capsWarning

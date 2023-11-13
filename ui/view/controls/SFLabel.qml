@@ -13,9 +13,10 @@ Label {
     signal copyText()
 
     font { 
-        family: "Proxima Nova"
-        styleName: "Regular"
-        weight: Font.Normal
+        family:     "Proxima Nova"
+        styleName:  "Regular"
+        weight:     Font.Normal
+        pixelSize:  14
     }
 
     background: Rectangle {

@@ -1,13 +1,13 @@
-import QtQuick 2.11
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.4
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
+import QtQuick 2
+import QtQuick.Controls 1
+import QtQuick.Controls 2
+import QtQuick.Controls.Styles 1
+import QtGraphicalEffects 1
 import "controls"
 import "start_wizzard"
 import "utils.js" as Utils
-import Beam.Wallet 1.0
-import QtQuick.Layouts 1.12
+import Beam.Wallet 1
+import QtQuick.Layouts 1
 
 Item
 {
@@ -203,7 +203,7 @@ Item
                 }
                 startWizzardView.push(openWalletPage);
             }
-            else if (viewModel.isFindExistingWalletDB()) {
+            else if (viewModel.isFoundExistingWalletDB()) {
                 startWizzardView.push(migrateWalletPage);
             } else {
                 startWizzardView.push(walletStartPage);

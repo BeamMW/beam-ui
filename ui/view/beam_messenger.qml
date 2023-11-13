@@ -56,12 +56,12 @@ Item {
                     spacing:          20
 
                     PrimaryButton {
-                        id:           newChatButton
-                        height:       32
+                        id:                     newChatButton
+                        Layout.preferredHeight: 32
                                       //% "New chat"
                         text:         qsTrId("messenger-new-chat")
                         icon.source:  "qrc:/assets/icon-messenger-new-chat.svg"
-                        allLowercase: false
+                        font.pixelSize: 12
                         onClicked:    {
                             messengerRoot.openChat();
                         }

@@ -127,7 +127,7 @@ BaseNotification {
                 Layout.alignment: Qt.AlignTop
                 icon.source: "qrc:/assets/icon-cancel-white.svg"
                 onClicked: function () {
-                control.close()
+                    control.close()
                 }
             }
         }
