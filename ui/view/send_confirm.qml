@@ -357,15 +357,11 @@ ConfirmationDialog {
             spacing: 0
             visible: isEnough && BeamGlobals.needPasswordToSpend()
 
-            SFTextInput {
+            PasswordInput {
                 id:               requirePasswordInput
                 width:            parent.width
                 font.pixelSize:   14
-                color:            requirePasswordError.text ? Style.validator_error : Style.content_main
-                backgroundColor:  requirePasswordError.text ? Style.validator_error : Style.content_main
-                echoMode:         TextInput.Password
-                leftPadding:      14
-                rightPadding:     14
+                hasError:         requirePasswordError.text.length > 0
 
                 onAccepted: function () {
                     control.okButton.clicked()
@@ -373,12 +369,6 @@ ConfirmationDialog {
 
                 onTextChanged: function () {
                     requirePasswordError.text = ""
-                }
-
-                background: Rectangle  {
-                    color:        Qt.rgba(1, 1, 1, 0.05)
-                    radius:       10
-
                 }
             }
 

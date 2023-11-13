@@ -187,7 +187,7 @@ ConfirmationDialog {
                 text:                   qsTrId("send-confirmation-pwd-require-message")
             }
 
-            SFTextInput {
+            PasswordInput {
                 id:                     requirePasswordInput
                 visible:                BeamGlobals.needPasswordToSpend()
                 Layout.columnSpan:      2
@@ -196,7 +196,7 @@ ConfirmationDialog {
                 activeFocusOnTab:       true
                 font.pixelSize:         14
                 color:                  Style.content_main
-                echoMode:               TextInput.Password
+                hassError:              requirePasswordError.text.length > 0
                 onAccepted:             passworInputEnter()
                 onTextChanged:          if (requirePasswordError.text.length > 0) requirePasswordError.text = ""
             }

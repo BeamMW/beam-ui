@@ -36,14 +36,13 @@ WizzardPage {
             font.pixelSize: 14
         }
 
-        SFTextInput {
+        PasswordInput {
             id:trezorPassword
             width: 400
             anchors.horizontalCenter: parent.horizontalCenter
             visible: viewModel.isOwnerKeyImported
             font.pixelSize: 14
             color: Style.content_main
-            echoMode: TextInput.Password
         }
     }
 

@@ -393,14 +393,13 @@ SettingsFoldable {
                 text:           qsTrId("settings-password")
             }
 
-            SFTextInput {
+            PasswordInput {
                 id:               passwordInput
                 visible:          !editElectrum
                 Layout.fillWidth: true
                 font.pixelSize:   14
                 color:            Style.content_main
                 activeFocusOnTab: true
-                echoMode:         TextInput.Password
                 underlineVisible: canEditNode
                 readOnly:         !canEditNode
             }

@@ -10,6 +10,14 @@ Item {
     implicitHeight: logoutButton.implicitHeight
     ContextMenu {
         id: accountContextMenu
+        VersionFooter {
+            horizontalAlignment:    Text.AlignRight
+            rightPadding:           20
+        }
+        MenuSeparator{
+            leftPadding:            8
+            rightPadding:           8
+        }
         SFLabel {
             leftPadding:            20
             rightPadding:           20
@@ -19,7 +27,10 @@ Item {
             color:                  Style.content_main
             font.styleName: "Bold"; font.weight: Font.Bold
         }
-        MenuSeparator{}
+        MenuSeparator{
+            leftPadding:            8
+            rightPadding:           8
+        }
         Action {
             text:           qsTrId("settings-title")
             icon.source:    "qrc:/assets/icon-settings.svg"
@@ -47,7 +58,7 @@ Item {
         icon.height:            32
         icon.color:             "transparent"
         onClicked: {
-            accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height))
+            accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height + 7))
         }
     }
 }

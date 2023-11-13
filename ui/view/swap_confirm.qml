@@ -254,7 +254,6 @@ ConfirmationDialog {
                 activeFocusOnTab:       true
                 font.pixelSize:         14
                 color:                  Style.content_main
-                echoMode:               TextInput.Password
                 onAccepted:             passworInputEnter()
                 onTextChanged:          if (requirePasswordError.text.length > 0) requirePasswordError.text = ""
             }

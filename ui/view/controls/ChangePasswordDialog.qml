@@ -18,7 +18,7 @@ CustomDialog {
     modal: true
 
     width: 520
-    height: 420
+    height: 444
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     visible: false
@@ -41,7 +41,7 @@ CustomDialog {
         Column
         {
             width: parent.width
-
+            spacing: 8
             SFText {
                 //% "Enter old password"
                 text: qsTrId("change-pwd-old-pwd-label")
@@ -50,21 +50,18 @@ CustomDialog {
                 font.styleName: "Bold"; font.weight: Font.Bold
             }
 
-            SFTextInput {
+            PasswordInput {
                 id: oldPass
-
                 width: parent.width
-
                 font.pixelSize: 12
                 color: Style.content_main
-                echoMode: TextInput.Password
-            }    		
+            }
         }
 
         Column
         {
             width: parent.width
-
+            spacing: 8
             SFText {
                 //% "Enter new password"
                 text: qsTrId("change-pwd-new-pwd-label")
@@ -73,21 +70,18 @@ CustomDialog {
                 font.styleName: "Bold"; font.weight: Font.Bold
             }
 
-            SFTextInput {
+            PasswordInput {
                 id: newPass
-
                 width: parent.width
-
                 font.pixelSize: 12
                 color: Style.content_main
-                echoMode: TextInput.Password
-            }    		
+            }
         }
 
         Column
         {
             width: parent.width
-
+            spacing: 8
             SFText {
                 //% "Confirm new password"
                 text: qsTrId("change-pwd-confirm-pwd-label")
@@ -96,14 +90,11 @@ CustomDialog {
                 font.styleName: "Bold"; font.weight: Font.Bold
             }
 
-            SFTextInput {
+            PasswordInput {
                 id: confirmPass
-
                 width: parent.width
-
                 font.pixelSize: 12
                 color: Style.content_main
-                echoMode: TextInput.Password
             }
 
         }
@@ -116,8 +107,8 @@ CustomDialog {
                 id: error
                 color: Style.validator_error
                 font.pixelSize: 12
-            }			
-        }    	
+            }
+        }
 
         Row {
             anchors.horizontalCenter: parent.horizontalCenter

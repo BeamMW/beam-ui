@@ -81,11 +81,11 @@ WizzardPage {
                 font.styleName: "Bold"; font.weight: Font.Bold
             }
 
-            PasswordBoxInput {
+            PasswordInput {
                 id:password
                 width: parent.width
                 font.pixelSize: 16
-                showEye: true
+                padding: 13
                 onTextChanged: {
                     if (confirmPassword.text.length == password.text.length) {
                         passwordError.text = "";
@@ -110,11 +110,11 @@ WizzardPage {
                 font.styleName: "Bold"; font.weight: Font.Bold
             }
 
-            PasswordBoxInput {
+            PasswordInput {
                 id: confirmPassword
                 width: parent.width
                 font.pixelSize: 16
-                showEye: true
+                padding: 13
                 onTextChanged: {
                     if (confirmPassword.text.length == password.text.length) {
                         passwordError.text = "";

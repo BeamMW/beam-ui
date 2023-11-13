@@ -11,8 +11,9 @@ ComboBox {
     id: control
     
     spacing: 8
-    padding: 6
-    leftPadding: 8
+    padding: 8
+    leftPadding:    16
+    rightPadding:   16
     property int dropSpacing: 20
     property int fontPixelSize: 12
     property int dropFontPixelSize: 13

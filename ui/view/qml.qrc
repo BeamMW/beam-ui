@@ -75,7 +75,7 @@
         <file>controls/SettingsTitle.qml</file>
         <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>controls/PanelGradient.qml</file>
-        <file>controls/PasswordBoxInput.qml</file>
+        <file>controls/PasswordInput.qml</file>
         <file>controls/AlphaTip.qml</file>
         <file>controls/AlphaTipPopup.qml</file>
         <file>controls/SubtitleRow.qml</file>

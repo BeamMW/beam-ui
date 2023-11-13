@@ -80,7 +80,7 @@ StartLayout {
                 if (viewModel.isFoundExistingWalletDB()) {
                     startWizzardView.replace(migrateWalletPage);
                 } else {
-                    startWizzardView.replace(walletStartPage);
+                    startWizzardView.push(walletStartPage);
                 }
             }
             function onCurrentNetworkChanged() {
@@ -102,18 +102,17 @@ StartLayout {
                 font.styleName: "Bold"; font.weight: Font.Bold
             }
 
-            SFTextInput {
+            PasswordInput {
                 id: openPassword
-                Layout.fillWidth: true
-                focus: true
-                activeFocusOnTab: true
-                font.pixelSize: 14
-                color: openPasswordError.text.length ? Style.validator_error : Style.content_main
-                echoMode: TextInput.Password
+                Layout.fillWidth:   true
+                focus:              true
+                activeFocusOnTab:   true
+                font.pixelSize:     14
+                padding:            13
+                hasError: openPasswordError.text.length > 0
                 onAccepted: btnCurrentWallet.clicked()
                 onTextChanged: if (openPassword.text.length > 0) openPasswordError.text = ""
-                enabled: viewModel.isOnlyOneInstanceStarted
-                backgroundColor: openPasswordError.text.length ? Style.validator_error : Style.content_main
+                enabled: viewModel.isOnlyOneInstanceStarted && viewModel.walletExists
             }
 
             SFText {
@@ -160,7 +159,9 @@ StartLayout {
             PrimaryButton {
                 anchors.verticalCenter: parent.verticalCenter
                 id: btnCurrentWallet
-                enabled: viewModel.isOnlyOneInstanceStarted && (!viewModel.useHWWallet || viewModel.isTrezorConnected)
+                enabled: viewModel.isOnlyOneInstanceStarted && 
+                         viewModel.walletExists &&
+                        (!viewModel.useHWWallet || viewModel.isTrezorConnected)
                 text: (viewModel.useHWWallet == false)
                     ?
                     //% "Show my wallet"

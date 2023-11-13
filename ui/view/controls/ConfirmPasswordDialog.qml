@@ -60,25 +60,23 @@
         }
 
         ColumnLayout {
-            Layout.fillWidth:		true
+            Layout.fillWidth:           true
             SFText {
-                Layout.fillWidth:		true
-                Layout.alignment:		Qt.AlignHCenter
-                text:					dialogMessage
-                color:					Style.content_main
-                font.pixelSize:			14
-                wrapMode:				Text.Wrap
+                Layout.fillWidth:       true
+                Layout.alignment:       Qt.AlignHCenter
+                text:                   dialogMessage
+                color:                  Style.content_main
+                font.pixelSize:         14
+                wrapMode:               Text.Wrap
             }
 
-            SFTextInput {
+            PasswordInput {
                 id: pwd
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillWidth: true
                 font.pixelSize: 14
                 rightPadding:   0
-                color: showError ? Style.validator_error : Style.content_main
-                backgroundColor: showError ? Style.validator_error : Style.content_main
-                echoMode: TextInput.Password
+                hasError: showError
                 onTextEdited: {
                     showError = false;
                 }
@@ -112,7 +110,7 @@
                     visible: showError && pwd.text.length
                 }
             }
-        }			 	
+        }
 
         RowLayout {
             spacing: 20

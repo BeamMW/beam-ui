@@ -26,7 +26,7 @@ T.TextField {
         letterSpacing : 4
     }
 
-    padding: 10
+    padding: 6
     leftPadding: 16
     rightPadding: showEye ? 50 : 16
 
@@ -35,10 +35,12 @@ T.TextField {
     verticalAlignment: TextInput.AlignVCenter
 
     property bool  focusablePlaceholder: false
+    property alias backgroundColor : backgroundRect.color
+    property alias underlineVisible : backgroundRect.visible
     property bool  hasError: false
     property color inputColor: Style.content_main
     color: hasError ? Style.validator_error : inputColor
-    property bool showEye: false
+    property bool showEye: true
     echoMode: TextInput.Password
     passwordCharacter: "•"
 
@@ -143,22 +145,18 @@ T.TextField {
         }
     }
 
-    SvgImage {
-        source: control.echoMode == TextInput.Password ? "qrc:/assets/icon-eye.svg" : "qrc:/assets/icon-eye-crossed.svg"
-        x: control.width - 40
-        y: 9
-        visible: showEye && control.activeFocus
-
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.LeftButton
-            cursorShape: Qt.PointingHandCursor
-            onClicked: function () {
-                if (control.echoMode == TextInput.Password) {
-                    control.echoMode = TextInput.Normal;
-                } else if (control.echoMode == TextInput.Normal) {
-                    control.echoMode = TextInput.Password;
-                }
+    CustomToolButton {
+        icon.source: control.echoMode == TextInput.Password ? "qrc:/assets/icon-eye.svg" : "qrc:/assets/icon-eye-crossed.svg"
+        anchors.right: control.right
+        anchors.rightMargin: 8
+        anchors.verticalCenter: control.verticalCenter
+        focusPolicy: Qt.NoFocus
+        visible: showEye && control.activeFocus && control.text.length > 0
+        onClicked: function () {
+            if (control.echoMode == TextInput.Password) {
+                control.echoMode = TextInput.Normal;
+            } else if (control.echoMode == TextInput.Normal) {
+                control.echoMode = TextInput.Password;
             }
         }
     }
