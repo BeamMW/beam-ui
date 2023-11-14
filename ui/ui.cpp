@@ -297,13 +297,11 @@ int main (int argc, char* argv[])
             QQmlApplicationEngine engine;
             Translator translator(settings, engine);
             
-            if (settings.getNodeAddress().isEmpty())
+            if (settings.getNodeAddress().isEmpty() &&
+                vm.count(cli::NODE_ADDR))
             {
-                if (vm.count(cli::NODE_ADDR))
-                {
-                    string nodeAddr = vm[cli::NODE_ADDR].as<string>();
-                    settings.setNodeAddress(nodeAddr.c_str());
-                }
+                string nodeAddr = vm[cli::NODE_ADDR].as<string>();
+                settings.setNodeAddress(nodeAddr.c_str());
             }
 
             qmlRegisterSingletonType<Theme>(

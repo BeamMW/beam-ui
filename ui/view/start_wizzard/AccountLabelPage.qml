@@ -50,6 +50,9 @@ WizzardPage {
                     property: "newAccountLabel"
                     value: accountLabel.text
                 }
+                Component.onCompleted: {
+                    viewModel.newAccountLabel = viewModel.defaultNewAccountLabel
+                }
             }
 
             SFText {

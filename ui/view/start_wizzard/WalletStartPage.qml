@@ -132,7 +132,6 @@ StartLayout {
         }
         Row {
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: 40
             Layout.bottomMargin: 37
             spacing: 40
             LinkButton {

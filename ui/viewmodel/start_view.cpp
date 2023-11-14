@@ -702,35 +702,52 @@ bool StartViewModel::isCapsLockOn() const
 
 void StartViewModel::setupLocalNode(int port, const QString& localNodePeer)
 {
+    m_connectToLocalNode = true;
+    m_localNodePort = port;
+    m_remoteNodeAddress = localNodePeer;
+}
+
+void StartViewModel::setupNode()
+{
     auto& settings = AppModel::getInstance().getSettings();
-    auto localAddress = QString::asprintf("127.0.0.1:%d", port);
-    settings.setNodeAddress(localAddress);
-    settings.setLocalNodePort(port);
-    settings.setRunLocalNode(true);
+    if (m_localNodePort > 0)
+    {
+        settings.setLocalNodePort(m_localNodePort);
+    }
+    if (m_connectToLocalNode) 
+    {
+        auto localAddress = defaultRemoteNodeAddr();
+        settings.setNodeAddress(localAddress);
+    }
+    else
+    {
+        settings.setNodeAddress(m_remoteNodeAddress);
+    }
+
+    settings.setRunLocalNode(m_connectToLocalNode);
     QStringList peers;
-    
+
     for (const auto& peer : getDefaultPeers())
     {
-        if (localNodePeer != peer.c_str())
+        if (m_remoteNodeAddress != peer.c_str())
         {
             peers.push_back(peer.c_str());
         }
     }
 
-    peers.push_back(localNodePeer);
+    peers.push_back(m_remoteNodeAddress);
     settings.setLocalNodePeers(peers);
 }
 
 void StartViewModel::setupRemoteNode(const QString& nodeAddress)
 {
-    AppModel::getInstance().getSettings().setRunLocalNode(false);
-    AppModel::getInstance().getSettings().setNodeAddress(nodeAddress);
+    m_connectToLocalNode = false;
+    m_remoteNodeAddress = nodeAddress;
 }
 
 void StartViewModel::setupRandomNode()
 {
-    AppModel::getInstance().getSettings().setRunLocalNode(false);
-    AppModel::getInstance().getSettings().setNodeAddress(chooseRandomNode());
+    setupRemoteNode(chooseRandomNode());
 }
 
 uint StartViewModel::coreAmount() const
@@ -794,8 +811,10 @@ void StartViewModel::createWallet(const QJSValue& callback)
     if (AppModel::getInstance().isOnlyOneInstanceStarted())
     {
         AppModel::resetInstance(AppModel::getInstance().getSettings(), getNewAccountIndex());
-        AppModel::getInstance().getSettings().setAccountLabel(getNewAccountLabel());
-        AppModel::getInstance().getSettings().setAccountPictureIndex(m_newAccountPictureIndex);
+        auto& settings = AppModel::getInstance().getSettings();
+        settings.setAccountLabel(getNewAccountLabel());
+        settings.setAccountPictureIndex(m_newAccountPictureIndex);
+        setupNode();
         try
         {
             AppModel::getInstance().createWalletThrow(m_useHWWallet ? nullptr : &secretSeed, secretPass, rawSeed);
@@ -1161,14 +1180,14 @@ void StartViewModel::setCurrentAccountIndexForced(int value)
 
 QString StartViewModel::getNewAccountLabel() const
 {
-    if (m_newAccountLabel.isEmpty())
-    {
-        int accountIndex = getNewAccountIndex();
-        //% "Account %1"
-        return qtTrId("new-account-label").arg(accountIndex + 1);
-    }
-
     return m_newAccountLabel;
+}
+
+QString StartViewModel::getDefaultNewAccountLabel() const
+{
+    int accountIndex = getNewAccountIndex();
+    //% "Account %1"
+    return qtTrId("new-account-label").arg(accountIndex + 1);
 }
 
 void StartViewModel::setNewAccountLabel(const QString& value)

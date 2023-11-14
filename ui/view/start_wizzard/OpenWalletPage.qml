@@ -59,8 +59,8 @@ StartLayout {
 
     ColumnLayout {
         id: openColumn
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+        Layout.fillHeight:  true
+        Layout.fillWidth:   true
         spacing: 0
 
         AccountSetup {
@@ -91,9 +91,9 @@ StartLayout {
         ColumnLayout {
             Layout.maximumWidth: 400
             Layout.minimumWidth: 400
-            Layout.preferredHeight: 79
+            Layout.fillHeight:  false
             Layout.alignment: Qt.AlignHCenter
-
+            spacing:    8
             SFText {
                 //% "Account password"
                 text: qsTrId("start-account-password-label")
@@ -130,7 +130,7 @@ StartLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 14
             Layout.preferredHeight: 38
-            spacing:          15
+            spacing:          20
                                 
             function tryOpenWallet() {
                 if(openPassword.text.length == 0)
@@ -210,7 +210,6 @@ StartLayout {
 
         LinkButton {
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: 40
             Layout.bottomMargin: 37
             //% "Restore wallet or create a new one"
             text: qsTrId("general-restore-or-create-wallet")

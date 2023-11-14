@@ -122,6 +122,7 @@ class StartViewModel : public QObject
     Q_PROPERTY(bool walletExists READ walletExists NOTIFY walletExistsChanged)
     Q_PROPERTY(bool isRecoveryMode READ getIsRecoveryMode WRITE setIsRecoveryMode NOTIFY isRecoveryModeChanged)
     Q_PROPERTY(QString newAccountLabel READ getNewAccountLabel WRITE setNewAccountLabel NOTIFY newAccountLabelChanged)
+    Q_PROPERTY(QString defaultNewAccountLabel READ getDefaultNewAccountLabel CONSTANT)
     Q_PROPERTY(QList<QObject*> recoveryPhrases READ getRecoveryPhrases NOTIFY recoveryPhrasesChanged)
     Q_PROPERTY(QList<QObject*> checkPhrases READ getCheckPhrases NOTIFY checkPhrasesChanged)
     Q_PROPERTY(QChar phrasesSeparator READ getPhrasesSeparator CONSTANT)
@@ -190,6 +191,7 @@ public:
     void setCurrentAccountIndex(int value);
     void setCurrentAccountIndexForced(int value);
     QString getNewAccountLabel() const;
+    QString getDefaultNewAccountLabel() const;
     void setNewAccountLabel(const QString& value);
     bool getAccountLabelExists() const;
     void setAccountLabelExists(bool value);
@@ -255,6 +257,7 @@ private:
     void findExistingWalletDBIfNeeded();
     void findExistingWalletDB();
     QString getPhrases() const;
+    void setupNode();
 
     QList<QObject*> m_recoveryPhrases;
     QList<QObject*> m_checkPhrases;
@@ -274,6 +277,9 @@ private:
     mutable QList<QVariantMap> m_accounts;
     bool m_accountLabelExists = false;
     int m_newAccountPictureIndex = 0;
+    bool m_connectToLocalNode = false;
+    int m_localNodePort = 0;
+    QString m_remoteNodeAddress;
 
 #if defined(BEAM_HW_WALLET)
     std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;
