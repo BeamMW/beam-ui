@@ -727,7 +727,7 @@
         <translation>Lütfen senkronizasyonu bekleyin ve uygulamayı kapatmayın veya simge durumuna almayın.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Yalnızca cüzdan bakiyesi (UTXO) geri yüklenebilir, işlem bilgileri ve adresler her zaman gizlidir ve hiçbir zaman blokzincirinde tutulmaz.</translation>
     </message>
     <message id="start-recovery-title">

@@ -727,7 +727,7 @@
         <translation>Ole hyvä ja odota kunnes synkronointi on valmis. Älä myöskään sulje sovellusta tai pienennä ikkunaa.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Ainoastaan lompakon saldo (UTXO) voidaan palauttaa. Tapahtumatiedot ja osoitteet pysyvät aina salassa, eivätkä ne tallennu lohkoketjuun.</translation>
     </message>
     <message id="start-recovery-title">
