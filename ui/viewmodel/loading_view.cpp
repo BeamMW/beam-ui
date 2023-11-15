@@ -47,7 +47,7 @@ LoadingViewModel::LoadingViewModel()
     , m_total{0}
     , m_done{0}
     , m_lastDone{0}
-    , m_hasLocalNode{ AppModel::getInstance().getSettings().getRunLocalNode() }
+    , m_connectedToLocalNode{ AppModel::getInstance().getSettings().isConnectedToLocalNode() }
     , m_isCreating{false}
     , m_isDownloadStarted{false}
     , m_lastProgress{0.}
@@ -64,7 +64,7 @@ LoadingViewModel::LoadingViewModel()
     connect(m_walletModel, SIGNAL(nodeConnectionChanged(bool)), SLOT(onNodeConnectionChanged(bool)));
     connect(m_walletModel, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
 
-    if (AppModel::getInstance().getSettings().getRunLocalNode())
+    if (m_connectedToLocalNode)
     {
         connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int, int)), SLOT(onNodeSyncProgressUpdated(int, int)));
         connect(&AppModel::getInstance().getNode(), SIGNAL(initProgressUpdated(quint64, quint64)), SLOT(onNodeInitProgressUpdated(quint64, quint64)));
@@ -82,7 +82,7 @@ void LoadingViewModel::onNodeInitProgressUpdated(quint64 done, quint64 total)
 
 void LoadingViewModel::onSyncProgressUpdated(int done, int total)
 {
-    if (!m_hasLocalNode)
+    if (!m_connectedToLocalNode)
     {
         onSync(done, total);
     }
@@ -90,7 +90,7 @@ void LoadingViewModel::onSyncProgressUpdated(int done, int total)
 
 void LoadingViewModel::onNodeSyncProgressUpdated(int done, int total)
 {
-    if (m_hasLocalNode)
+    if (m_connectedToLocalNode)
     {
         onSync(done, total);
     }
@@ -190,8 +190,7 @@ void LoadingViewModel::updateProgress()
     }
     else
     {
-        m_hasLocalNode = AppModel::getInstance().getSettings().getRunLocalNode();
-        if (m_hasLocalNode)
+        if (m_connectedToLocalNode)
         {
             //% "Rebuilding wallet data: "
             progressMessage = qtTrId("loading-view-rebuild-utxos");
@@ -204,7 +203,7 @@ void LoadingViewModel::updateProgress()
         progress = m_lastProgress;
 
     progressMessage.append(estimateStr);
-    if (m_hasLocalNode)
+    if (m_connectedToLocalNode)
     {
         progressMessage.append(
             " (" + QString::asprintf(kPercentagePlaceholderNatural, progress * 100) + ")");
@@ -388,7 +387,7 @@ void LoadingViewModel::onGetWalletError(beam::wallet::ErrorType error)
             break;
     }
 
-    // There's an unhandled error. Show wallet and display it in errorneous state
+    // There's an unhandled error. Show wallet and display it in erroneous state
     updateProgress();
     emit syncCompleted();
 }

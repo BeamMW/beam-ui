@@ -1306,6 +1306,11 @@ void  WalletSettings::setAccountPictureIndex(int value)
     m_accountSettings.m_data.setValue(kAccountPicture, value);
 }
 
+bool WalletSettings::isConnectedToLocalNode() const
+{
+    return getRunLocalNode() && getNodeAddress() == QString("127.0.0.1:%1").arg(getLocalNodePort());
+}
+
 QString WalletSettings::getAccountPictureByIndex(int index)
 {
     return QString("qrc:/assets/asset-%1.svg").arg(index);

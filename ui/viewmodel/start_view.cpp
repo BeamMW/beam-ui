@@ -724,7 +724,7 @@ void StartViewModel::setupNode()
         settings.setNodeAddress(m_remoteNodeAddress);
     }
 
-    settings.setRunLocalNode(m_connectToLocalNode);
+    settings.setRunLocalNode(true/*m_connectToLocalNode*/);
     QStringList peers;
 
     for (const auto& peer : getDefaultPeers())

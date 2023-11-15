@@ -177,6 +177,7 @@ public:
     void setAccountLabel(const QString& label);
     int getAccountPictureIndex() const;
     void setAccountPictureIndex(int value);
+    bool isConnectedToLocalNode() const;
 
     static QString getAccountPictureByIndex(int index);
 

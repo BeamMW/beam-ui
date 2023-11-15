@@ -178,7 +178,7 @@ Item {
                     id: progressText
                     color: Style.content_main
                     font.pixelSize: 15
-                    text: "(" + model.nodeSyncProgress + "%)"
+                    text: "(" + model.nodeSyncProgress.toFixed(2) + "%)"
                     visible: model.nodeSyncProgress > 0 && update_indicator.visible
                 }
 

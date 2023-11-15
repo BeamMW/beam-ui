@@ -57,7 +57,7 @@ SettingsFoldable {
         GridLayout {
             Layout.fillWidth: true
             Layout.topMargin: 30
-            visible: !viewModel.localNodeRun
+            //visible: !viewModel.localNodeRun
             columnSpacing: 20
             rowSpacing: 30
             columns: 2

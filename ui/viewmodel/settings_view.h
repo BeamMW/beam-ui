@@ -230,7 +230,7 @@ private:
     SwapEthSettingsItem m_ethSettings;
 
     QString m_nodeAddress;
-    bool m_localNodeRun;
+    bool m_localNodeRun = false;
     unsigned int m_localNodePort = 0;
     QString m_remoteNodePort; // TODO:change to unsigned int like localNodePort
 

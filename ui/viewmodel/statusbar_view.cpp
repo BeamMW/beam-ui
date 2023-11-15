@@ -91,7 +91,7 @@ bool StatusbarViewModel::getIsExchangeRatesUpdated() const
     return m_exchangeRatesManager->isUpToDate();
 }
 
-int StatusbarViewModel::getNodeSyncProgress() const
+float StatusbarViewModel::getNodeSyncProgress() const
 {
     return m_nodeSyncProgress;
 }
@@ -171,7 +171,7 @@ void StatusbarViewModel::setIsFailedStatus(bool value)
     }
 }
 
-void StatusbarViewModel::setNodeSyncProgress(int value)
+void StatusbarViewModel::setNodeSyncProgress(float value)
 {
     if (m_nodeSyncProgress != value)
     {
@@ -294,12 +294,15 @@ void StatusbarViewModel::onSyncProgressUpdated(int done, int total)
 
 void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
 {
+    if (!m_settings.isConnectedToLocalNode())
+        return;
+
     m_nodeDone = done;
     m_nodeTotal = total;
 
     if (total > 0)
     {
-        setNodeSyncProgress(static_cast<int>(done * 100) / total);
+        setNodeSyncProgress(static_cast<float>(done * 100) / total);
     }
 
     setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));

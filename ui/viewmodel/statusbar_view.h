@@ -39,7 +39,7 @@ class StatusbarViewModel : public QObject
     Q_PROPERTY(bool isConnectionTrusted     READ getIsConnectionTrusted NOTIFY isConnectionTrustedChanged)
     Q_PROPERTY(bool isExchangeRatesUpdated  READ getIsExchangeRatesUpdated NOTIFY exchangeRatesUpdateStatusChanged)
     Q_PROPERTY(QString exchangeStatus       READ getExchangeStatus      NOTIFY exchangeRatesUpdateStatusChanged)
-    Q_PROPERTY(int nodeSyncProgress         READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
+    Q_PROPERTY(float nodeSyncProgress       READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
     Q_PROPERTY(QString branchName           READ getBranchName          CONSTANT)
     Q_PROPERTY(QString walletError          READ getWalletError         NOTIFY walletErrorChanged)
     Q_PROPERTY(QString hwwError             READ getHwwError            NOTIFY hwwErrorChanged)
@@ -62,7 +62,7 @@ public:
     [[nodiscard]] bool getIsSyncInProgress() const;
     [[nodiscard]] bool getIsConnectionTrusted() const;
     [[nodiscard]] bool getIsExchangeRatesUpdated() const;
-    [[nodiscard]] int getNodeSyncProgress() const;
+    [[nodiscard]] float getNodeSyncProgress() const;
     [[nodiscard]] QString getBranchName() const;
     [[nodiscard]] QString getWalletError() const;
     [[nodiscard]] QString getExchangeStatus() const;
@@ -85,7 +85,7 @@ public:
     void setIsFailedStatus(bool value);
     void setIsSyncInProgress(bool value);
     void setIsConnectionTrusted(bool value);
-    void setNodeSyncProgress(int value);
+    void setNodeSyncProgress(float value);
     void setWalletStatusErrorMsg(const QString& value);
 
 public slots:
@@ -141,7 +141,7 @@ private:
     bool m_isFailedStatus;
     bool m_isFailedHww;
     bool m_isConnectionTrusted;
-    int m_nodeSyncProgress;
+    float m_nodeSyncProgress;
 
     int m_nodeDone;
     int m_nodeTotal;

@@ -599,16 +599,10 @@ void AppModel::applyNodeChanges()
     if (m_settings.getRunLocalNode())
     {
         startNode();
+    }
 
-        io::Address nodeAddr = io::Address::LOCALHOST;
-        nodeAddr.port(m_settings.getLocalNodePort());
-        m_wallet->getAsync()->setNodeAddress(nodeAddr.str());
-    }
-    else
-    {
-        auto nodeAddr = m_settings.getNodeAddress().toStdString();
-        m_wallet->getAsync()->setNodeAddress(nodeAddr);
-    }
+    auto nodeAddr = m_settings.getNodeAddress().toStdString();
+    m_wallet->getAsync()->setNodeAddress(nodeAddr);
 }
 
 void AppModel::nodeSettingsChanged()
@@ -663,12 +657,6 @@ void AppModel::start()
     m_nodeModel.setOwnerKey(m_db->get_OwnerKdf());
 
     std::string nodeAddrStr = m_settings.getNodeAddress().toStdString();
-    if (m_settings.getRunLocalNode())
-    {
-        io::Address nodeAddr = io::Address::LOCALHOST;
-        nodeAddr.port(m_settings.getLocalNodePort());
-        nodeAddrStr = nodeAddr.str();
-    }
 
     initSwapClients();
 
@@ -681,7 +669,8 @@ void AppModel::start()
     {
         startNode();
     }
-    else
+
+    if (!m_settings.isConnectedToLocalNode())
     {
         startWallet();
     }
