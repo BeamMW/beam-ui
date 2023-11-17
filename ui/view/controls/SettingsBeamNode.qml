@@ -109,7 +109,7 @@ SettingsFoldable {
         RowLayout {
             Layout.topMargin:       15
             Layout.bottomMargin:    5
-            Layout.rightMargin:     8   
+            Layout.rightMargin:     0
             spacing: 0
             visible: viewModel.localNodeRun
 
@@ -182,7 +182,7 @@ SettingsFoldable {
                     padding: 0
                     spacing: 0
                     icon.source: "qrc:/assets/icon-delete.svg"
-                    enabled: !localNodeRun.checked
+                    enabled: localNodeRun.checked
                     onClicked: viewModel.deleteLocalNodePeer(index)
                 }
             }
