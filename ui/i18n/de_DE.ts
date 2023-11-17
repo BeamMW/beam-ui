@@ -724,7 +724,7 @@
         <translation>Bitte warten Sie auf die Synchronisation und Schließen oder Minimieren Sie die Anwendung nicht.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Nur das Wallet-Guthaben (UTXO) kann wiederhergestellt werden, Transaktionen und Adressen sind immer privat und werden nie auf der Blockchain gespeichert.</translation>
     </message>
     <message id="start-recovery-title">

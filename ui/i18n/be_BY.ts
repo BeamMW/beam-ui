@@ -724,7 +724,7 @@
         <translation>Калі ласка, дачакайцеся завяршэння сінхранізацыі, ня зачыняйце і ня зварочвайце акно.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Будзе адноўлены толькі баланс кашалька (UTXO), інфармацыя аб транзакцыях і адрасах з&apos;яўляецца прыватнай і не захоўваецца ў блокчейн.</translation>
     </message>
     <message id="start-recovery-title">

@@ -875,7 +875,7 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>Молим сачекајте да се синхронизација заврши и не затварајте нити минимизујте апликацију.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Само баланс новчаника (UTXO) може бити опорављен, информације о трансакцијама и адресама су увек приватне и никада се не чувају на блокчеину.</translation>
     </message>
     <message id="start-recovery-title">
