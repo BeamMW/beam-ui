@@ -156,8 +156,8 @@ ColumnLayout {
                     text:  qsTrId("settings-connectivity-title")
                 }
 
-                SettingsBeamNode {
-                    id: nodeBlock
+                SettingsBeamRemoteNode {
+                    id: remoteNodeBlock
                     viewModel: viewModel
 
                     showStatus: true
@@ -169,6 +169,24 @@ ColumnLayout {
                         var sbar = main.statusBar.model
                         if (sbar.isFailedStatus) return "error"
                         else if (sbar.isSyncInProgress || sbar.isOnline) return "connected"
+                        else return "disconnected";
+                    }
+                }
+
+                SettingsBeamNode {
+                    id: nodeBlock
+                    viewModel: viewModel
+
+                    showStatus: true
+                    connectionStatus: getStatus()
+                    connectionError:  main.statusBar.localNodeError
+                    folded: unfoldSection != "BEAM_NODE"
+                    syncProgress: main.statusBar.nodeSyncProgress
+                    function getStatus() {
+                        console.log("main.statusBar.nodeSyncProgress: " + main.statusBar.nodeSyncProgress.toFixed(2))
+                        var sbar = main.statusBar.model
+                        if (sbar.isFailedLocalNode) return "error"
+                        else if (sbar.nodeSyncProgress > 0) return "connected"
                         else return "disconnected";
                     }
                 }

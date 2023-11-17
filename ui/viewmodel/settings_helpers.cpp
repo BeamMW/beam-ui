@@ -27,7 +27,7 @@ QString AddressToQstring(const beam::io::Address& address)
     return {};
 }
 
-QString formatAddress(const QString& address, const QString& port)
+QString formatAddress(const QString& address, uint16_t port)
 {
     return QString("%1:%2").arg(address).arg(port);
 }
@@ -44,7 +44,7 @@ UnpackedAddress parseAddress(const QString& address)
     if (separator > -1)
     {
         res.address = address.left(separator);
-        res.port = address.mid(separator + 1);
+        res.port = address.mid(separator + 1).toShort();
     }
     else
     {

@@ -34,7 +34,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(QString  nodeUser     READ getNodeUser     WRITE setNodeUser       NOTIFY nodeUserChanged)
     Q_PROPERTY(QString  nodePass     READ getNodePass     WRITE setNodePass       NOTIFY nodePassChanged)
     Q_PROPERTY(QString  nodeAddress  READ getNodeAddress  WRITE setNodeAddress    NOTIFY nodeAddressChanged)
-    Q_PROPERTY(QString  nodePort     READ getNodePort     WRITE setNodePort       NOTIFY nodePortChanged)
+    Q_PROPERTY(unsigned int nodePort     READ getNodePort     WRITE setNodePort       NOTIFY nodePortChanged)
 
     // electrum settings
     Q_PROPERTY(bool            isSupportedElectrum       READ isSupportedElectrum                                  CONSTANT)
@@ -43,7 +43,7 @@ class SwapCoinSettingsItem : public QObject
     Q_PROPERTY(bool            isCurrentSeedSegwit       READ getIsCurrentSeedSegwit                                            NOTIFY isCurrentSeedSegwitChanged)
     Q_PROPERTY(QList<QObject*> electrumSeedPhrases       READ getElectrumSeedPhrases                                            NOTIFY electrumSeedPhrasesChanged)
     Q_PROPERTY(QString         nodeAddressElectrum       READ getNodeAddressElectrum        WRITE setNodeAddressElectrum        NOTIFY nodeAddressElectrumChanged)
-    Q_PROPERTY(QString         nodePortElectrum          READ getNodePortElectrum           WRITE setNodePortElectrum           NOTIFY nodePortElectrumChanged)
+    Q_PROPERTY(unsigned int        nodePortElectrum          READ getNodePortElectrum           WRITE setNodePortElectrum           NOTIFY nodePortElectrumChanged)
     Q_PROPERTY(bool            selectServerAutomatically READ getSelectServerAutomatically  WRITE setSelectServerAutomatically  NOTIFY selectServerAutomaticallyChanged)
     Q_PROPERTY(bool            canChangeConnection       READ canChangeConnection                                               NOTIFY canChangeConnectionChanged)
 
@@ -72,8 +72,8 @@ public:
     void setNodePass(const QString& value);
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
-    QString getNodePort() const;
-    void setNodePort(const QString& value);
+    unsigned int getNodePort() const;
+    void setNodePort(unsigned int value);
 
     bool getIsCurrentSeedValid() const;
     bool getIsCurrentSeedSegwit() const;
@@ -81,8 +81,8 @@ public:
     QChar getPhrasesSeparatorElectrum() const;
     QString getNodeAddressElectrum() const;
     void setNodeAddressElectrum(const QString& value);
-    QString getNodePortElectrum() const;
-    void setNodePortElectrum(const QString& value);
+    unsigned int getNodePortElectrum() const;
+    void setNodePortElectrum(unsigned int value);
     bool getSelectServerAutomatically() const;
     void setSelectServerAutomatically(bool value);
     bool isSupportedElectrum() const;
@@ -167,11 +167,11 @@ private:
     QString m_nodeUser;
     QString m_nodePass;
     QString m_nodeAddress;
-    QString m_nodePort;
+    unsigned int m_nodePort;
 
     QList<QObject*> m_seedPhraseItems;
     QString m_nodeAddressElectrum;
-    QString m_nodePortElectrum;
+    unsigned int m_nodePortElectrum;
     bool m_selectServerAutomatically;
     bool m_isCurrentSeedValid = false;
 

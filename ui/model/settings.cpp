@@ -27,6 +27,7 @@
 #include "quazip/quazip.h"
 #include "quazip/quazipfile.h"
 #include "wallet/client/apps_api/apps_utils.h"
+#include "viewmodel/settings_helpers.h"
 
 #ifdef BEAM_IPFS_SUPPORT
 #include "utility/cli/options.h"
@@ -270,11 +271,6 @@ void WalletSettings::setNodeAddress(const QString& addr)
 {
     if (addr != getNodeAddress())
     {
-        auto walletModel = AppModel::getInstance().getWalletModelUnsafe();
-        if (walletModel)
-        {
-            walletModel->getAsync()->setNodeAddress(addr.toStdString());
-        }
         {
             Lock lock(m_mutex);
             m_accountSettings.m_data.setValue(kNodeAddressName, addr);
@@ -282,7 +278,6 @@ void WalletSettings::setNodeAddress(const QString& addr)
         
         emit nodeAddressChanged();
     }
-    
 }
 
 int WalletSettings::getLockTimeout() const
@@ -754,9 +749,9 @@ void WalletSettings::reportProblem()
     }
 }
 
-void WalletSettings::applyNodeChanges()
+void WalletSettings::applyLocalNodeChanges()
 {
-    AppModel::getInstance().applyNodeChanges();
+    AppModel::getInstance().applyLocalNodeChanges();
 }
 
 QString WalletSettings::getExplorerUrl() const
@@ -1308,7 +1303,10 @@ void  WalletSettings::setAccountPictureIndex(int value)
 
 bool WalletSettings::isConnectedToLocalNode() const
 {
-    return getRunLocalNode() && getNodeAddress() == QString("127.0.0.1:%1").arg(getLocalNodePort());
+    auto unpackedAddress = parseAddress(getNodeAddress());
+    return getRunLocalNode() &&
+           QHostAddress(unpackedAddress.address).isLoopback() &&
+           unpackedAddress.port == getLocalNodePort();
 }
 
 QString WalletSettings::getAccountPictureByIndex(int index)

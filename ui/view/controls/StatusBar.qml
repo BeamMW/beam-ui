@@ -38,6 +38,7 @@ Item {
     property string statusOnlineRemote: qsTrId("status-online-remote")
     property var indicatorX: 50
     property var indicatorY: 50
+    property real nodeSyncProgress: model.nodeSyncProgress
 
     function setIndicator(indicator) {
         if (indicator !== rootControl.indicator) {

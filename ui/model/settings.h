@@ -193,7 +193,7 @@ public:
     #endif
 
     static const char* NodeDBFile;
-    void applyNodeChanges();
+    void applyLocalNodeChanges();
 
     #ifdef BEAM_IPFS_SUPPORT
     void applyIPFSChanges();

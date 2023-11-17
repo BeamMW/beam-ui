@@ -34,14 +34,16 @@ class SettingsViewModel : public QObject
 
     Q_PROPERTY(QString      nodeAddress                     READ getNodeAddress                 WRITE setNodeAddress    NOTIFY nodeAddressChanged)
     Q_PROPERTY(QString      version                         READ getVersion                     CONSTANT)
+    Q_PROPERTY(bool         connectLocalNode                READ getConnectLocalNode            WRITE setConnectLocalNode   NOTIFY connectLocalNodeChanged)
     Q_PROPERTY(bool         localNodeRun                    READ getLocalNodeRun                WRITE setLocalNodeRun   NOTIFY localNodeRunChanged)
     Q_PROPERTY(unsigned int localNodePort                   READ getLocalNodePort               WRITE setLocalNodePort  NOTIFY localNodePortChanged)
-    Q_PROPERTY(QString      remoteNodePort                  READ getRemoteNodePort              WRITE setRemoteNodePort NOTIFY remoteNodePortChanged)
+    Q_PROPERTY(unsigned int remoteNodePort                  READ getRemoteNodePort              WRITE setRemoteNodePort NOTIFY remoteNodePortChanged)
     Q_PROPERTY(bool         isNodeChanged                   READ isNodeChanged                  NOTIFY nodeSettingsChanged)
+    Q_PROPERTY(bool         isLocalNodeChanged              READ isLocalNodeChanged             NOTIFY nodeSettingsChanged)
     Q_PROPERTY(QStringList  localNodePeers                  READ getLocalNodePeers              NOTIFY localNodePeersChanged)
     Q_PROPERTY(int          lockTimeout                     READ getLockTimeout                 WRITE  setLockTimeout NOTIFY lockTimeoutChanged)
     Q_PROPERTY(QString      walletLocation                  READ getWalletLocation              CONSTANT)
-    Q_PROPERTY(bool         isLocalNodeRunning              READ isLocalNodeRunning             NOTIFY localNodeRunningChanged)
+    Q_PROPERTY(bool         isLocalNodeRunning              READ isLocalNodeRunning             NOTIFY  localNodeRunningChanged)
     Q_PROPERTY(bool         isPasswordRequiredToSpendMoney  READ isPasswordRequiredToSpendMoney WRITE   setPasswordRequiredToSpendMoney NOTIFY passwordRequiredToSpendMoneyChanged)
     Q_PROPERTY(bool         isAllowedBeamMWLinks            READ isAllowedBeamMWLinks           WRITE   allowBeamMWLinks NOTIFY beamMWLinksPermissionChanged)
     Q_PROPERTY(QStringList  supportedLanguages              READ getSupportedLanguages          NOTIFY  currentLanguageIndexChanged)
@@ -84,6 +86,8 @@ public:
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
     QString getVersion() const;
+    bool getConnectLocalNode() const;
+    void setConnectLocalNode(bool value);
     bool getLocalNodeRun() const;
     void setLocalNodeRun(bool value);
 
@@ -101,8 +105,8 @@ public:
     void setIPFSNodeStart(const QString&);
     #endif
 
-    QString getRemoteNodePort() const;
-    void setRemoteNodePort(const QString& value);
+    unsigned int getRemoteNodePort() const;
+    void setRemoteNodePort(unsigned int value);
     int getLockTimeout() const;
     void setLockTimeout(int value);
     bool isPasswordRequiredToSpendMoney() const;
@@ -129,6 +133,7 @@ public:
     bool isValidNodeAddress() const;
 
     bool isNodeChanged() const;
+    bool isLocalNodeChanged() const;
 
     const QList<QObject*>& getSwapCoinSettings();
     QObject* getNotificationsSettings();
@@ -168,25 +173,26 @@ public:
     Q_INVOKABLE void disallowAssetId(quint32 asset);
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 
-public slots:
-    void applyNodeChanges();
+    Q_INVOKABLE void applyLocalNodeChanges();
+    Q_INVOKABLE void applyNodeConnectionChanges();
 
     #ifdef BEAM_IPFS_SUPPORT
-    void applyIPFSChanges();
+    Q_INVOKABLE void applyIPFSChanges();
     #endif
-
-    void undoChanges();
+    Q_INVOKABLE void undoChanges();
+public slots:
     void onNodeStarted();
     void onNodeStopped();
     void onAddressChecked(const QString& addr, bool isValid);
     void onPublicAddressChanged(const QString& publicAddr);
 #ifdef BEAM_ASSET_SWAP_SUPPORT
-    void assetsListChanged();
+    void onAssetsListChanged();
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 
 signals:
     void nodeAddressChanged();
     void localNodeRunChanged();
+    void connectLocalNodeChanged();
     void localNodePortChanged();
     void remoteNodePortChanged();
     void localNodePeersChanged();
@@ -231,8 +237,9 @@ private:
 
     QString m_nodeAddress;
     bool m_localNodeRun = false;
+    bool m_connectLocalNode = false;
     unsigned int m_localNodePort = 0;
-    QString m_remoteNodePort; // TODO:change to unsigned int like localNodePort
+    unsigned int m_remoteNodePort = 0;
 
     #ifdef BEAM_IPFS_SUPPORT
     unsigned int m_IPFSSwarmPort = 0;

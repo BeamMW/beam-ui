@@ -451,5 +451,6 @@
         <file>start_wizzard/SelectWalletDBPage.qml</file>
         <file>start_wizzard/CreateTrezorWalletPage.qml</file>
         <file>controls/LogoutButton.qml</file>
+        <file>controls/SettingsBeamRemoteNode.qml</file>
     </qresource>
 </RCC>

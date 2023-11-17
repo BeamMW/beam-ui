@@ -1654,9 +1654,10 @@ Your version is: %2. Please, check for updates.</source>
         <translation>ユーティリティ</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
-        <source>Integrated node</source>
+        <source>Run integrated node</source>
+        <oldsource>Integrated node</oldsource>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation>統合ノード</translation>
+        <translation type="unfinished">統合ノード</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1677,12 +1678,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Beam統合ノード</translation>
     </message>
     <message id="settings-remote-node-title">
-        <source>Beam Remote Node</source>
-        <translation>Beamリモートノード</translation>
-    </message>
-    <message id="settings-run-remote-node">
-        <source>Remote node</source>
-        <translation>リモートノード</translation>
+        <source>Beam Node Connection</source>
+        <oldsource>Beam Remote Node</oldsource>
+        <translation type="unfinished">Beamリモートノード</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -3866,7 +3864,8 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="start-new-account-label">
-        <source>Account label</source>
+        <source>Account name</source>
+        <oldsource>Account label</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="new-account-label">
@@ -3880,6 +3879,15 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-connect-local-node">
+        <source>Integrated node</source>
+        <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-connect-remote-node">
+        <source>Remote node</source>
+        <translation type="unfinished">リモートノード</translation>
     </message>
 </context>
 </TS>

@@ -74,7 +74,7 @@ SettingsViewModel::SettingsViewModel()
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     m_currenciesList = m_amgr->getAssetsListFull();
-    connect(m_walletModel, &WalletModel::fullAssetsListLoaded, this, &SettingsViewModel::assetsListChanged);
+    connect(m_walletModel, &WalletModel::fullAssetsListLoaded, this, &SettingsViewModel::onAssetsListChanged);
     m_walletModel->getAsync()->loadFullAssetsList();
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 }
@@ -104,7 +104,7 @@ void SettingsViewModel::onAddressChecked(const QString& addr, bool isValid)
         if (m_isNeedToApplyChanges)
         {
             if (m_isValidNodeAddress)
-                applyNodeChanges();
+                applyNodeConnectionChanges();
 
             m_isNeedToApplyChanges = false;
         }
@@ -121,7 +121,7 @@ void SettingsViewModel::onPublicAddressChanged(const QString& publicAddr)
 }
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT
-void SettingsViewModel::assetsListChanged()
+void SettingsViewModel::onAssetsListChanged()
 {
     m_currenciesList = m_amgr->getAssetsListFull();
     emit currenciesListChanged();
@@ -163,6 +163,41 @@ void SettingsViewModel::setNodeAddress(const QString& value)
 QString SettingsViewModel::getVersion() const
 {
     return QString::fromStdString(PROJECT_VERSION);
+}
+
+bool SettingsViewModel::getConnectLocalNode() const
+{
+    return m_connectLocalNode;
+}
+
+void SettingsViewModel::setConnectLocalNode(bool value)
+{
+    if (getConnectLocalNode() == value)
+        return;
+
+    if (value == true)
+    {
+        QHostAddress localAddr(QHostAddress::LocalHost);
+        setNodeAddress(localAddr.toString());
+        setRemoteNodePort(m_settings.getLocalNodePort());
+    }
+    else
+    {
+        if (m_localNodePeers.empty())
+        {
+            setNodeAddress("");
+            setRemoteNodePort(0);
+        }
+        else 
+        {
+            const auto& peer = m_localNodePeers.first();
+            auto address = parseAddress(peer);
+            setNodeAddress(address.address);
+            setRemoteNodePort(address.port);
+        }
+    }
+    m_connectLocalNode = value;
+    emit connectLocalNodeChanged();
 }
 
 bool SettingsViewModel::getLocalNodeRun() const
@@ -281,12 +316,12 @@ void SettingsViewModel::setAppsPort(int port)
     }
 }
 
-QString SettingsViewModel::getRemoteNodePort() const
+unsigned int SettingsViewModel::getRemoteNodePort() const
 {
     return m_remoteNodePort;
 }
 
-void SettingsViewModel::setRemoteNodePort(const QString& value)
+void SettingsViewModel::setRemoteNodePort(unsigned int value)
 {
     if (value != m_remoteNodePort)
     {
@@ -465,13 +500,26 @@ QString SettingsViewModel::getOwnerKey(const QString& password) const
 
 bool SettingsViewModel::isNodeChanged() const
 {
-    return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress()
-        || m_localNodeRun   != m_settings.getRunLocalNode()
-        || m_localNodePort  != m_settings.getLocalNodePort()
+    return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress();
+}
+
+bool SettingsViewModel::isLocalNodeChanged() const
+{
+    return m_localNodeRun != m_settings.getRunLocalNode()
+        || m_localNodePort != m_settings.getLocalNodePort()
         || m_localNodePeers != m_settings.getLocalNodePeers();
 }
 
-void SettingsViewModel::applyNodeChanges()
+void SettingsViewModel::applyLocalNodeChanges()
+{
+    m_settings.setRunLocalNode(m_localNodeRun);
+    m_settings.setLocalNodePort(m_localNodePort);
+    m_settings.setLocalNodePeers(m_localNodePeers);
+    m_settings.applyLocalNodeChanges();
+    emit nodeSettingsChanged();
+}
+
+void SettingsViewModel::applyNodeConnectionChanges()
 {
     if (!m_localNodeRun && m_isNeedToCheckAddress)
     {
@@ -480,10 +528,7 @@ void SettingsViewModel::applyNodeChanges()
     }
 
     m_settings.setNodeAddress(formatAddress(m_nodeAddress, m_remoteNodePort));
-    m_settings.setRunLocalNode(m_localNodeRun);
-    m_settings.setLocalNodePort(m_localNodePort);
-    m_settings.setLocalNodePeers(m_localNodePeers);
-    m_settings.applyNodeChanges();
+    m_walletModel->getAsync()->setNodeAddress(m_settings.getNodeAddress().toStdString());
     emit nodeSettingsChanged();
 }
 
@@ -513,6 +558,9 @@ void SettingsViewModel::undoChanges()
         setRemoteNodePort(unpackedAddress.port);
     }
 
+    setConnectLocalNode(//m_settings.getRunLocalNode() &&
+                        QHostAddress(unpackedAddress.address).isLoopback() &&
+                        m_remoteNodePort == m_settings.getLocalNodePort());
     setLocalNodeRun(m_settings.getRunLocalNode());
     setLocalNodePort(m_settings.getLocalNodePort());
     setLocalNodePeers(m_settings.getLocalNodePeers());

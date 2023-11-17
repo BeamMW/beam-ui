@@ -63,7 +63,7 @@ public:
     [[nodiscard]] bool checkWalletPassword(const beam::SecString& pass) const;
     void changeWalletPassword(const std::string& pass);
 
-    void applyNodeChanges();
+    void applyLocalNodeChanges();
 
     #ifdef BEAM_IPFS_SUPPORT
     void applyIPFSChanges();

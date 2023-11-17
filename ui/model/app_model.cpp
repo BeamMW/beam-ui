@@ -588,9 +588,9 @@ void AppModel::applyIPFSChanges()
 }
 #endif
 
-void AppModel::applyNodeChanges()
+void AppModel::applyLocalNodeChanges()
 {
-    if (m_nodeModel.isNodeRunning())
+    if (m_settings.getRunLocalNode())
     {
         m_nsc.disconnect();
         m_nodeModel.stopNode();
@@ -600,14 +600,11 @@ void AppModel::applyNodeChanges()
     {
         startNode();
     }
-
-    auto nodeAddr = m_settings.getNodeAddress().toStdString();
-    m_wallet->getAsync()->setNodeAddress(nodeAddr);
 }
 
 void AppModel::nodeSettingsChanged()
 {
-    applyNodeChanges();
+    applyLocalNodeChanges();
     if (!m_settings.getRunLocalNode())
     {
         if (!m_wallet->isRunning())
