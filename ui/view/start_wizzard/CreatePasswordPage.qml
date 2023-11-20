@@ -24,12 +24,14 @@ WizzardPage {
         else
         {
             viewModel.setPassword(password.text);
-            if (viewModel.isRecoveryMode) {
-                viewModel.setupLocalNode(parseInt(viewModel.defaultPortToListen()), viewModel.chooseRandomNode());
-                createWallet();
-            } else {
-                startWizzardView.push(nodeSetupPage);
-            }
+            viewModel.setupLocalNode(parseInt(viewModel.defaultPortToListen()), viewModel.chooseRandomNode());
+            createWallet();
+            //if (viewModel.isRecoveryMode) {
+            //    viewModel.setupLocalNode(parseInt(viewModel.defaultPortToListen()), viewModel.chooseRandomNode());
+            //    createWallet();
+            //} else {
+            //    startWizzardView.push(nodeSetupPage);
+            //}
         }
     }
 

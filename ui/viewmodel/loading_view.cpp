@@ -47,7 +47,7 @@ LoadingViewModel::LoadingViewModel()
     , m_total{0}
     , m_done{0}
     , m_lastDone{0}
-    , m_connectedToLocalNode{ AppModel::getInstance().getSettings().isConnectedToLocalNode() }
+    , m_connectedToLocalNode{ AppModel::getInstance().getSettings().isConnectToLocalNode() }
     , m_isCreating{false}
     , m_isDownloadStarted{false}
     , m_lastProgress{0.}
