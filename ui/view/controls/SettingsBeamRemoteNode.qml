@@ -96,6 +96,7 @@ SettingsFoldable {
                     Layout.preferredWidth: 170
                     Layout.alignment: Qt.AlignRight
                     SFText {
+                        anchors.right:  parent.right
                         color:          Style.validator_error
                         font.pixelSize: 12
                         font.italic:    true
@@ -142,13 +143,14 @@ SettingsFoldable {
                     Layout.preferredWidth: 170
                     Layout.alignment: Qt.AlignRight
                     SFText {
+                        anchors.right:  parent.right
                         color:          Style.validator_error
                         font.pixelSize: 12
                         font.italic:    true
                         //: settings tab, node section, port error label
                         //% "Port is mandatory"
                         text:           qsTrId("general-invalid-port")
-                        visible:        remoteNodePort.text.length && !remoteNodePort.acceptableInput
+                        visible:        !remoteNodePort.acceptableInput
                     }
                 }
             }

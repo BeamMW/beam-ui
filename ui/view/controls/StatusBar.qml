@@ -31,6 +31,7 @@ Item {
     property int indicator_radius: 5
     property Item indicator: online_indicator
     property string walletError: model.walletError
+    property string localNodeError: model.localNodeError
     property string error_msg_3rd_client: model.coinClientErrorMsg || model.ipfsError
     //% "online"
     property string statusOnline: qsTrId("status-online")

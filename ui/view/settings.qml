@@ -183,7 +183,6 @@ ColumnLayout {
                     folded: unfoldSection != "BEAM_NODE"
                     syncProgress: main.statusBar.nodeSyncProgress
                     function getStatus() {
-                        console.log("main.statusBar.nodeSyncProgress: " + main.statusBar.nodeSyncProgress.toFixed(2))
                         var sbar = main.statusBar.model
                         if (sbar.isFailedLocalNode) return "error"
                         else if (sbar.nodeSyncProgress > 0) return "connected"

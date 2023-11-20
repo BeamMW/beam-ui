@@ -211,12 +211,6 @@ void SettingsViewModel::setLocalNodeRun(bool value)
     {
         m_localNodeRun = value;
 
-        if (!m_localNodeRun && !m_isNeedToCheckAddress)
-        {
-            m_isNeedToCheckAddress = true;
-            m_timerId = startTimer(CHECK_INTERVAL);
-        }
-
         emit localNodeRunChanged();
         emit nodeSettingsChanged();
     }
@@ -521,7 +515,7 @@ void SettingsViewModel::applyLocalNodeChanges()
 
 void SettingsViewModel::applyNodeConnectionChanges()
 {
-    if (!m_localNodeRun && m_isNeedToCheckAddress)
+    if (m_isNeedToCheckAddress)
     {
         m_isNeedToApplyChanges = true;
         return;
@@ -606,7 +600,7 @@ void SettingsViewModel::disallowAssetId(quint32 asset)
 
 void SettingsViewModel::timerEvent(QTimerEvent *event)
 {
-    if (m_isNeedToCheckAddress && !m_localNodeRun)
+    if (m_isNeedToCheckAddress)
     {
         m_isNeedToCheckAddress = false;
         AppModel::getInstance().getWalletModel()->getAsync()->checkNetworkAddress(m_nodeAddress.toStdString());
