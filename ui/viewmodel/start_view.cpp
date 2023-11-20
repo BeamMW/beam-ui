@@ -22,6 +22,7 @@
 #include <QStandardPaths>
 #include <QJSEngine>
 #include <QPointer>
+#include <QCollator>
 #include "settings_view.h"
 #include "model/app_model.h"
 #include "model/keyboard.h"
@@ -50,12 +51,14 @@ namespace
     const uint8_t kPhraseSize = 12;
     const char kAccountLabel[] = "account/label";
     const char kAccountPicture[] = "account/picture";
+    const char kAccountFolderPrefix[] = "Account";
 
     const char kName[] = "name";
     const char kIcon[] = "icon";
     const char kIconWidth[] = "iconWidth";
     const char kIconHeight[] = "iconHeight";
     const char kLabel[] = "label";
+    const char kIndex[] = "index";
 
 
     Rules::Network getNetworkFromString(const QString& network)
@@ -117,6 +120,17 @@ namespace
         return walletDBs;
     }
 
+    boost::optional<int> extractAccountIndex(const QString& name)
+    {
+        auto suffix = name.mid((int)std::size(kAccountFolderPrefix) - 1); // ignore \0
+        bool ok = false;
+        auto res = suffix.toInt(&ok);
+        if (!ok || res < 1)
+            return boost::none;
+        res -= 1;
+        return res;
+    }
+
     int getNewAccountIndex()
     {
         QDir dir(AppModel::getInstance().getSettings().getAppDataPath().c_str());
@@ -124,19 +138,22 @@ namespace
             return 1;
 
         int index = 0;
-        const char accountName[] = "Account";
-        for (const auto& subDirInfo : dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::SortFlag::Name))
+        auto dirs = dir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::SortFlag::NoSort);
+        QCollator collator;
+        collator.setNumericMode(true);
+        std::sort(begin(dirs), end(dirs), [&collator](const QFileInfo& left, const QFileInfo& right)
+        {
+            return collator.compare(left.fileName(), right.fileName()) < 0;
+        });
+        for (const auto& subDirInfo : dirs)
         {
             auto name = subDirInfo.fileName();
-            if (!name.startsWith(accountName))
+            if (!name.startsWith(kAccountFolderPrefix))
                 continue;
 
-            auto suffix = name.mid((int)std::size(accountName) - 1); // ignore \0
-            bool ok = false;
-            int accountIndex = suffix.toInt(&ok);
-            if (!ok || accountIndex == 0)
+            auto accountIndex = extractAccountIndex(name);
+            if (!accountIndex)
                 continue;
-            accountIndex -= 1;
 
             if (index != accountIndex)
                 break;
@@ -724,7 +741,7 @@ void StartViewModel::setupNode()
         settings.setNodeAddress(m_remoteNodeAddress);
     }
 
-    settings.setRunLocalNode(m_connectToLocalNode);
+    settings.setRunLocalNode(true/*m_connectToLocalNode*/);
     QStringList peers;
 
     for (const auto& peer : getDefaultPeers())
@@ -1141,6 +1158,9 @@ const QList<QVariantMap>& StartViewModel::getAccounts() const
         if (paths.empty())
             continue;
         QString accountDir = subDirInfo.fileName();
+        auto accountIndex = extractAccountIndex(accountDir);
+        if (!accountIndex)
+            continue;
         QSettings settings(QDir(subDirInfo.absoluteFilePath()).filePath(WalletSettings::SettingsFile), QSettings::IniFormat);
         auto label = settings.value(kAccountLabel, accountDir).toString();
         QVariantMap account;
@@ -1148,6 +1168,7 @@ const QList<QVariantMap>& StartViewModel::getAccounts() const
         account[kIcon] = getAccountPictureByIndex(settings.value(kAccountPicture, 0).toInt());
         account[kIconWidth] = 16;
         account[kIconHeight] = 16;
+        account[kIndex] = accountIndex.get();
 
         m_accounts.push_back(account);
     }
@@ -1170,9 +1191,13 @@ void StartViewModel::setCurrentAccountIndex(int value)
 
 void StartViewModel::setCurrentAccountIndexForced(int value)
 {
+    if (m_accounts.size() <= value)
+        return;
+
     m_accountIndex = value;
+    int realIndex = m_accounts[value][kIndex].toInt();
     m_walletDBpaths.clear();
-    AppModel::resetInstance(AppModel::getInstance().getSettings(), value);
+    AppModel::resetInstance(AppModel::getInstance().getSettings(), realIndex);
     findExistingWalletDBIfNeeded();
     emit currentAccountChanged();
     emit walletExistsChanged();
