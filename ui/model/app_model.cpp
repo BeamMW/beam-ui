@@ -118,7 +118,7 @@ AppModel::AppModel(WalletSettings& settings)
         fix.attach();
     }
     m_memLock.release();
-
+    connect(&m_settings, &WalletSettings::nodeAddressChanged, this, &AppModel::onNodeAddressChanged);
     if (tryLock())
     {
         m_isOnlyOneInstanceStarted = true;
@@ -590,7 +590,7 @@ void AppModel::applyIPFSChanges()
 
 void AppModel::applyLocalNodeChanges()
 {
-    if (m_settings.getRunLocalNode())
+    if (!m_settings.getRunLocalNode())
     {
         m_nsc.disconnect();
         m_nodeModel.stopNode();
@@ -646,6 +646,28 @@ void AppModel::onFailedToStartNode(beam::wallet::ErrorType errorCode)
     getMessages().addMessage(qtTrId("appmodel-failed-start-node"), true, false);
 }
 
+void AppModel::onNodeSyncProgressUpdated(int done, int total)
+{
+    if (done == total && m_settings.isConnectToLocalNode())
+    {
+        m_wallet->getAsync()->setNodeAddress(m_settings.getNodeAddress().toStdString());
+    }
+}
+
+void AppModel::onNodeAddressChanged()
+{
+    if (m_wallet)
+    {
+        m_wallet->getAsync()->setNodeAddress(getNodeAddress());
+    }
+}
+
+std::string AppModel::getNodeAddress() const
+{
+    // if we connect to the local node connect to the bootstrap node first, then we'll switch to the local after if gets synced
+    return m_settings.isConnectToLocalNode() ? "" : m_settings.getNodeAddress().toStdString();
+}
+
 void AppModel::start()
 {
     m_walletConnections << connect(this, &AppModel::walletReset, this, &AppModel::onResetWallet);
@@ -653,11 +675,9 @@ void AppModel::start()
     m_nodeModel.setKdf(m_db->get_MasterKdf());
     m_nodeModel.setOwnerKey(m_db->get_OwnerKdf());
 
-    std::string nodeAddrStr = m_settings.getNodeAddress().toStdString();
-
     initSwapClients();
 
-    m_wallet   = std::make_unique<WalletModel>(m_db, nodeAddrStr, m_walletReactor);
+    m_wallet   = std::make_unique<WalletModel>(m_db, getNodeAddress(), m_walletReactor);
     m_rates    = std::make_shared<ExchangeRatesManager>(m_wallet.get(), m_settings);
     m_assets   = std::make_shared<AssetsManager>(m_wallet.get(), m_rates);
     m_myAssets = std::make_shared<AssetsList>(m_wallet.get(), m_assets, m_rates);
@@ -667,10 +687,7 @@ void AppModel::start()
         startNode();
     }
 
-    if (!m_settings.isConnectedToLocalNode())
-    {
-        startWallet();
-    }
+    startWallet();
 
     #ifdef BEAM_IPFS_SUPPORT
     auto ipfsConfig = m_settings.getIPFSConfig();
@@ -687,7 +704,8 @@ void AppModel::startNode()
     m_nsc
         << connect(&m_nodeModel, &NodeModel::startedNode, this, &AppModel::onStartedNode)
         << connect(&m_nodeModel, &NodeModel::failedToStartNode, this, &AppModel::onFailedToStartNode)
-        << connect(&m_nodeModel, &NodeModel::failedToSyncNode, this, &AppModel::onFailedToStartNode);
+        << connect(&m_nodeModel, &NodeModel::failedToSyncNode, this, &AppModel::onFailedToStartNode)
+        << connect(&m_nodeModel, &NodeModel::syncProgressUpdated, this, &AppModel::onNodeSyncProgressUpdated);
 
     m_nodeModel.startNode();
 }

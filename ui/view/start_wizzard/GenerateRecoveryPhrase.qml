@@ -106,7 +106,7 @@ WizzardPage {
             icon.source: "qrc:/assets/icon-back.svg"
             onClicked: {
                 if (seedValidationHelper.isSeedValidatiomMode) {
-                    rootLoader.setSource("qrc:/main.qml");
+                    navigateToMain();
                 } else {
                     startWizzardView.pop();
                     viewModel.resetPhrases();

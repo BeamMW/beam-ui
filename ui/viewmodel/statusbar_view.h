@@ -41,6 +41,7 @@ class StatusbarViewModel : public QObject
     Q_PROPERTY(bool isExchangeRatesUpdated  READ getIsExchangeRatesUpdated NOTIFY exchangeRatesUpdateStatusChanged)
     Q_PROPERTY(QString exchangeStatus       READ getExchangeStatus      NOTIFY exchangeRatesUpdateStatusChanged)
     Q_PROPERTY(float nodeSyncProgress       READ getNodeSyncProgress    NOTIFY nodeSyncProgressChanged)
+    Q_PROPERTY(float nodeInitProgress       READ getNodeInitProgress    NOTIFY nodeInitProgressChanged)
     Q_PROPERTY(QString branchName           READ getBranchName          CONSTANT)
     Q_PROPERTY(QString walletError          READ getWalletError         NOTIFY walletErrorChanged)
     Q_PROPERTY(QString hwwError             READ getHwwError            NOTIFY hwwErrorChanged)
@@ -66,6 +67,7 @@ public:
     [[nodiscard]] bool getIsConnectionTrusted() const;
     [[nodiscard]] bool getIsExchangeRatesUpdated() const;
     [[nodiscard]] float getNodeSyncProgress() const;
+    [[nodiscard]] float getNodeInitProgress() const;
     [[nodiscard]] QString getBranchName() const;
     [[nodiscard]] QString getWalletError() const;
     [[nodiscard]] QString getLocalNodeError() const;
@@ -91,6 +93,7 @@ public:
     void setIsSyncInProgress(bool value);
     void setIsConnectionTrusted(bool value);
     void setNodeSyncProgress(float value);
+    void setNodeInitProgress(float value);
     void setWalletStatusErrorMsg(const QString& value);
     void setLocalNodeErrorMsg(const QString& value);
 
@@ -101,6 +104,7 @@ public slots:
     void onFailedToSyncNode(beam::wallet::ErrorType error);
     void onSyncProgressUpdated(int done, int total);
     void onNodeSyncProgressUpdated(int done, int total);
+    void onNodeInitProgressUpdated(quint64 done, quint64 total);
     void onExchangeRatesTimer();
 
     #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -120,6 +124,7 @@ signals:
     void isSyncInProgressChanged();
     void isConnectionTrustedChanged();
     void nodeSyncProgressChanged();
+    void nodeInitProgressChanged();
     void walletErrorChanged();
     void hwwErrorChanged();
     void localNodeErrorChanged();
@@ -152,6 +157,7 @@ private:
     bool m_isFailedLocalNode;
     bool m_isConnectionTrusted;
     float m_nodeSyncProgress;
+    float m_nodeInitProgress;
 
     int m_nodeDone;
     int m_nodeTotal;

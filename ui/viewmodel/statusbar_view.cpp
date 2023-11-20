@@ -48,6 +48,7 @@ StatusbarViewModel::StatusbarViewModel()
     connect(m_model, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
     connect(m_model, SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
     connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onNodeSyncProgressUpdated(int,int)));
+    connect(&AppModel::getInstance().getNode(), SIGNAL(initProgressUpdated(quint64, quint64)), SLOT(onNodeInitProgressUpdated(quint64, quint64)));
     connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)), SLOT(onFailedToSyncNode(beam::wallet::ErrorType)));
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
@@ -100,6 +101,11 @@ bool StatusbarViewModel::getIsExchangeRatesUpdated() const
 float StatusbarViewModel::getNodeSyncProgress() const
 {
     return m_nodeSyncProgress;
+}
+
+float StatusbarViewModel::getNodeInitProgress() const
+{
+    return m_nodeInitProgress;
 }
 
 QString StatusbarViewModel::getBranchName() const
@@ -189,6 +195,15 @@ void StatusbarViewModel::setNodeSyncProgress(float value)
     {
         m_nodeSyncProgress = value;
         emit nodeSyncProgressChanged();
+    }
+}
+
+void StatusbarViewModel::setNodeInitProgress(float value)
+{
+    if (m_nodeInitProgress != value)
+    {
+        m_nodeInitProgress = value;
+        emit nodeInitProgressChanged();
     }
 }
 
@@ -316,7 +331,7 @@ void StatusbarViewModel::onSyncProgressUpdated(int done, int total)
 {
     m_done = done;
     m_total = total;
-    if (m_settings.isConnectedToLocalNode())
+    if (m_settings.isConnectToLocalNode())
     {
         setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
     }
@@ -335,10 +350,15 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
     {
         setNodeSyncProgress(static_cast<float>(done * 100) / total);
     }
-    if (m_settings.isConnectedToLocalNode())
+    if (m_settings.isConnectToLocalNode())
     {
         setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
     }
+}
+
+void StatusbarViewModel::onNodeInitProgressUpdated(quint64 done, quint64 total)
+{
+    m_nodeInitProgress = done / static_cast<double>(total);
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT

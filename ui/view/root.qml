@@ -46,6 +46,10 @@ Window {
         appWindow.setMinMax();
     }
 
+    function navigateToMain() {
+        rootLoader.setSource("qrc:/main.qml");
+    }
+
     SFFontLoader {}
     
     // Popup {

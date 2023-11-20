@@ -522,7 +522,6 @@ void SettingsViewModel::applyNodeConnectionChanges()
     }
 
     m_settings.setNodeAddress(formatAddress(m_nodeAddress, m_remoteNodePort));
-    m_walletModel->getAsync()->setNodeAddress(m_settings.getNodeAddress().toStdString());
     emit nodeSettingsChanged();
 }
 

@@ -1301,7 +1301,7 @@ void  WalletSettings::setAccountPictureIndex(int value)
     m_accountSettings.m_data.setValue(kAccountPicture, value);
 }
 
-bool WalletSettings::isConnectedToLocalNode() const
+bool WalletSettings::isConnectToLocalNode() const
 {
     auto unpackedAddress = parseAddress(getNodeAddress());
     return getRunLocalNode() &&

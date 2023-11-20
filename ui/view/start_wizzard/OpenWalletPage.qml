@@ -16,7 +16,8 @@ StartLayout {
         viewModel.openWallet(pass, callback);
     }
     property var loadWallet: function () {
-        startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
+        navigateToMain();
+        //startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
     }
 
     property var checkCapsLockOnActivation: function () {

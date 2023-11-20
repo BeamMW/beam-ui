@@ -152,7 +152,7 @@ WizzardPage {
                 if (seedValidationHelper.isSeedValidatiomMode) {
                     seedValidationHelper.isSeedValidatiomMode = false;
                     seedValidationHelper.validate();
-                    rootLoader.setSource("qrc:/main.qml");
+                    navigateToMain();
                 } else {
                     startWizzardView.push(accountLabelPage);
                 }

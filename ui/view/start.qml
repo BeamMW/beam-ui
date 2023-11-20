@@ -85,8 +85,9 @@ Item
     {
         viewModel.createWallet(function (errMsg)
         {
-            if (errMsg == "") { 
-                startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : true, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+            if (errMsg == "") {
+                navigateToMain();
+                //startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : true, "isCreating" : true, "cancelCallback": startWizzardView.pop});
             } else {
                 errorDlg.text = errMsg;
                 errorDlg.open();
@@ -194,7 +195,7 @@ Item
                         }
                       },
                       "loadWallet": function () {
-                        root.parent.setSource("qrc:/main.qml");
+                            navigateToMain()
                       }
                     })
             } else if (viewModel.walletExists) {

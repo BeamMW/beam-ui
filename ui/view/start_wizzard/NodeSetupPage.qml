@@ -228,7 +228,8 @@ WizzardPage {
 
                 if (isBadPortMode) {
                     viewModel.onNodeSettingsChanged();
-                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+                    navigateToMain();
+                    //startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
                 } else {
                     createWallet();
                 }
