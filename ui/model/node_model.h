@@ -34,6 +34,7 @@ public:
 
     NodeModel();
 
+    void setBeforeStartAction(std::function<void()> action);
     void setKdf(beam::Key::IKdf::Ptr);
     void setOwnerKey(beam::Key::IPKdf::Ptr);
     void startNode();
