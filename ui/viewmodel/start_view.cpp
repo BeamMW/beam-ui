@@ -1212,11 +1212,12 @@ void StartViewModel::setCurrentAccountIndex(int value)
 
 void StartViewModel::setCurrentAccountIndexForced(int value)
 {
-    if (getAccounts().size() <= value)
+    const auto& accounts = getAccounts();
+    if (accounts.size() <= value && value > 0)
         return;
 
     m_accountIndex = value;
-    int realIndex = getAccounts()[value][kIndex].toInt();
+    int realIndex = accounts.empty() ? 0 : accounts[value][kIndex].toInt();
     m_walletDBpaths.clear();
     AppModel::resetInstance(AppModel::getInstance().getSettings(), realIndex);
     findExistingWalletDBIfNeeded();
