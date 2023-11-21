@@ -200,7 +200,7 @@ Item
                     })
             } else if (viewModel.walletExists) {
                 if (isLogoutMode) {
-                    BeamGlobals.resetModel()
+                    viewModel.resetModel()
                 }
                 startWizzardView.push(openWalletPage);
             }

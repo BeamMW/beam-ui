@@ -171,6 +171,7 @@ const char* WalletSettings::LogsFolder = "logs";
 const char* WalletSettings::SettingsFile = "settings.ini";
 const char* WalletSettings::WalletDBFile = "wallet.db";
 const char* WalletSettings::NodeDBFile = "node.db";
+const char* WalletSettings::UtxoImageFile = "node-utxo-image.bin";
 #if defined(Q_OS_MACOS)
 const char* WalletSettings::DappsStoreWasm = "../Resources/dapps_store_app.wasm";
 #else

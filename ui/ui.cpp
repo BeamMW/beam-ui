@@ -167,7 +167,7 @@ namespace
 
         MigrateFile(oldDataDir, newDataDir, WalletSettings::SettingsFile, false);
         MigrateFile(oldDataDir, newDataDir, WalletSettings::NodeDBFile, true);
-        MigrateFile(oldDataDir, newDataDir, "node-utxo-image.bin", true);
+        MigrateFile(oldDataDir, newDataDir, WalletSettings::UtxoImageFile, true);
         MigrateFolder(oldDataDir, newDataDir, "ipfs-repo");
         MigrateFolder(oldDataDir, newDataDir, "appstorage");
         MigrateFolder(oldDataDir, newDataDir, "localapps");

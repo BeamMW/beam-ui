@@ -193,6 +193,7 @@ public:
     #endif
 
     static const char* NodeDBFile;
+    static const char* UtxoImageFile;
     void applyLocalNodeChanges();
 
     #ifdef BEAM_IPFS_SUPPORT
