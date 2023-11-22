@@ -212,12 +212,14 @@ StartLayout {
         LinkButton {
             Layout.alignment: Qt.AlignHCenter
             Layout.bottomMargin: 37
-            //% "Restore wallet or create a new one"
-            text: qsTrId("general-restore-or-create-wallet")
+            //% "Add account"
+            text: qsTrId("general-add-account")
             fontSize: 14
             visible: viewModel.isOnlyOneInstanceStarted
             onClicked: {
-                confirmChangeWalletDialog.open();
+                viewModel.isRecoveryMode = false;
+                startWizzardView.push(walletStartPage);
+                //confirmChangeWalletDialog.open();
             }
         }
 

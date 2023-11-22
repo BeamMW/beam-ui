@@ -3898,10 +3898,6 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="start-network-label">
-        <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="start-account-label">
         <source>Account</source>
         <translation type="unfinished"></translation>
@@ -3931,6 +3927,10 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="settings-connect-remote-node">
         <source>Remote node</source>
         <translation type="unfinished">Аддалены вузел</translation>
+    </message>
+    <message id="general-add-account">
+        <source>Add account</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

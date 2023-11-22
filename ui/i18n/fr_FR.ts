@@ -3886,10 +3886,6 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="start-network-label">
-        <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="start-account-label">
         <source>Account</source>
         <translation type="unfinished"></translation>
@@ -3919,6 +3915,10 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     <message id="settings-connect-remote-node">
         <source>Remote node</source>
         <translation type="unfinished">Nœud distant</translation>
+    </message>
+    <message id="general-add-account">
+        <source>Add account</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
