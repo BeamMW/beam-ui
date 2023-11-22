@@ -18,8 +18,7 @@ Button {
     property bool  showHandCursor: false
     property bool  hasShadow:      true
     property alias border:         rect.border
-
-
+    property color shadowColor:    control.palette.button == Style.background_button ? Style.content_main : control.palette.button
     font { 
         family: "Proxima Nova"
         pixelSize: 14
@@ -78,7 +77,7 @@ Button {
         anchors.fill: rect
         radius:  7
         samples: 9
-        color:   control.palette.button == Style.background_button ? Style.content_main : control.palette.button
+        color:   control.shadowColor
         source:  rect
         visible: control.hasShadow && (control.visualFocus || control.hovered || control.checked)
     }

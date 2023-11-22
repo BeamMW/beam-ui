@@ -12,6 +12,10 @@ function openUrl(url) {
     Qt.openUrlExternally(url)
 }
 
+function alpha(baseColor, value) {
+    return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, value)
+}
+
 function formatDateTime(datetime, localeName, neverStr) {
     var maxTime = new Date(4294967295000);
     if (datetime >= maxTime) {

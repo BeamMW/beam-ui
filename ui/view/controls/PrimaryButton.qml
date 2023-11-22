@@ -6,18 +6,4 @@ import "."
 CustomButton {
     palette.button: Style.active
     palette.buttonText: Style.content_opposite
-
-    SFText {
-        id: text
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        font.pixelSize: 12
-        font.styleName: "Bold"; font.weight: Font.Bold
-
-        color: Style.content_main
-
-        text: parent.text
-        visible: false
-    }
 }

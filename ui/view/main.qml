@@ -18,6 +18,7 @@ Rectangle {
     readonly property bool devMode: viewModel.isDevMode
     readonly property string accountLabel: viewModel.accountLabel
     readonly property string accountPicture: viewModel.accountPicture
+    readonly property alias unreadNotifications : viewModel.unreadNotifications
     property alias statusBar: statusBarInternal
     anchors.fill:   parent
 
@@ -462,6 +463,10 @@ Rectangle {
         } else {
             updateItem("settings", {"unfoldSection": section})
         }
+    }
+
+    function openNotifications() {
+        updateItem("notifications");
     }
 
     function openSwapActiveTransactionsList() {
