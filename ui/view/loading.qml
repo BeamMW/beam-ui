@@ -123,14 +123,14 @@ Item
 
         CustomProgressBar {
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: startLayout.isSqueezedHeight ? 10 : 24
+            Layout.topMargin: 24
             id: bar
             value: viewModel.progress
         }
 
         SFText {
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: startLayout.isSqueezedHeight ? 10 : 30
+            Layout.topMargin: 30
             width: 584
             //% "Please wait for synchronization and do not close or minimize the application."
             text: qsTrId("loading-restore-message-line1")
@@ -141,7 +141,7 @@ Item
         }
         Row {
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: startLayout.isSqueezedHeight ? 10 : 20
+            Layout.topMargin: 20
             SFText {
                 horizontalAlignment: Text.AlignHCenter
                 width: 548
@@ -159,10 +159,7 @@ Item
         Row {
             Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
             Layout.topMargin: {
-                if (startLayout.isSqueezedHeight)
-                    return isRecoveryMode ? 20 : 32;
-                else
-                    return isRecoveryMode ? 40 : 52;
+                return isRecoveryMode ? 40 : 52;
             }
 
             CustomButton {

@@ -64,11 +64,16 @@ StartLayout {
         Layout.fillWidth:   true
         spacing: 0
 
+        Item {
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+        }
+
         AccountSetup {
             Layout.alignment:       Qt.AlignHCenter
             Layout.minimumWidth:    400
             Layout.maximumWidth:    400
-            Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 10 : 20
+            Layout.bottomMargin:    20
         }
 
         Connections {
@@ -128,10 +133,10 @@ StartLayout {
         }
 
         Row {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 14
+            Layout.alignment:       Qt.AlignHCenter
+            Layout.topMargin:       14
             Layout.preferredHeight: 38
-            spacing:          20
+            spacing:                20
                                 
             function tryOpenWallet() {
                 if(openPassword.text.length == 0)
@@ -180,7 +185,7 @@ StartLayout {
         Item {
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: 36
-            Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 15
+            Layout.topMargin: 15
             Layout.bottomMargin: 9
             Rectangle {
                 id: capsWarning

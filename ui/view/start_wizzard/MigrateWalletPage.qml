@@ -89,8 +89,8 @@ StartLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 64
             Layout.bottomMargin: 37
-            //% "Restore wallet or create a new one"
-            text: qsTrId("general-restore-or-create-wallet")
+            //% "Add account"
+            text: qsTrId("general-add-account")
             visible: viewModel.isOnlyOneInstanceStarted
 
             onClicked: {

@@ -65,8 +65,8 @@ StartLayout {
 
     ColumnLayout {
         id: startColumn
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+        Layout.fillHeight:  true
+        Layout.fillWidth:   true
         spacing: 0
 
         AccountSetup {
