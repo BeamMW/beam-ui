@@ -41,7 +41,7 @@ Item {
         Action {
             //% "Logout"
             text: qsTrId("status-logout")
-            icon.source: "qrc:/assets/icon-back.svg"
+            icon.source: "qrc:/assets/icon-log-out.svg"
             onTriggered: {
                 main.parent.setSource("qrc:/start.qml", {"isLogoutMode": true});
             }
