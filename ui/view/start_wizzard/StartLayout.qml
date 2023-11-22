@@ -53,9 +53,28 @@ Rectangle
     }
 
     VersionFooter {
+        id: version
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.rightMargin: 40
         anchors.topMargin: 40
+    }
+
+    CustomComboBox {
+        id: networkSelector
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 40
+        anchors.topMargin: 40
+        fontPixelSize: 14
+        enableScroll: false
+        textRole: "name"
+
+        model: viewModel.networks
+        currentIndex: viewModel.currentNetworkIndex
+        onActivated: {
+            viewModel.currentNetwork = currentText;
+            Theme.update();
+        }
     }
 }
