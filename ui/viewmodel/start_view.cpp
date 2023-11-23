@@ -70,20 +70,6 @@ namespace
             return Rules::Network::mainnet;
     }
 
-    void copyNodeData(QDir sourceDir, QDir destDir, QString fileName)
-    {
-        if (sourceDir.exists(fileName))
-        {
-            auto sourcePath = sourceDir.filePath(fileName);
-            auto destPath = destDir.filePath(fileName);
-            LOG_INFO() << "Copying node data from " << sourcePath.toStdString() << " to " << destPath.toStdString();
-            if (!QFile::copy(sourcePath, destPath))
-            {
-                LOG_WARNING() << "Failed to copy node data to " << destPath.toStdString();
-            }
-        }
-    }
-
     fs::path pathFromStdString(const std::string& path)
     {
 #ifdef WIN32
@@ -337,7 +323,6 @@ StartViewModel::StartViewModel()
 #endif
 
 {
-    m_firstAccountDir = AppModel::getInstance().getSettings().getAccountDataDir();
     findExistingWalletDBIfNeeded();
 
 #if defined(BEAM_HW_WALLET)
@@ -846,11 +831,6 @@ void StartViewModel::createWallet(const QJSValue& callback)
         settings.setAccountLabel(getNewAccountLabel());
         settings.setAccountPictureIndex(m_newAccountPictureIndex);
 
-        AppModel::getInstance().getNode().setBeforeStartAction([sourceDir = m_firstAccountDir, destDir = settings.getAccountDataDir()]()
-        {
-            copyNodeData(sourceDir, destDir, WalletSettings::UtxoImageFile);
-            copyNodeData(sourceDir, destDir, WalletSettings::NodeDBFile);
-        });
         setupNode();
         try
         {
@@ -1155,7 +1135,6 @@ void StartViewModel::setCurrentNetwork(const QString& network)
     Rules::get().m_Network = value;
     m_accounts.clear();
     setCurrentAccountIndexForced(0);
-    m_firstAccountDir = AppModel::getInstance().getSettings().getAccountDataDir();
     emit currentNetworkChanged();
 }
 
@@ -1283,5 +1262,4 @@ QString StartViewModel::getAccountPictureByIndex(int index) const
 void StartViewModel::resetModel()
 {
     setCurrentAccountIndexForced(0);
-    m_firstAccountDir = AppModel::getInstance().getSettings().getAccountDataDir();
 }

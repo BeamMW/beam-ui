@@ -282,7 +282,6 @@ private:
     bool m_connectToLocalNode = false;
     int m_localNodePort = 0;
     QString m_remoteNodeAddress;
-    QDir m_firstAccountDir;
 
 #if defined(BEAM_HW_WALLET)
     std::shared_ptr<beam::wallet::HWWallet> m_hwWallet;

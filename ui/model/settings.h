@@ -147,6 +147,7 @@ public:
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
     QDir getAccountDataDir() const;
+    QDir getNetworkDataDir() const;
 
     bool showFaucetPromo() const;
     void setShowFacetPromo(bool value);
@@ -225,6 +226,7 @@ private:
     int m_accountIndex;
     QDir m_appDataDir;
     mutable AccountSettings m_accountSettings;
+    mutable QSettings m_networkSettings;
     mutable QSettings m_globalData;
 
     QString m_applicationDirPath;

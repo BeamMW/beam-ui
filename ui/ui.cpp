@@ -147,10 +147,11 @@ namespace
     void MigrateWalletData75(QDir oldDataDir)
     {
         QString newPath = Rules::get().get_NetworkName();
+        QDir newNetworkDataDir(oldDataDir.filePath(newPath));
         newPath.append("/Account1");
 
-        QDir newDataDir(oldDataDir.filePath(newPath));
-        if (!newDataDir.exists())
+        QDir newAccountDataDir(oldDataDir.filePath(newPath));
+        if (!newAccountDataDir.exists())
         {
             LOG_INFO() << "*MIGRATION* Creating \"" << newPath.toStdString() << "\" ...";
             oldDataDir.mkpath(newPath);
@@ -161,16 +162,16 @@ namespace
             QDir subDir(filePath);
             if (QFile(subDir.filePath(WalletSettings::WalletDBFile)).exists())
             {
-                MigrateFolder(oldDataDir, newDataDir, dir.fileName());
+                MigrateFolder(oldDataDir, newAccountDataDir, dir.fileName());
             }
         }
 
-        MigrateFile(oldDataDir, newDataDir, WalletSettings::SettingsFile, false);
-        MigrateFile(oldDataDir, newDataDir, WalletSettings::NodeDBFile, true);
-        MigrateFile(oldDataDir, newDataDir, WalletSettings::UtxoImageFile, true);
-        MigrateFolder(oldDataDir, newDataDir, "ipfs-repo");
-        MigrateFolder(oldDataDir, newDataDir, "appstorage");
-        MigrateFolder(oldDataDir, newDataDir, "localapps");
+        MigrateFile(oldDataDir, newAccountDataDir, WalletSettings::SettingsFile, false);
+        MigrateFile(oldDataDir, newNetworkDataDir, WalletSettings::NodeDBFile, true);
+        MigrateFile(oldDataDir, newNetworkDataDir, WalletSettings::UtxoImageFile, true);
+        MigrateFolder(oldDataDir, newNetworkDataDir, "ipfs-repo");
+        MigrateFolder(oldDataDir, newAccountDataDir, "appstorage");
+        MigrateFolder(oldDataDir, newAccountDataDir, "localapps");
     }
 }
 

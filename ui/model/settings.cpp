@@ -197,6 +197,7 @@ WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicatio
     : m_accountIndex{0}
     , m_appDataDir{appDataDir}
     , m_accountSettings{getAccountDataDir().filePath(SettingsFile)}
+    , m_networkSettings{getNetworkDataDir().filePath(SettingsFile), QSettings::IniFormat }
     , m_globalData{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_applicationDirPath{applicationDirPath}
 {
@@ -206,9 +207,11 @@ WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicatio
 void WalletSettings::changeAccount(int accountIndex)
 {
     Lock lock(m_mutex);
+    m_networkSettings.~QSettings();
     m_accountSettings.~AccountSettings();
     m_accountIndex = accountIndex;
     new(&m_accountSettings) AccountSettings(getAccountDataDir().filePath(SettingsFile));
+    new(&m_networkSettings) QSettings(getNetworkDataDir().filePath(SettingsFile), QSettings::IniFormat);
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -249,16 +252,20 @@ std::string WalletSettings::getUserDataPath() const
 
 QDir WalletSettings::getAccountDataDir() const
 {
-    QDir temp(m_appDataDir);
-    const char* networkName = Rules::get().get_NetworkName();
-    temp.mkdir(networkName);
-    temp.cd(networkName);
-
-    ///
+    QDir temp(getNetworkDataDir());
     QString accountName(QString("Account%1").arg(m_accountIndex+1));
     temp.mkdir(accountName);
     temp.cd(accountName);
 
+    return temp;
+}
+
+QDir WalletSettings::getNetworkDataDir() const
+{
+    QDir temp(m_appDataDir);
+    const char* networkName = Rules::get().get_NetworkName();
+    temp.mkdir(networkName);
+    temp.cd(networkName);
     return temp;
 }
 
@@ -387,21 +394,21 @@ void WalletSettings::setRunLocalNode(bool value)
 uint WalletSettings::getLocalNodePort() const
 {
     Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kLocalNodePort, getNetworkDefaultPort()).toUInt();
+    return m_networkSettings.value(kLocalNodePort, getNetworkDefaultPort()).toUInt();
 }
 
 void WalletSettings::setLocalNodePort(uint port)
 {
     {
         Lock lock(m_mutex);
-        m_accountSettings.m_data.setValue(kLocalNodePort, port);
+        m_networkSettings.setValue(kLocalNodePort, port);
     }
     emit localNodePortChanged();
 }
 
 std::string WalletSettings::getLocalNodeStorage() const
 {
-    return getAccountDataDir().filePath(NodeDBFile).toStdString();
+    return getNetworkDataDir().filePath(NodeDBFile).toStdString();
 }
 
 std::string WalletSettings::getTempDir() const
@@ -426,7 +433,7 @@ static void zipLocalFile(QuaZip& zip, const QString& path, const QString& folder
 QStringList WalletSettings::getLocalNodePeers()
 {
     Lock lock(m_mutex);
-    auto peers = m_accountSettings.m_data.value(kLocalNodePeers).value<QStringList>();
+    auto peers = m_networkSettings.value(kLocalNodePeers).value<QStringList>();
 
     size_t outDatedCount = std::count_if(
         peers.begin(),
@@ -445,7 +452,7 @@ QStringList WalletSettings::getLocalNodePeers()
         {
             peers << QString::fromStdString(it);
         }
-        m_accountSettings.m_data.setValue(kLocalNodePeers, QVariant::fromValue(peers));
+        m_networkSettings.setValue(kLocalNodePeers, QVariant::fromValue(peers));
     }
 
     return peers;
@@ -455,7 +462,7 @@ void WalletSettings::setLocalNodePeers(const QStringList& qPeers)
 {
     {
         Lock lock(m_mutex);
-        m_accountSettings.m_data.setValue(kLocalNodePeers, QVariant::fromValue(qPeers));
+        m_networkSettings.setValue(kLocalNodePeers, QVariant::fromValue(qPeers));
     }
     emit localNodePeersChanged();
 }
@@ -463,7 +470,7 @@ void WalletSettings::setLocalNodePeers(const QStringList& qPeers)
 bool WalletSettings::getPeersPersistent() const
 {
     Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kLocalNodePeersPersistent, false).toBool();
+    return m_networkSettings.value(kLocalNodePeersPersistent, false).toBool();
 }
 
 QString WalletSettings::getLocale() const
@@ -524,10 +531,7 @@ beam::wallet::Currency WalletSettings::getRateCurrency() const
     {
         return defaultUnit;
     }
-    else
-    {
-        return savedAmountUnit;
-    }
+    return savedAmountUnit;
 }
 
 void WalletSettings::setRateCurrency(const beam::wallet::Currency& curr)
@@ -950,14 +954,15 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
 {
     namespace cli = beam::cli;
 
-    QDir dataDir = getAccountDataDir();
+    QDir dataDir = getNetworkDataDir();
     Lock lock(m_mutex);
     asio_ipfs::config cfg(asio_ipfs::config::Mode::Desktop);
 
+    auto& settings = m_networkSettings;
     const QString keyStorage = QString(kIPFSPrefix) + cli::IPFS_STORAGE;
-    if (m_accountSettings.m_data.contains(keyStorage))
+    if (settings.contains(keyStorage))
     {
-        cfg.repo_root = m_accountSettings.m_data.value(keyStorage).toString().toStdString();
+        cfg.repo_root = settings.value(keyStorage).toString().toStdString();
     }
     else
     {
@@ -967,25 +972,25 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
         ).dirName()).toStdString();
     }
 
-    cfg.low_water = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
-    cfg.high_water = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
-    cfg.grace_period = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
-    cfg.swarm_port = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.swarm_port).toUInt();
-    cfg.auto_relay = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
-    cfg.relay_hop = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
-    cfg.storage_max = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
-    cfg.api_address = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_API_ADDR, QString::fromStdString(cfg.api_address)).toString().toStdString();
-    cfg.gateway_address = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_ADDR, QString::fromStdString(cfg.gateway_address)).toString().toStdString();
-    cfg.autonat = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
-    cfg.autonat_limit = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
-    cfg.autonat_peer_limit = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
-    cfg.routing_type = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
-    cfg.run_gc = m_accountSettings.m_data.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
+    cfg.low_water = settings.value(QString(kIPFSPrefix) + cli::IPFS_LOW_WATER, cfg.low_water).toUInt();
+    cfg.high_water = settings.value(QString(kIPFSPrefix) + cli::IPFS_HIGH_WATER, cfg.high_water).toUInt();
+    cfg.grace_period = settings.value(QString(kIPFSPrefix) + cli::IPFS_GRACE, cfg.grace_period).toUInt();
+    cfg.swarm_port = settings.value(QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT, cfg.swarm_port).toUInt();
+    cfg.auto_relay = settings.value(QString(kIPFSPrefix) + cli::IPFS_AUTO_RELAY, cfg.auto_relay).toUInt();
+    cfg.relay_hop = settings.value(QString(kIPFSPrefix) + cli::IPFS_RELAY_HOP, cfg.relay_hop).toUInt();
+    cfg.storage_max = settings.value(QString(kIPFSPrefix) + cli::IPFS_STORAGE_MAX, QString::fromStdString(cfg.storage_max)).toString().toStdString();
+    cfg.api_address = settings.value(QString(kIPFSPrefix) + cli::IPFS_API_ADDR, QString::fromStdString(cfg.api_address)).toString().toStdString();
+    cfg.gateway_address = settings.value(QString(kIPFSPrefix) + cli::IPFS_GATEWAY_ADDR, QString::fromStdString(cfg.gateway_address)).toString().toStdString();
+    cfg.autonat = settings.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT, cfg.autonat).toBool();
+    cfg.autonat_limit = settings.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_LIMIT, cfg.autonat_limit).toUInt();
+    cfg.autonat_peer_limit = settings.value(QString(kIPFSPrefix) + cli::IPFS_AUTONAT_PEER_LIMIT, cfg.autonat_peer_limit).toUInt();
+    cfg.routing_type = settings.value(QString(kIPFSPrefix) + cli::IPFS_ROUTING_TYPE, QString::fromStdString(cfg.routing_type)).toString().toStdString();
+    cfg.run_gc = settings.value(QString(kIPFSPrefix) + cli::IPFS_RUN_GC, cfg.run_gc).toBool();
 
     const QString keyBootstrap = QString(kIPFSPrefix) + cli::IPFS_BOOTSTRAP;
-    if (m_accountSettings.m_data.contains(keyBootstrap))
+    if (settings.contains(keyBootstrap))
     {
-        auto list = m_accountSettings.m_data.value(keyBootstrap).toStringList();
+        auto list = settings.value(keyBootstrap).toStringList();
         decltype(cfg.bootstrap)().swap(cfg.bootstrap);
         decltype(cfg.peering)().swap(cfg.peering);
 
@@ -997,9 +1002,9 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     }
 
     const QString keyPeering = QString(kIPFSPrefix) + cli::IPFS_PEERING;
-    if (m_accountSettings.m_data.contains(keyPeering))
+    if (settings.contains(keyPeering))
     {
-        auto list = m_accountSettings.m_data.value(keyPeering).toStringList();
+        auto list = settings.value(keyPeering).toStringList();
         decltype(cfg.peering)().swap(cfg.peering);
 
         for (const auto& qsval : list)
@@ -1009,9 +1014,9 @@ asio_ipfs::config WalletSettings::getIPFSConfig() const
     }
 
     const QString keySwarm = QString(kIPFSPrefix) + cli::IPFS_SWARM_KEY;
-    if (m_accountSettings.m_data.contains(keySwarm))
+    if (settings.contains(keySwarm))
     {
-        cfg.swarm_key = m_accountSettings.m_data.value(keySwarm).toString().toStdString();
+        cfg.swarm_key = settings.value(keySwarm).toString().toStdString();
     }
 
     return cfg;
@@ -1022,25 +1027,26 @@ void WalletSettings::setIPFSPort(uint32_t port)
     namespace cli = beam::cli;
     const QString keySwarmPort = QString(kIPFSPrefix) + cli::IPFS_SWARM_PORT;
 
+    auto& settings = m_networkSettings;
     Lock lock(m_mutex);
-    if (m_accountSettings.m_data.contains(keySwarmPort) && m_accountSettings.m_data.value(keySwarmPort).toUInt() == port) {
+    if (settings.contains(keySwarmPort) && settings.value(keySwarmPort).toUInt() == port) {
         return;
     }
 
-    m_accountSettings.m_data.setValue(keySwarmPort, port);
+    settings.setValue(keySwarmPort, port);
     emit IPFSSettingsChanged();
 }
 
 void WalletSettings::setIPFSNodeStart(const QString& start)
 {
     const QString keyNodeStart = QString(kIPFSPrefix) + kIPFSNodeStart;
-
+    auto& settings = m_networkSettings;
     Lock lock(m_mutex);
-    if (m_accountSettings.m_data.contains(keyNodeStart) && m_accountSettings.m_data.value(keyNodeStart).toString() == start) {
+    if (settings.contains(keyNodeStart) && settings.value(keyNodeStart).toString() == start) {
         return;
     }
 
-    m_accountSettings.m_data.setValue(keyNodeStart, start);
+    settings.setValue(keyNodeStart, start);
     emit IPFSSettingsChanged();
 }
 
@@ -1049,13 +1055,14 @@ QString WalletSettings::getIPFSNodeStart() const
     const QString keyNodeStart = QString(kIPFSPrefix) + kIPFSNodeStart;
     Lock lock(m_mutex);
 
+    auto& settings = m_networkSettings;
     QString defStart("clientstart");
-    auto start = m_accountSettings.m_data.value(keyNodeStart, defStart).toString();
+    auto start = settings.value(keyNodeStart, defStart).toString();
 
     if (start != "clientstart" && start != "dapps" && start != "never") {
         LOG_WARNING() << "Unknown IPFS start setting '" << start.toStdString()
                       << "'. Defaulting to '" << defStart.toStdString() << "'";
-        m_accountSettings.m_data.setValue(keyNodeStart, defStart);
+        settings.setValue(keyNodeStart, defStart);
         return defStart;
     }
 
