@@ -328,14 +328,8 @@ void StatusbarViewModel::onSyncProgressUpdated(int done, int total)
 {
     m_done = done;
     m_total = total;
-    if (m_settings.isConnectToLocalNode())
-    {
-        setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
-    }
-    else
-    {
-        setIsSyncInProgress(m_done != m_total);
-    }
+
+    setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
 }
 
 void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
@@ -347,10 +341,7 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
     {
         setNodeSyncProgress(static_cast<float>(done * 100) / total);
     }
-    if (m_settings.isConnectToLocalNode())
-    {
-        setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
-    }
+    setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
 }
 
 void StatusbarViewModel::onNodeInitProgressUpdated(quint64 done, quint64 total)
