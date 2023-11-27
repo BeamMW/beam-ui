@@ -8,7 +8,7 @@ RowLayout {
 
     property alias text: title.text
     property alias showBack: backBtn.visible
-    property var onBack
+    property var onBack: function (){ main.goBack() }
     property var onRefresh: function () {}
 
     Layout.fillWidth:    true

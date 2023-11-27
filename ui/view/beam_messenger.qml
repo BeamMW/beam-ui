@@ -72,9 +72,6 @@ Item {
             // Subtitle row
             //
             SubtitleRow {
-                onBack: function () {
-                    main.openWallet()
-                }
             }
             ListView {
                 id: chatsList

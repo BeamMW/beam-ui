@@ -9,7 +9,6 @@ import "utils.js" as Utils
 
 ColumnLayout {
     id:           root
-    anchors.fill: parent
     spacing:      0
 
     property string openedTxID: ""
@@ -162,7 +161,7 @@ ColumnLayout {
                         text: qsTrId("wallet-swap-button")
                         font.pixelSize: 12
                         onClicked: {
-                            swapContextMenu.popup(swapButton, Qt.point(20, swapButton.height + 6))
+                            swapContextMenu.popup(swapButton, Qt.point(0, swapButton.height + 6))
                         }
                     }
                 }

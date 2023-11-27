@@ -9,7 +9,6 @@ import Beam.Wallet 1.0
 
 ColumnLayout {
     id: control
-    anchors.fill: parent
     spacing: 0
 
     NotificationsViewModel {
@@ -25,7 +24,7 @@ ColumnLayout {
         }
         CustomButton {
             Layout.alignment: Qt.AlignRight
-            Layout.preferredHeight: 38
+            Layout.preferredHeight: 32
             palette.button: Style.background_second
             palette.buttonText : Style.content_main
             icon.source: "qrc:/assets/icon-cancel-white.svg"
@@ -41,9 +40,6 @@ ColumnLayout {
     // Subtitle row
     //
     SubtitleRow {
-        onBack: function () {
-            main.openWallet()
-        }
     }
 
     ColumnLayout {

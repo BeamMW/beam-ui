@@ -77,9 +77,6 @@ ColumnLayout {
     // Subtitle row
     //
     SubtitleRow {
-        onBack: function () {
-            main.openWallet()
-        }
     }
     ScrollView {
         Layout.fillHeight: true

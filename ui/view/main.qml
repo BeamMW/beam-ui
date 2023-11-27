@@ -392,6 +392,36 @@ Rectangle {
         focus: true
     }
 
+    StackView {
+        id: contentStack
+        anchors.topMargin:      30
+        anchors.bottomMargin:   0
+        anchors.rightMargin:    20
+        anchors.leftMargin:     20
+        anchors.fill:           parent
+        focus: true
+        initialItem: Qt.createComponent("wallet.qml")
+
+        pushEnter: Transition {
+            enabled: false
+        }
+        pushExit: Transition {
+            enabled: false
+        }
+        popEnter: Transition {
+            enabled: false
+        }
+        popExit: Transition {
+            enabled: false
+        }
+
+        onCurrentItemChanged: {
+            if (currentItem && currentItem.defaultFocusItem) {
+                assetsSwapStackView.currentItem.defaultFocusItem.forceActiveFocus();
+            }
+        }
+    }
+
     function updateItem(indexOrID, props)
     {
         var update = function(index) {
@@ -402,8 +432,9 @@ Rectangle {
             var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
             var args   = item.args ? item.args() : {}
 
-            //content.setSource("")
-            content.setSource(source, Object.assign(args, props))
+
+            contentStack.push(Qt.createComponent(source), Object.assign(args, props))
+            //content.setSource(source, Object.assign(args, props))
         }
 
         var indexByName = function(name) {
@@ -447,8 +478,12 @@ Rectangle {
        details.open()
     }
 
-    function openWallet () {
+    function openWallet() {
         updateItem("wallet")
+    }
+
+    function goBack() {
+        contentStack.pop()
     }
     function openSendDialog(receiver) {
         updateItem("wallet", {"openSend": true, "token" : receiver})

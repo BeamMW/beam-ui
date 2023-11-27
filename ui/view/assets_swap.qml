@@ -60,9 +60,6 @@ Item {
             // Subtitle row
             //
             SubtitleRow {
-                onBack: function () {
-                    main.openWallet()
-                }
             }
 
             AssetsPanel {

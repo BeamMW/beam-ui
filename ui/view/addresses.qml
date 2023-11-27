@@ -8,7 +8,6 @@ import Beam.Wallet 1.0
 
 ColumnLayout {
     id:             control
-    anchors.fill:   parent
     spacing:        0
     AddressBookViewModel {
         id: viewModel
@@ -23,9 +22,6 @@ ColumnLayout {
     // Subtitle row
     //
     SubtitleRow {
-        onBack: function () {
-            main.openWallet()
-        }
     }
 
     property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
