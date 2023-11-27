@@ -3929,5 +3929,9 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Обмін</translation>
+    </message>
 </context>
 </TS>

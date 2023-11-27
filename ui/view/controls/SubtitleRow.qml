@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
 import "."
 
 RowLayout {
@@ -13,8 +13,8 @@ RowLayout {
 
     Layout.fillWidth:    true
     Layout.fillHeight:   false
-    Layout.topMargin:    26
-    Layout.bottomMargin: 30
+    Layout.topMargin:    10
+    Layout.bottomMargin: 20
 
     CustomButton {
         id: backBtn

@@ -3913,5 +3913,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">바꾸기</translation>
+    </message>
 </context>
 </TS>

@@ -1,15 +1,15 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.4
-import QtQuick.Controls 2.3
-import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.Styles 1.2
 import "controls"
 import Beam.Wallet 1.0
 
 ColumnLayout {
-    id: control
-    anchors.fill: parent
-
+    id:             control
+    anchors.fill:   parent
+    spacing:        0
     AddressBookViewModel {
         id: viewModel
     }
@@ -17,6 +17,15 @@ ColumnLayout {
     Title {
         //% "Address Book"
         text: qsTrId("addresses-tittle")
+    }
+
+    //
+    // Subtitle row
+    //
+    SubtitleRow {
+        onBack: function () {
+            main.openWallet()
+        }
     }
 
     property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline

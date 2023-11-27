@@ -1,4 +1,4 @@
-import QtQuick 2.11
+import QtQuick 2.15
 
 AbstractTheme {
     property string navigation_logo: "qrc:/assets/logo.svg"

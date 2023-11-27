@@ -1,7 +1,7 @@
-import QtQuick 2
-import QtQuick.Controls 2
-import QtQuick.Layouts 1
-import QtGraphicalEffects 1
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 import "."
 import "../utils.js" as Utils
 
@@ -16,9 +16,21 @@ RowLayout {
     implicitWidth:       title.implicitWidth + buttons.implicitWidth
     implicitHeight:      title.implicitHeight + buttons.implicitHeight
 
+    Rectangle {
+        Layout.preferredWidth:  56
+        Layout.preferredHeight: 56
+        color:                  Utils.alpha(Style.background_main, 0.5)
+        radius:                 28
+        SvgImage {
+            id: image
+            anchors.centerIn:   parent
+            source:             Style.navigation_logo
+        }
+    }
+
     SFText {
         id:                 title
-        Layout.leftMargin:  10
+        Layout.leftMargin:  16
         font.pixelSize:     36
         color:              Style.content_main
     }
@@ -33,9 +45,12 @@ RowLayout {
         Layout.fillHeight:  false
         Layout.leftMargin:  16
         spacing:            8
-        Item {
+        Rectangle {
             Layout.preferredWidth:  32
             Layout.preferredHeight: 32
+            color:                  Utils.alpha(Style.background_main, 0.5)
+            radius:                 16
+
             CustomButton {
                 id:                     notificationsButton
                 width:                  32
@@ -47,7 +62,7 @@ RowLayout {
                 icon.width:             20
                 icon.height:            20
                 icon.color:             "transparent"
-                palette.button:         Style.background_main//Utils.alpha(Style.background_main, 0.5)
+                palette.button:         "transparent"//Utils.alpha(Style.background_main, 0.5)
                 shadowColor:            Style.content_main
                 onClicked: {
                     main.openNotifications()

@@ -3921,5 +3921,9 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Scambia</translation>
+    </message>
 </context>
 </TS>

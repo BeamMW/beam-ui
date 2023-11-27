@@ -1,16 +1,15 @@
-import QtQuick 2.11
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
 
 ColumnLayout {
     id: settingsView
-    Layout.fillWidth: true
-    state: "general"
+    Layout.fillWidth:   true
+    spacing:            0
+    state:              "general"
 
     property string  linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string  unfoldSection:   ""
@@ -74,9 +73,15 @@ ColumnLayout {
             onClicked: Utils.navigateToDownloads()
         }
     }
-
+    //
+    // Subtitle row
+    //
+    SubtitleRow {
+        onBack: function () {
+            main.openWallet()
+        }
+    }
     ScrollView {
-        Layout.topMargin:  25
         Layout.fillHeight: true
         Layout.bottomMargin: 10
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff

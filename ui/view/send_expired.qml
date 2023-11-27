@@ -1,4 +1,4 @@
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import "controls"
 
 ConfirmationDialog {

@@ -3936,5 +3936,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Swap</translation>
+    </message>
 </context>
 </TS>

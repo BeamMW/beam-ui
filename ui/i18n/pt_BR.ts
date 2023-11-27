@@ -3920,5 +3920,9 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Swap</translation>
+    </message>
 </context>
 </TS>

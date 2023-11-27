@@ -3918,5 +3918,9 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Wisselen</translation>
+    </message>
 </context>
 </TS>

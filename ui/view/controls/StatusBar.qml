@@ -1,7 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.3
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "."
 
@@ -37,8 +37,8 @@ Item {
     property string statusOnline: qsTrId("status-online")
     //% "connected node supports online transactions only"
     property string statusOnlineRemote: qsTrId("status-online-remote")
-    property var indicatorX: 50
-    property var indicatorY: 50
+    property var indicatorX: 60
+    property var indicatorY: 32
     property real nodeSyncProgress: model.nodeSyncProgress
 
     function setIndicator(indicator) {
@@ -133,7 +133,7 @@ Item {
     
     Rectangle {
         id:                     rowBackground
-        anchors.leftMargin:     70
+        anchors.leftMargin:     0
         anchors.left:           parent.left
         anchors.right:          parent.right
         height:                 24

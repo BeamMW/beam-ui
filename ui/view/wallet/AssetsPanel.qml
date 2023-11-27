@@ -1,6 +1,6 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "../controls"
 
@@ -52,6 +52,7 @@ Control {
     property real   itemHeight:     75
     property bool   showSelected:   false
     property bool   selectable:     true
+    property bool   showSettingLink:false
 
     property real   assetsFilterRowHeight: 50
 
@@ -104,9 +105,6 @@ Control {
         spacing: 0
 
         SFText {
-            Layout.leftMargin: 10
-            Layout.fillWidth: true
-
             font {
                 pixelSize: 14
                 letterSpacing: 4
@@ -118,6 +116,22 @@ Control {
             color: Style.content_main
             //% "Assets"
             text: qsTrId("wallet-assets-title")
+        }
+
+        LinkButton {
+            Layout.leftMargin:  30
+            Layout.alignment:   Qt.AlignVCenter
+            visible: showSettingLink
+            //% "Assets settings"
+            text: qsTrId("assets-settings")
+            onClicked: {
+                main.openSettings("CA");
+            }
+        }
+
+        Item {
+            Layout.fillWidth:   true
+            Layout.fillHeight:  true
         }
 
         SvgImage {

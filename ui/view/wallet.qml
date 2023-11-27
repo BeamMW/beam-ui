@@ -1,10 +1,8 @@
-import QtQuick 2
-import QtQuick.Controls 1
-import QtQuick.Controls 2
-import QtQuick.Controls.Styles 1
-import QtGraphicalEffects 1
-import QtQuick.Layouts 1
-import Beam.Wallet 1
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
+import Beam.Wallet 1.0
 import "controls"
 import "wallet"
 import "utils.js" as Utils
@@ -133,6 +131,38 @@ ColumnLayout {
                         font.pixelSize: 12
                         onClicked: {
                             navigateReceive(assets.selectedId);
+                        }
+                    }
+
+                    ContextMenu {
+                        id: swapContextMenu
+                        Action {
+                            text:           qsTrId("atomic-swap-title")
+                            icon.source:    "qrc:/assets/icon-atomic_swap.svg"
+                            onTriggered: {
+                                main.openAtomicSwaps();
+                            }
+                        }
+                        Action {
+                            text:           qsTrId("assets-swap-title")
+                            icon.source:    "qrc:/assets/icon-assets_swap.svg"
+                            onTriggered: {
+                                main.openAssetSwaps();
+                            }
+                        }
+                    }
+
+                    CustomButton {
+                        id:                 swapButton
+                        height:             32
+                        palette.button:     Style.active
+                        palette.buttonText: Style.content_opposite
+                        icon.source:        "qrc:/assets/icon-swap-blue.svg"
+                        //% "Swap"
+                        text: qsTrId("wallet-swap-button")
+                        font.pixelSize: 12
+                        onClicked: {
+                            swapContextMenu.popup(swapButton, Qt.point(20, swapButton.height + 6))
                         }
                     }
                 }

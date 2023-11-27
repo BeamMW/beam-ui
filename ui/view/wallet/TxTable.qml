@@ -1,9 +1,9 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "../controls"
 import "../utils.js" as Utils
@@ -41,7 +41,6 @@ Control {
         if (tableViewModel.showFailed) {
             f.push("failed");
         }
-        console.log(f.join('|'))
         return f.join('|')
     }
     property var       selectedFilters: getStatusFilter()

@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import Beam.Wallet 1.0
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts 1.15
 import "."
 
 SFText {

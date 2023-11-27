@@ -1,7 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.3
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "."
 
@@ -58,7 +58,7 @@ Item {
         icon.height:            32
         icon.color:             "transparent"
         onClicked: {
-            accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height + 7))
+            accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height + 6))
         }
     }
 }

@@ -1,9 +1,9 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.4
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.15
 import QtQuick.Window 2.2
 import "controls"
 import Beam.Wallet 1.0
@@ -249,6 +249,7 @@ Rectangle {
         anchors.bottom:  parent.bottom
         anchors.left:    parent.left
         anchors.top:     parent.top
+        visible: false
 
         Rectangle {
             anchors.fill: parent
@@ -386,7 +387,7 @@ Rectangle {
         anchors.topMargin: 30
         anchors.bottomMargin: 0
         anchors.rightMargin: 20
-        anchors.leftMargin: 90
+        anchors.leftMargin: 20
         anchors.fill: parent
         focus: true
     }
@@ -499,6 +500,14 @@ Rectangle {
 
     function validationSeedBackToSettings() {
         updateItem("settings", { "settingsPrivacyFolded": false});
+    }
+
+    function openAssetSwaps() {
+        updateItem("assets_swap")
+    }
+
+    function openAtomicSwaps() {
+        updateItem("atomic_swap")
     }
 
     property var trezor_popups : []

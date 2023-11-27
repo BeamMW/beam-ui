@@ -3920,5 +3920,9 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Échanger</translation>
+    </message>
 </context>
 </TS>

@@ -1,16 +1,14 @@
-import QtQuick 2.11
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
 
 ColumnLayout {
     id: thisView
-
+    spacing: 0
     // callbacks set by parent
     property var onClosed: undefined
     property string orderId: ""
