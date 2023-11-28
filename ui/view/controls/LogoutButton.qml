@@ -10,14 +10,6 @@ Item {
     implicitHeight: logoutButton.implicitHeight
     ContextMenu {
         id: accountContextMenu
-        VersionFooter {
-            horizontalAlignment:    Text.AlignRight
-            rightPadding:           20
-        }
-        MenuSeparator{
-            leftPadding:            8
-            rightPadding:           8
-        }
         SFLabel {
             leftPadding:            20
             rightPadding:           20
@@ -45,6 +37,14 @@ Item {
             onTriggered: {
                 main.parent.setSource("qrc:/start.qml", {"isLogoutMode": true});
             }
+        }
+        MenuSeparator{
+            leftPadding:            8
+            rightPadding:           8
+        }
+        VersionFooter {
+            horizontalAlignment:    Text.AlignRight
+            rightPadding:           20
         }
     }
     CustomToolButton {
