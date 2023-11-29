@@ -513,22 +513,39 @@ Rectangle {
     function goBack() {
         contentStack.pop()
     }
-    function openSendDialog(receiver) {
+    
+    function navigateSend(assetId) {
+        openSendDialog("", assetId)
+    }
+
+    function navigateReceive(assetId) {
+        openReceiveDialog("", assetId)
+    }
+
+    function openSendDialog(receiver, assetId) {
         var params = {
             "onAccepted":    contentStack.pop(),
             "onClosed":      contentStack.pop(),
             "receiverToken": receiver,
-            "assetId":       0
+            "assetId":       assetId
+        }
+        if (assetId != undefined)
+        {
+            params["assetId"] = assetId >= 0 ? assetId : 0
         }
         contentStack.push(Qt.createComponent("qrc:/send_regular.qml"), params)
     }
 
-    function openReceiveDialog(token) {
+    function openReceiveDialog(token, assetId) {
         var params = {
             "onClosed": contentStack.pop(),
             "token":    token,
-            "assetId":  0
+            "assetId":  assetId
             };
+        if (assetId != undefined)
+        {
+            params["assetId"] = assetId >= 0 ? assetId : 0
+        }
         contentStack.push(Qt.createComponent("qrc:/receive_regular.qml"), params)
     }
 
@@ -583,6 +600,16 @@ Rectangle {
 
     function openAtomicSwaps() {
         updateItem("atomic_swap")
+    }
+
+    function openMessenger() {
+        contentStack.pop(contentStack.get(0));
+        updateItem("beam_messenger")
+    }
+
+    function openAddresses() {
+        contentStack.pop(contentStack.get(0));
+        updateItem("addresses")
     }
 
     property var trezor_popups : []

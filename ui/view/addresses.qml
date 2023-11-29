@@ -52,7 +52,6 @@ ColumnLayout {
     RowLayout {
         Layout.minimumHeight: 40
         Layout.maximumHeight: 40
-        Layout.topMargin:       54
         visible:                viewModel.contacts.length > 0  || viewModel.activeAddresses.length > 0 || viewModel.expiredAddresses.length > 0
         TxFilter{
             id: activeAddressesFilter

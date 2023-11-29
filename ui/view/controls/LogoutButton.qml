@@ -24,6 +24,20 @@ Item {
             rightPadding:           8
         }
         Action {
+            text:           qsTrId("messenger-title")
+            icon.source:    "qrc:/assets/icon-beam_messenger.svg"
+            onTriggered: {
+                main.openMessenger();
+            }
+        }
+        Action {
+            text:           qsTrId("addresses-tittle")
+            icon.source:    "qrc:/assets/icon-addresses.svg"
+            onTriggered: {
+                main.openAddresses();
+            }
+        }
+        Action {
             text:           qsTrId("settings-title")
             icon.source:    "qrc:/assets/icon-settings.svg"
             onTriggered: {
