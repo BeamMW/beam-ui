@@ -366,8 +366,9 @@
         <translation>conectado</translation>
     </message>
     <message id="status-updating">
-        <source>updating</source>
-        <translation>actualizando</translation>
+        <source>synchronizing blockchain...</source>
+        <oldsource>updating</oldsource>
+        <translation type="unfinished">actualizando</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -2115,10 +2116,6 @@ Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más
     <message id="settings-infura-project-id">
         <source>Infura project ID</source>
         <translation>ID del proyecto Infura</translation>
-    </message>
-    <message id="apps-title">
-        <source>My DApp Store</source>
-        <translation>Mi tienda de DApp</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>

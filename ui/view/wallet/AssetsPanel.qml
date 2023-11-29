@@ -54,7 +54,7 @@ Control {
     property bool   selectable:     true
     property bool   showSettingLink:false
 
-    property real   assetsFilterRowHeight: 50
+    property real   assetsFilterRowHeight: 40
 
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showSeedValidationPromo && !seedValidationHelper.isSeedValidated

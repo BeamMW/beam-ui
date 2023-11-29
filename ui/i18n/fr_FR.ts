@@ -366,8 +366,9 @@
         <translation>en ligne</translation>
     </message>
     <message id="status-updating">
-        <source>updating</source>
-        <translation>en cours de mis à jour</translation>
+        <source>synchronizing blockchain...</source>
+        <oldsource>updating</oldsource>
+        <translation type="unfinished">en cours de mis à jour</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -2113,10 +2114,6 @@ prendre beaucoup plus de temps pour compléter une transaction.</translation>
     <message id="settings-infura-project-id">
         <source>Infura project ID</source>
         <translation>Identifiant de projet Infura</translation>
-    </message>
-    <message id="apps-title">
-        <source>My DApp Store</source>
-        <translation>Mon DApp Store</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>

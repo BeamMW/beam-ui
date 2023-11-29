@@ -367,8 +367,9 @@
         <translation>повезан на мрежу</translation>
     </message>
     <message id="status-updating">
-        <source>updating</source>
-        <translation>ажурирање</translation>
+        <source>synchronizing blockchain...</source>
+        <oldsource>updating</oldsource>
+        <translation type="unfinished">ажурирање</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -2125,10 +2126,6 @@ much longer for a transaction to complete.</translation>
     <message id="settings-infura-project-id">
         <source>Infura project ID</source>
         <translation type="unfinished">Infura project ID</translation>
-    </message>
-    <message id="apps-title">
-        <source>My DApp Store</source>
-        <translation type="unfinished">My DApp Store</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>

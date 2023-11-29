@@ -158,38 +158,39 @@ Item {
             anchors.fill: parent
 
             RowLayout {
-                width: rowBackground.width
-                spacing: 7
+                Layout.fillWidth:   true
+                Layout.rightMargin: 20
+                spacing:            8
 
                 Item {
-                    Layout.fillWidth: true
+                    Layout.fillWidth:   true
+                    Layout.fillHeight:  true
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.maximumWidth: parent.width - parent.spacing * 2 - 14
-                                         - (progressText.visible ? progressText.width + parent.spacing : 0)
-                                         - (settingsBtn.visible ? settingsBtn.width + parent.spacing : 0)
-                    id: status_text
-                    color: Style.content_main
-                    font.pixelSize: 15
-                    elide: Text.ElideRight
+                    id:                 statusText
+                    color:              Style.content_main
+                    font.pixelSize:     12
+                    elide:              Text.ElideRight
                 }
 
                 SFText {
-                    id: progressText
-                    color: Style.content_main
-                    font.pixelSize: 15
-                    text: "(" + model.nodeSyncProgress.toFixed(2) + "%)"
-                    visible: model.nodeSyncProgress > 0 && update_indicator.visible
+                    id:                 progressText
+                    color:              Style.content_main
+                    font.pixelSize:     12
+                    text:               "(" + model.nodeSyncProgress.toFixed(2) + "%)"
+                    visible:            model.nodeSyncProgress > 0 && update_indicator.visible
                 }
 
                 LinkButton {
                     id: settingsBtn
                     //% "Change settings"
                     text: qsTrId("status-change-settings")
-                    visible: model.ipfsError || model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
-                    fontSize: 15
+                    visible: model.ipfsError || 
+                             model.isCoinClientFailed || 
+                             model.isFailedStatus || 
+                             (model.isOnline && !model.isConnectionTrusted && !model.isSyncInProgress)
+                    fontSize: 12
 
                     onClicked: function () {
                         if (model.isCoinClientFailed || model.isFailedStatus) {
@@ -207,9 +208,10 @@ Item {
                     }
                 }
 
-                Item {
-                    Layout.fillWidth: true
-                }
+                //Item {
+                //    Layout.fillWidth:   true
+                //    Layout.fillHeight:  true
+                //}
             }
 
             CustomProgressBar {
@@ -227,7 +229,7 @@ Item {
         State {
             name: "connecting"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 //% "connecting"
                 text: qsTrId("status-connecting") + model.branchName
             }
@@ -241,7 +243,7 @@ Item {
         State {
             name: "online"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: statusOnline + (model.isConnectionTrusted || !model.isExchangeRatesUpdated ? "" : ": " + statusOnlineRemote) + model.branchName + 
                     (
                         model.isExchangeRatesUpdated ? "" : " " + model.exchangeStatus
@@ -258,9 +260,9 @@ Item {
         State {
             name: "updating"
             PropertyChanges {
-                target: status_text;
-                //% "updating"
-                text: qsTrId("status-updating") + "..." + model.branchName
+                target: statusText;
+                //% "synchronizing blockchain..."
+                text: qsTrId("status-updating")
             }
             StateChangeScript {
                 name: "updatingScript"
@@ -272,7 +274,7 @@ Item {
         State {
             name: "error"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: rootControl.walletError + model.branchName
             }
             StateChangeScript {
@@ -286,7 +288,7 @@ Item {
         State {
             name: "error_hww"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: model.hwwError;
                 color: Style.accent_fail;
                 font.pixelSize: 20
@@ -295,7 +297,7 @@ Item {
         State {
             name: "error_3rd"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: rootControl.error_msg_3rd_client + model.branchName
             }
             StateChangeScript {

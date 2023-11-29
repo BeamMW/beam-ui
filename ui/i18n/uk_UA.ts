@@ -366,8 +366,9 @@
         <translation>у мережі</translation>
     </message>
     <message id="status-updating">
-        <source>updating</source>
-        <translation>оновлення</translation>
+        <source>synchronizing blockchain...</source>
+        <oldsource>updating</oldsource>
+        <translation type="unfinished">оновлення</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -2120,10 +2121,6 @@ much longer for a transaction to complete.</source>
     <message id="settings-infura-project-id">
         <source>Infura project ID</source>
         <translation>Infura project ID</translation>
-    </message>
-    <message id="apps-title">
-        <source>My DApp Store</source>
-        <translation>Мій DApp магазин</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
