@@ -82,20 +82,19 @@ Update your settings and try again."
         text:       qsTrId("swap-na-message")
     }
 
-    Title {
-        text: qsTrId("atomic-swap-title")
-    }
+    //% "Create Offer"
+    property string title:  qsTrId("wallet-atomic-swap-title")
 
     //
     // Subtitle row
     //
-    SubtitleRow {
-        //% "Create Atomic Swap Offer"
-        text: qsTrId("wallet-atomic-swap-title")
-        onBack: function () {
-            onClosed()
-        }
-    }
+    //SubtitleRow {
+    //    //% "Create Atomic Swap Offer"
+    //    text: qsTrId("wallet-atomic-swap-title")
+    //    onBack: function () {
+    //        onClosed()
+    //    }
+    //}
 
     ScrollView {
         id:                  scrollView

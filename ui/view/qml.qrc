@@ -245,6 +245,7 @@
         <file>assets/icon-notifications-update.svg</file>
         <file>assets/icon-notifications-videos.svg</file>
         <file>assets/icon-chevron-down.svg</file>
+        <file>assets/icon-chevron-right.svg</file>
         <file>assets/icon-contract-completed.svg</file>
         <file>assets/icon-contract-expired.svg</file>
         <file>assets/icon-contract-failed.svg</file>
@@ -413,6 +414,7 @@
         <file>assets/icon-canceled-offline.svg</file>
         <file>assets/icon-sent-offline.svg</file>
         <file>assets/icon-sending-offline.svg</file>
+        <file>assets/icon-home-grey.svg</file>
         <file>assets/bg-pic.png</file>
         <file>assets/bg-pic@2x.png</file>
         <file>assets/bg-pic@3x.png</file>

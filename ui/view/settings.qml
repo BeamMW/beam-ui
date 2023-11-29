@@ -25,10 +25,9 @@ ColumnLayout {
         id: viewModel
     }
 
-    Title {
-        //% "Settings"
-        text: qsTrId("settings-title")
-
+    //% "Settings"
+    property string title:       qsTrId("settings-title")
+    property var titleContent: RowLayout {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignCenter | Qt.AlignRight
@@ -76,8 +75,8 @@ ColumnLayout {
     //
     // Subtitle row
     //
-    SubtitleRow {
-    }
+    //SubtitleRow {
+    //}
     ScrollView {
         Layout.fillHeight: true
         Layout.bottomMargin: 10

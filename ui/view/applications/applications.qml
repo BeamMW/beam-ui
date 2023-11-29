@@ -11,10 +11,9 @@ import "."
 
 ColumnLayout {
     id: control
-    Layout.fillWidth: true
-    Layout.topMargin: 27
     spacing:          0
 
+    property var      stackView:      StackView.view
     property string   errorMessage:   ""
     property var      appsList:       undefined
     property var      unsupportedCnt: 0
@@ -182,38 +181,40 @@ ColumnLayout {
     //
     // Page Header (Title + Status Bar)
     //
-    Title {
-                                                           //% "My DApp Store"
-        text: control.activeApp ? control.activeApp.name : qsTrId("apps-title")
+                                                                                   //% "My DApp Store"
+    property string   title:          control.activeApp ? control.activeApp.name : qsTrId("apps-title")
+    //Title {
+    //    MouseArea {
+    //        visible:         !!control.activeApp
+    //        anchors.fill:    parent
+    //        acceptedButtons: Qt.LeftButton
+    //        cursorShape:     Qt.PointingHandCursor
+    //
+    //        onClicked: function () {
+    //            reloadWebEngineView()
+    //        }
+    //    }
+    //
+    //    MouseArea {
+    //        visible:         !control.activeApp
+    //        enabled:         stackView.depth > 1
+    //        anchors.fill:    parent
+    //        acceptedButtons: Qt.LeftButton
+    //        hoverEnabled:    true
+    //        cursorShape:     enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+    //        onClicked:       stackView.pop()
+    //    }
+    //}
 
-        MouseArea {
-            visible:         !!control.activeApp
-            anchors.fill:    parent
-            acceptedButtons: Qt.LeftButton
-            cursorShape:     Qt.PointingHandCursor
-
-            onClicked: function () {
-                reloadWebEngineView()
-            }
-        }
-
-        MouseArea {
-            visible:         !control.activeApp
-            enabled:         stackView.depth > 1
-            anchors.fill:    parent
-            acceptedButtons: Qt.LeftButton
-            hoverEnabled:    true
-            cursorShape:     enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-            onClicked:       stackView.pop()
-        }
-    }
+    //SubtitleRow {
+    //}
 
     SettingsViewModel {
         id: settings
     }
 
-    Component {
-        id: dappsMainLayout
+//    Component {
+//        id: dappsMainLayout
 
         ColumnLayout {
             id:                dappsLayout
@@ -542,7 +543,7 @@ ColumnLayout {
                             }
 
                             if (control.activeApp) {
-                                createApi(control.activeApp)
+                                dappsLayout.createApi(control.activeApp)
                             }
                         }
                     }
@@ -628,7 +629,7 @@ ColumnLayout {
                 }
 
                 onLaunch: function (app) {
-                    launchApp(app)
+                    dappsLayout.launchApp(app)
                 }
 
                 onInstall: function (app) {
@@ -703,8 +704,8 @@ ColumnLayout {
                     for (let app of control.appsList)
                     {
                         if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
-                            if (appSupported(app)) {
-                                launchApp(app)
+                            if (dappsLayout.appSupported(app)) {
+                                dappsLayout.launchApp(app)
                             } else {
                                 //% "Update Wallet to launch %1 application"
                                 BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
@@ -718,7 +719,7 @@ ColumnLayout {
             function checkSupport (apps) {
                 unsupportedCnt = 0
                 for (var app of apps) {
-                    app.supported = appSupported(app)
+                    app.supported = dappsLayout.appSupported(app)
                     if (!app.supported) ++unsupportedCnt
                 }
                 return apps
@@ -744,7 +745,7 @@ ColumnLayout {
                 control.showTxDetails.disconnect(txPanel.showTxDetails)
             }
         }
-    }
+   // }
 
     TransactionIsSent {
         id:           transactionIsSent
@@ -791,30 +792,5 @@ ColumnLayout {
         okButtonText:            qsTrId("general-ok")
         okButton.palette.button: Style.accent_fail
         cancelButtonVisible:     false
-    }
-
-    StackView {
-        id:                stackView
-        Layout.fillWidth:  true
-        Layout.fillHeight: true
-        initialItem:       dappsMainLayout
-
-        pushEnter: Transition {
-            enabled: false
-        }
-        pushExit: Transition {
-            enabled: false
-        }
-        popEnter: Transition {
-            enabled: false
-        }
-        popExit: Transition {
-            enabled: false
-        }
-        onCurrentItemChanged: {
-            if (currentItem && currentItem.defaultFocusItem) {
-                stackView.currentItem.defaultFocusItem.forceActiveFocus();
-            }
-        }
     }
 }

@@ -3641,8 +3641,9 @@ Please, check the file and try again.</source>
         <translation>Обмін активами</translation>
     </message>
     <message id="wallet-atomic-swap-title">
-        <source>Create Atomic Swap Offer</source>
-        <translation>Створіть пропозицію обміну</translation>
+        <source>Create Offer</source>
+        <oldsource>Create Atomic Swap Offer</oldsource>
+        <translation type="unfinished">Створіть пропозицію обміну</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3695,12 +3696,14 @@ Please, restart the wallet and try again.</source>
         <translation>прийняти пропозицію</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
-        <source>Accept an Asset Swap Offer</source>
-        <translation>Прийняти пропозицію обміну активами</translation>
+        <source>Accept Offer</source>
+        <oldsource>Accept an Asset Swap Offer</oldsource>
+        <translation type="unfinished">Прийняти пропозицію обміну активами</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
-        <source>Create an Asset Swap Offer</source>
-        <translation>Створити пропозицію обміну активами</translation>
+        <source>Create Offer</source>
+        <oldsource>Create an Asset Swap Offer</oldsource>
+        <translation type="unfinished">Створити пропозицію обміну активами</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>

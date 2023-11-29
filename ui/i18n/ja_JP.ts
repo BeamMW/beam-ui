@@ -3601,8 +3601,9 @@ Please, check the file and try again.</source>
         <translation>アセットスワップ</translation>
     </message>
     <message id="wallet-atomic-swap-title">
-        <source>Create Atomic Swap Offer</source>
-        <translation>アトミックスワップのオファーを作成する</translation>
+        <source>Create Offer</source>
+        <oldsource>Create Atomic Swap Offer</oldsource>
+        <translation type="unfinished">アトミックスワップのオファーを作成する</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3655,12 +3656,14 @@ Please, restart the wallet and try again.</source>
         <translation>オファーを受ける</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
-        <source>Accept an Asset Swap Offer</source>
-        <translation>アセットスワップのオファーを受ける</translation>
+        <source>Accept Offer</source>
+        <oldsource>Accept an Asset Swap Offer</oldsource>
+        <translation type="unfinished">アセットスワップのオファーを受ける</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
-        <source>Create an Asset Swap Offer</source>
-        <translation>アセットスワップのオファーを作成する</translation>
+        <source>Create Offer</source>
+        <oldsource>Create an Asset Swap Offer</oldsource>
+        <translation type="unfinished">アセットスワップのオファーを作成する</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>

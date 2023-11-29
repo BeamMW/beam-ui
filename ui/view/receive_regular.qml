@@ -85,21 +85,19 @@ ColumnLayout {
             viewModel.saveAddress();
          }
     }
-
-    Title {
-        text: qsTrId("wallet-title")
-    }
+    //% "Receive"
+    property string title: qsTrId("wallet-receive-title")
 
     //
     // Subtitle row
     //
-    SubtitleRow {
-        //% "Receive"
-        text: qsTrId("wallet-receive-title")
-        onBack: function () {
-            control.onClosed()
-        }
-    }
+    //SubtitleRow {
+    //    ////% "Receive"
+    //    //text: qsTrId("wallet-receive-title")
+    //    //onBack: function () {
+    //    //    control.onClosed()
+    //    //}
+    //}
 
     QR {
         id: qrCode

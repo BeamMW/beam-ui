@@ -15,9 +15,9 @@ ColumnLayout {
         id: viewModel
     }
 
-    Title {
-        //% "Notifications"
-        text: qsTrId("notifications-title")
+    //% "Notifications"
+    property string title:      qsTrId("notifications-title")
+    property var titleContent : RowLayout {
         Item {
             Layout.fillWidth:   true
             Layout.fillHeight:  true
@@ -39,8 +39,8 @@ ColumnLayout {
     //
     // Subtitle row
     //
-    SubtitleRow {
-    }
+    //SubtitleRow {
+    //}
 
     ColumnLayout {
         Layout.fillWidth: true

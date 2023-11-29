@@ -24,6 +24,37 @@ ColumnLayout {
         }
     }
 
+    TokenDuplicateChecker {
+        id: tokenDuplicateChecker
+        onAccepted: {
+            StackView.view.pop();
+            main.openSwapActiveTransactionsList()
+        }
+        Connections {
+            target: tokenDuplicateChecker.model
+
+            function onTokenPreviousAccepted (token) {
+                tokenDuplicateChecker.isOwn = false
+                tokenDuplicateChecker.open()
+            }
+
+            function onTokenFirstTimeAccepted (token) {
+                StackView.view.replace(Qt.createComponent("send_swap.qml"),
+                                     {
+                                         "onAccepted": tokenDuplicateChecker.onAccepted,
+                                         "onClosed":   StackView.view.pop(),
+                                         "swapToken":  token
+                                     })
+                StackView.view.currentItem.validateCoin()
+            }
+
+            function onTokenOwnGenerated (token) {
+                tokenDuplicateChecker.isOwn = true
+                tokenDuplicateChecker.open()
+            }
+        }
+    }
+
     property alias assetId:   viewModel.assetId
     property alias assetIdx:  sendAmountInput.currencyIdx
     property var   assetInfo: viewModel.assetsList[assetIdx]
@@ -35,7 +66,6 @@ ColumnLayout {
     // callbacks set by parent
     property var   onAccepted:    undefined
     property var   onClosed:      undefined
-    property var   onSwapToken:   undefined
     property alias receiverToken: viewModel.token
 
     Component.onCompleted: {
@@ -60,18 +90,16 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    Title {
-        text: qsTrId("wallet-title")
-    }
+    //% "Send"
+    property string title:       qsTrId("send-title")
 
     //
     // Subtitle row
     //
-    SubtitleRow {
-        //% "Send"
-        text:   qsTrId("send-title")
-        onBack: control.onClosed
-    }
+    //SubtitleRow {
+    //    ////% "Send"
+    //    //text:   qsTrId("send-title")
+    //}
 
     ScrollView {
         id:                  scrollView
@@ -127,8 +155,8 @@ ColumnLayout {
                                 placeholderText:  qsTrId("send-contact-address-placeholder")
                                 onTextChanged: function () {
                                     var isSwap = BeamGlobals.isSwapToken(text)
-                                    if (isSwap && typeof onSwapToken == "function") {
-                                        onSwapToken(text);
+                                    if (isSwap) {
+                                        tokenDuplicateChecker.checkTokenForDuplicate(text);
                                     }
                                 }
                             }

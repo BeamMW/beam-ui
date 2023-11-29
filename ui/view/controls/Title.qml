@@ -5,16 +5,19 @@ import QtGraphicalEffects 1.15
 import "."
 import "../utils.js" as Utils
 
-
 RowLayout {
-    default property alias content: contentLayout.data
-    property alias text: title.text
+    id: control
+    default property alias  content:        contentLayout.data
+    property alias          text:           title.text
+    property var            path:           []
+    property alias          canNavigate:    navigationBar.visible
+    signal                  navigate(int item)
 
     spacing:             0
     Layout.fillHeight:   false
 
-    implicitWidth:       title.implicitWidth + buttons.implicitWidth
-    implicitHeight:      title.implicitHeight + buttons.implicitHeight
+    implicitWidth:       title.implicitWidth + navigationBar.implicitWidth + buttons.implicitWidth
+    implicitHeight:      title.implicitHeight + navigationBar.implicitHeight + buttons.implicitHeight
 
     Rectangle {
         Layout.preferredWidth:  56
@@ -27,12 +30,78 @@ RowLayout {
             source:             Style.navigation_logo
         }
     }
-
-    SFText {
-        id:                 title
+    RowLayout {
+        Layout.alignment:   Qt.AlignVCenter
         Layout.leftMargin:  16
-        font.pixelSize:     36
-        color:              Style.content_main
+        spacing:            8
+        RowLayout {
+            id:                 navigationBar
+            Layout.alignment:   Qt.AlignVCenter
+            RowLayout {
+                Layout.alignment:   Qt.AlignVCenter
+                spacing:    8
+                SvgImage {
+                    id:     home
+                    Layout.preferredWidth:  20
+                    Layout.preferredHeight: 20
+                    source: "qrc:/assets/icon-home-grey.svg"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape:  Qt.PointingHandCursor
+                        onClicked: {
+                            control.navigate(0)
+                        }
+                    }
+                }
+                SvgImage {
+                    Layout.preferredWidth:  24
+                    Layout.preferredHeight: 24
+                    source: "qrc:/assets/icon-chevron-right.svg"
+                }
+            }
+            Repeater {
+                Layout.alignment:          Qt.AlignVCenter
+                model: path
+                visible: path.length > 0
+
+                RowLayout {
+                    id:         navItem
+                    spacing:    8
+                    Item {
+                        Layout.alignment:          Qt.AlignVCenter
+                        width:  navText.width
+                        height: navText.height
+                        SFText {
+                            id: navText
+                            text: modelData
+                            font.pixelSize:     24
+                            color:              Style.content_secondary
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape:  Qt.PointingHandCursor 
+                            onClicked: function () {
+                                control.navigate(index + 1)
+                            }
+                        }
+                    }
+                    SvgImage {
+                        Layout.alignment:          Qt.AlignVCenter
+                        Layout.preferredWidth:     24
+                        Layout.preferredHeight:    24
+                        source: "qrc:/assets/icon-chevron-right.svg"
+                    }
+                }
+            }
+        }
+
+        SFText {
+            Layout.alignment:   Qt.AlignVCenter
+            id:                 title
+            font.pixelSize:     30
+            color:              Style.content_main
+        }
     }
     RowLayout {
         id:                 contentLayout

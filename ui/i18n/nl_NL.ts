@@ -3630,8 +3630,9 @@ Controleer het bestand en probeer het opnieuw.</translation>
         <translation>Assets Swaps</translation>
     </message>
     <message id="wallet-atomic-swap-title">
-        <source>Create Atomic Swap Offer</source>
-        <translation>Creëer Atomic swap aanbieding</translation>
+        <source>Create Offer</source>
+        <oldsource>Create Atomic Swap Offer</oldsource>
+        <translation type="unfinished">Creëer Atomic swap aanbieding</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3684,12 +3685,14 @@ Herstart de wallet en probeer het opnieuw.</translation>
         <translation>aanbod accepteren</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
-        <source>Accept an Asset Swap Offer</source>
-        <translation>Een Asset Swap Aanbod accepteren</translation>
+        <source>Accept Offer</source>
+        <oldsource>Accept an Asset Swap Offer</oldsource>
+        <translation type="unfinished">Een Asset Swap Aanbod accepteren</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
-        <source>Create an Asset Swap Offer</source>
-        <translation>Een Asset Swap Aanbod aanmaken</translation>
+        <source>Create Offer</source>
+        <oldsource>Create an Asset Swap Offer</oldsource>
+        <translation type="unfinished">Een Asset Swap Aanbod aanmaken</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>

@@ -176,18 +176,18 @@ Rectangle {
 
     property color topColor:            Style.background_main_top
     property color topGradientColor:    Qt.rgba(Style.background_main_top.r, Style.background_main_top.g, Style.background_main_top.b, 0)
-    property var backgroundRect: mainBackground
-    property var backgroundLogo: mainBackgroundLogo
+    property var backgroundRect:        mainBackground
+    property var backgroundLogo:        mainBackgroundLogo
 
 
     Rectangle {
-        id: mainBackground
-        anchors.fill: parent
-        color: Style.background_main
+        id:             mainBackground
+        anchors.fill:   parent
+        color:          Style.background_main
 
         Rectangle {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.left:   parent.left
+            anchors.right:  parent.right
             height: 230
             gradient: Gradient {
                 GradientStop { position: 0.0; color: main.topColor }
@@ -392,32 +392,60 @@ Rectangle {
         focus: true
     }
 
-    StackView {
-        id: contentStack
+    ColumnLayout {
         anchors.topMargin:      30
         anchors.bottomMargin:   0
         anchors.rightMargin:    20
         anchors.leftMargin:     20
         anchors.fill:           parent
-        focus: true
-        initialItem: Qt.createComponent("wallet.qml")
+        spacing: 0
 
-        pushEnter: Transition {
-            enabled: false
-        }
-        pushExit: Transition {
-            enabled: false
-        }
-        popEnter: Transition {
-            enabled: false
-        }
-        popExit: Transition {
-            enabled: false
+        Title {
+            Layout.fillWidth:   true
+            text:               contentStack.currentItem.title
+            path:               getNavigationPath()
+            content:            contentStack.currentItem.titleContent ? contentStack.currentItem.titleContent : null
+            canNavigate:        contentStack.depth > 1
+            onNavigate: function(index) {
+                var item = contentStack.get(index);
+                contentStack.pop(item);
+            }
+            
+            function getNavigationPath() {
+                var path = [];
+                if (contentStack.depth <= 2)
+                    return path;
+                for (var i = 1; i < contentStack.depth-1; ++i) {
+                    path.push(contentStack.get(i).title);
+                }
+                return path;
+            }
         }
 
-        onCurrentItemChanged: {
-            if (currentItem && currentItem.defaultFocusItem) {
-                assetsSwapStackView.currentItem.defaultFocusItem.forceActiveFocus();
+        StackView {
+            id:                     contentStack
+            Layout.topMargin:       30
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+            focus:                  true
+            initialItem:            Qt.createComponent("wallet.qml")
+
+            pushEnter: Transition {
+                enabled: false
+            }
+            pushExit: Transition {
+                enabled: false
+            }
+            popEnter: Transition {
+                enabled: false
+            }
+            popExit: Transition {
+                enabled: false
+            }
+            onCurrentItemChanged: {
+                if (currentItem && currentItem.defaultFocusItem) {
+                    contentStack.currentItem.defaultFocusItem.forceActiveFocus();
+                }
             }
         }
     }
@@ -432,7 +460,7 @@ Rectangle {
             var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
             var args   = item.args ? item.args() : {}
 
-
+            console.log("Push: " + source)
             contentStack.push(Qt.createComponent(source), Object.assign(args, props))
             //content.setSource(source, Object.assign(args, props))
         }
@@ -486,11 +514,22 @@ Rectangle {
         contentStack.pop()
     }
     function openSendDialog(receiver) {
-        updateItem("wallet", {"openSend": true, "token" : receiver})
+        var params = {
+            "onAccepted":    contentStack.pop(),
+            "onClosed":      contentStack.pop(),
+            "receiverToken": receiver,
+            "assetId":       0
+        }
+        contentStack.push(Qt.createComponent("qrc:/send_regular.qml"), params)
     }
 
     function openReceiveDialog(token) {
-        updateItem("wallet", {"openReceive": true, "token" : token})
+        var params = {
+            "onClosed": contentStack.pop(),
+            "token":    token,
+            "assetId":  0
+            };
+        contentStack.push(Qt.createComponent("qrc:/receive_regular.qml"), params)
     }
 
     function openSettings(section = "") {
@@ -502,7 +541,8 @@ Rectangle {
     }
 
     function openNotifications() {
-        updateItem("notifications");
+        contentStack.pop(contentStack.get(0));
+        contentStack.push(Qt.createComponent("qrc:/notifications.qml"));
     }
 
     function openSwapActiveTransactionsList() {
@@ -581,8 +621,7 @@ Rectangle {
     Component.onCompleted: {
         if (seedValidationHelper.isTriggeredFromSettings)
             validationSeedBackToSettings();
-        else
-            openWallet();
+
         main.Window.window.closing.connect(onClosing);
     }
 

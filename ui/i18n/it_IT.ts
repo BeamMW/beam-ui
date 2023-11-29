@@ -3633,8 +3633,9 @@ Controllare il file e riprovare.</translation>
         <translation>Scambi Di Asset</translation>
     </message>
     <message id="wallet-atomic-swap-title">
-        <source>Create Atomic Swap Offer</source>
-        <translation>Crea un&apos;offerta di Atomic Swap</translation>
+        <source>Create Offer</source>
+        <oldsource>Create Atomic Swap Offer</oldsource>
+        <translation type="unfinished">Crea un&apos;offerta di Atomic Swap</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3687,12 +3688,14 @@ Riavviare il wallet e riprovare.</translation>
         <translation>accetta offerta</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
-        <source>Accept an Asset Swap Offer</source>
-        <translation>Accetta un&apos;offerta di scambio di asset</translation>
+        <source>Accept Offer</source>
+        <oldsource>Accept an Asset Swap Offer</oldsource>
+        <translation type="unfinished">Accetta un&apos;offerta di scambio di asset</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
-        <source>Create an Asset Swap Offer</source>
-        <translation>Crea un&apos;offerta di scambio di asset</translation>
+        <source>Create Offer</source>
+        <oldsource>Create an Asset Swap Offer</oldsource>
+        <translation type="unfinished">Crea un&apos;offerta di scambio di asset</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>

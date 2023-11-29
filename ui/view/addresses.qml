@@ -13,16 +13,14 @@ ColumnLayout {
         id: viewModel
     }
 
-    Title {
-        //% "Address Book"
-        text: qsTrId("addresses-tittle")
-    }
+    //% "Address Book"
+    property string title:  qsTrId("addresses-tittle")
 
     //
     // Subtitle row
     //
-    SubtitleRow {
-    }
+    //SubtitleRow {
+    //}
 
     property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 

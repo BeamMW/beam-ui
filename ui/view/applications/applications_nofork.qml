@@ -1,5 +1,5 @@
-import QtQuick          2.11
-import QtQuick.Layouts  1.12
+import QtQuick          2.15
+import QtQuick.Layouts  1.15
 import QtQuick.Controls 2.15
 import QtWebEngine      1.4
 import QtWebChannel     1.0
@@ -14,10 +14,9 @@ ColumnLayout {
     //
     // Page Header (Title + Status Bar)
     //
-    Title {
-        //% "DApp Store"
-        text: qsTrId("apps-title-no-fork")
-    }
+
+    //% "DApp Store"
+    property string title: qsTrId("apps-title-no-fork")
 
     SvgImage {
         Layout.topMargin: 80

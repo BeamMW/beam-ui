@@ -66,23 +66,24 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    Title {
-        text: qsTrId("messenger-title")
-    }
+    //% "anonymous"
+    readonly property string kanon: qsTrId("chat-title-anon")
+    //% "Chat with %1"
+    property string title:   qsTrId("chat-title").arg(thisView.name.length != 0 ? thisView.name : kanon)
 
     //
     // Subtitle row
     //
-    SubtitleRow {
-        //% "anonymous"
-        readonly property string kanon: qsTrId("chat-title-anon")
-
-        //% "Chat with %1"
-        text: qsTrId("chat-title").arg(thisView.name.length != 0 ? thisView.name : kanon)
-        onBack: function () {
-            onClosed()
-        }
-    }
+    //SubtitleRow {
+    //    //% "anonymous"
+    //    readonly property string kanon: qsTrId("chat-title-anon")
+    //
+    //    //% "Chat with %1"
+    //    text: qsTrId("chat-title").arg(thisView.name.length != 0 ? thisView.name : kanon)
+    //    onBack: function () {
+    //        onClosed()
+    //    }
+    //}
 
     RowLayout {
         Layout.topMargin:    10

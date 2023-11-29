@@ -23,20 +23,19 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    Title {
-        text: qsTrId("assets-swap-title")
-    }
+    //% "Accept Offer"
+    property string title:  qsTrId("wallet-accept-asset-swap-title")
 
     //
     // Subtitle row
     //
-    SubtitleRow {
-        //% "Accept an Asset Swap Offer"
-        text: qsTrId("wallet-accept-asset-swap-title")
-        onBack: function () {
-            onClosed()
-        }
-    }
+    //SubtitleRow {
+    //    ////% "Accept an Asset Swap Offer"
+    //    //text: qsTrId("wallet-accept-asset-swap-title")
+    //    //onBack: function () {
+    //    //    onClosed()
+    //    //}
+    //}
 
     ScrollView {
         id:                  scrollView
