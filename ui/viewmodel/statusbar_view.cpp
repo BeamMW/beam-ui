@@ -308,6 +308,11 @@ void StatusbarViewModel::onDevStateChanged(const QString& sErr, int state)
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
 {
     setWalletStatusErrorMsg(m_model->GetErrorString(error));
+    if (!getIsOnline())
+    {
+        setIsFailedStatus(true);
+        setIsConnectionTrusted(false);
+    }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     if (m_isCoinClientFailed)
