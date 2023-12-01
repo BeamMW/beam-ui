@@ -2144,14 +2144,6 @@ much longer for a transaction to complete.</translation>
         <source>Contract transaction</source>
         <translation type="unfinished">Contract transaction</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>아토믹 스왑은 베타입니다</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>아토믹 스왑은 현재 베타입니다. 큰 금액은 전송하지 않는걸 권장합니다.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>오퍼 취소</translation>

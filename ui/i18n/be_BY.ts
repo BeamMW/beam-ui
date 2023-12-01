@@ -1074,10 +1074,6 @@ please review your settings and try again.</translation>
         <source>Search</source>
         <translation>Пошук</translation>
     </message>
-    <message id="swap-alert-confirm-button">
-        <source>I understand</source>
-        <translation>Ясна</translation>
-    </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
         <translation>Вы не можаце прыняць уласную прапанову</translation>
@@ -2155,14 +2151,6 @@ much longer for a transaction to complete.</source>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation>Транзакцыя кантракту</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap is in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
@@ -3898,6 +3886,10 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
         <translation>Стварыць новы адрас</translation>
+    </message>
+    <message id="swap-alert-confirm-button">
+        <source>I understand</source>
+        <translation type="unfinished">Ясна</translation>
     </message>
 </context>
 </TS>

@@ -2146,14 +2146,6 @@ mycket längre tid för en transaktion att slutföras.</translation>
         <source>Contract transaction</source>
         <translation type="unfinished">Contract transaction</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap är i BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap-funktionaliteten är i Beta-stadiet just nu. Vi rekommenderar inte att skicka några större summor.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>Avbryt erbjudande</translation>

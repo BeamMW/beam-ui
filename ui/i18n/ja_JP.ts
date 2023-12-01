@@ -2128,14 +2128,6 @@ much longer for a transaction to complete.</source>
         <source>Contract transaction</source>
         <translation>コントラクト トランザクション</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>アトミックスワップはベータ版です</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>アトミックスワップ機能は現時点でベータ版です。大きな金額を送信しないことをお勧めします。</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>オファーをキャンセルする</translation>

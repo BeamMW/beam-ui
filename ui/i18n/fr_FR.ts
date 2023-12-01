@@ -2147,14 +2147,6 @@ prendre beaucoup plus de temps pour compléter une transaction.</translation>
         <source>Contract transaction</source>
         <translation>Transaction de contrat</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Les échanges atomiques sont en BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>La fonctionnalité d&apos;échanges atomiques est en version beta pour le moment. Nous vous recommandons de ne pas envoyer de grandes quantités.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>Annuler offre</translation>
