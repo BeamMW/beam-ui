@@ -113,6 +113,7 @@
         <file>wallet/CoinsList.qml</file>
         <file>wallet/SeedValidationPanel.qml</file>
         <file>applications/applications.qml</file>
+        <file>applications/AppView.qml</file>
         <file>applications/applications_nofork.qml</file>
         <file>applications/AppButton.qml</file>
         <file>applications/AppPanel.qml</file>
@@ -130,7 +131,7 @@
         <file>loading.qml</file>
         <file>main.qml</file>
         <file>wallet.qml</file>
-        <file>settings.qml</file>
+        <file>Settings.qml</file>
         <file>addresses.qml</file>
         <file>atomic_swap.qml</file>
         <file>assets_swap.qml</file>

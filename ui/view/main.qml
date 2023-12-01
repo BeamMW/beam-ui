@@ -228,7 +228,7 @@ Rectangle {
         {name: "addresses"},
         {name: "notifications"},
         {name: "help"},
-        {name: "settings"}
+        {name: "Settings"}
     ]
 
     property int selectedItem: -1
@@ -428,7 +428,7 @@ Rectangle {
             Layout.fillWidth:       true
             Layout.fillHeight:      true
             focus:                  true
-            initialItem:            Qt.createComponent("wallet.qml")
+            initialItem:            Qt.createComponent("qrc:/applications/applications.qml")
 
             pushEnter: Transition {
                 enabled: false
@@ -550,10 +550,14 @@ Rectangle {
     }
 
     function openSettings(section = "") {
+        if (contentStack.currentItem instanceof Settings) {
+            contentStack.currentItem.unfoldSection = section
+            return
+        }
         if (section == "") {
-            updateItem("settings")
+            updateItem("Settings")
         } else {
-            updateItem("settings", {"unfoldSection": section})
+            updateItem("Settings", {"unfoldSection": section})
         }
     }
 

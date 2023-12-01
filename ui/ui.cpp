@@ -275,7 +275,7 @@ int main (int argc, char* argv[])
             rules.SetNetworkParams();
         }
 
-        int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
+        int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_ERROR);
         int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
 
         beam::Crash::InstallHandler(appDataDir.filePath(QMLGlobals::getAppName()).toStdString().c_str());

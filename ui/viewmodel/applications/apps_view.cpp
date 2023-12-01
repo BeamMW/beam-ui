@@ -628,7 +628,7 @@ namespace beamui::applications
 
         _localApps = result;
 
-        if (!_runApp)
+        //if (!_runApp)
             emit appsChanged();
     }
 
@@ -1540,7 +1540,7 @@ namespace beamui::applications
             LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
 
             QuaZip zip(fname);
-            if(!zip.open(QuaZip::Mode::mdUnzip))
+            if (!zip.open(QuaZip::Mode::mdUnzip))
             {
                 throw std::runtime_error("Failed to open the DApp file");
             }
@@ -1584,14 +1584,14 @@ namespace beamui::applications
 
             if (QDir(appFolder).exists())
             {
-                if(!QDir(appFolder).removeRecursively())
+                if (!QDir(appFolder).removeRecursively())
                 {
                     throw std::runtime_error("Failed to prepare folder");
                 }
             }
 
             QDir(appsPath).mkdir(guid);
-            if(JlCompress::extractDir(fname, appFolder).isEmpty())
+            if (JlCompress::extractDir(fname, appFolder).isEmpty())
             {
                 //cleanupFolder(appFolder)
                 throw std::runtime_error("DApp Installation failed");
@@ -1602,7 +1602,7 @@ namespace beamui::applications
 
             return appName;
         }
-        catch(std::exception& err)
+        catch (std::exception& err)
         {
             LOG_ERROR() << "Failed to install DApp: " << err.what();
             return "";

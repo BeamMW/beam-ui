@@ -181,8 +181,78 @@ ColumnLayout {
     //
     // Page Header (Title + Status Bar)
     //
-                                                                                   //% "My DApp Store"
-    property string   title:          control.activeApp ? control.activeApp.name : qsTrId("apps-title")
+
+    //% "Wallet"
+    property string title:      control.activeApp ? control.activeApp.name : qsTrId("wallet-title")
+    property var titleContent:  RowLayout {
+        spacing: 20
+        Item {
+            Layout.fillWidth:   true
+            Layout.fillHeight:  true
+        }
+
+        CustomButton {
+            id: sendButton
+            Layout.preferredHeight: 32
+            palette.button: Style.accent_outgoing
+            palette.buttonText: Style.content_opposite
+            icon.source: "qrc:/assets/icon-send-blue.svg"
+            //% "Send"
+            text: qsTrId("general-send")
+            font.pixelSize: 12
+            onClicked: {
+                main.navigateSend(assetsList.selectedId);
+            }
+        }
+
+        CustomButton {
+            Layout.preferredHeight: 32
+            palette.button: Style.accent_incoming
+            palette.buttonText: Style.content_opposite
+            icon.source: "qrc:/assets/icon-receive-blue.svg"
+            //% "Receive"
+            text: qsTrId("wallet-receive-button")
+            font.pixelSize: 12
+            onClicked: {
+                main.navigateReceive(assetsList.selectedId);
+            }
+        }
+
+        ContextMenu {
+            id: swapContextMenu
+            Action {
+                text:           qsTrId("atomic-swap-title")
+                icon.source:    "qrc:/assets/icon-atomic_swap.svg"
+                onTriggered: {
+                    main.openAtomicSwaps();
+                }
+            }
+            Action {
+                text:           qsTrId("assets-swap-title")
+                icon.source:    "qrc:/assets/icon-assets_swap.svg"
+                onTriggered: {
+                    main.openAssetSwaps();
+                }
+            }
+        }
+
+        CustomButton {
+            id:                     swapButton
+            Layout.preferredHeight: 32
+            palette.button:         Style.active
+            palette.buttonText:     Style.content_opposite
+            icon.source:            "qrc:/assets/icon-swap-blue.svg"
+            //% "Swap"
+            text: qsTrId("wallet-swap-button")
+            font.pixelSize:         12
+            onClicked: {
+                swapContextMenu.popup(swapButton, Qt.point(0, swapButton.height + 6))
+            }
+        }
+    }
+
+     //                                                                              //% "My DApp Store"
+    //property string   title:          control.activeApp ? control.activeApp.name : qsTrId("apps-title")
     //Title {
     //    MouseArea {
     //        visible:         !!control.activeApp
@@ -227,6 +297,12 @@ ColumnLayout {
                 onGetFileName: function(fname) {
                     appsListView.installFromFile(fname);
                 }
+            }
+
+            AssetsPanel {
+                id:                 assetsList
+                Layout.fillWidth:   true
+                visible:            !control.activeApp
             }
 
             Item {
@@ -283,169 +359,169 @@ ColumnLayout {
                 }
             }
 
+            ////
+            //// This object is visible to web. We create such proxy
+            //// to ensure that nothing (methods, events, props &c)
+            //// is leaked to the web from real API
+            ////
+            //QtObject {
+            //    id:            webapiBEAM
+            //    WebChannel.id: "BEAM"
             //
-            // This object is visible to web. We create such proxy
-            // to ensure that nothing (methods, events, props &c)
-            // is leaked to the web from real API
+            //    property var style: Style
+            //    property var api: QtObject
+            //    {
+            //        function callWalletApi (request)
+            //        {
+            //            callWalletApiCall(request)
+            //        }
             //
-            QtObject {
-                id:            webapiBEAM
-                WebChannel.id: "BEAM"
-
-                property var style: Style
-                property var api: QtObject
-                {
-                    function callWalletApi (request)
-                    {
-                        callWalletApiCall(request)
-                    }
-
-                    signal callWalletApiResult (string result)
-                    signal callWalletApiCall   (string request)
-                }
-            }
-
-            WebChannel {
-                id:                apiChannel
-                registeredObjects: [webapiBEAM]
-            }
-
+            //        signal callWalletApiResult (string result)
+            //        signal callWalletApiCall   (string request)
+            //    }
+            //}
+            //
+            //WebChannel {
+            //    id:                apiChannel
+            //    registeredObjects: [webapiBEAM]
+            //}
+            //
             WebAPICreator {
                 id: webapiCreator
-                property var releaseApi
-
-                onApiCreated: function (api) {
-                    control.errorMessage = ""
-
-                    webView.profile.cachePath = viewModel.getAppCachePath(control.activeApp["appid"])
-                    webView.profile.persistentStoragePath = viewModel.getAppStoragePath(control.activeApp["appid"])
-                    webView.url = control.activeApp.url
-
-                    var onCallWalletApi = function (request) {
-                        api.callWalletApi(request)
-                    }
-
-                    var onCallWalletApiResult = function (result) {
-                        webapiBEAM.api.callWalletApiResult(result)
-                    }
-
-                    var onApproveSend = function(request, info, amounts) {
-                        info = JSON.parse(info)
-                        amounts = JSON.parse(amounts)
-                        var dialog = Qt.createComponent("qrc:/send_confirm.qml")
-                        var instance = dialog.createObject(control,
-                            {
-                                amounts:        amounts,
-                                addressText:    info["token"],
-                                typeText:       info["tokenType"],
-                                isOnline:       info["isOnline"],
-                                rateUnit:       info["rateUnit"],
-                                fee:            info["fee"],
-                                feeRate:        info["feeRate"],
-                                comment:        info["comment"],
-                                appMode:        true,
-                                appName:        activeApp.name,
-                                showPrefix:     true,
-                                assetsProvider: api,
-                                isEnough:       info.isEnough
-                            })
-
-                        instance.Component.onDestruction.connect(function () {
-                             if (instance.result == Dialog.Accepted) {
-                                api.sendApproved(request)
-                                return
-                            }
-                            api.sendRejected(request)
-                            return
-                        })
-
-                        instance.open()
-                    }
-
-                    var onApproveContractInfo = function(request, info, amounts) {
-                        info = JSON.parse(info)
-                        amounts = JSON.parse(amounts)
-                        const dialog = Qt.createComponent("qrc:/send_confirm.qml")
-                        const instance = dialog.createObject(control,
-                            {
-                                amounts:        amounts,
-                                rateUnit:       info["rateUnit"],
-                                fee:            info["fee"],
-                                feeRate:        info["feeRate"],
-                                comment:        info["comment"],
-                                isSpend:        info["isSpend"],
-                                appMode:        true,
-                                appName:        activeApp.name,
-                                isOnline:       false,
-                                showPrefix:     true,
-                                assetsProvider: api,
-                                isEnough:       info.isEnough
-                            })
-
-                        instance.Component.onDestruction.connect(function () {
-                             if (instance.result == Dialog.Accepted) {
-                                api.contractInfoApproved(request)
-                                return
-                            }
-                            api.contractInfoRejected(request)
-                            return
-                        })
-
-                        instance.open()
-                    }
-
-                    webapiBEAM.api.callWalletApiCall.connect(onCallWalletApi)
-                    api.callWalletApiResult.connect(onCallWalletApiResult)
-                    api.approveSend.connect(onApproveSend)
-                    api.approveContractInfo.connect(onApproveContractInfo)
-
-                    releaseApi = function () {
-                        webapiBEAM.api.callWalletApiCall.disconnect(onCallWalletApi)
-                        api.callWalletApiResult.disconnect(onCallWalletApiResult)
-                        api.approveSend.disconnect(onApproveSend)
-                        api.approveContractInfo.disconnect(onApproveContractInfo)
-                        webapiCreator.destroyApi()
-                        webapiCreator.releaseApi = undefined
-                    }
-                }
+            //    property var releaseApi
+            //
+            //    onApiCreated: function (api) {
+            //        control.errorMessage = ""
+            //
+            //        webView.profile.cachePath = viewModel.getAppCachePath(control.activeApp["appid"])
+            //        webView.profile.persistentStoragePath = viewModel.getAppStoragePath(control.activeApp["appid"])
+            //        webView.url = control.activeApp.url
+            //
+            //        var onCallWalletApi = function (request) {
+            //            api.callWalletApi(request)
+            //        }
+            //
+            //        var onCallWalletApiResult = function (result) {
+            //            webapiBEAM.api.callWalletApiResult(result)
+            //        }
+            //
+            //        var onApproveSend = function(request, info, amounts) {
+            //            info = JSON.parse(info)
+            //            amounts = JSON.parse(amounts)
+            //            var dialog = Qt.createComponent("qrc:/send_confirm.qml")
+            //            var instance = dialog.createObject(control,
+            //                {
+            //                    amounts:        amounts,
+            //                    addressText:    info["token"],
+            //                    typeText:       info["tokenType"],
+            //                    isOnline:       info["isOnline"],
+            //                    rateUnit:       info["rateUnit"],
+            //                    fee:            info["fee"],
+            //                    feeRate:        info["feeRate"],
+            //                    comment:        info["comment"],
+            //                    appMode:        true,
+            //                    appName:        activeApp.name,
+            //                    showPrefix:     true,
+            //                    assetsProvider: api,
+            //                    isEnough:       info.isEnough
+            //                })
+            //
+            //            instance.Component.onDestruction.connect(function () {
+            //                 if (instance.result == Dialog.Accepted) {
+            //                    api.sendApproved(request)
+            //                    return
+            //                }
+            //                api.sendRejected(request)
+            //                return
+            //            })
+            //
+            //            instance.open()
+            //        }
+            //
+            //        var onApproveContractInfo = function(request, info, amounts) {
+            //            info = JSON.parse(info)
+            //            amounts = JSON.parse(amounts)
+            //            const dialog = Qt.createComponent("qrc:/send_confirm.qml")
+            //            const instance = dialog.createObject(control,
+            //                {
+            //                    amounts:        amounts,
+            //                    rateUnit:       info["rateUnit"],
+            //                    fee:            info["fee"],
+            //                    feeRate:        info["feeRate"],
+            //                    comment:        info["comment"],
+            //                    isSpend:        info["isSpend"],
+            //                    appMode:        true,
+            //                    appName:        activeApp.name,
+            //                    isOnline:       false,
+            //                    showPrefix:     true,
+            //                    assetsProvider: api,
+            //                    isEnough:       info.isEnough
+            //                })
+            //
+            //            instance.Component.onDestruction.connect(function () {
+            //                 if (instance.result == Dialog.Accepted) {
+            //                    api.contractInfoApproved(request)
+            //                    return
+            //                }
+            //                api.contractInfoRejected(request)
+            //                return
+            //            })
+            //
+            //            instance.open()
+            //        }
+            //
+            //        webapiBEAM.api.callWalletApiCall.connect(onCallWalletApi)
+            //        api.callWalletApiResult.connect(onCallWalletApiResult)
+            //        api.approveSend.connect(onApproveSend)
+            //        api.approveContractInfo.connect(onApproveContractInfo)
+            //
+            //        releaseApi = function () {
+            //            webapiBEAM.api.callWalletApiCall.disconnect(onCallWalletApi)
+            //            api.callWalletApiResult.disconnect(onCallWalletApiResult)
+            //            api.approveSend.disconnect(onApproveSend)
+            //            api.approveContractInfo.disconnect(onApproveContractInfo)
+            //            webapiCreator.destroyApi()
+            //            webapiCreator.releaseApi = undefined
+            //        }
+            //    }
             }
-
+            //
             function appSupported(app) {
                 return webapiCreator.apiSupported(app.api_version || "current") ||
                        webapiCreator.apiSupported(app.min_api_version || "")
             }
-
-            function createApi(app) {
-                try
-                {
-                   // temporary hack
-                   viewModel.prepareToLaunchApp()
-
-                   var verWant = app.api_version || "current"
-                   var verMin  = app.min_api_version || ""
-                   webapiCreator.createApi(verWant, verMin, app.name, app.url)
-                }
-                catch (err)
-                {
-                   control.errorMessage = err.toString()
-                }
-            }
-
-            function launchApp(app) {
-                app["appid"] = webapiCreator.generateAppID(app.name, app.url)
-                control.activeApp = app
-
-                if (app.local) {
-                    viewModel.launchAppServer()
-                }
-
-                createApi(app)
-            }
+            
+            //function createApi(app) {
+            //    try
+            //    {
+            //       // temporary hack
+            //       viewModel.prepareToLaunchApp()
+            //
+            //       var verWant = app.api_version || "current"
+            //       var verMin  = app.min_api_version || ""
+            //       webapiCreator.createApi(verWant, verMin, app.name, app.url)
+            //    }
+            //    catch (err)
+            //    {
+            //       control.errorMessage = err.toString()
+            //    }
+            //}
+            //
+            //function launchApp(app) {
+            //    app["appid"] = webapiCreator.generateAppID(app.name, app.url)
+            //    control.activeApp = app
+            //
+            //    if (app.local) {
+            //        viewModel.launchAppServer()
+            //    }
+            //
+            //    createApi(app)
+            //}
 
             Item {
                 Layout.fillHeight: true
                 Layout.fillWidth:  true
-                visible:           !appsListView.visible && !webLayout.visible
+                visible:           !appsListView.visible// && !webLayout.visible
 
                 ColumnLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -504,102 +580,102 @@ ColumnLayout {
                 }
             }
 
-            Item {
-                id:                  webLayout
-
-                Layout.fillHeight:   true
-                Layout.fillWidth:    true
-                Layout.bottomMargin: 90
-                Layout.topMargin:    20
-                visible:             false
-                opacity:             txPanel.folded ? 1.0 : 0.25
-                clip:                true
-
-                WebEngineView {
-                    id:              webView
-                    anchors.fill:    parent
-                    webChannel:      apiChannel
-                    visible:         true
-                    backgroundColor: "transparent"
-
-                    profile: WebEngineProfile {
-                        httpCacheType:           WebEngineProfile.DiskHttpCache
-                        persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
-                        offTheRecord:            false
-                        spellCheckEnabled:       false
-                        httpUserAgent:           viewModel.userAgent
-                        httpCacheMaximumSize:    536870912 // 5GB
-                    }
-
-                    settings {
-                        javascriptCanOpenWindows: false
-                    }
-
-                    onNavigationRequested: function (ev) {
-                        if (ev.navigationType == WebEngineNavigationRequest.ReloadNavigation) {
-
-                            if (webapiCreator.releaseApi) {
-                                webapiCreator.releaseApi()
-                            }
-
-                            if (control.activeApp) {
-                                dappsLayout.createApi(control.activeApp)
-                            }
-                        }
-                    }
-
-                    onNewViewRequested: function (ev) {
-                        var url = ev.requestedUrl.toString()
-                        Utils.openExternalWithConfirmation(url)
-                    }
-
-                    onLoadingChanged: {
-                        // do not change this to declarative style, it flickers somewhy, probably because of delays
-                        if (control.activeApp && !this.loading) {
-                            viewModel.onCompleted(webView)
-
-                            if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
-                                // code in this 'if' will cause next 'if' to be called
-                                control.errorMessage = ["Failed to load", JSON.stringify(loadRequest, null, 4)].join('\n')
-                                // no return
-                            }
-
-                            if (control.errorMessage.length) {
-                                webLayout.visible = false
-                                return
-                            }
-
-                            webLayout.visible = true
-                        }
-                    }
-
-                    onContextMenuRequested: function (req) {
-                        if (req.mediaType == ContextMenuRequest.MediaTypeNone && !req.linkText) {
-                            if (req.isContentEditable) {
-                                req.accepted = true
-                                return
-                            }
-                            if (req.selectedText) return
-                        }
-                        req.accepted = true
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    visible:      !txPanel.folded
-                    hoverEnabled: true
-
-                    onClicked: function (ev) {
-                        txPanel.folded = true
-                        ev.accepted = true
-                    }
-
-                    onWheel: function (ev) {
-                        ev.accepted = true
-                    }
-                }
-            }
+            //Item {
+            //    id:                  webLayout
+            //
+            //    Layout.fillHeight:   true
+            //    Layout.fillWidth:    true
+            //    Layout.bottomMargin: 90
+            //    Layout.topMargin:    20
+            //    visible:             false
+            //    opacity:             txPanel.folded ? 1.0 : 0.25
+            //    clip:                true
+            //
+            //    WebEngineView {
+            //        id:              webView
+            //        anchors.fill:    parent
+            //        webChannel:      apiChannel
+            //        visible:         true
+            //        backgroundColor: "transparent"
+            //
+            //        profile: WebEngineProfile {
+            //            httpCacheType:           WebEngineProfile.DiskHttpCache
+            //            persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
+            //            offTheRecord:            false
+            //            spellCheckEnabled:       false
+            //            httpUserAgent:           viewModel.userAgent
+            //            httpCacheMaximumSize:    536870912 // 5GB
+            //        }
+            //
+            //        settings {
+            //            javascriptCanOpenWindows: false
+            //        }
+            //
+            //        onNavigationRequested: function (ev) {
+            //            if (ev.navigationType == WebEngineNavigationRequest.ReloadNavigation) {
+            //
+            //                if (webapiCreator.releaseApi) {
+            //                    webapiCreator.releaseApi()
+            //                }
+            //
+            //                if (control.activeApp) {
+            //                    dappsLayout.createApi(control.activeApp)
+            //                }
+            //            }
+            //        }
+            //
+            //        onNewViewRequested: function (ev) {
+            //            var url = ev.requestedUrl.toString()
+            //            Utils.openExternalWithConfirmation(url)
+            //        }
+            //
+            //        onLoadingChanged: {
+            //            // do not change this to declarative style, it flickers somewhy, probably because of delays
+            //            if (control.activeApp && !this.loading) {
+            //                viewModel.onCompleted(webView)
+            //
+            //                if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
+            //                    // code in this 'if' will cause next 'if' to be called
+            //                    control.errorMessage = ["Failed to load", JSON.stringify(loadRequest, null, 4)].join('\n')
+            //                    // no return
+            //                }
+            //
+            //                if (control.errorMessage.length) {
+            //                    webLayout.visible = false
+            //                    return
+            //                }
+            //
+            //                webLayout.visible = true
+            //            }
+            //        }
+            //
+            //        onContextMenuRequested: function (req) {
+            //            if (req.mediaType == ContextMenuRequest.MediaTypeNone && !req.linkText) {
+            //                if (req.isContentEditable) {
+            //                    req.accepted = true
+            //                    return
+            //                }
+            //                if (req.selectedText) return
+            //            }
+            //            req.accepted = true
+            //        }
+            //    }
+            //
+            //    MouseArea {
+            //        anchors.fill: parent
+            //        visible:      !txPanel.folded
+            //        hoverEnabled: true
+            //
+            //        onClicked: function (ev) {
+            //            txPanel.folded = true
+            //            ev.accepted = true
+            //        }
+            //
+            //        onWheel: function (ev) {
+            //            ev.accepted = true
+            //        }
+            //    }
+            //}
 
             SFText {
                 id:                  errCntMessage
@@ -629,7 +705,8 @@ ColumnLayout {
                 }
 
                 onLaunch: function (app) {
-                    dappsLayout.launchApp(app)
+                    stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}})
+                    //dappsLayout.launchApp(app)
                 }
 
                 onInstall: function (app) {
@@ -689,7 +766,7 @@ ColumnLayout {
                     anchors.bottomMargin: 10
                     contentItemHeight:   parent.height * (txPanel.maximized ? 0.79 : 0.36)
                     foldsUp:             false
-                    visible:             appsListView.visible || webLayout.visible
+                    visible:             appsListView.visible// || webLayout.visible
                     bkColor:             Style.background_appstx
                     dappName:            (control.activeApp || {}).name || ""
                     dappFilter:          (control.activeApp || {}).appid || "all"
@@ -700,20 +777,20 @@ ColumnLayout {
             function loadAppsList () {
                 control.appsList = checkSupport(viewModel.apps)
 
-                if (control.appToOpen) {
-                    for (let app of control.appsList)
-                    {
-                        if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
-                            if (dappsLayout.appSupported(app)) {
-                                dappsLayout.launchApp(app)
-                            } else {
-                                //% "Update Wallet to launch %1 application"
-                                BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
-                            }
-                        }
-                    }
-                    control.appToOpen = undefined
-                }
+                //if (control.appToOpen) {
+                //    for (let app of control.appsList)
+                //    {
+                //        if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
+                //            if (dappsLayout.appSupported(app)) {
+                //                dappsLayout.launchApp(app)
+                //            } else {
+                //                //% "Update Wallet to launch %1 application"
+                //                BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+                //            }
+                //        }
+                //    }
+                //    control.appToOpen = undefined
+                //}
             }
 
             function checkSupport (apps) {
@@ -728,7 +805,7 @@ ColumnLayout {
             Component.onCompleted: {
                 viewModel.appsChanged.connect(loadAppsList)
                 viewModel.stopProgress.connect(appsListView.stopProgress);
-                control.reloadWebEngineView.connect(webView.reload)
+                //control.reloadWebEngineView.connect(webView.reload)
                 control.showTxDetails.connect(txPanel.showTxDetails)
 
                 if (!settings.dappsAllowed) {
@@ -741,7 +818,7 @@ ColumnLayout {
             Component.onDestruction: {
                 viewModel.appsChanged.disconnect(loadAppsList)
                 viewModel.stopProgress.disconnect(appsListView.stopProgress);
-                control.reloadWebEngineView.disconnect(webView.reload)
+                //control.reloadWebEngineView.disconnect(webView.reload)
                 control.showTxDetails.disconnect(txPanel.showTxDetails)
             }
         }
@@ -754,8 +831,8 @@ ColumnLayout {
 
     YouArePublisher {
         id:           youArePublisher
-        nickname:     viewModel.publisherInfo.name
-        publisherKey: viewModel.publisherInfo.pubkey
+        nickname:     !!viewModel.publisherInfo ? viewModel.publisherInfo.name : ""
+        publisherKey: !!viewModel.publisherInfo ? viewModel.publisherInfo.pubkey : ""
 
         onGoToMyAccount: {
             youArePublisher.close()
@@ -768,6 +845,7 @@ ColumnLayout {
 
         onRejected: function () {
             settings.dappsAllowed = false
+            main.openWallet()
             main.openWallet()
         }
         onAccepted: function () {
