@@ -145,7 +145,7 @@ Item
                 horizontalAlignment: Text.AlignHCenter
                 width: 548
                 height: 30
-                //% "Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain."
+                //% "Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain."
                 text: qsTrId("loading-restore-message-line2")
                 font.pixelSize: 14
                 color: Style.content_secondary

@@ -728,7 +728,7 @@
         <translation>Vui lòng đợi đồng bộ hóa và không đóng hoặc thu nhỏ ứng dụng.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Chỉ số dư ví (UTXO) được khôi phục, thông tin giao dịch và địa chỉ luôn ở chế độ riêng tư và không bao giờ được giữ trong blockchain.</translation>
     </message>
     <message id="start-recovery-title">

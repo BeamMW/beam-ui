@@ -727,7 +727,7 @@
         <translation>동기화가 될 때까지 어플리케이션을 닫거나 최소화하지 마시오.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>오직 지갑 잔고(UTXO)만 복구됩니다, 주소들은 항상 비공개이고 블록체인 상에 절대 저장되지 않습니다.</translation>
     </message>
     <message id="start-recovery-title">
