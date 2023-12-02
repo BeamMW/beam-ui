@@ -728,7 +728,7 @@
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation>Alleen het saldo van de portemonnee(UTXO) kan worden hersteld, transactie - info en adressen zijn altijd privé en worden nooit op de blockchain bewaard.</translation>
+        <translation>Alleen het wallet saldo (UTXO) kan worden hersteld, transactieinformatie en adressen zijn altijd privé en worden nooit op de blockchain opgeslagen.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
