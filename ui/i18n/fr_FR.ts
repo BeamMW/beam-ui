@@ -2962,10 +2962,6 @@ ne peuvent pas être annulées.</translation>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
         <translation>Port du serveur local</translation>
     </message>
-    <message id="apps-install-from-file">
-        <source>Install DApp from file</source>
-        <translation>Installer DApp depuis un fichier</translation>
-    </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Sélectionner l&apos;application à installer</translation>
@@ -3037,27 +3033,11 @@ ne peuvent pas être annulées.</translation>
         <translation>envoyé à sa propre adresse
 (hors ligne)</translation>
     </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation>Cette DApp requiert la version %1 ou supérieure du Beam Wallet. Veuillez mettre à jour votre portefeuille.</translation>
-    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
         <translation>en attente du destinataire
 (hors ligne)</translation>
-    </message>
-    <message id="apps-uninstall">
-        <source>Uninstall</source>
-        <translation>Désinstaller</translation>
-    </message>
-    <message id="apps-uninstall-confirm">
-        <source>Are you sure you want to uninstall %1 DApp?</source>
-        <translation>Êtes-vous sûr de vouloir désinstaller la DApp %1 ?</translation>
-    </message>
-    <message id="app-uninstall-title">
-        <source>Uninstall DApp</source>
-        <translation>Désinstaller DApp</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
@@ -3329,10 +3309,6 @@ peut durer indéfiniment)</translation>
     <message id="dapps-store-update">
         <source>update</source>
         <translation>mettre à jour</translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation>supprimer DApp</translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
@@ -3650,14 +3626,6 @@ Veuillez vérifier le fichier et réessayer.</translation>
 Please, restart the wallet and try again.</source>
         <translation>Désolé, la mise à jour a échoué.
 Veuillez redémarrer le portefeuille et réessayer.</translation>
-    </message>
-    <message id="dapps-store-installing">
-        <source>installing</source>
-        <translation>installation</translation>
-    </message>
-    <message id="dapps-store-updating">
-        <source>updating</source>
-        <translation>en cours de mis à jour</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>

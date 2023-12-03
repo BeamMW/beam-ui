@@ -54,6 +54,7 @@
         <file>controls/StatusBar.qml</file>
         <file>controls/Title.qml</file>
         <file>controls/SearchBox.qml</file>
+        <file>controls/UpdateIndicator.qml</file>
         <file>controls/SwapTransactionDetails.qml</file>
         <file>controls/PaymentInfoDialog.qml</file>
         <file>controls/OpenExternalLinkConfirmation.qml</file>
@@ -286,6 +287,7 @@
         <file>assets/icon-external-link-green.svg</file>
         <file>assets/icon-eye.svg</file>
         <file>assets/icon-eye-crossed.svg</file>
+        <file>assets/icon-download-green.svg</file>
         <file>assets/icon-cancel.svg</file>
         <file>assets/icon-cancel-16.svg</file>
         <file>assets/icon-cancel-white.svg</file>

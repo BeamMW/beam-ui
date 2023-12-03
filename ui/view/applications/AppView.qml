@@ -708,14 +708,12 @@ ColumnLayout {
             }
 
             function loadAppsList () {
-                console.log("!!!!!!!!!!!!!!loadAppsList")
                 control.appsList = checkSupport(viewModel.apps)
 
                 if (control.appToOpen) {
                     for (let app of control.appsList)
                     {
                         if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
-                             console.log("!!!!!!!!!!!!!!appToOpen.appid: " + appToOpen.appid)
                             if (dappsLayout.appSupported(app)) {
                                 dappsLayout.launchApp(app)
                             } else {

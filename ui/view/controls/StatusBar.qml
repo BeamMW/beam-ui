@@ -96,41 +96,13 @@ Item {
         }
     }
 
-    Item {
-        id: update_indicator
-        x: rootControl.indicatorX
-        y: rootControl.indicatorY
-        visible: false
-
-        property color color:               Style.online
-        property int circle_line_width:     2
-        property int animation_duration:    2000
-
-        width: 2 * rootControl.indicator_radius + circle_line_width
-        height: 2 * rootControl.indicator_radius + circle_line_width
-
-        Canvas {
-            id: canvas_
-            anchors.fill: parent
-            onPaint: {
-                var context = getContext("2d");
-                context.arc(width/2, height/2, width/2 - parent.circle_line_width, 0, 1.6 * Math.PI);
-                context.strokeStyle = parent.color;
-                context.lineWidth = parent.circle_line_width;
-                context.stroke();
-            }
-        }
-
-        RotationAnimator {
-            target: update_indicator
-            from: 0
-            to: 360
-            duration: update_indicator.animation_duration
-            running: update_indicator.visible
-            loops: Animation.Infinite
-        }
+    UpdateIndicator {
+        id:         update_indicator
+        x:          rootControl.indicatorX
+        y:          rootControl.indicatorY
+        visible:    false
+        radius:     rootControl.indicator_radius
     }
-    
     Rectangle {
         id:                     rowBackground
         anchors.leftMargin:     0

@@ -507,7 +507,8 @@ ColumnLayout {
             //    }
             //}
             //
-            //function launchApp(app) {
+            function launchApp(app) {
+                stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}})
             //    app["appid"] = webapiCreator.generateAppID(app.name, app.url)
             //    control.activeApp = app
             //
@@ -516,7 +517,7 @@ ColumnLayout {
             //    }
             //
             //    createApi(app)
-            //}
+            }
 
             Item {
                 Layout.fillHeight: true
@@ -705,11 +706,13 @@ ColumnLayout {
                 }
 
                 onLaunch: function (app) {
-                    stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}})
-                    //dappsLayout.launchApp(app)
+                    dappsLayout.launchApp(app)
                 }
 
-                onInstall: function (app) {
+                onInstall: function (app, launchOnSuccess) {
+                    if (launchOnSuccess) {
+                        control.appToOpen = app
+                    }
                     viewModel.installApp(app.guid)
                 }
 
@@ -776,21 +779,21 @@ ColumnLayout {
 
             function loadAppsList () {
                 control.appsList = checkSupport(viewModel.apps)
-
-                //if (control.appToOpen) {
-                //    for (let app of control.appsList)
-                //    {
-                //        if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
-                //            if (dappsLayout.appSupported(app)) {
-                //                dappsLayout.launchApp(app)
-                //            } else {
-                //                //% "Update Wallet to launch %1 application"
-                //                BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
-                //            }
-                //        }
-                //    }
-                //    control.appToOpen = undefined
-                //}
+                console.log(JSON.stringify(control.appToOpen))
+                if (control.appToOpen) {
+                    for (let app of control.appsList)
+                    {
+                        if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
+                            if (dappsLayout.appSupported(app)) {
+                                dappsLayout.launchApp(app)
+                            } else {
+                                //% "Update Wallet to launch %1 application"
+                                BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+                            }
+                        }
+                    }
+                    control.appToOpen = undefined
+                }
             }
 
             function checkSupport (apps) {
@@ -860,6 +863,12 @@ ColumnLayout {
                              //% "Ok"
         okButtonText:        qsTrId("general-ok")
         cancelButtonVisible: false
+        onAccepted: {
+            if (!!control.appToOpen) {
+                dappsLayout.launchApp(control.appToOpen)
+                control.appToOpen = undefined
+            }
+        }
     }
 
     ConfirmationDialog {

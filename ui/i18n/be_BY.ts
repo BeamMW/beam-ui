@@ -2972,10 +2972,6 @@ cannot be canceled.</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
         <translation>Порт лакальнага сервера</translation>
     </message>
-    <message id="apps-install-from-file">
-        <source>Install DApp from file</source>
-        <translation>Усталяваць DApp з файла</translation>
-    </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Абярыце прыкладанне для ўстаноўкі</translation>
@@ -3048,27 +3044,11 @@ cannot be canceled.</source>
         <translation>адпраўлена на ўласны адрас
 (афлайн)</translation>
     </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation>Для гэтага DApp патрабуецца версія %1 гаманца Beam Wallet або вышэй. Калі ласка, абновіце свой гаманец.</translation>
-    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
         <translation>чакае атрымальніка
 (афлайн)</translation>
-    </message>
-    <message id="apps-uninstall">
-        <source>Uninstall</source>
-        <translation>Выдаліць</translation>
-    </message>
-    <message id="apps-uninstall-confirm">
-        <source>Are you sure you want to uninstall %1 DApp?</source>
-        <translation>Вы ўпэўнены, што хочаце выдаліць DApp %1?</translation>
-    </message>
-    <message id="app-uninstall-title">
-        <source>Uninstall DApp</source>
-        <translation>Выдаліць DApp</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
@@ -3342,10 +3322,6 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="dapps-store-update">
         <source>update</source>
         <translation>абнавіць</translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation>выдаліць DApp</translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
@@ -3662,14 +3638,6 @@ Please, check the file and try again.</source>
 Please, restart the wallet and try again.</source>
         <translation>На жаль, абнаўленне не атрымалася.
 Перазапусціце кашалёк і паўтарыце спробу.</translation>
-    </message>
-    <message id="dapps-store-installing">
-        <source>installing</source>
-        <translation>ўстаноўка</translation>
-    </message>
-    <message id="dapps-store-updating">
-        <source>updating</source>
-        <translation>абнаўленне</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>

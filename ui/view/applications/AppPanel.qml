@@ -8,25 +8,27 @@ import "../controls"
 
 Item {
     id:             control
-    implicitHeight: 144
-    implicitWidth:  440
+    implicitHeight: 112
+    implicitWidth:  320
 
     property var app
     property bool showButtons:          true
     property bool isPublisherAdminMode: false
     property bool isIPFSAvailable:      false
+    property bool isBusy:               false
 
     readonly property int textWidth: 200
 
     property var stopProgress: function(appGuid) {
         if (!!control.app && !!control.app.guid && control.app.guid === appGuid) {
-            button.text = getButtonText();
-            button.enabled = true;
+            //button.text = getButtonText();
+            //button.enabled = true;
+            isBusy = false;
         }
     }
 
     signal launch(var app)
-    signal install(var app)
+    signal install(var app, var launchOnSuccess)
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)
@@ -36,15 +38,15 @@ Item {
     }
 
     function updateButtonStatus() {
-        if (isPublisherAdminMode) {
-            button.enabled = isIPFSAvailable
-        } else {
-            if (!app.supported) {
-                button.enabled = false
-            } else if (!!app.notInstalled || (!app.notInstalled && !!app.hasUpdate)) {
-                button.enabled = isIPFSAvailable
-            }
-        }
+       // if (isPublisherAdminMode) {
+       //     button.enabled = isIPFSAvailable
+       // } else {
+       //     if (!app.supported) {
+       //         button.enabled = false
+       //     } else if (!!app.notInstalled || (!app.notInstalled && !!app.hasUpdate)) {
+       //         button.enabled = isIPFSAvailable
+       //     }
+       // }
     }
 
     // background
@@ -55,48 +57,92 @@ Item {
         opacity:      hoverArea.containsMouse ? 0.15 : 0.1
     }
 
+    CustomToolButton {
+        id:                       statusButton
+        z:                        42
+        anchors.right:            parent.right
+        anchors.top:              parent.top
+        anchors.margins:          16
+        padding:                  0
+        height:                   16
+        width:                    16
+        icon.color:               Style.active
+        icon.source:              getButtonSource()
+        visible:                  !isBusy && (!!app.notInstalled || (!app.notInstalled && !!app.hasUpdate))
+        onClicked: {
+            if (!!app.notInstalled) {
+                control.isBusy = true;
+                control.install(modelData, false)
+            } else if (!app.notInstalled && !!app.hasUpdate) {
+                control.isBusy = true;
+                control.update(modelData)
+            }
+        }
+    }
+
+    //SvgImage {
+    //    id:                       statusIcon
+    //    anchors.right:            parent.right
+    //    anchors.top:              parent.top
+    //    anchors.margins:          16
+    //    width:                    16
+    //    height:                   16
+    //    source:                   getButtonSource()
+    //    visible:                  !isBusy && (!!app.notInstalled || (!app.notInstalled && !!app.hasUpdate))
+    //}
+
+    UpdateIndicator {
+        anchors.right:            parent.right
+        anchors.top:              parent.top
+        anchors.margins:          16
+        radius:                   8
+        visible:                  isBusy
+    }
+
     RowLayout {
         anchors.fill:         parent
-        anchors.topMargin:    20
-        anchors.leftMargin:   20
-        anchors.rightMargin:  20
+        anchors.topMargin:    16
+        anchors.leftMargin:   16
+        anchors.rightMargin:  16
         anchors.bottomMargin: 16
-        spacing:              20
+        spacing:              16
 
         // icon
-        RowLayout {
-            Layout.alignment:      Qt.AlignTop
-            Layout.preferredWidth: 50
-            Rectangle {
-                width:  50
-                height: 50
-                radius: 25
-                color:  Style.background_main
+        Rectangle {
+            Layout.preferredWidth:  80
+            Layout.preferredHeight: 80
+            radius:                 40
+            color:                  Style.background_main
 
-                SvgImage {
-                    id:                       defaultIcon
-                    source:                   hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
-                    anchors.verticalCenter:   parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    visible:                  !customIcon.visible
-                }
+            SvgImage {
+                id:                       defaultIcon
+                width:                    50
+                height:                   50
+                source:                   hoverArea.containsMouse ? "qrc:/assets/icon-defapp-active.svg" : "qrc:/assets/icon-defapp.svg"
+                anchors.verticalCenter:   parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible:                  !customIcon.visible
+            }
 
-                SvgImage {
-                    id:                       customIcon
-                    width:                    30
-                    height:                   30
-                    source:                   !!app.icon ? app.icon : "qrc:/assets/icon-defapp.svg"
-                    anchors.verticalCenter:   parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    visible:                  !!app.icon && progress == 1.0
-                }
+            SvgImage {
+                id:                       customIcon
+                width:                    50
+                height:                   50
+                source:                   !!app.icon ? app.icon : "qrc:/assets/icon-defapp.svg"
+                anchors.verticalCenter:   parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible:                  !!app.icon && progress == 1.0
             }
         }
 
         ColumnLayout {
-            Layout.fillWidth: true
-            spacing:          0
-
+            Layout.alignment:   Qt.AlignVCenter
+            Layout.fillWidth:   true
+            spacing:            4
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+            }
             RowLayout {
                 Layout.fillWidth: true
                 spacing:          4
@@ -108,49 +154,48 @@ Item {
                         weight:     Font.DemiBold
                         pixelSize:  16
                     }
-                    color: Style.content_main
-                    wrapMode:            Text.Wrap
+                    color:          Style.content_main
+                    wrapMode:       Text.Wrap
                 }
 
                 Item {
                     Layout.fillWidth: true
                 }
 
-                SFText {
-                    Layout.alignment: Qt.AlignRight | Qt.AlignTop
-                    text:             !!app.categoryName ? app.categoryName : "" 
-                    font.pixelSize:   14
-                    elide:            Text.ElideRight
-                    color:            !!app.categoryColor ? app.categoryColor : "#FF57BF"
-                    visible:          !!app.category
-                }
+                //SFText {
+                //    Layout.alignment: Qt.AlignRight | Qt.AlignTop
+                //    text:             !!app.categoryName ? app.categoryName : "" 
+                //    font.pixelSize:   14
+                //    elide:            Text.ElideRight
+                //    color:            !!app.categoryColor ? app.categoryColor : "#FF57BF"
+                //    visible:          !!app.category
+                //}
             }
 
-            SFText {
-                Layout.topMargin:    4
-                Layout.fillWidth:    true
-                Layout.rightMargin:  30
-                text:                app.description
-                font.pixelSize:      14
-                elide:               Text.ElideRight
-                color:               Style.content_main
-                maximumLineCount:    2
-                wrapMode:            Text.Wrap
-            }
+            //SFText {
+            //    Layout.fillWidth:    true
+            //    Layout.rightMargin:  30
+            //    text:                app.description
+            //    font.pixelSize:      14
+            //    elide:               Text.ElideRight
+            //    color:               Style.content_main
+            //    maximumLineCount:    2
+            //    wrapMode:            Text.Wrap
+            //}
 
-            Item {
-                Layout.fillHeight: true
-            }
+            //Item {
+            //    Layout.fillHeight: true
+            //}
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignBottom
+                //Layout.alignment: Qt.AlignBottom
                 spacing:          0
 
                 ColumnLayout {
                     Layout.alignment: Qt.AlignTop
                     spacing:          4
-
+                    visible:          !!app.publisherName
                     SFText {
                         text:                  !!app.publisherName ? app.publisherName : ""
                         font.pixelSize:        12
@@ -159,93 +204,97 @@ Item {
                         color:                 Style.content_secondary
                     }
 
-                    SFText {
-                        text:                  !!app.publisher ? app.publisher : ""
-                        font.pixelSize:        12
-                        elide:                 Text.ElideMiddle
-                        color:                 Style.content_secondary
-                        Layout.preferredWidth: control.textWidth
-                        visible:               !!app.publisher
-                    }
+                    //SFText {
+                    //    text:                  !!app.publisher ? app.publisher : ""
+                    //    font.pixelSize:        12
+                    //    elide:                 Text.ElideMiddle
+                    //    color:                 Style.content_secondary
+                    //    Layout.preferredWidth: control.textWidth
+                    //    visible:               !!app.publisher
+                    //}
                 }
 
                 Item {
                     Layout.fillWidth: true
                 }
 
-                AppButton {
-                    id: button
-                    Layout.alignment: Qt.AlignBottom | Qt.ALignRight
-                    icon.height:      16
-                    visible:          showButtons
-                    
-                    onClicked: {
-                        if (isPublisherAdminMode) {
-                            control.update(modelData)
-                        } else {
-                            if (!!app.notInstalled) {
-                                button.enabled = false;
-                                //% "installing"
-                                button.text = qsTrId("dapps-store-installing")
-                                control.install(modelData)
-                            } else if (!app.notInstalled && !!app.hasUpdate) {
-                                button.enabled = false;
-                                //% "updating"
-                                button.text = qsTrId("dapps-store-updating")
-                                control.update(modelData)
-                            } else if (!app.notInstalled)
-                                control.launch(modelData)
-                        }
-                    }
-                    
-                    onClickedByAdditional: {
-                        appMenu.popup(button, button.width - appMenu.width, button.height);
-                    }
-
-                    onXChanged: {
-                        // kludge: tracking mouse on the 'button' area.
-                        // Haven't found any other solution for tracking mouse hover when there are overlapping MouseArea:
-                        // Nested MouseArea with a manual button position binding.
-
-                        let startPoint = hoverArea.mapFromItem(button, 0, 0)
-                        buttonHoverArea.x = startPoint.x
-                        buttonHoverArea.y = startPoint.y
-                    }
-
-                    ToolTip {
-                        id:           toolTip
-                        delay:        500
-                        timeout:      2000
-                        visible:      false
-                        text:         !app.supported && !control.isPublisherAdminMode ? 
-                                      //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
-                                      qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
-                                        //% "IPFS Service is not running or is not connected to the peers. Please check the settings."
-                                      : qsTrId("dapps-store-ipfs-unavailable")
-                        width:        300
-                        modal:        false
-                        parent:       button
-                        x:            parent.width - width - 20
-                        y:            parent.height + 4
-                        z:            100
-                        padding:      20
-                        closePolicy:  Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
-
-                        contentItem: SFText {
-                            color:            Style.validator_error
-                            font.pixelSize:   12
-                            text:             toolTip.text
-                            maximumLineCount: 2
-                            wrapMode:         Text.WordWrap
-                        }
-
-                        background: Rectangle {
-                            radius:       10
-                            color:        Style.background_popup
-                            anchors.fill: parent
-                        }
-                    }
-                }
+                //AppButton {
+                //    id: button
+                //    Layout.alignment: Qt.AlignBottom | Qt.ALignRight
+                //    icon.height:      16
+                //    visible:          showButtons
+                //    
+                //    onClicked: {
+                //        if (isPublisherAdminMode) {
+                //            control.update(modelData)
+                //        } else {
+                //            if (!!app.notInstalled) {
+                //                button.enabled = false;
+                //                //% "installing"
+                //                button.text = qsTrId("dapps-store-installing")
+                //                control.install(modelData)
+                //            } else if (!app.notInstalled && !!app.hasUpdate) {
+                //                button.enabled = false;
+                //                //% "updating"
+                //                button.text = qsTrId("dapps-store-updating")
+                //                control.update(modelData)
+                //            } else if (!app.notInstalled)
+                //                control.launch(modelData)
+                //        }
+                //    }
+                //    
+                //    onClickedByAdditional: {
+                //        appMenu.popup(button, button.width - appMenu.width, button.height);
+                //    }
+                //
+                //    onXChanged: {
+                //        // kludge: tracking mouse on the 'button' area.
+                //        // Haven't found any other solution for tracking mouse hover when there are overlapping MouseArea:
+                //        // Nested MouseArea with a manual button position binding.
+                //
+                //        let startPoint = hoverArea.mapFromItem(button, 0, 0)
+                //        buttonHoverArea.x = startPoint.x
+                //        buttonHoverArea.y = startPoint.y
+                //    }
+                //
+                //    ToolTip {
+                //        id:           toolTip
+                //        delay:        500
+                //        timeout:      2000
+                //        visible:      false
+                //        text:         !app.supported && !control.isPublisherAdminMode ? 
+                //                      //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
+                //                      qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
+                //                        //% "IPFS Service is not running or is not connected to the peers. Please check the settings."
+                //                      : qsTrId("dapps-store-ipfs-unavailable")
+                //        width:        300
+                //        modal:        false
+                //        parent:       button
+                //        x:            parent.width - width - 20
+                //        y:            parent.height + 4
+                //        z:            100
+                //        padding:      20
+                //        closePolicy:  Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+                //
+                //        contentItem: SFText {
+                //            color:            Style.validator_error
+                //            font.pixelSize:   12
+                //            text:             toolTip.text
+                //            maximumLineCount: 2
+                //            wrapMode:         Text.WordWrap
+                //        }
+                //
+                //        background: Rectangle {
+                //            radius:       10
+                //            color:        Style.background_popup
+                //            anchors.fill: parent
+                //        }
+                //    }
+                //}
+            }
+            Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
             }
         }
     }
@@ -255,66 +304,89 @@ Item {
         anchors.fill:            parent
         hoverEnabled:            true
         propagateComposedEvents: true
-
-        MouseArea {
-            id:                      buttonHoverArea
-            width:                   button.width
-            height:                  button.height
-            hoverEnabled:            true
-            propagateComposedEvents: true
-            enabled:                 button.visible && !button.enabled
-
-            onContainsMouseChanged: {
-                if (button.visible) {
-                    toolTip.visible = containsMouse && !button.enabled
-                }
+        onClicked: {
+            if (isBusy) {
+                return;
             }
+            if (isPublisherAdminMode) {
+                control.update(modelData)
+            } else {
+            if (!!app.notInstalled) {
+                control.isBusy = true;
+                //button.enabled = false;
+                //% "installing"
+                ///button.text = qsTrId("dapps-store-installing")
+                control.install(modelData, true)
+            } else if (!app.notInstalled && !!app.hasUpdate) {
+                //button.enabled = false;
+                control.isBusy = true;
+                //% "updating"
+                //button.text = qsTrId("dapps-store-updating")
+                control.update(modelData)
+            } else if (!app.notInstalled)
+                control.launch(modelData)
         }
+    } 
+    
+        //MouseArea {
+        //    id:                      buttonHoverArea
+        //    width:                   button.width
+        //    height:                  button.height
+        //    hoverEnabled:            true
+        //    propagateComposedEvents: true
+        //    enabled:                 button.visible && !button.enabled
+        //
+        //    onContainsMouseChanged: {
+        //        if (button.visible) {
+        //            toolTip.visible = containsMouse && !button.enabled
+        //        }
+        //    }
+        //}
     }
-
-    ContextMenu {
-        id:    appMenu
-        modal: true
-        dim:   false
-    }
-
-    Action {
-        id:          uninstallAction
-                     //% "Uninstall"
-        text:        qsTrId("apps-uninstall")
-        icon.source: "qrc:/assets/icon-delete.svg"
-        onTriggered: function () {
-            confirmUninstall.open()
-        }
-    }
-
-    Action {
-        id:          removeAction
-                     //% "remove dapp"
-        text:        qsTrId("dapps-store-remove-dapp")
-        icon.source: "qrc:/assets/icon-delete.svg"
-        onTriggered: function () {
-            control.remove(modelData)
-        }
-    }
-
-    ConfirmationDialog {
-        id:                     confirmUninstall
-        width:                  460
-                                //% "Uninstall DApp"
-        title:                  qsTrId("app-uninstall-title")
-                                //% "Are you sure you want to uninstall %1 DApp?"
-        text:                   qsTrId("apps-uninstall-confirm").arg(app.name)
-                                //% "Uninstall"
-        okButtonText:           qsTrId("apps-uninstall")
-        okButtonIconSource:     "qrc:/assets/icon-delete.svg"
-        okButtonColor:          Style.accent_fail
-        cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
-
-        onAccepted: function () {
-            control.uninstall(modelData)
-        }
-    }
+    //
+    //ContextMenu {
+    //    id:    appMenu
+    //    modal: true
+    //    dim:   false
+    //}
+    //
+    //Action {
+    //    id:          uninstallAction
+    //                 //% "Uninstall"
+    //    text:        qsTrId("apps-uninstall")
+    //    icon.source: "qrc:/assets/icon-delete.svg"
+    //    onTriggered: function () {
+    //        confirmUninstall.open()
+    //    }
+    //}
+    //
+    //Action {
+    //    id:          removeAction
+    //                 //% "remove dapp"
+    //    text:        qsTrId("dapps-store-remove-dapp")
+    //    icon.source: "qrc:/assets/icon-delete.svg"
+    //    onTriggered: function () {
+    //        control.remove(modelData)
+    //    }
+    //}
+    //
+    //ConfirmationDialog {
+    //    id:                     confirmUninstall
+    //    width:                  460
+    //                            //% "Uninstall DApp"
+    //    title:                  qsTrId("app-uninstall-title")
+    //                            //% "Are you sure you want to uninstall %1 DApp?"
+    //    text:                   qsTrId("apps-uninstall-confirm").arg(app.name)
+    //                            //% "Uninstall"
+    //    okButtonText:           qsTrId("apps-uninstall")
+    //    okButtonIconSource:     "qrc:/assets/icon-delete.svg"
+    //    okButtonColor:          Style.accent_fail
+    //    cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
+    //
+    //    onAccepted: function () {
+    //        control.uninstall(modelData)
+    //    }
+    //}
 
     function getButtonText() {
         if (isPublisherAdminMode) {
@@ -340,7 +412,7 @@ Item {
             return "qrc:/assets/icon-dapps-store-update.svg"
         } else {
             if (!!app.notInstalled)
-                return "qrc:/assets/icon-dapps-store-install.svg"
+                return "qrc:/assets/icon-download-green.svg"
             if (!app.notInstalled && !!app.hasUpdate)
                 return "qrc:/assets/icon-dapps-store-update.svg"
             if (!app.notInstalled)
@@ -350,17 +422,17 @@ Item {
     }
 
     Component.onCompleted: {
-        button.text = getButtonText()
-        button.icon.source = getButtonSource()
-
-        updateButtonStatus()
-
-        if (isPublisherAdminMode) {
-            appMenu.addAction(removeAction)
-        } else if (!app.notInstalled && !app.devApp) {
-            appMenu.addAction(uninstallAction)
-        } else {
-            button.showAdditional = false
-        }
+        //button.text = getButtonText()
+        //button.icon.source = getButtonSource()
+        //
+        //updateButtonStatus()
+        //
+        //if (isPublisherAdminMode) {
+        //    appMenu.addAction(removeAction)
+        //} else if (!app.notInstalled && !app.devApp) {
+        //    appMenu.addAction(uninstallAction)
+        //} else {
+        //    button.showAdditional = false
+        //}
     }
 }

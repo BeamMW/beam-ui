@@ -2941,10 +2941,6 @@ cannot be canceled.</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
         <translation>ローカルサーバーポート</translation>
     </message>
-    <message id="apps-install-from-file">
-        <source>Install DApp from file</source>
-        <translation>ファイルから DApp をインストールする</translation>
-    </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>インストールするアプリケーションを選択する</translation>
@@ -3011,26 +3007,10 @@ cannot be canceled.</source>
 (offline)</source>
         <translation>自分のアドレスへ送信しました（オフライン）</translation>
     </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation>このDAppはBeamウォレットのバージョン %1 以上が必要です。ウォレットを更新してください。</translation>
-    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
         <translation>受信者を待っています (オフライン)</translation>
-    </message>
-    <message id="apps-uninstall">
-        <source>Uninstall</source>
-        <translation>アンインストール</translation>
-    </message>
-    <message id="apps-uninstall-confirm">
-        <source>Are you sure you want to uninstall %1 DApp?</source>
-        <translation>%1 DAppをアンインストールしますか？</translation>
-    </message>
-    <message id="app-uninstall-title">
-        <source>Uninstall DApp</source>
-        <translation>DAppをアンインストールする</translation>
     </message>
     <message id="apps-loading-app">
         <source>Please wait, %1 is loading</source>
@@ -3296,10 +3276,6 @@ In case you’d like to re-use an earlier created regular address please use the
     <message id="dapps-store-update">
         <source>update</source>
         <translation>更新</translation>
-    </message>
-    <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation>DAppを削除する</translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
@@ -3619,14 +3595,6 @@ Please, check the file and try again.</source>
 Please, restart the wallet and try again.</source>
         <translation>更新に失敗しました。
 ウォレットを再起動してもう一度お試しください。</translation>
-    </message>
-    <message id="dapps-store-installing">
-        <source>installing</source>
-        <translation>インストール中</translation>
-    </message>
-    <message id="dapps-store-updating">
-        <source>updating</source>
-        <translation>更新中</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
