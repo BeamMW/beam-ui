@@ -31,6 +31,13 @@ Item {
             }
         }
         Action {
+            text:           qsTrId("apps-title")
+            icon.source:    "qrc:/assets/icon-applications.svg"
+            onTriggered: {
+                main.openApplications();
+            }
+        }
+        Action {
             text:           qsTrId("addresses-tittle")
             icon.source:    "qrc:/assets/icon-addresses.svg"
             onTriggered: {

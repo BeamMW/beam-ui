@@ -896,6 +896,22 @@ void WalletSettings::setDappStoreUserUnwantedPublishers(const QStringList& publi
     m_accountSettings.m_data.setValue(kDappStoreUserUnwantedPublishers, QVariant::fromValue(publishersList));
 }
 
+
+QFileInfoList WalletSettings::getAppPathsToInstall() const
+{
+    const QString kAppsFolder = "apps";
+    QString network(Rules::get().get_NetworkName());
+    QString appsPath = QDir::cleanPath(m_applicationDirPath +
+                                       QDir::separator() + kAppsFolder);
+    QDir dir(appsPath);
+    if (dir.exists(network))
+    {
+        dir.cd(network);
+        return dir.entryInfoList({ "*.dapp" }, QDir::Filter::Files);
+    }
+    return {};
+}
+
 QString WalletSettings::getAppsCachePath(const QString& appid) const
 {
     const QString kCacheFolder = "appcache";

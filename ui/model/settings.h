@@ -105,6 +105,7 @@ public:
     void setDappStoreUserPublishers(const QStringList& publishersList);
     QStringList getDappStoreUserUnwantedPublishers() const;
     void setDappStoreUserUnwantedPublishers(const QStringList& publishersList);
+    QFileInfoList getAppPathsToInstall() const;
 
     bool getDevMode() const;
     bool getAppsAllowed() const;

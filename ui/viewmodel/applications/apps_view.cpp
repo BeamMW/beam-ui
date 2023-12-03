@@ -428,6 +428,11 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder, bool needExpandIcon)
     {
+        return parseAppManifestImpl(in, appFolder, _serverAddr, needExpandIcon);
+    }
+
+    QVariantMap AppsViewModel::parseAppManifestImpl(QTextStream& in, const QString& appFolder, const QString& serverAdd, bool needExpandIcon)
+    {
         QVariantMap app;
 
         const auto content = in.readAll();
@@ -476,8 +481,11 @@ namespace beamui::applications
                 throw std::runtime_error("Invalid url in the manifest file");
             }
 
-            const auto surl = url.get<std::string>();
-            app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl));
+            if (!serverAdd.isEmpty())
+            {
+                const auto surl = url.get<std::string>();
+                app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl, serverAdd));
+            }
 
             const auto& icon = json[DApp::kIcon];
             if (!icon.empty())
@@ -1187,14 +1195,14 @@ namespace beamui::applications
         return result;
     }
 
-    QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url) const
+    QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url, const QString& serverAddr)
     {
         QString result = QString::fromStdString(url);
-        result.replace(kLocalapp, QString("http://") + _serverAddr + "/" + folder);
+        result.replace(kLocalapp, QString("http://") + serverAddr + "/" + folder);
         return result;
     }
 
-    QString AppsViewModel::expandLocalFile(const QString& folder, const std::string& url) const
+    QString AppsViewModel::expandLocalFile(const QString& folder, const std::string& url)
     {
         auto path = QDir(AppSettings().getLocalAppsPath()).filePath(folder);
         auto result = QString::fromStdString(url);
@@ -1533,6 +1541,25 @@ namespace beamui::applications
 
     QString AppsViewModel::installFromFile(const QString& rawFname)
     {
+        return installFromFileImpl(rawFname, 
+            [this](const QString& guid)
+            {
+                const auto app = getAppByGUID(guid);
+                return !app.isEmpty();
+            },
+            [this]() 
+            {
+                loadApps();
+            });
+    }
+
+    QString AppsViewModel::installFromFile2(const QString& rawFname)
+    {
+        return installFromFileImpl(rawFname, [](const QString&) {return false; }, []() {});
+    }
+
+    QString AppsViewModel::installFromFileImpl(const QString& rawFname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction)
+    {
         try
         {
             QString fname = removeFilePrefix(rawFname);
@@ -1540,7 +1567,7 @@ namespace beamui::applications
             LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
 
             QuaZip zip(fname);
-            if(!zip.open(QuaZip::Mode::mdUnzip))
+            if (!zip.open(QuaZip::Mode::mdUnzip))
             {
                 throw std::runtime_error("Failed to open the DApp file");
             }
@@ -1558,7 +1585,7 @@ namespace beamui::applications
                     }
 
                     QTextStream in(&mfile);
-                    const auto app = parseAppManifest(in, "");
+                    const auto app = parseAppManifestImpl(in, "");
                     guid = app[DApp::kGuid].value<QString>();
                     appName = app[DApp::kName].value<QString>();
 
@@ -1574,7 +1601,7 @@ namespace beamui::applications
                 throw std::runtime_error("Invalid DApp file");
             }
 
-            if (const auto app = getAppByGUID(guid); !app.isEmpty())
+            if (appExists && appExists(guid))
             {
                 throw std::runtime_error("DApp with same guid already installed!");
             }
@@ -1584,25 +1611,28 @@ namespace beamui::applications
 
             if (QDir(appFolder).exists())
             {
-                if(!QDir(appFolder).removeRecursively())
+                if (!QDir(appFolder).removeRecursively())
                 {
                     throw std::runtime_error("Failed to prepare folder");
                 }
             }
 
             QDir(appsPath).mkdir(guid);
-            if(JlCompress::extractDir(fname, appFolder).isEmpty())
+            if (JlCompress::extractDir(fname, appFolder).isEmpty())
             {
                 //cleanupFolder(appFolder)
                 throw std::runtime_error("DApp Installation failed");
             }
 
             // refresh
-            loadApps();
+            if (afterInstallAction)
+            {
+                afterInstallAction();
+            }
 
             return appName;
         }
-        catch(std::exception& err)
+        catch (std::exception& err)
         {
             LOG_ERROR() << "Failed to install DApp: " << err.what();
             return "";
