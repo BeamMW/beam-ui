@@ -121,8 +121,8 @@ namespace beamui::applications
         void stopProgress(const QString& appGuid);
 
     private:
-        static [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url, const QString& serverAddr);
-        static [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url);
+        [[nodiscard]] static QString expandLocalUrl(const QString& folder, const std::string& url, const QString& serverAddr);
+        [[nodiscard]] static QString expandLocalFile(const QString& folder, const std::string& url);
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder, bool needExpandIcon = true);
         static QVariantMap parseAppManifestImpl(QTextStream& io, const QString& appFolder, const QString& serverAddr = {}, bool needExpandIcon = true);
         static QString installFromFileImpl(const QString& fname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction);
