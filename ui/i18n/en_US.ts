@@ -1001,7 +1001,7 @@ please review your settings and try again</translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
-        <translation>It may take longer then usual. Please, check your network.</translation>
+        <translation>It may take longer than usual. Please, check your network.</translation>
     </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
