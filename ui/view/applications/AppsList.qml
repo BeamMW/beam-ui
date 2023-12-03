@@ -9,7 +9,7 @@ Item {
     id: control
     property var  appsList
     property bool hasLocal
-    property bool showInstallFromFilePanel: false//installFromFilePanel.visible
+    property bool showInstallFromFilePanel:  false//installFromFilePanel.visible
     property bool isPublisherAdminMode:      false
     property bool isIPFSAvailable:           false
     property var onOpenDnd: function(){
@@ -29,7 +29,7 @@ Item {
     }
 
     signal launch(var app)
-    signal install(var appGUID)
+    signal install(var appGUID, var launchOnSuccess)
     signal installFromFile(string fname)
     signal update(var app)
     signal uninstall(var app)
@@ -40,11 +40,13 @@ Item {
     GridView {
         id:                          gridView
         anchors.fill:                parent
-        cellHeight:                  112
+        anchors.rightMargin:         -10
+        cellHeight:                  122
         cellWidth:                   gridView.width/3
-        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy:   ScrollBar.AsNeeded
         clip:                        true
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+        }
 
         //GridLayout {
         //    id:            gridLayoutId
@@ -55,10 +57,10 @@ Item {
         //
         //    Repeater {
                 model: control.appsList
-
+                
                 delegate: AppPanel {
-                    width:                  gridView.cellWidth
-                    height:                 grivView.cellHeight
+                    width:                  gridView.cellWidth  - 10
+                    height:                 gridView.cellHeight - 10
                     //Layout.fillWidth:       true
                     //Layout.minimumWidth:    320
                     //Layout.preferredHeight: 112
@@ -66,12 +68,12 @@ Item {
                     app:                    modelData
                     isPublisherAdminMode:   control.isPublisherAdminMode
                     isIPFSAvailable:        control.isIPFSAvailable
-
+                
                     onLaunch: function (app) {
                         control.launch(app)
                     }
-                    onInstall: function (app) {
-                        control.install(app)
+                    onInstall: function (app, launchOnSuccess) {
+                        control.install(app, launchOnSuccess)
                     }
                     onUpdate: function (app) {
                         control.update(app)

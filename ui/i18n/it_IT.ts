@@ -3893,5 +3893,9 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>Swap</source>
         <translation type="unfinished">Scambia</translation>
     </message>
+    <message id="apps-title">
+        <source>My DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

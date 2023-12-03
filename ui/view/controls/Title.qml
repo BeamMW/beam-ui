@@ -16,9 +16,6 @@ RowLayout {
     spacing:             0
     Layout.fillHeight:   false
 
-    implicitWidth:       title.implicitWidth + navigationBar.implicitWidth + buttons.implicitWidth
-    implicitHeight:      title.implicitHeight + navigationBar.implicitHeight + buttons.implicitHeight
-
     Rectangle {
         Layout.preferredWidth:  56
         Layout.preferredHeight: 56

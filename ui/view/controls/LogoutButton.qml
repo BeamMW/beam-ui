@@ -24,6 +24,14 @@ Item {
             rightPadding:           8
         }
         Action {
+            //% "My DApp Store"
+            text:           qsTrId("apps-title")
+            icon.source:    "qrc:/assets/icon-applications.svg"
+            onTriggered: {
+                main.openApplications();
+            }
+        }
+        Action {
             text:           qsTrId("messenger-title")
             icon.source:    "qrc:/assets/icon-beam_messenger.svg"
             onTriggered: {

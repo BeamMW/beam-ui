@@ -3890,5 +3890,9 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>Swap</source>
         <translation type="unfinished">Wisselen</translation>
     </message>
+    <message id="apps-title">
+        <source>My DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

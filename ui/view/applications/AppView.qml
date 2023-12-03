@@ -711,8 +711,7 @@ ColumnLayout {
                 control.appsList = checkSupport(viewModel.apps)
 
                 if (control.appToOpen) {
-                    for (let app of control.appsList)
-                    {
+                    for (let app of control.appsList) {
                         if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
                             if (dappsLayout.appSupported(app)) {
                                 dappsLayout.launchApp(app)

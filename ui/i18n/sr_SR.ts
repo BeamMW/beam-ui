@@ -3908,5 +3908,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Swap</source>
         <translation type="unfinished">Swap</translation>
     </message>
+    <message id="apps-title">
+        <source>My DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

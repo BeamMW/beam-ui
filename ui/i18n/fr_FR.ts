@@ -3892,5 +3892,9 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>Swap</source>
         <translation type="unfinished">Échanger</translation>
     </message>
+    <message id="apps-title">
+        <source>My DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

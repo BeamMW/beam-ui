@@ -428,7 +428,7 @@ Rectangle {
             Layout.fillWidth:       true
             Layout.fillHeight:      true
             focus:                  true
-            initialItem:            Qt.createComponent("qrc:/wallet.qml")//Qt.createComponent("qrc:/applications/applications.qml")
+            initialItem:            Qt.createComponent("qrc:/applications/applications.qml")
 
             pushEnter: Transition {
                 enabled: false

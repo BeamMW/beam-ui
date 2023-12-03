@@ -3893,5 +3893,9 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>Swap</source>
         <translation type="unfinished">Intercambiar</translation>
     </message>
+    <message id="apps-title">
+        <source>My DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

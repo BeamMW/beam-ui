@@ -17,7 +17,7 @@ ColumnLayout {
     property string   errorMessage:   ""
     property var      appsList:       undefined
     property var      unsupportedCnt: 0
-    property var      activeApp:      undefined
+    //property var      activeApp:      undefined
     property var      appToOpen:      undefined
     property string   openedTxID:     ""
     property bool     showBack:       true
@@ -182,8 +182,8 @@ ColumnLayout {
     // Page Header (Title + Status Bar)
     //
 
-    //% "Wallet"
-    property string title:      control.activeApp ? control.activeApp.name : qsTrId("wallet-title")
+                                //% "Wallet"
+    property string title:      qsTrId("wallet-title")
     property var titleContent:  RowLayout {
         spacing: 20
         Item {
@@ -302,7 +302,7 @@ ColumnLayout {
             AssetsPanel {
                 id:                 assetsList
                 Layout.fillWidth:   true
-                visible:            !control.activeApp
+                //visible:            !control.activeApp
             }
 
             Item {
@@ -508,7 +508,7 @@ ColumnLayout {
             //}
             //
             function launchApp(app) {
-                stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}})
+                stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}});
             //    app["appid"] = webapiCreator.generateAppID(app.name, app.url)
             //    control.activeApp = app
             //
@@ -544,12 +544,12 @@ ColumnLayout {
                                 return control.errorMessage
                             }
 
-                            if (control.activeApp || control.appToOpen) {
-                                //% "Please wait, %1 is loading"
-                                return qsTrId("apps-loading-app").arg(
-                                    (control.activeApp || control.appToOpen).name
-                                )
-                            }
+                            //if (control.activeApp || control.appToOpen) {
+                            //    //% "Please wait, %1 is loading"
+                            //    return qsTrId("apps-loading-app").arg(
+                            //        (control.activeApp || control.appToOpen).name
+                            //    )
+                            //}
 
                             if (!control.appsList) {
                                 //% "Loading..."
@@ -571,9 +571,9 @@ ColumnLayout {
                                 return false
                             }
 
-                            if (control.activeApp || control.appToOpen) {
-                                return true
-                            }
+                            //if (control.activeApp || control.appToOpen) {
+                            //    return true
+                            //}
 
                             return false
                         }
@@ -684,7 +684,7 @@ ColumnLayout {
                 Layout.topMargin:    5
                 Layout.bottomMargin: 10
                 color:               Style.validator_error
-                visible:             control.hasApps && !control.activeApp && unsupportedCnt > 0
+                visible:             control.hasApps && /*!control.activeApp && */unsupportedCnt > 0
                 font.italic:         true
                                      //% "%n DApp(s) is not available"
                 text:                qsTrId("apps-err-cnt", unsupportedCnt)
@@ -697,36 +697,36 @@ ColumnLayout {
                 Layout.fillWidth:    true
                 Layout.bottomMargin: 90
                 opacity:             txPanel.folded ? 1.0 : 0.25
-                visible:             control.hasApps && !control.activeApp
+                visible:             control.hasApps //&& !control.activeApp
                 appsList:            control.appsList
                 isIPFSAvailable:     viewModel.isIPFSAvailable
-
+            
                 onOpenDnd: function () {
                     dndDialog.open();
                 }
-
+            
                 onLaunch: function (app) {
                     dappsLayout.launchApp(app)
                 }
-
+            
                 onInstall: function (app, launchOnSuccess) {
                     if (launchOnSuccess) {
                         control.appToOpen = app
                     }
                     viewModel.installApp(app.guid)
                 }
-
+            
                 onUpdate: function (app) {
                     viewModel.updateDApp(app.guid)
                 }
-
+            
                 onInstallFromFile: function (fname) {
                     if (!fname) {
                         //% "Select application to install"
                         fname = viewModel.chooseFile(qsTrId("applications-install-title"))
                         if (!fname) return
                     }
-
+            
                     var appName = viewModel.installFromFile(fname)
                     if (appName.length) {
                         dndDialog.isOk = true;
@@ -735,21 +735,21 @@ ColumnLayout {
                         dndDialog.isFail = true;
                     }
                 }
-
+            
                 onUninstall: function (app) {
                     control.uninstallApp(app)
                 }
-
+            
                 MouseArea {
                     anchors.fill: parent
                     visible:      !txPanel.folded
                     hoverEnabled: true
-
+            
                     onClicked: function (ev) {
                         txPanel.folded = true
                         ev.accepted = true
                     }
-
+            
                     onWheel: function (ev) {
                         ev.accepted = true
                     }
@@ -771,19 +771,18 @@ ColumnLayout {
                     foldsUp:             false
                     visible:             appsListView.visible// || webLayout.visible
                     bkColor:             Style.background_appstx
-                    dappName:            (control.activeApp || {}).name || ""
-                    dappFilter:          (control.activeApp || {}).appid || "all"
+                   ///dappName:            (control.activeApp || {}).name || ""
+                    //dappFilter:          (control.activeApp || {}).appid || "all"
                     tableOwner:          control
                 }
             }
 
             function loadAppsList () {
                 control.appsList = checkSupport(viewModel.apps)
-                console.log(JSON.stringify(control.appToOpen))
+                
                 if (control.appToOpen) {
-                    for (let app of control.appsList)
-                    {
-                        if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
+                    for (let app of control.appsList) {
+                        if (app.guid == appToOpen.guid) {
                             if (dappsLayout.appSupported(app)) {
                                 dappsLayout.launchApp(app)
                             } else {
@@ -863,12 +862,6 @@ ColumnLayout {
                              //% "Ok"
         okButtonText:        qsTrId("general-ok")
         cancelButtonVisible: false
-        onAccepted: {
-            if (!!control.appToOpen) {
-                dappsLayout.launchApp(control.appToOpen)
-                control.appToOpen = undefined
-            }
-        }
     }
 
     ConfirmationDialog {
