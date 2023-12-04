@@ -79,6 +79,7 @@ namespace beamui::applications
         Q_INVOKABLE bool checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp);
         Q_INVOKABLE void installApp(const QString& guid);
         Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
+        static QString installFromFile2(const QString& fname);
         Q_INVOKABLE void updateDApp(const QString& guid);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
@@ -120,9 +121,11 @@ namespace beamui::applications
         void stopProgress(const QString& appGuid);
 
     private:
-        [[nodiscard]] QString expandLocalUrl(const QString& folder, const std::string& url) const;
-        [[nodiscard]] QString expandLocalFile(const QString& folder, const std::string& url) const;
+        [[nodiscard]] static QString expandLocalUrl(const QString& folder, const std::string& url, const QString& serverAddr);
+        [[nodiscard]] static QString expandLocalFile(const QString& folder, const std::string& url);
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder, bool needExpandIcon = true);
+        static QVariantMap parseAppManifestImpl(QTextStream& io, const QString& appFolder, const QString& serverAddr = {}, bool needExpandIcon = true);
+        static QString installFromFileImpl(const QString& fname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction);
         void loadApps();
         void loadLocalApps();
         void loadDevApps();

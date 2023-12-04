@@ -24,6 +24,7 @@
 #include <QPointer>
 #include <QCollator>
 #include "settings_view.h"
+#include "applications/apps_view.h"
 #include "model/app_model.h"
 #include "model/keyboard.h"
 #include "version.h"
@@ -167,6 +168,13 @@ namespace
         return index;
     }
 
+    void installApps(const QFileInfoList& files)
+    {
+        for (const auto& appFileName : files)
+        {
+            beamui::applications::AppsViewModel::installFromFile2(appFileName.filePath());
+        }
+    }
 
     template<typename T>
     void DoJSCallback(QJSValue& jsCallback, const T& res)
@@ -830,7 +838,7 @@ void StartViewModel::createWallet(const QJSValue& callback)
         auto& settings = AppModel::getInstance().getSettings();
         settings.setAccountLabel(getNewAccountLabel());
         settings.setAccountPictureIndex(m_newAccountPictureIndex);
-
+        installApps(settings.getAppPathsToInstall());
         setupNode();
         try
         {
@@ -872,6 +880,8 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
     // TODO make this secure
     if (AppModel::getInstance().isOnlyOneInstanceStarted())
     {
+        installApps(AppModel::getInstance().getSettings().getAppPathsToInstall());
+
         DoOpenWallet(m_callback, [pass] () {
             SecString secret = pass.toStdString();
             AppModel::getInstance().openWalletThrow(secret);
