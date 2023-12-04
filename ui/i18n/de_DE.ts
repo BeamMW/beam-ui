@@ -3882,10 +3882,6 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
         <source>Swap</source>
         <translation type="unfinished">Swap</translation>
     </message>
-    <message id="apps-title">
-        <source>My DApp Store</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="dapps-store-installing">
         <source>installing</source>
         <translation type="unfinished"></translation>
@@ -3908,6 +3904,10 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="app-uninstall-title">
         <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="help-title">
+        <source>Documentation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

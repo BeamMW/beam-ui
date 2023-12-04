@@ -3885,10 +3885,6 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>Swap</source>
         <translation type="unfinished">Échanger</translation>
     </message>
-    <message id="apps-title">
-        <source>My DApp Store</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="dapps-store-installing">
         <source>installing</source>
         <translation type="unfinished"></translation>
@@ -3911,6 +3907,10 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="app-uninstall-title">
         <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="help-title">
+        <source>Documentation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

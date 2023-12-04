@@ -47,6 +47,14 @@ Item {
             }
         }
         Action {
+            //% "Documentation"
+            text:           qsTrId("help-title")
+            icon.source:    "qrc:/assets/icon-help.svg"
+            onTriggered: {
+                main.openHelp();
+            }
+        }
+        Action {
             //% "Logout"
             text: qsTrId("status-logout")
             icon.source: "qrc:/assets/icon-log-out.svg"
