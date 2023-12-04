@@ -67,7 +67,7 @@ Item {
                     top: parent.top
                     left: parent.left
                     leftMargin: 0
-                    topMargin: 2
+                    topMargin: 0
                 }
 
                 SvgImage {

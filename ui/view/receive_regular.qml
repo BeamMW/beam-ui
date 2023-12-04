@@ -88,17 +88,6 @@ ColumnLayout {
     //% "Receive"
     property string title: qsTrId("wallet-receive-title")
 
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //    ////% "Receive"
-    //    //text: qsTrId("wallet-receive-title")
-    //    //onBack: function () {
-    //    //    control.onClosed()
-    //    //}
-    //}
-
     QR {
         id: qrCode
         address: viewModel.token

@@ -111,17 +111,6 @@ please review your settings and try again"
     //% "Accept Offer"
     property string title:       qsTrId("wallet-send-swap-title")
 
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //    ////% "Accept Swap Offer"
-    //    //text: qsTrId("wallet-send-swap-title")
-    //    //onBack: function () {
-    //    //    onClosed()
-    //    //}
-    //}
-
     ScrollView {
         id:                  scrollView
         Layout.fillWidth:    true

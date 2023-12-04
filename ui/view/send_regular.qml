@@ -93,14 +93,6 @@ ColumnLayout {
     //% "Send"
     property string title:       qsTrId("send-title")
 
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //    ////% "Send"
-    //    //text:   qsTrId("send-title")
-    //}
-
     ScrollView {
         id:                  scrollView
         Layout.fillWidth:    true

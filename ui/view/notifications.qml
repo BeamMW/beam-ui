@@ -36,11 +36,6 @@ ColumnLayout {
             }
         }
     }
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //}
 
     ColumnLayout {
         Layout.fillWidth: true

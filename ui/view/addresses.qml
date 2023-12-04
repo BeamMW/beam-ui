@@ -16,12 +16,6 @@ ColumnLayout {
     //% "Address Book"
     property string title:  qsTrId("addresses-tittle")
 
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //}
-
     property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
     ConfirmationDialog {

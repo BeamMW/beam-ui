@@ -26,17 +26,6 @@ ColumnLayout {
     //% "Create Offer"
     property string title: qsTrId("wallet-create-asset-swap-title")
 
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //    ////% "Create an Asset Swap Offer"
-    //    //text: qsTrId("wallet-create-asset-swap-title")
-    //    //onBack: function () {
-    //    //    onClosed()
-    //    //}
-    //}
-
     ScrollView {
         id:                  scrollView
         Layout.fillWidth:    true

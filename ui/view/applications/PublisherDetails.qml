@@ -323,7 +323,6 @@ ColumnLayout {
         Layout.fillWidth:         true
         visible:                  control.hasApps
         appsList:                 control.appsList
-        showInstallFromFilePanel: false
         isPublisherAdminMode:     true
         isIPFSAvailable:          control.viewModel.isIPFSAvailable
 

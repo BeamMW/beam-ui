@@ -50,12 +50,6 @@ ColumnLayout {
         }
     }
 
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //}
-
     AssetsPanel {
         id: assets
         Layout.fillWidth:   true

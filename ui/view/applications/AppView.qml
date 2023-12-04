@@ -210,8 +210,6 @@ ColumnLayout {
     //    }
     //}
 
-    //SubtitleRow {
-    //}
 
     SettingsViewModel {
         id: settings

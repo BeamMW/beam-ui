@@ -186,12 +186,6 @@ ColumnLayout {
         }
     }
 
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //}
-
     GridLayout {
         id: amountPanes
         Layout.alignment: Qt.AlignLeft | Qt.AlignTop

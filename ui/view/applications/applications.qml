@@ -77,6 +77,22 @@ ColumnLayout {
         }
     }
 
+    function installFromFile (fname) {
+        if (!fname) {
+            //% "Select application to install"
+            fname = viewModel.chooseFile(qsTrId("applications-install-title"))
+            if (!fname) return
+        }
+
+        var appName = viewModel.installFromFile(fname)
+        if (appName.length) {
+            dndDialog.isOk = true;
+            dndDialog.appName = appName;
+        } else {
+            dndDialog.isFail = true;
+        }
+    }
+
     signal showTxDetails(string txid)
 
     ApplicationsViewModel {
@@ -261,7 +277,7 @@ ColumnLayout {
         DnDdappInstallDialog {
             id: dndDialog
             onGetFileName: function(fname) {
-                appsListView.installFromFile(fname);
+                installFromFile(fname);
             }
         }
 
@@ -281,6 +297,22 @@ ColumnLayout {
                 spacing:           20
                 anchors.right:     parent.right
                 anchors.topMargin: 10
+
+                CustomButton {
+                    id:                     addApp
+                    height:                 36
+                    Layout.preferredHeight: 36
+                    width:                  36
+                    radius:                 10
+                    display:                AbstractButton.IconOnly
+                    leftPadding:            6
+                    rightPadding:           6
+                    palette.button:         Qt.rgba(255, 255, 255, 0.1)
+                    icon.source:            "qrc:/assets/icon-add-green.svg"
+                    icon.width:             24
+                    icon.height:            24
+                    onClicked:              dndDialog.open()
+                }
 
                 CustomButton {
                     id:                     showPublishers
@@ -423,10 +455,6 @@ ColumnLayout {
             appsList:            control.appsList
             isIPFSAvailable:     viewModel.isIPFSAvailable
 
-            onOpenDnd: function () {
-                dndDialog.open();
-            }
-
             onLaunch: function (app) {
                 dappsLayout.launchApp(app)
             }
@@ -440,22 +468,6 @@ ColumnLayout {
 
             onUpdate: function (app) {
                 viewModel.updateDApp(app.guid)
-            }
-
-            onInstallFromFile: function (fname) {
-                if (!fname) {
-                    //% "Select application to install"
-                    fname = viewModel.chooseFile(qsTrId("applications-install-title"))
-                    if (!fname) return
-                }
-
-                var appName = viewModel.installFromFile(fname)
-                if (appName.length) {
-                    dndDialog.isOk = true;
-                    dndDialog.appName = appName;
-                } else {
-                    dndDialog.isFail = true;
-                }
             }
 
             onUninstall: function (app) {

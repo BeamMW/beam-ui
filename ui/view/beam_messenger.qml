@@ -59,11 +59,7 @@ ColumnLayout {
             }
         }
     }
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //}
+
     ListView {
         id: chatsList
         Layout.fillWidth: true

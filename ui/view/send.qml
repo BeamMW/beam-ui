@@ -22,19 +22,8 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    //% "Accept Swap Offer"
+    //% "Accept Offer"
     property string title:  qsTrId("wallet-send-swap-title")
-
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //    ////% "Accept Swap Offer"
-    //    //text: qsTrId("wallet-send-swap-title")
-    //    //onBack: function () {
-    //    //    onClosed()
-    //    //}
-    //}
 
     //
     // Content row

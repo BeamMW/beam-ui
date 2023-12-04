@@ -72,11 +72,7 @@ ColumnLayout {
             onClicked: Utils.navigateToDownloads()
         }
     }
-    //
-    // Subtitle row
-    //
-    //SubtitleRow {
-    //}
+
     ScrollView {
         Layout.fillHeight: true
         Layout.bottomMargin: 10
