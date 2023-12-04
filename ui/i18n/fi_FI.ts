@@ -727,7 +727,7 @@
         <translation>Ole hyvä ja odota kunnes synkronointi on valmis. Älä myöskään sulje sovellusta tai pienennä ikkunaa.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Ainoastaan lompakon saldo (UTXO) voidaan palauttaa. Tapahtumatiedot ja osoitteet pysyvät aina salassa, eivätkä ne tallennu lohkoketjuun.</translation>
     </message>
     <message id="start-recovery-title">
@@ -2149,14 +2149,6 @@ much longer for a transaction to complete.</translation>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation type="unfinished">Contract transaction</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap on BETA-vaiheessa</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap -toiminto on beetaversio tällä hetkellä. Emme suosittele vaihtamaan suuria summia.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>

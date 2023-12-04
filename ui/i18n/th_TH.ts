@@ -727,7 +727,7 @@
         <translation>กรุณารอการรวบรวมข้อมูลและกรุณาอย่าปิดหรือลดหน้าต่างของแอป</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>มีแค่ยอดคงเหลือของกระเป๋า (UTXO) เท่านั้นที่จะสามารถกู้คืนได้ รายการธุรกรรมและรายการที่อยู่จะเก็บอยู่บนอุปกรณ์ และจะไม่ถูกนำไปบนบล็อกเชน</translation>
     </message>
     <message id="start-recovery-title">
@@ -2144,14 +2144,6 @@ much longer for a transaction to complete.</translation>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation type="unfinished">Contract transaction</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap อยู่ในสถานะเบต้า</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>ฟังก์ชั่น Atomic Swap อยู่ในสถานะเบต้าในขณะนี้ เราไม่แนะนำให้ใช้งานในจำนวนที่เยอะ</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>

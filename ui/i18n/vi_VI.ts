@@ -728,7 +728,7 @@
         <translation>Vui lòng đợi đồng bộ hóa và không đóng hoặc thu nhỏ ứng dụng.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Chỉ số dư ví (UTXO) được khôi phục, thông tin giao dịch và địa chỉ luôn ở chế độ riêng tư và không bao giờ được giữ trong blockchain.</translation>
     </message>
     <message id="start-recovery-title">
@@ -2147,14 +2147,6 @@ much longer for a transaction to complete.</translation>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation type="unfinished">Contract transaction</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation type="unfinished">Atomic Swaps are in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation type="unfinished">Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>

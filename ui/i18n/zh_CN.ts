@@ -735,7 +735,7 @@
         <translation>请等待同步，不要关闭或最小化应用程序</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>仅可恢复钱包余额(UTXO)
 交易历史信息保存在本地，区块链上不保存交易历史</translation>
     </message>
@@ -2155,14 +2155,6 @@ much longer for a transaction to complete.</source>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation type="unfinished">Contract transaction</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap is in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>

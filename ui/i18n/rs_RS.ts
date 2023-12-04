@@ -875,7 +875,7 @@ Allow to open and proceed to the website? You can always update your choice in S
         <translation>Молим сачекајте да се синхронизација заврши и не затварајте нити минимизујте апликацију.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Само баланс новчаника (UTXO) може бити опорављен, информације о трансакцијама и адресама су увек приватне и никада се не чувају на блокчеину.</translation>
     </message>
     <message id="start-recovery-title">
@@ -1129,14 +1129,6 @@ Allow to open and proceed to the website? You can always update your choice in S
     <message id="settings-password">
         <source>Password</source>
         <translation type="unfinished">Password</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Функционалност Атомске Размене је у Бета фази трнутно. Препоручујемо да не шаљете велике износе.</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Атомске Размене су у БЕТА фази</translation>
     </message>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.

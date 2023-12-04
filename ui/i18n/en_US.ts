@@ -727,8 +727,8 @@
         <translation>Please wait for synchronization and do not close or minimize the application.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
-        <translation>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</translation>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
+        <translation>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
@@ -1001,7 +1001,7 @@ please review your settings and try again</translation>
     </message>
     <message id="loading-view-net-problems">
         <source>It may take longer than usual. Please, check your network.</source>
-        <translation>It may take longer then usual. Please, check your network.</translation>
+        <translation>It may take longer than usual. Please, check your network.</translation>
     </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
@@ -2148,14 +2148,6 @@ much longer for a transaction to complete.</translation>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation>Contract transaction</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swaps are in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>

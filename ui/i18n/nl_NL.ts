@@ -727,8 +727,8 @@
         <translation>Wacht op synchronisatie en sluit of minimaliseer de applicatie niet.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
-        <translation>Alleen het wallet saldo (UTXO) kan worden hersteld, transactieinformatie en adressen zijn altijd privé en worden nooit in de blockchain opgeslagen.</translation>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
+        <translation>Alleen het wallet saldo (UTXO) kan worden hersteld, transactieinformatie en adressen zijn altijd privé en worden nooit op de blockchain opgeslagen.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
@@ -2146,14 +2146,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation>Contract transactie</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swaps is in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap functie is op dit moment in bèta. We raden u aan geen grote bedragen te verzenden.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>

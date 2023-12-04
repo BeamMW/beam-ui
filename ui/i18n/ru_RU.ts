@@ -727,7 +727,7 @@
         <translation>Пожалуйста, дождитесь завершения синхронизации, не закрывайте и не сворачивайте окно.</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept in the blockchain.</source>
+        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
         <translation>Будет восстановлен только баланс кошелька (UTXO), информация о транзакциях и адресах является приватной и не хранится в блокчейн.</translation>
     </message>
     <message id="start-recovery-title">
@@ -2156,14 +2156,6 @@ much longer for a transaction to complete.</source>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation>Контрактная транзакция</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Атомные обмены находятся в БЕТА тестировании</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>В данный момент Атомарные обмены в бета-версии. Рекомендуем не отправлять большие суммы.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
