@@ -48,60 +48,62 @@ Item {
             rootControl.indicator.visible = true;
         }
     }
+    Row {
+        height: 24
+        anchors.right:          parent.right
+        anchors.rightMargin:    20
+        Item {
+            id: online_indicator
+            anchors.verticalCenter: parent.verticalCenter
+            width:  childrenRect.width
+            height: childrenRect.height
 
-    Item {
-        id: online_indicator
-        x: rootControl.indicatorX
-        y: rootControl.indicatorY
-        width:  childrenRect.width
-        height: childrenRect.height
+            property color color: Style.online
+            property int radius: rootControl.indicator_radius
 
-        property color color: Style.online
-        property int radius: rootControl.indicator_radius
+            Column {
+                id: indicators
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    leftMargin: 0
+                    topMargin: 2
+                }
 
-        Column {
-            id: indicators
-            anchors {
-                top: parent.top
-                left: parent.left
-                leftMargin: 0
-                topMargin: 2
+                SvgImage {
+                    id:          onlineTrusted
+                    width:       10
+                    height:      10
+                    sourceSize:  Qt.size(10, 10)
+                    source:      model.isExchangeRatesUpdated && !model.ipfsError ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
+                    visible:     model.isConnectionTrusted && !model.isCoinClientFailed && !model.ipfsError
+                }
+
+                Rectangle {
+                    id:       online_rect
+                    width:    rootControl.indicator_radius * 2
+                    height:   rootControl.indicator_radius * 2
+                    radius:   rootControl.indicator_radius
+                    color:    online_indicator.color
+                    visible:  !onlineTrusted.visible
+                }
             }
 
-            SvgImage {
-                id:          onlineTrusted
-                width:       10
-                height:      10
-                sourceSize:  Qt.size(10, 10)
-                source:      model.isExchangeRatesUpdated && !model.ipfsError ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
-                visible:     model.isConnectionTrusted && !model.isCoinClientFailed && !model.ipfsError
-            }
-
-            Rectangle {
-                id:       online_rect
-                width:    rootControl.indicator_radius * 2
-                height:   rootControl.indicator_radius * 2
-                radius:   rootControl.indicator_radius
-                color:    online_indicator.color
-                visible:  !onlineTrusted.visible
+            DropShadow {
+                radius: 5
+                samples: 9
+                anchors.fill: indicators
+                source: indicators
+                color: online_indicator.color
             }
         }
 
-        DropShadow {
-            radius: 5
-            samples: 9
-            anchors.fill: indicators
-            source: indicators
-            color: online_indicator.color
+        UpdateIndicator {
+            id:         update_indicator
+            anchors.verticalCenter: parent.verticalCenter
+            visible:    false
+            radius:     rootControl.indicator_radius
         }
-    }
-
-    UpdateIndicator {
-        id:         update_indicator
-        x:          rootControl.indicatorX
-        y:          rootControl.indicatorY
-        visible:    false
-        radius:     rootControl.indicator_radius
     }
     Rectangle {
         id:                     rowBackground
@@ -131,7 +133,7 @@ Item {
 
             RowLayout {
                 Layout.fillWidth:   true
-                Layout.rightMargin: 20
+                Layout.rightMargin: 38
                 spacing:            8
 
                 Item {
@@ -150,7 +152,7 @@ Item {
                     id:                 progressText
                     color:              Style.content_main
                     font.pixelSize:     12
-                    text:               "(" + model.nodeSyncProgress.toFixed(2) + "%)"
+                    text:               model.nodeSyncProgress.toFixed(2) + "%"
                     visible:            model.nodeSyncProgress > 0 && update_indicator.visible
                 }
 
@@ -184,15 +186,6 @@ Item {
                 //    Layout.fillWidth:   true
                 //    Layout.fillHeight:  true
                 //}
-            }
-
-            CustomProgressBar {
-                id: progress_bar
-                backgroundImplicitWidth: parent.width
-                contentItemImplicitWidth: parent.width
-
-                visible: model.nodeSyncProgress > 0 && update_indicator.visible
-                value: model.nodeSyncProgress / 100
             }
         }
     }
@@ -233,7 +226,7 @@ Item {
             name: "updating"
             PropertyChanges {
                 target: statusText;
-                //% "synchronizing blockchain..."
+                //% "synchronizing blockchain"
                 text: qsTrId("status-updating")
             }
             StateChangeScript {

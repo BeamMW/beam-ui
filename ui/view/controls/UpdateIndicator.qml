@@ -10,8 +10,8 @@ Item {
     property int animationDuration:     2000
     property int radius:                5
 
-    implicitWidth:  2 * radius + circleLineWidth
-    implicitHeight: 2 * radius + circleLineWidth
+    implicitWidth:  2 * (radius + circleLineWidth)
+    implicitHeight: 2 * (radius + circleLineWidth)
 
     Canvas {
         id: canvas_

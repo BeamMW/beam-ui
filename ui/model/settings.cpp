@@ -899,7 +899,11 @@ void WalletSettings::setDappStoreUserUnwantedPublishers(const QStringList& publi
 
 QFileInfoList WalletSettings::getAppPathsToInstall() const
 {
+#if defined(Q_OS_MACOS)
+    const QString kAppsFolder = "../Resources/apps";
+#else
     const QString kAppsFolder = "apps";
+#endif
     QString network(Rules::get().get_NetworkName());
     QString appsPath = QDir::cleanPath(m_applicationDirPath +
                                        QDir::separator() + kAppsFolder);

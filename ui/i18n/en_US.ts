@@ -366,8 +366,8 @@
         <translation>online</translation>
     </message>
     <message id="status-updating">
-        <source>synchronizing blockchain...</source>
-        <translation>synchronizing blockchain...</translation>
+        <source>synchronizing blockchain</source>
+        <translation>synchronizing blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -3888,6 +3888,22 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="apps-title">
         <source>My DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
