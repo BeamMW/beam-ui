@@ -285,6 +285,8 @@ file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/icon_${BEAM_ICON_SUFFIX}.ico ${CMAKE_CUR
 file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.png ${CMAKE_CURRENT_SOURCE_DIR}/beam.png)
 file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.icns ${CMAKE_CURRENT_SOURCE_DIR}/beam.icns)
 
+file(GLOB_RECURSE DAPPS_LIST ${CMAKE_CURRENT_SOURCE_DIR}/apps *.dapp)
+
 string(REPLACE "." "," PROJECT_VERSION_VERSIONINFO "${PROJECT_VERSION}")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/beam.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/beam.rc)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/beam.desktop.in ${CMAKE_CURRENT_SOURCE_DIR}/beam.desktop)
@@ -300,7 +302,7 @@ if(BEAM_USE_STATIC AND LINUX)
     set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
 endif()
 if (APPLE)
-    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm")
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" ${DAPPS_LIST})
 else()
     add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
 endif()
