@@ -524,8 +524,8 @@ Rectangle {
 
     function openSendDialog(receiver, assetId) {
         var params = {
-            "onAccepted":    contentStack.pop(),
-            "onClosed":      contentStack.pop(),
+            "onAccepted":    goBack,
+            "onClosed":      goBack,
             "receiverToken": receiver,
             "assetId":       assetId
         }
@@ -538,7 +538,7 @@ Rectangle {
 
     function openReceiveDialog(token, assetId) {
         var params = {
-            "onClosed": contentStack.pop(),
+            "onClosed": goBack,
             "token":    token,
             "assetId":  assetId
             };

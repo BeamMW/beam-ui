@@ -42,7 +42,7 @@ ColumnLayout {
                 StackView.view.replace(Qt.createComponent("send_swap.qml"),
                                      {
                                          "onAccepted": tokenDuplicateChecker.onAccepted,
-                                         "onClosed":   StackView.view.pop(),
+                                         "onClosed":   StackView.view.pop,
                                          "swapToken":  token
                                      })
                 StackView.view.currentItem.validateCoin()

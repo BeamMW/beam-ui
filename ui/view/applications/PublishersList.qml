@@ -26,49 +26,13 @@ ColumnLayout {
         return !!viewModel.getRoleValue(row, socialNetwork)
     }
 
-    //
-    // Page Header (Back button + title + add publisher button)
-    //
-    RowLayout {
-        id: header
-
-        CustomButton {
-            id:             backButton
-            palette.button: "transparent"
-            leftPadding:    0
-            showHandCursor: true
-
-            font {
-                styleName: "DemiBold"
-                weight:    Font.DemiBold
-            }
-
-            //% "Back"
-            text:        qsTrId("general-back")
-            icon.source: "qrc:/assets/icon-back.svg"
-            visible:     true
-
-            onClicked:   control.onBack()
-        }
-
-        SFText {
-            Layout.fillWidth:     true
-            color:                Style.content_main
-            leftPadding:          -backButton.width
-            horizontalAlignment:  Text.AlignHCenter
-            font.pixelSize:       14
-            font.weight:          Font.Bold
-            font.capitalization:  Font.AllUppercase
-            //% "Publishers"
-            text: qsTrId("dapps-store-publishers-page-main-title")
-        }
-    }
-
+    //% "Publishers"
+    property string title: qsTrId("dapps-store-publishers-page-main-title")
 
     //
     // Body: publishers list
     //
-     PublishersViewModel {
+    PublishersViewModel {
         id:             viewModel
         publishersInfo: control.appsViewModel.userPublishers
     }
