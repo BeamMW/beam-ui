@@ -9,7 +9,7 @@ Control {
     id: appInfoControl
     property string dappName
     property string dappFilter
-
+    property bool  showBalance:       true
     property bool  folded:            true
     property bool  foldsUp:           true
     property alias bkColor:           appBackground.color
@@ -32,10 +32,12 @@ Control {
         State {
             name: "balance"
             PropertyChanges { target: balanceTab; state: "active" }
+            PropertyChanges { target: assetsList; visible: true }
         },
         State {
             name: "transactions"
             PropertyChanges { target: txsTab; state: "active" }
+            PropertyChanges { target: txTable; visible: true }
         }
     ]
 
@@ -46,20 +48,10 @@ Control {
             id: headerRow
             Layout.fillWidth: true
             spacing: 0
-            Layout.leftMargin: 25
-            Layout.rightMargin: 25
+            Layout.leftMargin: 20
+            Layout.rightMargin: 20
 
-            TxFilter {
-                id: balanceTab
-                //% "Wallet Balance"
-                label: qsTrId("wallet-balance-title")
-                Layout.alignment: Qt.AlignVCenter
-
-                onClicked: function () {
-                    if (appInfoControl.folded || appInfoControl.state == "balance")
-                        appInfoControl.folded = !appInfoControl.folded
-                    appInfoControl.state = "balance"
-                }
+            component AppPanelTxFilter : TxFilter {
 
                 showLed: false
                 opacity: (folded || this.state != "active") ? 0.5 : 1
@@ -75,21 +67,22 @@ Control {
                 }
             }
 
-            Item {
-                width: 25
-                Layout.fillHeight: true
+            AppPanelTxFilter {
+                id: balanceTab
+                //% "Wallet Balance"
+                label: qsTrId("wallet-balance-title")
+                Layout.alignment:   Qt.AlignVCenter
+                Layout.rightMargin: 20
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape:  folded ? Qt.PointingHandCursor : Qt.ArrowCursor
-                    onClicked: function () {
-                        if (appInfoControl.folded)
-                            appInfoControl.folded = !appInfoControl.folded
-                    }
+                onClicked: function () {
+                    if (appInfoControl.folded || appInfoControl.state == "balance")
+                        appInfoControl.folded = !appInfoControl.folded
+                    appInfoControl.state = "balance"
                 }
+                visible:    showBalance
             }
 
-            TxFilter {
+            AppPanelTxFilter {
                 id: txsTab
                 label: (dappName ? dappName + " " : "") + qsTrId("wallet-transactions-title")
                 Layout.alignment: Qt.AlignVCenter
@@ -99,33 +92,14 @@ Control {
                         appInfoControl.folded = !appInfoControl.folded
                     appInfoControl.state = "transactions"
                 }
-
-                showLed: false
-                opacity: (folded || this.state != "active") ? 0.5 : 1
-                activeColor: folded ? Style.content_main : Style.active
-                inactiveColor: Style.content_main
-
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  3.11
-                    capitalization: Font.AllUppercase
-                }
-            }
-
-            Item {
-                width: 5
-                Layout.fillHeight: true
-                visible: txTip.length != 0
             }
 
             SFText {
-                color:   Style.content_main
-                text:    txTip
-                visible: txTip.length != 0
-                Layout.alignment: Qt.AlignVCenter
-
+                color:              Style.content_main
+                text:               txTip
+                visible:            txTip.length != 0
+                Layout.alignment:   Qt.AlignVCenter
+                Layout.leftMargin:  5
                 font {
                     styleName:      "Bold"
                     weight:         Font.Bold
@@ -206,6 +180,8 @@ Control {
             id: contentRow
             Layout.fillWidth:       true
             Layout.topMargin:       folded ? 0 : 20
+            Layout.leftMargin:      20
+            Layout.rightMargin:     20
             Layout.alignment:       Qt.AlignTop
             opacity:                folded ? 0.0 : 1.0
 
@@ -213,21 +189,18 @@ Control {
                 Layout.fillWidth:       true
                 Layout.fillHeight:      true
                 TxTable {
-                    property bool isTransactionsView: appInfoControl.state == "transactions"
-                    anchors.fill: parent
-                    anchors.leftMargin: isTransactionsView ? 25 : 0
-                    anchors.rightMargin: isTransactionsView ? 25 : 0
                     id: txTable
-                    owner: appInfoControl
-                    emptyMessageMargin: 60
-                    mainBackgroundRect: appBackground
-                    dappFilter: appInfoControl.dappFilter
-                    visible: isTransactionsView
+                    anchors.fill:           parent
+                    owner:                  appInfoControl
+                    emptyMessageMargin:     60
+                    mainBackgroundRect:     appBackground
+                    dappFilter:             appInfoControl.dappFilter
+                    visible:                false
                 }
                 AssetsPanel {
-                    id: assetsList
-                    anchors.fill: parent
-                    visible: appInfoControl.state == "balance"
+                    id:             assetsList
+                    anchors.fill:   parent
+                    visible:        false
                 }
             }
 

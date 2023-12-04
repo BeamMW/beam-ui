@@ -497,7 +497,7 @@ ColumnLayout {
             AppInfoPanel {
                 id:                  txPanel
                 folded:              !control.openedTxID
-                state:               control.openedTxID ? "transactions" : "balance"
+                //state:               control.openedTxID ? "transactions" : "balance"
                 width:               parent.width
                 anchors.bottom:      parent.bottom
                 anchors.bottomMargin: 10
@@ -506,8 +506,9 @@ ColumnLayout {
                 visible:             appsListView.visible
                 bkColor:             Style.background_appstx
                 dappName:            ""
-                dappFilter:          "all"
+                dappFilter:          undefined
                 tableOwner:          control
+                showBalance:         false
             }
         }
 
