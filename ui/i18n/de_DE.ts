@@ -366,8 +366,8 @@
         <translation>online</translation>
     </message>
     <message id="status-updating">
-        <source>synchronizing blockchain...</source>
-        <oldsource>updating</oldsource>
+        <source>synchronizing blockchain</source>
+        <oldsource>synchronizing blockchain...</oldsource>
         <translation type="unfinished">aktualisiere</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
@@ -940,8 +940,9 @@
         <translation>Wechselkurs</translation>
     </message>
     <message id="wallet-send-swap-title">
-        <source>Accept Swap Offer</source>
-        <translation>Währungen tauschen</translation>
+        <source>Accept Offer</source>
+        <oldsource>Accept Swap Offer</oldsource>
+        <translation type="unfinished">Währungen tauschen</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -3299,10 +3300,6 @@ gesendet (öffentlich offline)</translation>
         <source>become a publisher</source>
         <translation>Werden Sie aktiv</translation>
     </message>
-    <message id="dapps-store-install">
-        <source>install</source>
-        <translation>installieren</translation>
-    </message>
     <message id="dapps-store-update">
         <source>update</source>
         <translation>Aktualisieren</translation>
@@ -3532,10 +3529,6 @@ Los gehts!</translation>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
         <translation>Öffentlicher Schlüssel</translation>
-    </message>
-    <message id="dapps-store-launch">
-        <source>launch</source>
-        <translation>Starten</translation>
     </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
@@ -3891,6 +3884,30 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="apps-title">
         <source>My DApp Store</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall">
+        <source>Uninstall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-remove-dapp">
+        <source>remove dapp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-uninstall-confirm">
+        <source>Are you sure you want to uninstall %1 DApp?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="app-uninstall-title">
+        <source>Uninstall DApp</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

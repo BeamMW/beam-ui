@@ -939,8 +939,8 @@
         <translation>Exchange rate</translation>
     </message>
     <message id="wallet-send-swap-title">
-        <source>Accept Swap Offer</source>
-        <translation>Accept Swap Offer</translation>
+        <source>Accept Offer</source>
+        <translation>Accept Offer</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -3300,10 +3300,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>become a publisher</source>
         <translation>become a publisher</translation>
     </message>
-    <message id="dapps-store-install">
-        <source>install</source>
-        <translation>install</translation>
-    </message>
     <message id="dapps-store-update">
         <source>update</source>
         <translation>update</translation>
@@ -3533,10 +3529,6 @@ Let&apos;s start!</translation>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
         <translation>Publisher link</translation>
-    </message>
-    <message id="dapps-store-launch">
-        <source>launch</source>
-        <translation>launch</translation>
     </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
@@ -3905,6 +3897,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="apps-uninstall-confirm">
         <source>Are you sure you want to uninstall %1 DApp?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapps-store-installing">
+        <source>installing</source>
+        <translation>installing</translation>
+    </message>
+    <message id="dapps-store-updating">
+        <source>updating</source>
+        <translation>updating</translation>
     </message>
 </context>
 </TS>

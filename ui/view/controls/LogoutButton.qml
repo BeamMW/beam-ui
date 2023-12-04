@@ -23,14 +23,7 @@ Item {
             leftPadding:            8
             rightPadding:           8
         }
-        Action {
-            //% "My DApp Store"
-            text:           qsTrId("apps-title")
-            icon.source:    "qrc:/assets/icon-applications.svg"
-            onTriggered: {
-                main.openApplications();
-            }
-        }
+
         Action {
             text:           qsTrId("messenger-title")
             icon.source:    "qrc:/assets/icon-beam_messenger.svg"
@@ -38,13 +31,7 @@ Item {
                 main.openMessenger();
             }
         }
-        Action {
-            text:           qsTrId("apps-title")
-            icon.source:    "qrc:/assets/icon-applications.svg"
-            onTriggered: {
-                main.openApplications();
-            }
-        }
+
         Action {
             text:           qsTrId("addresses-tittle")
             icon.source:    "qrc:/assets/icon-addresses.svg"

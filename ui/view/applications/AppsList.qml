@@ -62,7 +62,15 @@ Item {
                 control.update(app)
             }
             onUninstall: function (app) {
-                control.uninstall(app)
+                //% "Are you sure you want to uninstall %1 DApp?"
+                confirmUninstall.text = qsTrId("apps-uninstall-confirm").arg(app.name);
+                confirmUninstall.accepted.connect(function () {
+                    console.log("#### " + app.name)
+                    control.uninstall(app);
+                    confirmUninstall.accepted.disconnect()
+                    console.log("4444")
+                });
+                confirmUninstall.open();
             }
             onRemove: function (app) {
                 control.remove(app)
@@ -74,5 +82,17 @@ Item {
                 control.stopProgress.disconnect(stopProgress);
             }
         }
+    }
+
+    ConfirmationDialog {
+        id:                     confirmUninstall
+        width:                  460
+                                //% "Uninstall DApp"
+        title:                  qsTrId("app-uninstall-title")
+                                //% "Uninstall"
+        okButtonText:           qsTrId("apps-uninstall")
+        okButtonIconSource:     "qrc:/assets/icon-delete.svg"
+        okButtonColor:          Style.accent_fail
+        cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
     }
 }
