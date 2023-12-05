@@ -34,29 +34,7 @@ RowLayout {
         RowLayout {
             id:                 navigationBar
             Layout.alignment:   Qt.AlignVCenter
-            RowLayout {
-                Layout.alignment:   Qt.AlignVCenter
-                spacing:    8
-                SvgImage {
-                    id:     home
-                    Layout.preferredWidth:  20
-                    Layout.preferredHeight: 20
-                    source: "qrc:/assets/icon-home-grey.svg"
 
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape:  Qt.PointingHandCursor
-                        onClicked: {
-                            control.navigate(0)
-                        }
-                    }
-                }
-                SvgImage {
-                    Layout.preferredWidth:  24
-                    Layout.preferredHeight: 24
-                    source: "qrc:/assets/icon-chevron-right.svg"
-                }
-            }
             Repeater {
                 Layout.alignment:          Qt.AlignVCenter
                 model: path
@@ -79,7 +57,7 @@ RowLayout {
                             anchors.fill: parent
                             cursorShape:  Qt.PointingHandCursor 
                             onClicked: function () {
-                                control.navigate(index + 1)
+                                control.navigate(index)
                             }
                         }
                     }

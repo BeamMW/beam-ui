@@ -506,7 +506,6 @@ ColumnLayout {
                 visible:             appsListView.visible
                 bkColor:             Style.background_appstx
                 dappName:            ""
-                dappFilter:          undefined
                 tableOwner:          control
                 showBalance:         false
             }

@@ -239,9 +239,9 @@ Rectangle {
             
             function getNavigationPath() {
                 var path = [];
-                if (contentStack.depth <= 2)
+                if (contentStack.depth <= 1)
                     return path;
-                for (var i = 1; i < contentStack.depth-1; ++i) {
+                for (var i = 0; i < contentStack.depth-1; ++i) {
                     path.push(contentStack.get(i).title);
                 }
                 return path;
