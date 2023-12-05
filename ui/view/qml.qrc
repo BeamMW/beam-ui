@@ -81,7 +81,6 @@
         <file>controls/AlphaTipPopup.qml</file>
         <file>controls/SubtitleRow.qml</file>
         <file>controls/AddressQRDialog.qml</file>
-        <file>controls/OpenApplicationsDialog.qml</file>
         <file>controls/UtxoDialog.qml</file>
         <file>controls/Panel.qml</file>
         <file>controls/TokenInfoDialog.qml</file>

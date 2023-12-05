@@ -543,11 +543,7 @@ ColumnLayout {
             viewModel.stopProgress.connect(appsListView.stopProgress);
             control.showTxDetails.connect(txPanel.showTxDetails)
 
-            if (!settings.dappsAllowed) {
-                appsDialog.open();
-            } else {
-                viewModel.init(!!appToOpen);
-            }
+            viewModel.init(!!appToOpen);
         }
 
         Component.onDestruction: {
@@ -570,20 +566,6 @@ ColumnLayout {
         onGoToMyAccount: {
             youArePublisher.close()
             control.navigatePublisherDetails()
-        }
-    }
-
-    OpenApplicationsDialog {
-        id: appsDialog
-
-        onRejected: function () {
-            settings.dappsAllowed = false
-            main.openWallet()
-            main.openWallet()
-        }
-        onAccepted: function () {
-            settings.dappsAllowed = true
-            viewModel.init(!!appToOpen);
         }
     }
 

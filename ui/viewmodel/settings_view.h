@@ -55,7 +55,6 @@ class SettingsViewModel : public QObject
     Q_PROPERTY(QString      explorerUrl                     READ getExplorerUrl                 CONSTANT)
     Q_PROPERTY(QString      faucetUrl                       READ getFaucetUrl                   CONSTANT)
     Q_PROPERTY(int          minConfirmations                READ getMinConfirmations            WRITE  setMinConfirmations NOTIFY minConfirmationsChanged)
-    Q_PROPERTY(bool         dappsAllowed                    READ getDAppsAllowed                WRITE  setDAppsAllowed NOTIFY dappsAllowedChanged)
     Q_PROPERTY(int          appsServerPort                  READ getAppsPort                    WRITE  setAppsPort     NOTIFY appsPortChanged)
 
     Q_PROPERTY(bool ipfsSupported READ getIPFSSupported CONSTANT)
@@ -148,8 +147,6 @@ public:
     int getMinConfirmations() const;
     void setMinConfirmations(int value);
 
-    bool getDAppsAllowed () const;
-    void setDAppsAllowed (bool val);
     int getAppsPort() const;
     void setAppsPort(int port);
 
@@ -208,7 +205,6 @@ signals:
     void maxPrivacyAnonymitySetChanged();
     void maxPrivacyLockTimeLimitChanged();
     void minConfirmationsChanged();
-    void dappsAllowedChanged();
     void stateChanged();
     void appsPortChanged();
 

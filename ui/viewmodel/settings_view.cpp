@@ -67,7 +67,6 @@ SettingsViewModel::SettingsViewModel()
     connect(m_walletModel, SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
     connect(m_walletModel, SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
-    connect(&m_settings, &WalletSettings::dappsAllowedChanged, this, &SettingsViewModel::dappsAllowedChanged);
     connect(m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
@@ -367,16 +366,6 @@ void SettingsViewModel::allowBeamMWLinks(bool value)
     {
         m_settings.setAllowedBeamMWLinks(value);
     }
-}
-
-bool SettingsViewModel::getDAppsAllowed () const
-{
-    return m_settings.getAppsAllowed();
-}
-
-void SettingsViewModel::setDAppsAllowed (bool val)
-{
-    m_settings.setAppsAllowed(val);
 }
 
 QString SettingsViewModel::getCurrentHeight() const

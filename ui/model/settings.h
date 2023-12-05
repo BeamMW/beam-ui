@@ -211,7 +211,6 @@ signals:
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();
-    void dappsAllowedChanged();
     void IPFSSettingsChanged();
     void generalMouseEvent();
 

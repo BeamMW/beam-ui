@@ -107,20 +107,6 @@ SettingsFoldable {
             }
         }
 
-        CustomSwitch {
-            id: dappsAllowed
-            //% "Allow to launch DApps"
-            text: qsTrId("settings-dapps-allowed")
-            Layout.fillWidth: true
-
-            checked: viewModel.dappsAllowed
-            Binding {
-                target:   viewModel
-                property: "dappsAllowed"
-                value:    dappsAllowed.checked
-            }
-        }
-
         RowLayout {
             Layout.fillWidth:       true
             ColumnLayout {

@@ -42,7 +42,6 @@ namespace
     const char* kLockTimeoutName = "lock_timeout";
     const char* kRequirePasswordToSpendMoney = "require_password_to_spend_money";
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
-    const char* kDAppsAllowed = "dapps_allowed";
     const char* kshowSwapBetaWarning = "show_swap_beta_warning";
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
@@ -333,35 +332,10 @@ void WalletSettings::setAllowedBeamMWLinks(bool value)
     emit beamMWLinksChanged();
 }
 
-bool WalletSettings::getAppsAllowed() const
-{
-    Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kDAppsAllowed, false).toBool();
-}
-
 bool WalletSettings::getDevMode() const
 {
     Lock lock(m_mutex);
     return m_accountSettings.m_data.value(kDevMode, false).toBool();
-}
-
-void WalletSettings::setAppsAllowed(bool value)
-{
-    bool changed = false;
-
-    {
-        Lock lock(m_mutex);
-        if (m_accountSettings.m_data.value(kDAppsAllowed, false).toBool() != value)
-        {
-            m_accountSettings.m_data.setValue(kDAppsAllowed, value);
-            changed = true;
-        }
-    }
-
-    if (changed)
-    {
-        emit dappsAllowedChanged();
-    }
 }
 
 bool WalletSettings::showSwapBetaWarning()
