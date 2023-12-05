@@ -37,7 +37,7 @@ Item {
         anchors.fill:                parent
         anchors.rightMargin:         -10
         cellHeight:                  122
-        cellWidth:                   gridView.width/3
+        cellWidth:                   gridView.width / Math.floor(gridView.width / 320)
         clip:                        true
         ScrollBar.vertical: ScrollBar {
             policy: ScrollBar.AsNeeded
@@ -65,10 +65,8 @@ Item {
                 //% "Are you sure you want to uninstall %1 DApp?"
                 confirmUninstall.text = qsTrId("apps-uninstall-confirm").arg(app.name);
                 confirmUninstall.accepted.connect(function () {
-                    console.log("#### " + app.name)
                     control.uninstall(app);
                     confirmUninstall.accepted.disconnect()
-                    console.log("4444")
                 });
                 confirmUninstall.open();
             }
