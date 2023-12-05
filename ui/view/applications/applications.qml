@@ -291,52 +291,42 @@ ColumnLayout {
             visible:          appsListView.visible
             Layout.fillWidth: true
             opacity:          txPanel.folded ? 1.0 : 0.25
-            height:           47
+            Layout.preferredHeight: 47
 
             RowLayout {
                 spacing:           20
                 anchors.right:     parent.right
                 anchors.topMargin: 10
 
-                CustomButton {
-                    id:                     addApp
-                    height:                 36
-                    Layout.preferredHeight: 36
-                    width:                  36
-                    radius:                 10
-                    display:                AbstractButton.IconOnly
-                    leftPadding:            6
-                    rightPadding:           6
-                    palette.button:         Qt.rgba(255, 255, 255, 0.1)
-                    icon.source:            "qrc:/assets/icon-add-green.svg"
-                    icon.width:             24
-                    icon.height:            24
-                    onClicked:              dndDialog.open()
+                ContextMenu {
+                    id: appActionsMenu
+
+                    Action {
+                        //% "Install DApp"
+                        text:           qsTrId("dnd-app-install-title")
+                        icon.source:    "qrc:/assets/icon-add.svg"
+                        onTriggered:    dndDialog.open()
+                    }
+                    Action {
+                        //% "Publishers"
+                        text:           qsTrId("dapps-store-publishers-page-main-title")
+                        icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
+                        onTriggered:    navigatePublishersList()
+                    }
+                    Action {
+                        //% "become a publisher"
+                        text:           viewModel.isPublisher ? viewModel.publisherInfo.name : qsTrId("apps-become-a-publisher")
+                        icon.source:    "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
+                        onTriggered:    navigatePublisherDetails()
+                    }
                 }
 
-                CustomButton {
-                    id:                     showPublishers
-                    height:                 36
-                    Layout.preferredHeight: 36
-                    width:                  36
-                    radius:                 10
-                    display:                AbstractButton.IconOnly
-                    leftPadding:            6
-                    rightPadding:           6
-                    palette.button:         Qt.rgba(255, 255, 255, 0.1)
-                    icon.source:            "qrc:/assets/icon-dapps_store-publishers.svg"
-                    icon.width:             24
-                    icon.height:            24
-                    onClicked:              navigatePublishersList()
-                }
-
-                PrimaryButton {
-                    id:           publisherDetails
-                                  //% "become a publisher"
-                    text:         viewModel.isPublisher ? viewModel.publisherInfo.name : qsTrId("apps-become-a-publisher")
-                    icon.source:  "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
-                    allLowercase: false
-                    onClicked:    navigatePublisherDetails()
+                CustomToolButton {
+                    id:                       appActionButton
+                    padding:                  0
+                    icon.color:               Style.content_main
+                    icon.source:              "qrc:/assets/icon-actions.svg"
+                    onClicked:                appActionsMenu.open()
                 }
             }
 
@@ -472,21 +462,6 @@ ColumnLayout {
 
             onUninstall: function (app) {
                 control.uninstallApp(app)
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                visible:      !txPanel.folded
-                hoverEnabled: true
-
-                onClicked: function (ev) {
-                    txPanel.folded = true
-                    ev.accepted = true
-                }
-
-                onWheel: function (ev) {
-                    ev.accepted = true
-                }
             }
         }
 
