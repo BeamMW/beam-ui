@@ -526,10 +526,10 @@ ColumnLayout {
         }
 
         function loadAppsList () {
-            control.appsList = checkSupport(viewModel.apps)
-
+            control.appsList = viewModel.apps;
             if (control.appToOpen) {
-                for (let app of control.appsList) {
+                for (let i = 0; i <  control.appsList.rowCount(); ++i) {
+                    let app = control.appsList.get(i);
                     if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
                         if (dappsLayout.appSupported(app)) {
                             dappsLayout.launchApp(app)
@@ -543,14 +543,6 @@ ColumnLayout {
             }
         }
 
-        function checkSupport (apps) {
-            unsupportedCnt = 0
-            for (var app of apps) {
-                app.supported = dappsLayout.appSupported(app)
-                if (!app.supported) ++unsupportedCnt
-            }
-            return apps
-        }
 
         Component.onCompleted: {
             viewModel.appsChanged.connect(loadAppsList)

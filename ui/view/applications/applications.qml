@@ -20,7 +20,7 @@ ColumnLayout {
     property var      appToOpen:      undefined
     property string   openedTxID:     ""
     property bool     showBack:       true
-    readonly property bool hasApps:   !!appsList && appsList.length > 0
+    readonly property bool hasApps:   !!appsList && appsList.rowCount() > 0
 
     function openAppTx (txid) {
         openedTxID = txid
@@ -302,6 +302,8 @@ ColumnLayout {
 
         RowLayout {
             Layout.topMargin:   40
+            Layout.fillWidth:   true
+            Layout.fillHeight:  false
             spacing:            25
 
             TabButton {
@@ -317,6 +319,20 @@ ColumnLayout {
                 label:              qsTrId("wallet-transactions-title")
                 Layout.alignment:   Qt.AlignVCenter
                 onClicked:          appsRoot.state = "transactions"
+            }
+            Item {
+                Layout.fillWidth:   true
+                Layout.fillHeight:  true
+            }
+
+            SFText {
+                id:                  errCntMessage
+                Layout.alignment:    Qt.AlignRight
+                color:               Style.validator_error
+                visible:             dappsLayout.visible && control.hasApps && unsupportedCnt > 0
+                font.italic:         true
+                                     //% "%n DApp(s) is not available"
+                text:                qsTrId("apps-err-cnt", unsupportedCnt)
             }
         }
 
@@ -344,15 +360,15 @@ ColumnLayout {
             Layout.fillHeight: true
             spacing:           0
             visible:           false
-            Item {
-                visible:          appsListView.visible
-                Layout.fillWidth: true
-                Layout.preferredHeight: 32
-
-                RowLayout {
-                    spacing:           20
-                    anchors.right:     parent.right
-
+//            Item {
+//                visible:          appsListView.visible
+//                Layout.fillWidth: true
+//                Layout.preferredHeight: 32
+//
+//                RowLayout {
+//                    spacing:           20
+//                    anchors.right:     parent.right
+//
                     ContextMenu {
                         id: appActionsMenu
 
@@ -376,15 +392,15 @@ ColumnLayout {
                         }
                     }
 
-                    CustomToolButton {
-                        id:                       appActionButton
-                        padding:                  0
-                        icon.color:               Style.content_main
-                        icon.source:              "qrc:/assets/icon-settings.svg"
-                        onClicked:                appActionsMenu.open()
-                    }
-                }
-            }
+           //         CustomToolButton {
+           //             id:                       appActionButton
+           //             padding:                  0
+           //             icon.color:               Style.content_main
+           //             icon.source:              "qrc:/assets/icon-settings.svg"
+           //             onClicked:                appActionsMenu.open()
+           //         }
+           //     }
+           // }
 
             WebAPICreator {
                 id: webapiCreator
@@ -398,80 +414,6 @@ ColumnLayout {
                 stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}});
             }
 
-            Item {
-                Layout.fillHeight: true
-                Layout.fillWidth:  true
-                visible:           !appsListView.visible
-
-                ColumnLayout {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    y:                        parent.height / 2 - this.height / 2 - 40
-                    spacing:                  40
-
-                    SFText {
-                        Layout.alignment: Qt.AlignHCenter
-                        color:            control.errorMessage.length ? Style.validator_error : Style.content_main
-                        opacity:          0.5
-
-                        font {
-                            italic:    true
-                            pixelSize: 16
-                        }
-
-                        text: {
-                            if (control.errorMessage.length) {
-                                return control.errorMessage
-                            }
-
-                            //if (control.activeApp || control.appToOpen) {
-                            //    //% "Please wait, %1 is loading"
-                            //    return qsTrId("apps-loading-app").arg(
-                            //        (control.activeApp || control.appToOpen).name
-                            //    )
-                            //}
-
-                            if (!control.appsList) {
-                                //% "Loading..."
-                                return qsTrId("apps-loading")
-                            }
-
-                            //% "There are no applications at the moment"
-                            return qsTrId("apps-nothing")
-                        }
-                    }
-
-                    SvgImage {
-                        Layout.alignment: Qt.AlignHCenter
-                        source:           "qrc:/assets/dapp-loading.svg"
-                        sourceSize:       Qt.size(245, 140)
-
-                        visible: {
-                            if (control.errorMessage.length) {
-                                return false
-                            }
-
-                            //if (control.activeApp || control.appToOpen) {
-                            //    return true
-                            //}
-
-                            return false
-                        }
-                    }
-                }
-            }
-
-            //SFText {
-            //    id:                  errCntMessage
-            //    Layout.alignment:    Qt.AlignRight
-            //    Layout.topMargin:    5
-            //    Layout.bottomMargin: 10
-            //    color:               Style.validator_error
-            //    visible:             control.hasApps && unsupportedCnt > 0
-            //    font.italic:         true
-            //                         //% "%n DApp(s) is not available"
-            //    text:                qsTrId("apps-err-cnt", unsupportedCnt)
-            //}
-
             AppsList {
                 id:                  appsListView
                 //Layout.topMargin:    unsupportedCnt ? 0 : 20
@@ -480,6 +422,7 @@ ColumnLayout {
                 visible:             control.hasApps
                 appsList:            control.appsList
                 isIPFSAvailable:     viewModel.isIPFSAvailable
+                appActionsMenu:      appActionsMenu
 
                 onLaunch: function (app) {
                     dappsLayout.launchApp(app)
@@ -503,9 +446,9 @@ ColumnLayout {
 
             function loadAppsList () {
                 control.appsList = checkSupport(viewModel.apps)
-                
                 if (control.appToOpen) {
-                    for (let app of control.appsList) {
+                    for (let i = 0; i <  control.appsList.rowCount(); ++i) {
+                        let app = control.appsList.get(i);
                         if (app.guid == appToOpen.guid) {
                             if (dappsLayout.appSupported(app)) {
                                 dappsLayout.launchApp(app)
@@ -521,7 +464,8 @@ ColumnLayout {
 
             function checkSupport (apps) {
                 unsupportedCnt = 0
-                for (var app of apps) {
+                for (let i = 0; i < apps.rowCount(); ++i) {
+                    let app = apps.get(i);
                     app.supported = dappsLayout.appSupported(app)
                     if (!app.supported) ++unsupportedCnt
                 }

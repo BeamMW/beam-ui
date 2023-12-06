@@ -40,34 +40,10 @@ namespace
 
     namespace DApp
     {
-        const char kName[] = "name";
-        const char kDescription[] = "description";
-        const char kIpfsId[] = "ipfs_id";
-        const char kUrl[] = "url";
-        const char kApiVersion[] = "api_version";
-        const char kMinApiVersion[] = "min_api_version";
-        const char kGuid[] = "guid";
-        const char kId[] = "id";
-        const char kPublisherKey[] = "publisher";
-        const char kPublisherName[] = "publisherName";
-        const char kCategory[] = "category";
-        const char kCategoryName[] = "categoryName";
-        const char kCategoryColor[] = "categoryColor";
-        const char kSupported[] = "supported";
-        const char kNotInstalled[] = "notInstalled";
-        const char kIcon[] = "icon";
-        const char kVersion[] = "version";
-        const char kFullPath[] = "fullPath";
-        const char kAppid[] = "appid";
-        const char kMajor[] = "major";
-        const char kMinor[] = "minor";
-        const char kRelease[] = "release";
-        const char kBuild[] = "build";
-        const char kDevApp[] = "devApp";
-        const char kHasUpdate[] = "hasUpdate";
-        const char kReleaseDate[] = "release_date";
-        const char kLocal[] = "local";
-
+#define MACRO(id, value) const char k##id[] = value;
+        APP_PROPS(MACRO)
+#undef MACRO
+ 
         const int kNameMaxSize = 30;
         const int kDescriptionMaxSize = 1024;
         const int kApiVersionMaxSize = 10;
@@ -625,6 +601,7 @@ namespace beamui::applications
                 auto app = parseAppManifest(in, justFolder);
                 app.insert(DApp::kFullPath, fullFolder);
                 app.insert(DApp::kSupported, isAppSupported(app));
+                app.insert(DApp::kNotInstalled, false);
 
                 result.push_back(app);
             }
@@ -953,7 +930,14 @@ namespace beamui::applications
         return userPublishers;
     }
 
-    QList<QVariantMap> AppsViewModel::getApps()
+    QAbstractItemModel* AppsViewModel::getApps()
+    {
+        auto result = getAppsImpl();
+        m_appsModel.reset(result.begin(), result.end());
+        return &m_appsModel;
+    }
+
+    QList<QVariantMap>  AppsViewModel::getAppsImpl()
     {
         // Apps order: Dev APP, *.dapp files, installed from shader, not installed from shader
         QList<QVariantMap> result = _devApps;
@@ -1811,7 +1795,7 @@ namespace beamui::applications
     QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
     {
         QList<QVariantMap> publisherApps;
-        QList<QVariantMap> apps = getApps();
+        QList<QVariantMap> apps = getAppsImpl();
 
         std::copy_if(apps.cbegin(), apps.cend(), std::back_inserter(publisherApps),
             [publisherKey] (const auto& app) -> bool {
@@ -1830,7 +1814,7 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::getAppByGUID(const QString& guid)
     {
-        QList<QVariantMap> apps = getApps();
+        QList<QVariantMap> apps = getAppsImpl();
         // find app in _apps by guid
         const auto it = std::find_if(apps.cbegin(), apps.cend(),
             [guid](const auto& app) -> bool {

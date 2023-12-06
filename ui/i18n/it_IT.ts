@@ -3896,5 +3896,28 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
+    <message id="apps-installed-tab">
+        <source>Installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-all-tab">
+        <source>All</source>
+        <translation type="unfinished">Tutti</translation>
+    </message>
+    <message id="apps-no-installed">
+        <source>You don&apos;t have any applications installed yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-no-at-all">
+        <source>No applications yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-err-cnt" numerus="yes">
+        <source>%n DApp(s) is not available</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 </TS>

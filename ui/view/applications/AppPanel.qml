@@ -70,7 +70,7 @@ Item {
         onClicked: {
             if (!!app.notInstalled) {
                 control.isBusy = true;
-                control.install(modelData, false)
+                control.install(app, false)
             } else {
                 var instance = appMenuComponent.createObject(statusButton);
                 if (!isPublisherAdminMode) {
@@ -202,20 +202,20 @@ Item {
                 return;
             }
             if (isPublisherAdminMode) {
-                control.update(modelData)
+                control.update(app)
             } else {
             if (!!app.notInstalled) {
                 control.isBusy = true;
                 //% "installing"
                 control.statusText = qsTrId("dapps-store-installing")
-                control.install(modelData, true)
+                control.install(app, true)
             } else if (!app.notInstalled && !!app.hasUpdate) {
                 control.isBusy = true;
                 //% "updating"
                 control.statusText = qsTrId("dapps-store-updating")
-                control.update(modelData)
+                control.update(app)
             } else if (!app.notInstalled)
-                control.launch(modelData)
+                control.launch(app)
             }
         }
     }
@@ -258,7 +258,7 @@ Item {
                 icon.source: "qrc:/assets/icon-delete.svg"
                 onTriggered: function () {
                     control.isBusy = true
-                    control.remove(modelData)
+                    control.remove(app)
                 }
             }
         }

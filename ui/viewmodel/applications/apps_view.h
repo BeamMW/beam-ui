@@ -17,19 +17,94 @@
 #include <boost/optional.hpp>
 #include "utility/common.h"
 #include "model/wallet_model.h"
+#include "viewmodel/helpers/list_model.h"
 
 namespace beamui::applications
 {
+#define APP_PROPS(macro) \
+    macro(Name, "name") \
+    macro(Description, "description") \
+    macro(IpfsId, "ipfs_id") \
+    macro(Url, "url") \
+    macro(ApiVersion, "api_version") \
+    macro(MinApiVersion, "min_api_version") \
+    macro(Guid, "guid") \
+    macro(Id, "id") \
+    macro(PublisherKey, "publisher") \
+    macro(PublisherName, "publisherName") \
+    macro(Category, "category") \
+    macro(CategoryName, "categoryName") \
+    macro(CategoryColor, "categoryColor") \
+    macro(Supported, "supported") \
+    macro(NotInstalled, "notInstalled") \
+    macro(Icon, "icon") \
+    macro(Version, "version") \
+    macro(FullPath, "fullPath") \
+    macro(Appid, "appid") \
+    macro(Major, "major") \
+    macro(Minor, "minor") \
+    macro(Release, "release") \
+    macro(Build, "build") \
+    macro(DevApp, "devApp") \
+    macro(HasUpdate, "hasUpdate") \
+    macro(ReleaseDate, "release_date") \
+    macro(Local, "local") \
+
+    class AppsModel : public ListModel<QVariantMap>
+    {
+        Q_OBJECT
+        QHash<int, QByteArray> m_roleNames;
+    public:
+        enum class Roles
+        {
+            Start = Qt::UserRole,
+#define MACRO(id, value) id,
+            APP_PROPS(MACRO)
+#undef MACRO
+        };
+
+        AppsModel() : m_roleNames{
+#define MACRO(id, value) { static_cast<int>(Roles::id), value },
+                APP_PROPS(MACRO)
+#undef MACRO
+        }
+        {
+
+        }
+
+        [[nodiscard]] QHash<int, QByteArray> roleNames() const override
+        {
+            return m_roleNames;
+        }
+
+        [[nodiscard]] QVariant data(const QModelIndex& index, int role) const override
+        {
+            if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())
+            {
+                return QVariant();
+            }
+
+            auto& value = m_list[index.row()];
+            const auto& roleName = m_roleNames[role];
+            return value[roleName];
+        }
+
+        Q_INVOKABLE QVariantMap get(int i) const
+        {
+            return m_list[i];
+        }
+    };
+
     class AppsViewModel : public QObject
     {
         Q_OBJECT
-        Q_PROPERTY(QString            appsUrl         READ getAppsUrl        CONSTANT)
-        Q_PROPERTY(QString            userAgent       READ getUserAgent      CONSTANT)
-        Q_PROPERTY(QList<QVariantMap> apps            READ getApps           NOTIFY appsChanged)
-        Q_PROPERTY(bool               isPublisher     READ isPublisher       NOTIFY isPublisherChanged)
-        Q_PROPERTY(QVariantMap        publisherInfo   READ getPublisherInfo  NOTIFY publisherInfoChanged)
-        Q_PROPERTY(QList<QVariantMap> userPublishers  READ getUserPublishers NOTIFY userPublishersChanged)
-        Q_PROPERTY(bool               isIPFSAvailable READ isIPFSAvailable   NOTIFY isIPFSAvailableChanged)
+        Q_PROPERTY(QString             appsUrl         READ getAppsUrl        CONSTANT)
+        Q_PROPERTY(QString             userAgent       READ getUserAgent      CONSTANT)
+        Q_PROPERTY(QAbstractItemModel* apps            READ getApps           NOTIFY appsChanged)
+        Q_PROPERTY(bool                isPublisher     READ isPublisher       NOTIFY isPublisherChanged)
+        Q_PROPERTY(QVariantMap         publisherInfo   READ getPublisherInfo  NOTIFY publisherInfoChanged)
+        Q_PROPERTY(QList<QVariantMap>  userPublishers  READ getUserPublishers NOTIFY userPublishersChanged)
+        Q_PROPERTY(bool                isIPFSAvailable READ isIPFSAvailable   NOTIFY isIPFSAvailableChanged)
 
     public:
 
@@ -58,7 +133,8 @@ namespace beamui::applications
 
         [[nodiscard]] QString getAppsUrl() const;
         [[nodiscard]] QString getUserAgent() const;
-        [[nodiscard]] QList<QVariantMap> getApps();
+        [[nodiscard]] QAbstractItemModel* getApps();
+        [[nodiscard]] QList<QVariantMap> getAppsImpl();
         [[nodiscard]] QList<QVariantMap> getUserPublishers();
         bool isPublisher() const;
         bool isIPFSAvailable() const;
@@ -163,5 +239,6 @@ namespace beamui::applications
         bool _runApp = false;
         bool _isIPFSAvailable = false;
         QList<QString> _ipfsIdsToUnpin;
+        AppsModel m_appsModel;
     };
 }
