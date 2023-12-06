@@ -2820,22 +2820,6 @@ Update your settings and try again.</source>
         <source>DApp name</source>
         <translation>Ім&apos;я DAPP</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>Попередження про конфіденційність DApps</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet вимагає дозволу на запуск розподілених програм. Ця дія може надати стороннім веб-серверам і/або контрактам доступ до вашої інформації, включаючи, але не обмежуючись, IP-адресу.
-
-Дозволити продовжити? Ви завжди можете змінити свій вибір у налаштуваннях пізніше.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>Дозволити запуск DApps</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Дані про транзакцію</translation>
@@ -3059,14 +3043,6 @@ cannot be canceled.</source>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation>На цей час немає додатків</translation>
-    </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%n DApp(s) недоступний</numerusform>
-            <numerusform>%n DApp(s) недоступний</numerusform>
-            <numerusform>%n DApp(s) недоступний</numerusform>
-        </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
@@ -3920,6 +3896,11 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="help-title">
         <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

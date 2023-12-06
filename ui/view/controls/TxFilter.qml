@@ -6,18 +6,18 @@ import "."
 
 Item  {
     id: root
-    
-    property alias  label: text_label.text
-    property var    capitalization: Font.AllUppercase
-    property alias  font : text_label.font
-    property bool   showLed: true
 
-    implicitWidth: showLed ? led.width : text_label.implicitWidth
-    height: 20
+    property alias  label:          text_label.text
+    property var    capitalization: Font.AllUppercase
+    property alias  font :          text_label.font
+    property bool   showLed:        true
+
+    implicitWidth:  showLed ? led.width : text_label.implicitWidth
+    implicitHeight: showLed ? 20 : text_label.implicitHeight
     state: "normal"
     signal clicked()
 
-    property var activeColor: Style.content_main
+    property var activeColor:   Style.content_main
     property var inactiveColor: Style.section
 
     SFText {
@@ -29,9 +29,9 @@ Item  {
         font.capitalization: capitalization
 
         MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.clicked()
+            anchors.fill:   parent
+            cursorShape:    Qt.PointingHandCursor
+            onClicked:      root.clicked()
         }
     }
 
@@ -46,20 +46,18 @@ Item  {
     }
 
     DropShadow {
-        anchors.fill: led
-        radius: 5
-        samples: 9
-        color: Style.active
-        source: led
+        anchors.fill:   led
+        radius:         5
+        samples:        9
+        color:          Style.active
+        source:         led
 
-        visible: led.visible
+        visible:        led.visible
     }
 
     states: [
         State {
             name: "normal"
-            PropertyChanges {target: text_label; font.weight: showLed ? Font.Normal : Font.Bold}
-            PropertyChanges {target: text_label; font.styleName: showLed ? "Regular" : "Bold"}
             PropertyChanges {target: text_label; color: root.inactiveColor}
         },
         State {

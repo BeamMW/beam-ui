@@ -330,34 +330,24 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.topMargin: 50
 
-        TxFilter {
+        TabButton {
             id: offersTabSelector
             Layout.alignment: Qt.AlignTop
             //% "Active offers"
             label: qsTrId("swap-active-offers-tab")
             onClicked: atomicSwapLayout.state = "offers"
-            showLed: false
-            font {
-                pixelSize: 14
-                letterSpacing: 4
-            }
         }
 
-        TxFilter {
+        TabButton {
             id: myOffersTabSelector
             Layout.alignment: Qt.AlignTop
             Layout.leftMargin: 40
             //% "My offers"
             label: qsTrId("swap-my-offers-tab")
             onClicked: atomicSwapLayout.state = "myoffers"
-            showLed: false
-            font {
-                pixelSize: 14
-                letterSpacing: 4
-            }
         }
 
-        TxFilter {
+        TabButton {
             id: transactionsTabSelector
             Layout.alignment: Qt.AlignTop
             Layout.leftMargin: 40
@@ -366,11 +356,6 @@ ColumnLayout {
             onClicked: {
                 atomicSwapLayout.state = "transactions";
                 transactionsTab.state = "filterAllTransactions"
-            }
-            showLed: false
-            font {
-                pixelSize: 14
-                letterSpacing: 4
             }
         }
     }

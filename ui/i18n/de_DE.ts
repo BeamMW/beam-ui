@@ -2810,22 +2810,6 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <source>DApp name</source>
         <translation>DAPP-Name</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>DApps Datenschutz Warnung</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet benötigt eine Berechtigung, um verteilte Anwendungen zu starten. Diese Aktion kann Ihre Informationen offenlegen, einschließlich, aber nicht beschränkt auf die IP-Adresse auf Webserver und/oder Contracts von Drittanbietern.
-
-Möchten Sie fortfahren? Sie können Ihre Auswahl jederzeit in den Einstellungen aktualisieren.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>DApps Anwendung starten erlauben</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Informationen zur Übersetzung</translation>
@@ -3049,13 +3033,6 @@ gesendet (maximale Anonymität)</translation>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation>Derzeit gibt es keine Anwendungen</translation>
-    </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%n DApp(s) ist nicht verfügbar</numerusform>
-            <numerusform>%n DApp(s) sind nicht verfügbar</numerusform>
-        </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
@@ -3908,6 +3885,11 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="help-title">
         <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

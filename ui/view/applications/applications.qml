@@ -269,10 +269,24 @@ ColumnLayout {
     }
 
     ColumnLayout {
-        id:                dappsLayout
+        id:                appsRoot
         Layout.fillWidth:  true
         Layout.fillHeight: true
         spacing:           0
+
+        state: "applications"
+        states: [
+            State {
+                name: "applications"
+                PropertyChanges { target: appsTab; state: "active" }
+                PropertyChanges { target: dappsLayout; visible: true }
+            },
+            State {
+                name: "transactions"
+                PropertyChanges { target: txTab; state: "active" }
+                PropertyChanges { target: txTable; visible: true }
+            }
+        ]
 
         DnDdappInstallDialog {
             id: dndDialog
@@ -284,247 +298,247 @@ ColumnLayout {
         AssetsPanel {
             id:                 assetsList
             Layout.fillWidth:   true
-            //visible:            !control.activeApp
         }
 
-        Item {
-            visible:          appsListView.visible
-            Layout.fillWidth: true
-            opacity:          txPanel.folded ? 1.0 : 0.25
-            Layout.preferredHeight: 47
+        RowLayout {
+            Layout.topMargin:   40
+            spacing:            25
 
-            RowLayout {
-                spacing:           20
-                anchors.right:     parent.right
-                anchors.topMargin: 10
-
-                ContextMenu {
-                    id: appActionsMenu
-
-                    Action {
-                        //% "Install DApp"
-                        text:           qsTrId("dnd-app-install-title")
-                        icon.source:    "qrc:/assets/icon-add.svg"
-                        onTriggered:    dndDialog.open()
-                    }
-                    Action {
-                        //% "Publishers"
-                        text:           qsTrId("dapps-store-publishers-page-main-title")
-                        icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
-                        onTriggered:    navigatePublishersList()
-                    }
-                    Action {
-                        //% "become a publisher"
-                        text:           viewModel.isPublisher ? viewModel.publisherInfo.name : qsTrId("apps-become-a-publisher")
-                        icon.source:    "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
-                        onTriggered:    navigatePublisherDetails()
-                    }
-                }
-
-                CustomToolButton {
-                    id:                       appActionButton
-                    padding:                  0
-                    icon.color:               Style.content_main
-                    icon.source:              "qrc:/assets/icon-actions.svg"
-                    onClicked:                appActionsMenu.open()
-                }
+            TabButton {
+                id: appsTab
+                //% "Applications"
+                label:              qsTrId("apps-title")
+                Layout.alignment:   Qt.AlignVCenter
+                onClicked:          appsRoot.state = "applications"
             }
 
-            MouseArea {
-                anchors.fill:    parent
-
-                visible:      !txPanel.folded
-                hoverEnabled: true
-
-                onClicked: function (ev) {
-                    txPanel.folded = true
-                    ev.accepted = true
-                }
-
-                onWheel: function (ev) {
-                    ev.accepted = true
-                }
+            TabButton {
+                id: txTab
+                label:              qsTrId("wallet-transactions-title")
+                Layout.alignment:   Qt.AlignVCenter
+                onClicked:          appsRoot.state = "transactions"
             }
         }
 
-        WebAPICreator {
-            id: webapiCreator
-        }
-        function appSupported(app) {
-            return webapiCreator.apiSupported(app.api_version || "current") ||
-                   webapiCreator.apiSupported(app.min_api_version || "")
-        }
-        
+        TxTable {
+            id:    txTable
+            owner: control
 
-        function launchApp(app) {
-            stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}});
-        }
-
-        Item {
-            Layout.fillHeight: true
+            Layout.topMargin:  12
             Layout.fillWidth:  true
-            visible:           !appsListView.visible
+            Layout.fillHeight: true
+            visible:           false
+            Component.onCompleted: {
+                control.showTxDetails.connect(txTable.showTxDetails)
+            }
 
-            ColumnLayout {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y:                        parent.height / 2 - this.height / 2 - 40
-                spacing:                  40
+            Component.onDestruction: {
+                control.showTxDetails.disconnect(txTable.showTxDetails)
+            }
+        }
 
-                SFText {
-                    Layout.alignment: Qt.AlignHCenter
-                    color:            control.errorMessage.length ? Style.validator_error : Style.content_main
-                    opacity:          0.5
+        ColumnLayout {
+            id:                dappsLayout
+            Layout.topMargin:  12
+            Layout.fillWidth:  true
+            Layout.fillHeight: true
+            spacing:           0
+            visible:           false
+            Item {
+                visible:          appsListView.visible
+                Layout.fillWidth: true
+                Layout.preferredHeight: 32
 
-                    font {
-                        italic:    true
-                        pixelSize: 16
+                RowLayout {
+                    spacing:           20
+                    anchors.right:     parent.right
+
+                    ContextMenu {
+                        id: appActionsMenu
+
+                        Action {
+                            //% "Install DApp"
+                            text:           qsTrId("dnd-app-install-title")
+                            icon.source:    "qrc:/assets/icon-add.svg"
+                            onTriggered:    dndDialog.open()
+                        }
+                        Action {
+                            //% "Publishers"
+                            text:           qsTrId("dapps-store-publishers-page-main-title")
+                            icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
+                            onTriggered:    navigatePublishersList()
+                        }
+                        Action {
+                            //% "become a publisher"
+                            text:           viewModel.isPublisher ? viewModel.publisherInfo.name : qsTrId("apps-become-a-publisher")
+                            icon.source:    "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
+                            onTriggered:    navigatePublisherDetails()
+                        }
                     }
 
-                    text: {
-                        if (control.errorMessage.length) {
-                            return control.errorMessage
-                        }
-
-                        //if (control.activeApp || control.appToOpen) {
-                        //    //% "Please wait, %1 is loading"
-                        //    return qsTrId("apps-loading-app").arg(
-                        //        (control.activeApp || control.appToOpen).name
-                        //    )
-                        //}
-
-                        if (!control.appsList) {
-                            //% "Loading..."
-                            return qsTrId("apps-loading")
-                        }
-
-                        //% "There are no applications at the moment"
-                        return qsTrId("apps-nothing")
+                    CustomToolButton {
+                        id:                       appActionButton
+                        padding:                  0
+                        icon.color:               Style.content_main
+                        icon.source:              "qrc:/assets/icon-settings.svg"
+                        onClicked:                appActionsMenu.open()
                     }
                 }
+            }
 
-                SvgImage {
-                    Layout.alignment: Qt.AlignHCenter
-                    source:           "qrc:/assets/dapp-loading.svg"
-                    sourceSize:       Qt.size(245, 140)
+            WebAPICreator {
+                id: webapiCreator
+            }
+            function appSupported(app) {
+                return webapiCreator.apiSupported(app.api_version || "current") ||
+                       webapiCreator.apiSupported(app.min_api_version || "")
+            }
 
-                    visible: {
-                        if (control.errorMessage.length) {
+            function launchApp(app) {
+                stackView.push(Qt.createComponent("AppView.qml"), {"appToOpen": {"name":app.name, "appid":app.appid}});
+            }
+
+            Item {
+                Layout.fillHeight: true
+                Layout.fillWidth:  true
+                visible:           !appsListView.visible
+
+                ColumnLayout {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y:                        parent.height / 2 - this.height / 2 - 40
+                    spacing:                  40
+
+                    SFText {
+                        Layout.alignment: Qt.AlignHCenter
+                        color:            control.errorMessage.length ? Style.validator_error : Style.content_main
+                        opacity:          0.5
+
+                        font {
+                            italic:    true
+                            pixelSize: 16
+                        }
+
+                        text: {
+                            if (control.errorMessage.length) {
+                                return control.errorMessage
+                            }
+
+                            //if (control.activeApp || control.appToOpen) {
+                            //    //% "Please wait, %1 is loading"
+                            //    return qsTrId("apps-loading-app").arg(
+                            //        (control.activeApp || control.appToOpen).name
+                            //    )
+                            //}
+
+                            if (!control.appsList) {
+                                //% "Loading..."
+                                return qsTrId("apps-loading")
+                            }
+
+                            //% "There are no applications at the moment"
+                            return qsTrId("apps-nothing")
+                        }
+                    }
+
+                    SvgImage {
+                        Layout.alignment: Qt.AlignHCenter
+                        source:           "qrc:/assets/dapp-loading.svg"
+                        sourceSize:       Qt.size(245, 140)
+
+                        visible: {
+                            if (control.errorMessage.length) {
+                                return false
+                            }
+
+                            //if (control.activeApp || control.appToOpen) {
+                            //    return true
+                            //}
+
                             return false
                         }
-
-                        //if (control.activeApp || control.appToOpen) {
-                        //    return true
-                        //}
-
-                        return false
                     }
                 }
             }
-        }
 
-        SFText {
-            id:                  errCntMessage
-            Layout.alignment:    Qt.AlignRight
-            Layout.topMargin:    5
-            Layout.bottomMargin: 10
-            color:               Style.validator_error
-            visible:             control.hasApps && unsupportedCnt > 0
-            font.italic:         true
-                                 //% "%n DApp(s) is not available"
-            text:                qsTrId("apps-err-cnt", unsupportedCnt)
-        }
+            //SFText {
+            //    id:                  errCntMessage
+            //    Layout.alignment:    Qt.AlignRight
+            //    Layout.topMargin:    5
+            //    Layout.bottomMargin: 10
+            //    color:               Style.validator_error
+            //    visible:             control.hasApps && unsupportedCnt > 0
+            //    font.italic:         true
+            //                         //% "%n DApp(s) is not available"
+            //    text:                qsTrId("apps-err-cnt", unsupportedCnt)
+            //}
 
-        AppsList {
-            id:                  appsListView
-            Layout.topMargin:    unsupportedCnt ? 0 : 20
-            Layout.fillHeight:   true
-            Layout.fillWidth:    true
-            Layout.bottomMargin: 90
-            opacity:             txPanel.folded ? 1.0 : 0.25
-            visible:             control.hasApps
-            appsList:            control.appsList
-            isIPFSAvailable:     viewModel.isIPFSAvailable
+            AppsList {
+                id:                  appsListView
+                //Layout.topMargin:    unsupportedCnt ? 0 : 20
+                Layout.fillHeight:   true
+                Layout.fillWidth:    true
+                visible:             control.hasApps
+                appsList:            control.appsList
+                isIPFSAvailable:     viewModel.isIPFSAvailable
 
-            onLaunch: function (app) {
-                dappsLayout.launchApp(app)
-            }
-
-            onInstall: function (app, launchOnSuccess) {
-                if (launchOnSuccess) {
-                    control.appToOpen = app
+                onLaunch: function (app) {
+                    dappsLayout.launchApp(app)
                 }
-                viewModel.installApp(app.guid)
+
+                onInstall: function (app, launchOnSuccess) {
+                    if (launchOnSuccess) {
+                        control.appToOpen = app
+                    }
+                    viewModel.installApp(app.guid)
+                }
+
+                onUpdate: function (app) {
+                    viewModel.updateDApp(app.guid)
+                }
+
+                onUninstall: function (app) {
+                    control.uninstallApp(app)
+                }
             }
 
-            onUpdate: function (app) {
-                viewModel.updateDApp(app.guid)
-            }
-
-            onUninstall: function (app) {
-                control.uninstallApp(app)
-            }
-        }
-
-        Item {
-            width:  dappsLayout.width
-            height: dappsLayout.height
-            z: 42
-            AppInfoPanel {
-                id:                  txPanel
-                folded:              !control.openedTxID
-                //state:               control.openedTxID ? "transactions" : "balance"
-                width:               parent.width
-                anchors.bottom:      parent.bottom
-                anchors.bottomMargin: 10
-                contentItemHeight:   parent.height * (txPanel.maximized ? 0.79 : 0.36)
-                foldsUp:             false
-                visible:             appsListView.visible
-                bkColor:             Style.background_appstx
-                dappName:            ""
-                tableOwner:          control
-                showBalance:         false
-            }
-        }
-
-        function loadAppsList () {
-            control.appsList = checkSupport(viewModel.apps)
-            
-            if (control.appToOpen) {
-                for (let app of control.appsList) {
-                    if (app.guid == appToOpen.guid) {
-                        if (dappsLayout.appSupported(app)) {
-                            dappsLayout.launchApp(app)
-                        } else {
-                            //% "Update Wallet to launch %1 application"
-                            BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+            function loadAppsList () {
+                control.appsList = checkSupport(viewModel.apps)
+                
+                if (control.appToOpen) {
+                    for (let app of control.appsList) {
+                        if (app.guid == appToOpen.guid) {
+                            if (dappsLayout.appSupported(app)) {
+                                dappsLayout.launchApp(app)
+                            } else {
+                                //% "Update Wallet to launch %1 application"
+                                BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+                            }
                         }
                     }
+                    control.appToOpen = undefined
                 }
-                control.appToOpen = undefined
             }
-        }
 
-        function checkSupport (apps) {
-            unsupportedCnt = 0
-            for (var app of apps) {
-                app.supported = dappsLayout.appSupported(app)
-                if (!app.supported) ++unsupportedCnt
+            function checkSupport (apps) {
+                unsupportedCnt = 0
+                for (var app of apps) {
+                    app.supported = dappsLayout.appSupported(app)
+                    if (!app.supported) ++unsupportedCnt
+                }
+                return apps
             }
-            return apps
-        }
 
-        Component.onCompleted: {
-            viewModel.appsChanged.connect(loadAppsList)
-            viewModel.stopProgress.connect(appsListView.stopProgress);
-            control.showTxDetails.connect(txPanel.showTxDetails)
+            Component.onCompleted: {
+                viewModel.appsChanged.connect(loadAppsList)
+                viewModel.stopProgress.connect(appsListView.stopProgress);
 
-            viewModel.init(!!appToOpen);
-        }
+                viewModel.init(!!appToOpen);
+            }
 
-        Component.onDestruction: {
-            viewModel.appsChanged.disconnect(loadAppsList)
-            viewModel.stopProgress.disconnect(appsListView.stopProgress);
-            control.showTxDetails.disconnect(txPanel.showTxDetails)
+            Component.onDestruction: {
+                viewModel.appsChanged.disconnect(loadAppsList)
+                viewModel.stopProgress.disconnect(appsListView.stopProgress);
+            }
         }
     }
 

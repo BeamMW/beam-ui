@@ -139,7 +139,7 @@ ColumnLayout {
 
         font {
             pixelSize: 14
-            letterSpacing: 4
+            letterSpacing: 3.11
             styleName: "DemiBold"; weight: Font.DemiBold
             capitalization: Font.AllUppercase
         }

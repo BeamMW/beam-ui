@@ -2812,22 +2812,6 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>DApp name</source>
         <translation>DApp naam</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>DApps privacywaarschuwing</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet vereist toestemming om gedistribueerde applicaties te starten. Deze actie kan uw informatie, inclusief maar niet beperkt tot het IP adres, blootstellen aan webservers en/of contracten van derden.
-
-Wilt u doorgaan? U kunt uw keuze later altijd wijzigen in Instellingen.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>DApps starten toestaan</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Transactie informatie</translation>
@@ -3050,13 +3034,6 @@ cannot be canceled.</source>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation>Er zijn momenteel geen applicaties</translation>
-    </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%n DApp(s) is niet beschikbaar</numerusform>
-            <numerusform>%n DApp(s) zijn niet beschikbaar</numerusform>
-        </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
@@ -3909,6 +3886,11 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     </message>
     <message id="help-title">
         <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

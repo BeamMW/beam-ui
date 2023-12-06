@@ -2823,22 +2823,6 @@ Update your settings and try again.</source>
         <source>DApp name</source>
         <translation>Имя DApp</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>Предупреждение о конфиденциальности DApps</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Кошелёк Beam требует разрешения на запуск распределенных приложений. Это может раскрыть информацию о вас, включая, помимо прочего, IP-адрес, сторонним веб-серверам и/или контрактам.
-
-Продолжить? Вы всегда можете изменить свой выбор в Настройках позже.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>Позволить запускать DAPPы</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Информация о транзакции</translation>
@@ -3063,14 +3047,6 @@ cannot be canceled.</source>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation>На данный момент нет приложений</translation>
-    </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%n DApp недоступен</numerusform>
-            <numerusform>%n DApp&apos;а недоступно</numerusform>
-            <numerusform>%n DApp&apos;ов недоступны</numerusform>
-        </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
@@ -3925,6 +3901,11 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="help-title">
         <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

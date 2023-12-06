@@ -49,9 +49,18 @@ Item {
         }
     }
     Row {
+        id: networkStatusRow
         height: 24
         anchors.right:          parent.right
         anchors.rightMargin:    20
+        spacing:                8
+        SFText {
+            id:                 networkText
+            color:              online_indicator.color
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize:     12
+            text:               Theme.name
+        }
         Item {
             id: online_indicator
             anchors.verticalCenter: parent.verticalCenter
@@ -133,7 +142,7 @@ Item {
 
             RowLayout {
                 Layout.fillWidth:   true
-                Layout.rightMargin: 38
+                Layout.rightMargin: networkStatusRow.width+28
                 spacing:            8
 
                 Item {

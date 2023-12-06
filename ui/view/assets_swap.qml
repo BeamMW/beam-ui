@@ -98,76 +98,32 @@ ColumnLayout {
         RowLayout {
             spacing: 25
 
-            TxFilter {
+            TabButton {
                 id: offersTab
                 //% "Active offers"
-                label: qsTrId("swap-active-offers-tab")
-                Layout.alignment: Qt.AlignVCenter
-
-                onClicked: function () {
-                    tabSelector.state = "offers"
-                }
-
-                showLed: false
-                opacity: this.state != "active" ? 0.5 : 1
-                activeColor: Style.active
-                inactiveColor: Style.content_main
-
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  3.11
-                    capitalization: Font.AllUppercase
-                }
+                label:              qsTrId("swap-active-offers-tab")
+                Layout.alignment:   Qt.AlignVCenter
+                onClicked:          tabSelector.state = "offers"
             }
 
-            TxFilter {
+            TabButton {
                 id: myOffersTab
                 //% "My offers"
-                label: qsTrId("swap-my-offers-tab")
-                Layout.alignment: Qt.AlignVCenter
+                label:              qsTrId("swap-my-offers-tab")
+                Layout.alignment:   Qt.AlignVCenter
 
                 onClicked: function () {
                     tabSelector.state = "myoffers"
                     checkboxFitBalance.checked = false
                 }
-
-                showLed: false
-                opacity: this.state != "active" ? 0.5 : 1
-                activeColor: Style.active
-                inactiveColor: Style.content_main
-
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  3.11
-                    capitalization: Font.AllUppercase
-                }
             }
 
-            TxFilter {
+            TabButton {
                 id: txsTab
-                label: qsTrId("wallet-transactions-title")
-                Layout.alignment: Qt.AlignVCenter
+                label:              qsTrId("wallet-transactions-title")
+                Layout.alignment:   Qt.AlignVCenter
 
-                onClicked: function () {
-                    tabSelector.state = "transactions"
-                }
-
-                showLed: false
-                opacity: this.state != "active" ? 0.5 : 1
-                activeColor: Style.active
-                inactiveColor: Style.content_main
-
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  3.11
-                    capitalization: Font.AllUppercase
-                }
+                onClicked:          tabSelector.state = "transactions"
             }
         }
     }

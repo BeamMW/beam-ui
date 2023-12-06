@@ -107,7 +107,7 @@ Control {
         SFText {
             font {
                 pixelSize: 14
-                letterSpacing: 4
+                letterSpacing: 3.11
                 styleName: "DemiBold"; weight: Font.DemiBold
                 capitalization: Font.AllUppercase
             }
@@ -212,7 +212,7 @@ Control {
 
         Column {
             spacing: 10
-            height: grid.implicitHeight + (control.showValidationPromo ? 95 : 0)
+            height: grid.implicitHeight + (control.showValidationPromo ? 85 : 0)
             width: parent.width
             Grid {
                 id: grid

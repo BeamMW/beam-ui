@@ -2812,22 +2812,6 @@ Mettez à jour vos paramètres et réessayez.</translation>
         <source>DApp name</source>
         <translation>Nom de DApp</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>Avertissement de confidentialité des DApps</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet requiert une autorisation pour lancer des applications distribuées. Cette action peut exposer vos informations y compris, mais sans s&apos;y limiter, l&apos;adresse IP, à des serveurs web tiers et/ou à des contrats.
-
-Permettre de continuer ? Vous pourrez toujours mettre à jour votre choix dans les Paramètres plus tard.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>Autoriser le lancement de DApps</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Information de transaction</translation>
@@ -3051,13 +3035,6 @@ ne peuvent pas être annulées.</translation>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation>Il n&apos;y a pas d&apos;applications pour le moment</translation>
-    </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%n DApp n&apos;est pas disponible</numerusform>
-            <numerusform>%n DApps ne sont pas disponibles</numerusform>
-        </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
@@ -3911,6 +3888,11 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="help-title">
         <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

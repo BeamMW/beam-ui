@@ -47,7 +47,7 @@ RowLayout {
             styleName:      "DemiBold"
             weight:         Font.DemiBold
             pixelSize:      14
-            letterSpacing:  4
+            letterSpacing:  3.11
             capitalization: Font.AllUppercase
         }
         elide: Text.ElideRight

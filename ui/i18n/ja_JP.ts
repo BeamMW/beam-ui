@@ -2792,22 +2792,6 @@ Update your settings and try again.</source>
         <source>DApp name</source>
         <translation>DApp名称</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>DAppsプライバシー警告</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Walletは分散アプリケーションを起動するための許可が必要です。 この操作により、あなたの情報(IPアドレスその他) が第三者のウェブサーバーおよび/またはコントラクトに開示される場合があります。
-
-続行しますか？後で設定からいつでも選択を変更できます。</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>DAppsの起動を許可する</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>トランザクション履歴</translation>
@@ -3024,12 +3008,6 @@ cannot be canceled.</source>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation>現時点ではアプリケーションがありません</translation>
-    </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%n DAppは利用できません</numerusform>
-        </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
@@ -3880,6 +3858,11 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="help-title">
         <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

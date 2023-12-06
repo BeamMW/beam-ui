@@ -2815,22 +2815,6 @@ Aggiorna le tue impostazioni e riprova.</translation>
         <source>DApp name</source>
         <translation>Nome DApp</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>Avviso Privacy DApps</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet richiede un&apos;autorizzazione per avviare applicazioni distribuite. Questa azione potrebbe esporre le tue informazioni, incluso ma non limitato all&apos;indirizzo IP, a server Web e/o contratti di terze parti.
-
-Consentire di procedere? Puoi sempre aggiornare la tua scelta in Impostazioni in un secondo momento.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>Consenti l&apos;avvio delle DApp</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Dati della transazione</translation>
@@ -3054,13 +3038,6 @@ non potrà essere cancellato.</translation>
     <message id="apps-nothing">
         <source>There are no applications at the moment</source>
         <translation>Al momento non ci sono applicazioni</translation>
-    </message>
-    <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%n DApp(s) non è disponibile</numerusform>
-            <numerusform>%n DApp(s) non è disponibile</numerusform>
-        </translation>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
@@ -3912,6 +3889,11 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     </message>
     <message id="help-title">
         <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-title">
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished"></translation>
     </message>
 </context>

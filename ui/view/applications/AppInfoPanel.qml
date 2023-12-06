@@ -51,23 +51,12 @@ Control {
             Layout.leftMargin: 20
             Layout.rightMargin: 20
 
-            component AppPanelTxFilter : TxFilter {
-
-                showLed: false
-                opacity: (folded || this.state != "active") ? 0.5 : 1
+            component AppInfoTabButton : TabButton {
+                opacity:    (folded || this.state != "active") ? 0.5 : 1
                 activeColor: folded ? Style.content_main : Style.active
-                inactiveColor: Style.content_main
-
-                font {
-                    styleName:      "Bold"
-                    weight:         Font.Bold
-                    pixelSize:      14
-                    letterSpacing:  3.11
-                    capitalization: Font.AllUppercase
-                }
             }
 
-            AppPanelTxFilter {
+            AppInfoTabButton {
                 id: balanceTab
                 //% "Wallet Balance"
                 label: qsTrId("wallet-balance-title")
@@ -82,7 +71,7 @@ Control {
                 visible:    showBalance
             }
 
-            AppPanelTxFilter {
+            AppInfoTabButton {
                 id: txsTab
                 label: (dappName ? dappName + " " : "") + qsTrId("wallet-transactions-title")
                 Layout.alignment: Qt.AlignVCenter
