@@ -1,8 +1,8 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "."
 import "../utils.js" as Utils
@@ -104,20 +104,6 @@ SettingsFoldable {
                 confirmPasswordDialog.onDialogAccepted = onDialogAccepted
                 confirmPasswordDialog.onDialogRejected = onDialogRejected
                 confirmPasswordDialog.open()
-            }
-        }
-
-        CustomSwitch {
-            id: dappsAllowed
-            //% "Allow to launch DApps"
-            text: qsTrId("settings-dapps-allowed")
-            Layout.fillWidth: true
-
-            checked: viewModel.dappsAllowed
-            Binding {
-                target:   viewModel
-                property: "dappsAllowed"
-                value:    dappsAllowed.checked
             }
         }
 

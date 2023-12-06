@@ -32,6 +32,11 @@ NodeModel::NodeModel()
 
 }
 
+void NodeModel::setBeforeStartAction(std::function<void()> action)
+{
+    m_nodeClient.setBeforeStartAction(std::move(action));
+}
+
 void NodeModel::setKdf(beam::Key::IKdf::Ptr kdf)
 {
     m_nodeClient.setKdf(kdf);

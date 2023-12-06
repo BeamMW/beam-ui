@@ -63,7 +63,7 @@ public:
     [[nodiscard]] bool checkWalletPassword(const beam::SecString& pass) const;
     void changeWalletPassword(const std::string& pass);
 
-    void applyNodeChanges();
+    void applyLocalNodeChanges();
 
     #ifdef BEAM_IPFS_SUPPORT
     void applyIPFSChanges();
@@ -98,6 +98,8 @@ public:
 public slots:
     void onStartedNode();
     void onFailedToStartNode(beam::wallet::ErrorType errorCode);
+    void onNodeSyncProgressUpdated(int done, int total);
+    void onNodeAddressChanged();
     void onResetWallet();
 
 signals:
@@ -119,11 +121,11 @@ private:
 
     template<typename BridgeSide, typename Bridge, typename SettingsProvider>
     void registerSwapFactory(beam::wallet::AtomicSwapCoin swapCoin, beam::wallet::AtomicSwapTransaction::Creator& swapTxCreator);
-
-private:
+    std::string getNodeAddress() const;
     bool isAnotherRunning();
     bool tryLock();
     void release();
+private:
     // SwapCoinClientModels must be destroyed after WalletModel
     std::map<beam::wallet::AtomicSwapCoin, SwapCoinClientModel::Ptr> m_swapClients;
     std::map<beam::wallet::AtomicSwapCoin, beam::bitcoin::IBridgeHolder::Ptr> m_swapBridgeHolders;

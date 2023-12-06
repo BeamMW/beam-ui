@@ -54,6 +54,7 @@
         <file>controls/StatusBar.qml</file>
         <file>controls/Title.qml</file>
         <file>controls/SearchBox.qml</file>
+        <file>controls/UpdateIndicator.qml</file>
         <file>controls/SwapTransactionDetails.qml</file>
         <file>controls/PaymentInfoDialog.qml</file>
         <file>controls/OpenExternalLinkConfirmation.qml</file>
@@ -76,11 +77,11 @@
         <file>controls/PublicOfflineAddressDialog.qml</file>
         <file>controls/PanelGradient.qml</file>
         <file>controls/PasswordInput.qml</file>
+        <file>controls/TabButton.qml</file>
         <file>controls/AlphaTip.qml</file>
         <file>controls/AlphaTipPopup.qml</file>
         <file>controls/SubtitleRow.qml</file>
         <file>controls/AddressQRDialog.qml</file>
-        <file>controls/OpenApplicationsDialog.qml</file>
         <file>controls/UtxoDialog.qml</file>
         <file>controls/Panel.qml</file>
         <file>controls/TokenInfoDialog.qml</file>
@@ -113,6 +114,7 @@
         <file>wallet/CoinsList.qml</file>
         <file>wallet/SeedValidationPanel.qml</file>
         <file>applications/applications.qml</file>
+        <file>applications/AppView.qml</file>
         <file>applications/applications_nofork.qml</file>
         <file>applications/AppButton.qml</file>
         <file>applications/AppPanel.qml</file>
@@ -130,7 +132,7 @@
         <file>loading.qml</file>
         <file>main.qml</file>
         <file>wallet.qml</file>
-        <file>settings.qml</file>
+        <file>Settings.qml</file>
         <file>addresses.qml</file>
         <file>atomic_swap.qml</file>
         <file>assets_swap.qml</file>
@@ -179,6 +181,7 @@
         <file>assets/b-grey.svg</file>
         <file>assets/b-red.svg</file>
         <file>assets/icon-run.svg</file>
+        <file>assets/icon-log-out.svg</file>
         <file>assets/icon-grey-arrow-down.svg</file>
         <file>assets/icon-grey-arrow-up.svg</file>
         <file>assets/icon-attention.svg</file>
@@ -244,6 +247,7 @@
         <file>assets/icon-notifications-update.svg</file>
         <file>assets/icon-notifications-videos.svg</file>
         <file>assets/icon-chevron-down.svg</file>
+        <file>assets/icon-chevron-right.svg</file>
         <file>assets/icon-contract-completed.svg</file>
         <file>assets/icon-contract-expired.svg</file>
         <file>assets/icon-contract-failed.svg</file>
@@ -270,6 +274,7 @@
         <file>assets/icon-swap-completed.svg</file>
         <file>assets/icon-swap-failed.svg</file>
         <file>assets/icon-swap-failing.svg</file>
+        <file>assets/icon-swap-blue.svg</file>
         <file>assets/icon-comment.svg</file>
         <file>assets/icon-send-grey.svg</file>
         <file>assets/icon-recive-grey.svg</file>
@@ -282,6 +287,7 @@
         <file>assets/icon-external-link-green.svg</file>
         <file>assets/icon-eye.svg</file>
         <file>assets/icon-eye-crossed.svg</file>
+        <file>assets/icon-download-green.svg</file>
         <file>assets/icon-cancel.svg</file>
         <file>assets/icon-cancel-16.svg</file>
         <file>assets/icon-cancel-white.svg</file>
@@ -451,5 +457,6 @@
         <file>start_wizzard/SelectWalletDBPage.qml</file>
         <file>start_wizzard/CreateTrezorWalletPage.qml</file>
         <file>controls/LogoutButton.qml</file>
+        <file>controls/SettingsBeamRemoteNode.qml</file>
     </qresource>
 </RCC>

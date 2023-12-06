@@ -1,7 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -16,7 +16,8 @@ StartLayout {
         viewModel.openWallet(pass, callback);
     }
     property var loadWallet: function () {
-        startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
+        navigateToMain();
+        //startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : false, "isCreating" : false, "cancelCallback": startWizzardView.pop});
     }
 
     property var checkCapsLockOnActivation: function () {
@@ -63,11 +64,16 @@ StartLayout {
         Layout.fillWidth:   true
         spacing: 0
 
+        Item {
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+        }
+
         AccountSetup {
             Layout.alignment:       Qt.AlignHCenter
             Layout.minimumWidth:    400
             Layout.maximumWidth:    400
-            Layout.bottomMargin:    startLayout.isSqueezedHeight  ? 10 : 20
+            Layout.bottomMargin:    20
         }
 
         Connections {
@@ -127,10 +133,10 @@ StartLayout {
         }
 
         Row {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: startLayout.isSqueezedHeight  ? 8 : 14
+            Layout.alignment:       Qt.AlignHCenter
+            Layout.topMargin:       14
             Layout.preferredHeight: 38
-            spacing:          20
+            spacing:                20
                                 
             function tryOpenWallet() {
                 if(openPassword.text.length == 0)
@@ -179,7 +185,7 @@ StartLayout {
         Item {
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredHeight: 36
-            Layout.topMargin: startLayout.isSqueezedHeight  ? 9 : 15
+            Layout.topMargin: 15
             Layout.bottomMargin: 9
             Rectangle {
                 id: capsWarning
@@ -211,12 +217,14 @@ StartLayout {
         LinkButton {
             Layout.alignment: Qt.AlignHCenter
             Layout.bottomMargin: 37
-            //% "Restore wallet or create a new one"
-            text: qsTrId("general-restore-or-create-wallet")
+            //% "Add account"
+            text: qsTrId("general-add-account")
             fontSize: 14
             visible: viewModel.isOnlyOneInstanceStarted
             onClicked: {
-                confirmChangeWalletDialog.open();
+                viewModel.isRecoveryMode = false;
+                startWizzardView.push(walletStartPage);
+                //confirmChangeWalletDialog.open();
             }
         }
 

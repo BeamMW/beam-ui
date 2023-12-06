@@ -1,7 +1,7 @@
-import QtQuick 2
-import QtQuick.Controls 2
-import QtQuick.Layouts 1
-import QtGraphicalEffects 1
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -89,8 +89,8 @@ StartLayout {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 64
             Layout.bottomMargin: 37
-            //% "Restore wallet or create a new one"
-            text: qsTrId("general-restore-or-create-wallet")
+            //% "Add account"
+            text: qsTrId("general-add-account")
             visible: viewModel.isOnlyOneInstanceStarted
 
             onClicked: {

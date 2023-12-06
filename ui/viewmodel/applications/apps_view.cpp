@@ -40,34 +40,10 @@ namespace
 
     namespace DApp
     {
-        const char kName[] = "name";
-        const char kDescription[] = "description";
-        const char kIpfsId[] = "ipfs_id";
-        const char kUrl[] = "url";
-        const char kApiVersion[] = "api_version";
-        const char kMinApiVersion[] = "min_api_version";
-        const char kGuid[] = "guid";
-        const char kId[] = "id";
-        const char kPublisherKey[] = "publisher";
-        const char kPublisherName[] = "publisherName";
-        const char kCategory[] = "category";
-        const char kCategoryName[] = "categoryName";
-        const char kCategoryColor[] = "categoryColor";
-        const char kSupported[] = "supported";
-        const char kNotInstalled[] = "notInstalled";
-        const char kIcon[] = "icon";
-        const char kVersion[] = "version";
-        const char kFullPath[] = "fullPath";
-        const char kAppid[] = "appid";
-        const char kMajor[] = "major";
-        const char kMinor[] = "minor";
-        const char kRelease[] = "release";
-        const char kBuild[] = "build";
-        const char kDevApp[] = "devApp";
-        const char kHasUpdate[] = "hasUpdate";
-        const char kReleaseDate[] = "release_date";
-        const char kLocal[] = "local";
-
+#define MACRO(id, value) const char k##id[] = value;
+        APP_PROPS(MACRO)
+#undef MACRO
+ 
         const int kNameMaxSize = 30;
         const int kDescriptionMaxSize = 1024;
         const int kApiVersionMaxSize = 10;
@@ -428,6 +404,11 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::parseAppManifest(QTextStream& in, const QString& appFolder, bool needExpandIcon)
     {
+        return parseAppManifestImpl(in, appFolder, _serverAddr, needExpandIcon);
+    }
+
+    QVariantMap AppsViewModel::parseAppManifestImpl(QTextStream& in, const QString& appFolder, const QString& serverAdd, bool needExpandIcon)
+    {
         QVariantMap app;
 
         const auto content = in.readAll();
@@ -476,8 +457,11 @@ namespace beamui::applications
                 throw std::runtime_error("Invalid url in the manifest file");
             }
 
-            const auto surl = url.get<std::string>();
-            app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl));
+            if (!serverAdd.isEmpty())
+            {
+                const auto surl = url.get<std::string>();
+                app.insert(DApp::kUrl, expandLocalUrl(appFolder, surl, serverAdd));
+            }
 
             const auto& icon = json[DApp::kIcon];
             if (!icon.empty())
@@ -617,6 +601,7 @@ namespace beamui::applications
                 auto app = parseAppManifest(in, justFolder);
                 app.insert(DApp::kFullPath, fullFolder);
                 app.insert(DApp::kSupported, isAppSupported(app));
+                app.insert(DApp::kNotInstalled, false);
 
                 result.push_back(app);
             }
@@ -628,7 +613,7 @@ namespace beamui::applications
 
         _localApps = result;
 
-        if (!_runApp)
+        //if (!_runApp)
             emit appsChanged();
     }
 
@@ -945,7 +930,14 @@ namespace beamui::applications
         return userPublishers;
     }
 
-    QList<QVariantMap> AppsViewModel::getApps()
+    QAbstractItemModel* AppsViewModel::getApps()
+    {
+        auto result = getAppsImpl();
+        m_appsModel.reset(result.begin(), result.end());
+        return &m_appsModel;
+    }
+
+    QList<QVariantMap>  AppsViewModel::getAppsImpl()
     {
         // Apps order: Dev APP, *.dapp files, installed from shader, not installed from shader
         QList<QVariantMap> result = _devApps;
@@ -1187,14 +1179,14 @@ namespace beamui::applications
         return result;
     }
 
-    QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url) const
+    QString AppsViewModel::expandLocalUrl(const QString& folder, const std::string& url, const QString& serverAddr)
     {
         QString result = QString::fromStdString(url);
-        result.replace(kLocalapp, QString("http://") + _serverAddr + "/" + folder);
+        result.replace(kLocalapp, QString("http://") + serverAddr + "/" + folder);
         return result;
     }
 
-    QString AppsViewModel::expandLocalFile(const QString& folder, const std::string& url) const
+    QString AppsViewModel::expandLocalFile(const QString& folder, const std::string& url)
     {
         auto path = QDir(AppSettings().getLocalAppsPath()).filePath(folder);
         auto result = QString::fromStdString(url);
@@ -1533,6 +1525,25 @@ namespace beamui::applications
 
     QString AppsViewModel::installFromFile(const QString& rawFname)
     {
+        return installFromFileImpl(rawFname, 
+            [this](const QString& guid)
+            {
+                const auto app = getAppByGUID(guid);
+                return !app.isEmpty();
+            },
+            [this]() 
+            {
+                loadApps();
+            });
+    }
+
+    QString AppsViewModel::installFromFile2(const QString& rawFname)
+    {
+        return installFromFileImpl(rawFname, [](const QString&) {return false; }, []() {});
+    }
+
+    QString AppsViewModel::installFromFileImpl(const QString& rawFname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction)
+    {
         try
         {
             QString fname = removeFilePrefix(rawFname);
@@ -1540,7 +1551,7 @@ namespace beamui::applications
             LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
 
             QuaZip zip(fname);
-            if(!zip.open(QuaZip::Mode::mdUnzip))
+            if (!zip.open(QuaZip::Mode::mdUnzip))
             {
                 throw std::runtime_error("Failed to open the DApp file");
             }
@@ -1558,7 +1569,7 @@ namespace beamui::applications
                     }
 
                     QTextStream in(&mfile);
-                    const auto app = parseAppManifest(in, "");
+                    const auto app = parseAppManifestImpl(in, "");
                     guid = app[DApp::kGuid].value<QString>();
                     appName = app[DApp::kName].value<QString>();
 
@@ -1574,7 +1585,7 @@ namespace beamui::applications
                 throw std::runtime_error("Invalid DApp file");
             }
 
-            if (const auto app = getAppByGUID(guid); !app.isEmpty())
+            if (appExists && appExists(guid))
             {
                 throw std::runtime_error("DApp with same guid already installed!");
             }
@@ -1584,25 +1595,28 @@ namespace beamui::applications
 
             if (QDir(appFolder).exists())
             {
-                if(!QDir(appFolder).removeRecursively())
+                if (!QDir(appFolder).removeRecursively())
                 {
                     throw std::runtime_error("Failed to prepare folder");
                 }
             }
 
             QDir(appsPath).mkdir(guid);
-            if(JlCompress::extractDir(fname, appFolder).isEmpty())
+            if (JlCompress::extractDir(fname, appFolder).isEmpty())
             {
                 //cleanupFolder(appFolder)
                 throw std::runtime_error("DApp Installation failed");
             }
 
             // refresh
-            loadApps();
+            if (afterInstallAction)
+            {
+                afterInstallAction();
+            }
 
             return appName;
         }
-        catch(std::exception& err)
+        catch (std::exception& err)
         {
             LOG_ERROR() << "Failed to install DApp: " << err.what();
             return "";
@@ -1781,7 +1795,7 @@ namespace beamui::applications
     QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
     {
         QList<QVariantMap> publisherApps;
-        QList<QVariantMap> apps = getApps();
+        QList<QVariantMap> apps = getAppsImpl();
 
         std::copy_if(apps.cbegin(), apps.cend(), std::back_inserter(publisherApps),
             [publisherKey] (const auto& app) -> bool {
@@ -1800,7 +1814,7 @@ namespace beamui::applications
 
     QVariantMap AppsViewModel::getAppByGUID(const QString& guid)
     {
-        QList<QVariantMap> apps = getApps();
+        QList<QVariantMap> apps = getAppsImpl();
         // find app in _apps by guid
         const auto it = std::find_if(apps.cbegin(), apps.cend(),
             [guid](const auto& app) -> bool {

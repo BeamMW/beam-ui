@@ -30,6 +30,7 @@ StatusbarViewModel::StatusbarViewModel()
     , m_isSyncInProgress(!m_model->isSynced())
     , m_isFailedStatus(false)
     , m_isFailedHww(false)
+    , m_isFailedLocalNode(false)
     , m_isConnectionTrusted(false)
     , m_nodeSyncProgress(0)
     , m_nodeDone(0)
@@ -47,7 +48,8 @@ StatusbarViewModel::StatusbarViewModel()
     connect(m_model, SIGNAL(walletError(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
     connect(m_model, SIGNAL(syncProgressUpdated(int,int)), SLOT(onSyncProgressUpdated(int,int)));
     connect(&AppModel::getInstance().getNode(), SIGNAL(syncProgressUpdated(int,int)), SLOT(onNodeSyncProgressUpdated(int,int)));
-    connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)), SLOT(onGetWalletError(beam::wallet::ErrorType)));
+    connect(&AppModel::getInstance().getNode(), SIGNAL(initProgressUpdated(quint64, quint64)), SLOT(onNodeInitProgressUpdated(quint64, quint64)));
+    connect(&AppModel::getInstance().getNode(), SIGNAL(failedToSyncNode(beam::wallet::ErrorType)), SLOT(onFailedToSyncNode(beam::wallet::ErrorType)));
     connect(&m_exchangeRatesTimer, SIGNAL(timeout()), SLOT(onExchangeRatesTimer()));
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
     m_model->getAsync()->getNetworkStatus();
@@ -76,6 +78,11 @@ bool StatusbarViewModel::getIsFailedHww() const
     return m_isFailedHww;
 }
 
+bool StatusbarViewModel::getIsFailedLocalNode() const
+{
+    return m_isFailedLocalNode;
+}
+
 bool StatusbarViewModel::getIsSyncInProgress() const
 {
     return m_isSyncInProgress;
@@ -91,22 +98,19 @@ bool StatusbarViewModel::getIsExchangeRatesUpdated() const
     return m_exchangeRatesManager->isUpToDate();
 }
 
-int StatusbarViewModel::getNodeSyncProgress() const
+float StatusbarViewModel::getNodeSyncProgress() const
 {
     return m_nodeSyncProgress;
 }
 
+float StatusbarViewModel::getNodeInitProgress() const
+{
+    return m_nodeInitProgress;
+}
+
 QString StatusbarViewModel::getBranchName() const
 {
-    #ifdef BEAM_MAINNET
     return QString();
-    #else
-    if (BRANCH_NAME.empty()) {
-        return QString();
-    }
-
-    return QString::fromStdString(" (" + BRANCH_NAME + ")");
-    #endif
 }
 
 QString StatusbarViewModel::getWalletError() const
@@ -117,6 +121,11 @@ QString StatusbarViewModel::getWalletError() const
 QString StatusbarViewModel::getHwwError() const
 {
     return m_hwwError;
+}
+
+QString StatusbarViewModel::getLocalNodeError() const
+{
+    return m_localNodeError;
 }
 
 QString StatusbarViewModel::getExchangeStatus() const
@@ -171,12 +180,30 @@ void StatusbarViewModel::setIsFailedStatus(bool value)
     }
 }
 
-void StatusbarViewModel::setNodeSyncProgress(int value)
+void StatusbarViewModel::setIsFailedLocalNode(bool value)
+{
+    if (m_isFailedLocalNode != value)
+    {
+        m_isFailedLocalNode = value;
+        emit isFailedLocalNodeChanged();
+    }
+}
+
+void StatusbarViewModel::setNodeSyncProgress(float value)
 {
     if (m_nodeSyncProgress != value)
     {
         m_nodeSyncProgress = value;
         emit nodeSyncProgressChanged();
+    }
+}
+
+void StatusbarViewModel::setNodeInitProgress(float value)
+{
+    if (m_nodeInitProgress != value)
+    {
+        m_nodeInitProgress = value;
+        emit nodeInitProgressChanged();
     }
 }
 
@@ -209,6 +236,15 @@ void StatusbarViewModel::setWalletStatusErrorMsg(const QString& value)
         m_walletError = value;
         emit walletErrorChanged();
     }
+}
+
+void StatusbarViewModel::setLocalNodeErrorMsg(const QString& value)
+{
+    if (m_localNodeError == value)
+        return;
+
+    m_localNodeError = value;
+    emit localNodeErrorChanged();
 }
 
 void StatusbarViewModel::onNodeConnectionChanged(bool isNodeConnected)
@@ -271,10 +307,12 @@ void StatusbarViewModel::onDevStateChanged(const QString& sErr, int state)
 
 void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
 {
-    setIsOnline(false);
     setWalletStatusErrorMsg(m_model->GetErrorString(error));
-    setIsFailedStatus(true);
-    setIsConnectionTrusted(false);
+    if (!getIsOnline())
+    {
+        setIsFailedStatus(true);
+        setIsConnectionTrusted(false);
+    }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
     if (m_isCoinClientFailed)
@@ -285,10 +323,17 @@ void StatusbarViewModel::onGetWalletError(beam::wallet::ErrorType error)
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 }
 
+void StatusbarViewModel::onFailedToSyncNode(beam::wallet::ErrorType error)
+{
+    setIsFailedLocalNode(true);
+    setLocalNodeErrorMsg(m_model->GetErrorString(error));
+}
+
 void StatusbarViewModel::onSyncProgressUpdated(int done, int total)
 {
     m_done = done;
     m_total = total;
+
     setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
 }
 
@@ -299,10 +344,14 @@ void StatusbarViewModel::onNodeSyncProgressUpdated(int done, int total)
 
     if (total > 0)
     {
-        setNodeSyncProgress(static_cast<int>(done * 100) / total);
+        setNodeSyncProgress(static_cast<float>(done * 100) / total);
     }
-
     setIsSyncInProgress((m_done + m_nodeDone) != (m_total + m_nodeTotal));
+}
+
+void StatusbarViewModel::onNodeInitProgressUpdated(quint64 done, quint64 total)
+{
+    m_nodeInitProgress = done / static_cast<double>(total);
 }
 
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT

@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
 import "."
 
 RowLayout {
@@ -8,13 +8,13 @@ RowLayout {
 
     property alias text: title.text
     property alias showBack: backBtn.visible
-    property var onBack
+    property var onBack: function (){ main.goBack() }
     property var onRefresh: function () {}
 
     Layout.fillWidth:    true
     Layout.fillHeight:   false
-    Layout.topMargin:    26
-    Layout.bottomMargin: 30
+    Layout.topMargin:    10
+    Layout.bottomMargin: 20
 
     CustomButton {
         id: backBtn
@@ -47,7 +47,7 @@ RowLayout {
             styleName:      "DemiBold"
             weight:         Font.DemiBold
             pixelSize:      14
-            letterSpacing:  4
+            letterSpacing:  3.11
             capitalization: Font.AllUppercase
         }
         elide: Text.ElideRight

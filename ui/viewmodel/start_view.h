@@ -20,6 +20,7 @@
 #include <QTimer>
 #include <QThread>
 #include <QJSValue>
+#include <QDir>
 #include "wallet/core/wallet_db.h"
 #include "mnemonic/mnemonic.h"
 #include "messages_view.h"
@@ -216,6 +217,7 @@ public:
     Q_INVOKABLE void loadRecoveryPhraseForValidation();
     Q_INVOKABLE void setNewAccountPictureIndex(int value);
     Q_INVOKABLE QString getAccountPictureByIndex(int index) const;
+    Q_INVOKABLE void resetModel();
 
 #if defined(BEAM_HW_WALLET)
     Q_INVOKABLE void startOwnerKeyImporting(bool creating);

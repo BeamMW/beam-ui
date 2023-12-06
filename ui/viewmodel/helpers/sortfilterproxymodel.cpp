@@ -94,14 +94,14 @@ void SortFilterProxyModel::setFilterSyntax(SortFilterProxyModel::FilterSyntax sy
 
 QVariantMap SortFilterProxyModel::get(int idx) const
 {
-	QVariantMap map;
+    QVariantMap map;
     if (idx >= 0 && idx < count()) {
         QHash<int, QByteArray> roles = roleNames();
         QHashIterator<int, QByteArray> it(roles);
         while (it.hasNext()) {
             it.next();
-			auto roleName = QString::fromUtf8(it.value());
-			map[roleName] = data(index(idx, 0), it.key());
+            auto roleName = QString::fromUtf8(it.value());
+            map[roleName] = data(index(idx, 0), it.key());
         }
     }
     return map;

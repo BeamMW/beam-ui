@@ -1,9 +1,9 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.4
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
 import Beam.Wallet 1.0
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts 1.15
 import "../controls"
 import "."
 
@@ -106,7 +106,7 @@ WizzardPage {
             icon.source: "qrc:/assets/icon-back.svg"
             onClicked: {
                 if (seedValidationHelper.isSeedValidatiomMode) {
-                    rootLoader.setSource("qrc:/main.qml");
+                    navigateToMain();
                 } else {
                     startWizzardView.pop();
                     viewModel.resetPhrases();

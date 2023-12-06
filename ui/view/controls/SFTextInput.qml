@@ -1,5 +1,5 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import QtQuick.Controls.impl 2.4
 import QtQuick.Templates 2.4 as T
 import Beam.Wallet 1.0
@@ -21,8 +21,9 @@ T.TextField {
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
     font { 
-        family: "Proxima Nova"
-        styleName: "Regular"
+        family:         "Proxima Nova"
+        styleName:      "Regular"
+        pixelSize:      14
     }
 
     padding: 6

@@ -522,8 +522,3 @@ void QMLGlobals::fatal(const QString& message)
 {
     throw std::runtime_error(message.toStdString());
 }
-
-void QMLGlobals::resetModel()
-{
-    AppModel::resetInstance(AppModel::getInstance().getSettings(), 0);
-}

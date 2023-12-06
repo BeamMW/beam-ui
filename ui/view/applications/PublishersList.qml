@@ -1,7 +1,7 @@
-import QtQuick          2.11
-import QtQuick.Layouts  1.12
+import QtQuick          2.15
+import QtQuick.Layouts  1.15
 import QtQuick.Controls 1.4
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import Beam.Wallet      1.0
 import "../controls"
 import "../utils.js" as Utils
@@ -26,49 +26,13 @@ ColumnLayout {
         return !!viewModel.getRoleValue(row, socialNetwork)
     }
 
-    //
-    // Page Header (Back button + title + add publisher button)
-    //
-    RowLayout {
-        id: header
-
-        CustomButton {
-            id:             backButton
-            palette.button: "transparent"
-            leftPadding:    0
-            showHandCursor: true
-
-            font {
-                styleName: "DemiBold"
-                weight:    Font.DemiBold
-            }
-
-            //% "Back"
-            text:        qsTrId("general-back")
-            icon.source: "qrc:/assets/icon-back.svg"
-            visible:     true
-
-            onClicked:   control.onBack()
-        }
-
-        SFText {
-            Layout.fillWidth:     true
-            color:                Style.content_main
-            leftPadding:          -backButton.width
-            horizontalAlignment:  Text.AlignHCenter
-            font.pixelSize:       14
-            font.weight:          Font.Bold
-            font.capitalization:  Font.AllUppercase
-            //% "Publishers"
-            text: qsTrId("dapps-store-publishers-page-main-title")
-        }
-    }
-
+    //% "Publishers"
+    property string title: qsTrId("dapps-store-publishers-page-main-title")
 
     //
     // Body: publishers list
     //
-     PublishersViewModel {
+    PublishersViewModel {
         id:             viewModel
         publishersInfo: control.appsViewModel.userPublishers
     }

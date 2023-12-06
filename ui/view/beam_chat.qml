@@ -1,16 +1,16 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
 
 ColumnLayout {
     id: thisView
-
+    spacing: 0
     property var onClosed: undefined
     property alias receiverAddr: chatModel.address
     property alias receiverPeerId: chatModel.peerID
@@ -66,23 +66,10 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    Title {
-        text: qsTrId("messenger-title")
-    }
-
-    //
-    // Subtitle row
-    //
-    SubtitleRow {
-        //% "anonymous"
-        readonly property string kanon: qsTrId("chat-title-anon")
-
-        //% "Chat with %1"
-        text: qsTrId("chat-title").arg(thisView.name.length != 0 ? thisView.name : kanon)
-        onBack: function () {
-            onClosed()
-        }
-    }
+    //% "anonymous"
+    readonly property string kanon: qsTrId("chat-title-anon")
+    //% "Chat with %1"
+    property string title:   qsTrId("chat-title").arg(thisView.name.length != 0 ? thisView.name : kanon)
 
     RowLayout {
         Layout.topMargin:    10

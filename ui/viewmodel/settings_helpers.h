@@ -16,6 +16,7 @@
 
 #include <QObject>
 #include "wallet/transactions/swaps/common.h"
+#include <cstdint>
 
 namespace beam::io
 {
@@ -25,11 +26,11 @@ namespace beam::io
 struct UnpackedAddress
 {
     QString address;
-    QString port = 0;
+    uint16_t port = 0;
 };
 
 QString AddressToQstring(const beam::io::Address& address);
-QString formatAddress(const QString& address, const QString& port);
+QString formatAddress(const QString& address, uint16_t port);
 QString formatPort(uint16_t port);
 UnpackedAddress parseAddress(const QString& address);
 QString getCoinTitle(beam::wallet::AtomicSwapCoin swapCoin);

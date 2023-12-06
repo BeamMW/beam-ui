@@ -24,6 +24,7 @@
 #include <QPointer>
 #include <QCollator>
 #include "settings_view.h"
+#include "applications/apps_view.h"
 #include "model/app_model.h"
 #include "model/keyboard.h"
 #include "version.h"
@@ -167,6 +168,13 @@ namespace
         return index;
     }
 
+    void installApps(const QFileInfoList& files)
+    {
+        for (const auto& appFileName : files)
+        {
+            beamui::applications::AppsViewModel::installFromFile2(appFileName.filePath());
+        }
+    }
 
     template<typename T>
     void DoJSCallback(QJSValue& jsCallback, const T& res)
@@ -798,7 +806,6 @@ void StartViewModel::createWallet(const QJSValue& callback)
     }
 #endif
 
-
     SecString secretSeed;
     SecString secretPass = m_password;
     std::string rawSeed;
@@ -831,6 +838,7 @@ void StartViewModel::createWallet(const QJSValue& callback)
         auto& settings = AppModel::getInstance().getSettings();
         settings.setAccountLabel(getNewAccountLabel());
         settings.setAccountPictureIndex(m_newAccountPictureIndex);
+        installApps(settings.getAppPathsToInstall());
         setupNode();
         try
         {
@@ -872,6 +880,8 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
     // TODO make this secure
     if (AppModel::getInstance().isOnlyOneInstanceStarted())
     {
+        installApps(AppModel::getInstance().getSettings().getAppPathsToInstall());
+
         DoOpenWallet(m_callback, [pass] () {
             SecString secret = pass.toStdString();
             AppModel::getInstance().openWalletThrow(secret);
@@ -1191,11 +1201,12 @@ void StartViewModel::setCurrentAccountIndex(int value)
 
 void StartViewModel::setCurrentAccountIndexForced(int value)
 {
-    if (m_accounts.size() <= value)
+    const auto& accounts = getAccounts();
+    if (accounts.size() <= value && value > 0)
         return;
 
     m_accountIndex = value;
-    int realIndex = m_accounts[value][kIndex].toInt();
+    int realIndex = accounts.empty() ? 0 : accounts[value][kIndex].toInt();
     m_walletDBpaths.clear();
     AppModel::resetInstance(AppModel::getInstance().getSettings(), realIndex);
     findExistingWalletDBIfNeeded();
@@ -1256,4 +1267,9 @@ void StartViewModel::setNewAccountPictureIndex(int value)
 QString StartViewModel::getAccountPictureByIndex(int index) const
 {
     return WalletSettings::getAccountPictureByIndex(index);
+}
+
+void StartViewModel::resetModel()
+{
+    setCurrentAccountIndexForced(0);
 }

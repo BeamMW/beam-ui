@@ -1,7 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.3
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "."
 
@@ -31,13 +31,15 @@ Item {
     property int indicator_radius: 5
     property Item indicator: online_indicator
     property string walletError: model.walletError
+    property string localNodeError: model.localNodeError
     property string error_msg_3rd_client: model.coinClientErrorMsg || model.ipfsError
     //% "online"
     property string statusOnline: qsTrId("status-online")
     //% "connected node supports online transactions only"
     property string statusOnlineRemote: qsTrId("status-online-remote")
-    property var indicatorX: 50
-    property var indicatorY: 50
+    property var indicatorX: 60
+    property var indicatorY: 32
+    property real nodeSyncProgress: model.nodeSyncProgress
 
     function setIndicator(indicator) {
         if (indicator !== rootControl.indicator) {
@@ -46,92 +48,75 @@ Item {
             rootControl.indicator.visible = true;
         }
     }
+    Row {
+        id: networkStatusRow
+        height: 24
+        anchors.right:          parent.right
+        anchors.rightMargin:    20
+        spacing:                8
+        SFText {
+            id:                 networkText
+            color:              online_indicator.color
+            anchors.verticalCenter: parent.verticalCenter
+            font.pixelSize:     12
+            text:               Theme.name
+        }
+        Item {
+            id: online_indicator
+            anchors.verticalCenter: parent.verticalCenter
+            width:  childrenRect.width
+            height: childrenRect.height
 
-    Item {
-        id: online_indicator
-        x: rootControl.indicatorX
-        y: rootControl.indicatorY
-        width:  childrenRect.width
-        height: childrenRect.height
+            property color color: Style.online
+            property int radius: rootControl.indicator_radius
 
-        property color color: Style.online
-        property int radius: rootControl.indicator_radius
+            Column {
+                id: indicators
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    leftMargin: 0
+                    topMargin: 0
+                }
 
-        Column {
-            id: indicators
-            anchors {
-                top: parent.top
-                left: parent.left
-                leftMargin: 0
-                topMargin: 2
+                SvgImage {
+                    id:          onlineTrusted
+                    width:       10
+                    height:      10
+                    sourceSize:  Qt.size(10, 10)
+                    source:      model.isExchangeRatesUpdated && !model.ipfsError ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
+                    visible:     model.isConnectionTrusted && !model.isCoinClientFailed && !model.ipfsError
+                }
+
+                Rectangle {
+                    id:       online_rect
+                    width:    rootControl.indicator_radius * 2
+                    height:   rootControl.indicator_radius * 2
+                    radius:   rootControl.indicator_radius
+                    color:    online_indicator.color
+                    visible:  !onlineTrusted.visible
+                }
             }
 
-            SvgImage {
-                id:          onlineTrusted
-                width:       10
-                height:      10
-                sourceSize:  Qt.size(10, 10)
-                source:      model.isExchangeRatesUpdated && !model.ipfsError ? "qrc:/assets/icon-trusted-node-status.svg" : "qrc:/assets/icon-trusted-node-status-stale.svg"
-                visible:     model.isConnectionTrusted && !model.isCoinClientFailed && !model.ipfsError
-            }
-
-            Rectangle {
-                id:       online_rect
-                width:    rootControl.indicator_radius * 2
-                height:   rootControl.indicator_radius * 2
-                radius:   rootControl.indicator_radius
-                color:    online_indicator.color
-                visible:  !onlineTrusted.visible
+            DropShadow {
+                radius: 5
+                samples: 9
+                anchors.fill: indicators
+                source: indicators
+                color: online_indicator.color
             }
         }
 
-        DropShadow {
-            radius: 5
-            samples: 9
-            anchors.fill: indicators
-            source: indicators
-            color: online_indicator.color
-        }
-    }
-
-    Item {
-        id: update_indicator
-        x: rootControl.indicatorX
-        y: rootControl.indicatorY
-        visible: false
-
-        property color color:               Style.online
-        property int circle_line_width:     2
-        property int animation_duration:    2000
-
-        width: 2 * rootControl.indicator_radius + circle_line_width
-        height: 2 * rootControl.indicator_radius + circle_line_width
-
-        Canvas {
-            id: canvas_
-            anchors.fill: parent
-            onPaint: {
-                var context = getContext("2d");
-                context.arc(width/2, height/2, width/2 - parent.circle_line_width, 0, 1.6 * Math.PI);
-                context.strokeStyle = parent.color;
-                context.lineWidth = parent.circle_line_width;
-                context.stroke();
-            }
-        }
-
-        RotationAnimator {
-            target: update_indicator
-            from: 0
-            to: 360
-            duration: update_indicator.animation_duration
-            running: update_indicator.visible
-            loops: Animation.Infinite
+        UpdateIndicator {
+            id:         update_indicator
+            anchors.verticalCenter: parent.verticalCenter
+            visible:    false
+            radius:     rootControl.indicator_radius
         }
     }
-    
     Rectangle {
         id:                     rowBackground
-        anchors.leftMargin:     70
+        anchors.leftMargin:     0
         anchors.left:           parent.left
         anchors.right:          parent.right
         height:                 24
@@ -156,38 +141,39 @@ Item {
             anchors.fill: parent
 
             RowLayout {
-                width: rowBackground.width
-                spacing: 7
+                Layout.fillWidth:   true
+                Layout.rightMargin: networkStatusRow.width+28
+                spacing:            8
 
                 Item {
-                    Layout.fillWidth: true
+                    Layout.fillWidth:   true
+                    Layout.fillHeight:  true
                 }
 
                 SFText {
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.maximumWidth: parent.width - parent.spacing * 2 - 14
-                                         - (progressText.visible ? progressText.width + parent.spacing : 0)
-                                         - (settingsBtn.visible ? settingsBtn.width + parent.spacing : 0)
-                    id: status_text
-                    color: Style.content_main
-                    font.pixelSize: 15
-                    elide: Text.ElideRight
+                    id:                 statusText
+                    color:              Style.content_main
+                    font.pixelSize:     12
+                    elide:              Text.ElideRight
                 }
 
                 SFText {
-                    id: progressText
-                    color: Style.content_main
-                    font.pixelSize: 15
-                    text: "(" + model.nodeSyncProgress + "%)"
-                    visible: model.nodeSyncProgress > 0 && update_indicator.visible
+                    id:                 progressText
+                    color:              Style.content_main
+                    font.pixelSize:     12
+                    text:               model.nodeSyncProgress.toFixed(2) + "%"
+                    visible:            model.nodeSyncProgress > 0 && update_indicator.visible
                 }
 
                 LinkButton {
                     id: settingsBtn
                     //% "Change settings"
                     text: qsTrId("status-change-settings")
-                    visible: model.ipfsError || model.isCoinClientFailed || model.isFailedStatus || (model.isOnline && !model.isConnectionTrusted)
-                    fontSize: 15
+                    visible: model.ipfsError || 
+                             model.isCoinClientFailed || 
+                             model.isFailedStatus || 
+                             (model.isOnline && !model.isConnectionTrusted && !model.isSyncInProgress)
+                    fontSize: 12
 
                     onClicked: function () {
                         if (model.isCoinClientFailed || model.isFailedStatus) {
@@ -205,18 +191,10 @@ Item {
                     }
                 }
 
-                Item {
-                    Layout.fillWidth: true
-                }
-            }
-
-            CustomProgressBar {
-                id: progress_bar
-                backgroundImplicitWidth: parent.width
-                contentItemImplicitWidth: parent.width
-
-                visible: model.nodeSyncProgress > 0 && update_indicator.visible
-                value: model.nodeSyncProgress / 100
+                //Item {
+                //    Layout.fillWidth:   true
+                //    Layout.fillHeight:  true
+                //}
             }
         }
     }
@@ -225,7 +203,7 @@ Item {
         State {
             name: "connecting"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 //% "connecting"
                 text: qsTrId("status-connecting") + model.branchName
             }
@@ -239,7 +217,7 @@ Item {
         State {
             name: "online"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: statusOnline + (model.isConnectionTrusted || !model.isExchangeRatesUpdated ? "" : ": " + statusOnlineRemote) + model.branchName + 
                     (
                         model.isExchangeRatesUpdated ? "" : " " + model.exchangeStatus
@@ -256,9 +234,9 @@ Item {
         State {
             name: "updating"
             PropertyChanges {
-                target: status_text;
-                //% "updating"
-                text: qsTrId("status-updating") + "..." + model.branchName
+                target: statusText;
+                //% "synchronizing blockchain"
+                text: qsTrId("status-updating")
             }
             StateChangeScript {
                 name: "updatingScript"
@@ -270,7 +248,7 @@ Item {
         State {
             name: "error"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: rootControl.walletError + model.branchName
             }
             StateChangeScript {
@@ -284,7 +262,7 @@ Item {
         State {
             name: "error_hww"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: model.hwwError;
                 color: Style.accent_fail;
                 font.pixelSize: 20
@@ -293,7 +271,7 @@ Item {
         State {
             name: "error_3rd"
             PropertyChanges {
-                target: status_text;
+                target: statusText;
                 text: rootControl.error_msg_3rd_client + model.branchName
             }
             StateChangeScript {

@@ -67,14 +67,13 @@ SettingsViewModel::SettingsViewModel()
     connect(m_walletModel, SIGNAL(addressChecked(const QString&, bool)), SLOT(onAddressChecked(const QString&, bool)));
     connect(m_walletModel, SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
-    connect(&m_settings, &WalletSettings::dappsAllowedChanged, this, &SettingsViewModel::dappsAllowedChanged);
     connect(m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     m_currenciesList = m_amgr->getAssetsListFull();
-    connect(m_walletModel, &WalletModel::fullAssetsListLoaded, this, &SettingsViewModel::assetsListChanged);
+    connect(m_walletModel, &WalletModel::fullAssetsListLoaded, this, &SettingsViewModel::onAssetsListChanged);
     m_walletModel->getAsync()->loadFullAssetsList();
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 }
@@ -104,7 +103,7 @@ void SettingsViewModel::onAddressChecked(const QString& addr, bool isValid)
         if (m_isNeedToApplyChanges)
         {
             if (m_isValidNodeAddress)
-                applyNodeChanges();
+                applyNodeConnectionChanges();
 
             m_isNeedToApplyChanges = false;
         }
@@ -121,7 +120,7 @@ void SettingsViewModel::onPublicAddressChanged(const QString& publicAddr)
 }
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT
-void SettingsViewModel::assetsListChanged()
+void SettingsViewModel::onAssetsListChanged()
 {
     m_currenciesList = m_amgr->getAssetsListFull();
     emit currenciesListChanged();
@@ -165,6 +164,41 @@ QString SettingsViewModel::getVersion() const
     return QString::fromStdString(PROJECT_VERSION);
 }
 
+bool SettingsViewModel::getConnectLocalNode() const
+{
+    return m_connectLocalNode;
+}
+
+void SettingsViewModel::setConnectLocalNode(bool value)
+{
+    if (getConnectLocalNode() == value)
+        return;
+
+    if (value == true)
+    {
+        QHostAddress localAddr(QHostAddress::LocalHost);
+        setNodeAddress(localAddr.toString());
+        setRemoteNodePort(m_settings.getLocalNodePort());
+    }
+    else
+    {
+        if (m_localNodePeers.empty())
+        {
+            setNodeAddress("");
+            setRemoteNodePort(0);
+        }
+        else 
+        {
+            const auto& peer = m_localNodePeers.first();
+            auto address = parseAddress(peer);
+            setNodeAddress(address.address);
+            setRemoteNodePort(address.port);
+        }
+    }
+    m_connectLocalNode = value;
+    emit connectLocalNodeChanged();
+}
+
 bool SettingsViewModel::getLocalNodeRun() const
 {
     return m_localNodeRun;
@@ -175,12 +209,6 @@ void SettingsViewModel::setLocalNodeRun(bool value)
     if (value != m_localNodeRun)
     {
         m_localNodeRun = value;
-
-        if (!m_localNodeRun && !m_isNeedToCheckAddress)
-        {
-            m_isNeedToCheckAddress = true;
-            m_timerId = startTimer(CHECK_INTERVAL);
-        }
 
         emit localNodeRunChanged();
         emit nodeSettingsChanged();
@@ -281,12 +309,12 @@ void SettingsViewModel::setAppsPort(int port)
     }
 }
 
-QString SettingsViewModel::getRemoteNodePort() const
+unsigned int SettingsViewModel::getRemoteNodePort() const
 {
     return m_remoteNodePort;
 }
 
-void SettingsViewModel::setRemoteNodePort(const QString& value)
+void SettingsViewModel::setRemoteNodePort(unsigned int value)
 {
     if (value != m_remoteNodePort)
     {
@@ -338,16 +366,6 @@ void SettingsViewModel::allowBeamMWLinks(bool value)
     {
         m_settings.setAllowedBeamMWLinks(value);
     }
-}
-
-bool SettingsViewModel::getDAppsAllowed () const
-{
-    return m_settings.getAppsAllowed();
-}
-
-void SettingsViewModel::setDAppsAllowed (bool val)
-{
-    m_settings.setAppsAllowed(val);
 }
 
 QString SettingsViewModel::getCurrentHeight() const
@@ -465,25 +483,34 @@ QString SettingsViewModel::getOwnerKey(const QString& password) const
 
 bool SettingsViewModel::isNodeChanged() const
 {
-    return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress()
-        || m_localNodeRun   != m_settings.getRunLocalNode()
-        || m_localNodePort  != m_settings.getLocalNodePort()
+    return formatAddress(m_nodeAddress, m_remoteNodePort) != m_settings.getNodeAddress();
+}
+
+bool SettingsViewModel::isLocalNodeChanged() const
+{
+    return m_localNodeRun != m_settings.getRunLocalNode()
+        || m_localNodePort != m_settings.getLocalNodePort()
         || m_localNodePeers != m_settings.getLocalNodePeers();
 }
 
-void SettingsViewModel::applyNodeChanges()
+void SettingsViewModel::applyLocalNodeChanges()
 {
-    if (!m_localNodeRun && m_isNeedToCheckAddress)
+    m_settings.setRunLocalNode(m_localNodeRun);
+    m_settings.setLocalNodePort(m_localNodePort);
+    m_settings.setLocalNodePeers(m_localNodePeers);
+    m_settings.applyLocalNodeChanges();
+    emit nodeSettingsChanged();
+}
+
+void SettingsViewModel::applyNodeConnectionChanges()
+{
+    if (m_isNeedToCheckAddress)
     {
         m_isNeedToApplyChanges = true;
         return;
     }
 
     m_settings.setNodeAddress(formatAddress(m_nodeAddress, m_remoteNodePort));
-    m_settings.setRunLocalNode(m_localNodeRun);
-    m_settings.setLocalNodePort(m_localNodePort);
-    m_settings.setLocalNodePeers(m_localNodePeers);
-    m_settings.applyNodeChanges();
     emit nodeSettingsChanged();
 }
 
@@ -513,6 +540,9 @@ void SettingsViewModel::undoChanges()
         setRemoteNodePort(unpackedAddress.port);
     }
 
+    setConnectLocalNode(//m_settings.getRunLocalNode() &&
+                        QHostAddress(unpackedAddress.address).isLoopback() &&
+                        m_remoteNodePort == m_settings.getLocalNodePort());
     setLocalNodeRun(m_settings.getRunLocalNode());
     setLocalNodePort(m_settings.getLocalNodePort());
     setLocalNodePeers(m_settings.getLocalNodePeers());
@@ -558,7 +588,7 @@ void SettingsViewModel::disallowAssetId(quint32 asset)
 
 void SettingsViewModel::timerEvent(QTimerEvent *event)
 {
-    if (m_isNeedToCheckAddress && !m_localNodeRun)
+    if (m_isNeedToCheckAddress)
     {
         m_isNeedToCheckAddress = false;
         AppModel::getInstance().getWalletModel()->getAsync()->checkNetworkAddress(m_nodeAddress.toStdString());

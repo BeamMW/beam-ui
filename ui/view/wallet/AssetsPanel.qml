@@ -1,6 +1,6 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "../controls"
 
@@ -52,8 +52,9 @@ Control {
     property real   itemHeight:     75
     property bool   showSelected:   false
     property bool   selectable:     true
+    property bool   showSettingLink:false
 
-    property real   assetsFilterRowHeight: 50
+    property real   assetsFilterRowHeight: 40
 
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showSeedValidationPromo && !seedValidationHelper.isSeedValidated
@@ -104,12 +105,9 @@ Control {
         spacing: 0
 
         SFText {
-            Layout.leftMargin: 10
-            Layout.fillWidth: true
-
             font {
                 pixelSize: 14
-                letterSpacing: 4
+                letterSpacing: 3.11
                 styleName: "DemiBold"; weight: Font.DemiBold
                 capitalization: Font.AllUppercase
             }
@@ -118,6 +116,22 @@ Control {
             color: Style.content_main
             //% "Assets"
             text: qsTrId("wallet-assets-title")
+        }
+
+        LinkButton {
+            Layout.leftMargin:  30
+            Layout.alignment:   Qt.AlignVCenter
+            visible: showSettingLink
+            //% "Assets settings"
+            text: qsTrId("assets-settings")
+            onClicked: {
+                main.openSettings("CA");
+            }
+        }
+
+        Item {
+            Layout.fillWidth:   true
+            Layout.fillHeight:  true
         }
 
         SvgImage {
@@ -198,7 +212,7 @@ Control {
 
         Column {
             spacing: 10
-            height: grid.implicitHeight + (control.showValidationPromo ? 95 : 0)
+            height: grid.implicitHeight + (control.showValidationPromo ? 85 : 0)
             width: parent.width
             Grid {
                 id: grid

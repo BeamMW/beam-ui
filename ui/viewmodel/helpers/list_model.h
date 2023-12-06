@@ -83,16 +83,22 @@ public:
         endInsertRows();
     }
 
-    void reset(const std::vector<T>& items)
+    template<typename It>
+    void reset(It first, It last)
     {
         int row = 0;
         beginResetModel();
         m_list.clear();
-        for (const auto& item : items)
+        for (auto it = first; it != last; ++it)
         {
-            m_list.insert(row, item);
+            m_list.insert(row, *it);
         }
         endResetModel();
+    }
+
+    void reset(const std::vector<T>& items)
+    {
+        reset(items.begin(), items.end());
     }
 
     T get(int index) const

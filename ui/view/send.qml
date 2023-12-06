@@ -1,9 +1,9 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "controls"
 
@@ -22,20 +22,8 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    Title {
-        text: qsTrId("atomic-swap-title")
-    }
-
-    //
-    // Subtitle row
-    //
-    SubtitleRow {
-        //% "Accept Swap Offer"
-        text: qsTrId("wallet-send-swap-title")
-        onBack: function () {
-            onClosed()
-        }
-    }
+    //% "Accept Offer"
+    property string title:  qsTrId("wallet-send-swap-title")
 
     //
     // Content row

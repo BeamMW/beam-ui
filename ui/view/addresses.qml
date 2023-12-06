@@ -1,23 +1,20 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.4
-import QtQuick.Controls 2.3
-import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.Styles 1.2
 import "controls"
 import Beam.Wallet 1.0
 
 ColumnLayout {
-    id: control
-    anchors.fill: parent
-
+    id:             control
+    spacing:        0
     AddressBookViewModel {
         id: viewModel
     }
 
-    Title {
-        //% "Address Book"
-        text: qsTrId("addresses-tittle")
-    }
+    //% "Address Book"
+    property string title:  qsTrId("addresses-tittle")
 
     property bool isShieldedSupported: statusbarModel.isConnectionTrusted && statusbarModel.isOnline
 
@@ -49,7 +46,6 @@ ColumnLayout {
     RowLayout {
         Layout.minimumHeight: 40
         Layout.maximumHeight: 40
-        Layout.topMargin:       54
         visible:                viewModel.contacts.length > 0  || viewModel.activeAddresses.length > 0 || viewModel.expiredAddresses.length > 0
         TxFilter{
             id: activeAddressesFilter

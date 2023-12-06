@@ -1,16 +1,15 @@
-import QtQuick 2.11
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
 
 ColumnLayout {
     id: settingsView
-    Layout.fillWidth: true
-    state: "general"
+    Layout.fillWidth:   true
+    spacing:            0
+    state:              "general"
 
     property string  linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string  unfoldSection:   ""
@@ -26,10 +25,9 @@ ColumnLayout {
         id: viewModel
     }
 
-    Title {
-        //% "Settings"
-        text: qsTrId("settings-title")
-
+    //% "Settings"
+    property string title:       qsTrId("settings-title")
+    property var titleContent: RowLayout {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignCenter | Qt.AlignRight
@@ -76,7 +74,6 @@ ColumnLayout {
     }
 
     ScrollView {
-        Layout.topMargin:  25
         Layout.fillHeight: true
         Layout.bottomMargin: 10
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -156,8 +153,8 @@ ColumnLayout {
                     text:  qsTrId("settings-connectivity-title")
                 }
 
-                SettingsBeamNode {
-                    id: nodeBlock
+                SettingsBeamRemoteNode {
+                    id: remoteNodeBlock
                     viewModel: viewModel
 
                     showStatus: true
@@ -169,6 +166,23 @@ ColumnLayout {
                         var sbar = main.statusBar.model
                         if (sbar.isFailedStatus) return "error"
                         else if (sbar.isSyncInProgress || sbar.isOnline) return "connected"
+                        else return "disconnected";
+                    }
+                }
+
+                SettingsBeamNode {
+                    id: nodeBlock
+                    viewModel: viewModel
+
+                    showStatus: true
+                    connectionStatus: getStatus()
+                    connectionError:  main.statusBar.localNodeError
+                    folded: unfoldSection != "BEAM_NODE"
+                    syncProgress: main.statusBar.nodeSyncProgress
+                    function getStatus() {
+                        var sbar = main.statusBar.model
+                        if (sbar.isFailedLocalNode) return "error"
+                        else if (sbar.nodeSyncProgress > 0) return "connected"
                         else return "disconnected";
                     }
                 }

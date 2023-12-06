@@ -1,174 +1,44 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
+import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 import Beam.Wallet 1.0
 import "."
 
 SettingsFoldable {
     property var viewModel
-
-    title: viewModel.localNodeRun ?
-       //% "Beam Integrated Node"
-       qsTrId("settings-integrated-node-title") :
-       //% "Beam Remote Node"
-       qsTrId("settings-remote-node-title")
+    property real syncProgress
+    //% "Beam Integrated Node"
+    title: qsTrId("settings-integrated-node-title") + ((syncProgress > 0.0) ? " (" + syncProgress.toFixed(2) + "%)" : "")
 
     content: ColumnLayout {
         spacing:    0
         RowLayout {
             Layout.fillWidth: true
+            spacing: 10
             SFText {
+                Layout.fillWidth: true
                 //: settings tab, node section, run node label
-                //% "Integrated node"
+                //% "Run integrated node"
                 text: qsTrId("settings-local-node-run-checkbox")
                 color: viewModel.localNodeRun ? Style.active : Style.content_secondary
                 font.pixelSize: 14
             }
-            Item {width: 3}
+
             CustomSwitch {
                 id: localNodeRun
-                checked: !viewModel.localNodeRun
+                checked: viewModel.localNodeRun
                 alwaysGreen: true
                 spacing: 0
                 Binding {
                     target: viewModel
                     property: "localNodeRun"
-                    value: !localNodeRun.checked
-                }
-            }
-            Item {width: 3}
-            SFText {
-                //% "Remote node"
-                text: qsTrId("settings-run-remote-node")
-                color: viewModel.localNodeRun ? Style.content_secondary : Style.active
-                font.pixelSize: 14
-            }
-            Item {
-                Layout.fillWidth: true
-            }
-        }
-
-        //
-        // Remote node settings
-        //
-        GridLayout {
-            Layout.fillWidth: true
-            Layout.topMargin: 30
-            visible: !viewModel.localNodeRun
-            columnSpacing: 20
-            rowSpacing: 30
-            columns: 2
-
-            SFText {
-                //: settings tab, node section, address label
-                //% "Node address"
-                text: qsTrId("settings-remote-node-address")
-                color: Style.content_secondary
-                font.pixelSize: 14
-                wrapMode: Text.NoWrap
-            }
-
-            ColumnLayout {
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth: true
-                spacing: 0
-
-                SFTextInput {
-                    id: nodeAddress
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignLeft
-                    focus: true
-                    activeFocusOnTab: true
-                    font.pixelSize: 14
-                    color:  (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput)) ? Style.validator_error : Style.content_main
-                    backgroundColor:  (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput)) ? Style.validator_error : Style.content_main
-                    validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(\s|\x180E)*$/ }
-                    text: viewModel.nodeAddress
-                    //% "Please enter the address"
-                    placeholderText:  qsTrId("settings-remote-node-address-placeholder")
-                    Binding {
-                        target: viewModel
-                        property: "nodeAddress"
-                        value: nodeAddress.text.trim()
-                    }
-                }
-                Item {
-                    id: nodeAddressError
-                    Layout.preferredWidth: 170
-                    Layout.alignment: Qt.AlignRight
-                    SFText {
-                        color:          Style.validator_error
-                        font.pixelSize: 12
-                        font.italic:    true
-                        text:           qsTrId("general-invalid-address")
-                        visible:        (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput))
-                    }
+                    value: localNodeRun.checked
                 }
             }
 
-            // remote port
-            SFText {
-                text: qsTrId("settings-local-node-port")
-                color: Style.content_secondary
-                font.pixelSize: 14
-                wrapMode: Text.NoWrap
-            }
-
-            ColumnLayout {
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth: true
-                spacing: 0
-
-                SFTextInput {
-                    id: remoteNodePort
-                    Layout.alignment: Qt.AlignRight
-                    Layout.fillWidth: true
-                    activeFocusOnTab: true
-                    font.pixelSize: 14
-                    color: (text.length && !remoteNodePort.acceptableInput) ? Style.validator_error : Style.content_main
-                    backgroundColor: (text.length && !remoteNodePort.acceptableInput) ? Style.validator_error : Style.content_main
-                    text: viewModel.remoteNodePort
-                    //% "Please enter the port"
-                    placeholderText:  qsTrId("settings-local-node-port-placeholder")
-                    validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
-                    Binding {
-                        target: viewModel
-                        property: "remoteNodePort"
-                        value: remoteNodePort.text
-                    }
-                }
-                Item {
-                    id: nodePortError
-                    Layout.preferredWidth: 170
-                    Layout.alignment: Qt.AlignRight
-                    SFText {
-                        color:          Style.validator_error
-                        font.pixelSize: 12
-                        font.italic:    true
-                        //: settings tab, node section, port error label
-                        //% "Port is mandatory"
-                        text:           qsTrId("general-invalid-port")
-                        visible:        remoteNodePort.text.length && !remoteNodePort.acceptableInput
-                    }
-                }
-            }
-        }
-        SFText {
-            Layout.fillWidth:   true
-            Layout.topMargin:   20
-            Layout.leftMargin:  20
-            Layout.rightMargin: 20
-            color:              Style.content_main
-            opacity:            0.5
-            font.pixelSize:     14
-            horizontalAlignment:Text.AlignHCenter
-            wrapMode:           Text.Wrap
-            //% "To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key."
-            text:               qsTrId("remote-node-lelantus-warning")
-            visible:            !viewModel.localNodeRun && !statusbarModel.isConnectionTrusted
         }
 
         //
@@ -239,7 +109,7 @@ SettingsFoldable {
         RowLayout {
             Layout.topMargin:       15
             Layout.bottomMargin:    5
-            Layout.rightMargin:     8   
+            Layout.rightMargin:     0
             spacing: 0
             visible: viewModel.localNodeRun
 
@@ -312,7 +182,7 @@ SettingsFoldable {
                     padding: 0
                     spacing: 0
                     icon.source: "qrc:/assets/icon-delete.svg"
-                    enabled: !localNodeRun.checked
+                    enabled: localNodeRun.checked
                     onClicked: viewModel.deleteLocalNodePeer(index)
                 }
             }
@@ -325,6 +195,7 @@ SettingsFoldable {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 20
+            spacing:          20
 
             CustomButton {
                 leftPadding:  25
@@ -333,12 +204,8 @@ SettingsFoldable {
                 //% "Cancel"
                 text: qsTrId("general-cancel")
                 icon.source: enabled ? "qrc:/assets/icon-cancel-white.svg" : "qrc:/assets/icon-cancel.svg"
-                enabled: viewModel.isNodeChanged
+                enabled: viewModel.isLocalNodeChanged
                 onClicked: viewModel.undoChanges()
-            }
-
-            Item {
-                width: 20
             }
 
             PrimaryButton {
@@ -350,11 +217,11 @@ SettingsFoldable {
                 text: qsTrId("settings-apply")
                 icon.source: "qrc:/assets/icon-done.svg"
                 enabled: {
-                    if (!viewModel.isNodeChanged) return false;
-                    if (!localNodeRun.checked) return viewModel.localNodePeers.length > 0 && localNodePort.acceptableInput
-                    return viewModel.isValidNodeAddress && nodeAddress.acceptableInput && remoteNodePort.acceptableInput
+                    if (!viewModel.isLocalNodeChanged) return false;
+                    if (localNodeRun.checked) return viewModel.localNodePeers.length > 0 && localNodePort.acceptableInput
+                    return true;
                 }
-                onClicked: viewModel.applyNodeChanges()
+                onClicked: viewModel.applyLocalNodeChanges()
             }
         }
     }

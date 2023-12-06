@@ -105,6 +105,7 @@ public:
     void setDappStoreUserPublishers(const QStringList& publishersList);
     QStringList getDappStoreUserUnwantedPublishers() const;
     void setDappStoreUserUnwantedPublishers(const QStringList& publishersList);
+    QFileInfoList getAppPathsToInstall() const;
 
     bool getDevMode() const;
     bool getAppsAllowed() const;
@@ -147,6 +148,7 @@ public:
     QString getFaucetUrl() const;
     QString getAppsUrl() const;
     QDir getAccountDataDir() const;
+    QDir getNetworkDataDir() const;
 
     bool showFaucetPromo() const;
     void setShowFacetPromo(bool value);
@@ -177,6 +179,7 @@ public:
     void setAccountLabel(const QString& label);
     int getAccountPictureIndex() const;
     void setAccountPictureIndex(int value);
+    bool isConnectToLocalNode() const;
 
     static QString getAccountPictureByIndex(int index);
 
@@ -192,7 +195,8 @@ public:
     #endif
 
     static const char* NodeDBFile;
-    void applyNodeChanges();
+    static const char* UtxoImageFile;
+    void applyLocalNodeChanges();
 
     #ifdef BEAM_IPFS_SUPPORT
     void applyIPFSChanges();
@@ -207,7 +211,6 @@ signals:
     void localeChanged();
     void beamMWLinksChanged();
     void secondCurrencyChanged();
-    void dappsAllowedChanged();
     void IPFSSettingsChanged();
     void generalMouseEvent();
 
@@ -223,6 +226,7 @@ private:
     int m_accountIndex;
     QDir m_appDataDir;
     mutable AccountSettings m_accountSettings;
+    mutable QSettings m_networkSettings;
     mutable QSettings m_globalData;
 
     QString m_applicationDirPath;

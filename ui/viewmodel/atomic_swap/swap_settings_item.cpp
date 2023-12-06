@@ -254,12 +254,12 @@ void SwapCoinSettingsItem::setNodeAddress(const QString& value)
     }
 }
 
-QString SwapCoinSettingsItem::getNodePort() const
+unsigned int SwapCoinSettingsItem::getNodePort() const
 {
     return m_nodePort;
 }
 
-void SwapCoinSettingsItem::setNodePort(const QString& value)
+void SwapCoinSettingsItem::setNodePort(unsigned int value)
 {
     if (value != m_nodePort)
     {
@@ -302,12 +302,12 @@ void SwapCoinSettingsItem::setNodeAddressElectrum(const QString& value)
     }
 }
 
-QString SwapCoinSettingsItem::getNodePortElectrum() const
+unsigned int SwapCoinSettingsItem::getNodePortElectrum() const
 {
     return m_nodePortElectrum;
 }
 
-void SwapCoinSettingsItem::setNodePortElectrum(const QString& value)
+void SwapCoinSettingsItem::setNodePortElectrum(unsigned int value)
 {
     if (value != m_nodePortElectrum)
     {
@@ -381,7 +381,7 @@ void SwapCoinSettingsItem::onStatusChanged()
         default:
         {
             setNodeAddressElectrum("");
-            setNodePortElectrum("");
+            setNodePortElectrum(0);
         }
         }
     }
@@ -464,7 +464,7 @@ void SwapCoinSettingsItem::applyNodeSettings()
     {
         const std::string address = m_nodeAddress.toStdString();
         connectionSettings.m_address.resolve(address.c_str());
-        connectionSettings.m_address.port(m_nodePort.toInt());
+        connectionSettings.m_address.port(m_nodePort);
     }
 
     m_settings->SetConnectionOptions(connectionSettings);
@@ -635,7 +635,7 @@ void SwapCoinSettingsItem::SetDefaultNodeSettings()
 void SwapCoinSettingsItem::SetDefaultElectrumSettings(bool clearSeed)
 {
     setNodeAddressElectrum("");
-    setNodePortElectrum("");
+    setNodePortElectrum(0);
     setSelectServerAutomatically(true);
 
     if (clearSeed)

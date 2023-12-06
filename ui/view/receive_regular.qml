@@ -1,16 +1,16 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
 
 ColumnLayout {
     id: control
-
+    spacing: 0
     ReceiveViewModel {
         id: viewModel
 
@@ -85,21 +85,8 @@ ColumnLayout {
             viewModel.saveAddress();
          }
     }
-
-    Title {
-        text: qsTrId("wallet-title")
-    }
-
-    //
-    // Subtitle row
-    //
-    SubtitleRow {
-        //% "Receive"
-        text: qsTrId("wallet-receive-title")
-        onBack: function () {
-            control.onClosed()
-        }
-    }
+    //% "Receive"
+    property string title: qsTrId("wallet-receive-title")
 
     QR {
         id: qrCode

@@ -1,9 +1,9 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.impl 2.4
 import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.15
 import "."
 
 Button {
@@ -18,8 +18,7 @@ Button {
     property bool  showHandCursor: false
     property bool  hasShadow:      true
     property alias border:         rect.border
-
-
+    property color shadowColor:    control.palette.button == Style.background_button ? Style.content_main : control.palette.button
     font { 
         family: "Proxima Nova"
         pixelSize: 14
@@ -78,7 +77,7 @@ Button {
         anchors.fill: rect
         radius:  7
         samples: 9
-        color:   control.palette.button == Style.background_button ? Style.content_main : control.palette.button
+        color:   control.shadowColor
         source:  rect
         visible: control.hasShadow && (control.visualFocus || control.hovered || control.checked)
     }

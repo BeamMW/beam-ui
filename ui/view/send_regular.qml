@@ -1,6 +1,6 @@
-import QtQuick 2.11
-import QtQuick.Layouts 1.12
-import QtQuick.Controls 2.4
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
@@ -24,6 +24,37 @@ ColumnLayout {
         }
     }
 
+    TokenDuplicateChecker {
+        id: tokenDuplicateChecker
+        onAccepted: {
+            StackView.view.pop();
+            main.openSwapActiveTransactionsList()
+        }
+        Connections {
+            target: tokenDuplicateChecker.model
+
+            function onTokenPreviousAccepted (token) {
+                tokenDuplicateChecker.isOwn = false
+                tokenDuplicateChecker.open()
+            }
+
+            function onTokenFirstTimeAccepted (token) {
+                StackView.view.replace(Qt.createComponent("send_swap.qml"),
+                                     {
+                                         "onAccepted": tokenDuplicateChecker.onAccepted,
+                                         "onClosed":   StackView.view.pop,
+                                         "swapToken":  token
+                                     })
+                StackView.view.currentItem.validateCoin()
+            }
+
+            function onTokenOwnGenerated (token) {
+                tokenDuplicateChecker.isOwn = true
+                tokenDuplicateChecker.open()
+            }
+        }
+    }
+
     property alias assetId:   viewModel.assetId
     property alias assetIdx:  sendAmountInput.currencyIdx
     property var   assetInfo: viewModel.assetsList[assetIdx]
@@ -35,7 +66,6 @@ ColumnLayout {
     // callbacks set by parent
     property var   onAccepted:    undefined
     property var   onClosed:      undefined
-    property var   onSwapToken:   undefined
     property alias receiverToken: viewModel.token
 
     Component.onCompleted: {
@@ -60,18 +90,8 @@ ColumnLayout {
         topColor: Style.accent_outgoing
     }
 
-    Title {
-        text: qsTrId("wallet-title")
-    }
-
-    //
-    // Subtitle row
-    //
-    SubtitleRow {
-        //% "Send"
-        text:   qsTrId("send-title")
-        onBack: control.onClosed
-    }
+    //% "Send"
+    property string title:       qsTrId("send-title")
 
     ScrollView {
         id:                  scrollView
@@ -127,8 +147,8 @@ ColumnLayout {
                                 placeholderText:  qsTrId("send-contact-address-placeholder")
                                 onTextChanged: function () {
                                     var isSwap = BeamGlobals.isSwapToken(text)
-                                    if (isSwap && typeof onSwapToken == "function") {
-                                        onSwapToken(text);
+                                    if (isSwap) {
+                                        tokenDuplicateChecker.checkTokenForDuplicate(text);
                                     }
                                 }
                             }

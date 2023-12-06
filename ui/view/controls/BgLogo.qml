@@ -1,4 +1,4 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import Beam.Wallet 1.0
 
 Image {

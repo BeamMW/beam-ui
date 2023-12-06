@@ -1,7 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.3
-import QtGraphicalEffects 1.0
-import QtQuick.Layouts 1.12
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
 import "."
 
@@ -10,14 +10,6 @@ Item {
     implicitHeight: logoutButton.implicitHeight
     ContextMenu {
         id: accountContextMenu
-        VersionFooter {
-            horizontalAlignment:    Text.AlignRight
-            rightPadding:           20
-        }
-        MenuSeparator{
-            leftPadding:            8
-            rightPadding:           8
-        }
         SFLabel {
             leftPadding:            20
             rightPadding:           20
@@ -31,6 +23,22 @@ Item {
             leftPadding:            8
             rightPadding:           8
         }
+
+        Action {
+            text:           qsTrId("messenger-title")
+            icon.source:    "qrc:/assets/icon-beam_messenger.svg"
+            onTriggered: {
+                main.openMessenger();
+            }
+        }
+
+        Action {
+            text:           qsTrId("addresses-tittle")
+            icon.source:    "qrc:/assets/icon-addresses.svg"
+            onTriggered: {
+                main.openAddresses();
+            }
+        }
         Action {
             text:           qsTrId("settings-title")
             icon.source:    "qrc:/assets/icon-settings.svg"
@@ -39,12 +47,28 @@ Item {
             }
         }
         Action {
+            //% "Documentation"
+            text:           qsTrId("help-title")
+            icon.source:    "qrc:/assets/icon-help.svg"
+            onTriggered: {
+                main.openHelp();
+            }
+        }
+        Action {
             //% "Logout"
             text: qsTrId("status-logout")
-            icon.source: "qrc:/assets/icon-back.svg"
+            icon.source: "qrc:/assets/icon-log-out.svg"
             onTriggered: {
                 main.parent.setSource("qrc:/start.qml", {"isLogoutMode": true});
             }
+        }
+        MenuSeparator{
+            leftPadding:            8
+            rightPadding:           8
+        }
+        VersionFooter {
+            horizontalAlignment:    Text.AlignRight
+            rightPadding:           20
         }
     }
     CustomToolButton {
@@ -58,7 +82,7 @@ Item {
         icon.height:            32
         icon.color:             "transparent"
         onClicked: {
-            accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height + 7))
+            accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height + 6))
         }
     }
 }

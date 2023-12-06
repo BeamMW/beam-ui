@@ -285,6 +285,8 @@ file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/icon_${BEAM_ICON_SUFFIX}.ico ${CMAKE_CUR
 file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.png ${CMAKE_CURRENT_SOURCE_DIR}/beam.png)
 file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.icns ${CMAKE_CURRENT_SOURCE_DIR}/beam.icns)
 
+file(GLOB_RECURSE DAPPS_LIST ${CMAKE_CURRENT_SOURCE_DIR}/apps *.dapp)
+
 string(REPLACE "." "," PROJECT_VERSION_VERSIONINFO "${PROJECT_VERSION}")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/beam.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/beam.rc)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/beam.desktop.in ${CMAKE_CURRENT_SOURCE_DIR}/beam.desktop)
@@ -300,7 +302,7 @@ if(BEAM_USE_STATIC AND LINUX)
     set(CMAKE_CXX_FLAGS "-no-pie ${CMAKE_CXX_FLAGS}")
 endif()
 if (APPLE)
-    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm")
+    add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" "${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" ${DAPPS_LIST})
 else()
     add_executable(${TARGET_NAME} ${SYSTEM_TYPE} ${UI_SRC} ${QT_RESOURCES} beam.rc "${CMAKE_CURRENT_SOURCE_DIR}/beam.icns")
 endif()
@@ -494,9 +496,25 @@ if(BEAM_USE_STATIC_QT)
     endif()
 endif()
 
+function(set_folder_resources_properties SOURCE_PATH DESTINATION PATTERN)
+    file(GLOB_RECURSE _LIST CONFIGURE_DEPENDS ${SOURCE_PATH}/${PATTERN})
+    foreach (RESOURCE ${_LIST})
+        get_filename_component(_PARENT ${RESOURCE} DIRECTORY)
+        if (${_PARENT} STREQUAL ${SOURCE_PATH})
+            set(_DESTINATION ${DESTINATION})
+        else ()
+            file(RELATIVE_PATH _DESTINATION ${SOURCE_PATH} ${_PARENT})
+            set(_DESTINATION ${DESTINATION}/${_DESTINATION})
+        endif ()
+        message("${RESOURCE}->${_DESTINATION}")
+        set_source_files_properties(${RESOURCE} PROPERTIES MACOSX_PACKAGE_LOCATION ${_DESTINATION})
+    endforeach (RESOURCE)
+endfunction()
+
 if(LINUX)
     install(TARGETS ${TARGET_NAME} DESTINATION bin)
     install(FILES dapps_store_app.wasm DESTINATION bin)
+    install(DIRECTORY apps DESTINATION bin)
 
     SET(BEAM_DESKTOP_DIR     "${CMAKE_INSTALL_PREFIX}/share/applications/")
     SET(BEAM_PIXMAPS_DIR     "${CMAKE_INSTALL_PREFIX}/share/icons/")
@@ -508,6 +526,7 @@ elseif(APPLE)
     set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
+    set_folder_resources_properties(${CMAKE_CURRENT_SOURCE_DIR}/apps Resources/apps *.dapp)
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
@@ -575,6 +594,7 @@ else()
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
         install(FILES dapps_store_app.wasm DESTINATION .)
+        install(DIRECTORY apps DESTINATION .)
         install(TARGETS ${TARGET_NAME} DESTINATION .)
     endif()
 
@@ -603,3 +623,9 @@ if(NOT APPLE)
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm ${CMAKE_CURRENT_BINARY_DIR}
     )
 endif()
+
+add_custom_command(
+    TARGET ${TARGET_NAME} POST_BUILD
+    COMMENT "Copying apps..."
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/apps ${CMAKE_CURRENT_BINARY_DIR}/apps
+)

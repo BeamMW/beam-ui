@@ -1,7 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -228,7 +228,8 @@ WizzardPage {
 
                 if (isBadPortMode) {
                     viewModel.onNodeSettingsChanged();
-                    startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+                    navigateToMain();
+                    //startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : viewModel.isRecoveryMode, "isCreating" : true, "cancelCallback": startWizzardView.pop});
                 } else {
                     createWallet();
                 }

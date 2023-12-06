@@ -1,31 +1,30 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
+import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.12
+import QtQuick.Layouts 1.15
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
 
 ColumnLayout {
     id: control
-    anchors.fill: parent
     spacing: 0
 
     NotificationsViewModel {
         id: viewModel
     }
 
-    Title {
-        //% "Notifications"
-        text: qsTrId("notifications-title")
+    //% "Notifications"
+    property string title:      qsTrId("notifications-title")
+    property var titleContent : RowLayout {
         Item {
             Layout.fillWidth:   true
             Layout.fillHeight:  true
         }
         CustomButton {
             Layout.alignment: Qt.AlignRight
-            Layout.preferredHeight: 38
+            Layout.preferredHeight: 32
             palette.button: Style.background_second
             palette.buttonText : Style.content_main
             icon.source: "qrc:/assets/icon-cancel-white.svg"

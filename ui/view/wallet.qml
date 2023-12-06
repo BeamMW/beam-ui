@@ -1,19 +1,17 @@
-import QtQuick 2
-import QtQuick.Controls 1
-import QtQuick.Controls 2
-import QtQuick.Controls.Styles 1
-import QtGraphicalEffects 1
-import QtQuick.Layouts 1
-import Beam.Wallet 1
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
+import Beam.Wallet 1.0
 import "controls"
 import "wallet"
 import "utils.js" as Utils
 
 ColumnLayout {
     id:           root
-    anchors.fill: parent
     spacing:      0
 
+    property var walletStackView: StackView.view
     property string openedTxID: ""
     
     function onAccepted() { walletStackView.pop(); }
@@ -30,199 +28,141 @@ ColumnLayout {
     property bool openReceive:  false
     property string token:      ""
 
-    TokenDuplicateChecker {
-        id: tokenDuplicateChecker
-        onAccepted: {
-            walletStackView.pop();
-            main.openSwapActiveTransactionsList()
+    function navigateSend(assetId) {
+        var params = {
+            "onAccepted":    onAccepted,
+            "onClosed":      onClosed,
+            "receiverToken": root.token,
+            "assetId":       assetId
         }
-        Connections {
-            target: tokenDuplicateChecker.model
 
-            function onTokenPreviousAccepted (token) {
-                tokenDuplicateChecker.isOwn = false
-                tokenDuplicateChecker.open()
-            }
-
-            function onTokenFirstTimeAccepted (token) {
-                walletStackView.pop()
-                walletStackView.push(Qt.createComponent("send_swap.qml"),
-                                     {
-                                         "onAccepted": tokenDuplicateChecker.onAccepted,
-                                         "onClosed":   onClosed,
-                                         "swapToken":  token
-                                     })
-                walletStackView.currentItem.validateCoin()
-            }
-
-            function onTokenOwnGenerated (token) {
-                tokenDuplicateChecker.isOwn = true
-                tokenDuplicateChecker.open()
-            }
+        if (assetId != undefined)
+        {
+            params["assetId"] = assetId >= 0 ? assetId : 0
         }
+
+        walletStackView.push(Qt.createComponent("send_regular.qml"), params)
+        root.token = ""
     }
 
-    Component {
-        id: walletLayout
+    function navigateReceive(assetId) {
+        walletStackView.push(Qt.createComponent("receive_regular.qml"),
+                                {"onClosed": onClosed,
+                                    "token":    root.token,
+                                    "assetId":  assetId})
+        token = ""
+    }
 
-        ColumnLayout {
-            id: transactionsLayout
+    //% "Wallet"
+    property string title:      qsTrId("wallet-title")
+    property var titleContent:  RowLayout {
+        spacing: 20
+        Item {
             Layout.fillWidth:   true
             Layout.fillHeight:  true
-            spacing: 0
+        }
 
-            function navigateSend(assetId) {
-                var params = {
-                    "onAccepted":    onAccepted,
-                    "onClosed":      onClosed,
-                    "onSwapToken":   onSwapToken,
-                    "receiverToken": root.token,
-                    "assetId":       assetId
-                }
-
-                if (assetId != undefined)
-                {
-                    params["assetId"] = assetId >= 0 ? assetId : 0
-                }
-
-                walletStackView.push(Qt.createComponent("send_regular.qml"), params)
-                root.token = ""
+        CustomButton {
+            id: sendButton
+            Layout.preferredHeight: 32
+            palette.button: Style.accent_outgoing
+            palette.buttonText: Style.content_opposite
+            icon.source: "qrc:/assets/icon-send-blue.svg"
+            //% "Send"
+            text: qsTrId("general-send")
+            font.pixelSize: 12
+            onClicked: {
+                navigateSend(assets.selectedId);
             }
+        }
 
-            function navigateReceive(assetId) {
-                walletStackView.push(Qt.createComponent("receive_regular.qml"),
-                                        {"onClosed": onClosed,
-                                         "token":    root.token,
-                                         "assetId":  assetId})
-                token = ""
+        CustomButton {
+            Layout.preferredHeight: 32
+            palette.button: Style.accent_incoming
+            palette.buttonText: Style.content_opposite
+            icon.source: "qrc:/assets/icon-receive-blue.svg"
+            //% "Receive"
+            text: qsTrId("wallet-receive-button")
+            font.pixelSize: 12
+            onClicked: {
+                navigateReceive(assets.selectedId);
             }
+        }
 
-            Title {
-                //% "Wallet"
-                text: qsTrId("wallet-title")
-
-                Item {
-                    Layout.fillWidth:   true
-                    Layout.fillHeight:  true
-                }
-
-                Row {
-                    spacing: 20
-
-                    CustomButton {
-                        id: sendButton
-                        height: 32
-                        palette.button: Style.accent_outgoing
-                        palette.buttonText: Style.content_opposite
-                        icon.source: "qrc:/assets/icon-send-blue.svg"
-                        //% "Send"
-                        text: qsTrId("general-send")
-                        font.pixelSize: 12
-                        onClicked: {
-                            navigateSend(assets.selectedId);
-                        }
-                    }
-
-                    CustomButton {
-                        height: 32
-                        palette.button: Style.accent_incoming
-                        palette.buttonText: Style.content_opposite
-                        icon.source: "qrc:/assets/icon-receive-blue.svg"
-                        //% "Receive"
-                        text: qsTrId("wallet-receive-button")
-                        font.pixelSize: 12
-                        onClicked: {
-                            navigateReceive(assets.selectedId);
-                        }
-                    }
+        ContextMenu {
+            id: swapContextMenu
+            Action {
+                text:           qsTrId("atomic-swap-title")
+                icon.source:    "qrc:/assets/icon-atomic_swap.svg"
+                onTriggered: {
+                    main.openAtomicSwaps();
                 }
             }
-
-            AssetsPanel {
-                id: assets
-                Layout.topMargin: 25
-                Layout.fillWidth: true
-
-                Binding {
-                    target:    txTable
-                    property:  "selectedAssets"
-                    value:     assets.selectedIds
+            Action {
+                text:           qsTrId("assets-swap-title")
+                icon.source:    "qrc:/assets/icon-assets_swap.svg"
+                onTriggered: {
+                    main.openAssetSwaps();
                 }
             }
+        }
 
-            SFText {
-                Layout.topMargin: assets.folded ? 25 : 35
-                Layout.fillWidth: true
-
-                font {
-                    pixelSize: 14
-                    letterSpacing: 4
-                    styleName: "DemiBold"; weight: Font.DemiBold
-                    capitalization: Font.AllUppercase
-                }
-
-                opacity: 0.5
-                color: Style.content_main
-                //% "Transactions"
-                text: qsTrId("wallet-transactions-title")
-            }
-
-            TxTable {
-                id:    txTable
-                owner: root
-
-                Layout.topMargin:  12
-                Layout.fillWidth:  true
-                Layout.fillHeight: true
+        CustomButton {
+            id:                     swapButton
+            Layout.preferredHeight: 32
+            palette.button:         Style.active
+            palette.buttonText:     Style.content_opposite
+            icon.source:            "qrc:/assets/icon-swap-blue.svg"
+            //% "Swap"
+            text: qsTrId("wallet-swap-button")
+            font.pixelSize:         12
+            onClicked: {
+                swapContextMenu.popup(swapButton, Qt.point(0, swapButton.height + 6))
             }
         }
     }
 
-    StackView {
-        id: walletStackView
-        Layout.fillWidth:   true
-        Layout.fillHeight:  true
-        initialItem:        walletLayout
-        pushEnter: Transition {
-            enabled: false
-        }
-        pushExit: Transition {
-            enabled: false
-        }
-        popEnter: Transition {
-            enabled: false
-        }
-        popExit: Transition {
-            enabled: false
-        }
-        onCurrentItemChanged: {
-            if (currentItem && currentItem.defaultFocusItem) {
-                walletStackView.currentItem.defaultFocusItem.forceActiveFocus();
-            }
+    AssetsPanel {
+        id: assets
+        Layout.fillWidth: true
+
+        Binding {
+            target:    txTable
+            property:  "selectedAssets"
+            value:     assets.selectedIds
         }
     }
 
-    Component.onCompleted: {
-        if (root.openSend) {
-            var item = walletStackView.currentItem;
-            if (item && item.navigateSend && typeof item.navigateSend == "function" ) {
-                item.navigateSend();
-                root.openSend = false;
-            }
+    SFText {
+        Layout.topMargin: assets.folded ? 25 : 35
+        Layout.fillWidth: true
+
+        font {
+            pixelSize: 14
+            letterSpacing: 3.11
+            styleName: "DemiBold"; weight: Font.DemiBold
+            capitalization: Font.AllUppercase
         }
-        else if (root.openReceive) {
-            var item = walletStackView.currentItem;
-            if (item && item.navigateReceive && typeof item.navigateReceive == "function" ) {
-                item.navigateReceive();
-                root.openReceive = false;
-            }
-        }
+
+        opacity: 0.5
+        color: Style.content_main
+        //% "Transactions"
+        text: qsTrId("wallet-transactions-title")
+    }
+
+    TxTable {
+        id:    txTable
+        owner: root
+
+        Layout.topMargin:  12
+        Layout.fillWidth:  true
+        Layout.fillHeight: true
     }
 
     Component.onDestruction: {
-        var item = walletStackView.currentItem;
-        if (item && item.saveAddress && typeof item.saveAddress == "function") {
-            item.saveAddress();
-        }
+        //var item = walletStackView.currentItem;
+        //if (item && item.saveAddress && typeof item.saveAddress == "function") {
+        //    item.saveAddress();
+        //}
     }
 }

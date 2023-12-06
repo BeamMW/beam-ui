@@ -1,17 +1,14 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.4
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import Beam.Wallet 1.0
-import QtQuick.Layouts 1.12
-import QtQuick.Window 2.12
+import QtQuick.Layouts 1.15
+import QtQuick.Window 2.15
 import "../utils.js" as Utils
 import "../controls"
 import "."
 
-Rectangle
-{
+Rectangle {
     id: root
-
-    readonly property bool isSqueezedHeight : Utils.isSqueezedHeight(root.height)
 
     color: Style.background_main
     default property alias content: contentLayout.data
@@ -34,14 +31,14 @@ Rectangle
     }
 
     ColumnLayout {
-        id: rootColumn
-        anchors.fill: parent
-        spacing: 0
+        id:             rootColumn
+        anchors.fill:   parent
+        spacing:        0
 
         LogoComponent {
-            Layout.topMargin:   root.isSqueezedHeight ? 13 : 83
             Layout.alignment:   Qt.AlignHCenter
-            isSqueezedHeight:   root.isSqueezedHeight
+            Layout.fillHeight:  true
+            Layout.preferredHeight: 1
         }
 
         ColumnLayout {
@@ -49,13 +46,33 @@ Rectangle
             Layout.fillWidth:   true
             Layout.fillHeight:  true
             Layout.alignment:   Qt.AlignHCenter
+            Layout.preferredHeight: 1
         }
     }
 
     VersionFooter {
+        id: version
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.rightMargin: 40
         anchors.topMargin: 40
+    }
+
+    CustomComboBox {
+        id: networkSelector
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.leftMargin: 40
+        anchors.topMargin: 40
+        fontPixelSize: 14
+        enableScroll: false
+        textRole: "name"
+
+        model: viewModel.networks
+        currentIndex: viewModel.currentNetworkIndex
+        onActivated: {
+            viewModel.currentNetwork = currentText;
+            Theme.update();
+        }
     }
 }

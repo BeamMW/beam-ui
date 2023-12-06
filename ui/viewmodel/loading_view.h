@@ -80,7 +80,7 @@ private:
     int m_total;
     int m_done;
     int m_lastDone;
-    bool m_hasLocalNode;
+    bool m_connectedToLocalNode;
     QString m_progressMessage;
     bool m_isCreating;
     bool m_isRecoveryMode = false;

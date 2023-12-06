@@ -1,13 +1,11 @@
-import QtQuick 2
-import QtQuick.Controls 1
-import QtQuick.Controls 2
-import QtQuick.Controls.Styles 1
-import QtGraphicalEffects 1
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtGraphicalEffects 1.15
+import QtQuick.Layouts 1.15
 import "controls"
 import "start_wizzard"
 import "utils.js" as Utils
-import Beam.Wallet 1
-import QtQuick.Layouts 1
+import Beam.Wallet 1.0
 
 Item
 {
@@ -85,8 +83,9 @@ Item
     {
         viewModel.createWallet(function (errMsg)
         {
-            if (errMsg == "") { 
-                startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : true, "isCreating" : true, "cancelCallback": startWizzardView.pop});
+            if (errMsg == "") {
+                navigateToMain();
+                //startWizzardView.push("qrc:/loading.qml", {"isRecoveryMode" : true, "isCreating" : true, "cancelCallback": startWizzardView.pop});
             } else {
                 errorDlg.text = errMsg;
                 errorDlg.open();
@@ -194,12 +193,12 @@ Item
                         }
                       },
                       "loadWallet": function () {
-                        root.parent.setSource("qrc:/main.qml");
+                            navigateToMain()
                       }
                     })
             } else if (viewModel.walletExists) {
                 if (isLogoutMode) {
-                    BeamGlobals.resetModel()
+                    viewModel.resetModel()
                 }
                 startWizzardView.push(openWalletPage);
             }

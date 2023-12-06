@@ -1,6 +1,6 @@
-import QtQuick          2.11
-import QtQuick.Layouts  1.12
-import QtQuick.Controls 2.4
+import QtQuick          2.15
+import QtQuick.Layouts  1.15
+import QtQuick.Controls 2.15
 import QtWebEngine      1.4
 import QtWebChannel     1.0
 import Beam.Wallet      1.0
@@ -53,7 +53,7 @@ ColumnLayout {
     function showDAppStoreTxPopup(comment, txId) {
         const appName = "DApps Store"
         const appicon = "qrc:/assets/icon-dapps_store.svg"
-        main.showAppTxPopup(comment, appName, appicon, txId, true);        
+        main.showAppTxPopup(comment, appName, appicon, txId, true);
     }
 
     Component.onCompleted: {
@@ -67,44 +67,19 @@ ColumnLayout {
         viewModel.showDAppStoreTxPopup.disconnect(showDAppStoreTxPopup)
     }
 
+    //% "Publisher's page"
+    property string title: qsTrId("dapps-store-publisher-page")
+
     //
-    // Page Header (Back button + title + publisher's buttons)
+    // Page Header (publisher's buttons)
     //
-    RowLayout {
+    property var titleContent:  RowLayout {
         id:      header
         spacing: 0
-
-        CustomButton {
-            id:             backButton
-            palette.button: "transparent"
-            leftPadding:    0
-            showHandCursor: true
-
-            font {
-                styleName: "DemiBold"
-                weight:    Font.DemiBold
-            }
-
-            //% "Back"
-            text:        qsTrId("general-back")
-            icon.source: "qrc:/assets/icon-back.svg"
-            visible:     true
-
-            onClicked:   control.onBack()
+        Item {
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
         }
-
-        SFText {
-            Layout.fillWidth:     true
-            color:                Style.content_main
-            horizontalAlignment:  Text.AlignHCenter
-            font.pixelSize:       14
-            font.weight:          Font.Bold
-            font.capitalization:  Font.AllUppercase
-            font.letterSpacing:   3.11
-            //% "Publisher's page"
-            text: qsTrId("dapps-store-publisher-page")
-        }
-
         Item {
             Layout.alignment:       Qt.AlignRight
             width:                  uploadDappButton.width
@@ -323,7 +298,6 @@ ColumnLayout {
         Layout.fillWidth:         true
         visible:                  control.hasApps
         appsList:                 control.appsList
-        showInstallFromFilePanel: false
         isPublisherAdminMode:     true
         isIPFSAvailable:          control.viewModel.isIPFSAvailable
 

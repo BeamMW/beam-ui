@@ -1,9 +1,9 @@
-import QtQuick 2.11
+import QtQuick 2.15
 import QtQuick.Controls 1.4
-import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.12
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.15
 import QtQuick.Window 2.2
 import "controls"
 import Beam.Wallet 1.0
@@ -18,6 +18,7 @@ Rectangle {
     readonly property bool devMode: viewModel.isDevMode
     readonly property string accountLabel: viewModel.accountLabel
     readonly property string accountPicture: viewModel.accountPicture
+    readonly property alias unreadNotifications : viewModel.unreadNotifications
     property alias statusBar: statusBarInternal
     anchors.fill:   parent
 
@@ -175,18 +176,18 @@ Rectangle {
 
     property color topColor:            Style.background_main_top
     property color topGradientColor:    Qt.rgba(Style.background_main_top.r, Style.background_main_top.g, Style.background_main_top.b, 0)
-    property var backgroundRect: mainBackground
-    property var backgroundLogo: mainBackgroundLogo
+    property var backgroundRect:        mainBackground
+    property var backgroundLogo:        mainBackgroundLogo
 
 
     Rectangle {
-        id: mainBackground
-        anchors.fill: parent
-        color: Style.background_main
+        id:             mainBackground
+        anchors.fill:   parent
+        color:          Style.background_main
 
         Rectangle {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.left:   parent.left
+            anchors.right:  parent.right
             height: 230
             gradient: Gradient {
                 GradientStop { position: 0.0; color: main.topColor }
@@ -196,7 +197,6 @@ Rectangle {
 
         BgLogo {
             id: mainBackgroundLogo
-            anchors.leftMargin: sidebar.width
         }
     }
 
@@ -208,30 +208,6 @@ Rectangle {
         return BeamGlobals.isFork3() ? "applications/applications" : "applications/applications_nofork"
     }
 
-    function appArgs (name, appid, showBack) {
-        return {
-            "appToOpen": { name, appid},
-            showBack
-        }
-    }
-
-    property var contentItems : [
-        {name: "wallet"},
-        {name: "atomic_swap"},
-        {name: "assets_swap"},
-        {name: "applications", qml: appsQml, reloadable: true},
-        {name: "daocore", qml: appsQml, args: () => appArgs("BeamX DAO", viewModel.daoCoreAppID, false)},
-        {name: "voting", qml: appsQml, args: () => appArgs("BeamX DAO Voting", viewModel.votingAppID, false)},
-        {name: "bridge", qml: appsQml, args: () => appArgs("Bridges app", viewModel.ethBridgeAppID, false)},
-        {name: "beam_messenger"},
-        {name: "addresses"},
-        {name: "notifications"},
-        {name: "help"},
-        {name: "settings"}
-    ]
-
-    property int selectedItem: -1
-
     StatusBar {
         id:              statusBarInternal
         model:           statusbarModel
@@ -242,198 +218,68 @@ Rectangle {
         z:               33
     }
 
-    Item {
-        id:              sidebar
-        width:           70
-        anchors.bottom:  parent.bottom
-        anchors.left:    parent.left
-        anchors.top:     parent.top
+    ColumnLayout {
+        anchors.topMargin:      30
+        anchors.bottomMargin:   0
+        anchors.rightMargin:    20
+        anchors.leftMargin:     20
+        anchors.fill:           parent
+        spacing: 0
 
-        Rectangle {
-            anchors.fill: parent
-            opacity: 0.1
-            border.width: 0
-            color: Style.navigation_background
+        Title {
+            Layout.fillWidth:   true
+            text:               contentStack.currentItem.title
+            path:               getNavigationPath()
+            content:            contentStack.currentItem.titleContent ? contentStack.currentItem.titleContent : null
+            canNavigate:        contentStack.depth > 1
+            onNavigate: function(index) {
+                var item = contentStack.get(index);
+                contentStack.pop(item);
+            }
+            
+            function getNavigationPath() {
+                var path = [];
+                if (contentStack.depth <= 1)
+                    return path;
+                for (var i = 0; i < contentStack.depth-1; ++i) {
+                    path.push(contentStack.get(i).title);
+                }
+                return path;
+            }
         }
 
-        SvgImage {
-            id: image
-            y:  50
-            anchors.horizontalCenter: parent.horizontalCenter
-            source: Style.navigation_logo
-        }
+        StackView {
+            id:                     contentStack
+            Layout.topMargin:       30
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+            focus:                  true
+            initialItem:            Qt.createComponent("qrc:/applications/applications.qml")
 
-        ScrollView {
-            id: scrollView
-            anchors.left:       parent.left
-            anchors.right:      parent.right
-            anchors.top:        parent.top
-            anchors.bottom:     parent.bottom
-            anchors.topMargin:  130
-            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy:   ScrollBar.AsNeeded
-            // hoverEnabled: true
-
-            ColumnLayout {
-                width: scrollView.availableWidth
-                spacing:            0
-
-                Repeater {
-                    id: controls
-                    model: contentItems
-
-                    ColumnLayout {
-                        Layout.fillWidth:  true
-
-                        Item {
-                            id: control
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 58
-                            Layout.alignment: Qt.AlignBottom
-                            Layout.topMargin: {
-                                if (modelData.name != 'addresses')
-                                    return 0;
-                                var itemsHeight = contentItems.length * 69;
-                                var gap = sidebar.height - itemsHeight;
-                                return gap > 0 ? gap : 0;
-                            }
-                            activeFocusOnTab: true
-
-                            SvgImage {
-                                id: icon
-                                x: 21
-                                y: 14
-                                width: 28
-                                height: 28
-                                source: "qrc:/assets/icon-" + modelData.name + (selectedItem == index ? "-active" : "") + ".svg"
-                            }
-
-                            Item {
-                                Rectangle {
-                                    id: indicator
-                                    y: 6
-                                    width: 4
-                                    height: 44
-                                    color: selectedItem == index ? Style.active : Style.passive
-                                }
-
-                                DropShadow {
-                                    anchors.fill: indicator
-                                    radius: 5
-                                    samples: 9
-                                    color: Style.active
-                                    source: indicator
-                                }
-
-                                visible: selectedItem == index
-                            }
-
-                            Item {
-                                visible: modelData.name == 'notifications' && viewModel.unreadNotifications > 0
-                                Rectangle {
-                                    id: counter
-                                    x: 42
-                                    y: 9
-                                    width: 16
-                                    height: 16
-                                    radius: width/2
-                                    color: Style.active
-
-                                    SFText {
-                                        height: 14
-                                        text: viewModel.unreadNotifications
-                                        font.pixelSize: 12
-                                        anchors.centerIn: counter
-                                    }
-                                }
-                                DropShadow {
-                                    anchors.fill: counter
-                                    radius: 5
-                                    samples: 9
-                                    source: counter
-                                    color: Style.active
-                                }
-                            }
-
-                            Keys.onPressed: {
-                                if ((event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space))
-                                if (modelData.reloadable || selectedItem != index) {
-                                    updateItem(index);
-                                }
-                            }
-
-                            MouseArea {
-                                id: mouseArea
-                                anchors.fill: parent
-                                onClicked: {
-                                    control.focus = true
-                                    if (modelData.reloadable || selectedItem != index) {
-                                        updateItem(index);
-                                    }
-                                }
-                                hoverEnabled: true
-                            }
-                        }
-                    }
+            pushEnter: Transition {
+                enabled: false
+            }
+            pushExit: Transition {
+                enabled: false
+            }
+            popEnter: Transition {
+                enabled: false
+            }
+            popExit: Transition {
+                enabled: false
+            }
+            onCurrentItemChanged: {
+                if (currentItem && currentItem.defaultFocusItem) {
+                    contentStack.currentItem.defaultFocusItem.forceActiveFocus();
                 }
             }
         }
     }
 
-    Loader {
-        id: content
-        anchors.topMargin: 30
-        anchors.bottomMargin: 0
-        anchors.rightMargin: 20
-        anchors.leftMargin: 90
-        anchors.fill: parent
-        focus: true
-    }
-
-    function updateItem(indexOrID, props)
-    {
-        var update = function(index) {
-            selectedItem = index
-            controls.itemAt(index).focus = true
-
-            var item   = contentItems[index]
-            var source = ["qrc:/", item.qml ? item.qml() : item.name, ".qml"].join('')
-            var args   = item.args ? item.args() : {}
-
-            //content.setSource("")
-            content.setSource(source, Object.assign(args, props))
-        }
-
-        var indexByName = function(name) {
-            for (var index = 0; index < contentItems.length; index++) {
-                if (contentItems[index].name == name) {
-                    return index
-                }
-            }
-            return -1
-        }
-
-        if ((typeof(indexOrID) == "number" && contentItems[indexOrID].name == "help") ||
-            (typeof(indexOrID) == "string" && indexOrID == "help")) {
-            var previoslySelected = selectedItem;
-            selectedItem = typeof(indexOrID) == "string" ? indexByName(indexOrID) : indexOrID;
-            controls.itemAt(selectedItem).focus = true;
-            Utils.openExternalWithConfirmation(
-                "https://beam.mw/docs",
-                function () {
-                    selectedItem = previoslySelected;
-                    controls.itemAt(selectedItem).focus = true;
-                });
-
-            return;
-        }
-        
-        if (typeof(indexOrID) == "string") {
-            indexOrID = indexByName(indexOrID)
-        }
-
-        // here we always have a number
-        update(indexOrID)
+    function navigateTo(name, props) {
+        var source = ["qrc:/", name, ".qml"].join('')
+        console.log("Push: " + source)
+        contentStack.push(Qt.createComponent(source), props)
     }
 
     function openMaxPrivacyCoins (assetId, unitName, lockedAmount) {
@@ -445,55 +291,113 @@ Rectangle {
        details.open()
     }
 
-    function openWallet () {
-        updateItem("wallet")
-    }
-    function openSendDialog(receiver) {
-        updateItem("wallet", {"openSend": true, "token" : receiver})
+    function openHelp() {
+        Utils.openExternalWithConfirmation("https://beam.mw/docs");
     }
 
-    function openReceiveDialog(token) {
-        updateItem("wallet", {"openReceive": true, "token" : token})
+    function openWallet() {
+        navigateTo("wallet")
+    }
+
+    function goBack() {
+        contentStack.pop()
+    }
+    
+    function navigateSend(assetId) {
+        openSendDialog("", assetId)
+    }
+
+    function navigateReceive(assetId) {
+        openReceiveDialog("", assetId)
+    }
+
+    function openSendDialog(receiver, assetId) {
+        var params = {
+            "onAccepted":    goBack,
+            "onClosed":      goBack,
+            "receiverToken": receiver,
+            "assetId":       assetId
+        }
+        if (assetId != undefined)
+        {
+            params["assetId"] = assetId >= 0 ? assetId : 0
+        }
+        navigateTo("send_regular", params)
+    }
+
+    function openReceiveDialog(token, assetId) {
+        var params = {
+            "onClosed": goBack,
+            "token":    token,
+            "assetId":  assetId
+            };
+        if (assetId != undefined)
+        {
+            params["assetId"] = assetId >= 0 ? assetId : 0
+        }
+        navigateTo("receive_regular", params)
     }
 
     function openSettings(section = "") {
+        if (contentStack.currentItem instanceof Settings) {
+            contentStack.currentItem.unfoldSection = section
+            return
+        }
         if (section == "") {
-            updateItem("settings")
+            navigateTo("Settings")
         } else {
-            updateItem("settings", {"unfoldSection": section})
+            navigateTo("Settings", {"unfoldSection": section})
         }
     }
 
+    function openNotifications() {
+        contentStack.pop(contentStack.get(0));
+        navigateTo("notifications");
+    }
+
     function openSwapActiveTransactionsList() {
-        updateItem("atomic_swap", {"shouldShowActiveTransactions": true})
+        navigateTo("atomic_swap", {"shouldShowActiveTransactions": true})
     }
 
     function openTransactionDetails(id) {
-        updateItem("wallet", {"openedTxID": id})
+        navigateTo("wallet", {"openedTxID": id})
     }
 
     function openDAppTransactionDetails(txid) {
         if (content.item.openAppTx) {
             return content.item.openAppTx(txid)
         }
-        updateItem("applications", {"openedTxID": txid})
+        navigateTo(appsQml(), {"openedTxID": txid})
     }
 
     function openSwapTransactionDetails(id) {
-        updateItem("atomic_swap", {"openedTxID": id})
+        navigateTo("atomic_swap", {"openedTxID": id})
     }
 
     function openApplications () {
-        updateItem("applications")
-    }
-
-    function openFaucet () {
-        var args = appArgs("BEAM Faucet", viewModel.faucetAppID, false);
-        updateItem("applications", args);
+        navigateTo(appsQml())
     }
 
     function validationSeedBackToSettings() {
-        updateItem("settings", { "settingsPrivacyFolded": false});
+        navigateTo("Settings", { "settingsPrivacyFolded": false});
+    }
+
+    function openAssetSwaps() {
+        navigateTo("assets_swap")
+    }
+
+    function openAtomicSwaps() {
+        navigateTo("atomic_swap")
+    }
+
+    function openMessenger() {
+        contentStack.pop(contentStack.get(0));
+        navigateTo("beam_messenger")
+    }
+
+    function openAddresses() {
+        contentStack.pop(contentStack.get(0));
+        navigateTo("addresses")
     }
 
     property var trezor_popups : []
@@ -532,8 +436,7 @@ Rectangle {
     Component.onCompleted: {
         if (seedValidationHelper.isTriggeredFromSettings)
             validationSeedBackToSettings();
-        else
-            openWallet();
+
         main.Window.window.closing.connect(onClosing);
     }
 
