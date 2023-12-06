@@ -140,53 +140,34 @@ Item {
             Layout.fillWidth:   true
             spacing:            4
             Item {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-            }
-            RowLayout {
-                Layout.fillWidth: true
-                spacing:          4
-
-                SFText {
-                    text: app.name
-                    font {
-                        styleName:  "DemiBold"
-                        weight:     Font.DemiBold
-                        pixelSize:  16
-                    }
-                    color:          Style.content_main
-                    wrapMode:       Text.Wrap
-                }
-
-                Item {
-                    Layout.fillWidth: true
-                }
+                Layout.fillWidth:   true
+                Layout.fillHeight:  true
             }
 
-            RowLayout {
-                Layout.fillWidth: true
-                spacing:          0
-
-                ColumnLayout {
-                    Layout.alignment: Qt.AlignTop
-                    spacing:          4
-                    visible:          !!app.publisherName
-                    SFText {
-                        text:                  !!app.publisherName ? app.publisherName : ""
-                        font.pixelSize:        12
-                        elide:                 Text.ElideRight
-                        Layout.preferredWidth: control.textWidth
-                        color:                 Style.content_secondary
-                    }
+            SFText {
+                Layout.fillWidth:   true
+                text: app.name
+                font {
+                    styleName:      "DemiBold"
+                    weight:         Font.DemiBold
+                    pixelSize:      16
                 }
-
-                Item {
-                    Layout.fillWidth: true
-                }
+                color:              Style.content_main
+                wrapMode:           Text.Wrap
             }
+
+            SFText {
+                Layout.fillWidth:      true
+                text:                  !!app.publisherName ? app.publisherName : ""
+                visible:                !!app.publisherName
+                font.pixelSize:        12
+                elide:                 Text.ElideRight
+                color:                 Style.content_secondary
+            }
+
             Item {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+                Layout.fillWidth:   true
+                Layout.fillHeight:  true
             }
         }
     }
