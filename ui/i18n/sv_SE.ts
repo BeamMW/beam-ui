@@ -366,8 +366,9 @@
         <translation>uppkopplad</translation>
     </message>
     <message id="status-updating">
-        <source>updating</source>
-        <translation>uppdaterar</translation>
+        <source>synchronizing blockchain</source>
+        <oldsource>updating</oldsource>
+        <translation type="unfinished">uppdaterar</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -939,8 +940,9 @@
         <translation>Växelkurs</translation>
     </message>
     <message id="wallet-send-swap-title">
-        <source>Accept Swap Offer</source>
-        <translation>Swap-valutor</translation>
+        <source>Accept Offer</source>
+        <oldsource>Accept Swap Offer</oldsource>
+        <translation type="unfinished">Swap-valutor</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -1658,9 +1660,10 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation>Verktyg</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
-        <source>Integrated node</source>
+        <source>Run integrated node</source>
+        <oldsource>Integrated node</oldsource>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation>Integrerad nod</translation>
+        <translation type="unfinished">Integrerad nod</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1681,12 +1684,9 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation>Beam integrerad nod</translation>
     </message>
     <message id="settings-remote-node-title">
-        <source>Beam Remote Node</source>
-        <translation>Fjärrnod för Beam</translation>
-    </message>
-    <message id="settings-run-remote-node">
-        <source>Remote node</source>
-        <translation>Fjärr-nod</translation>
+        <source>Beam Node Connection</source>
+        <oldsource>Beam Remote Node</oldsource>
+        <translation type="unfinished">Fjärrnod för Beam</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -2116,7 +2116,8 @@ mycket längre tid för en transaktion att slutföras.</translation>
         <translation type="unfinished">Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>My DApp Store</source>
+        <source>Applications</source>
+        <oldsource>My DApp Store</oldsource>
         <translation type="unfinished">My DApp Store</translation>
     </message>
     <message id="apps-devapp">
@@ -2815,22 +2816,6 @@ Uppdatera dina inställningar och försök igen.</translation>
         <source>DApp name</source>
         <translation type="unfinished">DApp name</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation type="unfinished">DApps Privacy Warning</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation type="unfinished">Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation type="unfinished">Allow to launch DApps</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Information om transaktion</translation>
@@ -2966,10 +2951,6 @@ cannot be canceled.</translation>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
         <translation type="unfinished">Local server port</translation>
     </message>
-    <message id="apps-install-from-file">
-        <source>Install DApp from file</source>
-        <translation type="unfinished">Install DApp from file</translation>
-    </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation type="unfinished">Select application to install</translation>
@@ -3040,10 +3021,6 @@ cannot be canceled.</translation>
 (offline)</source>
         <translation type="unfinished">sent to own address
 (offline)</translation>
-    </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation type="unfinished">This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
@@ -3326,10 +3303,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>become a publisher</source>
         <translation type="unfinished">become a publisher</translation>
     </message>
-    <message id="dapps-store-install">
-        <source>install</source>
-        <translation type="unfinished">install</translation>
-    </message>
     <message id="dapps-store-update">
         <source>update</source>
         <translation type="unfinished">update</translation>
@@ -3564,10 +3537,6 @@ Let&apos;s start!</translation>
         <source>Publisher link</source>
         <translation type="unfinished">Publisher link</translation>
     </message>
-    <message id="dapps-store-launch">
-        <source>launch</source>
-        <translation type="unfinished">launch</translation>
-    </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
@@ -3633,7 +3602,8 @@ Please, check the file and try again.</translation>
         <translation type="unfinished">Assets Swaps</translation>
     </message>
     <message id="wallet-atomic-swap-title">
-        <source>Create Atomic Swap Offer</source>
+        <source>Create Offer</source>
+        <oldsource>Create Atomic Swap Offer</oldsource>
         <translation type="unfinished">Create Atomic Swap Offer</translation>
     </message>
     <message id="app-install-timeout-fail">
@@ -3687,11 +3657,13 @@ Please, restart the wallet and try again.</translation>
         <translation type="unfinished">accept offer</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
-        <source>Accept an Asset Swap Offer</source>
+        <source>Accept Offer</source>
+        <oldsource>Accept an Asset Swap Offer</oldsource>
         <translation type="unfinished">Accept an Asset Swap Offer</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
-        <source>Create an Asset Swap Offer</source>
+        <source>Create Offer</source>
+        <oldsource>Create an Asset Swap Offer</oldsource>
         <translation type="unfinished">Create an Asset Swap Offer</translation>
     </message>
     <message id="asset-swap-fee">
@@ -3887,16 +3859,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="start-network-label">
-        <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="start-account-label">
         <source>Account</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="start-new-account-label">
-        <source>Account label</source>
+        <source>Account name</source>
+        <oldsource>Account label</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="new-account-label">
@@ -3909,6 +3878,47 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Swappa</translation>
+    </message>
+    <message id="apps-no-installed">
+        <source>You don&apos;t have any applications installed yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-no-at-all">
+        <source>No applications yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-installed-tab">
+        <source>Installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-all-tab">
+        <source>All</source>
+        <translation type="unfinished">Alla</translation>
+    </message>
+    <message id="help-title">
+        <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-connect-local-node">
+        <source>Integrated node</source>
+        <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-connect-remote-node">
+        <source>Remote node</source>
+        <translation type="unfinished">Fjärr-nod</translation>
+    </message>
+    <message id="general-add-account">
+        <source>Add account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

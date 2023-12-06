@@ -366,8 +366,8 @@
         <translation>online</translation>
     </message>
     <message id="status-updating">
-        <source>updating</source>
-        <translation>updating</translation>
+        <source>synchronizing blockchain</source>
+        <translation>synchronizing blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -939,8 +939,8 @@
         <translation>Exchange rate</translation>
     </message>
     <message id="wallet-send-swap-title">
-        <source>Accept Swap Offer</source>
-        <translation>Accept Swap Offer</translation>
+        <source>Accept Offer</source>
+        <translation>Accept Offer</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -1660,9 +1660,9 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Utilities</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
-        <source>Integrated node</source>
+        <source>Run integrated node</source>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation>Integrated node</translation>
+        <translation>Run integrated node</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1683,12 +1683,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Beam Integrated Node</translation>
     </message>
     <message id="settings-remote-node-title">
-        <source>Beam Remote Node</source>
-        <translation>Beam Remote Node</translation>
-    </message>
-    <message id="settings-run-remote-node">
-        <source>Remote node</source>
-        <translation>Remote node</translation>
+        <source>Beam Node Connection</source>
+        <translation>Beam Node Connection</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -2118,8 +2114,8 @@ much longer for a transaction to complete.</translation>
         <translation>Infura project ID</translation>
     </message>
     <message id="apps-title">
-        <source>My DApp Store</source>
-        <translation>My DApp Store</translation>
+        <source>Applications</source>
+        <translation>Applications</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2817,22 +2813,6 @@ Update your settings and try again.</translation>
         <source>DApp name</source>
         <translation>DApp name</translation>
     </message>
-    <message id="dapps-privacy-title">
-        <source>DApps Privacy Warning</source>
-        <translation>DApps Privacy Warning</translation>
-    </message>
-    <message id="dapps-privacy-warning">
-        <source>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</source>
-        <translation>Beam Wallet requires a permission to launch distributed applications. This action may expose your info including but not limited to the IP address to 3rd-party web servers and/or contracts.
-
-Allow to proceed? You can always update your choice in Settings later.</translation>
-    </message>
-    <message id="settings-dapps-allowed">
-        <source>Allow to launch DApps</source>
-        <translation>Allow to launch DApps</translation>
-    </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
         <translation>Transaction info</translation>
@@ -2967,10 +2947,6 @@ cannot be canceled.</translation>
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
         <translation>Local server port</translation>
-    </message>
-    <message id="apps-install-from-file">
-        <source>Install DApp from file</source>
-        <translation>Install DApp from file</translation>
     </message>
     <message id="applications-install-title">
         <source>Select application to install</source>
@@ -3328,10 +3304,6 @@ In case you’d like to re-use an earlier created regular address please use the
         <source>become a publisher</source>
         <translation>become a publisher</translation>
     </message>
-    <message id="dapps-store-install">
-        <source>install</source>
-        <translation>install</translation>
-    </message>
     <message id="dapps-store-update">
         <source>update</source>
         <translation>update</translation>
@@ -3566,10 +3538,6 @@ Let&apos;s start!</translation>
         <source>Publisher link</source>
         <translation>Publisher link</translation>
     </message>
-    <message id="dapps-store-launch">
-        <source>launch</source>
-        <translation>launch</translation>
-    </message>
     <message id="app-failed-create-publisher">
         <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
@@ -3635,8 +3603,8 @@ Please, check the file and try again.</translation>
         <translation>Assets Swaps</translation>
     </message>
     <message id="wallet-atomic-swap-title">
-        <source>Create Atomic Swap Offer</source>
-        <translation>Create Atomic Swap Offer</translation>
+        <source>Create Offer</source>
+        <translation>Create Offer</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3689,12 +3657,12 @@ Please, restart the wallet and try again.</translation>
         <translation>accept offer</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
-        <source>Accept an Asset Swap Offer</source>
-        <translation>Accept an Asset Swap Offer</translation>
+        <source>Accept Offer</source>
+        <translation>Accept Offer</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
-        <source>Create an Asset Swap Offer</source>
-        <translation>Create an Asset Swap Offer</translation>
+        <source>Create Offer</source>
+        <translation>Create Offer</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3889,10 +3857,6 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Logout</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="start-network-label">
-        <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message id="start-account-label">
         <source>Account</source>
         <translation type="unfinished"></translation>
@@ -3911,6 +3875,43 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="wallet-swap-button">
+        <source>Swap</source>
+        <translation type="unfinished">Swap</translation>
+    </message>
+    <message id="apps-no-installed">
+        <source>You don&apos;t have any applications installed yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-no-at-all">
+        <source>No applications yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-installed-tab">
+        <source>Installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="apps-all-tab">
+        <source>All</source>
+        <translation type="unfinished">All</translation>
+    </message>
+    <message id="help-title">
+        <source>Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-connect-local-node">
+        <source>Integrated node</source>
+        <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-connect-remote-node">
+        <source>Remote node</source>
+        <translation type="unfinished">Remote node</translation>
+    </message>
+    <message id="general-add-account">
+        <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

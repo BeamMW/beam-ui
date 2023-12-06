@@ -199,6 +199,39 @@ Item {
                 control.launch(app)
             }
         }
+        ToolTip {
+            id:           toolTip
+            delay:        500
+            timeout:      2000
+            visible:      false
+            text:         !app.supported && !control.isPublisherAdminMode ? 
+                            //% "This DApp requires version %1 of Beam Wallet or higher. Please update your wallet."
+                            qsTrId("apps-version-error").arg(app.min_api_version || app.api_version)
+                            //% "IPFS Service is not running or is not connected to the peers. Please check the settings."
+                            : qsTrId("dapps-store-ipfs-unavailable")
+            width:        300
+            modal:        false
+            parent:       control
+            x:            parent.width - width - 20
+            y:            parent.height + 4
+            z:            100
+            padding:      20
+            closePolicy:  Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+            contentItem: SFText {
+                color:            Style.validator_error
+                font.pixelSize:   12
+                text:             toolTip.text
+                maximumLineCount: 2
+                wrapMode:         Text.WordWrap
+            }
+
+            background: Rectangle {
+                radius:       10
+                color:        Style.background_popup
+                anchors.fill: parent
+            }
+        }
     }
     Component {
         id:     appMenuComponent
