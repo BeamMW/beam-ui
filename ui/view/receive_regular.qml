@@ -311,47 +311,6 @@ ColumnLayout {
                                     }
                                 }
 
-                                RowLayout {
-                                    spacing: 0
-
-                                    Layout.fillWidth:   true
-                                    Layout.leftMargin:  20
-                                    Layout.rightMargin: 2
-                                    Layout.alignment:   Qt.AlignVCenter
-
-                                    Rectangle {
-                                        Layout.fillWidth:        true
-                                        Layout.preferredHeight:  sbbdText.height
-                                        color:                   "transparent"
-                                        border.color:            "orange"
-                                        border.width:            2
-                                        radius:                  10
-                                        SFText {
-                                            id : sbbdText
-                                            anchors.left:   parent.left
-                                            anchors.right:  parent.right
-                                            anchors.leftMargin:     10
-                                            anchors.rightMargin:    10
-                                            text:  viewModel.sbbsAddress
-                                            width: parent.width
-                                            color: Style.content_main
-                                            elide: Text.ElideMiddle
-                                        }
-                                    }
-                                    CustomToolButton {
-                                        Layout.alignment: Qt.AlignVCenter
-                                        icon.source: "qrc:/assets/icon-copy.svg"
-                                        ToolTip.text: qsTrId("settings-swap-copy-address")
-                                        ToolTip.visible: hovered
-                                        ToolTip.delay: 500
-                                        ToolTip.timeout: 2000
-                                        enabled: control.isValid()
-                                        onClicked: {
-                                            control.copySBBSAndSave()
-                                        }
-                                    }
-                                }
-
                                 LinkButton {
                                     Layout.alignment: Qt.AlignHCenter
                                     //% "Address details"
@@ -361,21 +320,58 @@ ColumnLayout {
                                         tokenInfoDialog.open()
                                     }
                                 }
-                            }
+                                Rectangle {
+                                    Layout.fillWidth:        true
+                                    Layout.preferredHeight:  childrenRect.height
+                                    color:                   "transparent"
+                                    border.color:            "orange"
+                                    border.width:            2
+                                    radius:                  10
+                                    visible:                 viewModel.sbbsAddress.length > 0
+                                    ColumnLayout {
+                                        anchors.left:       parent.left
+                                        anchors.right:      parent.right
+                                        anchors.leftMargin: 20
+                                        spacing:            0
+                                        SFText {
+                                            Layout.alignment:       Qt.AlignTop
+                                            Layout.topMargin:       10
+                                            font.pixelSize:         14
+                                            color:                  Style.content_disabled
+                                            /*% "SBBS Address
+                        (use for CEX withdrawals)"*/
+                                            text:                   qsTrId("address-info-sbbs-address") + ":"
+                                        }
+                                        RowLayout {
+                                            spacing: 0
 
-                            SFText {
-                                Layout.fillWidth:   true
-                                width: parent.width
-                                font.pixelSize:        14
-                                font.italic:           true
-                                color:                 Style.content_disabled
-                                wrapMode:              Text.WordWrap
-                                horizontalAlignment:   Text.AlignHCenter
-                                visible:               !viewModel.isMaxPrivacy && !control.hasHwError
-/*% "To ensure a better privacy, new address is generated every time.
-In case you’d like to re-use an earlier created regular address please use the Address Book."
-*/
-                                text:  qsTrId("wallet-receive-regular-address-message")
+                                            Layout.fillWidth:   true
+                                            Layout.rightMargin: 2
+                                            Layout.alignment:   Qt.AlignVCenter
+
+                                            SFText {
+                                                id : sbbdText
+                                                Layout.fillWidth:    true
+                                                text:                viewModel.sbbsAddress
+                                                width:               parent.width
+                                                color:               Style.content_main
+                                                elide:               Text.ElideMiddle
+                                            }
+                                            CustomToolButton {
+                                                Layout.alignment: Qt.AlignVCenter
+                                                icon.source: "qrc:/assets/icon-copy.svg"
+                                                ToolTip.text: qsTrId("settings-swap-copy-address")
+                                                ToolTip.visible: hovered
+                                                ToolTip.delay: 500
+                                                ToolTip.timeout: 2000
+                                                enabled: control.isValid()
+                                                onClicked: {
+                                                    control.copySBBSAndSave()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
 
                             SFText {

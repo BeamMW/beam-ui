@@ -707,7 +707,7 @@ const QList<QObject*>& StartViewModel::getWalletDBpaths()
 QList<QVariantMap> StartViewModel::getNetworks() const
 {
     QList<QVariantMap> networks;
-#define MACRO(name) \
+#define ADD_NETWORK(name) \
     { QVariantMap network; \
     network[kName] = #name; \
     network[kIcon] = "qrc:/assets/icon_" #name ".png"; \
@@ -715,8 +715,14 @@ QList<QVariantMap> StartViewModel::getNetworks() const
     network[kIconHeight] = 16; \
     networks.push_back(network); }
 
-    RulesNetworks(MACRO)
-#undef MACRO
+#ifndef NDEBUG
+    RulesNetworks(ADD_NETWORK)
+#else
+    ADD_NETWORK(mainnet);
+    ADD_NETWORK(dappnet);
+#endif
+
+#undef ADD_NETWORK
     return networks;
 }
 

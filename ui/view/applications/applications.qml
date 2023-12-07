@@ -264,10 +264,6 @@ ColumnLayout {
         }
     }
 
-    SettingsViewModel {
-        id: settings
-    }
-
     ColumnLayout {
         id:                appsRoot
         Layout.fillWidth:  true
@@ -298,6 +294,11 @@ ColumnLayout {
         AssetsPanel {
             id:                 assetsList
             Layout.fillWidth:   true
+            Binding {
+                target:    txTable
+                property:  "selectedAssets"
+                value:     assetsList.selectedIds
+            }
         }
 
         RowLayout {
