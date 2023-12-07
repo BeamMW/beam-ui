@@ -319,11 +319,11 @@
     </message>
     <message id="change-pwd-ok">
         <source>Change password</source>
-        <translation>パスワードを変更</translation>
+        <translation>パスワードを変更する</translation>
     </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
-        <translation>自分のウォレットを表示</translation>
+        <translation>マイウォレットを表示する</translation>
     </message>
     <message id="payment-info-proof-verification">
         <source>Payment proof verification</source>
@@ -367,8 +367,7 @@
     </message>
     <message id="status-updating">
         <source>synchronizing blockchain</source>
-        <oldsource>updating</oldsource>
-        <translation type="unfinished">更新中</translation>
+        <translation type="unfinished">synchronizing blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -484,12 +483,11 @@
     </message>
     <message id="start-create-pwd-message">
         <source>Create password to access your wallet</source>
-        <translation>ウォレットアクセスにするにはパスワードを入力して下さい</translation>
+        <translation>ウォレットにアクセスにするにはパスワードを作成して下さい</translation>
     </message>
     <message id="start-pwd-label">
         <source>Password</source>
-        <oldsource>Account password</oldsource>
-        <translation type="unfinished">パスワード</translation>
+        <translation>パスワード</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -726,7 +724,7 @@
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation>ウォレット残高（UTXO）のみ復元可能で、トランザクション情報とアドレスは常にプライベートであり、ブロックチェーンに残ることはありません。</translation>
+        <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
@@ -939,8 +937,7 @@
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Offer</source>
-        <oldsource>Accept Swap Offer</oldsource>
-        <translation type="unfinished">スワップオファーを受け入れる</translation>
+        <translation type="unfinished">Accept Offer</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -1657,9 +1654,8 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="settings-local-node-run-checkbox">
         <source>Run integrated node</source>
-        <oldsource>Integrated node</oldsource>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">統合ノード</translation>
+        <translation type="unfinished">Run integrated node</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1681,8 +1677,7 @@ Your version is: %2. Please, check for updates.</source>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Node Connection</source>
-        <oldsource>Beam Remote Node</oldsource>
-        <translation type="unfinished">Beamリモートノード</translation>
+        <translation type="unfinished">Beam Node Connection</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -2099,8 +2094,7 @@ much longer for a transaction to complete.</source>
     </message>
     <message id="apps-title">
         <source>Applications</source>
-        <oldsource>My DApp Store</oldsource>
-        <translation type="unfinished">My DApp Store</translation>
+        <translation type="unfinished">Applications</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2997,6 +2991,10 @@ cannot be canceled.</source>
 (offline)</source>
         <translation>自分のアドレスへ送信しました（オフライン）</translation>
     </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation>このDAppはBeamウォレットのバージョン %1 以上が必要です。ウォレットを更新してください。</translation>
+    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
@@ -3035,11 +3033,6 @@ cannot be canceled.</source>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
         <translation>ウォレットを更新して %1 アプリケーションを起動する</translation>
-    </message>
-    <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.
-In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <translation>匿名性を高めるために、毎回新しいアドレスが生成されます。 以前に生成されたレギュラーアドレスを再利用したい場合は、アドレス帳をご利用ください。</translation>
     </message>
     <message id="address-details">
         <source>Address details</source>
@@ -3573,8 +3566,7 @@ Please, check the file and try again.</source>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Offer</source>
-        <oldsource>Create Atomic Swap Offer</oldsource>
-        <translation type="unfinished">アトミックスワップのオファーを作成する</translation>
+        <translation type="unfinished">Create Offer</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3628,13 +3620,11 @@ Please, restart the wallet and try again.</source>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept Offer</source>
-        <oldsource>Accept an Asset Swap Offer</oldsource>
-        <translation type="unfinished">アセットスワップのオファーを受ける</translation>
+        <translation type="unfinished">Accept Offer</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create Offer</source>
-        <oldsource>Create an Asset Swap Offer</oldsource>
-        <translation type="unfinished">アセットスワップのオファーを作成する</translation>
+        <translation type="unfinished">Create Offer</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3786,15 +3776,15 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished">Publishers</translation>
+        <translation>発行元</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished">Show DApps</translation>
+        <translation>DAppsを表示する</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished">Hide DApps</translation>
+        <translation>DAppsを非表示にする</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
@@ -3802,15 +3792,15 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished">(all)</translation>
+        <translation>(すべて)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished">Use Hardware Wallet</translation>
+        <translation>ハードウェアウォレットを使用する</translation>
     </message>
     <message id="settings-start-switch">
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation>開始する</translation>
     </message>
     <message id="settings-dapps-switch">
         <source>DApps</source>
@@ -3823,73 +3813,68 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished">Generate new address</translation>
+        <translation>新規アドレスを生成する</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logout</translation>
     </message>
     <message id="start-account-label">
         <source>Account</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account</translation>
     </message>
     <message id="start-new-account-label">
         <source>Account name</source>
-        <oldsource>Account label</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account name</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account %1</translation>
     </message>
     <message id="start-account-password-label">
         <source>Account password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account password</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">An account with the same label already exists.</translation>
     </message>
     <message id="wallet-swap-button">
         <source>Swap</source>
-        <translation type="unfinished">スワップ</translation>
+        <translation>スワップ</translation>
     </message>
     <message id="apps-no-installed">
         <source>You don&apos;t have any applications installed yet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You don&apos;t have any applications installed yet</translation>
     </message>
     <message id="apps-no-at-all">
         <source>No applications yet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No applications yet</translation>
     </message>
     <message id="apps-installed-tab">
         <source>Installed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Installed</translation>
     </message>
     <message id="apps-all-tab">
         <source>All</source>
-        <translation type="unfinished">すべて</translation>
+        <translation>すべて</translation>
     </message>
     <message id="help-title">
         <source>Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>ドキュメント</translation>
     </message>
     <message id="settings-connect-local-node">
         <source>Integrated node</source>
         <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>統合ノード</translation>
     </message>
     <message id="settings-connect-remote-node">
         <source>Remote node</source>
-        <translation type="unfinished">リモートノード</translation>
+        <translation>リモートノード</translation>
     </message>
     <message id="general-add-account">
         <source>Add account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Add account</translation>
     </message>
 </context>
 </TS>

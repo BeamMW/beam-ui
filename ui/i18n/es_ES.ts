@@ -367,8 +367,7 @@
     </message>
     <message id="status-updating">
         <source>synchronizing blockchain</source>
-        <oldsource>updating</oldsource>
-        <translation type="unfinished">actualizando</translation>
+        <translation type="unfinished">synchronizing blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -488,8 +487,7 @@
     </message>
     <message id="start-pwd-label">
         <source>Password</source>
-        <oldsource>Account password</oldsource>
-        <translation type="unfinished">Contraseña</translation>
+        <translation>Contraseña</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
@@ -726,7 +724,7 @@
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation>Solo se puede restaurar el saldo del wallet (UTXO), la información de las transacciones siempre es privada y nunca se mantiene en la blockchain.</translation>
+        <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
@@ -942,8 +940,7 @@
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Offer</source>
-        <oldsource>Accept Swap Offer</oldsource>
-        <translation type="unfinished">Cambiar monedas</translation>
+        <translation type="unfinished">Accept Offer</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -1665,9 +1662,8 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
         <source>Run integrated node</source>
-        <oldsource>Integrated node</oldsource>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">Nodo integrado</translation>
+        <translation type="unfinished">Run integrated node</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1689,8 +1685,7 @@ Su versión es: %2. Por favor, compruebe si hay actualizaciones.</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Node Connection</source>
-        <oldsource>Beam Remote Node</oldsource>
-        <translation type="unfinished">Nodo remoto de Beam</translation>
+        <translation type="unfinished">Beam Node Connection</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -2120,8 +2115,7 @@ Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más
     </message>
     <message id="apps-title">
         <source>Applications</source>
-        <oldsource>My DApp Store</oldsource>
-        <translation type="unfinished">Mi tienda de DApp</translation>
+        <translation type="unfinished">Applications</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2480,7 +2474,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation>Offline</translation>
+        <translation>Desconectado</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -3025,6 +3019,10 @@ las transacciones offline no se pueden cancelar.</translation>
         <translation>enviado a su propia dirección
 (offline)</translation>
     </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation>Esta DApp requiere la versión %1 del wallet Beam o superior. Por favor, actualice su wallet.</translation>
+    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
@@ -3065,12 +3063,6 @@ las transacciones offline no se pueden cancelar.</translation>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
         <translation>Actualizar el Wallet para lanzar la aplicación %1</translation>
-    </message>
-    <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.
-In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <translation>Para asegurar una mejor privacidad, se genera una nueva dirección cada vez.
-En caso de que desee volver a utilizar una dirección normal creada anteriormente, por favor utilice la Libreta de Direcciones.</translation>
     </message>
     <message id="address-details">
         <source>Address details</source>
@@ -3605,8 +3597,7 @@ Por favor, comprueba el archivo e inténtelo de nuevo.</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Offer</source>
-        <oldsource>Create Atomic Swap Offer</oldsource>
-        <translation type="unfinished">Crear Oferta de Intercambio Atómico</translation>
+        <translation type="unfinished">Create Offer</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3660,13 +3651,11 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept Offer</source>
-        <oldsource>Accept an Asset Swap Offer</oldsource>
-        <translation type="unfinished">Aceptar una Oferta de Intercambio de Activos</translation>
+        <translation type="unfinished">Accept Offer</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create Offer</source>
-        <oldsource>Create an Asset Swap Offer</oldsource>
-        <translation type="unfinished">Crear una Oferta de Intercambio de Activos</translation>
+        <translation type="unfinished">Create Offer</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3859,69 +3848,64 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Logout</translation>
     </message>
     <message id="start-account-label">
         <source>Account</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account</translation>
     </message>
     <message id="start-new-account-label">
         <source>Account name</source>
-        <oldsource>Account label</oldsource>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account name</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account %1</translation>
     </message>
     <message id="start-account-password-label">
         <source>Account password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Account password</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">An account with the same label already exists.</translation>
     </message>
     <message id="wallet-swap-button">
         <source>Swap</source>
-        <translation type="unfinished">Intercambiar</translation>
+        <translation>Intercambiar</translation>
     </message>
     <message id="apps-no-installed">
         <source>You don&apos;t have any applications installed yet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">You don&apos;t have any applications installed yet</translation>
     </message>
     <message id="apps-no-at-all">
         <source>No applications yet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No applications yet</translation>
     </message>
     <message id="apps-installed-tab">
         <source>Installed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Installed</translation>
     </message>
     <message id="apps-all-tab">
         <source>All</source>
-        <translation type="unfinished">Todo</translation>
+        <translation>Todo</translation>
     </message>
     <message id="help-title">
         <source>Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Documentación</translation>
     </message>
     <message id="settings-connect-local-node">
         <source>Integrated node</source>
         <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nodo integrado</translation>
     </message>
     <message id="settings-connect-remote-node">
         <source>Remote node</source>
-        <translation type="unfinished">Nodo remoto</translation>
+        <translation>Nodo remoto</translation>
     </message>
     <message id="general-add-account">
         <source>Add account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Add account</translation>
     </message>
 </context>
 </TS>

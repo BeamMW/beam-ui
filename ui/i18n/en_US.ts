@@ -3064,12 +3064,6 @@ cannot be canceled.</translation>
         <source>Update Wallet to launch %1 application</source>
         <translation>Update Wallet to launch %1 application</translation>
     </message>
-    <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.
-In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <translation>To ensure a better privacy, new address is generated every time.
-In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
-    </message>
     <message id="address-details">
         <source>Address details</source>
         <translation>Address details</translation>

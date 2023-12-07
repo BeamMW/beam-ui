@@ -9,11 +9,11 @@
     </message>
     <message id="general-groth">
         <source>GROTH</source>
-        <translation type="unfinished">GROTH</translation>
+        <translation>GROTH</translation>
     </message>
     <message id="general-comment">
         <source>Comment</source>
-        <translation type="unfinished">Comment</translation>
+        <translation>Komentar</translation>
     </message>
     <message id="general-actions">
         <source>Actions</source>
@@ -21,15 +21,15 @@
     </message>
     <message id="general-address">
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
+        <translation>Alamat</translation>
     </message>
     <message id="general-send">
         <source>Send</source>
-        <translation type="unfinished">Send</translation>
+        <translation>Kirim</translation>
     </message>
     <message id="general-amount">
         <source>Amount</source>
-        <translation type="unfinished">Amount</translation>
+        <translation>Jumlah</translation>
     </message>
     <message id="general-status">
         <source>Status</source>
@@ -37,11 +37,11 @@
     </message>
     <message id="general-cancel">
         <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Batal</translation>
     </message>
     <message id="general-delete">
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Hapus</translation>
     </message>
     <message id="general-rescan">
         <source>Rescan</source>
@@ -49,7 +49,7 @@
     </message>
     <message id="general-change-pwd">
         <source>Change wallet password</source>
-        <translation type="unfinished">Change wallet password</translation>
+        <translation>Ubah kata sandi dompet</translation>
     </message>
     <message id="general-pwd-empty-error">
         <source>Please, enter password</source>
@@ -61,7 +61,7 @@
     </message>
     <message id="general-payment-proof">
         <source>Payment proof</source>
-        <translation type="unfinished">Payment proof</translation>
+        <translation>Bukti pembayaran</translation>
     </message>
     <message id="general-close">
         <source>Close</source>
@@ -69,15 +69,15 @@
     </message>
     <message id="general-details">
         <source>Details</source>
-        <translation type="unfinished">Details</translation>
+        <translation>Rincian</translation>
     </message>
     <message id="general-kernel-id">
         <source>Kernel ID</source>
-        <translation type="unfinished">Kernel ID</translation>
+        <translation>Kernel ID</translation>
     </message>
     <message id="general-copy">
         <source>Copy</source>
-        <translation type="unfinished">Copy</translation>
+        <translation>Salin</translation>
     </message>
     <message id="general-paste">
         <source>Paste</source>
@@ -86,7 +86,7 @@
     <message id="general-fee">
         <source>Transaction fee</source>
         <extracomment>UTXO type fee</extracomment>
-        <translation type="unfinished">Transaction fee</translation>
+        <translation>Biaya transaksi</translation>
     </message>
     <message id="general-ok">
         <source>Ok</source>
@@ -94,12 +94,12 @@
     </message>
     <message id="general-invalid-address">
         <source>Invalid address</source>
-        <translation type="unfinished">Invalid address</translation>
+        <translation>Alamat tidak valid</translation>
     </message>
     <message id="general-change">
         <source>Change</source>
         <extracomment>UTXO type Change</extracomment>
-        <translation type="unfinished">Change</translation>
+        <translation>Ubah</translation>
     </message>
     <message id="general-back">
         <source>Back</source>
@@ -107,11 +107,11 @@
     </message>
     <message id="general-next">
         <source>Next</source>
-        <translation type="unfinished">Next</translation>
+        <translation>Selanjutnya</translation>
     </message>
     <message id="general-create-wallet">
         <source>Create new wallet</source>
-        <translation type="unfinished">Create new wallet</translation>
+        <translation>Buat dompet baru</translation>
     </message>
     <message id="general-restore-or-create-wallet">
         <source>Restore wallet or create a new one</source>
@@ -119,15 +119,15 @@
     </message>
     <message id="general-select-db">
         <source>Select the wallet database file</source>
-        <translation type="unfinished">Select the wallet database file</translation>
+        <translation>Pilih file database dompet</translation>
     </message>
     <message id="general-restore-wallet">
         <source>Restore wallet</source>
-        <translation type="unfinished">Restore wallet</translation>
+        <translation>Pulihkan dompet</translation>
     </message>
     <message id="general-start-using">
         <source>Start using your wallet</source>
-        <translation>Mulai menggunakan wallet anda</translation>
+        <translation>Mulai menggunakan dompet Anda</translation>
     </message>
     <message id="general-open-wallet">
         <source>Open my wallet</source>
@@ -144,15 +144,15 @@
     </message>
     <message id="general-addr-comment-error">
         <source>Address with the same comment already exists</source>
-        <translation type="unfinished">Address with the same comment already exists</translation>
+        <translation>Alamat dengan komentar yang sama sudah ada</translation>
     </message>
     <message id="wallet-receive-button">
         <source>Receive</source>
-        <translation type="unfinished">Receive</translation>
+        <translation>Terima</translation>
     </message>
     <message id="wallet-transactions-title">
         <source>Transactions</source>
-        <translation type="unfinished">Transactions</translation>
+        <translation>Transaksi</translation>
     </message>
     <message id="wallet-txs-delete-message">
         <source>The transaction will be deleted. This operation can not be undone</source>
@@ -164,11 +164,11 @@
     </message>
     <message id="wallet-txs-status-waiting-sender">
         <source>waiting for sender</source>
-        <translation type="unfinished">waiting for sender</translation>
+        <translation>menunggu pengirim</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver">
         <source>waiting for receiver</source>
-        <translation type="unfinished">waiting for receiver</translation>
+        <translation>menunggu penerima</translation>
     </message>
     <message id="wallet-txs-status-completed">
         <source>completed</source>
@@ -184,7 +184,7 @@
     </message>
     <message id="wallet-txs-status-cancelled">
         <source>canceled</source>
-        <translation type="unfinished">canceled</translation>
+        <translation>dibatalkan</translation>
     </message>
     <message id="wallet-txs-status-expired">
         <source>expired</source>
@@ -200,11 +200,11 @@
     </message>
     <message id="addresses-tittle">
         <source>Address Book</source>
-        <translation type="unfinished">Address Book</translation>
+        <translation>Buku Alamat</translation>
     </message>
     <message id="addresses-tab-active">
         <source>My active addresses</source>
-        <translation type="unfinished">My active addresses</translation>
+        <translation>Alamat aktif saya</translation>
     </message>
     <message id="addresses-tab-expired">
         <source>My expired addresses</source>
@@ -212,31 +212,31 @@
     </message>
     <message id="addresses-tab-contacts">
         <source>Contacts</source>
-        <translation type="unfinished">Contacts</translation>
+        <translation>Kontak</translation>
     </message>
     <message id="address-table-cm-show-qr">
         <source>Show QR code</source>
         <extracomment>Entry in address table context menu to show QR</extracomment>
-        <translation type="unfinished">Show QR code</translation>
+        <translation>Tampilkan kode QR</translation>
     </message>
     <message id="address-table-cm-edit">
         <source>Edit address</source>
         <extracomment>Entry in address table context menu to edit</extracomment>
-        <translation type="unfinished">Edit address</translation>
+        <translation>Sunting alamat</translation>
     </message>
     <message id="address-table-cm-delete">
         <source>Delete address</source>
         <extracomment>Entry in address table context menu to delete</extracomment>
-        <translation type="unfinished">Delete address</translation>
+        <translation>Hapus alamat</translation>
     </message>
     <message id="address-table-cm-delete-contact">
         <source>Delete contact</source>
-        <translation type="unfinished">Delete contact</translation>
+        <translation>Hapus kontak</translation>
     </message>
     <message id="settings-version">
         <source>v</source>
         <extracomment>settings tab, version label</extracomment>
-        <translation type="unfinished">v</translation>
+        <translation>v</translation>
     </message>
     <message id="settings-local-node-port">
         <source>Port</source>
@@ -246,12 +246,12 @@
     <message id="settings-rescan-confirmation-message">
         <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
         <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation type="unfinished">Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</translation>
+        <translation>Pemindaian ulang akan menyinkronkan data transaksi dan UTXO dengan informasi terbaru di blockchain. Prosesnya mungkin memakan waktu lama.</translation>
     </message>
     <message id="settings-general-title">
         <source>General</source>
         <extracomment>settings tab, general section, title</extracomment>
-        <translation type="unfinished">General</translation>
+        <translation>Umum</translation>
     </message>
     <message id="settings-general-lock-screen">
         <source>Lock screen</source>
@@ -261,25 +261,25 @@
     <message id="settings-general-require-pwd-to-spend">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send label</extracomment>
-        <translation type="unfinished">Ask password on every Send</translation>
+        <translation>Tanyakan kata sandi pada setiap Pengiriman</translation>
     </message>
     <message id="settings-report-problem-title">
         <source>Report a problem</source>
-        <translation type="unfinished">Report a problem</translation>
+        <translation>Laporkan masalah</translation>
     </message>
     <message id="settings-wallet-location-label">
         <source>Wallet folder location</source>
         <extracomment>settings tab, general section, wallet data folder location label</extracomment>
-        <translation type="unfinished">Wallet folder location</translation>
+        <translation>Lokasi folder dompet</translation>
     </message>
     <message id="settings-apply">
         <source>Apply changes</source>
         <extracomment>settings tab, node section, apply button</extracomment>
-        <translation type="unfinished">Apply changes</translation>
+        <translation>Terapkan perubahan</translation>
     </message>
     <message id="logo-description">
         <source>Confidential DeFi Platform and Cryptocurrency</source>
-        <translation type="unfinished">Confidential DeFi Platform and Cryptocurrency</translation>
+        <translation>Platform DeFi Rahasia dan Cryptocurrency</translation>
     </message>
     <message id="change-pwd-old-empty">
         <source>Please, enter old password</source>
@@ -295,7 +295,7 @@
     </message>
     <message id="change-pwd-new-same-as-old">
         <source>New password cannot be the same as old</source>
-        <translation type="unfinished">New password cannot be the same as old</translation>
+        <translation>Kata sandi baru tidak boleh sama dengan kata sandi lama</translation>
     </message>
     <message id="change-pwd-confirm-fail">
         <source>New password doesn&apos;t match the confirm password</source>
@@ -319,7 +319,7 @@
     </message>
     <message id="change-pwd-ok">
         <source>Change password</source>
-        <translation type="unfinished">Change password</translation>
+        <translation>Ubah kata sandi</translation>
     </message>
     <message id="open-show-wallet-button">
         <source>Show my wallet</source>
@@ -327,31 +327,31 @@
     </message>
     <message id="payment-info-proof-verification">
         <source>Payment proof verification</source>
-        <translation type="unfinished">Payment proof verification</translation>
+        <translation>Verifikasi bukti pembayaran</translation>
     </message>
     <message id="payment-info-proof-label">
         <source>Paste your payment proof here</source>
-        <translation type="unfinished">Paste your payment proof here</translation>
+        <translation>Tempelkan bukti pembayaran Anda di sini</translation>
     </message>
     <message id="payment-info-proof-decode-fail">
         <source>Cannot decode a proof, illegal sequence.</source>
-        <translation type="unfinished">Cannot decode a proof, illegal sequence.</translation>
+        <translation>Tidak dapat memecahkan kode bukti, urutan ilegal.</translation>
     </message>
     <message id="payment-info-proof-code-label">
         <source>Code</source>
-        <translation type="unfinished">Code</translation>
+        <translation>Kode</translation>
     </message>
     <message id="payment-info-proof-sender-label">
         <source>Sender</source>
-        <translation type="unfinished">Sender</translation>
+        <translation>Pengirim</translation>
     </message>
     <message id="payment-info-proof-receiver-label">
         <source>Receiver</source>
-        <translation type="unfinished">Receiver</translation>
+        <translation>Penerima</translation>
     </message>
     <message id="payment-info-copy-details-button">
         <source>Copy details</source>
-        <translation type="unfinished">Copy details</translation>
+        <translation>Salin detail</translation>
     </message>
     <message id="loading-try-again-button">
         <source>Try again</source>
@@ -367,13 +367,12 @@
     </message>
     <message id="status-updating">
         <source>synchronizing blockchain</source>
-        <oldsource>updating</oldsource>
-        <translation type="unfinished">memperbarui</translation>
+        <translation>menyinkronkan blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
         <extracomment>settings tab, report problem section, save logs button</extracomment>
-        <translation type="unfinished">Save wallet logs</translation>
+        <translation>Simpan log dompet</translation>
     </message>
     <message id="settings-rescan-confirmation-message-line-2">
         <source>Are you sure?</source>
@@ -382,11 +381,11 @@
     </message>
     <message id="settings-title">
         <source>Settings</source>
-        <translation type="unfinished">Settings</translation>
+        <translation>Pengaturan</translation>
     </message>
     <message id="cant-send-to-expired-message">
         <source>Can&apos;t send to the expired address.</source>
-        <translation type="unfinished">Can&apos;t send to the expired address.</translation>
+        <translation>Tidak dapa&apos;t mengirim ke alamat yang sudah habis masa berlakunya.</translation>
     </message>
     <message id="send-confirmation-title">
         <source>Confirm transaction details</source>
@@ -402,7 +401,7 @@
     </message>
     <message id="wallet-title">
         <source>Wallet</source>
-        <translation type="unfinished">Wallet</translation>
+        <translation>Dompet</translation>
     </message>
     <message id="start-restore-confirm-button">
         <source>I agree</source>
@@ -423,20 +422,20 @@
     </message>
     <message id="start-select-db-thead-name">
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Nama</translation>
     </message>
     <message id="start-select-db-thead-size">
         <source>Size</source>
-        <translation type="unfinished">Size</translation>
+        <translation>Ukuran</translation>
     </message>
     <message id="kb-unit">
         <source>kb</source>
-        <translation type="unfinished">kb</translation>
+        <translation>kb</translation>
     </message>
     <message id="start-select-db-thead-modified">
         <source>Date modified</source>
         <extracomment>start screen, select db for migration, Date modified column title</extracomment>
-        <translation type="unfinished">Date modified</translation>
+        <translation>Tanggal dimodifikasi</translation>
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create new wallet with generating seed phrase.</source>
@@ -448,11 +447,11 @@
     </message>
     <message id="start-create-new-securiry-note-1">
         <source>Do not let anyone see your seed phrase</source>
-        <translation type="unfinished">Do not let anyone see your seed phrase</translation>
+        <translation>Jangan biarkan siapa pun melihat frase awal Anda</translation>
     </message>
     <message id="start-create-new-securiry-note-2">
         <source>Never type your seed phrase into password managers or elsewhere</source>
-        <translation type="unfinished">Never type your seed phrase into password managers or elsewhere</translation>
+        <translation>Jangan pernah mengetikkan seed phrase Anda ke pengelola kata sandi atau di tempat lain</translation>
     </message>
     <message id="start-create-new-securiry-note-3">
         <source>Keep the copies of your seed phrase in a safe place</source>
@@ -468,7 +467,7 @@
     </message>
     <message id="start-confirm-seed-phrase-button">
         <source>I understand</source>
-        <translation type="unfinished">I understand</translation>
+        <translation>Saya mengerti</translation>
     </message>
     <message id="start-confirm-seed-phrase-message">
         <source>It is strictly recommended to write down the seed phrase on a paper. Storing it in a file makes it prone to cyber attacks and, therefore, less secure.</source>
@@ -484,20 +483,19 @@
     </message>
     <message id="start-create-pwd-message">
         <source>Create password to access your wallet</source>
-        <translation>Masukan kata sandi untuk mengakses wallet anda</translation>
+        <translation>Masukkan kata sandi untuk mengakses dompet Anda</translation>
     </message>
     <message id="start-pwd-label">
         <source>Password</source>
-        <oldsource>Account password</oldsource>
-        <translation type="unfinished">Password</translation>
+        <translation>Kata sandi</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
         <source>Password confirmation</source>
-        <translation type="unfinished">Password confirmation</translation>
+        <translation>Konfirmasi kata sandi</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
         <source>Passwords do not match</source>
-        <translation type="unfinished">Passwords do not match</translation>
+        <translation>Kata sandi tidak cocok</translation>
     </message>
     <message id="start-node-title">
         <source>Setup node connectivity</source>
@@ -513,7 +511,7 @@
     </message>
     <message id="start-node-peer-label">
         <source>Peer</source>
-        <translation type="unfinished">Peer</translation>
+        <translation>Peer</translation>
     </message>
     <message id="start-node-random-radio">
         <source>Connect to random remote node</source>
@@ -537,7 +535,7 @@
     </message>
     <message id="start-node-peer-error">
         <source>Incorrect address</source>
-        <translation type="unfinished">Incorrect address</translation>
+        <translation>Alamat salah</translation>
     </message>
     <message id="start-node-empty-error">
         <source>Please specify address of the remote node</source>
@@ -605,7 +603,7 @@
     </message>
     <message id="start-view-db-file-filter">
         <source>SQLite database file (*.db)</source>
-        <translation type="unfinished">SQLite database file (*.db)</translation>
+        <translation>SQLite database file (*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
         <source>Connection to %1 nodes lost</source>
@@ -613,67 +611,67 @@
     </message>
     <message id="tx-failure-undefined">
         <source>Unexpected reason, please send wallet logs to Beam support</source>
-        <translation type="unfinished">Unexpected reason, please send wallet logs to Beam support</translation>
+        <translation>Alasan yang tidak terduga, silakan kirim log dompet ke dukungan Beam</translation>
     </message>
     <message id="tx-failure-cancelled">
         <source>Transaction cancelled</source>
-        <translation type="unfinished">Transaction cancelled</translation>
+        <translation>Transaksi dibatalkan</translation>
     </message>
     <message id="tx-failure-receiver-signature-invalid">
         <source>Receiver signature in not valid, please send wallet logs to Beam support</source>
-        <translation type="unfinished">Receiver signature in not valid, please send wallet logs to Beam support</translation>
+        <translation>Tanda tangan penerima tidak valid, kirimkan log dompet ke dukungan Beam</translation>
     </message>
     <message id="tx-failure-not-registered-in-blockchain">
         <source>Failed to register transaction with the blockchain, see node logs for details</source>
-        <translation type="unfinished">Failed to register transaction with the blockchain, see node logs for details</translation>
+        <translation>Gagal mendaftarkan transaksi dengan blockchain, lihat log node untuk detailnya</translation>
     </message>
     <message id="tx-failure-not-valid">
         <source>Transaction is not valid, please send wallet logs to Beam support</source>
-        <translation type="unfinished">Transaction is not valid, please send wallet logs to Beam support</translation>
+        <translation>Transaksi tidak valid, silakan kirim log dompet ke dukungan Beam</translation>
     </message>
     <message id="tx-failure-kernel-invalid">
         <source>Invalid kernel proof provided</source>
-        <translation type="unfinished">Invalid kernel proof provided</translation>
+        <translation>Bukti kernel tidak valid disediakan</translation>
     </message>
     <message id="tx-failure-parameters-not-sended">
         <source>Failed to send Transaction parameters</source>
-        <translation type="unfinished">Failed to send Transaction parameters</translation>
+        <translation>Gagal mengirimkan parameter Transaksi</translation>
     </message>
     <message id="tx-failure-no-inputs">
         <source>Not enough inputs to process the transaction</source>
-        <translation type="unfinished">Not enough inputs to process the transaction</translation>
+        <translation>Input tidak cukup untuk memproses transaksi</translation>
     </message>
     <message id="tx-failure-addr-expired">
         <source>Address is expired</source>
-        <translation type="unfinished">Address is expired</translation>
+        <translation>Alamat kedaluwarsa</translation>
     </message>
     <message id="tx-failure-parameters-not-readed">
         <source>Failed to get transaction parameters</source>
-        <translation type="unfinished">Failed to get transaction parameters</translation>
+        <translation>Gagal mendapatkan parameter transaksi</translation>
     </message>
     <message id="tx-failure-time-out">
         <source>Transaction timed out</source>
-        <translation type="unfinished">Transaction timed out</translation>
+        <translation>Waktu transaksi habis</translation>
     </message>
     <message id="tx-failure-not-signed-by-receiver">
         <source>Payment not signed by the receiver, please send wallet logs to Beam support</source>
-        <translation type="unfinished">Payment not signed by the receiver, please send wallet logs to Beam support</translation>
+        <translation>Pembayaran tidak ditandatangani oleh penerima, silakan kirim log dompet ke dukungan Beam</translation>
     </message>
     <message id="tx-failure-max-height-to-high">
         <source>Kernel maximum height is too high</source>
-        <translation type="unfinished">Kernel maximum height is too high</translation>
+        <translation>Tinggi maksimum kernel terlalu tinggi</translation>
     </message>
     <message id="tx-failure-invalid-state">
         <source>Transaction has invalid state</source>
-        <translation type="unfinished">Transaction has invalid state</translation>
+        <translation>Transaksi memiliki status tidak valid</translation>
     </message>
     <message id="utxo-utxo">
         <source>UTXO</source>
-        <translation type="unfinished">UTXO</translation>
+        <translation>UTXO</translation>
     </message>
     <message id="settings-general-lock-screen-never">
         <source>Never</source>
-        <translation type="unfinished">Never</translation>
+        <translation>Tidak pernah</translation>
     </message>
     <message id="settings-general-lock-screen-1m">
         <source>1 minute</source>
@@ -702,15 +700,15 @@
     <message id="settings-general-language">
         <source>Language</source>
         <extracomment>settings tab, general section, language label</extracomment>
-        <translation type="unfinished">Language</translation>
+        <translation>Bahasa</translation>
     </message>
     <message id="open-external-open">
         <source>open</source>
-        <translation type="unfinished">open</translation>
+        <translation>buka</translation>
     </message>
     <message id="open-external-title">
         <source>External link</source>
-        <translation type="unfinished">External link</translation>
+        <translation>Tautan eksternal</translation>
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
@@ -726,15 +724,15 @@
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
+        <translation>Hanya saldo dompet (UTXO) yang dapat dipulihkan, info transaksi dan alamat selalu bersifat pribadi dan tidak pernah disimpan di blockchain.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
-        <translation type="unfinished">Create new password</translation>
+        <translation>Buat kata sandi baru</translation>
     </message>
     <message id="start-recovery-pwd-message">
         <source>Create new password to access your wallet</source>
-        <translation type="unfinished">Create new password to access your wallet</translation>
+        <translation>Buat kata sandi baru untuk mengakses dompet Anda</translation>
     </message>
     <message id="start-create-pwd-strength-message">
         <source>Strong password needs to meet the following requirements:
@@ -742,11 +740,11 @@
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
 •  must contain at least one number</source>
-        <translation type="unfinished">Strong password needs to meet the following requirements:
-•  the length must be at least 10 characters
-•  must contain at least one lowercase letter
-•  must contain at least one uppercase letter
-•  must contain at least one number</translation>
+        <translation>Kata sandi yang kuat harus memenuhi persyaratan berikut:
+•\u0020\u0020panjang harus minimal 10 karakter
+•\u0020\u0020harus berisi setidaknya satu huruf kecil
+•\u0020\u0020harus berisi setidaknya satu huruf besar
+•\u0020\u0020harus berisi setidaknya satu nomor</translation>
     </message>
     <message id="start-open-caps-warning">
         <source>Caps lock is on!</source>
@@ -755,7 +753,7 @@
     <message id="show-qr-title">
         <source>QR code</source>
         <extracomment>show QR dialog title</extracomment>
-        <translation type="unfinished">QR code</translation>
+        <translation>Kode QR</translation>
     </message>
     <message id="show-qr-tx-token-label">
         <source>Your address</source>
@@ -787,7 +785,7 @@
     </message>
     <message id="time-never">
         <source>Never</source>
-        <translation type="unfinished">Never</translation>
+        <translation>Tidak pernah</translation>
     </message>
     <message id="start-pwd-difficulty-very-weak">
         <source>Very weak password</source>
@@ -817,7 +815,7 @@
     <message id="start-select-db-best-match-label">
         <source>(best match)</source>
         <extracomment>start screen, select db for migration, best match label</extracomment>
-        <translation type="unfinished">(best match)</translation>
+        <translation>(pertandingan terbaik)</translation>
     </message>
     <message id="start-select-db-thead-created">
         <source>Date created</source>
@@ -836,19 +834,19 @@
     </message>
     <message id="restore-finish-alert-button">
         <source>I understand</source>
-        <translation type="unfinished">I understand</translation>
+        <translation>Saya mengerti</translation>
     </message>
     <message id="restore-finish-alert-title">
         <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation type="unfinished">Do not simultaneously run two wallets initiated from the same seed phrase</translation>
+        <translation>Jangan menjalankan dua dompet yang dimulai dari seed phrase yang sama secara bersamaan</translation>
     </message>
     <message id="restore-finish-alert-message-line">
         <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation type="unfinished">Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</translation>
+        <translation>Jangan gunakan seed phrase yang sama di beberapa perangkat, saldo dan daftar transaksi Anda tidak akan disinkronkan.</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
-        <translation type="unfinished">Subtransaction has failed</translation>
+        <translation>Subtransaksi telah gagal</translation>
     </message>
     <message id="tx-failure-invalid-contract-amount">
         <source>Contract&apos;s amount is not valid</source>
@@ -856,27 +854,27 @@
     </message>
     <message id="tx-failure-invalid-sidechain-contract">
         <source>Side chain has invalid contract</source>
-        <translation type="unfinished">Side chain has invalid contract</translation>
+        <translation>Rantai samping memiliki kontrak yang tidak valid</translation>
     </message>
     <message id="tx-failure-sidechain-internal-error">
         <source>Side chain bridge has internal error</source>
-        <translation type="unfinished">Side chain bridge has internal error</translation>
+        <translation>Jembatan rantai samping mengalami kesalahan internal</translation>
     </message>
     <message id="tx-failure-sidechain-network-error">
         <source>Side chain bridge has network error</source>
-        <translation type="unfinished">Side chain bridge has network error</translation>
+        <translation>Jembatan rantai samping mengalami kesalahan jaringan</translation>
     </message>
     <message id="tx-failure-invalid-sidechain-response-format">
         <source>Side chain bridge has response format error</source>
-        <translation type="unfinished">Side chain bridge has response format error</translation>
+        <translation>Jembatan rantai samping memiliki kesalahan format respons</translation>
     </message>
     <message id="tx-failure-invalid-side-chain-credentials">
         <source>Invalid credentials of Side chain</source>
-        <translation type="unfinished">Invalid credentials of Side chain</translation>
+        <translation>Kredensial rantai samping tidak valid</translation>
     </message>
     <message id="tx-failure-not-enough-time-btc-lock">
         <source>Not enough time to finish btc lock transaction</source>
-        <translation type="unfinished">Not enough time to finish btc lock transaction</translation>
+        <translation>Tidak cukup waktu untuk menyelesaikan transaksi btc lock</translation>
     </message>
     <message id="tx-failure-create-multisig">
         <source>Failed to create multi-signature</source>
@@ -884,18 +882,18 @@
     </message>
     <message id="tx-failure-fee-too-small">
         <source>Fee is too small</source>
-        <translation type="unfinished">Fee is too small</translation>
+        <translation>Biaya terlalu kecil</translation>
     </message>
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n minute(s)</numerusform>
+        <translation>
+            <numerusform>%n menit(s)</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n second(s)</numerusform>
+        <translation>
+            <numerusform>%n detik(s)</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-time">
@@ -908,7 +906,7 @@
     </message>
     <message id="general-change-settings">
         <source>Change settings</source>
-        <translation type="unfinished">Change settings</translation>
+        <translation>Ubah pengaturan</translation>
     </message>
     <message id="general-swap">
         <source>Swap</source>
@@ -924,11 +922,11 @@
     </message>
     <message id="settings-password">
         <source>Password</source>
-        <translation type="unfinished">Password</translation>
+        <translation>Kata sandi</translation>
     </message>
     <message id="receive-amount-swap-label">
         <source>Receive amount</source>
-        <translation type="unfinished">Receive amount</translation>
+        <translation>Jumlah yang diterima</translation>
     </message>
     <message id="sent-amount-label">
         <source>Send amount</source>
@@ -940,8 +938,7 @@
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Offer</source>
-        <oldsource>Accept Swap Offer</oldsource>
-        <translation type="unfinished">Accept Swap Offer</translation>
+        <translation>Terima Tawaran</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -961,11 +958,11 @@
     </message>
     <message id="general-qtum">
         <source>QTUM</source>
-        <translation type="unfinished">QTUM</translation>
+        <translation>QTUM</translation>
     </message>
     <message id="general-electrum">
         <source>Electrum</source>
-        <translation type="unfinished">Electrum</translation>
+        <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
         <source>%1 is not connected, 
@@ -983,7 +980,7 @@ please review your settings and try again</translation>
     </message>
     <message id="wallet-send-swap-expires-label">
         <source>Expires on</source>
-        <translation type="unfinished">Expires on</translation>
+        <translation>Kedaluwarsa pada</translation>
     </message>
     <message id="loading-view-estimate-calculating">
         <source>calculating estimated time</source>
@@ -991,8 +988,8 @@ please review your settings and try again</translation>
     </message>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n hour(s)</numerusform>
+        <translation>
+            <numerusform>%n jam(s)</numerusform>
         </translation>
     </message>
     <message id="loading-view-net-problems">
@@ -1057,7 +1054,7 @@ please review your settings and try again</translation>
     </message>
     <message id="settings-swap-node">
         <source>Node</source>
-        <translation type="unfinished">Node</translation>
+        <translation>Node</translation>
     </message>
     <message id="wallet-clear-search">
         <source>Clear search</source>
@@ -1065,11 +1062,11 @@ please review your settings and try again</translation>
     </message>
     <message id="wallet-search">
         <source>Search</source>
-        <translation type="unfinished">Search</translation>
+        <translation>Cari</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
-        <translation type="unfinished">I understand</translation>
+        <translation>Saya mengerti</translation>
     </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
@@ -1117,7 +1114,7 @@ please review your settings and try again</translation>
     </message>
     <message id="swap-details-tx-id">
         <source>Transaction ID</source>
-        <translation type="unfinished">Transaction ID</translation>
+        <translation>ID Transaksi</translation>
     </message>
     <message id="swap-details-tx-fee">
         <source>BEAM Transaction fee</source>
@@ -1125,7 +1122,7 @@ please review your settings and try again</translation>
     </message>
     <message id="swap-details-tx-comment">
         <source>Comment</source>
-        <translation type="unfinished">Comment</translation>
+        <translation>Komentar</translation>
     </message>
     <message id="swap-details-tx-fee-rate">
         <source>%1 Transaction fee rate</source>
@@ -1141,19 +1138,19 @@ please review your settings and try again</translation>
     </message>
     <message id="settings-swap-qtum-node">
         <source>Qtum node</source>
-        <translation type="unfinished">Qtum node</translation>
+        <translation>Qtum node</translation>
     </message>
     <message id="settings-swap-bitcoin-electrum">
         <source>Bitcoin electrum</source>
-        <translation type="unfinished">Bitcoin electrum</translation>
+        <translation>Bitcoin electrum</translation>
     </message>
     <message id="settings-swap-litecoin-electrum">
         <source>Litecoin electrum</source>
-        <translation type="unfinished">Litecoin electrum</translation>
+        <translation>Litecoin electrum</translation>
     </message>
     <message id="settings-swap-qtum-electrum">
         <source>Qtum electrum</source>
-        <translation type="unfinished">Qtum electrum</translation>
+        <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
         <source>The offer with this transaction token is already accepted.
@@ -1171,7 +1168,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="swap-details-failure-reason">
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Kesalahan</translation>
     </message>
     <message id="swap-tx-failure-refunded">
         <source>Refunded</source>
@@ -1195,7 +1192,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="settings-swap-show-seed">
         <source>Show seed phrase</source>
-        <translation type="unfinished">Show seed phrase</translation>
+        <translation>Tampilkan frase unggulan</translation>
     </message>
     <message id="settings-swap-show-addresses">
         <source>Show wallet addresses</source>
@@ -1219,15 +1216,15 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="bitcoin-show-seed-title">
         <source>Bitcoin seed phrase</source>
-        <translation type="unfinished">Bitcoin seed phrase</translation>
+        <translation>Bitcoin frasa seed</translation>
     </message>
     <message id="litecoin-show-seed-title">
         <source>Litecoin seed phrase</source>
-        <translation type="unfinished">Litecoin seed phrase</translation>
+        <translation>Litecoin frasa seed</translation>
     </message>
     <message id="qtum-show-seed-title">
         <source>Qtum seed phrase</source>
-        <translation type="unfinished">Qtum seed phrase</translation>
+        <translation>Qtum frasa seed</translation>
     </message>
     <message id="bitcoin-show-addresses-title">
         <source>Bitcoin wallet addresses</source>
@@ -1243,7 +1240,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="settings-swap-copy-address">
         <source>Copy address</source>
-        <translation type="unfinished">Copy address</translation>
+        <translation>Salin alamat</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-title">
         <source>Edit seed phrase</source>
@@ -1268,7 +1265,7 @@ Please check the swap token and try again.</translation>
     <message id="settings-swap-confirm-show-seed-title">
         <source>Show seed phrase</source>
         <extracomment>electrum settings, ask password to show seed phrase, dialog title</extracomment>
-        <translation type="unfinished">Show seed phrase</translation>
+        <translation>Tampilkan frase unggulan</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-message">
         <source>Enter your wallet password to see the phrase</source>
@@ -1277,7 +1274,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="send-swap-confirmation-title">
         <source>Confirm atomic swap</source>
-        <translation type="unfinished">Confirm atomic swap</translation>
+        <translation>Konfirmasi pertukaran atomic</translation>
     </message>
     <message id="send-swap-sconfirmation-online-time">
         <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
@@ -1289,7 +1286,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="send-swap-token">
         <source>Swap token</source>
-        <translation type="unfinished">Swap token</translation>
+        <translation>Pertukaran Token</translation>
     </message>
     <message id="send-swap-token-hint">
         <source>Paste token or address here</source>
@@ -1309,11 +1306,11 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="atomic-swap-tx-yes-button">
         <source>yes</source>
-        <translation type="unfinished">yes</translation>
+        <translation>ya</translation>
     </message>
     <message id="atomic-swap-no-button">
         <source>no</source>
-        <translation type="unfinished">no</translation>
+        <translation>tidak</translation>
     </message>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
@@ -1338,7 +1335,7 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
-        <translation type="unfinished">Delete address</translation>
+        <translation>Hapus alamat</translation>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
@@ -1367,7 +1364,7 @@ Please check the swap token and try again.</translation>
     <message id="settings-show-owner-key-title">
         <source>Owner key</source>
         <extracomment>settings tab, show owner key dialog title</extracomment>
-        <translation type="unfinished">Owner key</translation>
+        <translation>Kunci pemilik</translation>
     </message>
     <message id="settings-show-owner-key-message">
         <source>Please notice, that knowing your owner key allows to
@@ -1381,7 +1378,7 @@ deploy the key at the node you trust completely.</translation>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
         <extracomment>settings tab, general section, Show owner key button and dialog title</extracomment>
-        <translation type="unfinished">Show owner key</translation>
+        <translation>Tampilkan kunci pemilik</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key-message">
         <source>Password verification is required to see the owner key</source>
@@ -1423,7 +1420,7 @@ deploy the key at the node you trust completely.</translation>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
         <source>Ask password on every Send</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
-        <translation type="unfinished">Ask password on every Send</translation>
+        <translation>Tanyakan kata sandi pada setiap Pengiriman</translation>
     </message>
     <message id="tx-failure-kernel-min-height">
         <source>Kernel&apos;s min height is unacceptable</source>
@@ -1435,67 +1432,67 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-key-keeper-no-initialized">
         <source>Key keeper is not initialized</source>
-        <translation type="unfinished">Key keeper is not initialized</translation>
+        <translation>Penjaga kunci tidak diinisialisasi</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
         <source>No valid asset id/asset owner id</source>
-        <translation type="unfinished">No valid asset id/asset owner id</translation>
+        <translation>Tidak ada id aset/id pemilik aset yang valid</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
         <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
-        <translation type="unfinished">Cannot issue/consume more than MAX_INT64 asset groth in one transaction</translation>
+        <translation>Tidak dapat menerbitkan/menggunakan lebih dari groth aset MAX_INT64 dalam satu transaksi</translation>
     </message>
     <message id="tx-failure-invalid-data-for-payment-proof">
         <source>Some mandatory data for payment proof is missing</source>
-        <translation type="unfinished">Some mandatory data for payment proof is missing</translation>
+        <translation>Beberapa data wajib untuk bukti pembayaran tidak ada</translation>
     </message>
     <message id="tx-failure-there-is-no-master-key">
         <source>Master key is needed for this transaction, but unavailable</source>
-        <translation type="unfinished">Master key is needed for this transaction, but unavailable</translation>
+        <translation>Kunci master diperlukan untuk transaksi ini, tetapi tidak tersedia</translation>
     </message>
     <message id="tx-failure-keeper-malfunctioned">
         <source>Key keeper malfunctioned</source>
-        <translation type="unfinished">Key keeper malfunctioned</translation>
+        <translation>Penjaga kunci tidak berfungsi</translation>
     </message>
     <message id="tx-failure-aborted-by-user">
         <source>Aborted by the user</source>
-        <translation type="unfinished">Aborted by the user</translation>
+        <translation>Dibatalkan oleh pengguna</translation>
     </message>
     <message id="tx-failure-asset-small-fee">
         <source>Asset registration fee is too small</source>
-        <translation type="unfinished">Asset registration fee is too small</translation>
+        <translation>Biaya pendaftaran aset terlalu kecil</translation>
     </message>
     <message id="settings-notifications-title">
         <source>Notifications</source>
-        <translation>Notifikasi</translation>
+        <translation>Pemberitahuan</translation>
     </message>
     <message id="settings-notifications-version">
         <source>Wallet updates</source>
-        <translation type="unfinished">Wallet updates</translation>
+        <translation>Pembaruan dompet</translation>
     </message>
     <message id="settings-notifications-tx-status">
         <source>Transaction status</source>
-        <translation type="unfinished">Transaction status</translation>
+        <translation>Status transaksi</translation>
     </message>
     <message id="tx-failure-fee-too-large">
         <source>Fee is too large</source>
-        <translation type="unfinished">Fee is too large</translation>
+        <translation>Biaya terlalu besar</translation>
     </message>
     <message id="tx-failure-asset-invalid-info">
         <source>No asset info or asset info is not valid</source>
-        <translation type="unfinished">No asset info or asset info is not valid</translation>
+        <translation>Tidak ada info aset atau info aset yang tidak valid</translation>
     </message>
     <message id="tx-failure-asset-invalid-metadata">
         <source>No asset metadata or asset metadata is not valid</source>
-        <translation type="unfinished">No asset metadata or asset metadata is not valid</translation>
+        <translation>Tidak ada metadata aset atau metadata aset yang tidak valid</translation>
     </message>
     <message id="tx-failure-asset-invalid-id">
         <source>Invalid asset id</source>
-        <translation type="unfinished">Invalid asset id</translation>
+        <translation>Id aset tidak valid</translation>
     </message>
     <message id="tx-failure-asset-confirmation">
         <source>Failed to receive asset confirmation</source>
-        <translation type="unfinished">Failed to receive asset confirmation</translation>
+        <translation>Gagal menerima konfirmasi aset</translation>
     </message>
     <message id="tx-failure-asset-in-use">
         <source>Asset is still in use (issued amount &gt; 0)</source>
@@ -1503,12 +1500,12 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="tx-failure-asset-locked">
         <source>Asset is still locked</source>
-        <translation type="unfinished">Asset is still locked</translation>
+        <translation>Aset masih terkunci</translation>
     </message>
     <message id="settings-general-amounts-unit">
         <source>Show amounts in</source>
         <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation type="unfinished">Show amounts in</translation>
+        <translation>Tampilkan jumlah dalam</translation>
     </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
@@ -1516,7 +1513,7 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-address-expired">
         <source>Address expired</source>
-        <translation type="unfinished">Address expired</translation>
+        <translation>Alamat kedaluwarsa</translation>
     </message>
     <message id="notification-transaction-received">
         <source>Transaction was received</source>
@@ -1524,11 +1521,11 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-transaction-sent-message">
         <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation type="unfinished">You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</translation>
+        <translation>Anda mengirim &lt;b&gt;%1 %2&lt;/b&gt; ke &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-failed">
         <source>Transaction failed</source>
-        <translation type="unfinished">Transaction failed</translation>
+        <translation>Transaksi gagal</translation>
     </message>
     <message id="notification-news">
         <source>BEAM in the press</source>
@@ -1536,19 +1533,19 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-address-expired-message">
         <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; address expired.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; alamat sudah habis masa berlakunya.</translation>
     </message>
     <message id="notification-transaction-received-message">
         <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation type="unfinished">You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</translation>
+        <translation>Anda menerima &lt;b&gt;%1 %2&lt;/b&gt; dari &lt;b&gt;%3&lt;/b&gt;.</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
         <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</translation>
+        <translation>Mengirim &lt;b&gt;%1 %2&lt;/b&gt; ke &lt;b&gt;%3&lt;/b&gt; gagal.</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
         <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</translation>
+        <translation>Menerima &lt;b&gt;%1 %2&lt;/b&gt; dari &lt;b&gt;%3&lt;/b&gt; gagal.</translation>
     </message>
     <message id="notification-transaction-sent">
         <source>Transaction was sent</source>
@@ -1557,7 +1554,7 @@ deploy the key at the node you trust completely.</translation>
     <message id="settings-update-wallet">
         <source>update wallet</source>
         <extracomment>settings update wallet button</extracomment>
-        <translation type="unfinished">update wallet</translation>
+        <translation>perbarui dompet</translation>
     </message>
     <message id="general-exchange-rate-not-available">
         <source>Exchange rate to %1 is not available</source>
@@ -1569,19 +1566,19 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-swap-beam-completed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
+        <translation>Penawaran &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; dengan ID transaksi &lt;b&gt;%4&lt;/b&gt; lengkap.</translation>
     </message>
     <message id="notification-swap-completed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</translation>
+        <translation>Penawaran &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; dengan ID transaksi &lt;b&gt;%4&lt;/b&gt; lengkap.</translation>
     </message>
     <message id="notification-swap-beam-failed-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
+        <translation>Penawaran &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; dengan ID transaksi &lt;b&gt;%4&lt;/b&gt; gagal.</translation>
     </message>
     <message id="notification-swap-failed-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</translation>
+        <translation>Penawaran &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; dengan ID transaksi &lt;b&gt;%4&lt;/b&gt; gagal.</translation>
     </message>
     <message id="notification-swap-failed">
         <source>Atomic Swap offer failed</source>
@@ -1593,11 +1590,11 @@ deploy the key at the node you trust completely.</translation>
     </message>
     <message id="notification-swap-beam-expired-message">
         <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
+        <translation>Penawaran &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; dengan ID transaksi &lt;b&gt;%4&lt;/b&gt; kedaluwarsa.</translation>
     </message>
     <message id="notification-swap-expired-message">
         <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation type="unfinished">Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</translation>
+        <translation>Penawaran &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; dengan ID transaksi &lt;b&gt;%4&lt;/b&gt; kedaluwarsa.</translation>
     </message>
     <message id="tx-failure-asset-exists">
         <source>Asset has been already registered</source>
@@ -1633,7 +1630,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
-        <translation type="unfinished">Wallet</translation>
+        <translation>Dompet</translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
@@ -1641,7 +1638,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-troubleshooting-title">
         <source>Troubleshooting</source>
-        <translation type="unfinished">Troubleshooting</translation>
+        <translation>Pemecahan masalah</translation>
     </message>
     <message id="settings-get-beam">
         <source>Get Beams from Beam Community Faucet</source>
@@ -1649,21 +1646,20 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-privacy-title">
         <source>Privacy</source>
-        <translation type="unfinished">Privacy</translation>
+        <translation>Privasi</translation>
     </message>
     <message id="settings-resources-title">
         <source>Resources</source>
-        <translation type="unfinished">Resources</translation>
+        <translation>Sumber Daya</translation>
     </message>
     <message id="settings-utilities-title">
         <source>Utilities</source>
-        <translation type="unfinished">Utilities</translation>
+        <translation>Utilitas</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
         <source>Run integrated node</source>
-        <oldsource>Integrated node</oldsource>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">Integrated node</translation>
+        <translation>Jalankan mode terintegrasi</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1685,8 +1681,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Node Connection</source>
-        <oldsource>Beam Remote Node</oldsource>
-        <translation type="unfinished">Beam Remote Node</translation>
+        <translation>Koneksi Node Beam</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -1706,11 +1701,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="token-info-token">
         <source>Token</source>
-        <translation type="unfinished">Token</translation>
+        <translation>Token</translation>
     </message>
     <message id="tx-regular">
         <source>Online</source>
-        <translation type="unfinished">Online</translation>
+        <translation>Online</translation>
     </message>
     <message id="tx-max-privacy">
         <source>Maximum anonymity</source>
@@ -1727,19 +1722,19 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="format-small-amount">
         <source>&lt; 1 %1</source>
-        <translation type="unfinished">&lt; 1 %1</translation>
+        <translation>&lt; 1 %1</translation>
     </message>
     <message id="format-amount">
         <source>%1 %2</source>
-        <translation type="unfinished">%1 %2</translation>
+        <translation>%1 %2</translation>
     </message>
     <message id="send-regular-fee">
         <source>Fee</source>
-        <translation type="unfinished">Fee</translation>
+        <translation>Biaya</translation>
     </message>
     <message id="settings-swap-clear">
         <source>clear</source>
-        <translation type="unfinished">clear</translation>
+        <translation>bersihkan</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-title">
         <source>Clear seed phrase</source>
@@ -1781,7 +1776,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="tx-address-offline">
         <source>Offline</source>
-        <translation type="unfinished">Offline</translation>
+        <translation>Offline</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
         <source>in progress
@@ -1871,7 +1866,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
+        <translation>Alamat</translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
         <source>Dogecoin seed phrase</source>
@@ -1899,39 +1894,39 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="general-dogecoin">
         <source>Dogecoin</source>
-        <translation type="unfinished">Dogecoin</translation>
+        <translation>Dogecoin</translation>
     </message>
     <message id="general-bitcoin-cash">
         <source>Bitcoin Cash</source>
-        <translation type="unfinished">Bitcoin Cash</translation>
+        <translation>Bitcoin Cash</translation>
     </message>
     <message id="general-dash">
         <source>DASH</source>
-        <translation type="unfinished">DASH</translation>
+        <translation>DASH</translation>
     </message>
     <message id="settings-swap-dogecoin-node">
         <source>Dogecoin node</source>
-        <translation type="unfinished">Dogecoin node</translation>
+        <translation>Dogecoin node</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-node">
         <source>Bitcoin Cash node</source>
-        <translation type="unfinished">Bitcoin Cash node</translation>
+        <translation>Bitcoin Cash node</translation>
     </message>
     <message id="settings-swap-dash-node">
         <source>Dash node</source>
-        <translation type="unfinished">Dash node</translation>
+        <translation>Dash node</translation>
     </message>
     <message id="settings-swap-dogecoin-electrum">
         <source>Dogecoin electrum</source>
-        <translation type="unfinished">Dogecoin electrum</translation>
+        <translation>Dogecoin electrum</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-electrum">
         <source>Bitcoin Cash electrum</source>
-        <translation type="unfinished">Bitcoin Cash electrum</translation>
+        <translation>Bitcoin Cash electrum</translation>
     </message>
     <message id="settings-swap-dash-electrum">
         <source>Dash electrum</source>
-        <translation type="unfinished">Dash electrum</translation>
+        <translation>Dash electrum</translation>
     </message>
     <message id="settings-show-public-offline-address">
         <source>Show public offline address</source>
@@ -1947,19 +1942,19 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="more-details">
         <source>More details</source>
-        <translation type="unfinished">More details</translation>
+        <translation>Lebih detail</translation>
     </message>
     <message id="tx-address-public-offline">
         <source>Public offline</source>
-        <translation type="unfinished">Public offline</translation>
+        <translation>Publik offline</translation>
     </message>
     <message id="tx-address-regular">
         <source>Regular</source>
-        <translation type="unfinished">Regular</translation>
+        <translation>Reguler</translation>
     </message>
     <message id="tx-address-max-privacy">
         <source>Maximum anonymity</source>
-        <translation type="unfinished">Maximum anonymity</translation>
+        <translation>Anonimitas maksimum</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
         <source>in progress
@@ -2029,7 +2024,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="max-privacy-dialog-amount">
         <source>Amount</source>
-        <translation type="unfinished">Amount</translation>
+        <translation>Jumlah</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
         <source>Unlock Time</source>
@@ -2054,28 +2049,28 @@ Your version is: %2. Please, check for updates.</translation>
     <message id="time-hour" numerus="yes">
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation type="unfinished">
-            <numerusform>%n hour(s)</numerusform>
+        <translation>
+            <numerusform>%n jam(s)</numerusform>
         </translation>
     </message>
     <message id="time-day" numerus="yes">
         <source>%n day(s)</source>
         <extracomment>time &quot;day&quot; string</extracomment>
-        <translation type="unfinished">
-            <numerusform>%n day(s)</numerusform>
+        <translation>
+            <numerusform>%n hari(s)</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
         <source>No limit</source>
-        <translation type="unfinished">No limit</translation>
+        <translation>Tanpa batas</translation>
     </message>
     <message id="general-ethereum">
         <source>Ethereum</source>
-        <translation type="unfinished">Ethereum</translation>
+        <translation>Ethereum</translation>
     </message>
     <message id="settings-swap-ethereum-node">
         <source>Ethereum node</source>
-        <translation type="unfinished">Ethereum node</translation>
+        <translation>Ethereum node</translation>
     </message>
     <message id="ethereum-show-seed-title">
         <source>Ethereum seed phrase</source>
@@ -2083,7 +2078,7 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-account-index">
         <source>Account index</source>
-        <translation type="unfinished">Account index</translation>
+        <translation>Indeks akun</translation>
     </message>
     <message id="general-recommended-fee-fail">
         <source>The minimum recommended fee is %1 %2</source>
@@ -2115,8 +2110,7 @@ much longer for a transaction to complete.</translation>
     </message>
     <message id="apps-title">
         <source>Applications</source>
-        <oldsource>My DApp Store</oldsource>
-        <translation type="unfinished">My DApp Store</translation>
+        <translation>Aplikasi</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2164,7 +2158,7 @@ much longer for a transaction to complete.</translation>
     </message>
     <message id="atomic-swap-back-button">
         <source>back</source>
-        <translation type="unfinished">back</translation>
+        <translation>kembali</translation>
     </message>
     <message id="atomic-swap-tx-cancel">
         <source>Cancel atomic swap</source>
@@ -2212,7 +2206,7 @@ much longer for a transaction to complete.</translation>
     </message>
     <message id="atomic-swap-transactions-tab">
         <source>Transactions</source>
-        <translation type="unfinished">Transactions</translation>
+        <translation>Transaksi</translation>
     </message>
     <message id="atomic-swap-fit-current-balance">
         <source>Fit my current balance</source>
@@ -2234,15 +2228,15 @@ Please try again later or create an offer yourself.</translation>
     </message>
     <message id="atomic-swap-amount-send">
         <source>Send</source>
-        <translation type="unfinished">Send</translation>
+        <translation>Kirim</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
-        <translation type="unfinished">All</translation>
+        <translation>Semua</translation>
     </message>
     <message id="atomic-swap-in-progress-transactions-tab">
         <source>In progress</source>
-        <translation type="unfinished">In progress</translation>
+        <translation>Sedang berlangsung</translation>
     </message>
     <message id="atomic-swap-tx-table-created">
         <source>Created on</source>
@@ -2250,19 +2244,19 @@ Please try again later or create an offer yourself.</translation>
     </message>
     <message id="atomic-swap-tx-table-from">
         <source>From</source>
-        <translation type="unfinished">From</translation>
+        <translation>Dari</translation>
     </message>
     <message id="atomic-swap-tx-table-to">
         <source>To</source>
-        <translation type="unfinished">To</translation>
+        <translation>Kepada</translation>
     </message>
     <message id="atomic-swap-tx-table-sent">
         <source>Sent</source>
-        <translation type="unfinished">Sent</translation>
+        <translation>Dikirim</translation>
     </message>
     <message id="atomic-swap-tx-table-received">
         <source>Received</source>
-        <translation type="unfinished">Received</translation>
+        <translation>Diterima</translation>
     </message>
     <message id="atomic-swap-tx-table-status">
         <source>Status</source>
@@ -2300,7 +2294,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="wallet-receive-expires-2">
         <source>2 hours</source>
-        <translation type="unfinished">2 hours</translation>
+        <translation>2 jam</translation>
     </message>
     <message id="wallet-receive-expires-6">
         <source>6 hours</source>
@@ -2308,7 +2302,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="wallet-receive-expires-12">
         <source>12 hours</source>
-        <translation type="unfinished">12 hours</translation>
+        <translation>12 jam</translation>
     </message>
     <message id="overtop-beam-supply">
         <source>Amount overtop total Beam supply.</source>
@@ -2348,11 +2342,11 @@ Update your settings and try again.</translation>
     </message>
     <message id="utxo-head-maturity">
         <source>Maturity</source>
-        <translation type="unfinished">Maturity</translation>
+        <translation>Jatuh tempo</translation>
     </message>
     <message id="utxo-status-available">
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation>Tersedia</translation>
     </message>
     <message id="utxo-status-maturing">
         <source>Maturing%1(till block height %2)</source>
@@ -2376,7 +2370,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="utxo-status-spent">
         <source>Spent</source>
-        <translation type="unfinished">Spent</translation>
+        <translation>Dihabiskan</translation>
     </message>
     <message id="utxo-status-maturing-mp">
         <source>Maturing%1(maximum anonymity %2% unlinked)</source>
@@ -2384,27 +2378,27 @@ Update your settings and try again.</translation>
     </message>
     <message id="utxo-head-type">
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Jenis</translation>
     </message>
     <message id="general-coinbase">
         <source>Coinbase</source>
         <extracomment>UTXO type Coinbase</extracomment>
-        <translation type="unfinished">Coinbase</translation>
+        <translation>Coinbase</translation>
     </message>
     <message id="general-regular">
         <source>Regular</source>
         <extracomment>UTXO type Regular</extracomment>
-        <translation type="unfinished">Regular</translation>
+        <translation>Reguler</translation>
     </message>
     <message id="general-treasury">
         <source>Treasury</source>
         <extracomment>UTXO type Treasury</extracomment>
-        <translation type="unfinished">Treasury</translation>
+        <translation>Perbendaharaan</translation>
     </message>
     <message id="general-shielded">
         <source>Shielded</source>
         <extracomment>UTXO type Shielded</extracomment>
-        <translation type="unfinished">Shielded</translation>
+        <translation>Terlindung</translation>
     </message>
     <message id="apps-bad-api-version">
         <source>Unsupported API version requested: %1</source>
@@ -2416,11 +2410,11 @@ Update your settings and try again.</translation>
     </message>
     <message id="wallet-receive-title">
         <source>Receive</source>
-        <translation type="unfinished">Receive</translation>
+        <translation>Terima</translation>
     </message>
     <message id="general-tx-type">
         <source>Transaction type</source>
-        <translation type="unfinished">Transaction type</translation>
+        <translation>Jenis transaksi</translation>
     </message>
     <message id="wallet-receive-max-privacy-unsupported">
         <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
@@ -2428,11 +2422,11 @@ Update your settings and try again.</translation>
     </message>
     <message id="receive-request">
         <source>Requested amount</source>
-        <translation type="unfinished">Requested amount</translation>
+        <translation>Jumlah yang diminta</translation>
     </message>
     <message id="receive-request-optional">
         <source>(optional)</source>
-        <translation type="unfinished">(optional)</translation>
+        <translation>(opsional)</translation>
     </message>
     <message id="wallet-receive-addr-message-mp" numerus="yes">
         <source>Transaction can last at most %n hour(s).</source>
@@ -2458,11 +2452,11 @@ Update your settings and try again.</translation>
     </message>
     <message id="send-title">
         <source>Send</source>
-        <translation type="unfinished">Send</translation>
+        <translation>Kirim</translation>
     </message>
     <message id="general-send-to">
         <source>Send to</source>
-        <translation type="unfinished">Send to</translation>
+        <translation>Kirim ke</translation>
     </message>
     <message id="send-contact-address-placeholder">
         <source>Paste recipient address here</source>
@@ -2474,7 +2468,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="tx-offline">
         <source>Offline</source>
-        <translation type="unfinished">Offline</translation>
+        <translation>Offline</translation>
     </message>
     <message id="send-no-funds">
         <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
@@ -2482,15 +2476,15 @@ Update your settings and try again.</translation>
     </message>
     <message id="amount-input-add-max">
         <source>max</source>
-        <translation type="unfinished">max</translation>
+        <translation>maks</translation>
     </message>
     <message id="send-amount-label">
         <source>Amount to send</source>
-        <translation type="unfinished">Amount to send</translation>
+        <translation>Jumlah yang harus dikirim</translation>
     </message>
     <message id="send-remaining-label">
         <source>Remaining</source>
-        <translation type="unfinished">Remaining</translation>
+        <translation>Tersisa</translation>
     </message>
     <message id="send-remaining-beam-label">
         <source>BEAM Remaining</source>
@@ -2498,23 +2492,23 @@ Update your settings and try again.</translation>
     </message>
     <message id="general-balance">
         <source>Balance</source>
-        <translation type="unfinished">Balance</translation>
+        <translation>Saldo</translation>
     </message>
     <message id="general-asset-info">
         <source>Asset Info</source>
-        <translation type="unfinished">Asset Info</translation>
+        <translation>Informasi Aset</translation>
     </message>
     <message id="balance-available">
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation>Tersedia</translation>
     </message>
     <message id="balance-regular">
         <source>Regular</source>
-        <translation type="unfinished">Regular</translation>
+        <translation>Reguler</translation>
     </message>
     <message id="balance-shielded">
         <source>Shielded</source>
-        <translation type="unfinished">Shielded</translation>
+        <translation>Terlindung</translation>
     </message>
     <message id="balance-locked">
         <source>Locked</source>
@@ -2522,15 +2516,15 @@ Update your settings and try again.</translation>
     </message>
     <message id="balance-maturing">
         <source>Maturing</source>
-        <translation type="unfinished">Maturing</translation>
+        <translation>Jatuh tempo</translation>
     </message>
     <message id="balance-change">
         <source>Change</source>
-        <translation type="unfinished">Change</translation>
+        <translation>Ubah</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
-        <translation type="unfinished">Maximum anonymity</translation>
+        <translation>Anonimitas maksimum</translation>
     </message>
     <message id="info-asset-id">
         <source>Asset ID</source>
@@ -2538,55 +2532,55 @@ Update your settings and try again.</translation>
     </message>
     <message id="info-asset-name">
         <source>Asset name</source>
-        <translation type="unfinished">Asset name</translation>
+        <translation>Nama aset</translation>
     </message>
     <message id="info-asset-unit">
         <source>Unit name</source>
-        <translation type="unfinished">Unit name</translation>
+        <translation>Nama unit</translation>
     </message>
     <message id="info-asset-smallest">
         <source>Smallest unit name</source>
-        <translation type="unfinished">Smallest unit name</translation>
+        <translation>Nama satuan terkecil</translation>
     </message>
     <message id="info-asset-short">
         <source>Short description</source>
-        <translation type="unfinished">Short description</translation>
+        <translation>Deskripsi singkat</translation>
     </message>
     <message id="info-asset-long">
         <source>Long description</source>
-        <translation type="unfinished">Long description</translation>
+        <translation>Deskripsi panjang</translation>
     </message>
     <message id="info-asset-site">
         <source>Website</source>
-        <translation type="unfinished">Website</translation>
+        <translation>Situs web</translation>
     </message>
     <message id="info-asset-paper">
         <source>Whitepaper</source>
-        <translation type="unfinished">Whitepaper</translation>
+        <translation>Whitepaper</translation>
     </message>
     <message id="tx-details-date-label">
         <source>Date</source>
-        <translation type="unfinished">Date</translation>
+        <translation>Tanggal</translation>
     </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
-        <translation type="unfinished">Sending address</translation>
+        <translation>Alamat pengiriman</translation>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender signature</source>
-        <translation type="unfinished">Sender signature</translation>
+        <translation>Tanda tangan pengirim</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
-        <translation type="unfinished">Receiving address</translation>
+        <translation>Alamat penerimaan</translation>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver signature</source>
-        <translation type="unfinished">Receiver signature</translation>
+        <translation>Tanda tangan penerima</translation>
     </message>
     <message id="tx-details-amount-label">
         <source>Amount</source>
-        <translation type="unfinished">Amount</translation>
+        <translation>Jumlah</translation>
     </message>
     <message id="tx-details-rate-notice">
         <source>calculated with the exchange rate at the time of the transaction</source>
@@ -2598,19 +2592,19 @@ Update your settings and try again.</translation>
     </message>
     <message id="tx-details-tx-id-label">
         <source>Transaction ID</source>
-        <translation type="unfinished">Transaction ID</translation>
+        <translation>ID Transaksi</translation>
     </message>
     <message id="open-in-explorer">
         <source>Open in Blockchain Explorer</source>
-        <translation type="unfinished">Open in Blockchain Explorer</translation>
+        <translation>Buka di Penjelajah Blockchain</translation>
     </message>
     <message id="tx-details-error-label">
         <source>Error</source>
-        <translation type="unfinished">Error</translation>
+        <translation>Kesalahan</translation>
     </message>
     <message id="utxo-empty">
         <source>Your UTXO list is empty</source>
-        <translation type="unfinished">Your UTXO list is empty</translation>
+        <translation>Daftar UTXO Anda kosong</translation>
     </message>
     <message id="tx-in-progress-empty">
         <source>There are no in progress transactions yet.</source>
@@ -2618,43 +2612,43 @@ Update your settings and try again.</translation>
     </message>
     <message id="receive-addr">
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
+        <translation>Alamat</translation>
     </message>
     <message id="edit-addr-title">
         <source>Edit address</source>
-        <translation type="unfinished">Edit address</translation>
+        <translation>Sunting alamat</translation>
     </message>
     <message id="edit-addr-addr">
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
+        <translation>Alamat</translation>
     </message>
     <message id="edit-addr-expires-label">
         <source>Expires on</source>
-        <translation type="unfinished">Expires on</translation>
+        <translation>Kedaluwarsa pada</translation>
     </message>
     <message id="edit-addr-expire-now">
         <source>Expire now</source>
-        <translation type="unfinished">Expire now</translation>
+        <translation>Kedaluwarsa sekarang</translation>
     </message>
     <message id="edit-addr-extend">
         <source>Extend</source>
-        <translation type="unfinished">Extend</translation>
+        <translation>Perluas</translation>
     </message>
     <message id="edit-addr-activate">
         <source>Activate</source>
-        <translation type="unfinished">Activate</translation>
+        <translation>Aktifkan</translation>
     </message>
     <message id="edit-addr-save-button">
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation>Simpan</translation>
     </message>
     <message id="edit-addr-no-expire">
         <source>There is an active transaction for this address, therefore it cannot be expired.</source>
-        <translation type="unfinished">There is an active transaction for this address, therefore it cannot be expired.</translation>
+        <translation>Ada transaksi aktif untuk alamat ini, oleh karena itu tidak dapat kedaluwarsa.</translation>
     </message>
     <message id="edit-addr-never-expires">
         <source>This address never expires</source>
-        <translation type="unfinished">This address never expires</translation>
+        <translation>Alamat ini tidak pernah kedaluwarsa</translation>
     </message>
     <message id="edit-addr-expired">
         <source>This address is already expired</source>
@@ -2690,7 +2684,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
-        <translation type="unfinished">Wallet</translation>
+        <translation>Dompet</translation>
     </message>
     <message id="settings-general-confirmations">
         <source>Minimum confirmations</source>
@@ -2723,15 +2717,15 @@ Update your settings and try again.</translation>
     </message>
     <message id="settings-export">
         <source>Export wallet data</source>
-        <translation type="unfinished">Export wallet data</translation>
+        <translation>Ekspor data dompet</translation>
     </message>
     <message id="settings-import">
         <source>Import wallet data</source>
-        <translation type="unfinished">Import wallet data</translation>
+        <translation>Impor data dompet</translation>
     </message>
     <message id="send-available">
         <source>Available</source>
-        <translation type="unfinished">Available</translation>
+        <translation>Tersedia</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
         <source>Maximum anonymity transaction sent</source>
@@ -2743,11 +2737,11 @@ Update your settings and try again.</translation>
     </message>
     <message id="notification-offline-transaction-sent">
         <source>Transaction sent to offline</source>
-        <translation type="unfinished">Transaction sent to offline</translation>
+        <translation>Transaksi dikirim ke offline</translation>
     </message>
     <message id="notification-offline-transaction-received">
         <source>Transaction received from offline</source>
-        <translation type="unfinished">Transaction received from offline</translation>
+        <translation>Transaksi diterima dari offline</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
         <source>Maximum anonymity transaction failed</source>
@@ -2759,7 +2753,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="notification-address-copied">
         <source>Address copied to clipboard</source>
-        <translation type="unfinished">Address copied to clipboard</translation>
+        <translation>Alamat disalin ke papan klip</translation>
     </message>
     <message id="general-ca-id">
         <source>Confidential asset ID</source>
@@ -2771,7 +2765,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="notifications-title">
         <source>Notifications</source>
-        <translation>Notifikasi</translation>
+        <translation>Pemberitahuan</translation>
     </message>
     <message id="notifications-clear-all">
         <source>clear all</source>
@@ -2779,27 +2773,27 @@ Update your settings and try again.</translation>
     </message>
     <message id="notifications-empty">
         <source>There are no notifications yet.</source>
-        <translation type="unfinished">There are no notifications yet.</translation>
+        <translation>Belum ada notifikasi.</translation>
     </message>
     <message id="notifications-read">
         <source>read</source>
-        <translation type="unfinished">read</translation>
+        <translation>dibaca</translation>
     </message>
     <message id="notifications-update-now">
         <source>update now</source>
-        <translation type="unfinished">update now</translation>
+        <translation>perbarui sekarang</translation>
     </message>
     <message id="notifications-activate">
         <source>activate</source>
-        <translation type="unfinished">activate</translation>
+        <translation>aktivasi</translation>
     </message>
     <message id="notifications-activated">
         <source>activated</source>
-        <translation type="unfinished">activated</translation>
+        <translation>diaktivasi</translation>
     </message>
     <message id="notifications-details">
         <source>details</source>
-        <translation type="unfinished">details</translation>
+        <translation>rincian</translation>
     </message>
     <message id="notifications-open-dapp">
         <source>open the DApp</source>
@@ -2807,7 +2801,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="general-description">
         <source>Description</source>
-        <translation type="unfinished">Description</translation>
+        <translation>Deskripsi</translation>
     </message>
     <message id="address-info-dapp">
         <source>DApp name</source>
@@ -2815,7 +2809,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="tx-details-popup-title">
         <source>Transaction info</source>
-        <translation type="unfinished">Transaction info</translation>
+        <translation>Info transaksi</translation>
     </message>
     <message id="send-no-funds-for-fee">
         <source>Insufficient funds to pay transaction fee.</source>
@@ -2823,27 +2817,27 @@ Update your settings and try again.</translation>
     </message>
     <message id="tx-details-general-info">
         <source>General info</source>
-        <translation type="unfinished">General info</translation>
+        <translation>Informasi Umum</translation>
     </message>
     <message id="general-wallet-signature">
         <source>Signature</source>
-        <translation type="unfinished">Signature</translation>
+        <translation>Tanda tangan</translation>
     </message>
     <message id="settings-utilities-show-utxo">
         <source>Show UTXO</source>
-        <translation type="unfinished">Show UTXO</translation>
+        <translation>Tampilkan UTXO</translation>
     </message>
     <message id="general-coin">
         <source>Coin</source>
-        <translation type="unfinished">Coin</translation>
+        <translation>Koin</translation>
     </message>
     <message id="general-show-tx-details">
         <source>Show details</source>
-        <translation type="unfinished">Show details</translation>
+        <translation>Tampilkan rincian</translation>
     </message>
     <message id="general-advanced">
         <source>Advanced</source>
-        <translation type="unfinished">Advanced</translation>
+        <translation>Lanjutan</translation>
     </message>
     <message id="receive-max-set">
         <source>Maximum anonymity set</source>
@@ -2859,7 +2853,7 @@ Update your settings and try again.</translation>
     </message>
     <message id="tx-online">
         <source>Online</source>
-        <translation type="unfinished">Online</translation>
+        <translation>Online</translation>
     </message>
     <message id="send-receiver-online-tip">
         <source>Ask receiver to come online to support more offline transactions.</source>
@@ -2877,11 +2871,11 @@ cannot be canceled.</translation>
     </message>
     <message id="send-anon-set">
         <source>Guarantees maximum anonymity set of up to 64K.</source>
-        <translation type="unfinished">Guarantees maximum anonymity set of up to 64K.</translation>
+        <translation>Menjamin set anonimitas maksimum hingga 64K.</translation>
     </message>
     <message id="send-online-tip">
         <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation type="unfinished">The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
+        <translation>Penerima harus online dalam 12 jam ke depan dan Anda harus online dalam waktu 2 jam setelahnya.</translation>
     </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
@@ -2909,7 +2903,7 @@ cannot be canceled.</translation>
     </message>
     <message id="send-type-label">
         <source>Transaction type</source>
-        <translation type="unfinished">Transaction type</translation>
+        <translation>Jenis transaksi</translation>
     </message>
     <message id="send-twoway-warning">
         <source>%1 will change the balances of your wallet</source>
@@ -2958,15 +2952,15 @@ cannot be canceled.</translation>
     </message>
     <message id="faucet-promo-get-coins">
         <source>get coins</source>
-        <translation type="unfinished">get coins</translation>
+        <translation>dapatkan koin</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
-        <translation type="unfinished">Seed phrase</translation>
+        <translation>Frase benih</translation>
     </message>
     <message id="general-do-later">
         <source>I will do it later</source>
-        <translation type="unfinished">I will do it later</translation>
+        <translation>Saya akan melakukannya nanti</translation>
     </message>
     <message id="general-complete-verification">
         <source>Complete wallet verification</source>
@@ -2974,15 +2968,15 @@ cannot be canceled.</translation>
     </message>
     <message id="general-complete-verification-button">
         <source>Complete verification</source>
-        <translation type="unfinished">Complete verification</translation>
+        <translation>Verifikasi lengkap</translation>
     </message>
     <message id="seed-validation-promo">
         <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation type="unfinished">Write down and validate your seed phrase so you can always recover your funds.</translation>
+        <translation>Tuliskan dan validasi frasa awal Anda sehingga Anda selalu dapat memulihkan dana Anda.</translation>
     </message>
     <message id="seed-validation-link">
         <source>Secure your phrase</source>
-        <translation type="unfinished">Secure your phrase</translation>
+        <translation>Amankan frasa Anda</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
@@ -3018,6 +3012,10 @@ cannot be canceled.</translation>
         <translation type="unfinished">sent to own address
 (offline)</translation>
     </message>
+    <message id="apps-version-error">
+        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+        <translation type="unfinished">This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</translation>
+    </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
         <source>waiting for receiver
 (offline)</source>
@@ -3026,7 +3024,7 @@ cannot be canceled.</translation>
     </message>
     <message id="apps-uninstall">
         <source>Uninstall</source>
-        <translation type="unfinished">Uninstall</translation>
+        <translation>Copot pemasangan</translation>
     </message>
     <message id="apps-uninstall-confirm">
         <source>Are you sure you want to uninstall %1 DApp?</source>
@@ -3058,12 +3056,6 @@ cannot be canceled.</translation>
         <source>Update Wallet to launch %1 application</source>
         <translation type="unfinished">Update Wallet to launch %1 application</translation>
     </message>
-    <message id="wallet-receive-regular-address-message">
-        <source>To ensure a better privacy, new address is generated every time.
-In case you’d like to re-use an earlier created regular address please use the Address Book.</source>
-        <translation type="unfinished">To ensure a better privacy, new address is generated every time.
-In case you’d like to re-use an earlier created regular address please use the Address Book.</translation>
-    </message>
     <message id="address-details">
         <source>Address details</source>
         <translation>Rincian alamat</translation>
@@ -3080,17 +3072,17 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n hour(s)</numerusform>
+        <translation>
+            <numerusform>%n jam(s)</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">
         <source> (recommended)</source>
-        <translation type="unfinished"> (recommended)</translation>
+        <translation> (direkomendasikan)</translation>
     </message>
     <message id="wallet-receive-addr-message-min-fee">
         <source>Min transaction fee is 0.01 BEAM.</source>
-        <translation type="unfinished">Min transaction fee is 0.01 BEAM.</translation>
+        <translation>Biaya transaksi minimum adalah 0,01 BEAM.</translation>
     </message>
     <message id="status-online-stale-rates">
         <source>(exchange rate to %1 was not updated since %2)</source>
@@ -3106,7 +3098,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="loading-view-less-than-minute">
         <source>less than a minute</source>
-        <translation type="unfinished">less than a minute</translation>
+        <translation>kurang dari satu menit</translation>
     </message>
     <message id="loading-view-rebuild-utxos">
         <source>Rebuilding wallet data: </source>
@@ -3114,11 +3106,11 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="status-change-settings">
         <source>Change settings</source>
-        <translation type="unfinished">Change settings</translation>
+        <translation>Ubah pengaturan</translation>
     </message>
     <message id="start-create-password">
         <source>Create password</source>
-        <translation type="unfinished">Create password</translation>
+        <translation>Buat kata sandi</translation>
     </message>
     <message id="start-second-copy-error">
         <source>The wallet is already started. Close all running wallets and start again.</source>
@@ -3163,7 +3155,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="tx-empty">
         <source>Your transaction list is empty</source>
-        <translation type="unfinished">Your transaction list is empty</translation>
+        <translation>Daftar transaksi Anda kosong</translation>
     </message>
     <message id="tx-sent-empty">
         <source>There are no sent transactions yet.</source>
@@ -3175,35 +3167,35 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
-        <translation type="unfinished">All</translation>
+        <translation>Semua</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
         <source>In progress</source>
-        <translation type="unfinished">In progress</translation>
+        <translation>Sedang berlangsung</translation>
     </message>
     <message id="wallet-transactions-sent-tab">
         <source>Sent</source>
-        <translation type="unfinished">Sent</translation>
+        <translation>Dikirim</translation>
     </message>
     <message id="wallet-transactions-received-tab">
         <source>Received</source>
-        <translation type="unfinished">Received</translation>
+        <translation>Diterima</translation>
     </message>
     <message id="tx-table-filter-in-progress">
         <source>In progress</source>
-        <translation type="unfinished">In progress</translation>
+        <translation>Sedang berlangsung</translation>
     </message>
     <message id="tx-table-filter-completed">
         <source>Completed</source>
-        <translation type="unfinished">Completed</translation>
+        <translation>Selesai</translation>
     </message>
     <message id="tx-table-filter-canceled">
         <source>Canceled</source>
-        <translation type="unfinished">Canceled</translation>
+        <translation>Dibatalkan</translation>
     </message>
     <message id="tx-table-filter-failed">
         <source>Failed</source>
-        <translation type="unfinished">Failed</translation>
+        <translation>Gagal</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
         <source>Enter search text...</source>
@@ -3219,15 +3211,15 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="general-value">
         <source>Value</source>
-        <translation type="unfinished">Value</translation>
+        <translation>Nilai</translation>
     </message>
     <message id="wallet-txs-source">
         <source>Source</source>
-        <translation type="unfinished">Source</translation>
+        <translation>Sumber</translation>
     </message>
     <message id="wallet-txs-action">
         <source>Action</source>
-        <translation type="unfinished">Action</translation>
+        <translation>Aksi</translation>
     </message>
     <message id="wallet-txs-date-time">
         <source>Created on</source>
@@ -3235,15 +3227,15 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="tx-table-filter-label">
         <source>Show</source>
-        <translation type="unfinished">Show</translation>
+        <translation>Tampilkan</translation>
     </message>
     <message id="multiselect-none">
         <source>None</source>
-        <translation type="unfinished">None</translation>
+        <translation>Tidak ada</translation>
     </message>
     <message id="multiselect-all">
         <source>All</source>
-        <translation type="unfinished">All</translation>
+        <translation>Semua</translation>
     </message>
     <message id="wallet-remove-filter-button">
         <source>remove filter</source>
@@ -3251,7 +3243,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-assets-title">
         <source>Assets</source>
-        <translation type="unfinished">Assets</translation>
+        <translation>Aset</translation>
     </message>
     <message id="wallet-selected-assets-checkbox">
         <source>Selected</source>
@@ -3259,7 +3251,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
-        <translation type="unfinished">All</translation>
+        <translation>Semua</translation>
     </message>
     <message id="dnd-app-install-title">
         <source>Install DApp</source>
@@ -3287,7 +3279,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="wallet-balance-title">
         <source>Wallet Balance</source>
-        <translation type="unfinished">Wallet Balance</translation>
+        <translation>Saldo Dompet</translation>
     </message>
     <message id="tx-no-transaction-filter">
         <source>No transactions to show</source>
@@ -3321,11 +3313,11 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-nickname">
         <source>Nickname</source>
-        <translation type="unfinished">Nickname</translation>
+        <translation>Nama Panggilan</translation>
     </message>
     <message id="dapps-store-short-title">
         <source>Short title</source>
-        <translation type="unfinished">Short title</translation>
+        <translation>Judul pendek</translation>
     </message>
     <message id="dapps-store-50-character-max">
         <source>50 characters max</source>
@@ -3333,7 +3325,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-about-me">
         <source>About me</source>
-        <translation type="unfinished">About me</translation>
+        <translation>Tentang saya</translation>
     </message>
     <message id="dapps-store-150-character-max">
         <source>150 characters max</source>
@@ -3341,31 +3333,31 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="dapps-store-social-networks">
         <source>Social networks</source>
-        <translation type="unfinished">Social networks</translation>
+        <translation>Jaringan sosial</translation>
     </message>
     <message id="dapps-store-website">
         <source>Website</source>
-        <translation type="unfinished">Website</translation>
+        <translation>Situs web</translation>
     </message>
     <message id="dapps-store-twitter">
         <source>Twitter</source>
-        <translation type="unfinished">Twitter</translation>
+        <translation>Twitter</translation>
     </message>
     <message id="dapps-store-linkedin">
         <source>LinkedIn</source>
-        <translation type="unfinished">LinkedIn</translation>
+        <translation>LinkedIn</translation>
     </message>
     <message id="dapps-store-instagram">
         <source>Instagram</source>
-        <translation type="unfinished">Instagram</translation>
+        <translation>Instagram</translation>
     </message>
     <message id="dapps-store-telegram">
         <source>Telegram</source>
-        <translation type="unfinished">Telegram</translation>
+        <translation>Telegram</translation>
     </message>
     <message id="dapps-store-discord">
         <source>Discord</source>
-        <translation type="unfinished">Discord</translation>
+        <translation>Discord</translation>
     </message>
     <message id="dapps-store-create-account">
         <source>create account</source>
@@ -3451,7 +3443,7 @@ In case you’d like to re-use an earlier created regular address please use the
     </message>
     <message id="general-continue">
         <source>continue</source>
-        <translation type="unfinished">continue</translation>
+        <translation>lanjutkan</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
         <source>Check the information below and select &quot;publish&quot;.
@@ -3463,11 +3455,11 @@ change the information in your file and upload your file again.</translation>
     </message>
     <message id="dapps-store-dapp-release-date">
         <source>Release date:</source>
-        <translation type="unfinished">Release date:</translation>
+        <translation>Tanggal rilis:</translation>
     </message>
     <message id="dapps-store-dapp-version">
         <source>Version:</source>
-        <translation type="unfinished">Version:</translation>
+        <translation>Versi:</translation>
     </message>
     <message id="dapps-store-dapp-api-version">
         <source>Api version:</source>
@@ -3479,11 +3471,11 @@ change the information in your file and upload your file again.</translation>
     </message>
     <message id="dapps-store-dapp-guid">
         <source>Guid:</source>
-        <translation type="unfinished">Guid:</translation>
+        <translation>Guid:</translation>
     </message>
     <message id="dapps-store-publish">
         <source>publish</source>
-        <translation type="unfinished">publish</translation>
+        <translation>terbitkan</translation>
     </message>
     <message id="dapps-store-you-now-are-publisher">
         <source>You now are a publisher!</source>
@@ -3517,15 +3509,15 @@ Let&apos;s start!</translation>
     </message>
     <message id="publishers-list-nickname">
         <source>Nickname</source>
-        <translation type="unfinished">Nickname</translation>
+        <translation>Nama Panggilan</translation>
     </message>
     <message id="publishers-list-about">
         <source>About</source>
-        <translation type="unfinished">About</translation>
+        <translation>Tentang</translation>
     </message>
     <message id="publishers-list-social-net">
         <source>Social networks</source>
-        <translation type="unfinished">Social networks</translation>
+        <translation>Jaringan sosial</translation>
     </message>
     <message id="publishers-list-publisher-link">
         <source>Publisher link</source>
@@ -3540,65 +3532,64 @@ Please check the log and try again.</translation>
     <message id="app-failed-edit-publisher">
         <source>Oops... Failed to edit Publisher.
 Please check the log and try again.</source>
-        <translation type="unfinished">Oops... Failed to edit Publisher.
-Please check the log and try again.</translation>
+        <translation>Ups... Gagal mengedit Penerbit.
+Silakan periksa log dan coba lagi.</translation>
     </message>
     <message id="app-failed-publish-dapp">
         <source>Oops... Failed to publish DApp.
 Please check the log and try again.</source>
-        <translation type="unfinished">Oops... Failed to publish DApp.
-Please check the log and try again.</translation>
+        <translation>Ups... Gagal menerbitkan DApp.
+Silakan periksa log dan coba lagi.</translation>
     </message>
     <message id="app-failed-remove-dapp">
         <source>Oops... Failed to remove DApp.
 Please check the log and try again.</source>
-        <translation type="unfinished">Oops... Failed to remove DApp.
-Please check the log and try again.</translation>
+        <translation>Ups... Gagal menghapus DApp.
+Silakan periksa log dan coba lagi.</translation>
     </message>
     <message id="dapps-store-ipfs-unavailable">
         <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
-        <translation type="unfinished">IPFS Service is not running or is not connected to the peers. Please check the settings.</translation>
+        <translation>Layanan IPFS tidak berjalan atau tidak terhubung ke peers. Silakan periksa pengaturan.</translation>
     </message>
     <message id="app-uninstall-success">
         <source>Everything worked out.
 &apos;%1&apos; DApp is uninstalled.</source>
-        <translation type="unfinished">Everything worked out.
-&apos;%1&apos; DApp is uninstalled.</translation>
+        <translation>Semuanya berhasil.
+&apos;%1&apos; DApp telah dihapus.</translation>
     </message>
     <message id="app-uninstall-fail">
         <source>Something went wrong.
 Uninstall failed. Please try again later.</source>
-        <translation type="unfinished">Something went wrong.
-Uninstall failed. Please try again later.</translation>
+        <translation>Ada yang tidak beres.
+Pencopotan pemasangan gagal. Silakan coba lagi nanti.</translation>
     </message>
     <message id="app-install-success">
         <source>Congratulations!
 &apos;%1&apos; DApp is successfully installed.</source>
-        <translation type="unfinished">Congratulations!
-&apos;%1&apos; DApp is successfully installed.</translation>
+        <translation>Selamat!
+&apos;%1&apos; DApp berhasil diinstal.</translation>
     </message>
     <message id="app-install-fail">
         <source>Sorry, the installation failed.
 Please, check the file and try again.</source>
-        <translation type="unfinished">Sorry, the installation failed.
-Please, check the file and try again.</translation>
+        <translation>Maaf, penginstalan gagal.
+Silakan periksa file dan coba lagi.</translation>
     </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
-        <translation type="unfinished">Dapp Store</translation>
+        <translation>Dapp Store</translation>
     </message>
     <message id="settings-blockchain-height">
         <source>Blockchain height</source>
-        <translation type="unfinished">Blockchain height</translation>
+        <translation>Tinggi blockchain</translation>
     </message>
     <message id="assets-swap-title">
         <source>Assets Swaps</source>
-        <translation type="unfinished">Assets Swaps</translation>
+        <translation>Pertukaran Aset</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Offer</source>
-        <oldsource>Create Atomic Swap Offer</oldsource>
-        <translation type="unfinished">Create Atomic Swap Offer</translation>
+        <translation>Buat Penawaran</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3628,7 +3619,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
-        <translation type="unfinished">Receive</translation>
+        <translation>Terima</translation>
     </message>
     <message id="swap-rate">
         <source>Rate</source>
@@ -3652,17 +3643,15 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept Offer</source>
-        <oldsource>Accept an Asset Swap Offer</oldsource>
-        <translation type="unfinished">Accept an Asset Swap Offer</translation>
+        <translation>Terima Tawaran</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create Offer</source>
-        <oldsource>Create an Asset Swap Offer</oldsource>
-        <translation type="unfinished">Create an Asset Swap Offer</translation>
+        <translation>Buat Penawaran</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
-        <translation type="unfinished">Transaction fee</translation>
+        <translation>Biaya transaksi</translation>
     </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
@@ -3726,7 +3715,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="assets-swap-confirm-dialog-receive-amount">
         <source>Receive amount</source>
-        <translation type="unfinished">Receive amount</translation>
+        <translation>Jumlah yang diterima</translation>
     </message>
     <message id="assets-swap-confirm-dialog-fee-label">
         <source>Asset swap fee</source>
@@ -3766,11 +3755,11 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="messenger-add-receiver-address-address">
         <source>Address</source>
-        <translation type="unfinished">Address</translation>
+        <translation>Alamat</translation>
     </message>
     <message id="messenger-add-receiver-address-name">
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Nama</translation>
     </message>
     <message id="messenger-add-receiver-address-save">
         <source>add receiver address</source>
@@ -3778,7 +3767,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="chat-title-anon">
         <source>anonymous</source>
-        <translation type="unfinished">anonymous</translation>
+        <translation>anonim</translation>
     </message>
     <message id="chat-message-placeholder-osx">
         <source>[command + enter] to send</source>
@@ -3790,7 +3779,7 @@ Please, restart the wallet and try again.</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
         <source>My address</source>
-        <translation type="unfinished">My address</translation>
+        <translation>Alamat saya</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
         <source>QR code is wrong.
@@ -3805,103 +3794,101 @@ A hardware wallet is not connected. Please, connect the wallet</translation>
     <message id="approve-on-hw-wallet-text">
         <source>Transaction is in process.
 Connect your Hardware Wallet to finalize the transaction.</source>
-        <translation type="unfinished">Transaction is in process.
-Connect your Hardware Wallet to finalize the transaction.</translation>
+        <translation>Hubungkan Dompet Perangkat Keras Anda untuk menyelesaikan transaksi.</translation>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
-        <translation type="unfinished">Publishers</translation>
+        <translation>Penerbit</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
         <source>Show DApps</source>
-        <translation type="unfinished">Show DApps</translation>
+        <translation>Tampilkan DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
-        <translation type="unfinished">Hide DApps</translation>
+        <translation>Sembunyikan DApps</translation>
     </message>
     <message id="Receiver signature">
         <source>Receiver signature</source>
-        <translation type="unfinished">Receiver signature</translation>
+        <translation>Tanda tangan penerima</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
-        <translation type="unfinished">(all)</translation>
+        <translation>(semua)</translation>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation type="unfinished">Use Hardware Wallet</translation>
+        <translation>Gunakan Dompet Perangkat Keras</translation>
     </message>
     <message id="settings-start-switch">
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation>Mulai</translation>
     </message>
     <message id="settings-dapps-switch">
         <source>DApps</source>
-        <translation type="unfinished">DApps</translation>
+        <translation>DApps</translation>
     </message>
     <message id="settings-never-switch">
         <source>Never</source>
-        <translation type="unfinished">Never</translation>
+        <translation>Tidak pernah</translation>
     </message>
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished">Generate new address</translation>
+        <translation>Membuat alamat baru</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluar</translation>
     </message>
     <message id="start-account-label">
         <source>Account</source>
-        <translation type="unfinished"></translation>
+        <translation>Akun</translation>
     </message>
     <message id="start-new-account-label">
         <source>Account name</source>
-        <oldsource>Account label</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Nama akun</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Akun %1</translation>
     </message>
     <message id="start-account-password-label">
         <source>Account password</source>
-        <translation type="unfinished"></translation>
+        <translation>Kata sandi akun</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Akun dengan label yang sama sudah ada.</translation>
     </message>
     <message id="wallet-swap-button">
         <source>Swap</source>
-        <translation type="unfinished">Tukar</translation>
+        <translation>Tukar</translation>
     </message>
     <message id="apps-no-installed">
         <source>You don&apos;t have any applications installed yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda belum&apos; menginstal aplikasi apa pun</translation>
     </message>
     <message id="apps-no-at-all">
         <source>No applications yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada aplikasi</translation>
     </message>
     <message id="apps-installed-tab">
         <source>Installed</source>
-        <translation type="unfinished"></translation>
+        <translation>Terpasang</translation>
     </message>
     <message id="apps-all-tab">
         <source>All</source>
-        <translation type="unfinished">All</translation>
+        <translation>Semua</translation>
     </message>
     <message id="help-title">
         <source>Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentasi</translation>
     </message>
     <message id="settings-connect-local-node">
         <source>Integrated node</source>
         <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Integrated node</translation>
     </message>
     <message id="settings-connect-remote-node">
         <source>Remote node</source>
@@ -3909,11 +3896,7 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="general-add-account">
         <source>Add account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tambahkan akun</translation>
     </message>
 </context>
 </TS>
