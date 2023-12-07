@@ -214,6 +214,11 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-function") # mostly in 3rd-party libs
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-value") # proto.h
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-nonnull") # yas
+    if(APPLE AND
+       CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|Clang" AND
+       (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 15 OR CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 15))
+       add_compile_definitions(_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION) # boost@1.76/1.76.0_4/include/boost/container_hash/hash.hpp:131:33
+    endif()
 endif()
 
 set(SKIP_INSTALL_ALL ON)
