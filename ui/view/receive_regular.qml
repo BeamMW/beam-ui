@@ -1,7 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.2
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
 import QtGraphicalEffects 1.15
 import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
@@ -43,7 +41,7 @@ ColumnLayout {
     }
 
     onAssetIdChanged: function () {
-        // C++ sometimes provides asset id, combobox exepects index, need to fix this at some point
+        // TODO: C++ sometimes provides asset id, combobox exepects index, need to fix this at some point
         syncIdx()
     }
 
@@ -82,6 +80,13 @@ ColumnLayout {
     function copyAndSave() {
          if (isValid()) {
             BeamGlobals.copyToClipboard(viewModel.token);
+            viewModel.saveAddress();
+         }
+    }
+
+    function copySBBSAndSave() {
+         if (isValid()) {
+            BeamGlobals.copyToClipboard(viewModel.sbbsAddress);
             viewModel.saveAddress();
          }
     }
@@ -302,6 +307,47 @@ ColumnLayout {
                                         hoverEnabled: true
                                         onClicked: {
                                             viewModel.generateNewAddress()
+                                        }
+                                    }
+                                }
+
+                                RowLayout {
+                                    spacing: 0
+
+                                    Layout.fillWidth:   true
+                                    Layout.leftMargin:  20
+                                    Layout.rightMargin: 2
+                                    Layout.alignment:   Qt.AlignVCenter
+
+                                    Rectangle {
+                                        Layout.fillWidth:        true
+                                        Layout.preferredHeight:  sbbdText.height
+                                        color:                   "transparent"
+                                        border.color:            "orange"
+                                        border.width:            2
+                                        radius:                  10
+                                        SFText {
+                                            id : sbbdText
+                                            anchors.left:   parent.left
+                                            anchors.right:  parent.right
+                                            anchors.leftMargin:     10
+                                            anchors.rightMargin:    10
+                                            text:  viewModel.sbbsAddress
+                                            width: parent.width
+                                            color: Style.content_main
+                                            elide: Text.ElideMiddle
+                                        }
+                                    }
+                                    CustomToolButton {
+                                        Layout.alignment: Qt.AlignVCenter
+                                        icon.source: "qrc:/assets/icon-copy.svg"
+                                        ToolTip.text: qsTrId("settings-swap-copy-address")
+                                        ToolTip.visible: hovered
+                                        ToolTip.delay: 500
+                                        ToolTip.timeout: 2000
+                                        enabled: control.isValid()
+                                        onClicked: {
+                                            control.copySBBSAndSave()
                                         }
                                     }
                                 }

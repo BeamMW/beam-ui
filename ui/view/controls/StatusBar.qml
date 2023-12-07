@@ -57,7 +57,7 @@ Item {
         SFText {
             id:                 networkText
             color:              online_indicator.color
-            anchors.verticalCenter: parent.verticalCenter
+            y:                  5 
             font.pixelSize:     12
             text:               Theme.name
         }
