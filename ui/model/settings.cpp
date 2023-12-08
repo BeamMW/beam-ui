@@ -42,7 +42,6 @@ namespace
     const char* kLockTimeoutName = "lock_timeout";
     const char* kRequirePasswordToSpendMoney = "require_password_to_spend_money";
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
-    const char* kshowSwapBetaWarning = "show_swap_beta_warning";
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
     const char* kShowFaucetPromo = "showFaucetPromo";
@@ -336,18 +335,6 @@ bool WalletSettings::getDevMode() const
 {
     Lock lock(m_mutex);
     return m_accountSettings.m_data.value(kDevMode, false).toBool();
-}
-
-bool WalletSettings::showSwapBetaWarning()
-{
-    Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kshowSwapBetaWarning, true).toBool();
-}
-
-void WalletSettings::setShowSwapBetaWarning(bool value)
-{
-    Lock lock(m_mutex);
-    m_accountSettings.m_data.setValue(kshowSwapBetaWarning, value);
 }
 
 bool WalletSettings::getRunLocalNode() const

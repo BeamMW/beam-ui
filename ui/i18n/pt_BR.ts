@@ -2140,14 +2140,6 @@ Verifique a blockchain %1 por su própria conta. Taxas baixas podem levar muito 
         <source>Contract transaction</source>
         <translation>Transação de contrato</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Os Swaps Atômicos estão em BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>A funcionalidade de Swaps Atômicos é Beta no momento. Recomendamos que não envie grandes quantidades.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>Cancelar oferta</translation>

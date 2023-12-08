@@ -21,19 +21,6 @@ ColumnLayout {
     }
 
     ConfirmationDialog {
-        id: betaDialog
-        //% "Atomic Swaps are in BETA"
-        title: qsTrId("swap-beta-title")
-        //% "I understand"
-        okButtonText:        qsTrId("swap-alert-confirm-button")
-        okButtonIconSource:  "qrc:/assets/icon-done.svg"
-        cancelButtonVisible: false
-        width: 470
-        //% "Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts."
-        text: qsTrId("swap-beta-message")
-    }
-
-    ConfirmationDialog {
         id:                     cancelOfferDialog
         property var txId: undefined
         width:                  460
@@ -80,10 +67,6 @@ ColumnLayout {
         }
     }
 
-    Component.onCompleted: {
-        if (viewModel.showBetaWarning) {
-            betaDialog.open()
-        }
         if (atomicSwapLayout.openedTxID != "") {
             atomicSwapLayout.state = "transactions";
             transactionsTab.state = "filterAllTransactions~";

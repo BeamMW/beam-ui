@@ -1130,14 +1130,6 @@ Allow to open and proceed to the website? You can always update your choice in S
         <source>Password</source>
         <translation type="unfinished">Password</translation>
     </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Функционалност Атомске Размене је у Бета фази трнутно. Препоручујемо да не шаљете велике износе.</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Атомске Размене су у БЕТА фази</translation>
-    </message>
     <message id="swap-na-message">
         <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>

@@ -2146,14 +2146,6 @@ much longer for a transaction to complete.</source>
         <source>Contract transaction</source>
         <translation>Транзакція контракт</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swaps в бета-версії</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>На цей час функція Atomic Swaps є бета-версією. Рекомендуємо не надсилати великі суми.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>Скасувати пропозицію</translation>
