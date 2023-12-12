@@ -97,7 +97,7 @@ RowLayout {
         Rectangle {
             Layout.preferredWidth:  32
             Layout.preferredHeight: 32
-            color:                  Utils.alpha(Style.background_main, 0.5)
+            color:                  "transparent"//Utils.alpha(Style.background_main, 0.5)
             radius:                 16
 
             CustomToolButton {
@@ -105,11 +105,11 @@ RowLayout {
                 width:                  32
                 height:                 32
                 padding:                0
-                leftPadding:            6
-                rightPadding:           6
+                leftPadding:            0
+                rightPadding:           0
                 icon.source:            "qrc:/assets/icon-notifications.svg"
-                icon.width:             20
-                icon.height:            20
+                icon.width:             24
+                icon.height:            24
                 icon.color:             Style.content_main
                 onClicked:              main.openNotifications()
             }

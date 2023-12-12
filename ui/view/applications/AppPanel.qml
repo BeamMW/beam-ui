@@ -33,6 +33,7 @@ Item {
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)
+    signal showDetails(var app)
 
     function isPanelEnabled() {
         if (isPublisherAdminMode) {
@@ -256,7 +257,7 @@ Item {
 
             Action {
                 id:          uninstallActionInternal
-                                //% "Uninstall"
+                             //% "Uninstall"
                 text:        qsTrId("apps-uninstall")
                 icon.source: "qrc:/assets/icon-delete.svg"
                 onTriggered: function () {
@@ -267,13 +268,21 @@ Item {
 
             Action {
                 id:          removeActionInternal
-                                //% "remove dapp"
+                             //% "remove dapp"
                 text:        qsTrId("dapps-store-remove-dapp")
                 icon.source: "qrc:/assets/icon-delete.svg"
                 onTriggered: function () {
                     control.isBusy = true
                     control.remove(app)
                 }
+            }
+            Action {
+                id:          detailsActionInternal
+                             //% "dapp details"
+                text:        qsTrId("dapps-store-dapp-details")
+                icon.source: "qrc:/assets/icon-details.svg"
+                icon.height: 12
+                onTriggered: control.showDetails(app)
             }
         }
     }

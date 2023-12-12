@@ -177,6 +177,10 @@ ColumnLayout {
             onRemove: function (app) {
                 control.remove(app)
             }
+            onShowDetails: function (app) {
+                appDetails.app = app;
+                appDetails.open()
+            }
             Component.onCompleted: {
                 control.stopProgress.connect(stopProgress);
             }
@@ -196,5 +200,9 @@ ColumnLayout {
         okButtonIconSource:     "qrc:/assets/icon-delete.svg"
         okButtonColor:          Style.accent_fail
         cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
+    }
+
+    AppDetails {
+        id:         appDetails
     }
 }

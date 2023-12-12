@@ -120,6 +120,7 @@
         <file>applications/AppPanel.qml</file>
         <file>applications/AppsList.qml</file>
         <file>applications/AppInfoPanel.qml</file>
+        <file>applications/AppDetails.qml</file>
         <file>applications/BecomePublisher.qml</file>
         <file>applications/PublisherDetails.qml</file>
         <file>applications/PublishersList.qml</file>

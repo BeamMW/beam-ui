@@ -3907,5 +3907,37 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Add account</source>
         <translation type="unfinished">Add account</translation>
     </message>
+    <message id="dapps-store-dapp-details">
+        <source>dapp details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-store-app-details">
+        <source>Application details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-details-name">
+        <source>Name</source>
+        <translation type="unfinished">名称</translation>
+    </message>
+    <message id="dapp-details-description">
+        <source>Description</source>
+        <translation type="unfinished">描述</translation>
+    </message>
+    <message id="dapp-details-release-date">
+        <source>Release date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-details-publisher-key">
+        <source>Publisher key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-details-publisher-name">
+        <source>Publisher name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-details-category">
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
