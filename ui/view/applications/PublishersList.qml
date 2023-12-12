@@ -64,7 +64,12 @@ ColumnLayout {
                 viewModel.sortOrder = viewModel.sortOrder == Qt.DescendingOrder ? Qt.AscendingOrder : Qt.DescendingOrder;
             }
         }
-
+        TableViewColumn {
+            width:     44 
+            movable:   false
+            resizable: false
+            delegate:  showDappsComponent
+        }
         TableViewColumn { 
             id:        nickname
             role:      viewModel.nicknameRole
@@ -80,7 +85,7 @@ ColumnLayout {
             role:      viewModel.aboutRole
                        //% "About"
             title:     qsTrId("publishers-list-about")
-            width:     400 * publishersTable.columnResizeRatio
+            width:     366 * publishersTable.columnResizeRatio
             movable:   false
             resizable: false
             delegate:  aboutComponent
@@ -89,7 +94,7 @@ ColumnLayout {
             id:        socialNetworks
                        //% "Social networks"
             title:     qsTrId("publishers-list-social-net")
-            width:     210 * publishersTable.columnResizeRatio
+            width:     200 * publishersTable.columnResizeRatio
             movable:   false
             resizable: false
             delegate:  socialNetworksComponent
@@ -124,7 +129,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_main
-                        text:                modelData && modelData && modelData.nickname 
+                        text:                modelData && modelData.nickname 
                     }
 
                     SFLabel {
@@ -134,27 +139,9 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_secondary
-                        text:                modelData && modelData && modelData.shortTitle
+                        text:                modelData && modelData.shortTitle
                     }
 
-                    CustomCheckBox {
-                        id:     showDappsCheckBox
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
-                        checked: modelData && !!modelData.enabled
-                        text:   !checked ?
-                                //% "Show DApps"
-                                qsTrId("dapps-store-publisher-show-dapps") : 
-                                //% "Hide DApps"
-                                qsTrId("dapps-store-publisher-hide-dapps")
-                        onClicked : {
-                            let publisherKey = modelData && modelData.publisherKey;
-                            if (!checked) {
-                                control.addUnwantedPublisherByKey(publisherKey)
-                            } else {
-                                control.removeUnwantedPublisherByKey(publisherKey)
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -252,6 +239,32 @@ ColumnLayout {
                             );
                        }
                    }
+                }
+            }
+        }
+
+        Component {
+            id: showDappsComponent
+            Item {
+                anchors.fill:           parent
+                CustomCheckBox {
+                    id:     showDappsCheckBox
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    checked: {
+                        if (!modelData) {
+                            return false;
+                        }
+                        return modelData.enabled
+                    }
+                    onClicked : {
+                        let publisherKey = modelData && modelData.publisherKey;
+                        if (!checked) {
+                            control.addUnwantedPublisherByKey(publisherKey)
+                        } else {
+                            control.removeUnwantedPublisherByKey(publisherKey)
+                        }
+                    }
                 }
             }
         }
