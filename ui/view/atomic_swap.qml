@@ -66,7 +66,8 @@ ColumnLayout {
             viewModel.cancelTx(cancelSwapDialog.txId);
         }
     }
-
+    
+    Component.onCompleted: {
         if (atomicSwapLayout.openedTxID != "") {
             atomicSwapLayout.state = "transactions";
             transactionsTab.state = "filterAllTransactions~";
