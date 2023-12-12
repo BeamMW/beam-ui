@@ -173,8 +173,7 @@ ColumnLayout {
     //
 
     //% "Wallet"
-    property string title:      control.activeApp ? control.activeApp.name : qsTrId("wallet-title")
-
+    property string title:      control.appToOpen.name
 
     SettingsViewModel {
         id: settings
@@ -369,7 +368,6 @@ ColumnLayout {
                         if (control.errorMessage.length) {
                             return control.errorMessage
                         }
-
                         if (control.activeApp || control.appToOpen) {
                             //% "Please wait, %1 is loading"
                             return qsTrId("apps-loading-app").arg(
@@ -528,7 +526,7 @@ ColumnLayout {
         function loadAppsList () {
             control.appsList = viewModel.apps;
             if (control.appToOpen) {
-                for (let i = 0; i <  control.appsList.rowCount(); ++i) {
+                for (let i = 0; i < control.appsList.rowCount(); ++i) {
                     let app = control.appsList.get(i);
                     if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
                         if (dappsLayout.appSupported(app)) {
@@ -539,10 +537,8 @@ ColumnLayout {
                         }
                     }
                 }
-                control.appToOpen = undefined
             }
         }
-
 
         Component.onCompleted: {
             viewModel.appsChanged.connect(loadAppsList)

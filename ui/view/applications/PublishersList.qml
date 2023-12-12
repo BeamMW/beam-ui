@@ -14,16 +14,12 @@ ColumnLayout {
     property var appsViewModel
     property var onBack
 
-    function addPublisherByKey(publisherKey) {
-        return appsViewModel.addPublisherByKey(publisherKey)
+    function addUnwantedPublisherByKey(publisherKey) {
+        return appsViewModel.addUnwantedPublisherByKey(publisherKey)
     }
 
-    function removePublisherByKey(publisherKey) {
-        appsViewModel.removePublisherByKey(publisherKey)
-    }
-
-    function checkVisibilityOfSocialNetwork(row, socialNetwork) {
-        return !!viewModel.getRoleValue(row, socialNetwork)
+    function removeUnwantedPublisherByKey(publisherKey) {
+        appsViewModel.removeUnwantedPublisherByKey(publisherKey)
     }
 
     //% "Publishers"
@@ -128,7 +124,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_main
-                        text:                viewModel.getRoleValue(styleData.row, viewModel.nicknameRole) || ''
+                        text:                modelData && modelData && modelData.nickname 
                     }
 
                     SFLabel {
@@ -138,7 +134,26 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_secondary
-                        text:                viewModel.getRoleValue(styleData.row, viewModel.shortTitleRole) || ''
+                        text:                modelData && modelData && modelData.shortTitle
+                    }
+
+                    CustomCheckBox {
+                        id:     showDappsCheckBox
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignLeft
+                        checked: modelData && !!modelData.enabled
+                        text:   !checked ?
+                                //% "Show DApps"
+                                qsTrId("dapps-store-publisher-show-dapps") : 
+                                //% "Hide DApps"
+                                qsTrId("dapps-store-publisher-hide-dapps")
+                        onClicked : {
+                            let publisherKey = modelData && modelData.publisherKey;
+                            if (!checked) {
+                                control.addUnwantedPublisherByKey(publisherKey)
+                            } else {
+                                control.removeUnwantedPublisherByKey(publisherKey)
+                            }
+                        }
                     }
                 }
             }
@@ -161,8 +176,8 @@ ColumnLayout {
                     elide:                Text.ElideRight
                     wrapMode:             Text.WrapAtWordBoundaryOrAnywhere
                     color:                Style.content_main
-                    text:                 viewModel.getRoleValue(styleData.row, viewModel.aboutRole) || ''
-                }                         
+                    text:                 modelData && modelData.aboutMe
+                }
             }
         }
 
@@ -178,62 +193,62 @@ ColumnLayout {
                     Layout.topMargin:  4
 
                    CustomToolButton {
-                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.websiteRole)
+                       visible:     modelData && !!modelData.website
                        icon.source: "qrc:/assets/icon-dapps-store-website-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                viewModel.getRoleValue(styleData.row, viewModel.websiteRole)
+                                modelData && modelData.website
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.discordRole)
+                       visible:     modelData && !!modelData.discord
                        icon.source: "qrc:/assets/icon-dapps-store-discord-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://discord.gg/" + viewModel.getRoleValue(styleData.row, viewModel.discordRole)
+                                "https://discord.gg/" + modelData && modelData.discord
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.twitterRole)
+                       visible:     modelData && !!modelData.twitter
                        icon.source: "qrc:/assets/icon-dapps-store-twitter-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://twitter.com/" + viewModel.getRoleValue(styleData.row, viewModel.twitterRole)
+                                "https://twitter.com/" + modelData && modelData.twitter
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.instagramRole)
+                       visible:     modelData && !!modelData.instagram
                        icon.source: "qrc:/assets/icon-dapps-store-instagram-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://instagram.com/" + viewModel.getRoleValue(styleData.row, viewModel.instagramRole)
+                                "https://instagram.com/" + modelData && modelData.instagram
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.linkedinRole)
+                       visible:     modelData && !!modelData.linkedin
                        icon.source: "qrc:/assets/icon-dapps-store-linkedin-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://linkedin.com/" + viewModel.getRoleValue(styleData.row, viewModel.linkedinRole)
+                               "https://linkedin.com/" + modelData && modelData.linkedin
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     checkVisibilityOfSocialNetwork(styleData.row,viewModel.telegramRole)
+                       visible:     modelData && !!modelData.telegram
                        icon.source: "qrc:/assets/icon-dapps-store-telegram-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://t.me/" + viewModel.getRoleValue(styleData.row, viewModel.telegramRole)
+                               "https://t.me/" + modelData && modelData.telegram
                             );
                        }
                    }
@@ -254,8 +269,8 @@ ColumnLayout {
                     anchors.rightMargin: 12
                     icon.source:         "qrc:/assets/icon-actions.svg"
                     onClicked: {
-                        publisherInfoContextMenu.publisherKey = viewModel.getRoleValue(styleData.row, viewModel.publisherLinkRole);
-                        publisherInfoContextMenu.publisherEnabled = viewModel.getRoleValue(styleData.row, viewModel.publisherStatusRole);
+                        publisherInfoContextMenu.publisherKey = modelData && modelData.publisherKey;
+                        publisherInfoContextMenu.publisherEnabled = modelData && modelData.enabled;
                         publisherInfoContextMenu.popup();
                     }
                 }
@@ -286,9 +301,9 @@ ColumnLayout {
                 icon.source: "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/check.png"
                 onTriggered: {
                     if (publisherInfoContextMenu.publisherEnabled) {
-                        control.addPublisherByKey(publisherInfoContextMenu.publisherKey)
+                        control.addUnwantedPublisherByKey(publisherInfoContextMenu.publisherKey)
                     } else {
-                        control.removePublisherByKey(publisherInfoContextMenu.publisherKey)
+                        control.removeUnwantedPublisherByKey(publisherInfoContextMenu.publisherKey)
                     }
                 }
             }

@@ -361,47 +361,29 @@ ColumnLayout {
             Layout.fillHeight: true
             spacing:           0
             visible:           false
-//            Item {
-//                visible:          appsListView.visible
-//                Layout.fillWidth: true
-//                Layout.preferredHeight: 32
-//
-//                RowLayout {
-//                    spacing:           20
-//                    anchors.right:     parent.right
-//
-                    ContextMenu {
-                        id: appActionsMenu
 
-                        Action {
-                            //% "Install DApp"
-                            text:           qsTrId("dnd-app-install-title")
-                            icon.source:    "qrc:/assets/icon-add.svg"
-                            onTriggered:    dndDialog.open()
-                        }
-                        Action {
-                            //% "Publishers"
-                            text:           qsTrId("dapps-store-publishers-page-main-title")
-                            icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
-                            onTriggered:    navigatePublishersList()
-                        }
-                        Action {
-                            //% "become a publisher"
-                            text:           viewModel.isPublisher ? viewModel.publisherInfo.name : qsTrId("apps-become-a-publisher")
-                            icon.source:    "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
-                            onTriggered:    navigatePublisherDetails()
-                        }
-                    }
+            ContextMenu {
+                id: appActionsMenu
 
-           //         CustomToolButton {
-           //             id:                       appActionButton
-           //             padding:                  0
-           //             icon.color:               Style.content_main
-           //             icon.source:              "qrc:/assets/icon-settings.svg"
-           //             onClicked:                appActionsMenu.open()
-           //         }
-           //     }
-           // }
+                Action {
+                    //% "Install DApp"
+                    text:           qsTrId("dnd-app-install-title")
+                    icon.source:    "qrc:/assets/icon-add.svg"
+                    onTriggered:    dndDialog.open()
+                }
+                Action {
+                    //% "Publishers"
+                    text:           qsTrId("dapps-store-publishers-page-main-title")
+                    icon.source:    "qrc:/assets/icon-dapps_store-publishers.svg"
+                    onTriggered:    navigatePublishersList()
+                }
+                Action {
+                    //% "become a publisher"
+                    text:           viewModel.isPublisher ? viewModel.publisherInfo.name : qsTrId("apps-become-a-publisher")
+                    icon.source:    "qrc:/assets/icon-dapps_store-become-a-publisher.svg"
+                    onTriggered:    navigatePublisherDetails()
+                }
+            }
 
             WebAPICreator {
                 id: webapiCreator

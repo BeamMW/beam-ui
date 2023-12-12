@@ -1,68 +1,98 @@
 #include "publishers_view.h"
 #include "viewmodel/ui_helpers.h"
-
+namespace
+{
+    namespace Roles
+    {
+        QString kShortTitle         = "shortTitle";
+        QString kNickname           = "nickname";
+        QString kAbout              = "about";
+        QString kWebsite            = "website";
+        QString kTwitter            = "twitter";
+        QString kLinkedin           = "linkedin";
+        QString kInstagram          = "instagram";
+        QString kTelegram           = "telegram";
+        QString kDiscord            = "discord";
+        QString kPublisherLink      = "publisherLink";
+        QString kEnabled            = "enabled";
+    }
+    namespace PublisherProps
+    {
+        QString kPubkey                =   "pubkey";
+        QString kName                  =   "name";
+        QString kShortTitle            =   "short_title";
+        QString kAboutMe               =   "about_me";
+        QString kWebsite               =   "website";
+        QString kTwitter               =   "twitter";
+        QString kLinkedin              =   "linkedin";
+        QString kInstagram             =   "instagram";
+        QString kTelegram              =   "telegram";
+        QString kDiscord               =   "discord";
+        QString kEnabled               =   "enabled";
+    }
+}
 
 PublisherItem::PublisherItem(const QVariantMap& publisherInfo)
 {
-    _publisherKey = publisherInfo["pubkey"].toString();
-    _nickname = publisherInfo["name"].toString();
-    _shortTitle = publisherInfo["short_title"].toString();
-    _aboutMe = publisherInfo["about_me"].toString();
-    _website = publisherInfo["website"].toString();
-    _twitter = publisherInfo["twitter"].toString();
-    _linkedin = publisherInfo["linkedin"].toString();
-    _instagram = publisherInfo["instagram"].toString();
-    _telegram = publisherInfo["telegram"].toString();
-    _discord = publisherInfo["discord"].toString();
-    _enabled = publisherInfo["enabled"].toBool();
+    _publisherKey   = publisherInfo[PublisherProps::kPubkey].toString();
+    _nickname       = publisherInfo[PublisherProps::kName].toString();
+    _shortTitle     = publisherInfo[PublisherProps::kShortTitle].toString();
+    _aboutMe        = publisherInfo[PublisherProps::kAboutMe].toString();
+    _website        = publisherInfo[PublisherProps::kWebsite].toString();
+    _twitter        = publisherInfo[PublisherProps::kTwitter].toString();
+    _linkedin       = publisherInfo[PublisherProps::kLinkedin].toString();
+    _instagram      = publisherInfo[PublisherProps::kInstagram].toString();
+    _telegram       = publisherInfo[PublisherProps::kTelegram].toString();
+    _discord        = publisherInfo[PublisherProps::kDiscord].toString();
+    _enabled        = publisherInfo[PublisherProps::kEnabled].toBool();
 }
 
-QString PublisherItem::publisherKey() const
+const QString& PublisherItem::publisherKey() const
 {
     return _publisherKey;
 }
 
-QString PublisherItem::nickname() const
+const QString& PublisherItem::nickname() const
 {
     return _nickname;
 }
 
-QString PublisherItem::shortTitle() const
+const QString& PublisherItem::shortTitle() const
 {
     return _shortTitle;
 }
 
-QString PublisherItem::aboutMe() const
+const QString& PublisherItem::aboutMe() const
 {
     return _aboutMe;
 }
 
-QString PublisherItem::website() const
+const QString& PublisherItem::website() const
 {
     return _website;
 }
 
-QString PublisherItem::twitter() const
+const QString& PublisherItem::twitter() const
 {
     return _twitter;
 }
 
-QString PublisherItem::linkedin() const
+const QString& PublisherItem::linkedin() const
 {
     return _linkedin;
 }
 
-QString PublisherItem::instagram() const
+const QString& PublisherItem::instagram() const
 {
     return _instagram;
 }
 
-QString PublisherItem::telegram() const
+const QString& PublisherItem::telegram() const
 {
     return _telegram;
 }
 
-QString PublisherItem::discord() const
+const QString& PublisherItem::discord() const
 {
     return _discord;
 }
@@ -75,40 +105,6 @@ bool PublisherItem::enabled() const
 
 PublishersViewModel::PublishersViewModel()
 {
-
-    for (size_t i = 0; i < 6; ++i)
-    {
-        QVariantMap info;
-        info["name"] = QString::number(i) + " Fluffy the Mouse";
-        info["short_title"] = "Beam biggest fan biggest fan biggest fan biggest fan biggest fan";
-        info["about_me"] = "Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years, ever since his remarkable disappearance and unexpected return. The riches he had brought back from his travels had now become a local legend, and it was popularly believed, whatever the old folk might say.";
-        info["website"] = "https://website.org";
-        info["pubkey"] = "128dhwue8yfhy7f9fy9e3hfouf";
-        info["enabled"] = true;
-        m_publishersInfo.append(info);
-    }
-
-    m_publishersInfo[1]["name"] = ("https://website.org");
-
-    m_publishersInfo[1]["discord"] = ("https://website.org");
-    m_publishersInfo[2]["discord"] = ("https://website.org");
-    m_publishersInfo[3]["discord"] = ("https://website.org");
-    m_publishersInfo[4]["discord"] = ("https://website.org");
-    m_publishersInfo[5]["discord"] = ("https://website.org");
-
-    m_publishersInfo[2]["twitter"] = ("https://website.org");
-    m_publishersInfo[3]["twitter"] = ("https://website.org");
-    m_publishersInfo[4]["twitter"] = ("https://website.org");
-    m_publishersInfo[5]["twitter"] = ("https://website.org");
-
-    m_publishersInfo[3]["instagram"] = ("https://website.org");
-    m_publishersInfo[4]["instagram"] = ("https://website.org");
-    m_publishersInfo[5]["instagram"] = ("https://website.org");
-
-    m_publishersInfo[4]["linkedin"] = ("https://website.org");
-    m_publishersInfo[5]["linkedin"] = ("https://website.org");
-
-    m_publishersInfo[5]["telegram"] = ("https://website.org");
     updatePublishers();
 }
 
@@ -117,71 +113,71 @@ PublishersViewModel::~PublishersViewModel()
     qDeleteAll(m_publishers);
 }
 
-QQmlListProperty<PublisherItem> PublishersViewModel::getPublishers()
+const QList<QObject*>& PublishersViewModel::getPublishers()
 {
-    return beamui::CreateQmlListProperty<PublisherItem>(this, m_publishers);
+    return m_publishers;
 }
 
 void PublishersViewModel::setPublishersInfo(QList<QVariantMap> info)
 {
-    m_publishersInfo = info;
+    m_publishersInfo = std::move(info);
 
     updatePublishers();
 }
 
-QList<QVariantMap> PublishersViewModel::getPublishersInfo() const
+const QList<QVariantMap>& PublishersViewModel::getPublishersInfo() const
 {
     return m_publishersInfo;
 }
 
-QString PublishersViewModel::getNicknameRole() const
+const QString& PublishersViewModel::getNicknameRole() const
 {
-    return "nickname";
+    return Roles::kNickname;
 }
 
-QString PublishersViewModel::getShortTitleRole() const
+const QString& PublishersViewModel::getShortTitleRole() const
 {
-    return "shortTitle";
+    return Roles::kShortTitle;
 }
 
-QString PublishersViewModel::getAboutRole() const
+const QString& PublishersViewModel::getAboutRole() const
 {
-    return "about";
+    return Roles::kAbout;
 }
 
-QString PublishersViewModel::getWebsiteRole() const
+const QString& PublishersViewModel::getWebsiteRole() const
 {
-    return "website";
+    return Roles::kWebsite;
 }
-QString PublishersViewModel::getTwitterRole() const
+const QString& PublishersViewModel::getTwitterRole() const
 {
-    return "twitter";
+    return Roles::kTwitter;
 }
-QString PublishersViewModel::getLinkedinRole() const
+const QString& PublishersViewModel::getLinkedinRole() const
 {
-    return "linkedin";
+    return Roles::kLinkedin;
 }
-QString PublishersViewModel::getInstagramRole() const
+const QString& PublishersViewModel::getInstagramRole() const
 {
-    return "instagram";
+    return Roles::kInstagram;
 }
-QString PublishersViewModel::getTelegramRole() const
+const QString& PublishersViewModel::getTelegramRole() const
 {
-    return "telegram";
+    return Roles::kTelegram;
 }
-QString PublishersViewModel::getDiscordRole() const
+const QString& PublishersViewModel::getDiscordRole() const
 {
-    return "discord";
-}
-
-QString PublishersViewModel::getPublisherLinkRole() const
-{
-    return "publisherLink";
+    return Roles::kDiscord;
 }
 
-QString PublishersViewModel::getPublisherStatusRole() const
+const QString& PublishersViewModel::getPublisherLinkRole() const
 {
-    return "enabled";
+    return Roles::kPublisherLink;
+}
+
+const QString& PublishersViewModel::getPublisherStatusRole() const
+{
+    return Roles::kEnabled;
 }
 
 Qt::SortOrder PublishersViewModel::sortOrder() const
@@ -201,11 +197,12 @@ void PublishersViewModel::setSortOrder(Qt::SortOrder value)
 void PublishersViewModel::sortPublishers()
 {
     std::sort(m_publishers.begin(), m_publishers.end(),
-        [sortOrder = m_sortOrder](const PublisherItem* left, const PublisherItem* right)
+        [sortOrder = m_sortOrder](const QObject* left, const QObject* right)
         {
+            
             if (sortOrder == Qt::DescendingOrder)
-                return left->nickname() > right->nickname();
-            return left->nickname() < right->nickname();
+                return ((PublisherItem*)left)->nickname() > ((PublisherItem*)right)->nickname();
+            return ((PublisherItem*)left)->nickname() < ((PublisherItem*)right)->nickname();
         });
 
     emit publishersChanged();
@@ -222,38 +219,4 @@ void PublishersViewModel::updatePublishers()
     }
 
     sortPublishers();
-}
-
-QVariant PublishersViewModel::getRoleValue(const int row, QByteArray roleName)
-{
-    // TODO: redo
-    if (row < 0 || row > m_publishers.size())
-    {
-        return QVariant();
-    }
-
-    if (roleName == getNicknameRole())
-        return m_publishers.at(row)->nickname();
-    else if (roleName == getShortTitleRole())
-        return m_publishers.at(row)->shortTitle();
-    else if (roleName == getAboutRole())
-        return m_publishers.at(row)->aboutMe();
-    else if (roleName == getWebsiteRole())
-        return m_publishers.at(row)->website();
-    else if (roleName == getTwitterRole())
-        return m_publishers.at(row)->twitter();
-    else if (roleName == getLinkedinRole())
-        return m_publishers.at(row)->linkedin();
-    else if (roleName == getInstagramRole())
-        return m_publishers.at(row)->instagram();
-    else if (roleName == getTelegramRole())
-        return m_publishers.at(row)->telegram();
-    else if (roleName == getDiscordRole())
-        return m_publishers.at(row)->discord();
-    else if (roleName == getPublisherLinkRole())
-        return m_publishers.at(row)->publisherKey();
-    else if (roleName == getPublisherStatusRole())
-        return m_publishers.at(row)->enabled();
-
-    return QVariant();
 }

@@ -159,8 +159,8 @@ namespace beamui::applications
         Q_INVOKABLE void updateDApp(const QString& guid);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
-        Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
-        Q_INVOKABLE void removePublisherByKey(const QString& publisherKey);
+        Q_INVOKABLE [[nodiscard]] QString addUnwantedPublisherByKey(const QString& publisherKey);
+        Q_INVOKABLE void removeUnwantedPublisherByKey(const QString& publisherKey);
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo, bool isCreating);
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
@@ -229,7 +229,7 @@ namespace beamui::applications
         QList<QVariantMap> _devApps;
         QList<QVariantMap> _shaderApps;
         QList<QVariantMap> _publishers;
-        QStringList _userPublishersKeys;
+        QStringList _userUnwantedPublishersKeys;
         QSet<QString> _knownPublishersWithDapps;
         QVariantMap _publisherInfo;
 
