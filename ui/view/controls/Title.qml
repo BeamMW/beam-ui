@@ -26,6 +26,11 @@ RowLayout {
             anchors.centerIn:   parent
             source:             Style.navigation_logo
         }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape:  path.length > 0 ? Qt.PointingHandCursor : Qt.ArrowCursor
+            onClicked:    control.navigate(0)
+        }
     }
     RowLayout {
         Layout.alignment:   Qt.AlignVCenter
@@ -95,22 +100,18 @@ RowLayout {
             color:                  Utils.alpha(Style.background_main, 0.5)
             radius:                 16
 
-            CustomButton {
+            CustomToolButton {
                 id:                     notificationsButton
                 width:                  32
                 height:                 32
-                display:                AbstractButton.IconOnly
+                padding:                0
                 leftPadding:            6
                 rightPadding:           6
                 icon.source:            "qrc:/assets/icon-notifications.svg"
                 icon.width:             20
                 icon.height:            20
-                icon.color:             "transparent"
-                palette.button:         "transparent"//Utils.alpha(Style.background_main, 0.5)
-                shadowColor:            Style.content_main
-                onClicked: {
-                    main.openNotifications()
-                }
+                icon.color:             Style.content_main
+                onClicked:              main.openNotifications()
             }
 
             Item {
