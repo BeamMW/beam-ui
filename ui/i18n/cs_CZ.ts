@@ -2147,14 +2147,6 @@ Zkontrolujte na %1 blockchainu sami. Nízké poplatky mohou způsobit
         <source>Contract transaction</source>
         <translation type="unfinished">Contract transaction</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Okamžitý převod měn je v BETA verzi</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Funkce Okamžitého převodu měn je v tuto chvíli v Beta verzi. Nedoporučujeme proto odesílat velké částky.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>Zrušit nabídku</translation>

@@ -472,17 +472,6 @@ void SwapOffersViewModel::resetAllOffersFitBalance()
     emit allOffersFitBalanceChanged();
 }
 
-bool SwapOffersViewModel::showBetaWarning() const
-{
-    auto& settings = AppModel::getInstance().getSettings();
-    bool showWarning = settings.showSwapBetaWarning();
-    if (showWarning)
-    {
-        settings.setShowSwapBetaWarning(false);
-    }
-    return showWarning;
-}
-
 bool SwapOffersViewModel::isOffersLoaded() const
 {
     return m_isOffersLoaded;
