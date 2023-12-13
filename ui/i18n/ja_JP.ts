@@ -3888,5 +3888,9 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

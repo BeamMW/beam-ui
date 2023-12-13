@@ -3915,5 +3915,9 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

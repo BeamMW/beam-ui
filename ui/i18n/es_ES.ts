@@ -3919,5 +3919,9 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>Category</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

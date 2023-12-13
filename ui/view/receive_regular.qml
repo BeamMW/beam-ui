@@ -70,26 +70,33 @@ ColumnLayout {
     }
 
     function copyAndClose() {
-        if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token);
-            viewModel.saveAddress();
-            control.onClosed()
-        }
+        copyAndSaveAddressAndClose(viewModel.token)
+    }
+
+    function copySBBSAndClose() {
+        copyAndSaveAddressAndClose(viewModel.sbbsAddress)
     }
 
     function copyAndSave() {
-         if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token);
-            viewModel.saveAddress();
-         }
+         copyAndSaveAddress(viewModel.token);
     }
 
     function copySBBSAndSave() {
-         if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.sbbsAddress);
-            viewModel.saveAddress();
-         }
+        copyAndSaveAddress(viewModel.sbbsAddress);
     }
+
+    function copyAndSaveAddress(address) {
+        if (isValid()) {
+           BeamGlobals.copyToClipboard(address);
+           viewModel.saveAddress();
+        }
+    }
+
+    function copyAndSaveAddressAndClose(address) {
+        copyAndSaveAddress(address)
+        control.onClosed()
+    }
+
     //% "Receive"
     property string title: qsTrId("wallet-receive-title")
 
@@ -390,22 +397,39 @@ A hardware wallet is not connected. Please, connect the wallet"
                     }
                 }
             }
-
-            CustomButton {
-                id: copyButton
+            Row {
                 Layout.topMargin:       30
                 Layout.alignment:       Qt.AlignHCenter
-                //% "copy and close"
-                text:                   qsTrId("general-copy-and-close")
-                Layout.preferredHeight: 38
-                palette.buttonText:     Style.content_opposite
-                icon.color:             Style.content_opposite
-                palette.button:         Style.accent_incoming
-                icon.source:            "qrc:/assets/icon-copy.svg"
-                enabled:                control.isValid()
+                spacing:    20
+                CustomButton {
+                    id: copyButton
+                    //% "copy and close"
+                    text:                   qsTrId("general-copy-and-close")
+                    Layout.preferredHeight: 38
+                    palette.buttonText:     Style.content_opposite
+                    icon.color:             Style.content_opposite
+                    palette.button:         Style.accent_incoming
+                    icon.source:            "qrc:/assets/icon-copy.svg"
+                    enabled:                control.isValid()
 
-                onClicked: function () {
-                    control.copyAndClose()
+                    onClicked: function () {
+                        control.copyAndClose()
+                    }
+                }
+                CustomButton {
+                    id: copySbbsButton
+                    //% "copy SBBS address and close"
+                    text:                   qsTrId("general-copy-SBBS-and-close")
+                    Layout.preferredHeight: 38
+                    palette.buttonText:     Style.content_opposite
+                    icon.color:             Style.content_opposite
+                    palette.button:         Style.accent_outgoing
+                    icon.source:            "qrc:/assets/icon-copy.svg"
+                    enabled:                control.isValid()
+
+                    onClicked: function () {
+                        control.copySBBSAndClose()
+                    }
                 }
             }
 
