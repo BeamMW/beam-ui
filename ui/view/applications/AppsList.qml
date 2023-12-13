@@ -14,6 +14,7 @@ ColumnLayout {
     property bool isIPFSAvailable:           false
     property alias model:                    gridView.model
     property var   appActionsMenu:           undefined
+    property bool showActions:               true
 
     onAppsListChanged: function() {
         if (!!appsList && appsList.length > 0) {
@@ -82,6 +83,7 @@ ColumnLayout {
             icon.color:               Style.content_main
             icon.source:              "qrc:/assets/icon-settings.svg"
             onClicked:                if (!!appActionsMenu) appActionsMenu.popup(appActionButton)
+            visible:                  control.showActions
         }
         SearchBox {
             id: searchBox

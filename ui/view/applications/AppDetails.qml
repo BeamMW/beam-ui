@@ -10,8 +10,8 @@ CustomDialog {
     property var app: undefined
 
     modal: true
-    width: 760
-    height: 650
+    width: 600
+    height: 400
     x: (parent.width - width) / 2
     y: (parent.height - height) / 2
     parent: Overlay.overlay

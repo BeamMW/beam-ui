@@ -317,6 +317,8 @@ namespace beamui::applications
 {
     AppsViewModel::AppsViewModel()
         : m_walletModel(AppModel::getInstance().getWalletModel())
+        , m_appsModel(this)
+        , m_publisherAppsModel(this)
     {
         LOG_INFO() << "AppsViewModel created";
     }
@@ -1793,7 +1795,7 @@ namespace beamui::applications
         emit appsChanged();
     }
 
-    QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
+    QAbstractItemModel* AppsViewModel::getPublisherDApps(const QString& publisherKey)
     {
         QList<QVariantMap> publisherApps;
         QList<QVariantMap> apps = getAppsImpl();
@@ -1809,8 +1811,8 @@ namespace beamui::applications
                 return appFieldsIt->toString() == publisherKey && app.contains(DApp::kIpfsId);
             }
         );
-
-        return publisherApps;
+        m_publisherAppsModel.reset(publisherApps.begin(), publisherApps.end());
+        return &m_publisherAppsModel;
     }
 
     QVariantMap AppsViewModel::getAppByGUID(const QString& guid)
