@@ -832,18 +832,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Калі ласка, увядзіце пароль каб змены ўступілі ў сілу</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Ясна</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Не запускайце адначасова два кашалькі, ініцыяваныя з адной і той жа фразы</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Не выкарыстоўвайце аднолькавую сід фразу на розных дэвайсах, ваш баланс і спісак транзакцы не будзе сінхранізаваны.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Падтранзакцыя завершана з памылкай</translation>

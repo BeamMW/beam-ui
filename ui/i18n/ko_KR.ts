@@ -832,18 +832,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>설정 바꾸기를 하려면 비밀번호 검증이 필요합니다</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>이해합니다</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>같은 시드 구문으로 생성된 2개의 다른 지갑을 같이 실행하지 마십시오</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>같은 시드 구문을 여러 기기에서 사용하지 마십시오, 당신의 잔고와 거래 내역은 동기화되지 않습니다.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Subtransaction 이 실패했습니다.</translation>

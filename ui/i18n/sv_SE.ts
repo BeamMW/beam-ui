@@ -831,18 +831,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Lösenordsverifiering krävs för att ändra denna inställning</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Jag förstår</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Kör inte två plånböcker sammtidigt som har blivit initierade från samma seed phrase</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Använd inte samma seed phrase på flera enheter, din balans samt transaktions-listan kommer inte att synkroniseras.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Subtransaktion har misslyckats</translation>

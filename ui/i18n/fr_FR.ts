@@ -832,18 +832,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>La vérification du mot de passe est nécessaire pour changer ce paramètre</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Je comprends</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Ne pas exécuter simultanément deux portefeuilles initiés à partir de la même phrase Seed</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Ne pas utiliser la même phrase de graines sur plusieurs appareils, votre solde et votre liste de transactions ne seront pas synchronisés.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>La sous-transaction a échoué</translation>

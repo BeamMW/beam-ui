@@ -172,7 +172,6 @@ ColumnLayout {
     // Page Header (Title + Status Bar)
     //
 
-    //% "Wallet"
     property string title:      control.appToOpen.name
 
     SettingsViewModel {

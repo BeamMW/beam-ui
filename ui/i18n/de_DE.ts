@@ -831,18 +831,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Passwort-Eingabe ist erforderlich, um diese Einstellung zu ändern</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Ich verstehe</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Führen Sie nicht gleichzeitig zwei Wallets aus, die von derselben Seed-Phrase initiiert wurden</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Verwenden Sie nicht dieselbe Seed-Phrase auf mehreren Geräten, Ihre Salden- und Transaktionen werden sonst nicht synchronisiert.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Teiltransaktion fehlgeschlagen</translation>

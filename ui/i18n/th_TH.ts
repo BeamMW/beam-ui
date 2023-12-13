@@ -832,18 +832,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>ต้องการรหัสผ่านเพื่อที่จะเปลี่ยนแปลงการตั้งค่า</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>ฉันเข้าใจ</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>อย่าใช้กลุ่มคำลับในกระเป๋าบนหลายๆอุปกรณ์</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>อย่าใช้กลุ่มคำลับเดียวกันในหลายๆอุปกรณ์ ยอดคงเหลือและข้อมูลธุรกรรมจะถูกเก็บในอุปกรณ์ใดอุปกรณ์หนึ่งเท่านั้น</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>ธุรกรรมย่อยผิดพลาด</translation>

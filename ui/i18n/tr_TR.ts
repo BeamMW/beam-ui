@@ -832,18 +832,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Bu ayarı değiştirmek için parola doğrulaması gerekiyor</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Anlıyorum</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Aynı anahtar kelimeler ile kurulan iki cüzdanı aynı anda çalıştırmayın</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Aynı anahtar kelimeleri birkaç cihazda kullanmayın, bakiye ve işlem listeniz senkronize edilmeyecek.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Alt işlem başarısız oldu</translation>

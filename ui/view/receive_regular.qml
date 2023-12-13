@@ -338,8 +338,6 @@ ColumnLayout {
                                             Layout.topMargin:       10
                                             font.pixelSize:         14
                                             color:                  Style.content_disabled
-                                            /*% "SBBS Address
-                        (use for CEX withdrawals)"*/
                                             text:                   qsTrId("address-info-sbbs-address") + ":"
                                         }
                                         RowLayout {

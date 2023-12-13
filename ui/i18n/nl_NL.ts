@@ -832,18 +832,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Wachtwoord verificatie is vereist om deze instelling te wijzigen</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Ik begrijp het</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Draai niet twee wallets die met dezelfde herstelzin geïnitieerd zijn tegelijkertijd</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Gebruik dezelfde herstelzin niet op verschillende apparaten. Uw saldo- en transactielijst zal niet worden gesynchroniseerd.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Subtransactie is mislukt</translation>

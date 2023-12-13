@@ -838,18 +838,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Cần xác minh mật khẩu để thay đổi cài đặt đó</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Tôi đã hiểu</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Không đồng thời chạy hai ví bắt đầu từ cùng một cụm từ hạt giống</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Không sử dụng cùng một cụm từ hạt giống trên nhiều thiết bị, số dư và danh sách giao dịch của bạn sẽ không được đồng bộ hóa.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Giao dịch phụ đã thất bại</translation>

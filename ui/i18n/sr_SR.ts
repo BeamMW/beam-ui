@@ -838,18 +838,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Верификација лозинке је обавезна да би променили то подешавање</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation type="unfinished">I understand</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation type="unfinished">Do not simultaneously run two wallets initiated from the same seed phrase</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Не користите исту seed фразу на више уређаја, ваш баланс и листа трансакција неће бити синхронизоване.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>Подтрансакција није успела</translation>
