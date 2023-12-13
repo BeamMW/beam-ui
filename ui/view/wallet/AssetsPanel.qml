@@ -59,22 +59,20 @@ Control {
     property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showSeedValidationPromo && !seedValidationHelper.isSeedValidated
 
+    property int minimalItemWidth:  220
+
     readonly property real itemWidth: {
         var assetsCount = control.showSelected ? control.selectedIds.length : control.assetsCount
         if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
-        return 220
+        if (assetsCount == 1) return minimalItemWidth
+        let colums = control.gridColumns
+        return ((control.availableWidth + control.hSpacing) / colums) - control.hSpacing
     }
 
     readonly property int gridColumns: {
-        var avail = control.availableWidth
-        var cnt = 0
-
-        while (avail >= control.itemWidth) {
-            avail -= control.itemWidth + control.hSpacing
-            cnt++
-        }
-
-        return cnt
+        let extraWidth = control.availableWidth + control.hSpacing
+        let count = Math.floor(extraWidth / (minimalItemWidth + control.hSpacing))
+        return count
     }
 
     readonly property int gridRows: {
