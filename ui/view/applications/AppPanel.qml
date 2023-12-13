@@ -292,17 +292,10 @@ Item {
                 id:          detailsActionInternal
                              //% "dapp details"
                 text:        qsTrId("dapps-store-dapp-details")
-                icon.source: "qrc:/assets/icon-details.svg"
-                icon.height:    12
-                icon.width:     16
+                icon.source: "qrc:/assets/icon-show_tx_details.svg"
                 onTriggered: control.showDetails(app)
             }
         }
     }
 
-    function getButtonSource() {
-        if (!!app.notInstalled)
-            return "qrc:/assets/icon-download-green.svg"
-        return "qrc:/assets/icon-actions.svg"
-    }
 }
