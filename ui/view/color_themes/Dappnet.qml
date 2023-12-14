@@ -13,7 +13,7 @@ AbstractTheme {
     property color content_opposite:      "#032e49"
     property color validator_warning:     "#f4ce4a"
     property color validator_error:       "#ff625c"
-    property color section:               Qt.rgba(255, 255, 255, 0.5)
+    property color section:               Qt.rgba(1, 1, 1, 0.5)
 
     property color navigation_background:  "#000000"
     property color background_main:        "#000a16"
@@ -28,7 +28,7 @@ AbstractTheme {
     property color background_details:     Qt.rgba(19/255, 24/255, 61/255, 0.75)
     property color background_button:      Qt.rgba(1, 1, 1, 0.2)
     property color background_popup:       "#0f1535"
-    property color background_appstx:      Qt.rgba(1, 1, 1, 0.05)
+    property color background_appstx:      Qt.tint(background_main, Qt.rgba(1, 1, 1, 0.05))
     property color row_selected:           "#085469"
     property color separator:              "#33566b"
     property color table_header:           Qt.rgba(0, 28/255, 66/255, 0.34)
@@ -41,7 +41,7 @@ AbstractTheme {
 
     property color coinPaneRight:     "#00458f"
     property color coinPaneLeft:      "#00f6d2"
-    property color coinPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
+    property color coinPaneBorder:    Qt.rgba(0, 246/255, 210/255, 0.15)
 
     property color swapStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"
