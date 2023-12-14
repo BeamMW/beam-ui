@@ -1,6 +1,6 @@
 import QtQuick          2.15
 import QtQuick.Layouts  1.15
-import QtQuick.Controls 1.4
+import QtQuick.Controls 1.4 as Controls1
 import QtQuick.Controls 2.15
 import Beam.Wallet      1.0
 import "../controls"
@@ -40,7 +40,7 @@ ColumnLayout {
         Layout.fillWidth:  true
         Layout.topMargin:  20
 
-        selectionMode:        SelectionMode.NoSelection
+        selectionMode:        Controls1.SelectionMode.NoSelection
         sortIndicatorVisible: true
         sortIndicatorColumn:  0
         sortIndicatorOrder:   Qt.DescendingOrder
@@ -64,13 +64,14 @@ ColumnLayout {
                 viewModel.sortOrder = viewModel.sortOrder == Qt.DescendingOrder ? Qt.AscendingOrder : Qt.DescendingOrder;
             }
         }
-        TableViewColumn {
+        Controls1.TableViewColumn {
+            role:      viewModel.publisherStatusRole
             width:     44 
             movable:   false
             resizable: false
             delegate:  showDappsComponent
         }
-        TableViewColumn { 
+        Controls1.TableViewColumn { 
             id:        nickname
             role:      viewModel.nicknameRole
                        //% "Nickname"
@@ -80,7 +81,7 @@ ColumnLayout {
             resizable: false
             delegate:  nicknameComponent
         }
-        TableViewColumn {
+        Controls1.TableViewColumn {
             id:        about
             role:      viewModel.aboutRole
                        //% "About"
@@ -90,7 +91,7 @@ ColumnLayout {
             resizable: false
             delegate:  aboutComponent
         }
-        TableViewColumn {
+        Controls1.TableViewColumn {
             id:        socialNetworks
                        //% "Social networks"
             title:     qsTrId("publishers-list-social-net")
@@ -99,7 +100,7 @@ ColumnLayout {
             resizable: false
             delegate:  socialNetworksComponent
         }
-        TableViewColumn {
+        Controls1.TableViewColumn {
             id:        publisherLink
                        //% "Publisher link"
             title:     qsTrId("publishers-list-publisher-link")
@@ -248,8 +249,8 @@ ColumnLayout {
             Item {
                 anchors.fill:           parent
                 CustomCheckBox {
-                    id:     showDappsCheckBox
-                    anchors.right: parent.right
+                    id:                     showDappsCheckBox
+                    anchors.right:          parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     checked: {
                         if (!modelData) {
@@ -258,8 +259,8 @@ ColumnLayout {
                         return modelData.enabled
                     }
                     onClicked : {
-                        let publisherKey = modelData && modelData.publisherKey;
-                        if (!checked) {
+                        let publisherKey = modelData.publisherKey;
+                        if (modelData.enabled) {
                             control.addUnwantedPublisherByKey(publisherKey)
                         } else {
                             control.removeUnwantedPublisherByKey(publisherKey)
