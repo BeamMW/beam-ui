@@ -114,7 +114,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         case Roles::RCreateTime:
         {
             QDateTime datetime;
-            datetime.setTime_t(order.getCreation());
+            datetime.setSecsSinceEpoch(order.getCreation());
             return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         }
         case Roles::RCreateTimeSort:
@@ -124,7 +124,7 @@ QVariant DexOrdersList::data(const QModelIndex &index, int role) const
         case Roles::RExpireTime:
         {
             QDateTime datetime;
-            datetime.setTime_t(order.getExpiration());
+            datetime.setSecsSinceEpoch(order.getExpiration());
             return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         }
         case Roles::RExpireTimeSort:

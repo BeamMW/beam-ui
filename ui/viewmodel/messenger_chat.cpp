@@ -31,7 +31,7 @@ if (!index.isValid() || index.row() < 0 || index.row() >= m_list.size())
         case Roles::Time:
         {
             QDateTime datetime;
-            datetime.setTime_t(value.m_timestamp);
+            datetime.setSecsSinceEpoch(value.m_timestamp);
             return datetime.time().toString(m_locale.timeFormat(QLocale::ShortFormat));
         }
         case Roles::CID:

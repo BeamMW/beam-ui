@@ -207,7 +207,7 @@ int main (int argc, char* argv[])
 
     QApplication::setApplicationName(QMLGlobals::getAppName());
     QApplication::setWindowIcon(QIcon(Theme::iconPath()));
-    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 
     try
     {
