@@ -170,10 +170,12 @@ ColumnLayout {
             onUninstall: function (app) {
                 //% "Are you sure you want to uninstall %1 DApp?"
                 confirmUninstall.text = qsTrId("apps-uninstall-confirm").arg(app.name);
-                confirmUninstall.accepted.connect(function () {
+                
+                function acceptHandler() {
+                    confirmUninstall.accepted.disconnect(acceptHandler)
                     control.uninstall(app);
-                    confirmUninstall.accepted.disconnect()
-                });
+                }
+                confirmUninstall.accepted.connect(acceptHandler);
                 confirmUninstall.open();
             }
             onRemove: function (app) {

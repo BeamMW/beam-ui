@@ -29,9 +29,10 @@ ColumnLayout {
     }
 
     function uninstallApp (app) {
+        let name = app.name
         if (viewModel.uninstallLocalApp(app.appid)) {
             //% "Everything worked out.\n'%1' DApp is uninstalled."
-            dappStoreOk.text = qsTrId("app-uninstall-success").arg(app.name)
+            dappStoreOk.text = qsTrId("app-uninstall-success").arg(name)
             dappStoreOk.open()
         } else {
             //% "Something went wrong.\nUninstall failed. Please try again later."
