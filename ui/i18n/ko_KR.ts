@@ -3881,15 +3881,15 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dapp details</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Application details</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">이름</translation>
+        <translation>이름</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
@@ -3897,23 +3897,23 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Release date</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher key</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher name</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Category</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

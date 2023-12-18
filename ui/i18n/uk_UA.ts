@@ -3897,39 +3897,39 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation>деталі dapp</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation>Деталі застосунку</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">Назва</translation>
+        <translation>Назва</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
-        <translation type="unfinished">Опис</translation>
+        <translation>Опис</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата релізу</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключ видавця</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я видавця</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Категорія</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати SBBS адресу і закрити</translation>
     </message>
 </context>
 </TS>

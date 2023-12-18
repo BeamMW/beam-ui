@@ -367,7 +367,7 @@
     </message>
     <message id="status-updating">
         <source>synchronizing blockchain</source>
-        <translation type="unfinished">synchronizing blockchain</translation>
+        <translation>sincronizando blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -724,7 +724,7 @@
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
+        <translation>Apenas o saldo da carteira (UTXO) pode ser restaurado, informações de transações e endereços são sempre privados e nunca mantidos na blockchain.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
@@ -875,15 +875,15 @@
     <message id="loading-view-estimate-minutes" numerus="yes">
         <source>%n minute(s)</source>
         <translation>
-            <numerusform>%n minuto(s)</numerusform>
+            <numerusform>%n minuto</numerusform>
             <numerusform>%n minutos</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
         <source>%n second(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n segundo(s)</numerusform>
-            <numerusform>%n second(s)</numerusform>
+        <translation>
+            <numerusform>%n segundo</numerusform>
+            <numerusform>%n segundos</numerusform>
         </translation>
     </message>
     <message id="loading-view-estimate-time">
@@ -928,7 +928,7 @@
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+        <translation>Aceitar Oferta</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -979,8 +979,8 @@ por favor, verifique suas configurações e tente novamente</translation>
     <message id="loading-view-estimate-hours" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>%n hora(s)</numerusform>
-            <numerusform>%n hora(s)</numerusform>
+            <numerusform>%n hora</numerusform>
+            <numerusform>%n horas</numerusform>
         </translation>
     </message>
     <message id="loading-view-net-problems">
@@ -1650,7 +1650,7 @@ Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
     <message id="settings-local-node-run-checkbox">
         <source>Run integrated node</source>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">Run integrated node</translation>
+        <translation>Executar nó integrado</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1672,7 +1672,7 @@ Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Node Connection</source>
-        <translation type="unfinished">Beam Node Connection</translation>
+        <translation>Conexão de Nó Beam</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -2041,16 +2041,16 @@ Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
         <translation>
-            <numerusform>%n hora(s)</numerusform>
-            <numerusform>%n hora(s)</numerusform>
+            <numerusform>%n hora</numerusform>
+            <numerusform>%n horas</numerusform>
         </translation>
     </message>
     <message id="time-day" numerus="yes">
         <source>%n day(s)</source>
         <extracomment>time &quot;day&quot; string</extracomment>
         <translation>
-            <numerusform>%n dia(s)</numerusform>
-            <numerusform>%n dia(s)</numerusform>
+            <numerusform>%n dia</numerusform>
+            <numerusform>%n dias</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
@@ -2102,7 +2102,7 @@ Verifique a blockchain %1 por su própria conta. Taxas baixas podem levar muito 
     </message>
     <message id="apps-title">
         <source>Applications</source>
-        <translation type="unfinished">Applications</translation>
+        <translation>Aplicativos</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2415,8 +2415,8 @@ Atualize suas configurações e tente novamente.</translation>
     <message id="wallet-receive-addr-message-mp" numerus="yes">
         <source>Transaction can last at most %n hour(s).</source>
         <translation>
-            <numerusform>Transação pode durar no máximo %n hora(s).</numerusform>
-            <numerusform>Transação pode durar no máximo %n hora(s).</numerusform>
+            <numerusform>Transação pode durar no máximo %n hora.</numerusform>
+            <numerusform>Transação pode durar no máximo %n horas.</numerusform>
         </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
@@ -2967,8 +2967,8 @@ as transações offline não podem ser canceladas.</translation>
     <message id="send-offline-tip" numerus="yes">
         <source>Offline address: %n transaction(s) left.</source>
         <translation>
+            <numerusform>Endereço offline: %n transação restante.</numerusform>
             <numerusform>Endereço offline: %n transações restantes.</numerusform>
-            <numerusform>Endereço offline: %n transação(ões) restante(s).</numerusform>
         </translation>
     </message>
     <message id="source-dex">
@@ -3036,8 +3036,8 @@ as transações offline não podem ser canceladas.</translation>
     <message id="apps-err-cnt" numerus="yes">
         <source>%n DApp(s) is not available</source>
         <translation>
-            <numerusform>DApp(s) %n não está disponível</numerusform>
-            <numerusform>DApp(s) %n não está disponível</numerusform>
+            <numerusform>%n DApp não está disponível</numerusform>
+            <numerusform>%n DApps não estão disponíveis</numerusform>
         </translation>
     </message>
     <message id="apps-update-message">
@@ -3061,8 +3061,8 @@ as transações offline não podem ser canceladas.</translation>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>%n hora(s)</numerusform>
-            <numerusform>%n hora(s)</numerusform>
+            <numerusform>%n hora</numerusform>
+            <numerusform>%n horas</numerusform>
         </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">
@@ -3576,7 +3576,7 @@ Por favor, verifique o arquivo e tente novamente.</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Criar Oferta</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3630,11 +3630,11 @@ Por favor, reinicie a carteira e tente novamente.</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+        <translation>Aceitar Oferta</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Criar Oferta</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3746,7 +3746,7 @@ Por favor, reinicie a carteira e tente novamente.</translation>
     </message>
     <message id="messenger-add-receiver-address-name">
         <source>Name</source>
-        <translation>Nome</translation>
+        <translation>Nome:</translation>
     </message>
     <message id="messenger-add-receiver-address-save">
         <source>add receiver address</source>
@@ -3827,27 +3827,27 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
-        <translation type="unfinished">Logout</translation>
+        <translation>Desconectar</translation>
     </message>
     <message id="start-account-label">
         <source>Account</source>
-        <translation type="unfinished">Account</translation>
+        <translation>Conta</translation>
     </message>
     <message id="start-new-account-label">
         <source>Account name</source>
-        <translation type="unfinished">Account name</translation>
+        <translation>Nome da conta</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
-        <translation type="unfinished">Account %1</translation>
+        <translation>Conta %1</translation>
     </message>
     <message id="start-account-password-label">
         <source>Account password</source>
-        <translation type="unfinished">Account password</translation>
+        <translation>Senha da conta</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
-        <translation type="unfinished">An account with the same label already exists.</translation>
+        <translation>Uma conta com o mesmo nome já existe.</translation>
     </message>
     <message id="wallet-swap-button">
         <source>Swap</source>
@@ -3855,15 +3855,15 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="apps-no-installed">
         <source>You don&apos;t have any applications installed yet</source>
-        <translation type="unfinished">You don&apos;t have any applications installed yet</translation>
+        <translation>Você não tem aplicativos instalados ainda</translation>
     </message>
     <message id="apps-no-at-all">
         <source>No applications yet</source>
-        <translation type="unfinished">No applications yet</translation>
+        <translation>Nenhum aplicativo ainda</translation>
     </message>
     <message id="apps-installed-tab">
         <source>Installed</source>
-        <translation type="unfinished">Installed</translation>
+        <translation>Instalado</translation>
     </message>
     <message id="apps-all-tab">
         <source>All</source>
@@ -3884,43 +3884,43 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="general-add-account">
         <source>Add account</source>
-        <translation type="unfinished">Add account</translation>
+        <translation>Adicionar conta</translation>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dapp details</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Application details</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome:</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
-        <translation type="unfinished">Descrição</translation>
+        <translation>Descrição</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Release date</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher key</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher name</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Category</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

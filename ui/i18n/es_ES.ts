@@ -3607,7 +3607,7 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
-        <translation>Recibir</translation>
+        <translation>Recibe</translation>
     </message>
     <message id="swap-rate">
         <source>Rate</source>
@@ -3889,39 +3889,39 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dapp details</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Application details</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
-        <translation type="unfinished">Descripción</translation>
+        <translation>Descripción</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Release date</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher key</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher name</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Category</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

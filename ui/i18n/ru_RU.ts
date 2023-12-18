@@ -3902,39 +3902,39 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация о приложении</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация о приложении</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">Имя</translation>
+        <translation>Имя</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
-        <translation type="unfinished">Описание</translation>
+        <translation>Описание</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата выпуска</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключ издателя</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя издателя</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Категория</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation>копировать SBBS адрес и закрыть</translation>
     </message>
 </context>
 </TS>

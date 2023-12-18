@@ -2040,7 +2040,7 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
         <translation>
-            <numerusform>%n uur</numerusform>
+            <numerusform>%n uur(en)</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -3058,7 +3058,7 @@ cannot be canceled.</source>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>%n uur(en)</numerusform>
+            <numerusform>%n uur</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -3886,39 +3886,39 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">dapp details</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Application details</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">Naam</translation>
+        <translation>Naam</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
-        <translation type="unfinished">Omschrijving</translation>
+        <translation>Omschrijving</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Release date</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher key</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publisher name</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Category</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

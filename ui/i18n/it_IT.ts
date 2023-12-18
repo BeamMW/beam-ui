@@ -3639,7 +3639,7 @@ Riavviare il wallet e riprovare.</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
-        <translation>Costo della transazione</translation>
+        <translation>Commissione di transazione</translation>
     </message>
     <message id="amount-input-asset-search">
         <source>Enter asset name...</source>
@@ -3889,39 +3889,39 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation>dettagli dapp</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation>Dettagli applicazione</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
-        <translation type="unfinished">Descrizione</translation>
+        <translation>Descrizione</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data di rilascio</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiave editore</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome dell&apos;editore</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Categoria</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation>copia l&apos;indirizzo SBBS e chiudi</translation>
     </message>
 </context>
 </TS>

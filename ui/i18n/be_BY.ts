@@ -111,7 +111,7 @@
     </message>
     <message id="general-create-wallet">
         <source>Create new wallet</source>
-        <translation>Стварыць кашалёк</translation>
+        <translation>Стварыць гаманец</translation>
     </message>
     <message id="general-restore-or-create-wallet">
         <source>Restore wallet or create a new one</source>
@@ -123,11 +123,11 @@
     </message>
     <message id="general-restore-wallet">
         <source>Restore wallet</source>
-        <translation>Аднавіць кашалёк</translation>
+        <translation>Аднавіць гаманец</translation>
     </message>
     <message id="general-start-using">
         <source>Start using your wallet</source>
-        <translation>Пачніце выкарыстоўваць кашалёк</translation>
+        <translation>Пачніце выкарыстоўваць гаманец</translation>
     </message>
     <message id="general-open-wallet">
         <source>Open my wallet</source>
@@ -409,11 +409,11 @@
     </message>
     <message id="start-restore-message-line">
         <source>You are trying to restore an existing Beam Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</source>
-        <translation>Вы спрабуеце аднавіць існуючы кашалёк. Калі ласка, звярніце ўвагу, калі ваш кашалёк выкарыстоўваецца на іншаым прыстасаваннi, ваш баланс будзе адноўлены да актуальнага стану, але гісторыя транзакцый і адрасы будуць захоўвацца эксклюзіўна для кожнага прыстасавання.</translation>
+        <translation>Вы спрабуеце аднавіць існуючы гаманец. Калі ласка, звярніце ўвагу, калі ваш гаманец выкарыстоўваецца на іншым прыстасаваннi, ваш баланс будзе адноўлены да актуальнага стану, але гісторыя транзакцый і адрасы будуць захоўвацца эксклюзіўна для кожнага прыстасавання.</translation>
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v </source>
-        <translation>Ваш кашалёк будзе абноўлены да версіі: </translation>
+        <translation>Ваш гаманец будзе абноўлены да версіі </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
@@ -439,7 +439,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create new wallet with generating seed phrase.</source>
-        <translation>Стварыць новы кашалёк і згенераваць кантрольную фразу.</translation>
+        <translation>Стварыць новы гаманец і згенераваць кантрольную фразу.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -571,7 +571,7 @@
     </message>
     <message id="wallet-model-connection-addr-in-use-error">
         <source>The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings.</source>
-        <translation>Порт %1 ужо выкарыстоўваецца. Магчыма кашалёк ўжо запушчаны на гэтым кампутары. Зменіце нумар порта.</translation>
+        <translation>Порт %1 ужо выкарыстоўваецца. Магчыма гаманец ужо запушчаны на гэтым кампутары. Зменіце нумар порта.</translation>
     </message>
     <message id="wallet-model-time-sync-error">
         <source>System time not synchronized</source>
@@ -695,7 +695,7 @@
     </message>
     <message id="appmodel-failed-time-not-synced">
         <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
-        <translation>Немагчыма запусціць лакальны вузел: час кампутара не сінхранізаваны. Праверце ўсталёўкі часу і перазапусціце кашалёк.</translation>
+        <translation>Немагчыма запусціць лакальны вузел: час кампутара не сінхранізаваны. Праверце ўсталёўкі часу і перазапусціце гаманец.</translation>
     </message>
     <message id="settings-general-language">
         <source>Language</source>
@@ -712,11 +712,11 @@
     </message>
     <message id="open-external-message">
         <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
-        <translation>Кашалёк спрабуе адкрыць знешнюю спасылку ў браўзэры. Гэта дзеянне можа раскрыць ваш IP адрас серверу. Каб пазбегнуць гэтага, націсніце &quot;адмена&quot;. Вы можаце змяніць свой выбар ва ўсталёўках у любы час.</translation>
+        <translation>Гаманец спрабуе адкрыць знешнюю спасылку ў браўзэры. Гэта дзеянне можа раскрыць ваш IP адрас серверу. Каб пазбегнуць гэтага, націсніце &quot;адмена&quot;. Вы можаце змяніць свой выбар ва ўсталёўках у любы час.</translation>
     </message>
     <message id="start-open-change-wallet-message">
         <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
-        <translation>Калі вы адновіце кашалёк, гісторыя транзакцый і адрасы будуць страчаныя на гэтай прыладзе.</translation>
+        <translation>Калі вы адновіце гаманец, гісторыя транзакцый і адрасы будуць страчаныя на гэтай прыладзе.</translation>
     </message>
     <message id="loading-restore-message-line1">
         <source>Please wait for synchronization and do not close or minimize the application.</source>
@@ -992,7 +992,7 @@ please review your settings and try again.</translation>
     </message>
     <message id="general-create-trezor-wallet">
         <source>Create new Trezor wallet</source>
-        <translation>Стварыць кашалёк Trezor</translation>
+        <translation>Стварыць гаманец Trezor</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
         <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
@@ -1004,7 +1004,7 @@ please review your settings and try again.</translation>
     </message>
     <message id="start-init-wallet-with-trezor">
         <source>Init wallet with Trezor</source>
-        <translation>Стварыць кашалёк з Trezor</translation>
+        <translation>Стварыць гаманец з Trezor</translation>
     </message>
     <message id="start-import-trezor-owner-key">
         <source>Import Trezor Owner Key</source>
@@ -1024,7 +1024,7 @@ please review your settings and try again.</translation>
     </message>
     <message id="start-no-trezor-device-connected">
         <source>There is no device connected, please, connect your hardware wallet.</source>
-        <translation>Прылада не падключана. Падключыце апаратны кашалёк.</translation>
+        <translation>Прылада не падключана. Падключыце апаратны гаманец.</translation>
     </message>
     <message id="wallet-model-device-not-connected">
         <source>There is no Trezor device connected. Please, connect and try again.</source>
@@ -1272,7 +1272,7 @@ Please check the swap token and try again.</source>
     </message>
     <message id="send-swap-sconfirmation-online-time">
         <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <translation>Трымайце кашалёк падключаным да Інтэрнэту. Своп звычайна займае каля 1 гадзіны.</translation>
+        <translation>Трымайце гаманец падключаным да Інтэрнэту. Своп звычайна займае каля 1 гадзіны.</translation>
     </message>
     <message id="beam-transaction-fee">
         <source>BEAM Transaction fee</source>
@@ -1308,7 +1308,7 @@ Please check the swap token and try again.</source>
     </message>
     <message id="swap-tx-state-refunding">
         <source>Swap failed, the money is being released back to your wallet</source>
-        <translation>Не атрымалася првесцi своп, грошы вяртаюцца ў кашалёк</translation>
+        <translation>Не атрымалася правесцi своп, грошы вяртаюцца ў гаманец</translation>
     </message>
     <message id="send-swap-fee-warning">
         <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
@@ -1316,11 +1316,11 @@ Please check the swap token and try again.</source>
     </message>
     <message id="app-close-title">
         <source>Beam wallet close</source>
-        <translation>Зачынiць кашалёк Beam</translation>
+        <translation>Зачынiць гаманец Beam</translation>
     </message>
     <message id="app-close-text">
         <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation>Зараз ёсць %1 актыўных транзакцый, якія могуць пацярпець няўдачу, калі кашалёк выйдзе з сеткі. Вы сапраўды хочаце зачыніць кашалёк?</translation>
+        <translation>Зараз ёсць %1 актыўных транзакцый, якія могуць пацярпець няўдачу, калі гаманец выйдзе з сеткі. Вы сапраўды хочаце зачыніць гаманец?</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transactions history</source>
@@ -1548,7 +1548,7 @@ deploy the key at the node you trust completely.</source>
     <message id="settings-update-wallet">
         <source>update wallet</source>
         <extracomment>settings update wallet button</extracomment>
-        <translation>абнавіць кашалёк</translation>
+        <translation>аднавіць гаманец</translation>
     </message>
     <message id="general-exchange-rate-not-available">
         <source>Exchange rate to %1 is not available</source>
@@ -2314,7 +2314,7 @@ Update your settings and try again.</source>
     </message>
     <message id="general-open-failed">
         <source>Failed to open wallet, please check logs</source>
-        <translation>Не атрымалася адкрыць кашалёк, праверце журналы</translation>
+        <translation>Не атрымалася адкрыць гаманец, праверце журналы</translation>
     </message>
     <message id="start-no-hwkeeper">
         <source>Hardware keykeeper is not initialized</source>
@@ -2678,7 +2678,7 @@ Update your settings and try again.</source>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
-        <translation>Кашалёк</translation>
+        <translation>Гаманец</translation>
     </message>
     <message id="settings-general-confirmations">
         <source>Minimum confirmations</source>
@@ -3052,7 +3052,7 @@ cannot be canceled.</source>
     </message>
     <message id="apps-update-message">
         <source>Update Wallet to launch %1 application</source>
-        <translation>Абнавіце кашалёк, каб запусціць прикладанне %1</translation>
+        <translation>Аднавіце гаманец, каб запусціць прыкладанне %1</translation>
     </message>
     <message id="address-details">
         <source>Address details</source>
@@ -3606,7 +3606,7 @@ Please, check the file and try again.</source>
         <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
         <translation>На жаль, абнаўленне не атрымалася.
-Перазапусціце кашалёк і паўтарыце спробу.</translation>
+Перазапусціце гаманец і паўтарыце спробу.</translation>
     </message>
     <message id="dapps-store-installing">
         <source>installing</source>
@@ -3784,7 +3784,7 @@ Please, restart the wallet and try again.</source>
         <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
         <translation>QR-код няправільны.
-Апаратны кашалёк не падключаны. Калі ласка, падключыце кашалёк</translation>
+Апаратны гаманец не падключаны. Калі ласка, падключыце яго</translation>
     </message>
     <message id="approve-on-hw-wallet-title">
         <source>Transaction</source>
@@ -3794,7 +3794,7 @@ A hardware wallet is not connected. Please, connect the wallet</source>
         <source>Transaction is in process.
 Connect your Hardware Wallet to finalize the transaction.</source>
         <translation>Транзакцыя ў працэсе.
-Падключыце апаратны кашалёк, каб завяршыць транзакцыю.</translation>
+Падключыце апаратны гаманец, каб завяршыць транзакцыю.</translation>
     </message>
     <message id="dapps-store-publishers-page-main-title">
         <source>Publishers</source>
@@ -3818,7 +3818,7 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="general-use-hw-wallet">
         <source>Use Hardware Wallet</source>
-        <translation>Выкарыстоўваць апаратны кашалёк</translation>
+        <translation>Выкарыстоўваць апаратны гаманец</translation>
     </message>
     <message id="settings-start-switch">
         <source>Start</source>
@@ -3900,39 +3900,39 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished"></translation>
+        <translation>Падрабязнасці</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished"></translation>
+        <translation>Падрабязнасці прыкладання</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
-        <translation type="unfinished">Імя</translation>
+        <translation>Імя</translation>
     </message>
     <message id="dapp-details-description">
         <source>Description</source>
-        <translation type="unfinished">Апісанне</translation>
+        <translation>Апісанне</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата выпуску</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished"></translation>
+        <translation>Ключ выдаўца</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished"></translation>
+        <translation>Імя выдаўца</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Катэгорыя</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished"></translation>
+        <translation>скапіяваць SBBS адрас і зачыніць</translation>
     </message>
 </context>
 </TS>
