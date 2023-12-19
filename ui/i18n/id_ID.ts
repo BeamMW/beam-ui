@@ -2396,10 +2396,6 @@ Perbarui pengaturan Anda dan coba lagi.</translation>
         <source>Transaction type</source>
         <translation>Jenis transaksi</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Hubungkan ke node terintegrasi atau node sendiri untuk memungkinkan penerimaan set anonimitas maksimum dan transaksi offline.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Jumlah yang diminta</translation>
@@ -2417,10 +2413,6 @@ Perbarui pengaturan Anda dan coba lagi.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>Transaksi dapat berlangsung tanpa batas waktu.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>Pengirim akan diberikan pilihan antara pembayaran online dan offline.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2912,10 +2904,6 @@ tidak dapat dibatalkan.</translation>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>Saat ini Anda sedang terhubung ke node yang hanya mendukung transaksi online.</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Agar pembayaran online dapat diselesaikan, Anda harus online dalam waktu 12 jam setelah koin dikirim.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

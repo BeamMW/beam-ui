@@ -2397,10 +2397,6 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <source>Transaction type</source>
         <translation>Transaktionstyp</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Verbinden Sie sich mit integrierter oder eigener Node, um das Empfangen von maximalen Anonymität und Offline-Transaktionen zu ermöglichen.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Angeforderter Betrag</translation>
@@ -2419,10 +2415,6 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>Transaktion kann auf unbestimmte Zeit dauern.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>Der Absender erhält die Wahl zwischen Online- und Offline-Zahlung.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2914,10 +2906,6 @@ nicht storniert werden können.</translation>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>Sie sind derzeit mit einem Knoten verbunden, der nur Online-Transaktionen unterstützt.</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Um eine Online-Zahlung abzuschließen, sollten Sie innerhalb der 12 Stunden nach Absenden der Münzen online sein.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

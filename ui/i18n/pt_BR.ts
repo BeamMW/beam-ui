@@ -2400,10 +2400,6 @@ Atualize suas configurações e tente novamente.</translation>
         <source>Transaction type</source>
         <translation>Tipo de transação</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Conecte-se a um nó integrado ou nó próprio para permitir o recebimento de anonimato máximo e transações offline.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Valor solicitado</translation>
@@ -2422,10 +2418,6 @@ Atualize suas configurações e tente novamente.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>A transação pode durar indefinidamente.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>O remetente terá uma escolha entre pagamento online e offline.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2918,10 +2910,6 @@ as transações offline não podem ser canceladas.</translation>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>Você está atualmente conectado a um nó que suporta apenas transações online.</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Para um pagamento online concluir, você deve aparecer online dentro das 12 horas após o envio das moedas.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

@@ -2399,10 +2399,6 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>Transaction type</source>
         <translation>Transactietype</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Maak verbinding met geïntegreerde of eigen node om maximale anonimiteitsset en offline transacties te kunnen ontvangen.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Gevraagd bedrag</translation>
@@ -2421,10 +2417,6 @@ Update uw instellingen en probeer opnieuw.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>Transactie kan onbepaalde tijd duren.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>Afzender krijgt een keuze tussen online en offline betaling.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2915,10 +2907,6 @@ cannot be canceled.</source>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>U bent momenteel verbonden met een node die alleen online transacties ondersteunt.</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Om een online betaling te voltooien moet u binnen 12 uur nadat de munten zijn verzonden online zijn.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

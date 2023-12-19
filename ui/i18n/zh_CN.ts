@@ -2413,10 +2413,6 @@ Update your settings and try again.</source>
         <source>Transaction type</source>
         <translation>交易类型</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>连接到完整节点或自己的节点以启用最强匿名模式和离线交易</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>请求数量</translation>
@@ -2434,10 +2430,6 @@ Update your settings and try again.</source>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>交易可以无限期地持续下去</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>发送者将在在线发送和离线发送之间做出选择</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2928,10 +2920,6 @@ cannot be canceled.</source>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>您当前连接到仅支持在线模式交易的节点</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>要完成在线付款，您应该在发送币后的12小时内上线</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

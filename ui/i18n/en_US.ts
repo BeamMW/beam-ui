@@ -2401,10 +2401,6 @@ Update your settings and try again.</translation>
         <source>Transaction type</source>
         <translation>Transaction type</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Requested amount</translation>
@@ -2423,10 +2419,6 @@ Update your settings and try again.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>Transaction can last indefinitely.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>Sender will be given a choice between online and offline payment.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2918,10 +2910,6 @@ cannot be canceled.</translation>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>You are currently connected to node that supports only online transactions.</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>For an online payment to complete, you should get online during the 12 hours after coins are sent.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

@@ -426,6 +426,7 @@ A hardware wallet is not connected. Please, connect the wallet"
                     palette.button:         Style.accent_outgoing
                     icon.source:            "qrc:/assets/icon-copy.svg"
                     enabled:                control.isValid()
+                    visible:                viewModel.sbbsAddress.length > 0
 
                     onClicked: function () {
                         control.copySBBSAndClose()
@@ -465,26 +466,6 @@ A hardware wallet is not connected. Please, connect the wallet"
                 visible:               viewModel.isMaxPrivacy
                 //% "Min transaction fee is 0.01 BEAM."
                 text: qsTrId("wallet-receive-addr-message-min-fee")
-            }
-
-            SFText {
-                //% "For an online payment to complete, you should get online during the 12 hours after coins are sent."
-                property string stayOnline: qsTrId("wallet-receive-stay-online")
-                Layout.alignment:      Qt.AlignHCenter
-                Layout.preferredWidth: 400
-                Layout.topMargin:      15
-                Layout.bottomMargin:   50
-                font.pixelSize:        14
-                font.italic:           true
-                color:                 Style.content_disabled
-                wrapMode:              Text.WordWrap
-                horizontalAlignment:   Text.AlignHCenter
-                text: control.isShieldedSupported
-                    //% "Sender will be given a choice between online and offline payment."
-                    ? qsTrId("wallet-receive-text-online-time") + "\n" + stayOnline
-                    //% "Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions."
-                    : qsTrId("wallet-receive-max-privacy-unsupported") + "\n" + stayOnline
-                visible:               !viewModel.isMaxPrivacy
             }
         }  // ColumnLayout
     }  // ScrollView

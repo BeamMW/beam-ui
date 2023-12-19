@@ -2401,10 +2401,6 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
         <source>Transaction type</source>
         <translation>Tipo de transacción</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Conéctese a un nodo integrado o propio para permitir anonimato máximo y transacciones offline.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Cantidad solicitada</translation>
@@ -2423,10 +2419,6 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>La transacción puede durar indefinidamente.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>El remitente tendrá la opción de elegir entre el pago online y offline.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2918,10 +2910,6 @@ las transacciones offline no se pueden cancelar.</translation>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>Actualmente está conectado al nodo que sólo soporta transacciones online.</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Para que la transacción se complete, debe conectarse durante las 12 horas posteriores al envío de los Beams.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

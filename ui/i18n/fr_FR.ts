@@ -2399,10 +2399,6 @@ Mettez à jour vos paramètres et réessayez.</translation>
         <source>Transaction type</source>
         <translation>Type de transaction</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Se connecter au nœud intégré ou à son propre nœud pour permettre l&apos;anonymat maximum et les transactions hors ligne.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Montant demandé</translation>
@@ -2421,10 +2417,6 @@ Mettez à jour vos paramètres et réessayez.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>La transaction peut durer indéfiniment.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>L&apos;expéditeur aura le choix entre paiement en ligne et hors ligne.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2916,10 +2908,6 @@ ne peuvent pas être annulées.</translation>
     <message id="address-info-remote-node-warning">
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>Vous êtes actuellement connecté à un nœud qui ne prend en charge que les transactions en ligne.</translation>
-    </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Pour compléter une transaction en ligne, vous devez vous connecter dans les 12 heures après l&apos;envoi des monnaies.</translation>
     </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>

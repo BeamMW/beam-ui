@@ -272,18 +272,12 @@ if(WIN32)
     add_definitions(-DWIN32_LEAN_AND_MEAN)
 endif()
 
-set(BEAM_ICON_SUFFIX ${BEAM_DEFAULT_NETWORK})
-
 add_definitions(-DAPP_NAME=\"${APP_NAME}\")
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/icons/icon_${BEAM_ICON_SUFFIX}.ico
-          ${CMAKE_CURRENT_SOURCE_DIR}/icons/beam_${BEAM_ICON_SUFFIX}.png
-          ${CMAKE_CURRENT_SOURCE_DIR}/icons/beam_${BEAM_ICON_SUFFIX}.icns
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/icons/icon.ico
+          ${CMAKE_CURRENT_SOURCE_DIR}/icons/beam.png
+          ${CMAKE_CURRENT_SOURCE_DIR}/icons/beam.icns
      DESTINATION  ${CMAKE_CURRENT_SOURCE_DIR})
-
-file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/icon_${BEAM_ICON_SUFFIX}.ico ${CMAKE_CURRENT_SOURCE_DIR}/icon.ico)
-file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.png ${CMAKE_CURRENT_SOURCE_DIR}/beam.png)
-file(RENAME ${CMAKE_CURRENT_SOURCE_DIR}/beam_${BEAM_ICON_SUFFIX}.icns ${CMAKE_CURRENT_SOURCE_DIR}/beam.icns)
 
 file(GLOB_RECURSE DAPPS_LIST ${CMAKE_CURRENT_SOURCE_DIR}/apps *.dapp)
 
@@ -522,7 +516,6 @@ if(LINUX)
     install (FILES beam.desktop DESTINATION ${BEAM_DESKTOP_DIR})
     install (FILES beam.png DESTINATION ${BEAM_PIXMAPS_DIR})
 elseif(APPLE)
-    #set(MACOSX_BUNDLE_ICON_FILE "Beam Wallet${BEAM_DISPLAY_SUFFIX}.icns")
     set(MACOSX_BUNDLE_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/beam.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/dapps_store_app.wasm" PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
