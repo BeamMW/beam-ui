@@ -2828,10 +2828,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>最大64Kまでの匿名化セットを保証します。</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>受信者はこの後12時間以内にオンラインになる必要があります。また、送信者は2時間以内にオンラインになる必要があります。</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>トランザクションは最大72時間継続します。</translation>

@@ -2861,10 +2861,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>保证最大限度的匿名性设定为64K</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>为使交易顺利完成，收款人应于12小时内上线同步其钱包至最新高度，而后您应2小时内再次上线同步钱包</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>交易时间可长达72小时</translation>

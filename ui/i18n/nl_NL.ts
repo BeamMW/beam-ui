@@ -2848,10 +2848,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Garandeert maximale anonimiteit tot 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>De ontvanger moet binnen de komende 12 uur online zijn en u moet binnen 2 uur daarna online zijn.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Transactie kan maximaal 72 uur duren.</translation>

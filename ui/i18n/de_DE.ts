@@ -2847,10 +2847,6 @@ nicht storniert werden können.</translation>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Garantiert maximale Anonymität von bis zu 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Damit die Transaktion abgeschlossen werden kann, muss der Empfänger innerhalb der nächsten 12 Stunden online sein und Sie sollten innerhalb von 2 Stunden online sein.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Die Transaktion kann bis zu 72 Stunden dauern.</translation>

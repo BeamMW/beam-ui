@@ -2845,10 +2845,6 @@ tidak dapat dibatalkan.</translation>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Menjamin set anonimitas maksimum hingga 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Penerima harus online dalam 12 jam ke depan dan Anda harus online dalam waktu 2 jam setelahnya.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Transaksi dapat berlangsung hingga 72 jam.</translation>

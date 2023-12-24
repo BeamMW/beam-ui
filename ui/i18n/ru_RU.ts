@@ -2860,10 +2860,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Гарантирует максимальный анонимный набор до 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Получатель должен войти в сеть в течение следующих 12 часов, а вы должны быть в сети в течение 2 часов после.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Транзакция может длиться до 72 часов.</translation>

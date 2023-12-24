@@ -2852,10 +2852,6 @@ cannot be canceled.</translation>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation type="unfinished">Guarantees maximum anonymity set of up to 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation type="unfinished">The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation type="unfinished">Transaction can last up to 72 hours.</translation>

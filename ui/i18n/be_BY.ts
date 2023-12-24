@@ -2859,10 +2859,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Гарантуе максімальны набор ананімнасці да 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Атрымальнік павінен падключыцца да сеткі на працягу наступных 12 гадзін, а вы павінны падключыцца да сеткі на працягу 2 гадзін пасля гэтага.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Транзакцыя можа доўжыцца да 72 гадзін.</translation>

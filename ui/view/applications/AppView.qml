@@ -548,6 +548,9 @@ ColumnLayout {
         }
 
         Component.onDestruction: {
+            if (webapiCreator.releaseApi) {
+                webapiCreator.releaseApi()
+            }
             viewModel.appsChanged.disconnect(loadAppsList)
             control.reloadWebEngineView.disconnect(webView.reload)
             control.showTxDetails.disconnect(txPanel.showTxDetails)

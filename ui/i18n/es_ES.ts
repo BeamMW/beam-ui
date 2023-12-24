@@ -2851,10 +2851,6 @@ las transacciones offline no se pueden cancelar.</translation>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Ajuste de anonimato máximo de hasta 64K garantizado.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>El destinatario debe conectarse dentro de las próximas 12 horas y usted debe conectarse dentro de las 2 horas posteriores.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>La transacción puede durar hasta 72 horas.</translation>
