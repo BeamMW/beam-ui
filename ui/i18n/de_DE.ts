@@ -2912,14 +2912,6 @@ nicht storniert werden können.</translation>
         <source>Select application to install</source>
         <translation>Zu installierende Anwendung auswählen</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Sehen Sie die Brieftasche in Aktion an. Holen Sie sich eine kleine Menge an Beams aus der Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>Erhalte Coins</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Wiederherstellungs-Phrase</translation>

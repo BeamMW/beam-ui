@@ -2914,14 +2914,6 @@ ne peuvent pas être annulées.</translation>
         <source>Select application to install</source>
         <translation>Sélectionner l&apos;application à installer</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Voyez le portefeuille en action. Obtenez une petite quantité de Beams depuis la DApp de Faucet.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>obtenir des monnaies</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Phrase mnémonique</translation>

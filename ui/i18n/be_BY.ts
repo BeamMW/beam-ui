@@ -2924,14 +2924,6 @@ cannot be canceled.</source>
         <source>Select application to install</source>
         <translation>Абярыце прыкладанне для ўстаноўкі</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Пабачце гаманец у дзеянні. Атрымайце невялікую колькасць Beams ад Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>атрымаць манеты</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Пачатковая фраза</translation>

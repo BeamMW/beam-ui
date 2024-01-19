@@ -2910,14 +2910,6 @@ tidak dapat dibatalkan.</translation>
         <source>Select application to install</source>
         <translation>Pilih aplikasi yang akan diinstal</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Lihat dompet beraksi. Dapatkan sejumlah kecil Balok dari Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>dapatkan koin</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Frase benih</translation>

@@ -2917,14 +2917,6 @@ non potrà essere cancellato.</translation>
         <source>Select application to install</source>
         <translation>Seleziona l&apos;applicazione da installare</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Guarda il portafoglio in azione. Ottieni una piccola quantità di Beam dalla DApp Faucet.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>ottieni monete</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Seed frase</translation>
@@ -3906,6 +3898,14 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
         <translation>copia l&apos;indirizzo SBBS e chiudi</translation>
+    </message>
+    <message id="faucet-promo">
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="faucet-promo-get-coins">
+        <source>get coins</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -2916,14 +2916,6 @@ as transações offline não podem ser canceladas.</translation>
         <source>Select application to install</source>
         <translation>Selecione o aplicativo para instalar</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Veja a carteira em ação. Obtenha uma pequena quantidade de Beams do Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>obter moedas</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Palavras-chave</translation>

@@ -24,7 +24,6 @@ class AssetsViewModel : public QObject {
 
     Q_PROPERTY(QVector<beam::Asset::ID> selectedAssets           
                                             READ getSelectedAssets         NOTIFY selectedAssetChanged)
-    Q_PROPERTY(bool showFaucetPromo         READ getShowFaucetPromo        WRITE setShowFaucetPromo      NOTIFY showFaucetPromoChanged)
     Q_PROPERTY(bool showSeedValidationPromo READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
     Q_PROPERTY(bool canHideValidationPromo  READ getCanHideValidationPromo NOTIFY canHideValidationPromoChanged )
 
@@ -38,9 +37,6 @@ public:
     Q_INVOKABLE void addAssetToSelected(int assetId);
     Q_INVOKABLE void clearSelectedAssets();
 
-    [[nodiscard]] bool getShowFaucetPromo();
-    void setShowFaucetPromo(bool value);
-
     [[nodiscard]] bool getShowValidationPromo() const;
     void setShowValidationPromo(bool value);
 
@@ -52,7 +48,6 @@ public slots:
 
 signals:
     void selectedAssetChanged();
-    void showFaucetPromoChanged();
     void showValidationPromoChanged();
     void canHideValidationPromoChanged();
 

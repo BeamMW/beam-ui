@@ -147,9 +147,6 @@ public:
     QDir getAccountDataDir() const;
     QDir getNetworkDataDir() const;
 
-    bool showFaucetPromo() const;
-    void setShowFacetPromo(bool value);
-
     bool hideSeedValidationPromo() const;
     void setHideSeedValidationPromo(bool value);
 

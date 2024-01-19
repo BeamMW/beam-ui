@@ -2913,14 +2913,6 @@ cannot be canceled.</source>
         <source>Select application to install</source>
         <translation>Selecteer applicatie om te installeren</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Bekijk de wallet in actie. Ontvang een kleine hoeveelheid Beams uit de Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>ontvang coins</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>Herstelzin</translation>

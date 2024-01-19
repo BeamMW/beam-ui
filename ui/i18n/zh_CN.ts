@@ -2926,14 +2926,6 @@ cannot be canceled.</source>
         <source>Select application to install</source>
         <translation>选择要安装的应用程序</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>看看钱包是如何使用的，并从社区水龙头Faucet DApp中获得少量的Beam</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>获取币</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>助记词</translation>

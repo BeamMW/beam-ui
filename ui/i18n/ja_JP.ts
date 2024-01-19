@@ -2893,14 +2893,6 @@ cannot be canceled.</source>
         <source>Select application to install</source>
         <translation>インストールするアプリケーションを選択する</translation>
     </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>ウォレットの動作を確認してください。Foucet DAppから少額のBeamを入手してください。</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>コインを入手</translation>
-    </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
         <translation>シードフレーズ</translation>
