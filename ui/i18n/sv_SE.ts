@@ -1319,9 +1319,9 @@ Vänligen kontrollera swap-token och försök igen.</translation>
         <translation>Det finns %1 aktiva transaktioner som kan misslyckas om plånboken går offline. Är du säker på att du vill stänga plånboken nu?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exportera Transaktionshistoriken</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Exportera Transaktionshistoriken</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

@@ -1321,9 +1321,9 @@ Tarkista swap-tunniste ja yritä uudelleen.</translation>
         <translation>Sinulla on aktiivisia tapahtumia (%1 kpl), jotka voivat epäonnistua, jos lompakon yhteys katkeaa. Oletko varma, että haluat sulkea lompakon?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Vie tapahtumahistoria</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Vie tapahtumahistoria</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

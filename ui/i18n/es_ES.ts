@@ -1321,9 +1321,9 @@ Por favor, comprueba el token de intercambio e inténtalo de nuevo.</translation
         <translation>Hay %1 transacciones activas que pueden fallar si el wallet se desconectara. ¿Está seguro de cerrar el wallet ahora?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exportar historial de transacciones</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Exportar historial de transacciones</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

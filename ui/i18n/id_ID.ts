@@ -1317,9 +1317,9 @@ Silakan periksa token swap dan coba lagi.</translation>
         <translation>Ada %1 transaksi aktif yang mungkin gagal jika dompet offline. Apakah Anda yakin untuk menutup dompet sekarang?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Riwayat transaksi ekspor</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Riwayat transaksi ekspor</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

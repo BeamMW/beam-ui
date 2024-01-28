@@ -1321,7 +1321,8 @@ Please check the swap token and try again.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>Export transaction history</translation>
     </message>
     <message id="addresses-delete-warning-title">

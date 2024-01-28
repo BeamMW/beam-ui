@@ -1321,9 +1321,9 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
         <translation>Er zijn %1 actieve transacties die mogelijk mislukken indien de wallet offline gaat. Weet u zeker dat u de wallet nu wilt sluiten?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Transactiegeschiedenis exporteren</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+    <translation type = "unfinished">Transactiegeschiedenis exporteren</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

@@ -1323,8 +1323,8 @@ Please check the swap token and try again.</source>
         <translation>Є %1 активна транзакція, яка може бути невдалою, якщо гаманець перейде в автономний режим. Ви впевнені, що бажаєте закрити гаманець?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>Експортувати історію транзакцій</translation>
     </message>
     <message id="addresses-delete-warning-title">

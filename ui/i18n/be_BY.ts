@@ -1323,9 +1323,10 @@ Please check the swap token and try again.</source>
         <translation>Зараз ёсць %1 актыўных транзакцый, якія могуць пацярпець няўдачу, калі гаманец выйдзе з сеткі. Вы сапраўды хочаце зачыніць гаманец?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Экспарціраваць гісторыю транзакцый</translation>
+        <translation type="unfinished">Экспарціраваць гісторыю транзакцый</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

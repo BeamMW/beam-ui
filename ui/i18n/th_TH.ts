@@ -1318,8 +1318,8 @@ Please check the swap token and try again.</source>
         <translation>มีธุรกรรมจำนวน %1 ที่กำลังดำเนินการ หากปิดกระเป๋าอาจจะทำให้การทำธุรกรรมล้มเหลวได้ คุณแน่ใจที่จะปิดกระเป๋าหรือไม่?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>ส่งออกประวัติธุรกรรม</translation>
     </message>
     <message id="addresses-delete-warning-title">

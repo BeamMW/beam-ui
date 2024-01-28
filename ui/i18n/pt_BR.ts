@@ -1320,9 +1320,9 @@ Por favor, verifique o token de swap e tente novamente.</translation>
         <translation>Existem %1 transações ativas que podem falhar se a carteira passar offline. Você tem certeza que deseja fechar a carteira agora?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exportar histórico de transações</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+    <translation type= "unfinished">Exportar histórico de transações</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

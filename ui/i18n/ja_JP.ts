@@ -1315,9 +1315,9 @@ Please check the swap token and try again.</source>
         <translation>ウォレットがオフラインになると、 %1 アクティブなトランザクションが失敗する可能性があります。ウォレットを閉じますか？</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>トランザクション履歴を出力する</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">トランザクション履歴を出力する</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

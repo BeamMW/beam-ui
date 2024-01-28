@@ -1323,9 +1323,9 @@ Please check the swap token and try again.</source>
         <translation>Имеется %1 активных транзакций, которые могут не состояться, если кошелек выйдет в автономном режиме. Вы уверены, что хотите закрыть кошелек сейчас?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Экспорт истории транзакций</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Экспорт истории транзакций</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

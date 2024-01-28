@@ -1743,9 +1743,9 @@ to complete.</translation>
         <translation>Постоји %1 активна трансакција која може да буде неуспешна ако новчаник буде оф-лајн. Да ли сте сигурни да желите да затворите новчаник сада?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Извези историју трансакција</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Извези историју трансакција</translation>
     </message>
     <message id="atomic-swap-my-offers-tab">
         <source>My offers</source>

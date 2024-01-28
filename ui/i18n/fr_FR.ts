@@ -1320,9 +1320,9 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
         <translation>Il y a %1 transactions actives qui pourraient échouer si le portefeuille se déconnecte. Êtes-vous sûr de vouloir fermer le portefeuille maintenant&#x202f;?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exporter l&apos;historique des transactions</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Exporter l&apos;historique des transactions</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

@@ -1320,8 +1320,8 @@ Si prega di controllare il token di swap e riprovare.</translation>
         <translation>Ci sono %1 transazioni attive che potrebbero fallire se il wallet andrà offline. Sei sicuro di chiudere il wallet ora?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>Esporta cronologia transazioni</translation>
     </message>
     <message id="addresses-delete-warning-title">

@@ -1327,9 +1327,9 @@ Please check the swap token and try again.</source>
         <translation>如果钱包离线， %1 个活动交易可能会失败。你确定要现在关闭钱包吗？</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>导出交易记录</translation>
+        <source>Export transaction history</source>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+    <translation type = "unfinished">导出交易记录</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
