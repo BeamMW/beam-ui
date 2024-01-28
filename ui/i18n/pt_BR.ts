@@ -1322,7 +1322,7 @@ Por favor, verifique o token de swap e tente novamente.</translation>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-    <translation type= "unfinished">Exportar histórico de transações</translation>
+        <translation type= "unfinished">Exportar histórico de transações</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
