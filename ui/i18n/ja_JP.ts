@@ -438,8 +438,8 @@
         <translation>変更日</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>シードフレーズを生成し新しいウォレットを作成</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">シードフレーズを生成し新しいウォレットを作成</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>

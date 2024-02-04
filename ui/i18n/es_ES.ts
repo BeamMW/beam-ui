@@ -438,8 +438,8 @@
         <translation>Fecha modificada</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Crear nuevo wallet generando la frase semilla.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Crear nuevo wallet generando la frase semilla.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>

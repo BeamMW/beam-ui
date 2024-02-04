@@ -438,8 +438,8 @@
         <translation>데이터가 수정됨</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>시드 구문 생성하고 새로운 지갑을 만드십시오</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">시드 구문 생성하고 새로운 지갑을 만드십시오</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>

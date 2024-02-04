@@ -440,8 +440,8 @@
         <translation>Датум модификовања</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Креирај нови новчаник са генерисаном seed фразом.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Креирај нови новчаник са генерисаном seed фразом.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
