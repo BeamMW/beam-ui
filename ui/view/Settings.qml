@@ -56,7 +56,7 @@ ColumnLayout {
                 color: Style.content_secondary
                 //: settings tab, version label
                 //% "v"
-                text: qsTrId("settings-version") + " " + viewModel.version
+                text: qsTrId("settings-version") + viewModel.version
             }
         }
 
