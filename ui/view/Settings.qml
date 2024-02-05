@@ -57,7 +57,7 @@ ColumnLayout {
                 //: settings tab, version label
                 //% "v"
                 text: qsTrId("settings-version") + viewModel.version
-                BeamGlobals.copyToClipboard(viewModel.version)
+                BeamGlobals.copyToClipboard(qsTrId("settings-version" + viewModel.version)
             }
         }
 
