@@ -8,5 +8,8 @@ SFText {
     Layout.bottomMargin: 27
     font.pixelSize:      12
     color:               Qt.rgba(1, 1, 1, 0.3)
-    text:                [qsTrId("settings-version"), BeamGlobals.version()].join(' ')
+    text:                qsTrId("settings-version") + BeamGlobals.version()
+    onClicked: function() {
+        BeamGlobals.copyToClipboard(qsTrId("settings-version") + BeamGlobals.version())
+    }
 }
