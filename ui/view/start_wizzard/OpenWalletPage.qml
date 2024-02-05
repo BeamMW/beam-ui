@@ -52,7 +52,7 @@ StartLayout {
         }
     }
     Keys.onReleased: {
-        // OSX hack, to handle capslock shutdonw
+        // OSX hack, to handle capslock shutdown
         if (Qt.platform.os == "osx") {
             viewModel.checkCapsLock();
         }
