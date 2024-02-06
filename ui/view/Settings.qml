@@ -57,11 +57,16 @@ ColumnLayout {
                 //: settings tab, version label
                 //% "v"
                 text: qsTrId("settings-version") + viewModel.version
+                
+            }
+            MouseArea {
+                anchors.fill:parent
+                acceptedButtons: Qt.LeftButton
+                cursorShape: Qt.PointingHandCursor
                 onClicked: function () {
                     BeamGlobals.copyToClipboard(qsTrId("settings-version") + viewModel.version)
                 }
-                
-            }
+           }
         }
 
         PrimaryButton {
