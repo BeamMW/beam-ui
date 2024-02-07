@@ -438,7 +438,8 @@
         <translation>Tanggal dimodifikasi</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create a new wallet by generating a seed phrase..</source>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <oldsource>Create a new wallet by generating a seed phrase..</oldsource>
         <translation type="unfinished">Buat dompet baru dengan menghasilkan frasa seed.</translation>
     </message>
     <message id="start-create-new-message-line-2">
@@ -1318,6 +1319,7 @@ Silakan periksa token swap dan coba lagi.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Riwayat transaksi ekspor</translation>
     </message>

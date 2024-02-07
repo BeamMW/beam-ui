@@ -1320,7 +1320,7 @@ Bitte überprüfen Sie das Swap-Token und versuchen Sie es erneut.</translation>
         <translation>Es gibt %1 aktive Transaktionen, die fehlschlagen könnten, wenn die Brieftasche offline geht. Sind Sie sicher, dass Sie die Brieftasche jetzt schließen möchten?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
+        <source>Export transaction history</source>
         <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>Transaktionsverlauf exportieren</translation>

@@ -1324,7 +1324,7 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
         <translation>Existuje %1 aktivních transakcí, které nemusí proběhnout, pokud bude peněženka odpojena. Opravdu nyní chcete zavřít peněženku?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
+        <source>Export transaction history</source>
         <oldsource>Export transaction history</oldsource>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Exportovat historii transakcí</translation>

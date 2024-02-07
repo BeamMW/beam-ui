@@ -1320,6 +1320,7 @@ Vänligen kontrollera swap-token och försök igen.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Exportera Transaktionshistoriken</translation>
     </message>

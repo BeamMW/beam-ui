@@ -1322,6 +1322,7 @@ Tarkista swap-tunniste ja yritä uudelleen.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Vie tapahtumahistoria</translation>
     </message>

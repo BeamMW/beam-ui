@@ -1322,8 +1322,9 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type = "unfinished">Transactiegeschiedenis exporteren</translation>
+        <translation type="unfinished">Transactiegeschiedenis exporteren</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

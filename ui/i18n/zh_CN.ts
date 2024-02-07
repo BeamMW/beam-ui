@@ -1328,8 +1328,9 @@ Please check the swap token and try again.</source>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type = "unfinished">导出交易记录</translation>
+        <translation type="unfinished">导出交易记录</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
