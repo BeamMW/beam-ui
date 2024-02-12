@@ -438,8 +438,8 @@
         <translation>変更日</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>シードフレーズを生成し新しいウォレットを作成</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">シードフレーズを生成し新しいウォレットを作成</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1315,9 +1315,10 @@ Please check the swap token and try again.</source>
         <translation>ウォレットがオフラインになると、 %1 アクティブなトランザクションが失敗する可能性があります。ウォレットを閉じますか？</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>トランザクション履歴を出力する</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">トランザクション履歴を出力する</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2892,14 +2893,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>インストールするアプリケーションを選択する</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>ウォレットの動作を確認してください。Foucet DAppから少額のBeamを入手してください。</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>コインを入手</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

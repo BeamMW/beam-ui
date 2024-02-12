@@ -438,8 +438,8 @@
         <translation>Datum změny</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Vytvořte novou peněženku pomocí generování klíčových slov.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Vytvořte novou peněženku pomocí generování klíčových slov.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1324,9 +1324,10 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
         <translation>Existuje %1 aktivních transakcí, které nemusí proběhnout, pokud bude peněženka odpojena. Opravdu nyní chcete zavřít peněženku?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exportovat historii transakcí</translation>
+        <translation type="unfinished">Exportovat historii transakcí</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2922,14 +2923,6 @@ cannot be canceled.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation type="unfinished">Select application to install</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation type="unfinished">get coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

@@ -440,8 +440,8 @@
         <translation>Датум модификовања</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Креирај нови новчаник са генерисаном seed фразом.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Креирај нови новчаник са генерисаном seed фразом.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1331,9 +1331,10 @@ to complete.</translation>
         <translation>Постоји %1 активна трансакција која може да буде неуспешна ако новчаник буде оф-лајн. Да ли сте сигурни да желите да затворите новчаник сада?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Извези историју трансакција</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Извези историју трансакција</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2932,14 +2933,6 @@ cannot be canceled.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation type="unfinished">Select application to install</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation type="unfinished">get coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

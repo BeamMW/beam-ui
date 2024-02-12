@@ -57,17 +57,6 @@ void AssetsViewModel::clearSelectedAssets()
     emit selectedAssetChanged();
 }
 
-bool AssetsViewModel::getShowFaucetPromo()
-{
-    return _settings.showFaucetPromo() && !hasBeamAmount();
-}
-
-void AssetsViewModel::setShowFaucetPromo(bool value)
-{
-    _settings.setShowFacetPromo(value);
-    emit showFaucetPromoChanged();
-}
-
 bool AssetsViewModel::getShowValidationPromo() const
 {
     const bool hide = getCanHideValidationPromo() && _settings.hideSeedValidationPromo();
@@ -88,14 +77,12 @@ bool AssetsViewModel::getCanHideValidationPromo() const
 
 void AssetsViewModel::onNormalCoinsChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::Coin>& utxos)
 {
-    emit showFaucetPromoChanged();
     emit showValidationPromoChanged();
     emit canHideValidationPromoChanged();
 }
 
 void AssetsViewModel::onShieldedCoinChanged(beam::wallet::ChangeAction action, const std::vector<beam::wallet::ShieldedCoin>& items)
 {
-    emit showFaucetPromoChanged();
     emit showValidationPromoChanged();
     emit canHideValidationPromoChanged();
 }

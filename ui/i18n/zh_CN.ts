@@ -441,8 +441,8 @@
         <translation>修改日期</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>生成助记词来创建新钱包</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">生成助记词来创建新钱包</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1327,9 +1327,10 @@ Please check the swap token and try again.</source>
         <translation>如果钱包离线， %1 个活动交易可能会失败。你确定要现在关闭钱包吗？</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>导出交易记录</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">导出交易记录</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2925,14 +2926,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>选择要安装的应用程序</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>看看钱包是如何使用的，并从社区水龙头Faucet DApp中获得少量的Beam</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>获取币</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

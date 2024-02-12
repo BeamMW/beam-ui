@@ -438,8 +438,8 @@
         <translation>Änderungsdatum</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Generieren Sie eine Seed-Phrase, um ein neues Wallet zu kreieren.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation>Generieren Sie einen Seed-Phrase, um ein neues Wallet zu erstellen.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1320,8 +1320,9 @@ Bitte überprüfen Sie das Swap-Token und versuchen Sie es erneut.</translation>
         <translation>Es gibt %1 aktive Transaktionen, die fehlschlagen könnten, wenn die Brieftasche offline geht. Sind Sie sicher, dass Sie die Brieftasche jetzt schließen möchten?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>Transaktionsverlauf exportieren</translation>
     </message>
     <message id="addresses-delete-warning-title">
@@ -2911,14 +2912,6 @@ nicht storniert werden können.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Zu installierende Anwendung auswählen</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Sehen Sie die Brieftasche in Aktion an. Holen Sie sich eine kleine Menge an Beams aus der Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>Erhalte Coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

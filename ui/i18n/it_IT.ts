@@ -438,8 +438,8 @@
         <translation>Data di modifica</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Crea un nuovo wallet con la generazione della frase seme.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Crea un nuovo wallet con la generazione della frase seme.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1320,9 +1320,10 @@ Si prega di controllare il token di swap e riprovare.</translation>
         <translation>Ci sono %1 transazioni attive che potrebbero fallire se il wallet andrà offline. Sei sicuro di chiudere il wallet ora?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Esporta cronologia transazioni</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Esporta cronologia transazioni</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2916,14 +2917,6 @@ non potrà essere cancellato.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Seleziona l&apos;applicazione da installare</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Guarda il portafoglio in azione. Ottieni una piccola quantità di Beam dalla DApp Faucet.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>ottieni monete</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

@@ -438,8 +438,9 @@
         <translation>Tanggal dimodifikasi</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Buat dompet baru dengan menghasilkan frasa seed.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <oldsource>Create a new wallet by generating a seed phrase..</oldsource>
+        <translation type="unfinished">Buat dompet baru dengan menghasilkan frasa seed.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1317,9 +1318,10 @@ Silakan periksa token swap dan coba lagi.</translation>
         <translation>Ada %1 transaksi aktif yang mungkin gagal jika dompet offline. Apakah Anda yakin untuk menutup dompet sekarang?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Riwayat transaksi ekspor</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Riwayat transaksi ekspor</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2909,14 +2911,6 @@ tidak dapat dibatalkan.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Pilih aplikasi yang akan diinstal</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Lihat dompet beraksi. Dapatkan sejumlah kecil Balok dari Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>dapatkan koin</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

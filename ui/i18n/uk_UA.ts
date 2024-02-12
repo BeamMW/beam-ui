@@ -438,8 +438,8 @@
         <translation>Дата змінення</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Створити новий гаманець з генеруванням фрази-паролю (seed).</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Створити новий гаманець з генеруванням фрази-паролю (seed).</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1323,9 +1323,10 @@ Please check the swap token and try again.</source>
         <translation>Є %1 активна транзакція, яка може бути невдалою, якщо гаманець перейде в автономний режим. Ви впевнені, що бажаєте закрити гаманець?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Експортувати історію транзакцій</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Експортувати історію транзакцій</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2920,14 +2921,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Оберіть застосунок, щоб встановити</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Переглядайте гаманець в дії. Отримайте невелику кількість Beams від крану спільноти.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>отримати монети</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

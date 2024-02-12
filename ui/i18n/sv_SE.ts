@@ -438,8 +438,8 @@
         <translation>Datum modifierat</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Skapa ny plånbok med genererat seed phrase.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Skapa ny plånbok med genererat seed phrase.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1319,9 +1319,10 @@ Vänligen kontrollera swap-token och försök igen.</translation>
         <translation>Det finns %1 aktiva transaktioner som kan misslyckas om plånboken går offline. Är du säker på att du vill stänga plånboken nu?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exportera Transaktionshistoriken</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Exportera Transaktionshistoriken</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2912,14 +2913,6 @@ cannot be canceled.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation type="unfinished">Select application to install</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation type="unfinished">get coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

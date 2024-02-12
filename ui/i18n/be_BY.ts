@@ -438,8 +438,8 @@
         <translation>Дата змянення</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Стварыць новы гаманец і згенераваць кантрольную фразу.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Стварыць новы гаманец і згенераваць кантрольную фразу.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1323,9 +1323,10 @@ Please check the swap token and try again.</source>
         <translation>Зараз ёсць %1 актыўных транзакцый, якія могуць пацярпець няўдачу, калі гаманец выйдзе з сеткі. Вы сапраўды хочаце зачыніць гаманец?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Экспарціраваць гісторыю транзакцый</translation>
+        <translation type="unfinished">Экспарціраваць гісторыю транзакцый</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2923,14 +2924,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Абярыце прыкладанне для ўстаноўкі</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Пабачце гаманец у дзеянні. Атрымайце невялікую колькасць Beams ад Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>атрымаць манеты</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

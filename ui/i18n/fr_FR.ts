@@ -438,8 +438,8 @@
         <translation>Date de modification</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Créez un nouveau portefeuille avec une phrase mnémonique générée.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Créez un nouveau portefeuille avec une phrase mnémonique générée.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1320,9 +1320,10 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
         <translation>Il y a %1 transactions actives qui pourraient échouer si le portefeuille se déconnecte. Êtes-vous sûr de vouloir fermer le portefeuille maintenant&#x202f;?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exporter l&apos;historique des transactions</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Exporter l&apos;historique des transactions</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2913,14 +2914,6 @@ ne peuvent pas être annulées.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Sélectionner l&apos;application à installer</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Voyez le portefeuille en action. Obtenez une petite quantité de Beams depuis la DApp de Faucet.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>obtenir des monnaies</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

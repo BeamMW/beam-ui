@@ -438,8 +438,8 @@
         <translation>วันที่แก้ไข</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>สร้างกระเป๋าใหม่ด้วยการสร้างกลุ่มคำลับ</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">สร้างกระเป๋าใหม่ด้วยการสร้างกลุ่มคำลับ</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1318,9 +1318,10 @@ Please check the swap token and try again.</source>
         <translation>มีธุรกรรมจำนวน %1 ที่กำลังดำเนินการ หากปิดกระเป๋าอาจจะทำให้การทำธุรกรรมล้มเหลวได้ คุณแน่ใจที่จะปิดกระเป๋าหรือไม่?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>ส่งออกประวัติธุรกรรม</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">ส่งออกประวัติธุรกรรม</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2909,14 +2910,6 @@ cannot be canceled.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation type="unfinished">Select application to install</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation type="unfinished">See the wallet in action. Get a small amount of Beams from the Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation type="unfinished">get coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>

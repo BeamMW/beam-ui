@@ -44,7 +44,6 @@ namespace
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
-    const char* kShowFaucetPromo = "showFaucetPromo";
     const char* kHideSeedValidationPromo = "hideSeedValidationPromo";
     const char* kDevMode ="dev_mode";
 
@@ -763,18 +762,6 @@ QString WalletSettings::getAppsUrl() const
     default:
         return "https://apps.beam.mw/appslist.json";
     }
-}
-
-bool WalletSettings::showFaucetPromo() const
-{
-    Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kShowFaucetPromo, true).toBool();
-}
-
-void WalletSettings::setShowFacetPromo(bool value)
-{
-    Lock lock(m_mutex);
-    m_accountSettings.m_data.setValue(kShowFaucetPromo, value);
 }
 
 bool WalletSettings::hideSeedValidationPromo() const

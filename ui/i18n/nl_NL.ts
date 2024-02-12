@@ -438,8 +438,8 @@
         <translation>Datum van wijziging</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Maak een nieuwe wallet aan met het genereren van een herstelzin.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Maak een nieuwe wallet aan met het genereren van een herstelzin.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1321,9 +1321,10 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
         <translation>Er zijn %1 actieve transacties die mogelijk mislukken indien de wallet offline gaat. Weet u zeker dat u de wallet nu wilt sluiten?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Transactiegeschiedenis exporteren</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Transactiegeschiedenis exporteren</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2912,14 +2913,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Selecteer applicatie om te installeren</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Bekijk de wallet in actie. Ontvang een kleine hoeveelheid Beams uit de Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>ontvang coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
