@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.15
 import "."
 
 SFText {
+    id: versionText
     Layout.alignment:    Qt.AlignHCenter
     Layout.bottomMargin: 27
     font.pixelSize:      12
@@ -15,7 +16,7 @@ SFText {
     acceptedButtons: Qt.LeftButton
     cursorShape: Qt.PointingHandCursor
     onClicked: function() {
-        BeamGlobals.copyToClipboard(qsTrId("settings-version") + BeamGlobals.version())
+        BeamGlobals.copyToClipboard(versionText.text)
     }
 }
 }
