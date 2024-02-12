@@ -329,7 +329,7 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::TimeCreated:
         {
             QDateTime datetime;
-            datetime.setTime_t(value->timeCreated());
+            datetime.setSecsSinceEpoch(value->timeCreated());
             return datetime.toString(m_locale.dateTimeFormat(QLocale::ShortFormat));
         }
         case Roles::TimeCreatedSort:

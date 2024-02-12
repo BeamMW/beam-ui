@@ -438,8 +438,8 @@
         <translation>変更日</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>シードフレーズを生成し新しいウォレットを作成</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">シードフレーズを生成し新しいウォレットを作成</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -830,18 +830,6 @@
         <source>Password verification is required to change that setting</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>設定を変更するにはパスワードの照合が必要です</translation>
-    </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>理解しました</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>同一のシードで、２つのウォレットを同時に使用しないでください</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>複数のデバイスで同一のシードフレーズを利用しないでください。残高とトランザクションリストが同期されません。</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
@@ -1327,9 +1315,10 @@ Please check the swap token and try again.</source>
         <translation>ウォレットがオフラインになると、 %1 アクティブなトランザクションが失敗する可能性があります。ウォレットを閉じますか？</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>トランザクション履歴を出力する</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">トランザクション履歴を出力する</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2120,14 +2109,6 @@ much longer for a transaction to complete.</source>
         <source>Contract transaction</source>
         <translation>コントラクト トランザクション</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>アトミックスワップはベータ版です</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>アトミックスワップ機能は現時点でベータ版です。大きな金額を送信しないことをお勧めします。</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>オファーをキャンセルする</translation>
@@ -2400,10 +2381,6 @@ Update your settings and try again.</source>
         <source>Transaction type</source>
         <translation>トランザクション種別</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>最大匿名セットおよびオフライントランザクションを受信できるように、統合ノードまたは自己ノードに接続します。</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>請求数量</translation>
@@ -2421,10 +2398,6 @@ Update your settings and try again.</source>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>トランザクションは無期限に継続します。</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>送信者には、レギュラーペイメントおよびオフラインペイメントの選択肢があります。</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2856,10 +2829,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>最大64Kまでの匿名化セットを保証します。</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>受信者はこの後12時間以内にオンラインになる必要があります。また、送信者は2時間以内にオンラインになる必要があります。</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>トランザクションは最大72時間継続します。</translation>
@@ -2916,10 +2885,6 @@ cannot be canceled.</source>
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>現在、オンライン トランザクションのみをサポートするノードに接続されています。</translation>
     </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>オンラインペイメントを完了するために、コインの送信後12時間以内にオンラインになってください。</translation>
-    </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
@@ -2928,14 +2893,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>インストールするアプリケーションを選択する</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>ウォレットの動作を確認してください。Foucet DAppから少額のBeamを入手してください。</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>コインを入手</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
@@ -3875,6 +3832,42 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="general-add-account">
         <source>Add account</source>
         <translation type="unfinished">Add account</translation>
+    </message>
+    <message id="dapps-store-dapp-details">
+        <source>dapp details</source>
+        <translation type="unfinished">dapp details</translation>
+    </message>
+    <message id="dapp-store-app-details">
+        <source>Application details</source>
+        <translation type="unfinished">Application details</translation>
+    </message>
+    <message id="dapp-details-name">
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message id="dapp-details-description">
+        <source>Description</source>
+        <translation>説明</translation>
+    </message>
+    <message id="dapp-details-release-date">
+        <source>Release date</source>
+        <translation type="unfinished">Release date</translation>
+    </message>
+    <message id="dapp-details-publisher-key">
+        <source>Publisher key</source>
+        <translation type="unfinished">Publisher key</translation>
+    </message>
+    <message id="dapp-details-publisher-name">
+        <source>Publisher name</source>
+        <translation type="unfinished">Publisher name</translation>
+    </message>
+    <message id="dapp-details-category">
+        <source>Category</source>
+        <translation type="unfinished">Category</translation>
+    </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

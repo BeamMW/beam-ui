@@ -63,11 +63,13 @@ namespace beamui::applications
 #undef MACRO
         };
 
-        AppsModel() : m_roleNames{
+        AppsModel(QObject* parent) 
+            : ListModel<QVariantMap>(parent)
+            , m_roleNames{
 #define MACRO(id, value) { static_cast<int>(Roles::id), value },
                 APP_PROPS(MACRO)
 #undef MACRO
-        }
+            }
         {
 
         }
@@ -159,14 +161,14 @@ namespace beamui::applications
         Q_INVOKABLE void updateDApp(const QString& guid);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
-        Q_INVOKABLE [[nodiscard]] QString addPublisherByKey(const QString& publisherKey);
-        Q_INVOKABLE void removePublisherByKey(const QString& publisherKey);
+        Q_INVOKABLE [[nodiscard]] QString addUnwantedPublisherByKey(const QString& publisherKey);
+        Q_INVOKABLE void removeUnwantedPublisherByKey(const QString& publisherKey);
         Q_INVOKABLE void changePublisherInfo(const QVariantMap& publisherInfo, bool isCreating);
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
         Q_INVOKABLE void prepareToLaunchApp();
 
-        Q_INVOKABLE [[nodiscard]] QList<QVariantMap> getPublisherDApps(const QString& publisherKey);
+        Q_INVOKABLE [[nodiscard]] QAbstractItemModel* getPublisherDApps(const QString& publisherKey);
 
     public slots:
         void onTransactionsChanged(
@@ -229,7 +231,7 @@ namespace beamui::applications
         QList<QVariantMap> _devApps;
         QList<QVariantMap> _shaderApps;
         QList<QVariantMap> _publishers;
-        QStringList _userPublishersKeys;
+        QStringList _userUnwantedPublishersKeys;
         QSet<QString> _knownPublishersWithDapps;
         QVariantMap _publisherInfo;
 
@@ -240,5 +242,6 @@ namespace beamui::applications
         bool _isIPFSAvailable = false;
         QList<QString> _ipfsIdsToUnpin;
         AppsModel m_appsModel;
+        AppsModel m_publisherAppsModel;
     };
 }

@@ -6,7 +6,7 @@ Item {
     id: control
     state: control.choices[0]
 
-    property var backgroundColor: Qt.rgba(0, 246, 210, 0.1)
+    property var backgroundColor: Qt.rgba(0, 246/255, 210/255, 0.1)
     property var borderColor: Style.active
     property var choices: ["0", "1", "2"]
     property var labels: ["0", "1", "2"]

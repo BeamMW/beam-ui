@@ -24,7 +24,7 @@
 
 namespace
 {
-    const char kTxHistoryFileNamePrefix[] = "transactions_history_";
+    const char kTxHistoryFileNamePrefix[] = "transaction_history_";
     const char kTxHistoryFileFormatDesc[] = "Zip Archive (*.zip)";
     const char kTxHistoryFileNameFormat[] = "yyyy_MM_dd_HH_mm_ss";
 
@@ -67,8 +67,8 @@ void TxTableViewModel::exportTxHistoryToCsv()
     QDateTime now = QDateTime::currentDateTime();
     QString path = QFileDialog::getSaveFileName(
         nullptr,
-        //: transactions history screen, export button tooltip and open file dialog
-        //% "Export transactions history"
+        //: transaction history screen, export button tooltip and open file dialog
+        //% "Export transaction history"
         qtTrId("wallet-export-tx-history"),
         QDir(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation))
             .filePath(kTxHistoryFileNamePrefix + now.toString(kTxHistoryFileNameFormat)), kTxHistoryFileFormatDesc);

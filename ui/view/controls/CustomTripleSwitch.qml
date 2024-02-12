@@ -11,7 +11,7 @@ Item {
     property bool isUsdButtonActive:  false
     property bool isBtcButtonActive:  false
 
-    property var backgroundColor:   isOffButtonActive ? Qt.rgba(141, 161, 173, 0.1) : Qt.rgba(0, 246, 210, 0.1)
+    property var backgroundColor:   isOffButtonActive ? Qt.rgba(141/255, 161/255, 173/255, 0.1) : Qt.rgba(0, 246/255, 210/255, 0.1)
     property var borderColor:       isOffButtonActive ? Style.content_secondary : Style.active
     
     readonly property var offButtonActiveColor: Style.content_secondary

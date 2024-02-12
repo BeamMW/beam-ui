@@ -22,7 +22,6 @@
 #include <QString>
 #include <QVariant>
 
-
 class PublisherItem : public QObject
 {
     Q_OBJECT
@@ -36,22 +35,22 @@ class PublisherItem : public QObject
         Q_PROPERTY(QString instagram    READ instagram    CONSTANT)
         Q_PROPERTY(QString telegram     READ telegram     CONSTANT)
         Q_PROPERTY(QString discord      READ discord      CONSTANT)
-        Q_PROPERTY(QString enabled      READ enabled      CONSTANT)
+        Q_PROPERTY(bool    enabled      READ enabled      CONSTANT)
 
 public:
     PublisherItem() = default;
     PublisherItem(const QVariantMap& publisherInfo);
 
-    [[nodiscard]] QString publisherKey() const;
-    [[nodiscard]] QString nickname() const;
-    [[nodiscard]] QString shortTitle() const;
-    [[nodiscard]] QString aboutMe() const;
-    [[nodiscard]] QString website() const;
-    [[nodiscard]] QString twitter() const;
-    [[nodiscard]] QString linkedin() const;
-    [[nodiscard]] QString instagram() const;
-    [[nodiscard]] QString telegram() const;
-    [[nodiscard]] QString discord() const;
+    [[nodiscard]] const QString& publisherKey() const;
+    [[nodiscard]] const QString& nickname() const;
+    [[nodiscard]] const QString& shortTitle() const;
+    [[nodiscard]] const QString& aboutMe() const;
+    [[nodiscard]] const QString& website() const;
+    [[nodiscard]] const QString& twitter() const;
+    [[nodiscard]] const QString& linkedin() const;
+    [[nodiscard]] const QString& instagram() const;
+    [[nodiscard]] const QString& telegram() const;
+    [[nodiscard]] const QString& discord() const;
     [[nodiscard]] bool enabled() const;
 
 private:
@@ -73,7 +72,7 @@ class PublishersViewModel: public QObject
     Q_OBJECT
     Q_PROPERTY(QList<QVariantMap> publishersInfo          READ getPublishersInfo      WRITE setPublishersInfo)
 
-    Q_PROPERTY(QQmlListProperty<PublisherItem> publishers READ getPublishers          NOTIFY publishersChanged)
+    Q_PROPERTY(const QList<QObject*>& publishers              READ getPublishers          NOTIFY publishersChanged)
     Q_PROPERTY(QString nicknameRole                       READ getNicknameRole        CONSTANT)
     Q_PROPERTY(QString shortTitleRole                     READ getShortTitleRole      CONSTANT)
     Q_PROPERTY(QString aboutRole                          READ getAboutRole           CONSTANT)
@@ -92,27 +91,25 @@ public:
     PublishersViewModel();
     virtual ~PublishersViewModel();
 
-    QQmlListProperty<PublisherItem> getPublishers();
+    const QObjectList& getPublishers();
 
     void setPublishersInfo(QList<QVariantMap> info);
-    [[nodiscard]] QList<QVariantMap> getPublishersInfo() const;
+    [[nodiscard]] const QList<QVariantMap>& getPublishersInfo() const;
 
-    [[nodiscard]] QString getNicknameRole() const;
-    [[nodiscard]] QString getShortTitleRole() const;
-    [[nodiscard]] QString getAboutRole() const;
-    [[nodiscard]] QString getWebsiteRole() const;
-    [[nodiscard]] QString getTwitterRole() const;
-    [[nodiscard]] QString getLinkedinRole() const;
-    [[nodiscard]] QString getInstagramRole() const;
-    [[nodiscard]] QString getTelegramRole() const;
-    [[nodiscard]] QString getDiscordRole() const;
-    [[nodiscard]] QString getPublisherLinkRole() const;
-    [[nodiscard]] QString getPublisherStatusRole() const;
+    [[nodiscard]] const QString& getNicknameRole() const;
+    [[nodiscard]] const QString& getShortTitleRole() const;
+    [[nodiscard]] const QString& getAboutRole() const;
+    [[nodiscard]] const QString& getWebsiteRole() const;
+    [[nodiscard]] const QString& getTwitterRole() const;
+    [[nodiscard]] const QString& getLinkedinRole() const;
+    [[nodiscard]] const QString& getInstagramRole() const;
+    [[nodiscard]] const QString& getTelegramRole() const;
+    [[nodiscard]] const QString& getDiscordRole() const;
+    [[nodiscard]] const QString& getPublisherLinkRole() const;
+    [[nodiscard]] const QString& getPublisherStatusRole() const;
 
     [[nodiscard]] Qt::SortOrder sortOrder() const;
     void setSortOrder(Qt::SortOrder);
-
-    Q_INVOKABLE QVariant getRoleValue(const int row, QByteArray roleName);
 
 signals:
     void publishersChanged();
@@ -123,6 +120,6 @@ private:
 
 private:
     QList<QVariantMap> m_publishersInfo;
-    QList<PublisherItem*> m_publishers;
+    QList<QObject*> m_publishers;
     Qt::SortOrder m_sortOrder = Qt::AscendingOrder;
 };

@@ -33,6 +33,7 @@ Item {
     signal update(var app)
     signal uninstall(var app)
     signal remove(var app)
+    signal showDetails(var app)
 
     function isPanelEnabled() {
         if (isPublisherAdminMode) {
@@ -54,25 +55,37 @@ Item {
         opacity:      hoverArea.containsMouse ? 0.15 : (isEnabled ? 0.1 : 0.05)
     }
 
-    CustomToolButton {
-        id:                       statusButton
+    Row {
         z:                        42
         anchors.right:            parent.right
         anchors.top:              parent.top
         anchors.margins:          16
-        padding:                  0
-        height:                   16
-        width:                    16
-        icon.color:               Style.active
-        icon.source:              getButtonSource()
-        enabled:                  isEnabled
         visible:                  !isBusy
-        onClicked: {
-            if (!!app.notInstalled) {
+        CustomToolButton {
+            id:                       installButton
+            padding:                  0
+            height:                   16
+            width:                    16
+            icon.color:               Style.active
+            icon.source:              "qrc:/assets/icon-download-green.svg"
+            enabled:                  isEnabled
+            visible:                  !!app.notInstalled
+            onClicked: {
                 control.isBusy = true;
                 control.install(app, false)
-            } else {
-                var instance = appMenuComponent.createObject(statusButton);
+            }
+        }
+        CustomToolButton {
+            id:                       actionsButton
+            padding:                  0
+            height:                   16
+            width:                    16
+            icon.color:               Style.active
+            icon.source:              "qrc:/assets/icon-actions.svg"
+            enabled:                  isEnabled
+            visible:                  !app.notInstalled || isPublisherAdminMode
+            onClicked: {
+                var instance = appMenuComponent.createObject(actionsButton);
                 if (!isPublisherAdminMode) {
                     instance.removeAction(instance.myRemoveAction)
                 } 
@@ -256,7 +269,7 @@ Item {
 
             Action {
                 id:          uninstallActionInternal
-                                //% "Uninstall"
+                             //% "Uninstall"
                 text:        qsTrId("apps-uninstall")
                 icon.source: "qrc:/assets/icon-delete.svg"
                 onTriggered: function () {
@@ -267,7 +280,7 @@ Item {
 
             Action {
                 id:          removeActionInternal
-                                //% "remove dapp"
+                             //% "remove dapp"
                 text:        qsTrId("dapps-store-remove-dapp")
                 icon.source: "qrc:/assets/icon-delete.svg"
                 onTriggered: function () {
@@ -275,12 +288,14 @@ Item {
                     control.remove(app)
                 }
             }
+            Action {
+                id:          detailsActionInternal
+                             //% "dapp details"
+                text:        qsTrId("dapps-store-dapp-details")
+                icon.source: "qrc:/assets/icon-show_tx_details.svg"
+                onTriggered: control.showDetails(app)
+            }
         }
     }
 
-    function getButtonSource() {
-        if (!!app.notInstalled)
-            return "qrc:/assets/icon-download-green.svg"
-        return "qrc:/assets/icon-actions.svg"
-    }
 }

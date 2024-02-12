@@ -117,7 +117,6 @@ jobs:
       - name: Configure CMake [macos-11]
         if: matrix.os == 'macos-11'
         run: |
-          #cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
           cmake $GITHUB_WORKSPACE -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
 
       - name: Configure CMake [ununtu all]
@@ -178,6 +177,7 @@ jobs:
           echo "Copying files to AppImage deploy tree"
           cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
           cp ui/dapps_store_app.wasm deploy/usr/bin/
+          cp -r ui/apps deploy/usr/bin/
           cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
           cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
           cp ui/x-beam-dapp.xml deploy/usr/share/mime/packages

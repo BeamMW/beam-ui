@@ -18,7 +18,7 @@ AbstractTheme {
     property color navigation_background: "#000000"
     property color background_main:       "#1a132d"
     property color background_main_top:   "#4c3677"
-    property color background_second:     Qt.rgba(255, 255, 255, 0.05)
+    property color background_second:     Qt.rgba(1, 1, 1, 0.05)
 
     property color background_row_even:         "#07ffffff"
     property color background_row_odd:          "#0cffffff"
@@ -26,7 +26,7 @@ AbstractTheme {
     property color background_row_details_even: "#07ffffff"
     property color background_row_details_odd:  "#0cffffff"
 
-    property color background_button:     Qt.rgba(255, 255, 255, 0.2)
+    property color background_button:     Qt.rgba(1, 1, 1, 0.2)
     property color background_popup:      "#342e41"
     property color background_appstx:     "#261f38"
     property color row_selected:          "#534e5e"
@@ -39,7 +39,7 @@ AbstractTheme {
 
     property color coinPaneRight:     "#45316c"
     property color coinPaneLeft:      "#00f6d2"
-    property color coinPaneBorder:    Qt.rgba(0, 246, 210, 0.15)
+    property color coinPaneBorder:    Qt.rgba(0, 246/255, 210/255, 0.15)
 
     property color swapStateIndicator:  "#ff746b"
     property color swapDisconnectNode:          "#f9605b"

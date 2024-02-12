@@ -14,7 +14,7 @@ ColumnLayout {
 
     property var viewModel
     property var appsList: undefined
-    readonly property bool hasApps: !!appsList && appsList.length > 0
+    readonly property bool hasApps: !!appsList && appsList.rowCount() > 0
 
     property var onBack: function () {
         console.log("PublisherDetails::onBack is not initialized")
@@ -152,7 +152,7 @@ ColumnLayout {
             display:                AbstractButton.IconOnly
             leftPadding:            6
             rightPadding:           6
-            palette.button:         Qt.rgba(255, 255, 255, 0.1)
+            palette.button:         Qt.rgba(1, 1, 1, 0.1)
             icon.source:            "qrc:/assets/icon-dapps_store-publisher-edit.svg"
             icon.width:             24
             icon.height:            24
@@ -170,7 +170,7 @@ ColumnLayout {
             display:                AbstractButton.IconOnly
             leftPadding:            6
             rightPadding:           6
-            palette.button:         Qt.rgba(255, 255, 255, 0.1)
+            palette.button:         Qt.rgba(1, 1, 1, 0.1)
             icon.source:            "qrc:/assets/icon-dapps_store-publisher-show-key.svg"
             icon.width:             24
             icon.height:            24
@@ -183,8 +183,8 @@ ColumnLayout {
     // Title
     //
     SFText {
-        Layout.topMargin:     20
-        Layout.bottomMargin:  20
+        Layout.topMargin:     40
+        Layout.bottomMargin:  12
         color:                Style.content_main
         font.pixelSize:       14
         font.weight:          Font.Bold
@@ -300,6 +300,7 @@ ColumnLayout {
         appsList:                 control.appsList
         isPublisherAdminMode:     true
         isIPFSAvailable:          control.viewModel.isIPFSAvailable
+        showActions:              false
 
         onUpdate: function (app) {
             control.uploadNewVersion(app)

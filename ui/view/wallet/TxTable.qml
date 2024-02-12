@@ -231,8 +231,8 @@ Control {
             CustomToolButton {
                 Layout.alignment: Qt.AlignVCenter
                 icon.source: "qrc:/assets/icon-export.svg"
-                //: transactions history screen, export button tooltip and open file dialog
-                //% "Export transactions history"
+                //: transaction history screen, export button tooltip and open file dialog
+                //% "Export transaction history"
                 ToolTip.text: qsTrId("wallet-export-tx-history")
                 ToolTip.visible: hovered
                 ToolTip.delay: 500

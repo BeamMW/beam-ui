@@ -9,6 +9,7 @@ import "../utils.js" as Utils
 
 StartLayout {
     property Item defaultFocusItem: startMigration
+    showNetworkSelector:            false
 
     ColumnLayout {
         id: migrateColumn

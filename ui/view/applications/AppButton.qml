@@ -9,7 +9,7 @@ import "../controls"
 Button {
     id: control
     
-    palette.button:     Qt.rgba(0, 246, 210, 0.1)
+    palette.button:     Qt.rgba(0, 246/255, 210/255, 0.1)
     palette.buttonText: Style.active
     opacity:            enabled ? 1.0 : 0.7
 

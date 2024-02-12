@@ -24,7 +24,7 @@ WizzardPage {
         SFText {
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Qt.AlignHCenter
-            //% "Create new wallet with generating seed phrase."
+            //% "Create a new wallet by generating a seed phrase."
             text: qsTrId("start-create-new-message-line-1")
             color: Style.content_main
             wrapMode: Text.WordWrap

@@ -360,12 +360,13 @@ Rectangle {
     }
 
     function openTransactionDetails(id) {
-        navigateTo("wallet", {"openedTxID": id})
+        openDAppTransactionDetails(id)
     }
 
     function openDAppTransactionDetails(txid) {
-        if (content.item.openAppTx) {
-            return content.item.openAppTx(txid)
+        contentStack.pop(contentStack.get(0));
+        if (contentStack.currentItem.openAppTx) {
+            return contentStack.currentItem.openAppTx(txid)
         }
         navigateTo(appsQml(), {"openedTxID": txid})
     }

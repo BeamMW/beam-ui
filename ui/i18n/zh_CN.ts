@@ -441,8 +441,8 @@
         <translation>修改日期</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>生成助记词来创建新钱包</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">生成助记词来创建新钱包</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -839,18 +839,6 @@
         <source>Password verification is required to change that setting</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>需验证密码来使设置变更生效</translation>
-    </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>我理解</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>不要同时运行同一助记词下的两个钱包</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>请勿在多个设备上使用相同助记词 余额和交易历史无法在多个设备间完全同步</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
@@ -1339,9 +1327,10 @@ Please check the swap token and try again.</source>
         <translation>如果钱包离线， %1 个活动交易可能会失败。你确定要现在关闭钱包吗？</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>导出交易记录</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">导出交易记录</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2152,14 +2141,6 @@ much longer for a transaction to complete.</source>
         <source>Contract transaction</source>
         <translation>合约交易</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap is in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap functionality is Beta at the moment. We recommend you not to send large amounts.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>取消报价</translation>
@@ -2433,10 +2414,6 @@ Update your settings and try again.</source>
         <source>Transaction type</source>
         <translation>交易类型</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>连接到完整节点或自己的节点以启用最强匿名模式和离线交易</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>请求数量</translation>
@@ -2454,10 +2431,6 @@ Update your settings and try again.</source>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>交易可以无限期地持续下去</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>发送者将在在线发送和离线发送之间做出选择</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2889,10 +2862,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>保证最大限度的匿名性设定为64K</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>为使交易顺利完成，收款人应于12小时内上线同步其钱包至最新高度，而后您应2小时内再次上线同步钱包</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>交易时间可长达72小时</translation>
@@ -2949,10 +2918,6 @@ cannot be canceled.</source>
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>您当前连接到仅支持在线模式交易的节点</translation>
     </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>要完成在线付款，您应该在发送币后的12小时内上线</translation>
-    </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
@@ -2961,14 +2926,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>选择要安装的应用程序</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>看看钱包是如何使用的，并从社区水龙头Faucet DApp中获得少量的Beam</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>获取币</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
@@ -3914,6 +3871,42 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="general-add-account">
         <source>Add account</source>
         <translation type="unfinished">Add account</translation>
+    </message>
+    <message id="dapps-store-dapp-details">
+        <source>dapp details</source>
+        <translation type="unfinished">dapp details</translation>
+    </message>
+    <message id="dapp-store-app-details">
+        <source>Application details</source>
+        <translation type="unfinished">Application details</translation>
+    </message>
+    <message id="dapp-details-name">
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message id="dapp-details-description">
+        <source>Description</source>
+        <translation>描述</translation>
+    </message>
+    <message id="dapp-details-release-date">
+        <source>Release date</source>
+        <translation type="unfinished">Release date</translation>
+    </message>
+    <message id="dapp-details-publisher-key">
+        <source>Publisher key</source>
+        <translation type="unfinished">Publisher key</translation>
+    </message>
+    <message id="dapp-details-publisher-name">
+        <source>Publisher name</source>
+        <translation type="unfinished">Publisher name</translation>
+    </message>
+    <message id="dapp-details-category">
+        <source>Category</source>
+        <translation type="unfinished">Category</translation>
+    </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

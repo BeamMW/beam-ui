@@ -927,7 +927,7 @@ void StartViewModel::findExistingWalletDB()
     auto appDataPath = AppModel::getInstance().getSettings().getUserDataPath();
     pathsToCheck.insert(appDataPath);
 
-    auto defaultAppDataPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString();
+    auto defaultAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation).toStdString();
     pathsToCheck.insert(defaultAppDataPath);
 
     #ifdef Q_OS_LINUX

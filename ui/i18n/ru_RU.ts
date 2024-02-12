@@ -438,8 +438,8 @@
         <translation>Дата изменения</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Создать новый кошелек и сгенерировать контрольную фразу.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Создать новый кошелек и сгенерировать контрольную фразу.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -831,18 +831,6 @@
         <source>Password verification is required to change that setting</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Введите пароль чтобы изменения вступили в силу</translation>
-    </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Ясно</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Не запускайте одновременно два кошелька, инициированные из одной фразы seed</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Не используйте одну и ту же контрольную фразу на разных устройствах, ваш баланс и список транзакций не будут синхронизированы.</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
@@ -1335,9 +1323,10 @@ Please check the swap token and try again.</source>
         <translation>Имеется %1 активных транзакций, которые могут не состояться, если кошелек выйдет в автономном режиме. Вы уверены, что хотите закрыть кошелек сейчас?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Экспорт истории транзакций</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Экспорт истории транзакций</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2149,14 +2138,6 @@ much longer for a transaction to complete.</source>
         <source>Contract transaction</source>
         <translation>Контрактная транзакция</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Атомные обмены находятся в БЕТА тестировании</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>В данный момент Атомарные обмены в бета-версии. Рекомендуем не отправлять большие суммы.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>Отменить предложение</translation>
@@ -2429,10 +2410,6 @@ Update your settings and try again.</source>
         <source>Transaction type</source>
         <translation>Тип транзакции</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Подключитесь к интегрированному или собственному узлу, чтобы включить получение транзакций с максимальной анонимностью и оффлайн транзакций.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Запрашиваемая сумма</translation>
@@ -2452,10 +2429,6 @@ Update your settings and try again.</source>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>Транзакция может длиться бесконечно.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>Отправителю будет предоставлен выбор между оплатой онлайн и оффлайн.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2888,10 +2861,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Гарантирует максимальный анонимный набор до 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Получатель должен войти в сеть в течение следующих 12 часов, а вы должны быть в сети в течение 2 часов после.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Транзакция может длиться до 72 часов.</translation>
@@ -2948,10 +2917,6 @@ cannot be canceled.</source>
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>В настоящее время вы подключены к узлу, который поддерживает только онлайн-транзакции.</translation>
     </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Чтобы оплатить онлайн, вы должны быть в сети в течение 12 часов после отправки монет.</translation>
-    </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
@@ -2960,14 +2925,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Выберите приложение для установки</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Посмотрите кошелек в действии. Получите небольшое количество Beam от Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>получить монеты</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
@@ -3919,6 +3876,42 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="general-add-account">
         <source>Add account</source>
         <translation>Добавить учётную запись</translation>
+    </message>
+    <message id="dapps-store-dapp-details">
+        <source>dapp details</source>
+        <translation>Информация о приложении</translation>
+    </message>
+    <message id="dapp-store-app-details">
+        <source>Application details</source>
+        <translation>Информация о приложении</translation>
+    </message>
+    <message id="dapp-details-name">
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message id="dapp-details-description">
+        <source>Description</source>
+        <translation>Описание</translation>
+    </message>
+    <message id="dapp-details-release-date">
+        <source>Release date</source>
+        <translation>Дата выпуска</translation>
+    </message>
+    <message id="dapp-details-publisher-key">
+        <source>Publisher key</source>
+        <translation>Ключ издателя</translation>
+    </message>
+    <message id="dapp-details-publisher-name">
+        <source>Publisher name</source>
+        <translation>Имя издателя</translation>
+    </message>
+    <message id="dapp-details-category">
+        <source>Category</source>
+        <translation>Категория</translation>
+    </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation>копировать SBBS адрес и закрыть</translation>
     </message>
 </context>
 </TS>

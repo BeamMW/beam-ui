@@ -438,8 +438,8 @@
         <translation>Änderungsdatum</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Generieren Sie eine Seed-Phrase, um ein neues Wallet zu kreieren.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation>Generieren Sie einen Seed-Phrase, um ein neues Wallet zu erstellen.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -830,18 +830,6 @@
         <source>Password verification is required to change that setting</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Passwort-Eingabe ist erforderlich, um diese Einstellung zu ändern</translation>
-    </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Ich verstehe</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Führen Sie nicht gleichzeitig zwei Wallets aus, die von derselben Seed-Phrase initiiert wurden</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Verwenden Sie nicht dieselbe Seed-Phrase auf mehreren Geräten, Ihre Salden- und Transaktionen werden sonst nicht synchronisiert.</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
@@ -1332,8 +1320,9 @@ Bitte überprüfen Sie das Swap-Token und versuchen Sie es erneut.</translation>
         <translation>Es gibt %1 aktive Transaktionen, die fehlschlagen könnten, wenn die Brieftasche offline geht. Sind Sie sicher, dass Sie die Brieftasche jetzt schließen möchten?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>Transaktionsverlauf exportieren</translation>
     </message>
     <message id="addresses-delete-warning-title">
@@ -2137,14 +2126,6 @@ viel länger dauern, bis eine Transaktion abgeschlossen ist.</translation>
         <source>Contract transaction</source>
         <translation>Contract-Transaktion</translation>
     </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swap ist in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap-Funktionalität ist momentan im Beta-Status. Wir empfehlen, keine großen Summen zu versenden.</translation>
-    </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
         <translation>Angebot stornieren</translation>
@@ -2417,10 +2398,6 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <source>Transaction type</source>
         <translation>Transaktionstyp</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Verbinden Sie sich mit integrierter oder eigener Node, um das Empfangen von maximalen Anonymität und Offline-Transaktionen zu ermöglichen.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Angeforderter Betrag</translation>
@@ -2439,10 +2416,6 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>Transaktion kann auf unbestimmte Zeit dauern.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>Der Absender erhält die Wahl zwischen Online- und Offline-Zahlung.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2875,10 +2848,6 @@ nicht storniert werden können.</translation>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Garantiert maximale Anonymität von bis zu 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Damit die Transaktion abgeschlossen werden kann, muss der Empfänger innerhalb der nächsten 12 Stunden online sein und Sie sollten innerhalb von 2 Stunden online sein.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Die Transaktion kann bis zu 72 Stunden dauern.</translation>
@@ -2935,10 +2904,6 @@ nicht storniert werden können.</translation>
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>Sie sind derzeit mit einem Knoten verbunden, der nur Online-Transaktionen unterstützt.</translation>
     </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Um eine Online-Zahlung abzuschließen, sollten Sie innerhalb der 12 Stunden nach Absenden der Münzen online sein.</translation>
-    </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
@@ -2947,14 +2912,6 @@ nicht storniert werden können.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Zu installierende Anwendung auswählen</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Sehen Sie die Brieftasche in Aktion an. Holen Sie sich eine kleine Menge an Beams aus der Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>Erhalte Coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
@@ -3902,6 +3859,42 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     <message id="general-add-account">
         <source>Add account</source>
         <translation type="unfinished">Add account</translation>
+    </message>
+    <message id="dapps-store-dapp-details">
+        <source>dapp details</source>
+        <translation type="unfinished">dapp details</translation>
+    </message>
+    <message id="dapp-store-app-details">
+        <source>Application details</source>
+        <translation type="unfinished">Application details</translation>
+    </message>
+    <message id="dapp-details-name">
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message id="dapp-details-description">
+        <source>Description</source>
+        <translation>Beschreibung</translation>
+    </message>
+    <message id="dapp-details-release-date">
+        <source>Release date</source>
+        <translation type="unfinished">Release date</translation>
+    </message>
+    <message id="dapp-details-publisher-key">
+        <source>Publisher key</source>
+        <translation type="unfinished">Publisher key</translation>
+    </message>
+    <message id="dapp-details-publisher-name">
+        <source>Publisher name</source>
+        <translation type="unfinished">Publisher name</translation>
+    </message>
+    <message id="dapp-details-category">
+        <source>Category</source>
+        <translation type="unfinished">Category</translation>
+    </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

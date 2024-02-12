@@ -115,7 +115,7 @@
     </message>
     <message id="general-restore-or-create-wallet">
         <source>Restore wallet or create a new one</source>
-        <translation>Restaurer un portefeuille existant ou créer un nouveau portefeuille</translation>
+        <translation>Restaurer un portefeuille existant ou en créer un nouveau</translation>
     </message>
     <message id="general-select-db">
         <source>Select the wallet database file</source>
@@ -367,7 +367,7 @@
     </message>
     <message id="status-updating">
         <source>synchronizing blockchain</source>
-        <translation type="unfinished">synchronizing blockchain</translation>
+        <translation>synchronisation en cours</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -438,8 +438,8 @@
         <translation>Date de modification</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Créez un nouveau portefeuille avec une phrase clé générée.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Créez un nouveau portefeuille avec une phrase mnémonique générée.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -447,19 +447,19 @@
     </message>
     <message id="start-create-new-securiry-note-1">
         <source>Do not let anyone see your seed phrase</source>
-        <translation>Ne laissez personne voir votre phrase clé</translation>
+        <translation>Ne laissez personne voir votre phrase mnémonique</translation>
     </message>
     <message id="start-create-new-securiry-note-2">
         <source>Never type your seed phrase into password managers or elsewhere</source>
-        <translation>Ne jamais sauvegarder votre phrase clé dans des gestionnaires de mots de passe ou ailleurs</translation>
+        <translation>Ne jamais sauvegarder votre phrase mnémonique dans des gestionnaires de mots de passe ou ailleurs</translation>
     </message>
     <message id="start-create-new-securiry-note-3">
         <source>Keep the copies of your seed phrase in a safe place</source>
-        <translation>Conservez les copies de votre phrase clé dans un endroit sûr</translation>
+        <translation>Conservez les copies de votre phrase mnémonique dans un endroit sûr</translation>
     </message>
     <message id="start-generate-seed-phrase-button">
         <source>Generate seed phrase</source>
-        <translation>Générer une phrase clé</translation>
+        <translation>Générer une phrase mnémonique</translation>
     </message>
     <message id="start-generate-seed-phrase-message">
         <source>Your seed phrase is the access key to all the cryptocurrencies in your wallet. Write down the phrase to keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
@@ -471,15 +471,15 @@
     </message>
     <message id="start-confirm-seed-phrase-message">
         <source>It is strictly recommended to write down the seed phrase on a paper. Storing it in a file makes it prone to cyber attacks and, therefore, less secure.</source>
-        <translation>Il est strictement recommandé d&apos;écrire la phrase clé sur une feuille de papier. Le stockage dans un fichier le rend vulnérable aux cyberattaques et, par conséquent, moins sécurisé.</translation>
+        <translation>Il est strictement recommandé d&apos;écrire la phrase mnémonique sur une feuille de papier. Le stockage dans un fichier le rend vulnérable aux cyberattaques et, par conséquent, moins sécurisé.</translation>
     </message>
     <message id="start-check-seed-phrase-message">
         <source>To ensure the seed phrase is written down, please fill-in the specific words below</source>
-        <translation>Pour vous assurer que la phrase-clé est bien écrite, veuillez compléter les mots ci-dessous</translation>
+        <translation>Pour vous assurer que la phrase mnémonique est bien écrite, veuillez compléter les mots ci-dessous</translation>
     </message>
     <message id="start-restore-message">
         <source>Type in or paste your seed phrase</source>
-        <translation>Saisir ou copier votre phrase clé</translation>
+        <translation>Saisir ou copier votre phrase mnémonique</translation>
     </message>
     <message id="start-create-pwd-message">
         <source>Create password to access your wallet</source>
@@ -551,7 +551,7 @@
     </message>
     <message id="wallet-model-incompatible-peer-error">
         <source>You are trying to connect to incompatible peer.</source>
-        <translation>Vous essayez de vous connecter à un noeud incompatible.</translation>
+        <translation>Vous essayez de vous connecter à un nœud incompatible.</translation>
     </message>
     <message id="wallet-model-connection-base-error">
         <source>Connection error</source>
@@ -563,11 +563,11 @@
     </message>
     <message id="wallet-model-connection-refused-error">
         <source>Connection to %1 node lost</source>
-        <translation>Connexion au noeud %1 perdue</translation>
+        <translation>Connexion au nœud %1 perdue</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
         <source>Node is unreachable</source>
-        <translation>Le noeud est inaccessible</translation>
+        <translation>Le nœud est inaccessible</translation>
     </message>
     <message id="wallet-model-connection-addr-in-use-error">
         <source>The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings.</source>
@@ -579,7 +579,7 @@
     </message>
     <message id="wallet-model-host-unresolved-error">
         <source>Incorrect node name or no Internet connection.</source>
-        <translation>Nom de noeud incorrect ou pas de connexion Internet.</translation>
+        <translation>Nom de nœud incorrect ou pas de connexion Internet.</translation>
     </message>
     <message id="wallet-model-undefined-error">
         <source>Unexpected error!</source>
@@ -724,7 +724,7 @@
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
+        <translation>Seul le solde du portefeuille (UTXO) peut être restauré, les informations de transaction et les adresses sont toujours privées et ne sont jamais conservées sur la blockchain.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
@@ -832,18 +832,6 @@
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>La vérification du mot de passe est nécessaire pour changer ce paramètre</translation>
     </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Je comprends</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Ne pas exécuter simultanément deux portefeuilles initiés à partir de la même phrase Seed</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Ne pas utiliser la même phrase de graines sur plusieurs appareils, votre solde et votre liste de transactions ne seront pas synchronisés.</translation>
-    </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
         <translation>La sous-transaction a échoué</translation>
@@ -940,7 +928,7 @@
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+        <translation>Accepter Offre</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -1332,13 +1320,14 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
         <translation>Il y a %1 transactions actives qui pourraient échouer si le portefeuille se déconnecte. Êtes-vous sûr de vouloir fermer le portefeuille maintenant&#x202f;?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Exporter l&apos;historique des transactions</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Exporter l&apos;historique des transactions</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
-        <translation>Supprimer l&apos;adresse</translation>
+        <translation>Supprimer adresse</translation>
     </message>
     <message id="addresses-delete-warning-text">
         <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
@@ -1660,7 +1649,7 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
     <message id="settings-local-node-run-checkbox">
         <source>Run integrated node</source>
         <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">Run integrated node</translation>
+        <translation>Utiliser un nœud intégré</translation>
     </message>
     <message id="general-invalid-port">
         <source>Port is mandatory</source>
@@ -1682,7 +1671,7 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Node Connection</source>
-        <translation type="unfinished">Beam Node Connection</translation>
+        <translation>Connexion de Noeud Beam</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -2113,7 +2102,7 @@ prendre beaucoup plus de temps pour compléter une transaction.</translation>
     </message>
     <message id="apps-title">
         <source>Applications</source>
-        <translation type="unfinished">Applications</translation>
+        <translation>Applications</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2138,14 +2127,6 @@ prendre beaucoup plus de temps pour compléter une transaction.</translation>
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation>Transaction de contrat</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Les échanges atomiques sont en BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>La fonctionnalité d&apos;échanges atomiques est en version beta pour le moment. Nous vous recommandons de ne pas envoyer de grandes quantités.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
@@ -2329,7 +2310,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="start-no-hwkeeper">
         <source>Hardware keykeeper is not initialized</source>
-        <translation>Le Key keeper matériel n&apos;est pas initialisé</translation>
+        <translation>Le Key keeper physique n&apos;est pas initialisé</translation>
     </message>
     <message id="start-trezor-error">
         <source>Failed to create trezor wallet</source>
@@ -2337,7 +2318,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="start-hw-not-connected">
         <source>Hardware wallet is not connected</source>
-        <translation>Le portefeuille matériel n&apos;est pas connecté</translation>
+        <translation>Le portefeuille physique n&apos;est pas connecté</translation>
     </message>
     <message id="general-locked">
         <source>Locked</source>
@@ -2419,10 +2400,6 @@ Mettez à jour vos paramètres et réessayez.</translation>
         <source>Transaction type</source>
         <translation>Type de transaction</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Se connecter au nœud intégré ou à son propre nœud pour permettre l&apos;anonymat maximum et les transactions hors ligne.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Montant demandé</translation>
@@ -2441,10 +2418,6 @@ Mettez à jour vos paramètres et réessayez.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>La transaction peut durer indéfiniment.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>L&apos;expéditeur aura le choix entre paiement en ligne et hors ligne.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2524,7 +2497,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="balance-change">
         <source>Change</source>
-        <translation>Change</translation>
+        <translation>Changer</translation>
     </message>
     <message id="balance-mp">
         <source>Maximum anonymity</source>
@@ -2620,7 +2593,7 @@ Mettez à jour vos paramètres et réessayez.</translation>
     </message>
     <message id="edit-addr-title">
         <source>Edit address</source>
-        <translation>Modifier l&apos;adresse</translation>
+        <translation>Modifier adresse</translation>
     </message>
     <message id="edit-addr-addr">
         <source>Address</source>
@@ -2877,10 +2850,6 @@ ne peuvent pas être annulées.</translation>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Garantit un set d&apos;anonymat maximum de jusqu&apos;à 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>Le destinataire doit se connecter dans les 12 heures qui suivent et vous devriez vous connecter dans les 2 heures qui suivent.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>La transaction peut durer jusqu&apos;à 72 heures.</translation>
@@ -2937,10 +2906,6 @@ ne peuvent pas être annulées.</translation>
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>Vous êtes actuellement connecté à un nœud qui ne prend en charge que les transactions en ligne.</translation>
     </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Pour compléter une transaction en ligne, vous devez vous connecter dans les 12 heures après l&apos;envoi des monnaies.</translation>
-    </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
@@ -2949,14 +2914,6 @@ ne peuvent pas être annulées.</translation>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Sélectionner l&apos;application à installer</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Voyez le portefeuille en action. Obtenez une petite quantité de Beams depuis la DApp de Faucet.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>obtenir des monnaies</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
@@ -3372,7 +3329,7 @@ peut durer indéfiniment)</translation>
     </message>
     <message id="dapps-store-save-changes">
         <source>save changes</source>
-        <translation>confirmer les modifications</translation>
+        <translation>enregistrer les modifications</translation>
     </message>
     <message id="dapps-store-publisher-page">
         <source>Publisher&apos;s page</source>
@@ -3457,8 +3414,7 @@ peut durer indéfiniment)</translation>
 If something is wrong, please cancel the uploading,
 change the information in your file and upload your file again.</source>
         <translation>Vérifiez les informations ci-dessous et sélectionnez &quot;publier&quot;.
-Si quelque chose ne va pas, veuillez annuler le téléchargement,
-modifier les informations dans votre fichier et télécharger votre fichier à nouveau.</translation>
+Si quelque chose ne va pas, veuillez annuler le téléchargement, modifier les informations dans votre fichier et le télécharger à nouveau.</translation>
     </message>
     <message id="dapps-store-dapp-release-date">
         <source>Release date:</source>
@@ -3596,7 +3552,7 @@ Veuillez vérifier le fichier et réessayer.</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Créer Offre</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3618,11 +3574,11 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
     </message>
     <message id="dapps-store-installing">
         <source>installing</source>
-        <translation>installation</translation>
+        <translation>installation en cours</translation>
     </message>
     <message id="dapps-store-updating">
         <source>updating</source>
-        <translation>en cours de mis à jour</translation>
+        <translation>mise à jour en cours</translation>
     </message>
     <message id="general-receive">
         <source>Receive</source>
@@ -3650,11 +3606,11 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+        <translation>Accepter Offre</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Créer Offre</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3847,27 +3803,27 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="status-logout">
         <source>Logout</source>
-        <translation type="unfinished">Logout</translation>
+        <translation>Déconnexion</translation>
     </message>
     <message id="start-account-label">
         <source>Account</source>
-        <translation type="unfinished">Account</translation>
+        <translation>Compte</translation>
     </message>
     <message id="start-new-account-label">
         <source>Account name</source>
-        <translation type="unfinished">Account name</translation>
+        <translation>Nom du compte</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
-        <translation type="unfinished">Account %1</translation>
+        <translation>Compte %1</translation>
     </message>
     <message id="start-account-password-label">
         <source>Account password</source>
-        <translation type="unfinished">Account password</translation>
+        <translation>Mot de passe du compte</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
-        <translation type="unfinished">An account with the same label already exists.</translation>
+        <translation>Un compte avec le même nom existe déjà.</translation>
     </message>
     <message id="wallet-swap-button">
         <source>Swap</source>
@@ -3875,15 +3831,15 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="apps-no-installed">
         <source>You don&apos;t have any applications installed yet</source>
-        <translation type="unfinished">You don&apos;t have any applications installed yet</translation>
+        <translation>Vous n&apos;avez pas encore d&apos;applications installées</translation>
     </message>
     <message id="apps-no-at-all">
         <source>No applications yet</source>
-        <translation type="unfinished">No applications yet</translation>
+        <translation>Pas encore d&apos;applications</translation>
     </message>
     <message id="apps-installed-tab">
         <source>Installed</source>
-        <translation type="unfinished">Installed</translation>
+        <translation>Installée</translation>
     </message>
     <message id="apps-all-tab">
         <source>All</source>
@@ -3904,7 +3860,43 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="general-add-account">
         <source>Add account</source>
-        <translation type="unfinished">Add account</translation>
+        <translation>Ajouter un compte</translation>
+    </message>
+    <message id="dapps-store-dapp-details">
+        <source>dapp details</source>
+        <translation type="unfinished">dapp details</translation>
+    </message>
+    <message id="dapp-store-app-details">
+        <source>Application details</source>
+        <translation type="unfinished">Application details</translation>
+    </message>
+    <message id="dapp-details-name">
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message id="dapp-details-description">
+        <source>Description</source>
+        <translation>Description</translation>
+    </message>
+    <message id="dapp-details-release-date">
+        <source>Release date</source>
+        <translation type="unfinished">Release date</translation>
+    </message>
+    <message id="dapp-details-publisher-key">
+        <source>Publisher key</source>
+        <translation type="unfinished">Publisher key</translation>
+    </message>
+    <message id="dapp-details-publisher-name">
+        <source>Publisher name</source>
+        <translation type="unfinished">Publisher name</translation>
+    </message>
+    <message id="dapp-details-category">
+        <source>Category</source>
+        <translation type="unfinished">Category</translation>
+    </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

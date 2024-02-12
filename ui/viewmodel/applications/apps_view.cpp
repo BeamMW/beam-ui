@@ -317,6 +317,8 @@ namespace beamui::applications
 {
     AppsViewModel::AppsViewModel()
         : m_walletModel(AppModel::getInstance().getWalletModel())
+        , m_appsModel(this)
+        , m_publisherAppsModel(this)
     {
         LOG_INFO() << "AppsViewModel created";
     }
@@ -345,6 +347,7 @@ namespace beamui::applications
         {
             _runApp = true;
             loadLocalApps();
+            loadDevApps();
         }
         else
         {
@@ -693,7 +696,7 @@ namespace beamui::applications
                             _knownPublishersWithDapps.insert(publisherKey);
 
                             // parse DApps only of the user enabled publishers + own
-                            if (_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
+                            if (_userUnwantedPublishersKeys.contains(publisherKey, Qt::CaseInsensitive) &&
                                 !(isPublisher() && publisherKey.compare(_publisherInfo[Publisher::kPubkey].toString(), Qt::CaseInsensitive) == 0))
                             {
                                 continue;
@@ -836,7 +839,7 @@ namespace beamui::applications
 
     void AppsViewModel::loadUserPublishers()
     {
-        _userPublishersKeys = AppSettings().getDappStoreUserUnwantedPublishers();
+        _userUnwantedPublishersKeys = AppSettings().getDappStoreUserUnwantedPublishers();
     }
 
     void AppsViewModel::loadMyPublisherInfo(bool hideTxIsSentDialog, bool showYouArePublsherDialog)
@@ -923,7 +926,7 @@ namespace beamui::applications
 
         // set the 'enabled' flag
         for (auto& publisher : userPublishers) {
-            bool enabled = !_userPublishersKeys.contains(publisher[Publisher::kPubkey].toString(), Qt::CaseInsensitive);
+            bool enabled = !_userUnwantedPublishersKeys.contains(publisher[Publisher::kPubkey].toString(), Qt::CaseInsensitive);
             publisher[Publisher::kEnabled] = enabled;
         }
 
@@ -1055,7 +1058,7 @@ namespace beamui::applications
         }
     }
 
-    QString AppsViewModel::addPublisherByKey(const QString& publisherKey)
+    QString AppsViewModel::addUnwantedPublisherByKey(const QString& publisherKey)
     {
         // find publisher in _publishers by publicKey
         const auto it = std::find_if(_publishers.cbegin(), _publishers.cend(),
@@ -1075,10 +1078,10 @@ namespace beamui::applications
             return {};
         }
 
-        if (!_userPublishersKeys.contains(publisherKey, Qt::CaseInsensitive))
+        if (!_userUnwantedPublishersKeys.contains(publisherKey, Qt::CaseInsensitive))
         {
-            _userPublishersKeys.append(publisherKey);
-            AppSettings().setDappStoreUserUnwantedPublishers(_userPublishersKeys);
+            _userUnwantedPublishersKeys.append(publisherKey);
+            AppSettings().setDappStoreUserUnwantedPublishers(_userUnwantedPublishersKeys);
 
             emit userPublishersChanged();
             loadAppsFromStore();
@@ -1087,11 +1090,11 @@ namespace beamui::applications
         return (*it)[Publisher::kName].toString();
     }
 
-    void AppsViewModel::removePublisherByKey(const QString& publisherKey)
+    void AppsViewModel::removeUnwantedPublisherByKey(const QString& publisherKey)
     {
-        if (_userPublishersKeys.removeOne(publisherKey))
+        if (_userUnwantedPublishersKeys.removeOne(publisherKey))
         {
-            AppSettings().setDappStoreUserUnwantedPublishers(_userPublishersKeys);
+            AppSettings().setDappStoreUserUnwantedPublishers(_userUnwantedPublishersKeys);
             
             emit userPublishersChanged();
             loadAppsFromStore();
@@ -1792,7 +1795,7 @@ namespace beamui::applications
         emit appsChanged();
     }
 
-    QList<QVariantMap> AppsViewModel::getPublisherDApps(const QString& publisherKey)
+    QAbstractItemModel* AppsViewModel::getPublisherDApps(const QString& publisherKey)
     {
         QList<QVariantMap> publisherApps;
         QList<QVariantMap> apps = getAppsImpl();
@@ -1808,8 +1811,8 @@ namespace beamui::applications
                 return appFieldsIt->toString() == publisherKey && app.contains(DApp::kIpfsId);
             }
         );
-
-        return publisherApps;
+        m_publisherAppsModel.reset(publisherApps.begin(), publisherApps.end());
+        return &m_publisherAppsModel;
     }
 
     QVariantMap AppsViewModel::getAppByGUID(const QString& guid)

@@ -44,9 +44,6 @@ public:
     bool isAllowedBeamMWLinks() const;
     void setAllowedBeamMWLinks(bool value);
 
-    bool showSwapBetaWarning();
-    void setShowSwapBetaWarning(bool value);
-
     #if defined(BEAM_HW_WALLET)
     std::string getTrezorWalletStorage() const;
     #endif
@@ -149,9 +146,6 @@ public:
     QString getAppsUrl() const;
     QDir getAccountDataDir() const;
     QDir getNetworkDataDir() const;
-
-    bool showFaucetPromo() const;
-    void setShowFacetPromo(bool value);
 
     bool hideSeedValidationPromo() const;
     void setHideSeedValidationPromo(bool value);

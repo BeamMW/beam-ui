@@ -120,6 +120,7 @@
         <file>applications/AppPanel.qml</file>
         <file>applications/AppsList.qml</file>
         <file>applications/AppInfoPanel.qml</file>
+        <file>applications/AppDetails.qml</file>
         <file>applications/BecomePublisher.qml</file>
         <file>applications/PublisherDetails.qml</file>
         <file>applications/PublishersList.qml</file>
@@ -169,6 +170,9 @@
         <file>assets/ltc-circle.svg</file>
         <file>assets/qtum-circle.svg</file>
         <file>assets/btc-circle.svg</file>
+        <file>assets/5-years.png</file>
+        <file>assets/5-years@2x.png</file>
+        <file>assets/5-years@3x.png</file>
         <file>assets/logo.svg</file>
         <file>assets/beamx-logo.svg</file>
         <file>assets/start-logo.svg</file>

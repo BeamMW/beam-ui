@@ -14,6 +14,7 @@ ColumnLayout {
     property bool isIPFSAvailable:           false
     property alias model:                    gridView.model
     property var   appActionsMenu:           undefined
+    property bool showActions:               true
 
     onAppsListChanged: function() {
         if (!!appsList && appsList.length > 0) {
@@ -82,6 +83,7 @@ ColumnLayout {
             icon.color:               Style.content_main
             icon.source:              "qrc:/assets/icon-settings.svg"
             onClicked:                if (!!appActionsMenu) appActionsMenu.popup(appActionButton)
+            visible:                  control.showActions
         }
         SearchBox {
             id: searchBox
@@ -168,14 +170,20 @@ ColumnLayout {
             onUninstall: function (app) {
                 //% "Are you sure you want to uninstall %1 DApp?"
                 confirmUninstall.text = qsTrId("apps-uninstall-confirm").arg(app.name);
-                confirmUninstall.accepted.connect(function () {
+                
+                function acceptHandler() {
+                    confirmUninstall.accepted.disconnect(acceptHandler)
                     control.uninstall(app);
-                    confirmUninstall.accepted.disconnect()
-                });
+                }
+                confirmUninstall.accepted.connect(acceptHandler);
                 confirmUninstall.open();
             }
             onRemove: function (app) {
                 control.remove(app)
+            }
+            onShowDetails: function (app) {
+                appDetails.app = app;
+                appDetails.open()
             }
             Component.onCompleted: {
                 control.stopProgress.connect(stopProgress);
@@ -196,5 +204,9 @@ ColumnLayout {
         okButtonIconSource:     "qrc:/assets/icon-delete.svg"
         okButtonColor:          Style.accent_fail
         cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
+    }
+
+    AppDetails {
+        id:         appDetails
     }
 }

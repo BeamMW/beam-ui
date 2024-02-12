@@ -163,7 +163,7 @@ CustomDialog {
                     Layout.fillWidth:   true
                     Layout.fillHeight:  true
                     radius:             10
-                    color:              Qt.rgba(26, 246, 214, 0.1)
+                    color:              Qt.rgba(26/255, 246/255, 214/255, 0.1)
 
                     Canvas {
                         anchors.fill: parent

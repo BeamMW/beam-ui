@@ -42,10 +42,8 @@ namespace
     const char* kLockTimeoutName = "lock_timeout";
     const char* kRequirePasswordToSpendMoney = "require_password_to_spend_money";
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
-    const char* kshowSwapBetaWarning = "show_swap_beta_warning";
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
-    const char* kShowFaucetPromo = "showFaucetPromo";
     const char* kHideSeedValidationPromo = "hideSeedValidationPromo";
     const char* kDevMode ="dev_mode";
 
@@ -336,18 +334,6 @@ bool WalletSettings::getDevMode() const
 {
     Lock lock(m_mutex);
     return m_accountSettings.m_data.value(kDevMode, false).toBool();
-}
-
-bool WalletSettings::showSwapBetaWarning()
-{
-    Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kshowSwapBetaWarning, true).toBool();
-}
-
-void WalletSettings::setShowSwapBetaWarning(bool value)
-{
-    Lock lock(m_mutex);
-    m_accountSettings.m_data.setValue(kshowSwapBetaWarning, value);
 }
 
 bool WalletSettings::getRunLocalNode() const
@@ -776,18 +762,6 @@ QString WalletSettings::getAppsUrl() const
     default:
         return "https://apps.beam.mw/appslist.json";
     }
-}
-
-bool WalletSettings::showFaucetPromo() const
-{
-    Lock lock(m_mutex);
-    return m_accountSettings.m_data.value(kShowFaucetPromo, true).toBool();
-}
-
-void WalletSettings::setShowFacetPromo(bool value)
-{
-    Lock lock(m_mutex);
-    m_accountSettings.m_data.setValue(kShowFaucetPromo, value);
 }
 
 bool WalletSettings::hideSeedValidationPromo() const

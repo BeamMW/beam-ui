@@ -199,7 +199,7 @@ ECC::uintBig NotificationItem::getID() const
 QDateTime NotificationItem::timeCreated() const
 {
     QDateTime datetime;
-    datetime.setTime_t(m_notification.m_createTime);
+    datetime.setSecsSinceEpoch(m_notification.m_createTime);
     return datetime;
 }
 
@@ -209,7 +209,7 @@ QDateTime NotificationItem::txTimeCreated() const
     beam::wallet::TxDescription desc(p);
 
     QDateTime datetime;
-    datetime.setTime_t(desc.m_createTime);
+    datetime.setSecsSinceEpoch(desc.m_createTime);
     return datetime;
 }
 

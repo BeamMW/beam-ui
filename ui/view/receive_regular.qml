@@ -70,26 +70,33 @@ ColumnLayout {
     }
 
     function copyAndClose() {
-        if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token);
-            viewModel.saveAddress();
-            control.onClosed()
-        }
+        copyAndSaveAddressAndClose(viewModel.token)
+    }
+
+    function copySBBSAndClose() {
+        copyAndSaveAddressAndClose(viewModel.sbbsAddress)
     }
 
     function copyAndSave() {
-         if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.token);
-            viewModel.saveAddress();
-         }
+         copyAndSaveAddress(viewModel.token);
     }
 
     function copySBBSAndSave() {
-         if (isValid()) {
-            BeamGlobals.copyToClipboard(viewModel.sbbsAddress);
-            viewModel.saveAddress();
-         }
+        copyAndSaveAddress(viewModel.sbbsAddress);
     }
+
+    function copyAndSaveAddress(address) {
+        if (isValid()) {
+           BeamGlobals.copyToClipboard(address);
+           viewModel.saveAddress();
+        }
+    }
+
+    function copyAndSaveAddressAndClose(address) {
+        copyAndSaveAddress(address)
+        control.onClosed()
+    }
+
     //% "Receive"
     property string title: qsTrId("wallet-receive-title")
 
@@ -338,8 +345,6 @@ ColumnLayout {
                                             Layout.topMargin:       10
                                             font.pixelSize:         14
                                             color:                  Style.content_disabled
-                                            /*% "SBBS Address
-                        (use for CEX withdrawals)"*/
                                             text:                   qsTrId("address-info-sbbs-address") + ":"
                                         }
                                         RowLayout {
@@ -392,22 +397,40 @@ A hardware wallet is not connected. Please, connect the wallet"
                     }
                 }
             }
-
-            CustomButton {
-                id: copyButton
+            Row {
                 Layout.topMargin:       30
                 Layout.alignment:       Qt.AlignHCenter
-                //% "copy and close"
-                text:                   qsTrId("general-copy-and-close")
-                Layout.preferredHeight: 38
-                palette.buttonText:     Style.content_opposite
-                icon.color:             Style.content_opposite
-                palette.button:         Style.accent_incoming
-                icon.source:            "qrc:/assets/icon-copy.svg"
-                enabled:                control.isValid()
+                spacing:    20
+                CustomButton {
+                    id: copyButton
+                    //% "copy and close"
+                    text:                   qsTrId("general-copy-and-close")
+                    Layout.preferredHeight: 38
+                    palette.buttonText:     Style.content_opposite
+                    icon.color:             Style.content_opposite
+                    palette.button:         Style.accent_incoming
+                    icon.source:            "qrc:/assets/icon-copy.svg"
+                    enabled:                control.isValid()
 
-                onClicked: function () {
-                    control.copyAndClose()
+                    onClicked: function () {
+                        control.copyAndClose()
+                    }
+                }
+                CustomButton {
+                    id: copySbbsButton
+                    //% "copy SBBS address and close"
+                    text:                   qsTrId("general-copy-SBBS-and-close")
+                    Layout.preferredHeight: 38
+                    palette.buttonText:     Style.content_opposite
+                    icon.color:             Style.content_opposite
+                    palette.button:         Style.accent_outgoing
+                    icon.source:            "qrc:/assets/icon-copy.svg"
+                    enabled:                control.isValid()
+                    visible:                viewModel.sbbsAddress.length > 0
+
+                    onClicked: function () {
+                        control.copySBBSAndClose()
+                    }
                 }
             }
 
@@ -443,26 +466,6 @@ A hardware wallet is not connected. Please, connect the wallet"
                 visible:               viewModel.isMaxPrivacy
                 //% "Min transaction fee is 0.01 BEAM."
                 text: qsTrId("wallet-receive-addr-message-min-fee")
-            }
-
-            SFText {
-                //% "For an online payment to complete, you should get online during the 12 hours after coins are sent."
-                property string stayOnline: qsTrId("wallet-receive-stay-online")
-                Layout.alignment:      Qt.AlignHCenter
-                Layout.preferredWidth: 400
-                Layout.topMargin:      15
-                Layout.bottomMargin:   50
-                font.pixelSize:        14
-                font.italic:           true
-                color:                 Style.content_disabled
-                wrapMode:              Text.WordWrap
-                horizontalAlignment:   Text.AlignHCenter
-                text: control.isShieldedSupported
-                    //% "Sender will be given a choice between online and offline payment."
-                    ? qsTrId("wallet-receive-text-online-time") + "\n" + stayOnline
-                    //% "Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions."
-                    : qsTrId("wallet-receive-max-privacy-unsupported") + "\n" + stayOnline
-                visible:               !viewModel.isMaxPrivacy
             }
         }  // ColumnLayout
     }  // ScrollView

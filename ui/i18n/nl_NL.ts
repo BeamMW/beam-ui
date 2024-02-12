@@ -438,8 +438,8 @@
         <translation>Datum van wijziging</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create new wallet with generating seed phrase.</source>
-        <translation>Maak een nieuwe wallet aan met het genereren van een herstelzin.</translation>
+        <source>Create a new wallet by generating a seed phrase.</source>
+        <translation type="unfinished">Maak een nieuwe wallet aan met het genereren van een herstelzin.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -831,18 +831,6 @@
         <source>Password verification is required to change that setting</source>
         <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
         <translation>Wachtwoord verificatie is vereist om deze instelling te wijzigen</translation>
-    </message>
-    <message id="restore-finish-alert-button">
-        <source>I understand</source>
-        <translation>Ik begrijp het</translation>
-    </message>
-    <message id="restore-finish-alert-title">
-        <source>Do not simultaneously run two wallets initiated from the same seed phrase</source>
-        <translation>Draai niet twee wallets die met dezelfde herstelzin geïnitieerd zijn tegelijkertijd</translation>
-    </message>
-    <message id="restore-finish-alert-message-line">
-        <source>Don’t use same seed phrase on several devices, your balance and transaction list won’t be synchronized.</source>
-        <translation>Gebruik dezelfde herstelzin niet op verschillende apparaten. Uw saldo- en transactielijst zal niet worden gesynchroniseerd.</translation>
     </message>
     <message id="tx-failure-subtx-failed">
         <source>Subtransaction has failed</source>
@@ -1333,9 +1321,10 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
         <translation>Er zijn %1 actieve transacties die mogelijk mislukken indien de wallet offline gaat. Weet u zeker dat u de wallet nu wilt sluiten?</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transactions history</source>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
-        <translation>Transactiegeschiedenis exporteren</translation>
+        <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+        <translation type="unfinished">Transactiegeschiedenis exporteren</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2052,7 +2041,7 @@ Uw versie is: %2. Controleer op updates.</translation>
         <source>%n hour(s)</source>
         <extracomment>time &quot;hour&quot; string</extracomment>
         <translation>
-            <numerusform>%n uur</numerusform>
+            <numerusform>%n uur(en)</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -2138,14 +2127,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
     <message id="tx-contract-default-comment">
         <source>Contract transaction</source>
         <translation>Contract transactie</translation>
-    </message>
-    <message id="swap-beta-title">
-        <source>Atomic Swaps are in BETA</source>
-        <translation>Atomic Swaps is in BETA</translation>
-    </message>
-    <message id="swap-beta-message">
-        <source>Atomic Swaps functionality is Beta at the moment. We recommend you not to send large amounts.</source>
-        <translation>Atomic Swap functie is op dit moment in bèta. We raden u aan geen grote bedragen te verzenden.</translation>
     </message>
     <message id="atomic-swap-cancel">
         <source>Cancel offer</source>
@@ -2419,10 +2400,6 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>Transaction type</source>
         <translation>Transactietype</translation>
     </message>
-    <message id="wallet-receive-max-privacy-unsupported">
-        <source>Connect to integrated or own node to enable receiving maximum anonymity set and offline transactions.</source>
-        <translation>Maak verbinding met geïntegreerde of eigen node om maximale anonimiteitsset en offline transacties te kunnen ontvangen.</translation>
-    </message>
     <message id="receive-request">
         <source>Requested amount</source>
         <translation>Gevraagd bedrag</translation>
@@ -2441,10 +2418,6 @@ Update uw instellingen en probeer opnieuw.</translation>
     <message id="wallet-receive-addr-message-mp-no-limit">
         <source>Transaction can last indefinitely.</source>
         <translation>Transactie kan onbepaalde tijd duren.</translation>
-    </message>
-    <message id="wallet-receive-text-online-time">
-        <source>Sender will be given a choice between online and offline payment.</source>
-        <translation>Afzender krijgt een keuze tussen online en offline betaling.</translation>
     </message>
     <message id="send-public-token">
         <source>Public offline address.</source>
@@ -2876,10 +2849,6 @@ cannot be canceled.</source>
         <source>Guarantees maximum anonymity set of up to 64K.</source>
         <translation>Garandeert maximale anonimiteit tot 64K.</translation>
     </message>
-    <message id="send-online-tip">
-        <source>The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>De ontvanger moet binnen de komende 12 uur online zijn en u moet binnen 2 uur daarna online zijn.</translation>
-    </message>
     <message id="send-mp-tip">
         <source>Transaction can last up to 72 hours.</source>
         <translation>Transactie kan maximaal 72 uur duren.</translation>
@@ -2936,10 +2905,6 @@ cannot be canceled.</source>
         <source>You are currently connected to node that supports only online transactions.</source>
         <translation>U bent momenteel verbonden met een node die alleen online transacties ondersteunt.</translation>
     </message>
-    <message id="wallet-receive-stay-online">
-        <source>For an online payment to complete, you should get online during the 12 hours after coins are sent.</source>
-        <translation>Om een online betaling te voltooien moet u binnen 12 uur nadat de munten zijn verzonden online zijn.</translation>
-    </message>
     <message id="settings-dapps-port">
         <source>Local server port</source>
         <extracomment>settings tab, daps section, local apps server port label</extracomment>
@@ -2948,14 +2913,6 @@ cannot be canceled.</source>
     <message id="applications-install-title">
         <source>Select application to install</source>
         <translation>Selecteer applicatie om te installeren</translation>
-    </message>
-    <message id="faucet-promo">
-        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
-        <translation>Bekijk de wallet in actie. Ontvang een kleine hoeveelheid Beams uit de Faucet DApp.</translation>
-    </message>
-    <message id="faucet-promo-get-coins">
-        <source>get coins</source>
-        <translation>ontvang coins</translation>
     </message>
     <message id="general-seed-phrase">
         <source>Seed phrase</source>
@@ -3078,7 +3035,7 @@ cannot be canceled.</source>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
         <translation>
-            <numerusform>%n uur(en)</numerusform>
+            <numerusform>%n uur</numerusform>
             <numerusform>%n uur</numerusform>
         </translation>
     </message>
@@ -3903,6 +3860,42 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     <message id="general-add-account">
         <source>Add account</source>
         <translation type="unfinished">Add account</translation>
+    </message>
+    <message id="dapps-store-dapp-details">
+        <source>dapp details</source>
+        <translation type="unfinished">dapp details</translation>
+    </message>
+    <message id="dapp-store-app-details">
+        <source>Application details</source>
+        <translation type="unfinished">Application details</translation>
+    </message>
+    <message id="dapp-details-name">
+        <source>Name</source>
+        <translation>Naam</translation>
+    </message>
+    <message id="dapp-details-description">
+        <source>Description</source>
+        <translation>Omschrijving</translation>
+    </message>
+    <message id="dapp-details-release-date">
+        <source>Release date</source>
+        <translation type="unfinished">Release date</translation>
+    </message>
+    <message id="dapp-details-publisher-key">
+        <source>Publisher key</source>
+        <translation type="unfinished">Publisher key</translation>
+    </message>
+    <message id="dapp-details-publisher-name">
+        <source>Publisher name</source>
+        <translation type="unfinished">Publisher name</translation>
+    </message>
+    <message id="dapp-details-category">
+        <source>Category</source>
+        <translation type="unfinished">Category</translation>
+    </message>
+    <message id="general-copy-SBBS-and-close">
+        <source>copy SBBS address and close</source>
+        <translation type="unfinished">copy SBBS address and close</translation>
     </message>
 </context>
 </TS>

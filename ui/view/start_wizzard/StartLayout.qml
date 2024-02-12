@@ -11,7 +11,8 @@ Rectangle {
     id: root
 
     color: Style.background_main
-    default property alias content: contentLayout.data
+    default property alias content:     contentLayout.data
+    property alias showNetworkSelector: networkSelector.visible
 
     Image {
         fillMode: Image.PreserveAspectCrop
@@ -36,40 +37,40 @@ Rectangle {
         spacing:        0
 
         LogoComponent {
-            Layout.alignment:   Qt.AlignHCenter
-            Layout.fillHeight:  true
+            Layout.alignment:       Qt.AlignHCenter
+            Layout.fillHeight:      true
             Layout.preferredHeight: 1
         }
 
         ColumnLayout {
-            id:                 contentLayout
-            Layout.fillWidth:   true
-            Layout.fillHeight:  true
-            Layout.alignment:   Qt.AlignHCenter
+            id:                     contentLayout
+            Layout.fillWidth:       true
+            Layout.fillHeight:      true
+            Layout.alignment:       Qt.AlignHCenter
             Layout.preferredHeight: 1
         }
     }
 
     VersionFooter {
-        id: version
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.rightMargin: 40
-        anchors.topMargin: 40
+        id:                     version
+        anchors.right:          parent.right
+        anchors.top:            parent.top
+        anchors.rightMargin:    40
+        anchors.topMargin:      40
     }
 
     CustomComboBox {
-        id: networkSelector
-        anchors.left: parent.left
-        anchors.top: parent.top
+        id:                 networkSelector
+        anchors.left:       parent.left
+        anchors.top:        parent.top
         anchors.leftMargin: 40
-        anchors.topMargin: 40
-        fontPixelSize: 14
-        enableScroll: false
-        textRole: "name"
+        anchors.topMargin:  40
+        fontPixelSize:      14
+        enableScroll:       false
+        textRole:           "name"
 
-        model: viewModel.networks
-        currentIndex: viewModel.currentNetworkIndex
+        model:              viewModel.networks
+        currentIndex:       viewModel.currentNetworkIndex
         onActivated: {
             viewModel.currentNetwork = currentText;
             Theme.update();

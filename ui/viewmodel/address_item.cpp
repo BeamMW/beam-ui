@@ -48,7 +48,7 @@ QString AddressItem::getIdentity() const
 QDateTime AddressItem::getExpirationDate() const
 {
     QDateTime datetime;
-    datetime.setTime_t(m_walletAddress.getExpirationTime());
+    datetime.setSecsSinceEpoch(m_walletAddress.getExpirationTime());
     
     return datetime;
 }
@@ -56,7 +56,7 @@ QDateTime AddressItem::getExpirationDate() const
 QDateTime AddressItem::getCreateDate() const
 {
     QDateTime datetime;
-    datetime.setTime_t(m_walletAddress.getCreateTime());
+    datetime.setSecsSinceEpoch(m_walletAddress.getCreateTime());
     
     return datetime;
 }

@@ -135,7 +135,7 @@ QString AssetSwapAcceptViewModel::getOfferCreated() const
         return kNoValue;
 
     QDateTime datetime;
-    datetime.setTime_t(_offerCreated);
+    datetime.setSecsSinceEpoch(_offerCreated);
     return datetime.toString(_locale.dateTimeFormat(QLocale::ShortFormat));
 }
 
@@ -145,7 +145,7 @@ QString AssetSwapAcceptViewModel::getOfferExpires() const
         return kNoValue;
 
     QDateTime datetime;
-    datetime.setTime_t(_offerExpires);
+    datetime.setSecsSinceEpoch(_offerExpires);
     return datetime.toString(_locale.dateTimeFormat(QLocale::ShortFormat));
 }
 

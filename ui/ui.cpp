@@ -125,19 +125,26 @@ namespace
         auto filePath = oldDataDir.filePath(fileName);
         if (!QFile::exists(filePath))
         {
+            // nothing to migrate
+            return;
+        }
+        auto newPath = newDataDir.absoluteFilePath(fileName);
+        if (QFile::exists(newPath))
+        {
+            // migrated already
             return;
         }
         if (removeOld)
         {
             LOG_INFO() << "*MIGRATION* Moving \"" << filePath.toStdString() << "\" ...";
-            if (!QFile::rename(filePath, newDataDir.absoluteFilePath(fileName)))
+            if (!QFile::rename(filePath, newPath))
             {
                 LOG_WARNING() << "*MIGRATION* Failed to move \"" << filePath.toStdString() << "\" ...";
             }
             return;
         }
         LOG_INFO() << "*MIGRATION* Copying \"" << filePath.toStdString() << "\" ...";
-        if (!QFile::copy(filePath, newDataDir.absoluteFilePath(fileName)))
+        if (!QFile::copy(filePath, newPath))
         {
             LOG_WARNING() << "*MIGRATION* Failed to copy \"" << filePath.toStdString() << "\" ...";
         }
@@ -200,7 +207,7 @@ int main (int argc, char* argv[])
 
     QApplication::setApplicationName(QMLGlobals::getAppName());
     QApplication::setWindowIcon(QIcon(Theme::iconPath()));
-    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
+    QDir appDataDir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
 
     try
     {

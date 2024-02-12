@@ -336,7 +336,7 @@ QString AssetsManager::getPaperUrl(beam::Asset::ID id)
 
     if (desc.isEmpty() && id == GetBeamXID())
     {
-        desc = "https://documentation.beam.mw/overview/beamx-tokenomics";
+        desc = "https://beam.mw/docs/ecosystem/overview/beamx-tokenomics";
     }
 
     return desc;

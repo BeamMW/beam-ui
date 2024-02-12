@@ -80,7 +80,6 @@ class SwapOffersViewModel : public QObject
     Q_PROPERTY(QAbstractItemModel*                       allOffers           READ getAllOffers           NOTIFY allOffersChanged)
     Q_PROPERTY(QAbstractItemModel*                       allOffersFitBalance READ getAllOffersFitBalance NOTIFY allOffersFitBalanceChanged)
     Q_PROPERTY(QString                                   beamAvailable       READ beamAvailable          NOTIFY beamAvailableChanged)
-    Q_PROPERTY(bool                                      showBetaWarning     READ showBetaWarning)
     Q_PROPERTY(bool                                      isOffersLoaded      READ isOffersLoaded         NOTIFY offersLoaded)
     Q_PROPERTY(int                                       activeTxCount       READ getActiveTxCount       NOTIFY allTransactionsChanged)
     Q_PROPERTY(QQmlListProperty<SwapCoinClientWrapper>   swapClientList      READ getSwapClients         CONSTANT)

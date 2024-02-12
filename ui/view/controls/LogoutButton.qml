@@ -78,8 +78,8 @@ Item {
         rightPadding:           0
         verticalPadding:        0
         icon.source:            main.accountPicture
-        icon.width:             32
-        icon.height:            32
+        icon.width:             40
+        icon.height:            40
         icon.color:             "transparent"
         onClicked: {
             accountContextMenu.popup(logoutButton, Qt.point(20, logoutButton.height + 6))

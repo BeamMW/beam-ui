@@ -737,12 +737,6 @@ QString SendViewModel::getTokenTip2() const
     using namespace beam::wallet;
     const auto type = GetAddressType(_token.toStdString());
 
-    if (type == TxAddressType::Regular || (type == TxAddressType::Offline && !_choiceOffline))
-    {
-        //% "The recipient must get online within the next 12 hours and you should get online within 2 hours afterwards."
-        return qtTrId("send-online-tip");
-    }
-
     if (type == TxAddressType::Offline && _choiceOffline)
     {
         //% "Make sure the address is correct as offline transactions\ncannot be canceled."

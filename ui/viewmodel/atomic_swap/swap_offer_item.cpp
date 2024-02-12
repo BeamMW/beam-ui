@@ -41,7 +41,7 @@ bool SwapOfferItem::operator==(const SwapOfferItem& other) const
 QDateTime SwapOfferItem::timeCreated() const
 {
     QDateTime datetime;
-    datetime.setTime_t(m_offer.timeCreated());
+    datetime.setSecsSinceEpoch(m_offer.timeCreated());
     return datetime;
 }
 

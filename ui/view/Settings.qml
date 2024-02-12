@@ -50,14 +50,25 @@ ColumnLayout {
             }
 
             SFText {
+                id: versionText
                 horizontalAlignment: Text.AlignRight
                 Layout.leftMargin: 20
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //: settings tab, version label
                 //% "v"
-                text: qsTrId("settings-version") + " " + viewModel.version
+                text: qsTrId("settings-version") + viewModel.version
+                
+                MouseArea {
+                anchors.fill:parent
+                acceptedButtons: Qt.LeftButton
+                cursorShape: Qt.PointingHandCursor
+                onClicked: function () {
+		                    BeamGlobals.copyToClipboard(versionText.text)
+                }
+           } 
             }
+                
         }
 
         PrimaryButton {
