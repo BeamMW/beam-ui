@@ -50,6 +50,7 @@ ColumnLayout {
             }
 
             SFText {
+                id: versionText
                 horizontalAlignment: Text.AlignRight
                 Layout.leftMargin: 20
                 font.pixelSize: 14
@@ -63,7 +64,7 @@ ColumnLayout {
                 acceptedButtons: Qt.LeftButton
                 cursorShape: Qt.PointingHandCursor
                 onClicked: function () {
-                    BeamGlobals.copyToClipboard(qsTrId("settings-version") + viewModel.version)
+		                    BeamGlobals.copyToClipboard(versionText.text)
                 }
            } 
             }
