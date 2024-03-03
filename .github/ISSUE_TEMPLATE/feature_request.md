@@ -1,3 +1,6 @@
+---
+name: feature request
+---
 **Feature title**
 Express the feature in a single concise sentence
 
