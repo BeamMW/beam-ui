@@ -302,11 +302,12 @@ CustomTableView {
             text: qsTrId("address-table-cm-delete")
             icon.source: "qrc:/assets/icon-delete.svg"
             onTriggered: {
-                if (viewModel.isWIDBusy(contextMenu.addressItem.walletID)) {
-                    return deleteAddressDialog.open()
-                }
-                viewModel.deleteAddress(contextMenu.addressItem.token)
-            }
+             var dialog = Qt.createComponent("DeleteAddress.qml").createObject(main, {
+                 viewModel: rootControl.parentModel,
+                 addressItem: contextMenu.addressItem,
+                 isShieldedSupported: rootControl.isShieldedSupported
+             })
+             dialog.open();
         }
     
         Component.onCompleted: {
@@ -328,4 +329,5 @@ CustomTableView {
         okButtonIconSource: "qrc:/assets/icon-done.svg"
         cancelButtonVisible: false
     }
+}
 }

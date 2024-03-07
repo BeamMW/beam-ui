@@ -1,0 +1,185 @@
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import Beam.Wallet 1.0
+import "../utils.js" as Utils
+import "."
+
+CustomDialog {
+    id:      control
+    modal:   true
+    x:       (parent.width - width) / 2
+    y:       (parent.height - height) / 2
+    padding: 30
+
+    property var  viewModel
+    property var  addressItem
+    property bool isShieldedSupported: true
+
+    property var     token:         addressItem.token
+    property var     walletID:      addressItem.walletID
+    property var     isOldAddr:     addressItem.token == addressItem.walletID
+    property string  comment:       addressItem.name
+    property var     expiration:    addressItem.expirationDate
+    property bool    expired:       expiration < new Date(Date.now())
+    property bool    neverExpires:  expiration.getTime() == (new Date(4294967295000)).getTime()
+    property bool    commentValid:  comment == "" || comment == addressItem.name || viewModel.commentValid(comment)
+    property bool    extended:      false
+
+    contentItem: Item { ColumnLayout {
+        spacing: 0
+
+        SFText {
+            Layout.alignment: Qt.AlignHCenter
+                                                //TODO: add //% "Delete address"
+            text: "Delete address"              //TODO: add qsTrId("delete-addr-title") with "Delete address"
+            color: Style.content_main
+            font.pixelSize: 18
+            font.weight:    Font.Bold
+        }
+
+        SFText {
+            Layout.topMargin: 20
+            //% "Address"
+            text: qsTrId("edit-addr-addr")
+            color: Style.content_main
+            font.pixelSize: 14
+            font.weight: Font.Bold
+        }
+
+        ScrollView {
+            Layout.maximumHeight:         200
+            Layout.topMargin:             10
+            Layout.preferredWidth:        control.isOldAddr ? 510: 582
+            clip:                         true
+            ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+
+            SFLabel {
+                id:                       addressID
+                width:                    control.isOldAddr ? 510: 582
+                copyMenuEnabled:          true
+                wrapMode:                 Text.Wrap
+                font.pixelSize:           14
+                color:                    Style.content_main
+                text:                     isShieldedSupported ? control.token : control.walletID
+
+                onCopyText: function () {
+                    BeamGlobals.copyToClipboard(text)
+                }
+            }
+        }
+
+        SFText {
+            //% "Expires on"
+            text: qsTrId("edit-addr-expires-label")
+
+            Layout.topMargin: 25
+            color:            Style.content_main
+            font.pixelSize:   14
+            font.styleName:   "Bold"
+            font.weight:      Font.Bold
+        }
+
+        SFText {
+            Layout.topMargin: 10
+
+            text: control.expired ?
+                //% "This address is already expired"
+                qsTrId("edit-addr-expired") :
+                //% "This address never expires"
+                Utils.formatDateTime(control.expiration, BeamGlobals.getLocaleName(), qsTrId("edit-addr-never-expires"))
+
+            color: Style.content_main
+            font.pixelSize: 14
+        }
+
+        SFText {
+            //% "There is an active transaction for this address, therefore it cannot be expired."
+            text: qsTrId("edit-addr-no-expire")
+            color:            Style.content_secondary
+            Layout.topMargin: 7
+            font.pixelSize:   13
+            font.italic:      true
+            visible:          viewModel.isWIDBusy(control.walletID)
+        }
+
+        SFText {
+            //% "Comment"
+            text: qsTrId("general-comment")
+
+            Layout.topMargin: 25
+            color:            Style.content_main
+            font.pixelSize:   14
+            font.styleName:   "Bold";
+            font.weight:      Font.Bold
+        }
+
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.preferredWidth: addressID.width
+            spacing: 0
+
+            SFTextInput {
+                id: addressName
+                Layout.preferredWidth: addressID.width
+
+                font.pixelSize:  14
+                font.italic :    !control.commentValid
+                backgroundColor: Style.content_main
+                color:           Style.content_main
+                text:            control.comment
+            }
+
+            Item {
+                Layout.fillWidth: true
+                SFText {
+                    //% "Address with the same comment already exists"
+                    text:    qsTrId("general-addr-comment-error")
+                    color:   Style.validator_error
+                    visible: !control.commentValid
+                    font.pixelSize: 12
+                }
+            }
+        }
+
+        Binding {
+            target: control
+            property: "comment"
+            value: addressName.text
+        }
+
+        RowLayout {
+            Layout.topMargin: 35
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 15
+
+            CustomButton {
+                Layout.preferredHeight: 40
+
+                //% "Cancel"
+                text:        qsTrId("general-cancel")
+                icon.source: "qrc:/assets/icon-cancel-white.svg"
+                icon.color:  Style.content_main
+
+                onClicked: {
+                    control.destroy()
+                }
+            }
+
+            PrimaryButton {
+                id: deleteButton
+                Layout.preferredHeight: 40
+                Layout.alignment: Qt.AlignHCenter
+
+                //% "Delete"
+                text: "Delete" //TODO: add qsTrId("delete-addr-delete-button")
+                icon.source: "qrc:/assets/icon-done.svg"
+                onClicked: {
+                viewModel.deleteAddress(contextMenu.addressItem.token)
+                control.destroy()
+                }
+            }
+        }
+    }}
+}
