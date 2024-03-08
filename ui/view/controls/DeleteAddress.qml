@@ -32,15 +32,6 @@ CustomDialog {
             font.weight:    Font.Bold
         }
 
-        SFText {
-            Layout.topMargin: 20
-            //% "Address"
-            text: qsTrId("edit-addr-addr")
-            color: Style.content_main
-            font.pixelSize: 14
-            font.weight: Font.Bold
-        }
-
         ScrollView {
             Layout.maximumHeight:         200
             Layout.topMargin:             10
@@ -52,6 +43,7 @@ CustomDialog {
             SFLabel {
                 id:                       addressID
                 width:                    control.isOldAddr ? 510: 582
+                horizontalAlignment:      Text.AlignHCenter
                 copyMenuEnabled:          true
                 wrapMode:                 Text.Wrap
                 font.pixelSize:           14

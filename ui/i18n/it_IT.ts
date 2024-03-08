@@ -3900,5 +3900,13 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>copy SBBS address and close</source>
         <translation>copia l&apos;indirizzo SBBS e chiudi</translation>
     </message>
+    <message id="faucet-promo">
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="faucet-promo-get-coins">
+        <source>get coins</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

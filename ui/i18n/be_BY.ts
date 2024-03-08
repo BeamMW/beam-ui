@@ -1325,7 +1325,7 @@ Please check the swap token and try again.</source>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
         <oldsource>Export transaction history</oldsource>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Экспарціраваць гісторыю транзакцый</translation>
     </message>
     <message id="addresses-delete-warning-title">
@@ -3910,6 +3910,14 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
         <translation>скапіяваць SBBS адрас і зачыніць</translation>
+    </message>
+    <message id="faucet-promo">
+        <source>See the wallet in action. Get a small amount of Beams from the Faucet DApp.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="faucet-promo-get-coins">
+        <source>get coins</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
