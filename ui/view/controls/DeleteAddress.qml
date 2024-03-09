@@ -25,9 +25,10 @@ CustomDialog {
 
         SFText {
             Layout.alignment: Qt.AlignHCenter
-                                                //TODO: add //% "Delete address"
-            text: "Delete address?"              //TODO: add qsTrId("delete-addr-title") with "Delete address"
-            color: Style.content_main
+
+            //% "Delete address"
+            text:           qsTrId("address-table-cm-delete")
+            color:          Style.content_main
             font.pixelSize: 18
             font.weight:    Font.Bold
         }
