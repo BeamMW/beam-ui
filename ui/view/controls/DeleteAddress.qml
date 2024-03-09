@@ -80,8 +80,8 @@ CustomDialog {
                 Layout.preferredHeight: 40
                 Layout.alignment: Qt.AlignHCenter
 
-                //% "Delete"
-                text: "Delete" //TODO: add qsTrId("delete-addr-delete-button")
+                //% "delete"
+                text: qsTrId("general-delete")
                 icon.source: "qrc:/assets/icon-done.svg"
                 onClicked: {
                 viewModel.deleteAddress(contextMenu.addressItem.token)
