@@ -1323,7 +1323,7 @@ Por favor, comprueba el token de intercambio e inténtalo de nuevo.</translation
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
         <oldsource>Export transaction history</oldsource>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Exportar historial de transacciones</translation>
     </message>
     <message id="addresses-delete-warning-title">

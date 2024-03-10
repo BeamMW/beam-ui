@@ -1326,7 +1326,7 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
         <oldsource>Export transaction history</oldsource>
-        <extracomment>transactions history screen, export button tooltip and open file dialog</extracomment>
+        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Exportovat historii transakcí</translation>
     </message>
     <message id="addresses-delete-warning-title">

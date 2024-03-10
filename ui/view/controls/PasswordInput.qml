@@ -98,20 +98,6 @@ T.TextField {
         modal: true
         dim: false
         Action {
-            //% "Copy"
-            text: qsTrId("general-copy")
-            icon.source: "qrc:/assets/icon-copy.svg"
-            enabled: control.enabled && (control.echoMode === TextInput.Normal) && control.text.length
-            onTriggered: {
-                if (control.selectedText.length > 0) {
-                    control.copy();
-                }
-                else {
-                    BeamGlobals.copyToClipboard(control.text)
-                }
-            }
-        }
-        Action {
             //% "Paste"
             text: qsTrId("general-paste")
             icon.source: "qrc:/assets/icon-edit.svg"
