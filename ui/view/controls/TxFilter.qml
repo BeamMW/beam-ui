@@ -18,7 +18,7 @@ Item  {
     signal clicked()
 
     property var activeColor:   Style.content_main
-    property var inactiveColor: Style.section
+    property var inactiveColor: Style.content_secondary
 
     SFText {
         id: text_label
