@@ -84,8 +84,8 @@ CustomDialog {
                 text: qsTrId("general-delete")
                 icon.source: "qrc:/assets/icon-done.svg"
                 onClicked: {
-                    viewModel.deleteAddress(contextMenu.addressItem.token)
-                    control.destroy()
+                viewModel.deleteAddress(contextMenu.addressItem.token)
+                control.destroy()
                 }
             }
         }

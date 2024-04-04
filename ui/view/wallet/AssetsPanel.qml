@@ -62,7 +62,7 @@ Control {
 
     readonly property real itemWidth: {
         var assetsCount = control.showSelected ? control.selectedIds.length : control.assetsCount
-        if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
+        if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         if (assetsCount == 1) return minimalItemWidth
         let colums = control.gridColumns
         return ((control.availableWidth + control.hSpacing) / colums) - control.hSpacing
@@ -86,7 +86,7 @@ Control {
     }
 
     readonly property real scrollContentHeight: {
-        return grid.implicitHeight + (control.showValidationPromo && (control.assetsCount > 1) ? 95 : 0)
+        return grid.implicitHeight + (control.showValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? 95 : 0)
     }
 
     readonly property real scrollViewHeight: {
