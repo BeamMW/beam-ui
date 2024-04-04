@@ -349,7 +349,12 @@ ColumnLayout {
                         text: qsTrId("address-table-cm-delete-contact")
                         icon.source: "qrc:/assets/icon-delete.svg"
                         onTriggered: {
-                            viewModel.deleteAddress(contextMenu.token);
+                            var dialog = Qt.createComponent("DeleteContact.qml").createObject(main, {
+                                viewModel: rootControl.parentModel,
+                                addressItem: contextMenu.addressItem,
+                                isShieldedSupported: rootControl.isShieldedSupported
+                            })
+                            dialog.open();
                         }
                     }
                 }
