@@ -246,6 +246,34 @@ Control {
                     }
                 }
             }
+
+            Row {
+                width:       scroll.width - 5
+                visible:     control.showValidationPromo && control.assetsCount > 1
+
+                SeedValidationPanel {
+                    canHideValidationPromo: viewModel.canHideValidationPromo
+                    itemHeight: 75
+                    onShowSeedValidationPromoOff: function() {
+                        viewModel.showSeedValidationPromo = false
+                    }
+                }
+            }
+        }
+    }
+
+    Row {
+        width:       parent.width / 2 - 5
+        leftPadding: itemWidth + 10
+        topPadding:  50
+        visible:     control.showValidationPromo && control.assetsCount == 1
+
+        SeedValidationPanel {
+            canHideValidationPromo: viewModel.canHideValidationPromo
+            itemHeight: 75
+            onShowSeedValidationPromoOff: function() {
+                viewModel.showSeedValidationPromo = false
+            }
         }
     }
 }
