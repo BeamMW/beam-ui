@@ -56,14 +56,13 @@ Control {
 
     property real   assetsFilterRowHeight: 40
 
-    property bool  showFaucetPromo: viewModel.showFaucetPromo
     property bool  showValidationPromo: viewModel.showSeedValidationPromo && !seedValidationHelper.isSeedValidated
 
     property int minimalItemWidth:  220
 
     readonly property real itemWidth: {
         var assetsCount = control.showSelected ? control.selectedIds.length : control.assetsCount
-        if (assetsCount == 1 && !showFaucetPromo) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
+        if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         if (assetsCount == 1) return minimalItemWidth
         let colums = control.gridColumns
         return ((control.availableWidth + control.hSpacing) / colums) - control.hSpacing
@@ -87,7 +86,7 @@ Control {
     }
 
     readonly property real scrollContentHeight: {
-        return grid.implicitHeight + (control.showValidationPromo && (showFaucetPromo || control.assetsCount > 1) ? 95 : 0)
+        return grid.implicitHeight + (control.showValidationPromo && (control.assetsCount > 1) ? 95 : 0)
     }
 
     readonly property real scrollViewHeight: {
@@ -247,68 +246,12 @@ Control {
                     }
                 }
 
-                Panel {
-                    width:   scroll.width - control.hSpacing - control.itemWidth
-                    height:  control.itemHeight
-                    visible: showFaucetPromo && control.assetsCount == 1
-
-                    content: RowLayout {
-                        spacing: 14
-                        SFText {
-                            Layout.topMargin: -12
-                            font.pixelSize:    14
-                            color:             Style.content_main
-                            //% "See the wallet in action. Get a small amount of Beams from the Faucet DApp."
-                            text: qsTrId("faucet-promo")
-                        }
-                        Item {
-                            Layout.preferredWidth: openFaucet.width + 6 + openFaucetIcon.width
-                            height: 16
-                            Layout.topMargin:   -12
-                            Layout.rightMargin: 10
-                            SvgImage {
-                                id: openFaucetIcon
-                                source: "qrc:/assets/icon-receive-skyblue.svg"
-                            }
-                            SFText {
-                                id: openFaucet
-                                x:  openFaucetIcon.width + 6
-                                font.pixelSize:      14
-                                font.styleName:      "Bold"
-                                font.weight:         Font.Bold
-                                color:               Style.accent_incoming
-                                //% "get coins"
-                                text:                qsTrId("faucet-promo-get-coins")
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                acceptedButtons: Qt.LeftButton
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: {
-                                    main.openFaucet();
-                                }
-                                hoverEnabled: true
-                            }
-                        }
-                        Item {
-                            Layout.fillWidth: true
-                        }
-
-                        CustomToolButton {
-                            Layout.topMargin:   -50
-                            Layout.rightMargin: -17
-                            icon.source: "qrc:/assets/icon-cancel-white.svg"
-                            onClicked: {
-                                viewModel.showFaucetPromo = false;
-                            }
-                        }
-                    }
-                }
+                
             }
 
             Row {
-                width:       scroll.width - (control.showFaucetPromo ? 0 : 5)
-                visible:     control.showValidationPromo && (control.showFaucetPromo || control.assetsCount > 1)
+                width:       scroll.width - 5
+                visible:     control.showValidationPromo && (control.assetsCount > 1)
 
                 SeedValidationPanel {
                     canHideValidationPromo: viewModel.canHideValidationPromo
@@ -316,7 +259,6 @@ Control {
                     onShowSeedValidationPromoOff: function() {
                         viewModel.showSeedValidationPromo = false
                     }
-                    showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
                 }
             }
         }
@@ -326,7 +268,7 @@ Control {
         width:       parent.width / 2 - 5
         leftPadding: itemWidth + 10
         topPadding:  50
-        visible:     control.showValidationPromo && !control.showFaucetPromo && control.assetsCount == 1
+        visible:     control.showValidationPromo && control.assetsCount == 1
 
         SeedValidationPanel {
             canHideValidationPromo: viewModel.canHideValidationPromo
@@ -334,7 +276,6 @@ Control {
             onShowSeedValidationPromoOff: function() {
                 viewModel.showSeedValidationPromo = false
             }
-            showFaucetPromo: control.showFaucetPromo || control.assetsCount > 1
         }
     }
 }
