@@ -776,7 +776,7 @@
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <translation>3. Don&apos;t vergessen die Logdateien anzuhängen.</translation>
+        <translation>3. Nicht vergessen die Logdateien anzuhängen.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
