@@ -251,7 +251,7 @@ Control {
 
             Row {
                 width:       scroll.width - 5
-                visible:     control.showValidationPromo && (control.assetsCount > 1)
+                visible:     control.showValidationPromo && control.assetsCount > 1
 
                 SeedValidationPanel {
                     canHideValidationPromo: viewModel.canHideValidationPromo
@@ -259,6 +259,7 @@ Control {
                     onShowSeedValidationPromoOff: function() {
                         viewModel.showSeedValidationPromo = false
                     }
+                    showFaucetPromo: control.assetsCount > 1
                 }
             }
         }
@@ -267,7 +268,7 @@ Control {
     Row {
         width:       parent.width / 2 - 5
         leftPadding: itemWidth + 10
-        topPadding:  50
+        topPadding:  assetsFilterRowHeight
         visible:     control.showValidationPromo && control.assetsCount == 1
 
         SeedValidationPanel {
@@ -276,6 +277,7 @@ Control {
             onShowSeedValidationPromoOff: function() {
                 viewModel.showSeedValidationPromo = false
             }
+            showFaucetPromo: false
         }
     }
 }
