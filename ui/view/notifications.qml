@@ -114,7 +114,7 @@ ColumnLayout {
                 //% "read"
                 text: qsTrId("notifications-read")
                 font.pixelSize: 12
-                color: Style.section
+                color: Style.content_secondary
                 font.capitalization: Font.AllUppercase
                 visible: parent.isRead
             }
