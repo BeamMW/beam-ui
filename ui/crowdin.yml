@@ -30,7 +30,7 @@ files: [
       "translation": "/i18n/%locale%.ts",
       "translation_replace": {
          "-": "_"
-      }
+      },
 
 
       #
