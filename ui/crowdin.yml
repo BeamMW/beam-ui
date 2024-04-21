@@ -29,6 +29,7 @@ files: [
       #
       "translation": "/i18n/%locale_with_underscore%.ts",
 
+
       #
       # Files or directories for ignore
       # e.g. ["/**/?.txt", "/**/[0-9].txt", "/**/*\?*.txt"]
