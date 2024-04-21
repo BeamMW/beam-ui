@@ -27,7 +27,7 @@ files: [
       # Where translations will be placed
       # e.g. "/resources/%two_letters_code%/%original_file_name%"
       #
-      "translation": ""/i18n/%two_letters_code%.ts",
+      "translation": "/i18n/%two_letters_code%.ts",
 
       #
       # Files or directories for ignore
