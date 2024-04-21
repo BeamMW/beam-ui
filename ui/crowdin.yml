@@ -34,7 +34,7 @@ files: [
       # Files or directories for ignore
       # e.g. ["/**/?.txt", "/**/[0-9].txt", "/**/*\?*.txt"]
       #
-      # "ignore": [],
+      "ignore": ["Localizable.strings", "strings.xml", "Website"],
 
       #
       # The dest allows you to specify a file name in Crowdin
