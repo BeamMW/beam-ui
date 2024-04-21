@@ -1,3461 +1,3461 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="zh-CN" sourcelanguage="en">
-<context>
-    <name></name>
+  <context>
+    <name/>
     <message id="general-beam">
-        <source>BEAM</source>
-        <translation>BEAM</translation>
+      <source>BEAM</source>
+      <translation>BEAM</translation>
     </message>
     <message id="general-groth">
-        <source>GROTH</source>
-        <translation>GROTH</translation>
+      <source>GROTH</source>
+      <translation>GROTH</translation>
     </message>
     <message id="general-comment">
-        <source>Comment</source>
-        <translation>备注</translation>
+      <source>Comment</source>
+      <translation>备注</translation>
     </message>
     <message id="general-actions">
-        <source>Actions</source>
-        <translation>执行</translation>
+      <source>Actions</source>
+      <translation>执行</translation>
     </message>
     <message id="general-address">
-        <source>Address</source>
-        <translation>地址</translation>
+      <source>Address</source>
+      <translation>地址</translation>
     </message>
     <message id="general-send">
-        <source>Send</source>
-        <translation>付款</translation>
+      <source>Send</source>
+      <translation>付款</translation>
     </message>
     <message id="general-amount">
-        <source>Amount</source>
-        <translation>数量</translation>
+      <source>Amount</source>
+      <translation>数量</translation>
     </message>
     <message id="general-status">
-        <source>Status</source>
-        <translation>状态</translation>
+      <source>Status</source>
+      <translation>状态</translation>
     </message>
     <message id="general-cancel">
-        <source>Cancel</source>
-        <translation>取消</translation>
+      <source>Cancel</source>
+      <translation>取消</translation>
     </message>
     <message id="general-delete">
-        <source>Delete</source>
-        <translation>删除</translation>
+      <source>Delete</source>
+      <translation>删除</translation>
     </message>
     <message id="general-rescan">
-        <source>Rescan</source>
-        <translation>重新扫描</translation>
+      <source>Rescan</source>
+      <translation>重新扫描</translation>
     </message>
     <message id="general-change-pwd">
-        <source>Change wallet password</source>
-        <translation>修改钱包密码</translation>
+      <source>Change wallet password</source>
+      <translation>修改钱包密码</translation>
     </message>
     <message id="general-pwd-empty-error">
-        <source>Please, enter password</source>
-        <translation>请输入密码</translation>
+      <source>Please, enter password</source>
+      <translation>请输入密码</translation>
     </message>
     <message id="general-pwd-invalid">
-        <source>Invalid password provided</source>
-        <translation>输入密码无效</translation>
+      <source>Invalid password provided</source>
+      <translation>输入密码无效</translation>
     </message>
     <message id="general-payment-proof">
-        <source>Payment proof</source>
-        <translation>付款证明</translation>
+      <source>Payment proof</source>
+      <translation>付款证明</translation>
     </message>
     <message id="general-close">
-        <source>Close</source>
-        <translation>关闭</translation>
+      <source>Close</source>
+      <translation>关闭</translation>
     </message>
     <message id="general-details">
-        <source>Details</source>
-        <translation>详情</translation>
+      <source>Details</source>
+      <translation>详情</translation>
     </message>
     <message id="general-kernel-id">
-        <source>Kernel ID</source>
-        <translation>内核ID</translation>
+      <source>Kernel ID</source>
+      <translation>内核ID</translation>
     </message>
     <message id="general-copy">
-        <source>Copy</source>
-        <translation>复制</translation>
+      <source>Copy</source>
+      <translation>复制</translation>
     </message>
     <message id="general-paste">
-        <source>Paste</source>
-        <translation>粘贴</translation>
+      <source>Paste</source>
+      <translation>粘贴</translation>
     </message>
     <message id="general-fee">
-        <source>Transaction fee</source>
-        <extracomment>UTXO type fee</extracomment>
-        <translation>交易费</translation>
+      <source>Transaction fee</source>
+      <extracomment>UTXO type fee</extracomment>
+      <translation>交易费</translation>
     </message>
     <message id="general-ok">
-        <source>Ok</source>
-        <translation>好</translation>
+      <source>Ok</source>
+      <translation>好</translation>
     </message>
     <message id="general-invalid-address">
-        <source>Invalid address</source>
-        <translation>无效地址</translation>
+      <source>Invalid address</source>
+      <translation>无效地址</translation>
     </message>
     <message id="general-change">
-        <source>Change</source>
-        <extracomment>UTXO type Change</extracomment>
-        <translation>找零</translation>
+      <source>Change</source>
+      <extracomment>UTXO type Change</extracomment>
+      <translation>找零</translation>
     </message>
     <message id="general-back">
-        <source>Back</source>
-        <translation>返回</translation>
+      <source>Back</source>
+      <translation>返回</translation>
     </message>
     <message id="general-next">
-        <source>Next</source>
-        <translation>下一步</translation>
+      <source>Next</source>
+      <translation>下一步</translation>
     </message>
     <message id="general-create-wallet">
-        <source>Create new wallet</source>
-        <translation>创建新钱包</translation>
+      <source>Create new wallet</source>
+      <translation>创建新钱包</translation>
     </message>
     <message id="general-restore-or-create-wallet">
-        <source>Restore wallet or create a new one</source>
-        <translation>恢复钱包或创建新钱包</translation>
+      <source>Restore wallet or create a new one</source>
+      <translation>恢复钱包或创建新钱包</translation>
     </message>
     <message id="general-select-db">
-        <source>Select the wallet database file</source>
-        <translation>选择钱包数据库文件</translation>
+      <source>Select the wallet database file</source>
+      <translation>选择钱包数据库文件</translation>
     </message>
     <message id="general-restore-wallet">
-        <source>Restore wallet</source>
-        <translation>恢复钱包</translation>
+      <source>Restore wallet</source>
+      <translation>恢复钱包</translation>
     </message>
     <message id="general-start-using">
-        <source>Start using your wallet</source>
-        <translation>开始使用钱包</translation>
+      <source>Start using your wallet</source>
+      <translation>开始使用钱包</translation>
     </message>
     <message id="general-open-wallet">
-        <source>Open my wallet</source>
-        <translation>打开钱包</translation>
+      <source>Open my wallet</source>
+      <translation>打开钱包</translation>
     </message>
     <message id="general-proceed">
-        <source>Proceed</source>
-        <extracomment>confirm password dialog, ok button</extracomment>
-        <translation>继续</translation>
+      <source>Proceed</source>
+      <extracomment>confirm password dialog, ok button</extracomment>
+      <translation>开始</translation>
     </message>
     <message id="general-show-in-folder">
-        <source>Show in folder</source>
-        <translation>在文件夹中显示</translation>
+      <source>Show in folder</source>
+      <translation>在文件夹中显示</translation>
     </message>
     <message id="general-addr-comment-error">
-        <source>Address with the same comment already exists</source>
-        <translation>有地址已使用了相同备注</translation>
+      <source>Address with the same comment already exists</source>
+      <translation>有地址已使用了相同备注</translation>
     </message>
     <message id="wallet-receive-button">
-        <source>Receive</source>
-        <translation>收款</translation>
+      <source>Receive</source>
+      <translation>收款</translation>
     </message>
     <message id="wallet-transactions-title">
-        <source>Transactions</source>
-        <translation>交易</translation>
+      <source>Transactions</source>
+      <translation>交易</translation>
     </message>
     <message id="wallet-txs-delete-message">
-        <source>The transaction will be deleted. This operation can not be undone</source>
-        <translation>交易将被删除
+      <source>The transaction will be deleted. This operation can not be undone</source>
+      <translation>交易将被删除
 此操作无法撤销</translation>
     </message>
     <message id="wallet-txs-status-pending">
-        <source>pending</source>
-        <translation>待确认</translation>
+      <source>pending</source>
+      <translation>待确认</translation>
     </message>
     <message id="wallet-txs-status-waiting-sender">
-        <source>waiting for sender</source>
-        <translation>等待付款方</translation>
+      <source>waiting for sender</source>
+      <translation>等待付款方</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver">
-        <source>waiting for receiver</source>
-        <translation>等待收款方</translation>
+      <source>waiting for receiver</source>
+      <translation>等待收款方</translation>
     </message>
     <message id="wallet-txs-status-completed">
-        <source>completed</source>
-        <translation>已完成</translation>
+      <source>completed</source>
+      <translation>已完成</translation>
     </message>
     <message id="wallet-txs-status-received">
-        <source>received</source>
-        <translation>已收</translation>
+      <source>received</source>
+      <translation>已收</translation>
     </message>
     <message id="wallet-txs-status-sent">
-        <source>sent</source>
-        <translation>已付</translation>
+      <source>sent</source>
+      <translation>已付</translation>
     </message>
     <message id="wallet-txs-status-cancelled">
-        <source>canceled</source>
-        <translation>已取消</translation>
+      <source>canceled</source>
+      <translation>已取消</translation>
     </message>
     <message id="wallet-txs-status-expired">
-        <source>expired</source>
-        <translation>已失效</translation>
+      <source>expired</source>
+      <translation>已失效</translation>
     </message>
     <message id="wallet-txs-status-failed">
-        <source>failed</source>
-        <translation>失败</translation>
+      <source>failed</source>
+      <translation>失败</translation>
     </message>
     <message id="wallet-txs-status-unknown">
-        <source>unknown</source>
-        <translation>未知</translation>
+      <source>unknown</source>
+      <translation>未知</translation>
     </message>
     <message id="addresses-tittle">
-        <source>Address Book</source>
-        <translation>地址簿</translation>
+      <source>Address Book</source>
+      <translation>地址簿</translation>
     </message>
     <message id="addresses-tab-active">
-        <source>My active addresses</source>
-        <translation>我的有效地址</translation>
+      <source>My active addresses</source>
+      <translation>有效地址</translation>
     </message>
     <message id="addresses-tab-expired">
-        <source>My expired addresses</source>
-        <translation>失效地址</translation>
+      <source>My expired addresses</source>
+      <translation>失效地址</translation>
     </message>
     <message id="addresses-tab-contacts">
-        <source>Contacts</source>
-        <translation>联系人</translation>
+      <source>Contacts</source>
+      <translation>联系人</translation>
     </message>
     <message id="address-table-cm-show-qr">
-        <source>Show QR code</source>
-        <extracomment>Entry in address table context menu to show QR</extracomment>
-        <translation>显示二维码</translation>
+      <source>Show QR code</source>
+      <extracomment>Entry in address table context menu to show QR</extracomment>
+      <translation>显示二维码</translation>
     </message>
     <message id="address-table-cm-edit">
-        <source>Edit address</source>
-        <extracomment>Entry in address table context menu to edit</extracomment>
-        <translation>编辑地址</translation>
+      <source>Edit address</source>
+      <extracomment>Entry in address table context menu to edit</extracomment>
+      <translation>编辑地址</translation>
     </message>
     <message id="address-table-cm-delete">
-        <source>Delete address</source>
-        <extracomment>Entry in address table context menu to delete</extracomment>
-        <translation>删除地址</translation>
+      <source>Delete address</source>
+      <extracomment>Entry in address table context menu to delete</extracomment>
+      <translation>删除地址</translation>
     </message>
     <message id="address-table-cm-delete-contact">
-        <source>Delete contact</source>
-        <translation>删除联系人</translation>
+      <source>Delete contact</source>
+      <translation>删除联系人</translation>
     </message>
     <message id="settings-version">
-        <source>v</source>
-        <extracomment>settings tab, version label</extracomment>
-        <translation>版本</translation>
+      <source>v</source>
+      <extracomment>settings tab, version label</extracomment>
+      <translation>版本</translation>
     </message>
     <message id="settings-local-node-port">
-        <source>Port</source>
-        <extracomment>settings tab, node section, port label</extracomment>
-        <translation>端口</translation>
+      <source>Port</source>
+      <extracomment>settings tab, node section, port label</extracomment>
+      <translation>端口</translation>
     </message>
     <message id="settings-rescan-confirmation-message">
-        <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
-        <extracomment>settings tab, confirm rescan dialog message</extracomment>
-        <translation>重新扫描将使交易和UTXO数据与区块链上的最新信息同步，此过程可能需要很长时间</translation>
+      <source>Rescan will sync transaction and UTXO data with the latest information on the blockchain. The process might take a long time.</source>
+      <extracomment>settings tab, confirm rescan dialog message</extracomment>
+      <translation>重新扫描将使交易和UTXO数据与区块链上的最新信息同步，此过程可能需要很长时间</translation>
     </message>
     <message id="settings-general-title">
-        <source>General</source>
-        <extracomment>settings tab, general section, title</extracomment>
-        <translation>概述</translation>
+      <source>General</source>
+      <extracomment>settings tab, general section, title</extracomment>
+      <translation>概述</translation>
     </message>
     <message id="settings-general-lock-screen">
-        <source>Lock screen</source>
-        <extracomment>settings tab, general section, lock screen label</extracomment>
-        <translation>锁定屏幕</translation>
+      <source>Lock screen</source>
+      <extracomment>settings tab, general section, lock screen label</extracomment>
+      <translation>锁定屏幕</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend">
-        <source>Ask password on every Send</source>
-        <extracomment>settings tab, general section, ask password to send label</extracomment>
-        <translation>每次发送时都询问密码</translation>
+      <source>Ask password on every Send</source>
+      <extracomment>settings tab, general section, ask password to send label</extracomment>
+      <translation>每次发送时都询问密码</translation>
     </message>
     <message id="settings-report-problem-title">
-        <source>Report a problem</source>
-        <translation>报告问题</translation>
+      <source>Report a problem</source>
+      <translation>报告问题</translation>
     </message>
     <message id="settings-wallet-location-label">
-        <source>Wallet folder location</source>
-        <extracomment>settings tab, general section, wallet data folder location label</extracomment>
-        <translation>钱包文件夹位置</translation>
+      <source>Wallet folder location</source>
+      <extracomment>settings tab, general section, wallet data folder location label</extracomment>
+      <translation>钱包文件夹位置</translation>
     </message>
     <message id="settings-apply">
-        <source>Apply changes</source>
-        <extracomment>settings tab, node section, apply button</extracomment>
-        <translation>应用更改</translation>
+      <source>Apply changes</source>
+      <extracomment>settings tab, node section, apply button</extracomment>
+      <translation>应用更改</translation>
     </message>
     <message id="logo-description">
-        <source>Confidential DeFi Platform and Cryptocurrency</source>
-        <translation>保密的DeFi平台和加密货币</translation>
+      <source>Confidential DeFi Platform and Cryptocurrency</source>
+      <translation>保密的DeFi平台和加密货币</translation>
     </message>
     <message id="change-pwd-old-empty">
-        <source>Please, enter old password</source>
-        <translation>请输入旧密码</translation>
+      <source>Please, enter old password</source>
+      <translation>请输入旧密码</translation>
     </message>
     <message id="change-pwd-new-empty">
-        <source>Please, enter new password</source>
-        <translation>请输入新密码</translation>
+      <source>Please, enter new password</source>
+      <translation>请输入新密码</translation>
     </message>
     <message id="change-pwd-confirm-empty">
-        <source>Please, confirm new password</source>
-        <translation>请确认新密码</translation>
+      <source>Please, confirm new password</source>
+      <translation>请确认新密码</translation>
     </message>
     <message id="change-pwd-new-same-as-old">
-        <source>New password cannot be the same as old</source>
-        <translation>新密码不能与旧密码相同</translation>
+      <source>New password cannot be the same as old</source>
+      <translation>新密码不能与旧密码相同</translation>
     </message>
     <message id="change-pwd-confirm-fail">
-        <source>New password doesn&apos;t match the confirm password</source>
-        <translation>两次密码不匹配</translation>
+      <source>New password doesn&apos;t match the confirm password</source>
+      <translation>两次密码不匹配</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>您输入的旧密码不正确</translation>
+      <source>The old password you have entered is incorrect</source>
+      <translation>您输入的旧密码不正确</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>请输入旧密码</translation>
+      <source>Enter old password</source>
+      <translation>请输入旧密码</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
-        <source>Enter new password</source>
-        <translation>请输入新密码</translation>
+      <source>Enter new password</source>
+      <translation>请输入新密码</translation>
     </message>
     <message id="change-pwd-confirm-pwd-label">
-        <source>Confirm new password</source>
-        <translation>请确认新密码</translation>
+      <source>Confirm new password</source>
+      <translation>请确认新密码</translation>
     </message>
     <message id="change-pwd-ok">
-        <source>Change password</source>
-        <translation>修改密码</translation>
+      <source>Change password</source>
+      <translation>修改密码</translation>
     </message>
     <message id="open-show-wallet-button">
-        <source>Show my wallet</source>
-        <translation>显示我的钱包</translation>
+      <source>Show my wallet</source>
+      <translation>显示我的钱包</translation>
     </message>
     <message id="payment-info-proof-verification">
-        <source>Payment proof verification</source>
-        <translation>付款证明验证</translation>
+      <source>Payment proof verification</source>
+      <translation>付款证明验证</translation>
     </message>
     <message id="payment-info-proof-label">
-        <source>Paste your payment proof here</source>
-        <translation>请在此处粘贴付款证明</translation>
+      <source>Paste your payment proof here</source>
+      <translation>请在此处粘贴付款证明</translation>
     </message>
     <message id="payment-info-proof-decode-fail">
-        <source>Cannot decode a proof, illegal sequence.</source>
-        <translation>无法解码证明
+      <source>Cannot decode a proof, illegal sequence.</source>
+      <translation>无法解码证明
 非法序列</translation>
     </message>
     <message id="payment-info-proof-code-label">
-        <source>Code</source>
-        <translation>代码</translation>
+      <source>Code</source>
+      <translation>代码</translation>
     </message>
     <message id="payment-info-proof-sender-label">
-        <source>Sender</source>
-        <translation>付款人</translation>
+      <source>Sender</source>
+      <translation>付款人</translation>
     </message>
     <message id="payment-info-proof-receiver-label">
-        <source>Receiver</source>
-        <translation>收款人</translation>
+      <source>Receiver</source>
+      <translation>收款人</translation>
     </message>
     <message id="payment-info-copy-details-button">
-        <source>Copy details</source>
-        <translation>复制详情</translation>
+      <source>Copy details</source>
+      <translation>复制详情</translation>
     </message>
     <message id="loading-try-again-button">
-        <source>Try again</source>
-        <translation>请再试一次</translation>
+      <source>Try again</source>
+      <translation>请再试一次</translation>
     </message>
     <message id="status-connecting">
-        <source>connecting</source>
-        <translation>正在连接</translation>
+      <source>connecting</source>
+      <translation>正在连接</translation>
     </message>
     <message id="status-online">
-        <source>online</source>
-        <translation>在线</translation>
+      <source>online</source>
+      <translation>在线</translation>
     </message>
     <message id="status-updating">
-        <source>synchronizing blockchain</source>
-        <translation type="unfinished">synchronizing blockchain</translation>
+      <source>synchronizing blockchain</source>
+      <translation type="unfinished">synchronizing blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
-        <source>Save wallet logs</source>
-        <extracomment>settings tab, report problem section, save logs button</extracomment>
-        <translation>保存钱包日志</translation>
+      <source>Save wallet logs</source>
+      <extracomment>settings tab, report problem section, save logs button</extracomment>
+      <translation>保存钱包日志</translation>
     </message>
     <message id="settings-rescan-confirmation-message-line-2">
-        <source>Are you sure?</source>
-        <extracomment>settings tab, confirm rescan dialog additional message</extracomment>
-        <translation>是否确定？</translation>
+      <source>Are you sure?</source>
+      <extracomment>settings tab, confirm rescan dialog additional message</extracomment>
+      <translation>是否确定？</translation>
     </message>
     <message id="settings-title">
-        <source>Settings</source>
-        <translation>设置</translation>
+      <source>Settings</source>
+      <translation>设置</translation>
     </message>
     <message id="cant-send-to-expired-message">
-        <source>Can&apos;t send to the expired address.</source>
-        <translation>不能向失效地址付款</translation>
+      <source>Can&apos;t send to the expired address.</source>
+      <translation>不能向失效地址付款</translation>
     </message>
     <message id="send-confirmation-title">
-        <source>Confirm transaction details</source>
-        <translation>确认交易详情</translation>
+      <source>Confirm transaction details</source>
+      <translation>确认交易详情</translation>
     </message>
     <message id="send-confirmation-recipient-label">
-        <source>Recipient</source>
-        <translation>收款人</translation>
+      <source>Recipient</source>
+      <translation>收款人</translation>
     </message>
     <message id="send-confirmation-pwd-require-message">
-        <source>To approve the transaction please enter your password</source>
-        <translation>要批准此交易，请输入您的密码</translation>
+      <source>To approve the transaction please enter your password</source>
+      <translation>要批准此交易，请输入您的密码</translation>
     </message>
     <message id="wallet-title">
-        <source>Wallet</source>
-        <translation>钱包</translation>
+      <source>Wallet</source>
+      <translation>钱包</translation>
     </message>
     <message id="start-restore-confirm-button">
-        <source>I agree</source>
-        <translation>我同意</translation>
+      <source>I agree</source>
+      <translation>我同意</translation>
     </message>
     <message id="start-restore-message-line">
-        <source>You are trying to restore an existing Beam Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</source>
-        <translation>您正在尝试还原已存在的Beam钱包
+      <source>You are trying to restore an existing Beam Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</source>
+      <translation>您正在尝试还原已存在的Beam钱包
 请注意：如果您在其他设备上使用该钱包，您的余额将是最新的，但交易历史和地址将分别保存在每个设备上</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>您的钱包将被迁移到当前版本</translation>
+      <source>Your wallet will be migrated to v </source>
+      <translation>您的钱包将被迁移到当前版本</translation>
     </message>
     <message id="start-migration-button">
-        <source>start auto migration</source>
-        <extracomment>migration screen, start auto migration button</extracomment>
-        <translation>开始自动迁移</translation>
+      <source>start auto migration</source>
+      <extracomment>migration screen, start auto migration button</extracomment>
+      <translation>开始自动迁移</translation>
     </message>
     <message id="start-select-db-thead-name">
-        <source>Name</source>
-        <translation>名称</translation>
+      <source>Name</source>
+      <translation>名称</translation>
     </message>
     <message id="start-select-db-thead-size">
-        <source>Size</source>
-        <translation>大小</translation>
+      <source>Size</source>
+      <translation>大小</translation>
     </message>
     <message id="kb-unit">
-        <source>kb</source>
-        <translation>KB</translation>
+      <source>kb</source>
+      <translation>KB</translation>
     </message>
     <message id="start-select-db-thead-modified">
-        <source>Date modified</source>
-        <extracomment>start screen, select db for migration, Date modified column title</extracomment>
-        <translation>修改日期</translation>
+      <source>Date modified</source>
+      <extracomment>start screen, select db for migration, Date modified column title</extracomment>
+      <translation>修改日期</translation>
     </message>
     <message id="start-create-new-message-line-1">
-        <source>Create a new wallet by generating a seed phrase.</source>
-        <translation type="unfinished">生成助记词来创建新钱包</translation>
+      <source>Create a new wallet by generating a seed phrase.</source>
+      <translation type="unfinished">Create a new wallet by generating a seed phrase.</translation>
     </message>
     <message id="start-create-new-message-line-2">
-        <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
-        <translation>如果您丢失了设备或密码，您可以使用该助记词来回复您的钱包！</translation>
+      <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
+      <translation>如果您丢失了设备或密码，您可以使用该助记词来回复您的钱包！</translation>
     </message>
     <message id="start-create-new-securiry-note-1">
-        <source>Do not let anyone see your seed phrase</source>
-        <translation>不要向任何人泄漏您的助记词</translation>
+      <source>Do not let anyone see your seed phrase</source>
+      <translation>不要向任何人泄漏您的助记词</translation>
     </message>
     <message id="start-create-new-securiry-note-2">
-        <source>Never type your seed phrase into password managers or elsewhere</source>
-        <translation>永远不要使用密码管理器或其他电子方式保存助记词</translation>
+      <source>Never type your seed phrase into password managers or elsewhere</source>
+      <translation>永远不要使用密码管理器或其他电子方式保存助记词</translation>
     </message>
     <message id="start-create-new-securiry-note-3">
-        <source>Keep the copies of your seed phrase in a safe place</source>
-        <translation>请将助记词誊本保存在安全的地方</translation>
+      <source>Keep the copies of your seed phrase in a safe place</source>
+      <translation>请将助记词誊本保存在安全的地方</translation>
     </message>
     <message id="start-generate-seed-phrase-button">
-        <source>Generate seed phrase</source>
-        <translation>生成助记词</translation>
+      <source>Generate seed phrase</source>
+      <translation>生成助记词</translation>
     </message>
     <message id="start-generate-seed-phrase-message">
-        <source>Your seed phrase is the access key to all the cryptocurrencies in your wallet. Write down the phrase to keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
-        <translation>助记词是访问您账户资金的密钥
+      <source>Your seed phrase is the access key to all the cryptocurrencies in your wallet. Write down the phrase to keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
+      <translation>助记词是访问您账户资金的密钥
 必须打印或誊写助记词，并将其妥善保存在保险箱中
 如果您遗失或忘记助记词，您将无法找回或恢复钱包中的资金</translation>
     </message>
     <message id="start-confirm-seed-phrase-button">
-        <source>I understand</source>
-        <translation>我理解</translation>
+      <source>I understand</source>
+      <translation>我理解</translation>
     </message>
     <message id="start-confirm-seed-phrase-message">
-        <source>It is strictly recommended to write down the seed phrase on a paper. Storing it in a file makes it prone to cyber attacks and, therefore, less secure.</source>
-        <translation>强烈建议将助记词写在纸张上保存
+      <source>It is strictly recommended to write down the seed phrase on a paper. Storing it in a file makes it prone to cyber attacks and, therefore, less secure.</source>
+      <translation>强烈建议将助记词写在纸张上保存
 使用电脑文件或照片等电子化保存非常容易因设备安全原因而泄露助记词，非常不安全</translation>
     </message>
     <message id="start-check-seed-phrase-message">
-        <source>To ensure the seed phrase is written down, please fill-in the specific words below</source>
-        <translation>为验证助记词已被您被正确誊写并保存，请根据下面数字提示输入相应的助记词</translation>
+      <source>To ensure the seed phrase is written down, please fill-in the specific words below</source>
+      <translation>为验证助记词已被您被正确誊写并保存，请根据下面数字提示输入相应的助记词</translation>
     </message>
     <message id="start-restore-message">
-        <source>Type in or paste your seed phrase</source>
-        <translation>请输入或粘贴助记词</translation>
+      <source>Type in or paste your seed phrase</source>
+      <translation>请输入或粘贴助记词</translation>
     </message>
     <message id="start-create-pwd-message">
-        <source>Create password to access your wallet</source>
-        <translation>创建密码以访问您的钱包</translation>
+      <source>Create password to access your wallet</source>
+      <translation>创建密码以访问您的钱包</translation>
     </message>
     <message id="start-pwd-label">
-        <source>Password</source>
-        <translation>密码</translation>
+      <source>Password</source>
+      <translation>密码</translation>
     </message>
     <message id="start-create-pwd-confirm-label">
-        <source>Password confirmation</source>
-        <translation>确认密码</translation>
+      <source>Password confirmation</source>
+      <translation>确认密码</translation>
     </message>
     <message id="start-create-pwd-not-match-error">
-        <source>Passwords do not match</source>
-        <translation>密码不正确</translation>
+      <source>Passwords do not match</source>
+      <translation>密码不正确</translation>
     </message>
     <message id="start-node-title">
-        <source>Setup node connectivity</source>
-        <translation>设置节点连接</translation>
+      <source>Setup node connectivity</source>
+      <translation>设置节点连接</translation>
     </message>
     <message id="start-node-integrated-radio">
-        <source>Run integrated node (recommended)</source>
-        <translation>运行集成节点(推荐)</translation>
+      <source>Run integrated node (recommended)</source>
+      <translation>运行集成节点(推荐)</translation>
     </message>
     <message id="start-node-port-label">
-        <source>Enter port to listen</source>
-        <translation>请输入监听端口号</translation>
+      <source>Enter port to listen</source>
+      <translation>请输入监听端口号</translation>
     </message>
     <message id="start-node-peer-label">
-        <source>Peer</source>
-        <translation>节点</translation>
+      <source>Peer</source>
+      <translation>节点</translation>
     </message>
     <message id="start-node-random-radio">
-        <source>Connect to random remote node</source>
-        <translation>连接到随机远程节点</translation>
+      <source>Connect to random remote node</source>
+      <translation>连接到随机远程节点</translation>
     </message>
     <message id="start-node-remote-radio">
-        <source>Connect to specific remote node</source>
-        <translation>连接到指定远程节点</translation>
+      <source>Connect to specific remote node</source>
+      <translation>连接到指定远程节点</translation>
     </message>
     <message id="start-node-port-empty-error">
-        <source>Please specify port</source>
-        <translation>请输入端口号</translation>
+      <source>Please specify port</source>
+      <translation>请输入端口号</translation>
     </message>
     <message id="start-node-port-value-error">
-        <source>Port must be a number between 1 and 65535</source>
-        <translation>端口号必须是1到65535之间的数字</translation>
+      <source>Port must be a number between 1 and 65535</source>
+      <translation>端口号必须是1到65535之间的数字</translation>
     </message>
     <message id="start-node-peer-empty-error">
-        <source>Please specify peer</source>
-        <translation>请指定节点</translation>
+      <source>Please specify peer</source>
+      <translation>请指定节点</translation>
     </message>
     <message id="start-node-peer-error">
-        <source>Incorrect address</source>
-        <translation>地址不正确</translation>
+      <source>Incorrect address</source>
+      <translation>地址不正确</translation>
     </message>
     <message id="start-node-empty-error">
-        <source>Please specify address of the remote node</source>
-        <translation>请输入远程节点的地址</translation>
+      <source>Please specify address of the remote node</source>
+      <translation>请输入远程节点的地址</translation>
     </message>
     <message id="appmodel-failed-start-node">
-        <source>Failed to start node. Please save wallet logs and contact support.</source>
-        <translation>无法启动节点，请保存钱包日志并联系支持人员。</translation>
+      <source>Failed to start node. Please save wallet logs and contact support.</source>
+      <translation>无法启动节点，请保存钱包日志并联系支持人员。</translation>
     </message>
     <message id="wallet-model-node-protocol-error">
-        <source>Node protocol error!</source>
-        <translation>节点协议错误！</translation>
+      <source>Node protocol error!</source>
+      <translation>节点协议错误！</translation>
     </message>
     <message id="wallet-model-incompatible-peer-error">
-        <source>You are trying to connect to incompatible peer.</source>
-        <translation>您正在试图连接到不兼容的节点</translation>
+      <source>You are trying to connect to incompatible peer.</source>
+      <translation>您正在试图连接到不兼容的节点</translation>
     </message>
     <message id="wallet-model-connection-base-error">
-        <source>Connection error</source>
-        <translation>连接错误</translation>
+      <source>Connection error</source>
+      <translation>连接错误</translation>
     </message>
     <message id="wallet-model-connection-time-out-error">
-        <source>Connection timed out</source>
-        <translation>连接超时</translation>
+      <source>Connection timed out</source>
+      <translation>连接超时</translation>
     </message>
     <message id="wallet-model-connection-refused-error">
-        <source>Connection to %1 node lost</source>
-        <translation>与 %1 节点的连接丢失</translation>
+      <source>Connection to %1 node lost</source>
+      <translation>与 %1 节点的连接丢失</translation>
     </message>
     <message id="wallet-model-connection-host-unreach-error">
-        <source>Node is unreachable</source>
-        <translation>节点无法被连接</translation>
+      <source>Node is unreachable</source>
+      <translation>节点无法被连接</translation>
     </message>
     <message id="wallet-model-connection-addr-in-use-error">
-        <source>The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings.</source>
-        <translation>端口号%1已被占用
+      <source>The port %1 is already in use. Check if a wallet is already running on this machine or change the port settings.</source>
+      <translation>端口号%1已被占用
 请检查本机后台是否已启动了钱包程序或更改端口设置</translation>
     </message>
     <message id="wallet-model-time-sync-error">
-        <source>System time not synchronized</source>
-        <translation>系统时间不同步</translation>
+      <source>System time not synchronized</source>
+      <translation>系统时间不同步</translation>
     </message>
     <message id="wallet-model-host-unresolved-error">
-        <source>Incorrect node name or no Internet connection.</source>
-        <translation>节点名称不正确或无网络连接</translation>
+      <source>Incorrect node name or no Internet connection.</source>
+      <translation>节点名称不正确或无网络连接</translation>
     </message>
     <message id="wallet-model-undefined-error">
-        <source>Unexpected error!</source>
-        <translation>异常错误！</translation>
+      <source>Unexpected error!</source>
+      <translation>异常错误！</translation>
     </message>
     <message id="wallet-model-data-location-error">
-        <source>Failed to start wallet. Please check your wallet data location</source>
-        <translation>启动钱包失败
+      <source>Failed to start wallet. Please check your wallet data location</source>
+      <translation>启动钱包失败
 请检查您的钱包数据文件位置</translation>
     </message>
     <message id="loading-view-download-blocks">
-        <source>Syncing with the blockchain: </source>
-        <translation>同步区块链中：</translation>
+      <source>Syncing with the blockchain: </source>
+      <translation>同步区块链中：</translation>
     </message>
     <message id="loading-view-protocol-error">
-        <source>Incompatible peer</source>
-        <translation>节点不兼容</translation>
+      <source>Incompatible peer</source>
+      <translation>节点不兼容</translation>
     </message>
     <message id="loading-view-connection-error">
-        <source>Connection error</source>
-        <translation>连接错误</translation>
+      <source>Connection error</source>
+      <translation>连接错误</translation>
     </message>
     <message id="start-view-db-file-filter">
-        <source>SQLite database file (*.db)</source>
-        <translation>SQLite数据库文件(*.db)</translation>
+      <source>SQLite database file (*.db)</source>
+      <translation>SQLite数据库文件(*.db)</translation>
     </message>
     <message id="status-bar-view-not-connected">
-        <source>Connection to %1 nodes lost</source>
-        <translation>与 %1 节点的连接丢失</translation>
+      <source>Connection to %1 nodes lost</source>
+      <translation>与 %1 节点的连接丢失</translation>
     </message>
     <message id="tx-failure-undefined">
-        <source>Unexpected reason, please send wallet logs to Beam support</source>
-        <translation>异常原因，请将钱包日志发送到Beam技术小组</translation>
+      <source>Unexpected reason, please send wallet logs to Beam support</source>
+      <translation>异常原因，请将钱包日志发送到Beam技术小组</translation>
     </message>
     <message id="tx-failure-cancelled">
-        <source>Transaction cancelled</source>
-        <translation>交易已取消</translation>
+      <source>Transaction cancelled</source>
+      <translation>交易已取消</translation>
     </message>
     <message id="tx-failure-receiver-signature-invalid">
-        <source>Receiver signature in not valid, please send wallet logs to Beam support</source>
-        <translation>收款人签名无效，请将钱包日志发送到Beam技术小组</translation>
+      <source>Receiver signature in not valid, please send wallet logs to Beam support</source>
+      <translation>收款人签名无效，请将钱包日志发送到Beam技术小组</translation>
     </message>
     <message id="tx-failure-not-registered-in-blockchain">
-        <source>Failed to register transaction with the blockchain, see node logs for details</source>
-        <translation>向区块链注册交易失败，请参阅节点日志了解详细信息</translation>
+      <source>Failed to register transaction with the blockchain, see node logs for details</source>
+      <translation>向区块链注册交易失败，请参阅节点日志了解详细信息</translation>
     </message>
     <message id="tx-failure-not-valid">
-        <source>Transaction is not valid, please send wallet logs to Beam support</source>
-        <translation>交易无效，请将钱包日志发送到Beam技术小组</translation>
+      <source>Transaction is not valid, please send wallet logs to Beam support</source>
+      <translation>交易无效，请将钱包日志发送到Beam技术小组</translation>
     </message>
     <message id="tx-failure-kernel-invalid">
-        <source>Invalid kernel proof provided</source>
-        <translation>提供的内核证明无效</translation>
+      <source>Invalid kernel proof provided</source>
+      <translation>提供的内核证明无效</translation>
     </message>
     <message id="tx-failure-parameters-not-sended">
-        <source>Failed to send Transaction parameters</source>
-        <translation>发送交易参数失败</translation>
+      <source>Failed to send Transaction parameters</source>
+      <translation>发送交易参数失败</translation>
     </message>
     <message id="tx-failure-no-inputs">
-        <source>Not enough inputs to process the transaction</source>
-        <translation>没有足够的输入处理交易</translation>
+      <source>Not enough inputs to process the transaction</source>
+      <translation>没有足够的输入处理交易</translation>
     </message>
     <message id="tx-failure-addr-expired">
-        <source>Address is expired</source>
-        <translation>地址已失效</translation>
+      <source>Address is expired</source>
+      <translation>地址已失效</translation>
     </message>
     <message id="tx-failure-parameters-not-readed">
-        <source>Failed to get transaction parameters</source>
-        <translation>获取交易参数失败</translation>
+      <source>Failed to get transaction parameters</source>
+      <translation>获取交易参数失败</translation>
     </message>
     <message id="tx-failure-time-out">
-        <source>Transaction timed out</source>
-        <translation>交易超时</translation>
+      <source>Transaction timed out</source>
+      <translation>交易超时</translation>
     </message>
     <message id="tx-failure-not-signed-by-receiver">
-        <source>Payment not signed by the receiver, please send wallet logs to Beam support</source>
-        <translation>付款未被收款人签名，请发送钱包日志至Beam技术小组</translation>
+      <source>Payment not signed by the receiver, please send wallet logs to Beam support</source>
+      <translation>付款未被收款人签名，请发送钱包日志至Beam技术小组</translation>
     </message>
     <message id="tx-failure-max-height-to-high">
-        <source>Kernel maximum height is too high</source>
-        <translation>内核最大高度太高</translation>
+      <source>Kernel maximum height is too high</source>
+      <translation>内核最大高度太高</translation>
     </message>
     <message id="tx-failure-invalid-state">
-        <source>Transaction has invalid state</source>
-        <translation>交易状态无效</translation>
+      <source>Transaction has invalid state</source>
+      <translation>交易状态无效</translation>
     </message>
     <message id="utxo-utxo">
-        <source>UTXO</source>
-        <translation>UTXO</translation>
+      <source>UTXO</source>
+      <translation>UTXO</translation>
     </message>
     <message id="settings-general-lock-screen-never">
-        <source>Never</source>
-        <translation>永不</translation>
+      <source>Never</source>
+      <translation>永不</translation>
     </message>
     <message id="settings-general-lock-screen-1m">
-        <source>1 minute</source>
-        <translation>1分钟</translation>
+      <source>1 minute</source>
+      <translation>1分钟</translation>
     </message>
     <message id="settings-general-lock-screen-5m">
-        <source>5 minutes</source>
-        <translation>5分钟</translation>
+      <source>5 minutes</source>
+      <translation>5分钟</translation>
     </message>
     <message id="settings-general-lock-screen-15m">
-        <source>15 minutes</source>
-        <translation>15分钟</translation>
+      <source>15 minutes</source>
+      <translation>15分钟</translation>
     </message>
     <message id="settings-general-lock-screen-30m">
-        <source>30 minutes</source>
-        <translation>30分钟</translation>
+      <source>30 minutes</source>
+      <translation>30分钟</translation>
     </message>
     <message id="settings-general-lock-screen-1h">
-        <source>1 hour</source>
-        <translation>1小时</translation>
+      <source>1 hour</source>
+      <translation>1小时</translation>
     </message>
     <message id="appmodel-failed-time-not-synced">
-        <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
-        <translation>启动集成节点失败：您的设备时区设置未同步，请修正时区设置后重启钱包</translation>
+      <source>Failed to start the integrated node: the timezone settings of your machine are out of sync. Please fix them and restart the wallet.</source>
+      <translation>启动集成节点失败：您的设备时区设置未同步，请修正时区设置后重启钱包</translation>
     </message>
     <message id="settings-general-language">
-        <source>Language</source>
-        <extracomment>settings tab, general section, language label</extracomment>
-        <translation>语言</translation>
+      <source>Language</source>
+      <extracomment>settings tab, general section, language label</extracomment>
+      <translation>语言</translation>
     </message>
     <message id="open-external-open">
-        <source>open</source>
-        <translation>打开</translation>
+      <source>open</source>
+      <translation>打开</translation>
     </message>
     <message id="open-external-title">
-        <source>External link</source>
-        <translation>外部链接</translation>
+      <source>External link</source>
+      <translation>外部链接</translation>
     </message>
     <message id="open-external-message">
-        <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
-        <translation>Beam钱包需要获取权限以在浏览器中打开外部链接，但此操作会暴露您的IP地址。如不想暴露IP地址，请选择“取消”，您可以随时在设置中修改该选项</translation>
+      <source>Beam Wallet app requires permission to open external link in the browser. This action will expose your IP to the web server. To avoid it, choose &quot;Cancel&quot;. You can change your choice in app setting anytime.</source>
+      <translation>Beam钱包需要获取权限以在浏览器中打开外部链接，但此操作会暴露您的IP地址。如不想暴露IP地址，请选择“取消”，您可以随时在设置中修改该选项</translation>
     </message>
     <message id="start-open-change-wallet-message">
-        <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
-        <translation>如果恢复钱包，本钱包所有的交易记录和地址都将丢失</translation>
+      <source>If you&apos;ll restore a wallet all transaction history and addresses will be lost.</source>
+      <translation>如果恢复钱包，本钱包所有的交易记录和地址都将丢失</translation>
     </message>
     <message id="loading-restore-message-line1">
-        <source>Please wait for synchronization and do not close or minimize the application.</source>
-        <translation>请等待同步，不要关闭或最小化应用程序</translation>
+      <source>Please wait for synchronization and do not close or minimize the application.</source>
+      <translation>请等待同步，不要关闭或最小化应用程序</translation>
     </message>
     <message id="loading-restore-message-line2">
-        <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
+      <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
+      <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
     </message>
     <message id="start-recovery-title">
-        <source>Create new password</source>
-        <translation>创建新密码</translation>
+      <source>Create new password</source>
+      <translation>创建新密码</translation>
     </message>
     <message id="start-recovery-pwd-message">
-        <source>Create new password to access your wallet</source>
-        <translation>创建新密码以访问您的钱包</translation>
+      <source>Create new password to access your wallet</source>
+      <translation>创建新密码以访问您的钱包</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:
+      <source>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
 •  must contain at least one number</source>
-        <translation>强密码需要满足以下要求：
+      <translation>强密码需要满足以下要求：
 • 长度必须至少为10个字符
 • 必须包含至少一个小写字母
 • 必须包含至少一个大写字母
 • 必须包含至少一个数字</translation>
     </message>
     <message id="start-open-caps-warning">
-        <source>Caps lock is on!</source>
-        <translation>大写锁定处于开启状态</translation>
+      <source>Caps lock is on!</source>
+      <translation>大写锁定处于开启状态</translation>
     </message>
     <message id="show-qr-title">
-        <source>QR code</source>
-        <extracomment>show QR dialog title</extracomment>
-        <translation>二维码</translation>
+      <source>QR code</source>
+      <extracomment>show QR dialog title</extracomment>
+      <translation>二维码</translation>
     </message>
     <message id="show-qr-tx-token-label">
-        <source>Your address</source>
-        <extracomment>show qr dialog address label</extracomment>
-        <translation>您的地址</translation>
+      <source>Your address</source>
+      <extracomment>show qr dialog address label</extracomment>
+      <translation>您的地址</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2
+      <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <extracomment>general settings, label for alow open external links</extracomment>
-        <translation>允许访问 %1 和 %2
+      <extracomment>general settings, label for alow open external links</extracomment>
+      <translation>允许访问 %1 和 %2
 (获取交易和交易数据)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
-        <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
-        <translation>1. 点击“保存钱包日志”并选择目标文件夹进行日志存档</translation>
+      <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
+      <translation>1. 点击“保存钱包日志”并选择目标文件夹进行日志存档</translation>
     </message>
     <message id="settings-report-problem-message-l2">
-        <source>2. Send an email to %1 or open a ticket on %2</source>
-        <translation>2. 向%1发送邮件或者在%2中打开工单</translation>
+      <source>2. Send an email to %1 or open a ticket on %2</source>
+      <translation>2. 向%1发送邮件或者在%2中打开工单</translation>
     </message>
     <message id="settings-report-problem-message-l3">
-        <source>3. Don&apos;t forget to attach the log files.</source>
-        <translation>3. 请不要忘了附加日志文件</translation>
+      <source>3. Don&apos;t forget to attach the log files.</source>
+      <translation>3. 请不要忘了附加日志文件</translation>
     </message>
     <message id="explorer">
-        <source>blockchain explorer</source>
-        <translation>区块链浏览器</translation>
+      <source>blockchain explorer</source>
+      <translation>区块链浏览器</translation>
     </message>
     <message id="time-never">
-        <source>Never</source>
-        <translation>永不</translation>
+      <source>Never</source>
+      <translation>永不</translation>
     </message>
     <message id="start-pwd-difficulty-very-weak">
-        <source>Very weak password</source>
-        <extracomment>set passwort, difficulty message, very weak</extracomment>
-        <translation>非常弱的密码</translation>
+      <source>Very weak password</source>
+      <extracomment>set passwort, difficulty message, very weak</extracomment>
+      <translation>非常弱的密码</translation>
     </message>
     <message id="start-pwd-difficulty-weak">
-        <source>Weak password</source>
-        <extracomment>set passwort, difficulty message, weak</extracomment>
-        <translation>弱密码</translation>
+      <source>Weak password</source>
+      <extracomment>set passwort, difficulty message, weak</extracomment>
+      <translation>弱密码</translation>
     </message>
     <message id="start-pwd-difficulty-medium">
-        <source>Medium strength password</source>
-        <extracomment>set passwort, difficulty message, medium</extracomment>
-        <translation>中等强度的密码</translation>
+      <source>Medium strength password</source>
+      <extracomment>set passwort, difficulty message, medium</extracomment>
+      <translation>中等强度的密码</translation>
     </message>
     <message id="start-pwd-difficulty-strong">
-        <source>Strong password</source>
-        <extracomment>set passwort, difficulty message, strong</extracomment>
-        <translation>强密码</translation>
+      <source>Strong password</source>
+      <extracomment>set passwort, difficulty message, strong</extracomment>
+      <translation>强密码</translation>
     </message>
     <message id="start-pwd-difficulty-very-strong">
-        <source>Very strong password</source>
-        <extracomment>set passwort, difficulty message, very strong</extracomment>
-        <translation>非常强的密码</translation>
+      <source>Very strong password</source>
+      <extracomment>set passwort, difficulty message, very strong</extracomment>
+      <translation>非常强的密码</translation>
     </message>
     <message id="start-select-db-best-match-label">
-        <source>(best match)</source>
-        <extracomment>start screen, select db for migration, best match label</extracomment>
-        <translation>(最佳匹配)</translation>
+      <source>(best match)</source>
+      <extracomment>start screen, select db for migration, best match label</extracomment>
+      <translation>(最佳匹配)</translation>
     </message>
     <message id="start-select-db-thead-created">
-        <source>Date created</source>
-        <extracomment>start screen, select db for migration, Date created column title</extracomment>
-        <translation>创建日期</translation>
+      <source>Date created</source>
+      <extracomment>start screen, select db for migration, Date created column title</extracomment>
+      <translation>创建日期</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-title">
-        <source>Don&apos;t ask password on every Send</source>
-        <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if checked</extracomment>
-        <translation>Don&apos;t ask password on every Send</translation>
+      <source>Don&apos;t ask password on every Send</source>
+      <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if checked</extracomment>
+      <translation>Don&apos;t ask password on every Send</translation>
     </message>
     <message id="settings-general-require-pwd-to-spend-confirm-pwd-message">
-        <source>Password verification is required to change that setting</source>
-        <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
-        <translation>需验证密码来使设置变更生效</translation>
+      <source>Password verification is required to change that setting</source>
+      <extracomment>settings tab, general section, ask password to send, confirm password dialog, message</extracomment>
+      <translation>需验证密码来使设置变更生效</translation>
     </message>
     <message id="tx-failure-subtx-failed">
-        <source>Subtransaction has failed</source>
-        <translation>子交易失败</translation>
+      <source>Subtransaction has failed</source>
+      <translation>子交易失败</translation>
     </message>
     <message id="tx-failure-invalid-contract-amount">
-        <source>Contract&apos;s amount is not valid</source>
-        <translation>合约&apos;数额无效</translation>
+      <source>Contract&apos;s amount is not valid</source>
+      <translation>合约&apos;数额无效</translation>
     </message>
     <message id="tx-failure-invalid-sidechain-contract">
-        <source>Side chain has invalid contract</source>
-        <translation>侧链有无效合约</translation>
+      <source>Side chain has invalid contract</source>
+      <translation>侧链有无效合约</translation>
     </message>
     <message id="tx-failure-sidechain-internal-error">
-        <source>Side chain bridge has internal error</source>
-        <translation>侧链桥接发生内部错误</translation>
+      <source>Side chain bridge has internal error</source>
+      <translation>侧链桥接发生内部错误</translation>
     </message>
     <message id="tx-failure-sidechain-network-error">
-        <source>Side chain bridge has network error</source>
-        <translation>侧链桥接发生网络错误</translation>
+      <source>Side chain bridge has network error</source>
+      <translation>侧链桥接发生网络错误</translation>
     </message>
     <message id="tx-failure-invalid-sidechain-response-format">
-        <source>Side chain bridge has response format error</source>
-        <translation>侧链桥接发生响应格式错误</translation>
+      <source>Side chain bridge has response format error</source>
+      <translation>侧链桥接发生响应格式错误</translation>
     </message>
     <message id="tx-failure-invalid-side-chain-credentials">
-        <source>Invalid credentials of Side chain</source>
-        <translation>侧链无效证书</translation>
+      <source>Invalid credentials of Side chain</source>
+      <translation>侧链无效证书</translation>
     </message>
     <message id="tx-failure-not-enough-time-btc-lock">
-        <source>Not enough time to finish btc lock transaction</source>
-        <translation>无充足时间完成比特币锁定交易</translation>
+      <source>Not enough time to finish btc lock transaction</source>
+      <translation>无充足时间完成比特币锁定交易</translation>
     </message>
     <message id="tx-failure-create-multisig">
-        <source>Failed to create multi-signature</source>
-        <translation>创建多签失败</translation>
+      <source>Failed to create multi-signature</source>
+      <translation>创建多签失败</translation>
     </message>
     <message id="tx-failure-fee-too-small">
-        <source>Fee is too small</source>
-        <translation>手续费过低</translation>
+      <source>Fee is too small</source>
+      <translation>手续费过低</translation>
     </message>
     <message id="loading-view-estimate-minutes" numerus="yes">
-        <source>%n minute(s)</source>
-        <translation>
-            <numerusform>%n分钟</numerusform>
-        </translation>
+      <source>%n minute(s)</source>
+      <translation>
+        <numerusform>%n分钟</numerusform>
+      </translation>
     </message>
     <message id="loading-view-estimate-seconds" numerus="yes">
-        <source>%n second(s)</source>
-        <translation>
-            <numerusform>%n 秒</numerusform>
-        </translation>
+      <source>%n second(s)</source>
+      <translation>
+        <numerusform>%n 秒</numerusform>
+      </translation>
     </message>
     <message id="loading-view-estimate-time">
-        <source>%s to completion</source>
-        <translation>预计完成时间%s</translation>
+      <source>%s to completion</source>
+      <translation>预计完成时间%s</translation>
     </message>
     <message id="general-fee-rate">
-        <source>%1 Transaction fee rate</source>
-        <translation>%1 交易费率</translation>
+      <source>%1 Transaction fee rate</source>
+      <translation>%1 交易费率</translation>
     </message>
     <message id="general-change-settings">
-        <source>Change settings</source>
-        <translation>修改设置</translation>
+      <source>Change settings</source>
+      <translation>修改设置</translation>
     </message>
     <message id="general-swap">
-        <source>Swap</source>
-        <translation>交换</translation>
+      <source>Swap</source>
+      <translation>交换</translation>
     </message>
     <message id="settings-node-address">
-        <source>Node address</source>
-        <translation>节点地址</translation>
+      <source>Node address</source>
+      <translation>节点地址</translation>
     </message>
     <message id="settings-username">
-        <source>Username</source>
-        <translation>用户名</translation>
+      <source>Username</source>
+      <translation>用户名</translation>
     </message>
     <message id="settings-password">
-        <source>Password</source>
-        <translation>密码</translation>
+      <source>Password</source>
+      <translation>密码</translation>
     </message>
     <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>收款金额</translation>
+      <source>Receive amount</source>
+      <translation>收款金额</translation>
     </message>
     <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>发送金额</translation>
+      <source>Send amount</source>
+      <translation>发送金额</translation>
     </message>
     <message id="general-rate">
-        <source>Exchange rate</source>
-        <translation>汇率</translation>
+      <source>Exchange rate</source>
+      <translation>汇率</translation>
     </message>
     <message id="wallet-send-swap-title">
-        <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+      <source>Accept Offer</source>
+      <translation type="unfinished">Accept Offer</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
-        <source>Invalid swap token</source>
-        <translation>无效的交易</translation>
+      <source>Invalid swap token</source>
+      <translation>无效的交易</translation>
     </message>
     <message id="general-comment-local">
-        <source>Comments are local and won&apos;t be shared</source>
-        <translation>Comments are local and won&apos;t be shared</translation>
+      <source>Comments are local and won&apos;t be shared</source>
+      <translation>Comments are local and won&apos;t be shared</translation>
     </message>
     <message id="general-bitcoin">
-        <source>Bitcoin</source>
-        <translation>比特币</translation>
+      <source>Bitcoin</source>
+      <translation>比特币</translation>
     </message>
     <message id="general-litecoin">
-        <source>Litecoin</source>
-        <translation>莱特币</translation>
+      <source>Litecoin</source>
+      <translation>莱特币</translation>
     </message>
     <message id="general-qtum">
-        <source>QTUM</source>
-        <translation>QTUM币</translation>
+      <source>QTUM</source>
+      <translation>QTUM币</translation>
     </message>
     <message id="general-electrum">
-        <source>Electrum</source>
-        <translation>Electrum</translation>
+      <source>Electrum</source>
+      <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, 
+      <source>%1 is not connected, 
 please review your settings and try again</source>
-        <translation>%1 未连接， 
+      <translation>%1 未连接， 
 请检查您的设置并重试</translation>
     </message>
     <message id="send-not-enough">
-        <source>There is not enough funds to complete the transaction</source>
-        <translation>没有足够的资金完成这笔交易</translation>
+      <source>There is not enough funds to complete the transaction</source>
+      <translation>没有足够的资金完成这笔交易</translation>
     </message>
     <message id="wallet-send-swap-offered-label">
-        <source>Offered on</source>
-        <translation>已提供</translation>
+      <source>Offered on</source>
+      <translation>已提供</translation>
     </message>
     <message id="wallet-send-swap-expires-label">
-        <source>Expires on</source>
-        <translation>失效于</translation>
+      <source>Expires on</source>
+      <translation>失效于</translation>
     </message>
     <message id="loading-view-estimate-calculating">
-        <source>calculating estimated time</source>
-        <translation>正在计算加载时间</translation>
+      <source>calculating estimated time</source>
+      <translation>正在计算加载时间</translation>
     </message>
     <message id="loading-view-estimate-hours" numerus="yes">
-        <source>%n hour(s)</source>
-        <translation>
-            <numerusform>%n小时</numerusform>
-        </translation>
+      <source>%n hour(s)</source>
+      <translation>
+        <numerusform>%n小时</numerusform>
+      </translation>
     </message>
     <message id="loading-view-net-problems">
-        <source>It may take longer than usual. Please, check your network.</source>
-        <translation>可能会比平时花更长的时间。请检查你的网络。</translation>
+      <source>It may take longer than usual. Please, check your network.</source>
+      <translation>可能会比平时花更长的时间。请检查你的网络。</translation>
     </message>
     <message id="general-create-trezor-wallet">
-        <source>Create new Trezor wallet</source>
-        <translation>创建新的Trezor钱包</translation>
+      <source>Create new Trezor wallet</source>
+      <translation>创建新的Trezor钱包</translation>
     </message>
     <message id="send-confirmation-pwd-text-online-time">
-        <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
-        <translation>为使交易顺利完成，收款人应于12小时内上线同步其钱包至最新高度，而后您应于2小时内再次上线同步钱包</translation>
+      <source>For the transaction to complete, the recipient must get online within the next 12 hours and you should get online within 2 hours afterwards.</source>
+      <translation>为使交易顺利完成，收款人应于12小时内上线同步其钱包至最新高度，而后您应于2小时内再次上线同步钱包</translation>
     </message>
     <message id="trezor-message">
-        <source>Please, look at your Trezor device to complete actions...</source>
-        <translation>请查看您的 Trezor 设备来完成操作...</translation>
+      <source>Please, look at your Trezor device to complete actions...</source>
+      <translation>请查看您的 Trezor 设备来完成操作...</translation>
     </message>
     <message id="start-init-wallet-with-trezor">
-        <source>Init wallet with Trezor</source>
-        <translation>用Trezor初始化钱包</translation>
+      <source>Init wallet with Trezor</source>
+      <translation>用Trezor初始化钱包</translation>
     </message>
     <message id="start-import-trezor-owner-key">
-        <source>Import Trezor Owner Key</source>
-        <translation>导入 Trezor 所有者密钥</translation>
+      <source>Import Trezor Owner Key</source>
+      <translation>导入 Trezor 所有者密钥</translation>
     </message>
     <message id="start-owner-key-imported">
-        <source>Owner Key imported. Please, enter the password you saw on device to decrypt your Owner Key.</source>
-        <translation>所有者密钥已导入。请输入您在设备上看到的密码来解密您的所有者密钥。</translation>
+      <source>Owner Key imported. Please, enter the password you saw on device to decrypt your Owner Key.</source>
+      <translation>所有者密钥已导入。请输入您在设备上看到的密码来解密您的所有者密钥。</translation>
     </message>
     <message id="start-look-at-trezor-to-complete-actions">
-        <source>Please, look at your Trezor to complete actions...</source>
-        <translation>请查看您的 Trezor 来完成操作...</translation>
+      <source>Please, look at your Trezor to complete actions...</source>
+      <translation>请查看您的 Trezor 来完成操作...</translation>
     </message>
     <message id="start-found-trezor-device">
-        <source>Found device:</source>
-        <translation>发现设备：</translation>
+      <source>Found device:</source>
+      <translation>发现设备：</translation>
     </message>
     <message id="start-no-trezor-device-connected">
-        <source>There is no device connected, please, connect your hardware wallet.</source>
-        <translation>没有连接设备，请连接您的硬件钱包。</translation>
+      <source>There is no device connected, please, connect your hardware wallet.</source>
+      <translation>没有连接设备，请连接您的硬件钱包。</translation>
     </message>
     <message id="wallet-model-device-not-connected">
-        <source>There is no Trezor device connected. Please, connect and try again.</source>
-        <translation>没有连接到Trezor 。请连接并重试。</translation>
+      <source>There is no Trezor device connected. Please, connect and try again.</source>
+      <translation>没有连接到Trezor 。请连接并重试。</translation>
     </message>
     <message id="send-less-than-fee">
-        <source>The swap amount must be greater than the transaction fee</source>
-        <translation>交易金额必须大于交易费用</translation>
+      <source>The swap amount must be greater than the transaction fee</source>
+      <translation>交易金额必须大于交易费用</translation>
     </message>
     <message id="wallet-txs-status-in-progress">
-        <source>in progress</source>
-        <translation>进行中</translation>
+      <source>in progress</source>
+      <translation>进行中</translation>
     </message>
     <message id="wallet-txs-status-own-sent">
-        <source>sent to own address</source>
-        <translation>发送到自己的地址</translation>
+      <source>sent to own address</source>
+      <translation>发送到自己的地址</translation>
     </message>
     <message id="wallet-txs-status-own-sending">
-        <source>sending to own address</source>
-        <translation>发送到自己的地址</translation>
+      <source>sending to own address</source>
+      <translation>发送到自己的地址</translation>
     </message>
     <message id="settings-swap-node">
-        <source>Node</source>
-        <translation>节点</translation>
+      <source>Node</source>
+      <translation>节点</translation>
     </message>
     <message id="wallet-clear-search">
-        <source>Clear search</source>
-        <translation>清空搜索</translation>
+      <source>Clear search</source>
+      <translation>清空搜索</translation>
     </message>
     <message id="wallet-search">
-        <source>Search</source>
-        <translation>搜索</translation>
+      <source>Search</source>
+      <translation>搜索</translation>
     </message>
     <message id="swap-alert-confirm-button">
-        <source>I understand</source>
-        <translation>我理解</translation>
+      <source>I understand</source>
+      <translation>我理解</translation>
     </message>
     <message id="accept-own-offer-allert-head">
-        <source>You cannot accept your own offer</source>
-        <translation>Own offer can’t be accepted</translation>
+      <source>You cannot accept your own offer</source>
+      <translation>Own offer can’t be accepted</translation>
     </message>
     <message id="accept-own-offer-allert-body">
-        <source>The swap token was generated by you, and therefore cannot be accepted.</source>
-        <translation>交易令牌是由您生成的，因此不能被接受。</translation>
+      <source>The swap token was generated by you, and therefore cannot be accepted.</source>
+      <translation>交易令牌是由您生成的，因此不能被接受。</translation>
     </message>
     <message id="swap-details-lock-tx-id">
-        <source>lock transaction ID</source>
-        <translation>锁定交易 ID</translation>
+      <source>lock transaction ID</source>
+      <translation>锁定交易 ID</translation>
     </message>
     <message id="swap-details-lock-tx-conf">
-        <source>lock transaction confirmations</source>
-        <translation>锁定交易确认</translation>
+      <source>lock transaction confirmations</source>
+      <translation>锁定交易确认</translation>
     </message>
     <message id="swap-details-beam-lock-kernel-id">
-        <source>BEAM lock transaction kernel ID</source>
-        <translation>BEAM 锁定交易内核ID</translation>
+      <source>BEAM lock transaction kernel ID</source>
+      <translation>BEAM 锁定交易内核ID</translation>
     </message>
     <message id="swap-details-beam-redeem-kernel-id">
-        <source>BEAM redeem transaction kernel ID</source>
-        <translation>BEAM 兑换交易内核ID</translation>
+      <source>BEAM redeem transaction kernel ID</source>
+      <translation>BEAM 兑换交易内核ID</translation>
     </message>
     <message id="swap-details-redeem-tx-id">
-        <source>redeem transaction ID</source>
-        <translation>赎回交易 ID</translation>
+      <source>redeem transaction ID</source>
+      <translation>赎回交易 ID</translation>
     </message>
     <message id="swap-details-redeem-tx-conf">
-        <source>redeem transaction confirmations</source>
-        <translation>赎回交易确认</translation>
+      <source>redeem transaction confirmations</source>
+      <translation>赎回交易确认</translation>
     </message>
     <message id="swap-details-beam-refund-kernel-id">
-        <source>BEAM refund transaction kernel ID</source>
-        <translation>BEAM 退款交易内核ID</translation>
+      <source>BEAM refund transaction kernel ID</source>
+      <translation>BEAM 退款交易内核ID</translation>
     </message>
     <message id="swap-details-refund-tx-id">
-        <source>refund transaction ID</source>
-        <translation>退款交易 ID</translation>
+      <source>refund transaction ID</source>
+      <translation>退款交易 ID</translation>
     </message>
     <message id="swap-details-refund-tx-conf">
-        <source>refund transaction confirmations</source>
-        <translation>退款交易确认</translation>
+      <source>refund transaction confirmations</source>
+      <translation>退款交易确认</translation>
     </message>
     <message id="swap-details-tx-id">
-        <source>Transaction ID</source>
-        <translation>交易ID</translation>
+      <source>Transaction ID</source>
+      <translation>交易ID</translation>
     </message>
     <message id="swap-details-tx-fee">
-        <source>BEAM Transaction fee</source>
-        <translation>交易费</translation>
+      <source>BEAM Transaction fee</source>
+      <translation>交易费</translation>
     </message>
     <message id="swap-details-tx-comment">
-        <source>Comment</source>
-        <translation>备注</translation>
+      <source>Comment</source>
+      <translation>备注</translation>
     </message>
     <message id="swap-details-tx-fee-rate">
-        <source>%1 Transaction fee rate</source>
-        <translation>%1 交易费率</translation>
+      <source>%1 Transaction fee rate</source>
+      <translation>%1 交易费率</translation>
     </message>
     <message id="settings-swap-bitcoin-node">
-        <source>Bitcoin node</source>
-        <translation>比特币节点</translation>
+      <source>Bitcoin node</source>
+      <translation>比特币节点</translation>
     </message>
     <message id="settings-swap-litecoin-node">
-        <source>Litecoin node</source>
-        <translation>莱特币节点</translation>
+      <source>Litecoin node</source>
+      <translation>莱特币节点</translation>
     </message>
     <message id="settings-swap-qtum-node">
-        <source>Qtum node</source>
-        <translation>量子链节点</translation>
+      <source>Qtum node</source>
+      <translation>量子链节点</translation>
     </message>
     <message id="settings-swap-bitcoin-electrum">
-        <source>Bitcoin electrum</source>
-        <translation>比特币 electrum</translation>
+      <source>Bitcoin electrum</source>
+      <translation>比特币 electrum</translation>
     </message>
     <message id="settings-swap-litecoin-electrum">
-        <source>Litecoin electrum</source>
-        <translation>莱特币 electrum</translation>
+      <source>Litecoin electrum</source>
+      <translation>莱特币 electrum</translation>
     </message>
     <message id="settings-swap-qtum-electrum">
-        <source>Qtum electrum</source>
-        <translation>量子链 electrum</translation>
+      <source>Qtum electrum</source>
+      <translation>量子链 electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.
+      <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <translation>此交易令牌的报价已被接受。
+      <translation>此交易令牌的报价已被接受。
 请检查交换令牌，然后重试。</translation>
     </message>
     <message id="swap-offer-duplicate-title">
-        <source>Offer is already accepted</source>
-        <translation>报价已被接受</translation>
+      <source>Offer is already accepted</source>
+      <translation>报价已被接受</translation>
     </message>
     <message id="swap-offer-duplicate-confirm-button">
-        <source>ok</source>
-        <translation>确定</translation>
+      <source>ok</source>
+      <translation>确定</translation>
     </message>
     <message id="swap-details-failure-reason">
-        <source>Error</source>
-        <translation>错误</translation>
+      <source>Error</source>
+      <translation>错误</translation>
     </message>
     <message id="swap-tx-failure-refunded">
-        <source>Refunded</source>
-        <translation>退款</translation>
+      <source>Refunded</source>
+      <translation>退款</translation>
     </message>
     <message id="settings-swap-edit-seed">
-        <source>Edit your seed phrase</source>
-        <translation>编辑助记词</translation>
+      <source>Edit your seed phrase</source>
+      <translation>编辑助记词</translation>
     </message>
     <message id="settings-swap-enter-seed">
-        <source>Enter your seed phrase</source>
-        <translation>请输入助记词</translation>
+      <source>Enter your seed phrase</source>
+      <translation>请输入助记词</translation>
     </message>
     <message id="settings-swap-label-or">
-        <source>or</source>
-        <translation>或者</translation>
+      <source>or</source>
+      <translation>或者</translation>
     </message>
     <message id="settings-swap-new-seed">
-        <source>Generate new seed phrase</source>
-        <translation>生成新的助记词</translation>
+      <source>Generate new seed phrase</source>
+      <translation>生成新的助记词</translation>
     </message>
     <message id="settings-swap-show-seed">
-        <source>Show seed phrase</source>
-        <translation>显示助记词</translation>
+      <source>Show seed phrase</source>
+      <translation>显示助记词</translation>
     </message>
     <message id="settings-swap-show-addresses">
-        <source>Show wallet addresses</source>
-        <translation>显示钱包地址</translation>
+      <source>Show wallet addresses</source>
+      <translation>显示钱包地址</translation>
     </message>
     <message id="swap-seed-info-message">
-        <source>Your seed phrase is the access key to all the funds! Print or write down the phrase and keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
-        <translation>助记词是访问你账户资金的密钥
+      <source>Your seed phrase is the access key to all the funds! Print or write down the phrase and keep it in a safe or in a locked vault. Without the phrase you will not be able to recover your money.</source>
+      <translation>助记词是访问你账户资金的密钥
 必须打印或誊写助记词，并将其妥善保存在保险箱中
 如果你遗失或忘记助记词，你将无法找回或恢复钱包中的资金</translation>
     </message>
     <message id="settings-swap-seed-generate">
-        <source>generate another seed phrase</source>
-        <translation>生成另一个助记词</translation>
+      <source>generate another seed phrase</source>
+      <translation>生成另一个助记词</translation>
     </message>
     <message id="swap-seed-new">
-        <source>New seed phrase</source>
-        <translation>新的助记词</translation>
+      <source>New seed phrase</source>
+      <translation>新的助记词</translation>
     </message>
     <message id="swap-seed-edit">
-        <source>Enter your seed phrase</source>
-        <translation>请输入助记词</translation>
+      <source>Enter your seed phrase</source>
+      <translation>请输入助记词</translation>
     </message>
     <message id="bitcoin-show-seed-title">
-        <source>Bitcoin seed phrase</source>
-        <translation>比特币助记词</translation>
+      <source>Bitcoin seed phrase</source>
+      <translation>比特币助记词</translation>
     </message>
     <message id="litecoin-show-seed-title">
-        <source>Litecoin seed phrase</source>
-        <translation>莱特币助记词</translation>
+      <source>Litecoin seed phrase</source>
+      <translation>莱特币助记词</translation>
     </message>
     <message id="qtum-show-seed-title">
-        <source>Qtum seed phrase</source>
-        <translation>量子链助记词</translation>
+      <source>Qtum seed phrase</source>
+      <translation>量子链助记词</translation>
     </message>
     <message id="bitcoin-show-addresses-title">
-        <source>Bitcoin wallet addresses</source>
-        <translation>比特币钱包地址</translation>
+      <source>Bitcoin wallet addresses</source>
+      <translation>比特币钱包地址</translation>
     </message>
     <message id="litecoin-show-addresses-title">
-        <source>Litecoin wallet addresses</source>
-        <translation>莱特币钱包地址</translation>
+      <source>Litecoin wallet addresses</source>
+      <translation>莱特币钱包地址</translation>
     </message>
     <message id="qtum-show-addresses-title">
-        <source>Qtum wallet addresses</source>
-        <translation>量子链钱包地址</translation>
+      <source>Qtum wallet addresses</source>
+      <translation>量子链钱包地址</translation>
     </message>
     <message id="settings-swap-copy-address">
-        <source>Copy address</source>
-        <translation>复制地址</translation>
+      <source>Copy address</source>
+      <translation>复制地址</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-title">
-        <source>Edit seed phrase</source>
-        <extracomment>electrum settings, ask password to edit seed phrase, dialog title</extracomment>
-        <translation>编辑助记词</translation>
+      <source>Edit seed phrase</source>
+      <extracomment>electrum settings, ask password to edit seed phrase, dialog title</extracomment>
+      <translation>编辑助记词</translation>
     </message>
     <message id="settings-swap-confirm-edit-seed-message">
-        <source>Enter your wallet password to edit the phrase</source>
-        <extracomment>electrum settings, ask password to edit seed phrase, dialog message</extracomment>
-        <translation>输入你的钱包密码来编辑助记词</translation>
+      <source>Enter your wallet password to edit the phrase</source>
+      <extracomment>electrum settings, ask password to edit seed phrase, dialog message</extracomment>
+      <translation>输入你的钱包密码来编辑助记词</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-title">
-        <source>Generate new seed phrase</source>
-        <extracomment>electrum settings, ask password to generate new seed phrase, dialog title</extracomment>
-        <translation>生成新的助记词</translation>
+      <source>Generate new seed phrase</source>
+      <extracomment>electrum settings, ask password to generate new seed phrase, dialog title</extracomment>
+      <translation>生成新的助记词</translation>
     </message>
     <message id="settings-swap-confirm-generate-seed-message">
-        <source>Enter your wallet password to generate new seed phrase</source>
-        <extracomment>electrum settings, ask password to generate new seed phrase, dialog message</extracomment>
-        <translation>请输入您的钱包密码以生成新的助记词</translation>
+      <source>Enter your wallet password to generate new seed phrase</source>
+      <extracomment>electrum settings, ask password to generate new seed phrase, dialog message</extracomment>
+      <translation>请输入您的钱包密码以生成新的助记词</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-title">
-        <source>Show seed phrase</source>
-        <extracomment>electrum settings, ask password to show seed phrase, dialog title</extracomment>
-        <translation>显示助记词</translation>
+      <source>Show seed phrase</source>
+      <extracomment>electrum settings, ask password to show seed phrase, dialog title</extracomment>
+      <translation>显示助记词</translation>
     </message>
     <message id="settings-swap-confirm-show-seed-message">
-        <source>Enter your wallet password to see the phrase</source>
-        <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
-        <translation>请输入您的钱包密码以查看助记词</translation>
+      <source>Enter your wallet password to see the phrase</source>
+      <extracomment>electrum settings, ask password to show seed phrase, dialog message</extracomment>
+      <translation>请输入您的钱包密码以查看助记词</translation>
     </message>
     <message id="send-swap-confirmation-title">
-        <source>Confirm atomic swap</source>
-        <translation>确认原子交换</translation>
+      <source>Confirm atomic swap</source>
+      <translation>确认原子交换</translation>
     </message>
     <message id="send-swap-sconfirmation-online-time">
-        <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
-        <translation>保持您的钱包在线。交换通常需要约1小时才能完成。</translation>
+      <source>Keep your wallet online. The swap normally takes about 1 hour to complete.</source>
+      <translation>保持您的钱包在线。交换通常需要约1小时才能完成。</translation>
     </message>
     <message id="beam-transaction-fee">
-        <source>BEAM Transaction fee</source>
-        <translation>交易费</translation>
+      <source>BEAM Transaction fee</source>
+      <translation>交易费</translation>
     </message>
     <message id="send-swap-token">
-        <source>Swap token</source>
-        <translation>交换令牌</translation>
+      <source>Swap token</source>
+      <translation>交换令牌</translation>
     </message>
     <message id="send-swap-token-hint">
-        <source>Paste token or address here</source>
-        <translation>在这里粘贴令牌或地址</translation>
+      <source>Paste token or address here</source>
+      <translation>在这里粘贴令牌或地址</translation>
     </message>
     <message id="swap-tx-state-initial">
-        <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
-        <translation>如果在%1内没有人接受此报价，则次报价将自动取消</translation>
+      <source>If nobody accepts the offer in %1 at most, the offer will be automatically canceled</source>
+      <translation>如果在%1内没有人接受此报价，则次报价将自动取消</translation>
     </message>
     <message id="swap-tx-state-in-progress-normal">
-        <source>The swap is expected to complete in %1 at most.</source>
-        <translation>交换预计最多在%1中完成。</translation>
+      <source>The swap is expected to complete in %1 at most.</source>
+      <translation>交换预计最多在%1中完成。</translation>
     </message>
     <message id="swap-tx-state-in-progress-refunding">
-        <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
-        <translation>交换失败：你的 %2 的退款将在 %1中开始。退款时间取决于你为 %2 指定的交易费用。</translation>
+      <source>Swap failed: the refund of your %2 will start in %1. The refund duration depends on the transaction fee you specified for %2.</source>
+      <translation>交换失败：你的 %2 的退款将在 %1中开始。退款时间取决于你为 %2 指定的交易费用。</translation>
     </message>
     <message id="atomic-swap-tx-yes-button">
-        <source>yes</source>
-        <translation>是的</translation>
+      <source>yes</source>
+      <translation>是的</translation>
     </message>
     <message id="atomic-swap-no-button">
-        <source>no</source>
-        <translation>否</translation>
+      <source>no</source>
+      <translation>否</translation>
     </message>
     <message id="swap-tx-state-refunding">
-        <source>Swap failed, the money is being released back to your wallet</source>
-        <translation>交换失败，资金正被释放回你的钱包</translation>
+      <source>Swap failed, the money is being released back to your wallet</source>
+      <translation>交换失败，资金正被释放回你的钱包</translation>
     </message>
     <message id="send-swap-fee-warning">
-        <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
-        <translation> 一旦报价被对方接受，即使取消报价，也要收取 %1 的交易费。</translation>
+      <source> Once the offer is accepted by the other side, the %1 transaction fee will be charged even if the offer is cancelled.</source>
+      <translation> 一旦报价被对方接受，即使取消报价，也要收取 %1 的交易费。</translation>
     </message>
     <message id="app-close-title">
-        <source>Beam wallet close</source>
-        <translation>Beam 钱包关闭</translation>
+      <source>Beam wallet close</source>
+      <translation>Beam 钱包关闭</translation>
     </message>
     <message id="app-close-text">
-        <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
-        <translation>如果钱包离线， %1 个活动交易可能会失败。你确定要现在关闭钱包吗？</translation>
+      <source>There are %1 active transactions that might fail if the wallet will go offline. Are you sure to close the wallet now?</source>
+      <translation>如果钱包离线， %1 个活动交易可能会失败。你确定要现在关闭钱包吗？</translation>
     </message>
     <message id="wallet-export-tx-history">
-        <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
-        <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">导出交易记录</translation>
+      <source>Export transaction history</source>
+      <oldsource>Export transaction history</oldsource>
+      <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
+      <translation>导出交易记录</translation>
     </message>
     <message id="addresses-delete-warning-title">
-        <source>Delete address</source>
-        <translation>删除地址</translation>
+      <source>Delete address</source>
+      <translation>删除地址</translation>
     </message>
     <message id="addresses-delete-warning-text">
-        <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
-        <translation>有活动交易在使用此地址，因此无法删除该地址。</translation>
+      <source>There is active transaction that uses this address, therefore the address cannot be deleted.</source>
+      <translation>有活动交易在使用此地址，因此无法删除该地址。</translation>
     </message>
     <message id="general-fee-total">
-        <source>%1 Transaction fee (est)</source>
-        <translation>%1 交易费 (最优)</translation>
+      <source>%1 Transaction fee (est)</source>
+      <translation>%1 交易费 (最优)</translation>
     </message>
     <message id="settings-fee-rate-note">
-        <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
-        <translation>记住验证区块链的预期收费率(它随时间而变化)。</translation>
+      <source>Remember to validate the expected fee rate for the blockchain (as it varies with time).</source>
+      <translation>记住验证区块链的预期收费率(它随时间而变化)。</translation>
     </message>
     <message id="settings-swap-seed-segwit-warning">
-        <source>Segwit seed phrase is not supported yet.</source>
-        <translation>不支持Segwit助记词。</translation>
+      <source>Segwit seed phrase is not supported yet.</source>
+      <translation>不支持Segwit助记词。</translation>
     </message>
     <message id="settings-swap-seed-invali-warning">
-        <source>Invalid seed phrase. Please check again and resubmit.</source>
-        <translation>无效的助记词。请再次检查并重新提交。</translation>
+      <source>Invalid seed phrase. Please check again and resubmit.</source>
+      <translation>无效的助记词。请再次检查并重新提交。</translation>
     </message>
     <message id="swap-details-tx-fee-estimated">
-        <source>%1 Estimated transaction fee</source>
-        <translation>%1 估计交易费用</translation>
+      <source>%1 Estimated transaction fee</source>
+      <translation>%1 估计交易费用</translation>
     </message>
     <message id="settings-show-owner-key-title">
-        <source>Owner key</source>
-        <extracomment>settings tab, show owner key dialog title</extracomment>
-        <translation>所有者密钥</translation>
+      <source>Owner key</source>
+      <extracomment>settings tab, show owner key dialog title</extracomment>
+      <translation>所有者密钥</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to
+      <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
 deploy the key at the node you trust completely.</source>
-        <extracomment>settings tab, show owner key message</extracomment>
-        <translation>请注意，知道你所有者密钥允许
+      <extracomment>settings tab, show owner key message</extracomment>
+      <translation>请注意，知道你所有者密钥允许
 知道你的所有资金(UTXO)。 请确保你
 在你信任的节点上部署密钥。</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
-        <source>Show owner key</source>
-        <extracomment>settings tab, general section, Show owner key button and dialog title</extracomment>
-        <translation>显示所有者密钥</translation>
+      <source>Show owner key</source>
+      <extracomment>settings tab, general section, Show owner key button and dialog title</extracomment>
+      <translation>显示所有者密钥</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key-message">
-        <source>Password verification is required to see the owner key</source>
-        <extracomment>settings tab, general section, ask password to Show owner key, message</extracomment>
-        <translation>需要密码验证才能看到所有者密钥</translation>
+      <source>Password verification is required to see the owner key</source>
+      <extracomment>settings tab, general section, ask password to Show owner key, message</extracomment>
+      <translation>需要密码验证才能看到所有者密钥</translation>
     </message>
     <message id="swap-tx-state-in-progress-negotiation">
-        <source>If the other side will not sign the transaction in %1, the offer will be canceled automatically.</source>
-        <translation>如果对方不在 %1签名交易，则该报价将自动取消。</translation>
+      <source>If the other side will not sign the transaction in %1, the offer will be canceled automatically.</source>
+      <translation>如果对方不在 %1签名交易，则该报价将自动取消。</translation>
     </message>
     <message id="swap-invalid-credentials-error">
-        <source>Cannot connect to node. Invalid credentials</source>
-        <translation>无法连接到节点。无效的凭据</translation>
+      <source>Cannot connect to node. Invalid credentials</source>
+      <translation>无法连接到节点。无效的凭据</translation>
     </message>
     <message id="swap-connection-error">
-        <source>Cannot connect to node. Please check your network connection.</source>
-        <translation>无法连接到节点，请检查您的网络连接。</translation>
+      <source>Cannot connect to node. Please check your network connection.</source>
+      <translation>无法连接到节点，请检查您的网络连接。</translation>
     </message>
     <message id="swap-invalid-genesis-block-error">
-        <source>Cannot connect to node. Invalid genesis block</source>
-        <translation>无法连接到节点。无效的初始块</translation>
+      <source>Cannot connect to node. Invalid genesis block</source>
+      <translation>无法连接到节点。无效的初始块</translation>
     </message>
     <message id="tx-state-initial-sender">
-        <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation>如果接收方在%1中没有在线，交易将被取消</translation>
+      <source>If the receiver doesn&apos;t get online in %1, the transaction will be canceled</source>
+      <translation>如果接收方在%1中没有在线，交易将被取消</translation>
     </message>
     <message id="tx-state-initial-receiver">
-        <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
-        <translation>如果发送方在%1中没有在线，交易将被取消</translation>
+      <source>If the sender doesn&apos;t get online in %1, the transaction will be canceled</source>
+      <translation>如果发送方在%1中没有在线，交易将被取消</translation>
     </message>
     <message id="tx-state-in-progress-normal">
-        <source>The transaction is usually expected to complete in a few minutes.</source>
-        <translation>交易通常预计在几分钟内完成。</translation>
+      <source>The transaction is usually expected to complete in a few minutes.</source>
+      <translation>交易通常预计在几分钟内完成。</translation>
     </message>
     <message id="tx-state-in-progress-long">
-        <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
-        <translation>花的时间比平时更长。如果交易不能完成，将在%1中自动取消。</translation>
+      <source>It is taking longer than usual. In case the transaction could not be completed it will be canceled automatically in %1.</source>
+      <translation>花的时间比平时更长。如果交易不能完成，将在%1中自动取消。</translation>
     </message>
     <message id="settings-general-no-require-pwd-to-spend-confirm-pwd-title">
-        <source>Ask password on every Send</source>
-        <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
-        <translation>每次发送时都询问密码</translation>
+      <source>Ask password on every Send</source>
+      <extracomment>settings tab, general section, ask password to send, confirm password dialog, title if unchecked</extracomment>
+      <translation>每次发送时都询问密码</translation>
     </message>
     <message id="tx-failure-kernel-min-height">
-        <source>Kernel&apos;s min height is unacceptable</source>
-        <translation>内核&apos;s 最小高度是不可接受的</translation>
+      <source>Kernel&apos;s min height is unacceptable</source>
+      <translation>内核&apos;s 最小高度是不可接受的</translation>
     </message>
     <message id="tx-failure-loopback">
-        <source>Not a loopback transaction</source>
-        <translation>不是循环交易</translation>
+      <source>Not a loopback transaction</source>
+      <translation>不是循环交易</translation>
     </message>
     <message id="tx-failure-key-keeper-no-initialized">
-        <source>Key keeper is not initialized</source>
-        <translation>密钥管理器未初始化</translation>
+      <source>Key keeper is not initialized</source>
+      <translation>密钥管理器未初始化</translation>
     </message>
     <message id="tx-failure-invalid-asset-id">
-        <source>No valid asset id/asset owner id</source>
-        <translation>没有有效的资产ID/资产所有者ID</translation>
+      <source>No valid asset id/asset owner id</source>
+      <translation>没有有效的资产ID/资产所有者ID</translation>
     </message>
     <message id="tx-failure-invalid-asset-amount">
-        <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
-        <translation>在一个交易中不能发出/消耗超过 MAX_INT64 资产总额</translation>
+      <source>Cannot issue/consume more than MAX_INT64 asset groth in one transaction</source>
+      <translation>在一个交易中不能发出/消耗超过 MAX_INT64 资产总额</translation>
     </message>
     <message id="tx-failure-invalid-data-for-payment-proof">
-        <source>Some mandatory data for payment proof is missing</source>
-        <translation>缺少一些付款证明的强制性数据</translation>
+      <source>Some mandatory data for payment proof is missing</source>
+      <translation>缺少一些付款证明的强制性数据</translation>
     </message>
     <message id="tx-failure-there-is-no-master-key">
-        <source>Master key is needed for this transaction, but unavailable</source>
-        <translation>本次交易需要主密钥，但不可用</translation>
+      <source>Master key is needed for this transaction, but unavailable</source>
+      <translation>本次交易需要主密钥，但不可用</translation>
     </message>
     <message id="tx-failure-keeper-malfunctioned">
-        <source>Key keeper malfunctioned</source>
-        <translation>密钥守护器功能错误</translation>
+      <source>Key keeper malfunctioned</source>
+      <translation>密钥守护器功能错误</translation>
     </message>
     <message id="tx-failure-aborted-by-user">
-        <source>Aborted by the user</source>
-        <translation>被用户中止</translation>
+      <source>Aborted by the user</source>
+      <translation>被用户中止</translation>
     </message>
     <message id="tx-failure-asset-small-fee">
-        <source>Asset registration fee is too small</source>
-        <translation>资产注册费太低</translation>
+      <source>Asset registration fee is too small</source>
+      <translation>资产注册费太低</translation>
     </message>
     <message id="settings-notifications-title">
-        <source>Notifications</source>
-        <translation>通知</translation>
+      <source>Notifications</source>
+      <translation>通知</translation>
     </message>
     <message id="settings-notifications-version">
-        <source>Wallet updates</source>
-        <translation>钱包更新</translation>
+      <source>Wallet updates</source>
+      <translation>钱包更新</translation>
     </message>
     <message id="settings-notifications-tx-status">
-        <source>Transaction status</source>
-        <translation>交易状态</translation>
+      <source>Transaction status</source>
+      <translation>交易状态</translation>
     </message>
     <message id="tx-failure-fee-too-large">
-        <source>Fee is too large</source>
-        <translation>文件过大</translation>
+      <source>Fee is too large</source>
+      <translation>文件过大</translation>
     </message>
     <message id="tx-failure-asset-invalid-info">
-        <source>No asset info or asset info is not valid</source>
-        <translation>没有资产信息或资产信息无效</translation>
+      <source>No asset info or asset info is not valid</source>
+      <translation>没有资产信息或资产信息无效</translation>
     </message>
     <message id="tx-failure-asset-invalid-metadata">
-        <source>No asset metadata or asset metadata is not valid</source>
-        <translation>没有资产数据或资产数据无效</translation>
+      <source>No asset metadata or asset metadata is not valid</source>
+      <translation>没有资产数据或资产数据无效</translation>
     </message>
     <message id="tx-failure-asset-invalid-id">
-        <source>Invalid asset id</source>
-        <translation>无效资产 ID</translation>
+      <source>Invalid asset id</source>
+      <translation>无效资产 ID</translation>
     </message>
     <message id="tx-failure-asset-confirmation">
-        <source>Failed to receive asset confirmation</source>
-        <translation>接收资产确认失败</translation>
+      <source>Failed to receive asset confirmation</source>
+      <translation>接收资产确认失败</translation>
     </message>
     <message id="tx-failure-asset-in-use">
-        <source>Asset is still in use (issued amount &gt; 0)</source>
-        <translation>资金仍在使用中 (发出的金额 &gt;)</translation>
+      <source>Asset is still in use (issued amount &gt; 0)</source>
+      <translation>资金仍在使用中 (发出的金额 &gt;)</translation>
     </message>
     <message id="tx-failure-asset-locked">
-        <source>Asset is still locked</source>
-        <translation>资产仍被锁定</translation>
+      <source>Asset is still locked</source>
+      <translation>资产仍被锁定</translation>
     </message>
     <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>显示金额</translation>
+      <source>Show amounts in</source>
+      <extracomment>settings tab, general section, amounts unit label</extracomment>
+      <translation>显示金额</translation>
     </message>
     <message id="notification-update-title">
-        <source>New version v %1 is available</source>
-        <translation>新版本 v %1 可用</translation>
+      <source>New version v %1 is available</source>
+      <translation>新版本 v %1 可用</translation>
     </message>
     <message id="notification-address-expired">
-        <source>Address expired</source>
-        <translation>地址已过期</translation>
+      <source>Address expired</source>
+      <translation>地址已过期</translation>
     </message>
     <message id="notification-transaction-received">
-        <source>Transaction was received</source>
-        <translation>已收到交易</translation>
+      <source>Transaction was received</source>
+      <translation>已收到交易</translation>
     </message>
     <message id="notification-transaction-sent-message">
-        <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation>您发送了%1个%2给%3</translation>
+      <source>You sent &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt;.</source>
+      <translation>您发送了%1个%2给%3</translation>
     </message>
     <message id="notification-transaction-failed">
-        <source>Transaction failed</source>
-        <translation>交易失败</translation>
+      <source>Transaction failed</source>
+      <translation>交易失败</translation>
     </message>
     <message id="notification-news">
-        <source>BEAM in the press</source>
-        <translation>BEAM 新闻</translation>
+      <source>BEAM in the press</source>
+      <translation>BEAM 新闻</translation>
     </message>
     <message id="notification-address-expired-message">
-        <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; 地址已过期。</translation>
+      <source>&lt;b&gt;%1&lt;/b&gt; address expired.</source>
+      <translation>&lt;b&gt;%1&lt;/b&gt; 地址已过期。</translation>
     </message>
     <message id="notification-transaction-received-message">
-        <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
-        <translation>您从%3收到了%1个%2</translation>
+      <source>You received &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt;.</source>
+      <translation>您从%3收到了%1个%2</translation>
     </message>
     <message id="notification-transaction-send-failed-message">
-        <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation>发送%1个%2到%3失败</translation>
+      <source>Sending &lt;b&gt;%1 %2&lt;/b&gt; to &lt;b&gt;%3&lt;/b&gt; failed.</source>
+      <translation>发送%1个%2到%3失败</translation>
     </message>
     <message id="notification-transaction-receive-failed-message">
-        <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
-        <translation>从%3接收%1个%2失败</translation>
+      <source>Receiving &lt;b&gt;%1 %2&lt;/b&gt; from &lt;b&gt;%3&lt;/b&gt; failed.</source>
+      <translation>从%3接收%1个%2失败</translation>
     </message>
     <message id="notification-transaction-sent">
-        <source>Transaction was sent</source>
-        <translation>交易已发送</translation>
+      <source>Transaction was sent</source>
+      <translation>交易已发送</translation>
     </message>
     <message id="settings-update-wallet">
-        <source>update wallet</source>
-        <extracomment>settings update wallet button</extracomment>
-        <translation>更新钱包</translation>
+      <source>update wallet</source>
+      <extracomment>settings update wallet button</extracomment>
+      <translation>更新钱包</translation>
     </message>
     <message id="general-exchange-rate-not-available">
-        <source>Exchange rate to %1 is not available</source>
-        <translation>汇率为%1是不可用的</translation>
+      <source>Exchange rate to %1 is not available</source>
+      <translation>汇率为%1是不可用的</translation>
     </message>
     <message id="notification-swap-completed">
-        <source>Atomic Swap offer completed</source>
-        <translation>Atomic 交换报价已完成</translation>
+      <source>Atomic Swap offer completed</source>
+      <translation>Atomic 交换报价已完成</translation>
     </message>
     <message id="notification-swap-beam-completed-message">
-        <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation>提供 &lt;b&gt;%1 BEAM  %2 %3&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt; 已完成。</translation>
+      <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
+      <translation>提供 &lt;b&gt;%1 BEAM  %2 %3&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt; 已完成。</translation>
     </message>
     <message id="notification-swap-completed-message">
-        <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
-        <translation>提供 &lt;b&gt;%1 %3  ➞ %2 BEAM&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt; 完成。</translation>
+      <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; completed.</source>
+      <translation>提供 &lt;b&gt;%1 %3  ➞ %2 BEAM&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt; 完成。</translation>
     </message>
     <message id="notification-swap-beam-failed-message">
-        <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation>提供 &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt;交易ID&lt;b&gt;%4&lt;/b&gt; 失败.</translation>
+      <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
+      <translation>提供 &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt;交易ID&lt;b&gt;%4&lt;/b&gt; 失败.</translation>
     </message>
     <message id="notification-swap-failed-message">
-        <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
-        <translation>提供 &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt; 失败.</translation>
+      <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; failed.</source>
+      <translation>提供 &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt; 失败.</translation>
     </message>
     <message id="notification-swap-failed">
-        <source>Atomic Swap offer failed</source>
-        <translation>原子交换报价失败</translation>
+      <source>Atomic Swap offer failed</source>
+      <translation>原子交换报价失败</translation>
     </message>
     <message id="notification-swap-expired">
-        <source>Atomic Swap offer expired</source>
-        <translation>原子交换报价已过期</translation>
+      <source>Atomic Swap offer expired</source>
+      <translation>原子交换报价已过期</translation>
     </message>
     <message id="notification-swap-beam-expired-message">
-        <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation>提供 &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt;交易ID &lt;b&gt;%4&lt;/b&gt; 过期.
+      <source>Offer &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
+      <translation>提供 &lt;b&gt;%1 BEAM ➞ %2 %3&lt;/b&gt;交易ID &lt;b&gt;%4&lt;/b&gt; 过期.
 </translation>
     </message>
     <message id="notification-swap-expired-message">
-        <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
-        <translation>提供 &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt;过期.
+      <source>Offer &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; with transaction ID &lt;b&gt;%4&lt;/b&gt; expired.</source>
+      <translation>提供 &lt;b&gt;%1 %3 ➞ %2 BEAM&lt;/b&gt; 交易ID &lt;b&gt;%4&lt;/b&gt;过期.
 </translation>
     </message>
     <message id="tx-failure-asset-exists">
-        <source>Asset has been already registered</source>
-        <translation>资产已注册</translation>
+      <source>Asset has been already registered</source>
+      <translation>资产已注册</translation>
     </message>
     <message id="tx-failure-asset-invalid-owner-id">
-        <source>Invalid asset owner id</source>
-        <translation>无效资产所有者ID</translation>
+      <source>Invalid asset owner id</source>
+      <translation>无效资产所有者ID</translation>
     </message>
     <message id="tx-failure-assets-disabled">
-        <source>Asset transactions are disabled in the wallet</source>
-        <translation>钱包中禁用了资产交易</translation>
+      <source>Asset transactions are disabled in the wallet</source>
+      <translation>钱包中禁用了资产交易</translation>
     </message>
     <message id="tx-failure-no-vouchers">
-        <source>No voucher, no address to receive it</source>
-        <translation>没有凭据，没有接收它的地址</translation>
+      <source>No voucher, no address to receive it</source>
+      <translation>没有凭据，没有接收它的地址</translation>
     </message>
     <message id="tx-failure-assets-fork2">
-        <source>Asset transactions are not available until fork2</source>
-        <translation>资产交易在第二次硬分叉之前是不可用的</translation>
+      <source>Asset transactions are not available until fork2</source>
+      <translation>资产交易在第二次硬分叉之前是不可用的</translation>
     </message>
     <message id="address-newer-lib">
-        <source>This address generated by newer Beam library version(%1)
+      <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>此令牌由新的Beam客户端版本生成(%1)
+      <translation>此令牌由新的Beam客户端版本生成(%1)
 你的版本是： %2。请检查更新。</translation>
     </message>
     <message id="address-newer-client">
-        <source>This address generated by newer Beam client version(%1)
+      <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>此令牌由新的Beam客户端版本生成(%1)
+      <translation>此令牌由新的Beam客户端版本生成(%1)
 你的版本是： %2。请检查更新。</translation>
     </message>
     <message id="settings-wallet-title">
-        <source>Wallet</source>
-        <translation>钱包</translation>
+      <source>Wallet</source>
+      <translation>钱包</translation>
     </message>
     <message id="settings-connectivity-title">
-        <source>Connectivity</source>
-        <translation>连接</translation>
+      <source>Connectivity</source>
+      <translation>连接</translation>
     </message>
     <message id="settings-troubleshooting-title">
-        <source>Troubleshooting</source>
-        <translation>故障排除</translation>
+      <source>Troubleshooting</source>
+      <translation>故障排除</translation>
     </message>
     <message id="settings-get-beam">
-        <source>Get Beams from Beam Community Faucet</source>
-        <translation>从Beam社区水龙头获得Beam</translation>
+      <source>Get Beams from Beam Community Faucet</source>
+      <translation>从Beam社区水龙头获得Beam</translation>
     </message>
     <message id="settings-privacy-title">
-        <source>Privacy</source>
-        <translation>隐私</translation>
+      <source>Privacy</source>
+      <translation>隐私</translation>
     </message>
     <message id="settings-resources-title">
-        <source>Resources</source>
-        <translation>资源</translation>
+      <source>Resources</source>
+      <translation>资源</translation>
     </message>
     <message id="settings-utilities-title">
-        <source>Utilities</source>
-        <translation>实用工具</translation>
+      <source>Utilities</source>
+      <translation>实用工具</translation>
     </message>
     <message id="settings-local-node-run-checkbox">
-        <source>Run integrated node</source>
-        <extracomment>settings tab, node section, run node label</extracomment>
-        <translation type="unfinished">Run integrated node</translation>
+      <source>Run integrated node</source>
+      <extracomment>settings tab, node section, run node label</extracomment>
+      <translation type="unfinished">Run integrated node</translation>
     </message>
     <message id="general-invalid-port">
-        <source>Port is mandatory</source>
-        <extracomment>settings tab, node section, port error label</extracomment>
-        <translation>端口是必填项</translation>
+      <source>Port is mandatory</source>
+      <extracomment>settings tab, node section, port error label</extracomment>
+      <translation>端口是必填项</translation>
     </message>
     <message id="settings-remote-node-address">
-        <source>Node address</source>
-        <extracomment>settings tab, node section, address label</extracomment>
-        <translation>节点地址</translation>
+      <source>Node address</source>
+      <extracomment>settings tab, node section, address label</extracomment>
+      <translation>节点地址</translation>
     </message>
     <message id="settings-peers-title">
-        <source>Peers</source>
-        <translation>节点</translation>
+      <source>Peers</source>
+      <translation>节点</translation>
     </message>
     <message id="settings-integrated-node-title">
-        <source>Beam Integrated Node</source>
-        <translation>Beam 本地节点</translation>
+      <source>Beam Integrated Node</source>
+      <translation>Beam 本地节点</translation>
     </message>
     <message id="settings-remote-node-title">
-        <source>Beam Node Connection</source>
-        <translation type="unfinished">Beam Node Connection</translation>
+      <source>Beam Node Connection</source>
+      <translation type="unfinished">Beam Node Connection</translation>
     </message>
     <message id="open-show-wallet-button-hw">
-        <source>Show my wallet with Trezor</source>
-        <translation>使用 Trezor 展示我的钱包</translation>
+      <source>Show my wallet with Trezor</source>
+      <translation>使用 Trezor 展示我的钱包</translation>
     </message>
     <message id="specific_node">
-        <source>Specific node</source>
-        <translation>指定节点</translation>
+      <source>Specific node</source>
+      <translation>指定节点</translation>
     </message>
     <message id="random_node">
-        <source>Random node</source>
-        <translation>随机节点</translation>
+      <source>Random node</source>
+      <translation>随机节点</translation>
     </message>
     <message id="token-info-title">
-        <source>Transaction token</source>
-        <translation>交易令牌</translation>
+      <source>Transaction token</source>
+      <translation>交易令牌</translation>
     </message>
     <message id="token-info-token">
-        <source>Token</source>
-        <translation>令牌</translation>
+      <source>Token</source>
+      <translation>令牌</translation>
     </message>
     <message id="tx-regular">
-        <source>Online</source>
-        <translation>在线</translation>
+      <source>Online</source>
+      <translation>在线</translation>
     </message>
     <message id="tx-max-privacy">
-        <source>Maximum anonymity</source>
-        <translation>最强匿名模式</translation>
+      <source>Maximum anonymity</source>
+      <translation>最强匿名模式</translation>
     </message>
     <message id="error-peer-exists">
-        <source>Peer already exists</source>
-        <translation>已存在</translation>
+      <source>Peer already exists</source>
+      <translation>已存在</translation>
     </message>
     <message id="address-table-cm-receive">
-        <source>receive</source>
-        <extracomment>Entry in address table context menu to get receive token</extracomment>
-        <translation>接收</translation>
+      <source>receive</source>
+      <extracomment>Entry in address table context menu to get receive token</extracomment>
+      <translation>接收</translation>
     </message>
     <message id="format-small-amount">
-        <source>&lt; 1 %1</source>
-        <translation>&lt; 1 %1</translation>
+      <source>&lt; 1 %1</source>
+      <translation>&lt; 1 %1</translation>
     </message>
     <message id="format-amount">
-        <source>%1 %2</source>
-        <translation>%1, %2</translation>
+      <source>%1 %2</source>
+      <translation>%1, %2</translation>
     </message>
     <message id="send-regular-fee">
-        <source>Fee</source>
-        <translation>费用</translation>
+      <source>Fee</source>
+      <translation>费用</translation>
     </message>
     <message id="settings-swap-clear">
-        <source>clear</source>
-        <translation>清除</translation>
+      <source>clear</source>
+      <translation>清除</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-title">
-        <source>Clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
-        <translation>清除助记词</translation>
+      <source>Clear seed phrase</source>
+      <extracomment>electrum settings, ask password to clear seed phrase, dialog title</extracomment>
+      <translation>清除助记词</translation>
     </message>
     <message id="settings-swap-confirm-clear-seed-message">
-        <source>Enter your wallet password to clear seed phrase</source>
-        <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
-        <translation>请输入你的钱包密码来清除助记词</translation>
+      <source>Enter your wallet password to clear seed phrase</source>
+      <extracomment>electrum settings, ask password to clear seed phrase, dialog message</extracomment>
+      <translation>请输入你的钱包密码来清除助记词</translation>
     </message>
     <message id="settings-swap-connect-to-electrum">
-        <source>connect to electrum node</source>
-        <translation>连接到 electrum 节点</translation>
+      <source>connect to electrum node</source>
+      <translation>连接到 electrum 节点</translation>
     </message>
     <message id="settings-swap-connect-to-node">
-        <source>connect to node</source>
-        <translation>连接到节点</translation>
+      <source>connect to node</source>
+      <translation>连接到节点</translation>
     </message>
     <message id="settings-swap-disconnect">
-        <source>disconnect</source>
-        <translation>断开连接</translation>
+      <source>disconnect</source>
+      <translation>断开连接</translation>
     </message>
     <message id="swap-expiration-time">
-        <source>Expiration time</source>
-        <translation>过期时间</translation>
+      <source>Expiration time</source>
+      <translation>过期时间</translation>
     </message>
     <message id="send-confirmation-type-label">
-        <source>Address type</source>
-        <translation>地址类型</translation>
+      <source>Address type</source>
+      <translation>地址类型</translation>
     </message>
     <message id="swap-expired">
-        <source>Expired.</source>
-        <translation>过期</translation>
+      <source>Expired.</source>
+      <translation>过期</translation>
     </message>
     <message id="from-shielded-pool">
-        <source>shielded pool</source>
-        <translation>屏蔽池</translation>
+      <source>shielded pool</source>
+      <translation>屏蔽池</translation>
     </message>
     <message id="tx-address-offline">
-        <source>Offline</source>
-        <translation>离线</translation>
+      <source>Offline</source>
+      <translation>离线</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max">
-        <source>in progress
+      <source>in progress
 (maximum anonymity)</source>
-        <translation>正在进行
+      <translation>正在进行
 (最强匿名模式)</translation>
     </message>
     <message id="wallet-txs-status-sent-max">
-        <source>sent
+      <source>sent
 (maximum anonymity)</source>
-        <translation>已发送
+      <translation>已发送
 (最强匿名模式)</translation>
     </message>
     <message id="wallet-txs-status-received-max">
-        <source>received
+      <source>received
 (maximum anonymity)</source>
-        <translation>已接收
+      <translation>已接收
 (最强匿名模式)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-offline">
-        <source>in progress (offline)</source>
-        <translation>正在进行
+      <source>in progress (offline)</source>
+      <translation>正在进行
 (离线转账模式)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-offline">
-        <source>sent (offline)</source>
-        <translation>已发送
+      <source>sent (offline)</source>
+      <translation>已发送
  (离线转账模式)</translation>
     </message>
     <message id="wallet-txs-status-received-max-offline">
-        <source>received (offline)</source>
-        <translation>已接收
+      <source>received (offline)</source>
+      <translation>已接收
  (离线转账模式)</translation>
     </message>
     <message id="tx-failure-out-of-slots">
-        <source>Key keeper out of slots</source>
-        <translation>密钥管理员从空位</translation>
+      <source>Key keeper out of slots</source>
+      <translation>密钥管理员从空位</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
-        <source>Cannot extract shielded coin, fee is too big.</source>
-        <translation>无法提取被保护的的币，因为费用太高</translation>
+      <source>Cannot extract shielded coin, fee is too big.</source>
+      <translation>无法提取被保护的的币，因为费用太高</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
-        <source>Asset transactions are disabled in the receiver wallet</source>
-        <translation>接收方钱包中的资产交易被禁用</translation>
+      <source>Asset transactions are disabled in the receiver wallet</source>
+      <translation>接收方钱包中的资产交易被禁用</translation>
     </message>
     <message id="tx-failure-assets-disabled-blockchain">
-        <source>Asset transactions are disabled in blockchain configuration</source>
-        <translation>在配置中禁用了资产交易</translation>
+      <source>Asset transactions are disabled in blockchain configuration</source>
+      <translation>在配置中禁用了资产交易</translation>
     </message>
     <message id="tx-failure-identity-required">
-        <source>Peer wallet&apos;s signature required</source>
-        <translation>需要对方钱包&apos;的签名</translation>
+      <source>Peer wallet&apos;s signature required</source>
+      <translation>需要对方钱包&apos;的签名</translation>
     </message>
     <message id="tx-failure-cannot-get-vouchers">
-        <source>The sender cannot get vouchers for max privacy transaction</source>
-        <translation>发件人无法获得最大隐私交易凭单</translation>
+      <source>The sender cannot get vouchers for max privacy transaction</source>
+      <translation>发件人无法获得最大隐私交易凭单</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed 
+      <source>Random node address and port will be displayed 
 when connection is established</source>
-        <translation>随机节点地址和端口将在连接建立时显示</translation>
+      <translation>随机节点地址和端口将在连接建立时显示</translation>
     </message>
     <message id="swap-token-newer-lib">
-        <source>This address generated by newer Beam library version(%1)
+      <source>This address generated by newer Beam library version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>此令牌由新的Beam客户端版本生成(%1)
+      <translation>此令牌由新的Beam客户端版本生成(%1)
 你的版本是： %2。请检查更新。</translation>
     </message>
     <message id="swap-swap-token-newer-client">
-        <source>This address generated by newer Beam client version(%1)
+      <source>This address generated by newer Beam client version(%1)
 Your version is: %2. Please, check for updates.</source>
-        <translation>此令牌由新的Beam客户端版本生成(%1)
+      <translation>此令牌由新的Beam客户端版本生成(%1)
 你的版本是： %2。请检查更新。</translation>
     </message>
     <message id="address-info-title">
-        <source>address details</source>
-        <translation>地址细节</translation>
+      <source>address details</source>
+      <translation>地址细节</translation>
     </message>
     <message id="address-info-type">
-        <source>Address type</source>
-        <translation>地址类型</translation>
+      <source>Address type</source>
+      <translation>地址类型</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address
+      <source>SBBS Address
 (use for CEX withdrawals)</source>
-        <translation>SBBS地址
+      <translation>SBBS地址
 (用于中心化交易所取款)</translation>
     </message>
     <message id="address-info-address">
-        <source>Address</source>
-        <translation>地址</translation>
+      <source>Address</source>
+      <translation>地址</translation>
     </message>
     <message id="dogecoin-show-seed-phrase">
-        <source>Dogecoin seed phrase</source>
-        <translation>Dogecoin助记词</translation>
+      <source>Dogecoin seed phrase</source>
+      <translation>Dogecoin助记词</translation>
     </message>
     <message id="bitcoin-cash-show-seed-phrase">
-        <source>Bitcoin Cash seed phrase</source>
-        <translation>Bitcoin Cash助记词</translation>
+      <source>Bitcoin Cash seed phrase</source>
+      <translation>Bitcoin Cash助记词</translation>
     </message>
     <message id="dash-show-seed-phrase">
-        <source>Dash seed phrase</source>
-        <translation>Dash助记词</translation>
+      <source>Dash seed phrase</source>
+      <translation>Dash助记词</translation>
     </message>
     <message id="dogecoin-show-addresses-title">
-        <source>Dogecoin wallet addresses</source>
-        <translation>Dogecoin钱包地址</translation>
+      <source>Dogecoin wallet addresses</source>
+      <translation>Dogecoin钱包地址</translation>
     </message>
     <message id="bitcoin-cash-show-addresses-title">
-        <source>Bitcoin Cash wallet addresses</source>
-        <translation>Bitcoin Cash钱包地址</translation>
+      <source>Bitcoin Cash wallet addresses</source>
+      <translation>Bitcoin Cash钱包地址</translation>
     </message>
     <message id="dash-show-addresses-title">
-        <source>Dash wallet addresses</source>
-        <translation>Dash钱包地址</translation>
+      <source>Dash wallet addresses</source>
+      <translation>Dash钱包地址</translation>
     </message>
     <message id="general-dogecoin">
-        <source>Dogecoin</source>
-        <translation>Dogecoin</translation>
+      <source>Dogecoin</source>
+      <translation>Dogecoin</translation>
     </message>
     <message id="general-bitcoin-cash">
-        <source>Bitcoin Cash</source>
-        <translation>Bitcoin Cash</translation>
+      <source>Bitcoin Cash</source>
+      <translation>Bitcoin Cash</translation>
     </message>
     <message id="general-dash">
-        <source>DASH</source>
-        <translation>DASH</translation>
+      <source>DASH</source>
+      <translation>DASH</translation>
     </message>
     <message id="settings-swap-dogecoin-node">
-        <source>Dogecoin node</source>
-        <translation>Dogecoin 节点</translation>
+      <source>Dogecoin node</source>
+      <translation>Dogecoin 节点</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-node">
-        <source>Bitcoin Cash node</source>
-        <translation>Bitcoin Cash 节点</translation>
+      <source>Bitcoin Cash node</source>
+      <translation>Bitcoin Cash 节点</translation>
     </message>
     <message id="settings-swap-dash-node">
-        <source>Dash node</source>
-        <translation>Dash节点</translation>
+      <source>Dash node</source>
+      <translation>Dash节点</translation>
     </message>
     <message id="settings-swap-dogecoin-electrum">
-        <source>Dogecoin electrum</source>
-        <translation>Dogecoin electrum</translation>
+      <source>Dogecoin electrum</source>
+      <translation>Dogecoin electrum</translation>
     </message>
     <message id="settings-swap-bitcoin-cash-electrum">
-        <source>Bitcoin Cash electrum</source>
-        <translation>Bitcoin Cash electrum</translation>
+      <source>Bitcoin Cash electrum</source>
+      <translation>Bitcoin Cash electrum</translation>
     </message>
     <message id="settings-swap-dash-electrum">
-        <source>Dash electrum</source>
-        <translation>Dash electrum</translation>
+      <source>Dash electrum</source>
+      <translation>Dash electrum</translation>
     </message>
     <message id="settings-show-public-offline-address">
-        <source>Show public offline address</source>
-        <translation>显示公开离线地址</translation>
+      <source>Show public offline address</source>
+      <translation>显示公开离线地址</translation>
     </message>
     <message id="public-address-title">
-        <source>Public offline address</source>
-        <translation>公共离线地址</translation>
+      <source>Public offline address</source>
+      <translation>公共离线地址</translation>
     </message>
     <message id="public-offline-address-note">
-        <source>Publishing this address will allow you to be identified</source>
-        <translation>公开此地址将允许您被识别</translation>
+      <source>Publishing this address will allow you to be identified</source>
+      <translation>公开此地址将允许您被识别</translation>
     </message>
     <message id="more-details">
-        <source>More details</source>
-        <translation>更多详细信息</translation>
+      <source>More details</source>
+      <translation>更多详细信息</translation>
     </message>
     <message id="tx-address-public-offline">
-        <source>Public offline</source>
-        <translation>公共离线</translation>
+      <source>Public offline</source>
+      <translation>公共离线</translation>
     </message>
     <message id="tx-address-regular">
-        <source>Regular</source>
-        <translation>常规</translation>
+      <source>Regular</source>
+      <translation>常规</translation>
     </message>
     <message id="tx-address-max-privacy">
-        <source>Maximum anonymity</source>
-        <translation>最强匿名模式</translation>
+      <source>Maximum anonymity</source>
+      <translation>最强匿名模式</translation>
     </message>
     <message id="wallet-txs-status-in-progress-public-offline">
-        <source>in progress
+      <source>in progress
 (public offline)</source>
-        <translation>正在进行
+      <translation>正在进行
 (公共离线转账模式)</translation>
     </message>
     <message id="wallet-txs-status-sent-public-offline">
-        <source>sent
+      <source>sent
 (public offline)</source>
-        <translation>已发送
+      <translation>已发送
 (公共离线转账模式)</translation>
     </message>
     <message id="wallet-txs-status-received-public-offline">
-        <source>received
+      <source>received
 (public offline)</source>
-        <translation>已接受
+      <translation>已接受
 (公共离线转账模式)</translation>
     </message>
     <message id="wallet-txs-status-canceled-public-offline">
-        <source>canceled
+      <source>canceled
 (public offline)</source>
-        <translation>已取消
+      <translation>已取消
 (公共离线转账模式)</translation>
     </message>
     <message id="wallet-txs-status-failed-public-offline">
-        <source>failed
+      <source>failed
 (public offline)</source>
-        <translation>失败
+      <translation>失败
 (公共离线转账模式)</translation>
     </message>
     <message id="settings-node-progress">
-        <source>Swap in progress, cannot disconnect or switch connection type.</source>
-        <translation>交易正在进行中，不能断开连接或切换连接类型。</translation>
+      <source>Swap in progress, cannot disconnect or switch connection type.</source>
+      <translation>交易正在进行中，不能断开连接或切换连接类型。</translation>
     </message>
     <message id="settings-doge-node-progress">
-        <source>Swap in progress, cannot disconnect.</source>
-        <translation>交易正在进行中，不能断开连接。</translation>
+      <source>Swap in progress, cannot disconnect.</source>
+      <translation>交易正在进行中，不能断开连接。</translation>
     </message>
     <message id="wallet-txs-status-canceled-max">
-        <source>canceled
+      <source>canceled
 (maximum anonymity)</source>
-        <translation>已取消
+      <translation>已取消
 (最强匿名模式)</translation>
     </message>
     <message id="wallet-txs-status-canceled-max-offline">
-        <source>canceled (offline)</source>
-        <translation>已取消
+      <source>canceled (offline)</source>
+      <translation>已取消
  (离线转账模式)</translation>
     </message>
     <message id="wallet-txs-status-failed-max">
-        <source>failed
+      <source>failed
 (maximum anonymity)</source>
-        <translation>失败
+      <translation>失败
 (最强匿名模式)</translation>
     </message>
     <message id="wallet-txs-status-failed-max-offline">
-        <source>failed (offline)</source>
-        <translation>失败
+      <source>failed (offline)</source>
+      <translation>失败
  (离线转账模式)</translation>
     </message>
     <message id="max-privacy-dialog-header">
-        <source>Maximum anonymity</source>
-        <translation>最强匿名模式</translation>
+      <source>Maximum anonymity</source>
+      <translation>最强匿名模式</translation>
     </message>
     <message id="max-privacy-dialog-locked">
-        <source>Locked</source>
-        <translation>锁定</translation>
+      <source>Locked</source>
+      <translation>锁定</translation>
     </message>
     <message id="max-privacy-dialog-amount">
-        <source>Amount</source>
-        <translation>数量</translation>
+      <source>Amount</source>
+      <translation>数量</translation>
     </message>
     <message id="max-privacy-dialog-unlock-time">
-        <source>Unlock Time</source>
-        <translation>解锁时间</translation>
+      <source>Unlock Time</source>
+      <translation>解锁时间</translation>
     </message>
     <message id="settings-privacy-mp-anonymity-set">
-        <source>Maximum anonymity set size</source>
-        <translation>最强匿名设置大小</translation>
+      <source>Maximum anonymity set size</source>
+      <translation>最强匿名设置大小</translation>
     </message>
     <message id="settings-privacy-mp-notice">
-        <source>Received coins can be spent immediately.</source>
-        <translation>收到的币可以立即使用</translation>
+      <source>Received coins can be spent immediately.</source>
+      <translation>收到的币可以立即使用</translation>
     </message>
     <message id="settings-privacy-mp-time-limit">
-        <source>Longest transaction time for maximum anonymity</source>
-        <translation>最强匿名模式的交易时间最长</translation>
+      <source>Longest transaction time for maximum anonymity</source>
+      <translation>最强匿名模式的交易时间最长</translation>
     </message>
     <message id="remote-node-lelantus-warning">
-        <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
-        <translation>为了支持最强的匿名性设置和离线交易，请连接到完整节点，或者使用您自己的密钥配置自己的节点</translation>
+      <source>To support maximum anonymity set and offline transactions please connect to integrated node or to own node configured with your owner key.</source>
+      <translation>为了支持最强的匿名性设置和离线交易，请连接到完整节点，或者使用您自己的密钥配置自己的节点</translation>
     </message>
     <message id="time-hour" numerus="yes">
-        <source>%n hour(s)</source>
-        <extracomment>time &quot;hour&quot; string</extracomment>
-        <translation>
-            <numerusform>%n小时</numerusform>
-        </translation>
+      <source>%n hour(s)</source>
+      <extracomment>time &quot;hour&quot; string</extracomment>
+      <translation>
+        <numerusform>%n小时</numerusform>
+      </translation>
     </message>
     <message id="time-day" numerus="yes">
-        <source>%n day(s)</source>
-        <extracomment>time &quot;day&quot; string</extracomment>
-        <translation>
-            <numerusform>%n 天</numerusform>
-        </translation>
+      <source>%n day(s)</source>
+      <extracomment>time &quot;day&quot; string</extracomment>
+      <translation>
+        <numerusform>%n 天</numerusform>
+      </translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit">
-        <source>No limit</source>
-        <translation>无限制</translation>
+      <source>No limit</source>
+      <translation>无限制</translation>
     </message>
     <message id="general-ethereum">
-        <source>Ethereum</source>
-        <translation>以太坊</translation>
+      <source>Ethereum</source>
+      <translation>以太坊</translation>
     </message>
     <message id="settings-swap-ethereum-node">
-        <source>Ethereum node</source>
-        <translation>以太坊节点</translation>
+      <source>Ethereum node</source>
+      <translation>以太坊节点</translation>
     </message>
     <message id="ethereum-show-seed-title">
-        <source>Ethereum seed phrase</source>
-        <translation>以太坊助记词</translation>
+      <source>Ethereum seed phrase</source>
+      <translation>以太坊助记词</translation>
     </message>
     <message id="settings-account-index">
-        <source>Account index</source>
-        <translation>账户索引</translation>
+      <source>Account index</source>
+      <translation>账户索引</translation>
     </message>
     <message id="general-recommended-fee-fail">
-        <source>The minimum recommended fee is %1 %2</source>
-        <translation>建议的最低费用是 %1 %2</translation>
+      <source>The minimum recommended fee is %1 %2</source>
+      <translation>建议的最低费用是 %1 %2</translation>
     </message>
     <message id="general-fee-fail">
-        <source>The minimum fee is %1 %2</source>
-        <translation>最小交易费为%1%2</translation>
+      <source>The minimum fee is %1 %2</source>
+      <translation>最小交易费为%1%2</translation>
     </message>
     <message id="general-max-fee-fail">
-        <source>The maximum fee is %1 %2</source>
-        <translation>最多交易费为%1%2</translation>
+      <source>The maximum fee is %1 %2</source>
+      <translation>最多交易费为%1%2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
+      <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</source>
-        <translation>连接错误：无法计算推荐的费用率。 
+      <translation>连接错误：无法计算推荐的费用率。 
 自行在 %1 区块链上检查。 低费率可能需要 
 更长时间才能完成交易。 </translation>
     </message>
     <message id="ethereum-show-addresses-title">
-        <source>Ethereum wallet addresses</source>
-        <translation>以太坊钱包地址</translation>
+      <source>Ethereum wallet addresses</source>
+      <translation>以太坊钱包地址</translation>
     </message>
     <message id="settings-infura-project-id">
-        <source>Infura project ID</source>
-        <translation>Infura项目ID</translation>
+      <source>Infura project ID</source>
+      <translation>Infura项目ID</translation>
     </message>
     <message id="apps-title">
-        <source>Applications</source>
-        <translation type="unfinished">Applications</translation>
+      <source>Applications</source>
+      <translation type="unfinished">Applications</translation>
     </message>
     <message id="apps-devapp">
-        <source>This is your dev application</source>
-        <translation>这是您的dev应用程序</translation>
+      <source>This is your dev application</source>
+      <translation>这是您的dev应用程序</translation>
     </message>
     <message id="send-flat-fee">
-        <source>%1 Transaction fee</source>
-        <translation>%1交易手续费</translation>
+      <source>%1 Transaction fee</source>
+      <translation>%1交易手续费</translation>
     </message>
     <message id="notification-contract-no-message">
-        <source>No description provided by the contract</source>
-        <translation>合约未提供说明</translation>
+      <source>No description provided by the contract</source>
+      <translation>合约未提供说明</translation>
     </message>
     <message id="notification-contract-completed">
-        <source>DApp transaction completed</source>
-        <translation>DApp交易已完成</translation>
+      <source>DApp transaction completed</source>
+      <translation>DApp交易已完成</translation>
     </message>
     <message id="notification-contract-expired">
-        <source>DApp transaction expired</source>
-        <translation>DApp交易已失效</translation>
+      <source>DApp transaction expired</source>
+      <translation>DApp交易已失效</translation>
     </message>
     <message id="tx-contract-default-comment">
-        <source>Contract transaction</source>
-        <translation>合约交易</translation>
+      <source>Contract transaction</source>
+      <translation>合约交易</translation>
     </message>
     <message id="atomic-swap-cancel">
-        <source>Cancel offer</source>
-        <translation>取消报价</translation>
+      <source>Cancel offer</source>
+      <translation>取消报价</translation>
     </message>
     <message id="atomic-swap-cancel-text">
-        <source>Are you sure you want to cancel your offer?</source>
-        <translation>你确定要取消你的报价吗？</translation>
+      <source>Are you sure you want to cancel your offer?</source>
+      <translation>你确定要取消你的报价吗？</translation>
     </message>
     <message id="atomic-swap-cancel-button">
-        <source>cancel offer</source>
-        <translation>取消出价</translation>
+      <source>cancel offer</source>
+      <translation>取消出价</translation>
     </message>
     <message id="atomic-swap-back-button">
-        <source>back</source>
-        <translation>返回</translation>
+      <source>back</source>
+      <translation>返回</translation>
     </message>
     <message id="atomic-swap-tx-cancel">
-        <source>Cancel atomic swap</source>
-        <translation>取消原子交换</translation>
+      <source>Cancel atomic swap</source>
+      <translation>取消原子交换</translation>
     </message>
     <message id="atomic-swap-tx-cancel-text">
-        <source>Are you sure you want to cancel?</source>
-        <translation>你确定要取消吗?</translation>
+      <source>Are you sure you want to cancel?</source>
+      <translation>你确定要取消吗?</translation>
     </message>
     <message id="atomic-swap-title">
-        <source>Atomic Swaps</source>
-        <translation>Atomic Swap</translation>
+      <source>Atomic Swaps</source>
+      <translation>Atomic Swap</translation>
     </message>
     <message id="atomic-swap-accept">
-        <source>Accept offer</source>
-        <translation>接受报价</translation>
+      <source>Accept offer</source>
+      <translation>接受报价</translation>
     </message>
     <message id="atomic-swap-create">
-        <source>Create offer</source>
-        <translation>创建报价</translation>
+      <source>Create offer</source>
+      <translation>创建报价</translation>
     </message>
     <message id="atomic-swap-1active-tx-count">
-        <source>1 active transaction</source>
-        <translation>1 笔活动的交易</translation>
+      <source>1 active transaction</source>
+      <translation>1 笔活动的交易</translation>
     </message>
     <message id="atomic-swap-active-tx-count">
-        <source>%1 active transactions</source>
-        <translation>%1  笔活动的交易</translation>
+      <source>%1 active transactions</source>
+      <translation>%1  笔活动的交易</translation>
     </message>
     <message id="swap-beta-tx-in-progress">
-        <source>Transaction is in progress</source>
-        <translation>交易正在进行中</translation>
+      <source>Transaction is in progress</source>
+      <translation>交易正在进行中</translation>
     </message>
     <message id="swap-connecting">
-        <source>Connecting...</source>
-        <translation>正在连接...</translation>
+      <source>Connecting...</source>
+      <translation>正在连接...</translation>
     </message>
     <message id="swap-beta-connection-error">
-        <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
-        <translation>无法连接到对等点。请在设置中检查地址，然后重试。</translation>
+      <source>Cannot connect to peer. Please check the address in Settings and try again.</source>
+      <translation>无法连接到对等点。请在设置中检查地址，然后重试。</translation>
     </message>
     <message id="atomic-swap-more-currency">
-        <source>Connect more currencies</source>
-        <translation>连接更多货币</translation>
+      <source>Connect more currencies</source>
+      <translation>连接更多货币</translation>
     </message>
     <message id="atomic-swap-transactions-tab">
-        <source>Transactions</source>
-        <translation>交易</translation>
+      <source>Transactions</source>
+      <translation>交易</translation>
     </message>
     <message id="atomic-swap-fit-current-balance">
-        <source>Fit my current balance</source>
-        <translation>适应我当前的余额</translation>
+      <source>Fit my current balance</source>
+      <translation>适应我当前的余额</translation>
     </message>
     <message id="atomic-swap-currency">
-        <source>Currency</source>
-        <translation>币种</translation>
+      <source>Currency</source>
+      <translation>币种</translation>
     </message>
     <message id="atomic-offers-loading">
-        <source>Please wait, offers are loading.</source>
-        <translation>请稍候，正在加载报价</translation>
+      <source>Please wait, offers are loading.</source>
+      <translation>请稍候，正在加载报价</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
+      <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <translation>目前没有活动的报价。
+      <translation>目前没有活动的报价。
 请稍后再试或自己创建报价。</translation>
     </message>
     <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>付款</translation>
+      <source>Send</source>
+      <translation>付款</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
-        <source>All</source>
-        <translation>所有</translation>
+      <source>All</source>
+      <translation>所有</translation>
     </message>
     <message id="atomic-swap-in-progress-transactions-tab">
-        <source>In progress</source>
-        <translation>交易中</translation>
+      <source>In progress</source>
+      <translation>交易中</translation>
     </message>
     <message id="atomic-swap-tx-table-created">
-        <source>Created on</source>
-        <translation>创建</translation>
+      <source>Created on</source>
+      <translation>创建</translation>
     </message>
     <message id="atomic-swap-tx-table-from">
-        <source>From</source>
-        <translation>从</translation>
+      <source>From</source>
+      <translation>从</translation>
     </message>
     <message id="atomic-swap-tx-table-to">
-        <source>To</source>
-        <translation>至</translation>
+      <source>To</source>
+      <translation>至</translation>
     </message>
     <message id="atomic-swap-tx-table-sent">
-        <source>Sent</source>
-        <translation>已付</translation>
+      <source>Sent</source>
+      <translation>已付</translation>
     </message>
     <message id="atomic-swap-tx-table-received">
-        <source>Received</source>
-        <translation>已收</translation>
+      <source>Received</source>
+      <translation>已收</translation>
     </message>
     <message id="atomic-swap-tx-table-status">
-        <source>Status</source>
-        <translation>状态</translation>
+      <source>Status</source>
+      <translation>状态</translation>
     </message>
     <message id="swap-copy-token">
-        <source>Copy token</source>
-        <translation>复制令牌</translation>
+      <source>Copy token</source>
+      <translation>复制令牌</translation>
     </message>
     <message id="wallet-txs-status-waiting-peer">
-        <source>waiting for counterparty</source>
-        <translation>等待对应方</translation>
+      <source>waiting for counterparty</source>
+      <translation>等待对应方</translation>
     </message>
     <message id="wallet-txs-status-failing">
-        <source>failing</source>
-        <translation>失败</translation>
+      <source>failing</source>
+      <translation>失败</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
+      <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <translation>无任何第三方货币连接
+      <translation>无任何第三方货币连接
 请更新设置后重试</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
-        <source>Offer expiration time</source>
-        <translation>报价失效时间</translation>
+      <source>Offer expiration time</source>
+      <translation>报价失效时间</translation>
     </message>
     <message id="wallet-receive-expires-30m">
-        <source>30 minutes</source>
-        <translation>30分钟</translation>
+      <source>30 minutes</source>
+      <translation>30分钟</translation>
     </message>
     <message id="wallet-receive-expires-1">
-        <source>1 hour</source>
-        <translation>1小时</translation>
+      <source>1 hour</source>
+      <translation>1小时</translation>
     </message>
     <message id="wallet-receive-expires-2">
-        <source>2 hours</source>
-        <translation>2小时</translation>
+      <source>2 hours</source>
+      <translation>2小时</translation>
     </message>
     <message id="wallet-receive-expires-6">
-        <source>6 hours</source>
-        <translation>6小时</translation>
+      <source>6 hours</source>
+      <translation>6小时</translation>
     </message>
     <message id="wallet-receive-expires-12">
-        <source>12 hours</source>
-        <translation>12 小时</translation>
+      <source>12 hours</source>
+      <translation>12 小时</translation>
     </message>
     <message id="overtop-beam-supply">
-        <source>Amount overtop total Beam supply.</source>
-        <translation>数量过大。</translation>
+      <source>Amount overtop total Beam supply.</source>
+      <translation>数量过大。</translation>
     </message>
     <message id="swap-invalid-rate">
-        <source>Invalid rate</source>
-        <translation>无效的价格</translation>
+      <source>Invalid rate</source>
+      <translation>无效的价格</translation>
     </message>
     <message id="wallet-receive-swap-publish">
-        <source>publish offer</source>
-        <translation>publish transaction token</translation>
+      <source>publish offer</source>
+      <translation>publish transaction token</translation>
     </message>
     <message id="appmodel-already-opened">
-        <source>Wallet database is already opened</source>
-        <translation>钱包数据库已打开</translation>
+      <source>Wallet database is already opened</source>
+      <translation>钱包数据库已打开</translation>
     </message>
     <message id="general-open-failed">
-        <source>Failed to open wallet, please check logs</source>
-        <translation>无法打开钱包，请检查日志</translation>
+      <source>Failed to open wallet, please check logs</source>
+      <translation>无法打开钱包，请检查日志</translation>
     </message>
     <message id="start-no-hwkeeper">
-        <source>Hardware keykeeper is not initialized</source>
-        <translation>硬件密钥管理器未初始化</translation>
+      <source>Hardware keykeeper is not initialized</source>
+      <translation>硬件密钥管理器未初始化</translation>
     </message>
     <message id="start-trezor-error">
-        <source>Failed to create trezor wallet</source>
-        <translation>无法创建trezor钱包</translation>
+      <source>Failed to create trezor wallet</source>
+      <translation>无法创建trezor钱包</translation>
     </message>
     <message id="start-hw-not-connected">
-        <source>Hardware wallet is not connected</source>
-        <translation>硬件钱包未连接</translation>
+      <source>Hardware wallet is not connected</source>
+      <translation>硬件钱包未连接</translation>
     </message>
     <message id="general-locked">
-        <source>Locked</source>
-        <translation>锁定</translation>
+      <source>Locked</source>
+      <translation>锁定</translation>
     </message>
     <message id="utxo-head-maturity">
-        <source>Maturity</source>
-        <translation>成熟</translation>
+      <source>Maturity</source>
+      <translation>成熟</translation>
     </message>
     <message id="utxo-status-available">
-        <source>Available</source>
-        <translation>可用余额</translation>
+      <source>Available</source>
+      <translation>可用余额</translation>
     </message>
     <message id="utxo-status-maturing">
-        <source>Maturing%1(till block height %2)</source>
-        <translation>成熟高度 %1 (至区块高度 %2 )</translation>
+      <source>Maturing%1(till block height %2)</source>
+      <translation>成熟高度 %1 (至区块高度 %2 )</translation>
     </message>
     <message id="utxo-status-unavailable">
-        <source>Unavailable%1(mining result rollback)</source>
-        <translation>不可用%1 (挖矿结果回滚)</translation>
+      <source>Unavailable%1(mining result rollback)</source>
+      <translation>不可用%1 (挖矿结果回滚)</translation>
     </message>
     <message id="utxo-status-outgoing">
-        <source>In progress%1(outgoing)</source>
-        <translation>进行中%1 (出账)</translation>
+      <source>In progress%1(outgoing)</source>
+      <translation>进行中%1 (出账)</translation>
     </message>
     <message id="utxo-status-change">
-        <source>In progress%1(change)</source>
-        <translation>进行中%1 (找零)</translation>
+      <source>In progress%1(change)</source>
+      <translation>进行中%1 (找零)</translation>
     </message>
     <message id="utxo-status-incoming">
-        <source>In progress%1(incoming)</source>
-        <translation>进行中%1 (入账)</translation>
+      <source>In progress%1(incoming)</source>
+      <translation>进行中%1 (入账)</translation>
     </message>
     <message id="utxo-status-spent">
-        <source>Spent</source>
-        <translation>已使用</translation>
+      <source>Spent</source>
+      <translation>已使用</translation>
     </message>
     <message id="utxo-status-maturing-mp">
-        <source>Maturing%1(maximum anonymity %2% unlinked)</source>
-        <translation>成熟中%1(最强匿名模式%2%未连接)</translation>
+      <source>Maturing%1(maximum anonymity %2% unlinked)</source>
+      <translation>成熟中%1(最强匿名模式%2%未连接)</translation>
     </message>
     <message id="utxo-head-type">
-        <source>Type</source>
-        <translation>类型</translation>
+      <source>Type</source>
+      <translation>类型</translation>
     </message>
     <message id="general-coinbase">
-        <source>Coinbase</source>
-        <extracomment>UTXO type Coinbase</extracomment>
-        <translation>Coinbase</translation>
+      <source>Coinbase</source>
+      <extracomment>UTXO type Coinbase</extracomment>
+      <translation>Coinbase</translation>
     </message>
     <message id="general-regular">
-        <source>Regular</source>
-        <extracomment>UTXO type Regular</extracomment>
-        <translation>常规</translation>
+      <source>Regular</source>
+      <extracomment>UTXO type Regular</extracomment>
+      <translation>常规</translation>
     </message>
     <message id="general-treasury">
-        <source>Treasury</source>
-        <extracomment>UTXO type Treasury</extracomment>
-        <translation>基金会</translation>
+      <source>Treasury</source>
+      <extracomment>UTXO type Treasury</extracomment>
+      <translation>基金会</translation>
     </message>
     <message id="general-shielded">
-        <source>Shielded</source>
-        <extracomment>UTXO type Shielded</extracomment>
-        <translation>盾</translation>
+      <source>Shielded</source>
+      <extracomment>UTXO type Shielded</extracomment>
+      <translation>盾</translation>
     </message>
     <message id="apps-bad-api-version">
-        <source>Unsupported API version requested: %1</source>
-        <translation>不支持的 API 版本: %1</translation>
+      <source>Unsupported API version requested: %1</source>
+      <translation>不支持的 API 版本: %1</translation>
     </message>
     <message id="can-not-generate-new-address-message">
-        <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
-        <translation>无法生成新地址
+      <source>You cannot generate new address. Your wallet doesn&apos;t have a master key.</source>
+      <translation>无法生成新地址
 您的钱包无主密钥</translation>
     </message>
     <message id="wallet-receive-title">
-        <source>Receive</source>
-        <translation>收款</translation>
+      <source>Receive</source>
+      <translation>收款</translation>
     </message>
     <message id="general-tx-type">
-        <source>Transaction type</source>
-        <translation>交易类型</translation>
+      <source>Transaction type</source>
+      <translation>交易类型</translation>
     </message>
     <message id="receive-request">
-        <source>Requested amount</source>
-        <translation>请求数量</translation>
+      <source>Requested amount</source>
+      <translation>请求数量</translation>
     </message>
     <message id="receive-request-optional">
-        <source>(optional)</source>
-        <translation>（可选）</translation>
+      <source>(optional)</source>
+      <translation>（可选）</translation>
     </message>
     <message id="wallet-receive-addr-message-mp" numerus="yes">
-        <source>Transaction can last at most %n hour(s).</source>
-        <translation>
-            <numerusform>交易最多可以持续%n小时</numerusform>
-        </translation>
+      <source>Transaction can last at most %n hour(s).</source>
+      <translation>
+        <numerusform>交易最多可以持续%n小时</numerusform>
+      </translation>
     </message>
     <message id="wallet-receive-addr-message-mp-no-limit">
-        <source>Transaction can last indefinitely.</source>
-        <translation>交易可以无限期地持续下去</translation>
+      <source>Transaction can last indefinitely.</source>
+      <translation>交易可以无限期地持续下去</translation>
     </message>
     <message id="send-public-token">
-        <source>Public offline address.</source>
-        <translation>公共离线地址</translation>
+      <source>Public offline address.</source>
+      <translation>公共离线地址</translation>
     </message>
     <message id="send-unknown-token">
-        <source>Unknown address.</source>
-        <translation>未知地址</translation>
+      <source>Unknown address.</source>
+      <translation>未知地址</translation>
     </message>
     <message id="send-title">
-        <source>Send</source>
-        <translation>付款</translation>
+      <source>Send</source>
+      <translation>付款</translation>
     </message>
     <message id="general-send-to">
-        <source>Send to</source>
-        <translation>付款至</translation>
+      <source>Send to</source>
+      <translation>付款至</translation>
     </message>
     <message id="send-contact-address-placeholder">
-        <source>Paste recipient address here</source>
-        <translation>收件人地址粘贴到这里</translation>
+      <source>Paste recipient address here</source>
+      <translation>收件人地址粘贴到这里</translation>
     </message>
     <message id="wallet-send-invalid-address-or-token">
-        <source>Invalid wallet address</source>
-        <translation>无效的钱包地址</translation>
+      <source>Invalid wallet address</source>
+      <translation>无效的钱包地址</translation>
     </message>
     <message id="tx-offline">
-        <source>Offline</source>
-        <translation>离线</translation>
+      <source>Offline</source>
+      <translation>离线</translation>
     </message>
     <message id="send-no-funds">
-        <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
-        <translation>资金不足，无法完成交易，最大金额为%1个%2</translation>
+      <source>Insufficient funds to complete the transaction. Maximum amount is %1 %2.</source>
+      <translation>资金不足，无法完成交易，最大金额为%1个%2</translation>
     </message>
     <message id="amount-input-add-max">
-        <source>max</source>
-        <translation>最多</translation>
+      <source>max</source>
+      <translation>最多</translation>
     </message>
     <message id="send-amount-label">
-        <source>Amount to send</source>
-        <translation>付款金额</translation>
+      <source>Amount to send</source>
+      <translation>付款金额</translation>
     </message>
     <message id="send-remaining-label">
-        <source>Remaining</source>
-        <translation>剩余</translation>
+      <source>Remaining</source>
+      <translation>剩余</translation>
     </message>
     <message id="send-remaining-beam-label">
-        <source>BEAM Remaining</source>
-        <translation>剩余BEAM</translation>
+      <source>BEAM Remaining</source>
+      <translation>剩余BEAM</translation>
     </message>
     <message id="general-balance">
-        <source>Balance</source>
-        <translation>余额</translation>
+      <source>Balance</source>
+      <translation>余额</translation>
     </message>
     <message id="general-asset-info">
-        <source>Asset Info</source>
-        <translation>资产信息</translation>
+      <source>Asset Info</source>
+      <translation>资产信息</translation>
     </message>
     <message id="balance-available">
-        <source>Available</source>
-        <translation>可用余额</translation>
+      <source>Available</source>
+      <translation>可用余额</translation>
     </message>
     <message id="balance-regular">
-        <source>Regular</source>
-        <translation>常规</translation>
+      <source>Regular</source>
+      <translation>常规</translation>
     </message>
     <message id="balance-shielded">
-        <source>Shielded</source>
-        <translation>盾</translation>
+      <source>Shielded</source>
+      <translation>盾</translation>
     </message>
     <message id="balance-locked">
-        <source>Locked</source>
-        <translation>锁定</translation>
+      <source>Locked</source>
+      <translation>锁定</translation>
     </message>
     <message id="balance-maturing">
-        <source>Maturing</source>
-        <translation>成熟中</translation>
+      <source>Maturing</source>
+      <translation>成熟中</translation>
     </message>
     <message id="balance-change">
-        <source>Change</source>
-        <translation>找零</translation>
+      <source>Change</source>
+      <translation>找零</translation>
     </message>
     <message id="balance-mp">
-        <source>Maximum anonymity</source>
-        <translation>最强匿名模式</translation>
+      <source>Maximum anonymity</source>
+      <translation>最强匿名模式</translation>
     </message>
     <message id="info-asset-id">
-        <source>Asset ID</source>
-        <translation>资产ID</translation>
+      <source>Asset ID</source>
+      <translation>资产ID</translation>
     </message>
     <message id="info-asset-name">
-        <source>Asset name</source>
-        <translation>资产名称</translation>
+      <source>Asset name</source>
+      <translation>资产名称</translation>
     </message>
     <message id="info-asset-unit">
-        <source>Unit name</source>
-        <translation>单元名称</translation>
+      <source>Unit name</source>
+      <translation>单元名称</translation>
     </message>
     <message id="info-asset-smallest">
-        <source>Smallest unit name</source>
-        <translation>最小单元名称</translation>
+      <source>Smallest unit name</source>
+      <translation>最小单元名称</translation>
     </message>
     <message id="info-asset-short">
-        <source>Short description</source>
-        <translation>简述</translation>
+      <source>Short description</source>
+      <translation>简述</translation>
     </message>
     <message id="info-asset-long">
-        <source>Long description</source>
-        <translation>详细描述</translation>
+      <source>Long description</source>
+      <translation>详细描述</translation>
     </message>
     <message id="info-asset-site">
-        <source>Website</source>
-        <translation>网站</translation>
+      <source>Website</source>
+      <translation>网站</translation>
     </message>
     <message id="info-asset-paper">
-        <source>Whitepaper</source>
-        <translation>白皮书</translation>
+      <source>Whitepaper</source>
+      <translation>白皮书</translation>
     </message>
     <message id="tx-details-date-label">
-        <source>Date</source>
-        <translation>日期</translation>
+      <source>Date</source>
+      <translation>日期</translation>
     </message>
     <message id="tx-details-sending-addr-label">
-        <source>Sending address</source>
-        <translation>付款地址</translation>
+      <source>Sending address</source>
+      <translation>付款地址</translation>
     </message>
     <message id="tx-details-sender-identity">
-        <source>Sender signature</source>
-        <translation>发送人签名</translation>
+      <source>Sender signature</source>
+      <translation>发送人签名</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
-        <source>Receiving address</source>
-        <translation>收款地址</translation>
+      <source>Receiving address</source>
+      <translation>收款地址</translation>
     </message>
     <message id="tx-details-receiver-identity">
-        <source>Receiver signature</source>
-        <translation>接收人签名</translation>
+      <source>Receiver signature</source>
+      <translation>接收人签名</translation>
     </message>
     <message id="tx-details-amount-label">
-        <source>Amount</source>
-        <translation>数量</translation>
+      <source>Amount</source>
+      <translation>数量</translation>
     </message>
     <message id="tx-details-rate-notice">
-        <source>calculated with the exchange rate at the time of the transaction</source>
-        <translation>以交易时的汇率计算</translation>
+      <source>calculated with the exchange rate at the time of the transaction</source>
+      <translation>以交易时的汇率计算</translation>
     </message>
     <message id="tx-details-exchange-rate-not-available">
-        <source>exchange rate was not available at the time of the transaction</source>
-        <translation>交易时汇率不可用</translation>
+      <source>exchange rate was not available at the time of the transaction</source>
+      <translation>交易时汇率不可用</translation>
     </message>
     <message id="tx-details-tx-id-label">
-        <source>Transaction ID</source>
-        <translation>交易ID</translation>
+      <source>Transaction ID</source>
+      <translation>交易ID</translation>
     </message>
     <message id="open-in-explorer">
-        <source>Open in Blockchain Explorer</source>
-        <translation>在区块链浏览器中打开</translation>
+      <source>Open in Blockchain Explorer</source>
+      <translation>在区块链浏览器中打开</translation>
     </message>
     <message id="tx-details-error-label">
-        <source>Error</source>
-        <translation>错误</translation>
+      <source>Error</source>
+      <translation>错误</translation>
     </message>
     <message id="utxo-empty">
-        <source>Your UTXO list is empty</source>
-        <translation>UTXO列表是空的</translation>
+      <source>Your UTXO list is empty</source>
+      <translation>UTXO列表是空的</translation>
     </message>
     <message id="tx-in-progress-empty">
-        <source>There are no in progress transactions yet.</source>
-        <translation>无进行中的交易</translation>
+      <source>There are no in progress transactions yet.</source>
+      <translation>无进行中的交易</translation>
     </message>
     <message id="receive-addr">
-        <source>Address</source>
-        <translation>地址</translation>
+      <source>Address</source>
+      <translation>地址</translation>
     </message>
     <message id="edit-addr-title">
-        <source>Edit address</source>
-        <translation>编辑地址</translation>
+      <source>Edit address</source>
+      <translation>编辑地址</translation>
     </message>
     <message id="edit-addr-addr">
-        <source>Address</source>
-        <translation>地址</translation>
+      <source>Address</source>
+      <translation>地址</translation>
     </message>
     <message id="edit-addr-expires-label">
-        <source>Expires on</source>
-        <translation>失效于</translation>
+      <source>Expires on</source>
+      <translation>失效于</translation>
     </message>
     <message id="edit-addr-expire-now">
-        <source>Expire now</source>
-        <translation>现在失效</translation>
+      <source>Expire now</source>
+      <translation>现在失效</translation>
     </message>
     <message id="edit-addr-extend">
-        <source>Extend</source>
-        <translation>扩展</translation>
+      <source>Extend</source>
+      <translation>扩展</translation>
     </message>
     <message id="edit-addr-activate">
-        <source>Activate</source>
-        <translation>激活</translation>
+      <source>Activate</source>
+      <translation>激活</translation>
     </message>
     <message id="edit-addr-save-button">
-        <source>Save</source>
-        <translation>保存</translation>
+      <source>Save</source>
+      <translation>保存</translation>
     </message>
     <message id="edit-addr-no-expire">
-        <source>There is an active transaction for this address, therefore it cannot be expired.</source>
-        <translation>此地址有一个正在进行的交易，因此它不能失效</translation>
+      <source>There is an active transaction for this address, therefore it cannot be expired.</source>
+      <translation>此地址有一个正在进行的交易，因此它不能失效</translation>
     </message>
     <message id="edit-addr-never-expires">
-        <source>This address never expires</source>
-        <translation>此地址永不失效</translation>
+      <source>This address never expires</source>
+      <translation>此地址永不失效</translation>
     </message>
     <message id="edit-addr-expired">
-        <source>This address is already expired</source>
-        <translation>此地址已失效</translation>
+      <source>This address is already expired</source>
+      <translation>此地址已失效</translation>
     </message>
     <message id="notification-contract-failed">
-        <source>DApp transaction failed</source>
-        <translation>DApp交易失败</translation>
+      <source>DApp transaction failed</source>
+      <translation>DApp交易失败</translation>
     </message>
     <message id="contacts-empty">
-        <source>Your contact list is empty</source>
-        <translation>您的联系人列表为空</translation>
+      <source>Your contact list is empty</source>
+      <translation>您的联系人列表为空</translation>
     </message>
     <message id="addressbook-empty">
-        <source>Your address book is empty</source>
-        <translation>您的地址簿为空</translation>
+      <source>Your address book is empty</source>
+      <translation>您的地址簿为空</translation>
     </message>
     <message id="atomic-no-my-offers">
-        <source>There are no offers yet.</source>
-        <translation>尚无报价</translation>
+      <source>There are no offers yet.</source>
+      <translation>尚无报价</translation>
     </message>
     <message id="swap-tx-empty">
-        <source>There are no transactions yet.</source>
-        <translation>没有交易</translation>
+      <source>There are no transactions yet.</source>
+      <translation>没有交易</translation>
     </message>
     <message id="apps-fork-warning">
-        <source>DAPPs will be available in your wallet after the Hard Fork</source>
-        <translation>硬分叉后，您将可以在钱包中使用DApps</translation>
+      <source>DAPPs will be available in your wallet after the Hard Fork</source>
+      <translation>硬分叉后，您将可以在钱包中使用DApps</translation>
     </message>
     <message id="address-info-cid">
-        <source>Application shader ID</source>
-        <translation>应用程序shader ID</translation>
+      <source>Application shader ID</source>
+      <translation>应用程序shader ID</translation>
     </message>
     <message id="source-wallet">
-        <source>Wallet</source>
-        <translation>钱包</translation>
+      <source>Wallet</source>
+      <translation>钱包</translation>
     </message>
     <message id="settings-general-confirmations">
-        <source>Minimum confirmations</source>
-        <extracomment>settings tab, general section, minimum confirmations</extracomment>
-        <translation>最小确认</translation>
+      <source>Minimum confirmations</source>
+      <extracomment>settings tab, general section, minimum confirmations</extracomment>
+      <translation>最小确认</translation>
     </message>
     <message id="tx-details-confirmation-status-label">
-        <source>Confirmation status</source>
-        <translation>确认状态</translation>
+      <source>Confirmation status</source>
+      <translation>确认状态</translation>
     </message>
     <message id="wallet-txs-status-confirming">
-        <source>confirming</source>
-        <translation>确认中</translation>
+      <source>confirming</source>
+      <translation>确认中</translation>
     </message>
     <message id="tx-details-confirmation-progress-label">
-        <source>Confirmed (%1)</source>
-        <translation>已确认(%1)</translation>
+      <source>Confirmed (%1)</source>
+      <translation>已确认(%1)</translation>
     </message>
     <message id="general-copy-and-close">
-        <source>copy and close</source>
-        <translation>复制并关闭</translation>
+      <source>copy and close</source>
+      <translation>复制并关闭</translation>
     </message>
     <message id="settings-remote-node-address-placeholder">
-        <source>Please enter the address</source>
-        <translation>请输入地址</translation>
+      <source>Please enter the address</source>
+      <translation>请输入地址</translation>
     </message>
     <message id="settings-local-node-port-placeholder">
-        <source>Please enter the port</source>
-        <translation>请输入端口</translation>
+      <source>Please enter the port</source>
+      <translation>请输入端口</translation>
     </message>
     <message id="settings-export">
-        <source>Export wallet data</source>
-        <translation>导出钱包数据</translation>
+      <source>Export wallet data</source>
+      <translation>导出钱包数据</translation>
     </message>
     <message id="settings-import">
-        <source>Import wallet data</source>
-        <translation>导入钱包数据</translation>
+      <source>Import wallet data</source>
+      <translation>导入钱包数据</translation>
     </message>
     <message id="send-available">
-        <source>Available</source>
-        <translation>可用余额</translation>
+      <source>Available</source>
+      <translation>可用余额</translation>
     </message>
     <message id="notification-maxp-transaction-sent">
-        <source>Maximum anonymity transaction sent</source>
-        <translation>最强匿名模式交易已发送</translation>
+      <source>Maximum anonymity transaction sent</source>
+      <translation>最强匿名模式交易已发送</translation>
     </message>
     <message id="notification-maxp-transaction-received">
-        <source>Maximum anonymity transaction received</source>
-        <translation>最强匿名模式交易已接收</translation>
+      <source>Maximum anonymity transaction received</source>
+      <translation>最强匿名模式交易已接收</translation>
     </message>
     <message id="notification-offline-transaction-sent">
-        <source>Transaction sent to offline</source>
-        <translation>发送到离线模式的交易</translation>
+      <source>Transaction sent to offline</source>
+      <translation>发送到离线模式的交易</translation>
     </message>
     <message id="notification-offline-transaction-received">
-        <source>Transaction received from offline</source>
-        <translation>从离线模式收到的交易</translation>
+      <source>Transaction received from offline</source>
+      <translation>从离线模式收到的交易</translation>
     </message>
     <message id="notification-maxp-transaction-failed">
-        <source>Maximum anonymity transaction failed</source>
-        <translation>最强匿名模式交易失败</translation>
+      <source>Maximum anonymity transaction failed</source>
+      <translation>最强匿名模式交易失败</translation>
     </message>
     <message id="notification-offline-transaction-failed">
-        <source>Offline transaction failed</source>
-        <translation>离线模式交易失败</translation>
+      <source>Offline transaction failed</source>
+      <translation>离线模式交易失败</translation>
     </message>
     <message id="notification-address-copied">
-        <source>Address copied to clipboard</source>
-        <translation>地址已被复制到剪贴板</translation>
+      <source>Address copied to clipboard</source>
+      <translation>地址已被复制到剪贴板</translation>
     </message>
     <message id="general-ca-id">
-        <source>Confidential asset ID</source>
-        <translation>加密资产ID</translation>
+      <source>Confidential asset ID</source>
+      <translation>加密资产ID</translation>
     </message>
     <message id="address-info-copy-and-close">
-        <source>copy address and close</source>
-        <translation>复制地址并关闭</translation>
+      <source>copy address and close</source>
+      <translation>复制地址并关闭</translation>
     </message>
     <message id="notifications-title">
-        <source>Notifications</source>
-        <translation>通知</translation>
+      <source>Notifications</source>
+      <translation>通知</translation>
     </message>
     <message id="notifications-clear-all">
-        <source>clear all</source>
-        <translation>全部清除</translation>
+      <source>clear all</source>
+      <translation>全部清除</translation>
     </message>
     <message id="notifications-empty">
-        <source>There are no notifications yet.</source>
-        <translation>目前还没有通知。</translation>
+      <source>There are no notifications yet.</source>
+      <translation>目前还没有通知。</translation>
     </message>
     <message id="notifications-read">
-        <source>read</source>
-        <translation>已读</translation>
+      <source>read</source>
+      <translation>已读</translation>
     </message>
     <message id="notifications-update-now">
-        <source>update now</source>
-        <translation>立即更新</translation>
+      <source>update now</source>
+      <translation>立即更新</translation>
     </message>
     <message id="notifications-activate">
-        <source>activate</source>
-        <translation>激活</translation>
+      <source>activate</source>
+      <translation>激活</translation>
     </message>
     <message id="notifications-activated">
-        <source>activated</source>
-        <translation>已激活</translation>
+      <source>activated</source>
+      <translation>已激活</translation>
     </message>
     <message id="notifications-details">
-        <source>details</source>
-        <translation>详细信息</translation>
+      <source>details</source>
+      <translation>详细信息</translation>
     </message>
     <message id="notifications-open-dapp">
-        <source>open the DApp</source>
-        <translation>打开DApp</translation>
+      <source>open the DApp</source>
+      <translation>打开DApp</translation>
     </message>
     <message id="general-description">
-        <source>Description</source>
-        <translation>描述</translation>
+      <source>Description</source>
+      <translation>描述</translation>
     </message>
     <message id="address-info-dapp">
-        <source>DApp name</source>
-        <translation>DApp名称</translation>
+      <source>DApp name</source>
+      <translation>DApp名称</translation>
     </message>
     <message id="tx-details-popup-title">
-        <source>Transaction info</source>
-        <translation>交易信息</translation>
+      <source>Transaction info</source>
+      <translation>交易信息</translation>
     </message>
     <message id="send-no-funds-for-fee">
-        <source>Insufficient funds to pay transaction fee.</source>
-        <translation>没有足够的资金支付交易费用</translation>
+      <source>Insufficient funds to pay transaction fee.</source>
+      <translation>没有足够的资金支付交易费用</translation>
     </message>
     <message id="tx-details-general-info">
-        <source>General info</source>
-        <translation>基本信息</translation>
+      <source>General info</source>
+      <translation>基本信息</translation>
     </message>
     <message id="general-wallet-signature">
-        <source>Signature</source>
-        <translation>签名</translation>
+      <source>Signature</source>
+      <translation>签名</translation>
     </message>
     <message id="settings-utilities-show-utxo">
-        <source>Show UTXO</source>
-        <translation>显示UTXO</translation>
+      <source>Show UTXO</source>
+      <translation>显示 UTXO</translation>
     </message>
     <message id="general-coin">
-        <source>Coin</source>
-        <translation>代币</translation>
+      <source>Coin</source>
+      <translation>代币</translation>
     </message>
     <message id="general-show-tx-details">
-        <source>Show details</source>
-        <translation>显示详情</translation>
+      <source>Show details</source>
+      <translation>显示详情</translation>
     </message>
     <message id="general-advanced">
-        <source>Advanced</source>
-        <translation>高级</translation>
+      <source>Advanced</source>
+      <translation>高级</translation>
     </message>
     <message id="receive-max-set">
-        <source>Maximum anonymity set</source>
-        <translation>最强匿名模式设置</translation>
+      <source>Maximum anonymity set</source>
+      <translation>最强匿名模式设置</translation>
     </message>
     <message id="address-info-title-mp">
-        <source>Address details with max anonymity set</source>
-        <translation>地址信息包含最强匿名模式设置</translation>
+      <source>Address details with max anonymity set</source>
+      <translation>地址信息包含最强匿名模式设置</translation>
     </message>
     <message id="address-info-regular-notice">
-        <source>Regular address includes both online and offline addresses.</source>
-        <translation>常用地址包括在线地址和离线地址</translation>
+      <source>Regular address includes both online and offline addresses.</source>
+      <translation>常用地址包括在线地址和离线地址</translation>
     </message>
     <message id="tx-online">
-        <source>Online</source>
-        <translation>在线</translation>
+      <source>Online</source>
+      <translation>在线</translation>
     </message>
     <message id="send-receiver-online-tip">
-        <source>Ask receiver to come online to support more offline transactions.</source>
-        <translation>请接收者在线以支持更多离线交易</translation>
+      <source>Ask receiver to come online to support more offline transactions.</source>
+      <translation>请接收者在线以支持更多离线交易</translation>
     </message>
     <message id="send-offline-refund">
-        <source>Make sure the address is correct as offline transactions
+      <source>Make sure the address is correct as offline transactions
 cannot be canceled.</source>
-        <translation>请确保地址正确，因为离线模式交易不能被取消</translation>
+      <translation>请确保地址正确，因为离线模式交易不能被取消</translation>
     </message>
     <message id="send-online-address">
-        <source>Online address.</source>
-        <translation>在线模式地址</translation>
+      <source>Online address.</source>
+      <translation>在线模式地址</translation>
     </message>
     <message id="send-anon-set">
-        <source>Guarantees maximum anonymity set of up to 64K.</source>
-        <translation>保证最大限度的匿名性设定为64K</translation>
+      <source>Guarantees maximum anonymity set of up to 64K.</source>
+      <translation>保证最大限度的匿名性设定为64K</translation>
     </message>
     <message id="send-mp-tip">
-        <source>Transaction can last up to 72 hours.</source>
-        <translation>交易时间可长达72小时</translation>
+      <source>Transaction can last up to 72 hours.</source>
+      <translation>交易时间可长达72小时</translation>
     </message>
     <message id="send-app-twoway-confirmation-title">
-        <source>Confirm withdraw &amp; deposit</source>
-        <translation>确认取款&amp;存款</translation>
+      <source>Confirm withdraw &amp; deposit</source>
+      <translation>确认取款&amp;存款</translation>
     </message>
     <message id="send-app-spend-confirmation-title">
-        <source>Confirm deposit from the wallet</source>
-        <translation>确认来自钱包的存款</translation>
+      <source>Confirm deposit from the wallet</source>
+      <translation>确认来自钱包的存款</translation>
     </message>
     <message id="send-app-receive-confirmation-title">
-        <source>Confirm withdraw to the wallet</source>
-        <translation>确认取款到钱包</translation>
+      <source>Confirm withdraw to the wallet</source>
+      <translation>确认取款到钱包</translation>
     </message>
     <message id="send-app-confirmation-title">
-        <source>Confirm application transaction</source>
-        <translation>确认应用交易</translation>
+      <source>Confirm application transaction</source>
+      <translation>确认应用交易</translation>
     </message>
     <message id="general-confirm">
-        <source>Confirm</source>
-        <translation>确认</translation>
+      <source>Confirm</source>
+      <translation>确认</translation>
     </message>
     <message id="send-type-label">
-        <source>Transaction type</source>
-        <translation>交易类型</translation>
+      <source>Transaction type</source>
+      <translation>交易类型</translation>
     </message>
     <message id="send-twoway-warning">
-        <source>%1 will change the balances of your wallet</source>
-        <translation>%1将更改您钱包的余额</translation>
+      <source>%1 will change the balances of your wallet</source>
+      <translation>%1将更改您钱包的余额</translation>
     </message>
     <message id="send-dapp-spend-warning">
-        <source>%1 will take the funds from your wallet</source>
-        <translation>%1将从您的钱包中提取资金</translation>
+      <source>%1 will take the funds from your wallet</source>
+      <translation>%1将从您的钱包中提取资金</translation>
     </message>
     <message id="send-dapp-receive-warning">
-        <source>%1 will send the funds to your wallet</source>
-        <translation>%1将把资金发送到您的钱包</translation>
+      <source>%1 will send the funds to your wallet</source>
+      <translation>%1将把资金发送到您的钱包</translation>
     </message>
     <message id="send-contract-only-fee">
-        <source>The transaction fee would be deducted from your balance</source>
-        <translation>交易手续费将从您的余额中扣除</translation>
+      <source>The transaction fee would be deducted from your balance</source>
+      <translation>交易手续费将从您的余额中扣除</translation>
     </message>
     <message id="status-online-remote">
-        <source>connected node supports online transactions only</source>
-        <translation>连接的节点仅支持在线模式交易</translation>
+      <source>connected node supports online transactions only</source>
+      <translation>连接的节点仅支持在线模式交易</translation>
     </message>
     <message id="address-info-title-online">
-        <source>Online (SBBS) address details</source>
-        <translation>在线模式(SBBS)地址详细信息</translation>
+      <source>Online (SBBS) address details</source>
+      <translation>在线模式(SBBS)地址详细信息</translation>
     </message>
     <message id="address-info-remote-node-warning">
-        <source>You are currently connected to node that supports only online transactions.</source>
-        <translation>您当前连接到仅支持在线模式交易的节点</translation>
+      <source>You are currently connected to node that supports only online transactions.</source>
+      <translation>您当前连接到仅支持在线模式交易的节点</translation>
     </message>
     <message id="settings-dapps-port">
-        <source>Local server port</source>
-        <extracomment>settings tab, daps section, local apps server port label</extracomment>
-        <translation>本地服务器端口</translation>
+      <source>Local server port</source>
+      <extracomment>settings tab, daps section, local apps server port label</extracomment>
+      <translation>本地服务器端口</translation>
     </message>
     <message id="applications-install-title">
-        <source>Select application to install</source>
-        <translation>选择要安装的应用程序</translation>
+      <source>Select application to install</source>
+      <translation>选择要安装的应用程序</translation>
     </message>
     <message id="general-seed-phrase">
-        <source>Seed phrase</source>
-        <translation>助记词</translation>
+      <source>Seed phrase</source>
+      <translation>助记词</translation>
     </message>
     <message id="general-do-later">
-        <source>I will do it later</source>
-        <translation>稍后设置</translation>
+      <source>I will do it later</source>
+      <translation>稍后设置</translation>
     </message>
     <message id="general-complete-verification">
-        <source>Complete wallet verification</source>
-        <translation>完成钱包验证</translation>
+      <source>Complete wallet verification</source>
+      <translation>完成钱包验证</translation>
     </message>
     <message id="general-complete-verification-button">
-        <source>Complete verification</source>
-        <translation>完成验证</translation>
+      <source>Complete verification</source>
+      <translation>完成验证</translation>
     </message>
     <message id="seed-validation-promo">
-        <source>Write down and validate your seed phrase so you can always recover your funds.</source>
-        <translation>请写下并验证您的助记词，以便你可以随时恢复你的资金。</translation>
+      <source>Write down and validate your seed phrase so you can always recover your funds.</source>
+      <translation>请写下并验证您的助记词，以便你可以随时恢复你的资金。</translation>
     </message>
     <message id="seed-validation-link">
-        <source>Secure your phrase</source>
-        <translation>保护你的助记词</translation>
+      <source>Secure your phrase</source>
+      <translation>保护你的助记词</translation>
     </message>
     <message id="send-offline-tip" numerus="yes">
-        <source>Offline address: %n transaction(s) left.</source>
-        <translation>
-            <numerusform>离线模式地址:%n个交易剩余</numerusform>
-        </translation>
+      <source>Offline address: %n transaction(s) left.</source>
+      <translation>
+        <numerusform>离线模式地址:%n个交易剩余</numerusform>
+      </translation>
     </message>
     <message id="source-dex">
-        <source>Assets Swap</source>
-        <translation>资产兑换</translation>
+      <source>Assets Swap</source>
+      <translation>资产兑换</translation>
     </message>
     <message id="wallet-txs-status-in-progress-max-to-own">
-        <source>sending to own address
+      <source>sending to own address
 (maximum anonymity)</source>
-        <translation>发送到自己的地址
+      <translation>发送到自己的地址
 (最强匿名模式)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
-        <source>sending to own address
+      <source>sending to own address
 (offline)</source>
-        <translation>发送到自己的地址
+      <translation>发送到自己的地址
 (离线模式)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
-        <source>sent to own address
+      <source>sent to own address
 (maximum anonymity)</source>
-        <translation>已发送到自己的地址
+      <translation>已发送到自己的地址
 (最强匿名模式)</translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
-        <source>sent to own address
+      <source>sent to own address
 (offline)</source>
-        <translation>已发送到自己的地址
+      <translation>已发送到自己的地址
 (离线模式)</translation>
     </message>
     <message id="apps-version-error">
-        <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
-        <translation>此DApp要求Beam Wallet的%1版本或更高版本，请更新您的钱包。</translation>
+      <source>This DApp requires version %1 of Beam Wallet or higher. Please update your wallet.</source>
+      <translation>此DApp要求Beam Wallet的%1版本或更高版本，请更新您的钱包。</translation>
     </message>
     <message id="wallet-txs-status-waiting-receiver-offline">
-        <source>waiting for receiver
+      <source>waiting for receiver
 (offline)</source>
-        <translation>等待接收者
+      <translation>等待接收者
 (离线模式)</translation>
     </message>
     <message id="apps-uninstall">
-        <source>Uninstall</source>
-        <translation>卸载</translation>
+      <source>Uninstall</source>
+      <translation>卸载</translation>
     </message>
     <message id="apps-uninstall-confirm">
-        <source>Are you sure you want to uninstall %1 DApp?</source>
-        <translation>您确定要卸载%1DApp吗？</translation>
+      <source>Are you sure you want to uninstall %1 DApp?</source>
+      <translation>您确定要卸载%1DApp吗？</translation>
     </message>
     <message id="app-uninstall-title">
-        <source>Uninstall DApp</source>
-        <translation>卸载DApp</translation>
+      <source>Uninstall DApp</source>
+      <translation>卸载DApp</translation>
     </message>
     <message id="apps-loading-app">
-        <source>Please wait, %1 is loading</source>
-        <translation>请稍候，正在加载%1</translation>
+      <source>Please wait, %1 is loading</source>
+      <translation>请稍候，正在加载%1</translation>
     </message>
     <message id="apps-loading">
-        <source>Loading...</source>
-        <translation>正在加载...</translation>
+      <source>Loading...</source>
+      <translation>正在加载...</translation>
     </message>
     <message id="apps-nothing">
-        <source>There are no applications at the moment</source>
-        <translation>目前没有应用程序</translation>
+      <source>There are no applications at the moment</source>
+      <translation>目前没有应用程序</translation>
     </message>
     <message id="apps-err-cnt" numerus="yes">
-        <source>%n DApp(s) is not available</source>
-        <translation>
-            <numerusform>%nDApp(s)不可用</numerusform>
-        </translation>
+      <source>%n DApp(s) is not available</source>
+      <translation>
+        <numerusform>%nDApp(s)不可用</numerusform>
+      </translation>
     </message>
     <message id="apps-update-message">
-        <source>Update Wallet to launch %1 application</source>
-        <translation>更新钱包以启动%1应用程序</translation>
+      <source>Update Wallet to launch %1 application</source>
+      <translation>更新钱包以启动%1应用程序</translation>
     </message>
     <message id="address-details">
-        <source>Address details</source>
-        <translation>地址详情</translation>
+      <source>Address details</source>
+      <translation>地址详情</translation>
     </message>
     <message id="swap-token-details">
-        <source>Token details</source>
-        <translation>Token详情</translation>
+      <source>Token details</source>
+      <translation>Token详情</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit
+      <source>No limit
 (transaction can last indefinitely)</source>
-        <translation>无限制
+      <translation>无限制
 (交易可以无限期持续)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
-        <source>%n hour(s)</source>
-        <translation>
-            <numerusform>%n小时</numerusform>
-        </translation>
+      <source>%n hour(s)</source>
+      <translation>
+        <numerusform>%n小时</numerusform>
+      </translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val72-comment">
-        <source> (recommended)</source>
-        <translation>(推荐)</translation>
+      <source> (recommended)</source>
+      <translation>(推荐)</translation>
     </message>
     <message id="wallet-receive-addr-message-min-fee">
-        <source>Min transaction fee is 0.01 BEAM.</source>
-        <translation>最低交易手续费为0.01 BEAM。</translation>
+      <source>Min transaction fee is 0.01 BEAM.</source>
+      <translation>最低交易手续费为0.01 BEAM。</translation>
     </message>
     <message id="status-online-stale-rates">
-        <source>(exchange rate to %1 was not updated since %2)</source>
-        <translation>(汇率为%1，自%2以来没有更新)</translation>
+      <source>(exchange rate to %1 was not updated since %2)</source>
+      <translation>(汇率为%1，自%2以来没有更新)</translation>
     </message>
     <message id="loading-view-restoring">
-        <source>Restoring wallet from the blockchain: </source>
-        <translation>正在从区块链中恢复钱包：</translation>
+      <source>Restoring wallet from the blockchain: </source>
+      <translation>正在从区块链中恢复钱包：</translation>
     </message>
     <message id="loading-view-creating">
-        <source>Downloading blockchain data: </source>
-        <translation>正在下载区块链数据：</translation>
+      <source>Downloading blockchain data: </source>
+      <translation>正在下载区块链数据：</translation>
     </message>
     <message id="loading-view-less-than-minute">
-        <source>less than a minute</source>
-        <translation>一分钟内</translation>
+      <source>less than a minute</source>
+      <translation>一分钟内</translation>
     </message>
     <message id="loading-view-rebuild-utxos">
-        <source>Rebuilding wallet data: </source>
-        <translation>恢复钱包数据：</translation>
+      <source>Rebuilding wallet data: </source>
+      <translation>恢复钱包数据：</translation>
     </message>
     <message id="status-change-settings">
-        <source>Change settings</source>
-        <translation>修改设置</translation>
+      <source>Change settings</source>
+      <translation>修改设置</translation>
     </message>
     <message id="start-create-password">
-        <source>Create password</source>
-        <translation>创建密码</translation>
+      <source>Create password</source>
+      <translation>创建密码</translation>
     </message>
     <message id="start-second-copy-error">
-        <source>The wallet is already started. Close all running wallets and start again.</source>
-        <translation>钱包已经启动，关闭所有正在运行的钱包并重新启动。</translation>
+      <source>The wallet is already started. Close all running wallets and start again.</source>
+      <translation>钱包已经启动，关闭所有正在运行的钱包并重新启动。</translation>
     </message>
     <message id="settings-ipfsnode-title">
-        <source>IPFS Integrated Node</source>
-        <translation>IPFS完整节点</translation>
+      <source>IPFS Integrated Node</source>
+      <translation>IPFS完整节点</translation>
     </message>
     <message id="settings-ipfs-swarm-port">
-        <source>Swarm Port</source>
-        <translation>Swarm节点</translation>
+      <source>Swarm Port</source>
+      <translation>Swarm节点</translation>
     </message>
     <message id="wallet-txs-status-in-progress-pub-offline-to-own">
-        <source>sending to own address
+      <source>sending to own address
 (public offline)</source>
-        <translation>发送到自己的地址
+      <translation>发送到自己的地址
 (公共离线模式)</translation>
     </message>
     <message id="wallet-txs-status-sent-pub-offline-to-own">
-        <source>sent to own address
+      <source>sent to own address
 (public offline)</source>
-        <translation>已发送到自己的地址
+      <translation>已发送到自己的地址
 (公共离线模式)</translation>
     </message>
     <message id="start-migration-manual-button">
-        <source>start manual migration</source>
-        <extracomment>migration screen, select db file button</extracomment>
-        <translation>开始手动迁移</translation>
+      <source>start manual migration</source>
+      <extracomment>migration screen, select db file button</extracomment>
+      <translation>开始手动迁移</translation>
     </message>
     <message id="restore-find-db">
-        <source>Find the wallet database file manually</source>
-        <translation>手动查找钱包数据库文件</translation>
+      <source>Find the wallet database file manually</source>
+      <translation>手动查找钱包数据库文件</translation>
     </message>
     <message id="settings-ipfs-location">
-        <source>IPFS repository location</source>
-        <translation>IPFS仓库位置</translation>
+      <source>IPFS repository location</source>
+      <translation>IPFS仓库位置</translation>
     </message>
     <message id="settings-ipfs-start">
-        <source>Run node on</source>
-        <translation>运行节点</translation>
+      <source>Run node on</source>
+      <translation>运行节点</translation>
     </message>
     <message id="tx-empty">
-        <source>Your transaction list is empty</source>
-        <translation>交易列表是空的</translation>
+      <source>Your transaction list is empty</source>
+      <translation>交易列表是空的</translation>
     </message>
     <message id="tx-sent-empty">
-        <source>There are no sent transactions yet.</source>
-        <translation>没有已发送的交易</translation>
+      <source>There are no sent transactions yet.</source>
+      <translation>没有已发送的交易</translation>
     </message>
     <message id="tx-received-empty">
-        <source>There are no received transactions yet.</source>
-        <translation>没有已接收的交易</translation>
+      <source>There are no received transactions yet.</source>
+      <translation>没有已接收的交易</translation>
     </message>
     <message id="wallet-transactions-all-tab">
-        <source>All</source>
-        <translation>所有</translation>
+      <source>All</source>
+      <translation>所有</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
-        <source>In progress</source>
-        <translation>交易中</translation>
+      <source>In progress</source>
+      <translation>交易中</translation>
     </message>
     <message id="wallet-transactions-sent-tab">
-        <source>Sent</source>
-        <translation>已付</translation>
+      <source>Sent</source>
+      <translation>已付</translation>
     </message>
     <message id="wallet-transactions-received-tab">
-        <source>Received</source>
-        <translation>已收</translation>
+      <source>Received</source>
+      <translation>已收</translation>
     </message>
     <message id="tx-table-filter-in-progress">
-        <source>In progress</source>
-        <translation>交易中</translation>
+      <source>In progress</source>
+      <translation>交易中</translation>
     </message>
     <message id="tx-table-filter-completed">
-        <source>Completed</source>
-        <translation>已完成</translation>
+      <source>Completed</source>
+      <translation>已完成</translation>
     </message>
     <message id="tx-table-filter-canceled">
-        <source>Canceled</source>
-        <translation>已取消</translation>
+      <source>Canceled</source>
+      <translation>已取消</translation>
     </message>
     <message id="tx-table-filter-failed">
-        <source>Failed</source>
-        <translation>失败</translation>
+      <source>Failed</source>
+      <translation>失败</translation>
     </message>
     <message id="wallet-search-transactions-placeholder">
-        <source>Enter search text...</source>
-        <translation>输入搜索内容……</translation>
+      <source>Enter search text...</source>
+      <translation>输入搜索内容……</translation>
     </message>
     <message id="wallet-verify-payment">
-        <source>Verify payment</source>
-        <translation>验证付款</translation>
+      <source>Verify payment</source>
+      <translation>验证付款</translation>
     </message>
     <message id="general-multiple-assets">
-        <source>Multiple assets</source>
-        <translation>多元资产</translation>
+      <source>Multiple assets</source>
+      <translation>多元资产</translation>
     </message>
     <message id="general-value">
-        <source>Value</source>
-        <translation>价值</translation>
+      <source>Value</source>
+      <translation>价值</translation>
     </message>
     <message id="wallet-txs-source">
-        <source>Source</source>
-        <translation>来源</translation>
+      <source>Source</source>
+      <translation>来源</translation>
     </message>
     <message id="wallet-txs-action">
-        <source>Action</source>
-        <translation>执行</translation>
+      <source>Action</source>
+      <translation>执行</translation>
     </message>
     <message id="wallet-txs-date-time">
-        <source>Created on</source>
-        <translation>创建</translation>
+      <source>Created on</source>
+      <translation>创建</translation>
     </message>
     <message id="tx-table-filter-label">
-        <source>Show</source>
-        <translation>显示</translation>
+      <source>Show</source>
+      <translation>显示</translation>
     </message>
     <message id="multiselect-none">
-        <source>None</source>
-        <translation>无</translation>
+      <source>None</source>
+      <translation>无</translation>
     </message>
     <message id="multiselect-all">
-        <source>All</source>
-        <translation>所有</translation>
+      <source>All</source>
+      <translation>所有</translation>
     </message>
     <message id="wallet-remove-filter-button">
-        <source>remove filter</source>
-        <translation>移除过滤器</translation>
+      <source>remove filter</source>
+      <translation>移除过滤器</translation>
     </message>
     <message id="wallet-assets-title">
-        <source>Assets</source>
-        <translation>资产</translation>
+      <source>Assets</source>
+      <translation>资产</translation>
     </message>
     <message id="wallet-selected-assets-checkbox">
-        <source>Selected</source>
-        <translation>已选中</translation>
+      <source>Selected</source>
+      <translation>已选中</translation>
     </message>
     <message id="wallet-all-assets-checkbox">
-        <source>All</source>
-        <translation>所有</translation>
+      <source>All</source>
+      <translation>所有</translation>
     </message>
     <message id="dnd-app-install-title">
-        <source>Install DApp</source>
-        <translation>安装DApp</translation>
+      <source>Install DApp</source>
+      <translation>安装DApp</translation>
     </message>
     <message id="dnd-load-a-file">
-        <source>load a file</source>
-        <translation>加载文件</translation>
+      <source>load a file</source>
+      <translation>加载文件</translation>
     </message>
     <message id="dnd-jus-drop">
-        <source>or just drop it here</source>
-        <translation>或只是将它丢弃到这里</translation>
+      <source>or just drop it here</source>
+      <translation>或只是将它丢弃到这里</translation>
     </message>
     <message id="dnd-install-success">
-        <source>The &quot;%1&quot; DApp is installed successfully</source>
-        <translation>&quot;%1&quot; DApp安装成功</translation>
+      <source>The &quot;%1&quot; DApp is installed successfully</source>
+      <translation>&quot;%1&quot; DApp安装成功</translation>
     </message>
     <message id="dnd-install-fail">
-        <source>The DApp installation error.</source>
-        <translation>DApp安装错误</translation>
+      <source>The DApp installation error.</source>
+      <translation>DApp安装错误</translation>
     </message>
     <message id="apps-inprogress-tip">
-        <source>(%1 active)</source>
-        <translation>(%1 正在进行)</translation>
+      <source>(%1 active)</source>
+      <translation>(%1 正在进行)</translation>
     </message>
     <message id="wallet-balance-title">
-        <source>Wallet Balance</source>
-        <translation>钱包余额</translation>
+      <source>Wallet Balance</source>
+      <translation>钱包余额</translation>
     </message>
     <message id="tx-no-transaction-filter">
-        <source>No transactions to show</source>
-        <translation>没有交易</translation>
+      <source>No transactions to show</source>
+      <translation>没有交易</translation>
     </message>
     <message id="apps-become-a-publisher">
-        <source>become a publisher</source>
-        <translation>成为一个发布者</translation>
+      <source>become a publisher</source>
+      <translation>成为一个发布者</translation>
     </message>
     <message id="dapps-store-update">
-        <source>update</source>
-        <translation>更新</translation>
+      <source>update</source>
+      <translation>更新</translation>
     </message>
     <message id="dapps-store-remove-dapp">
-        <source>remove dapp</source>
-        <translation>移除DApp</translation>
+      <source>remove dapp</source>
+      <translation>移除DApp</translation>
     </message>
     <message id="dapps-store-become-publisher">
-        <source>Become a publisher</source>
-        <translation>成为一个发布者</translation>
+      <source>Become a publisher</source>
+      <translation>成为一个发布者</translation>
     </message>
     <message id="dapps-store-edit-publisher-info">
-        <source>Edit publisher info</source>
-        <translation>编辑发布者信息</translation>
+      <source>Edit publisher info</source>
+      <translation>编辑发布者信息</translation>
     </message>
     <message id="dapps-store-become-publisher-text">
-        <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
+      <source>To become a publisher you need to set up a username. ID number and personal Publisher Key will
  be given to you automatically. Registration will allow you to publish, update and delete DApps.</source>
-        <translation>要成为一个发布者，您需要设置一个用户名。ID号和个人发布者密钥
+      <translation>要成为一个发布者，您需要设置一个用户名。ID号和个人发布者密钥
 会自动为您提供。注册将允许您发布、更新和删除DApps。</translation>
     </message>
     <message id="dapps-store-nickname">
-        <source>Nickname</source>
-        <translation>昵称</translation>
+      <source>Nickname</source>
+      <translation>昵称</translation>
     </message>
     <message id="dapps-store-short-title">
-        <source>Short title</source>
-        <translation>短标题</translation>
+      <source>Short title</source>
+      <translation>短标题</translation>
     </message>
     <message id="dapps-store-50-character-max">
-        <source>50 characters max</source>
-        <translation>最多50个字符</translation>
+      <source>50 characters max</source>
+      <translation>最多50个字符</translation>
     </message>
     <message id="dapps-store-about-me">
-        <source>About me</source>
-        <translation>关于我</translation>
+      <source>About me</source>
+      <translation>关于我</translation>
     </message>
     <message id="dapps-store-150-character-max">
-        <source>150 characters max</source>
-        <translation>最多150个字符</translation>
+      <source>150 characters max</source>
+      <translation>最多150个字符</translation>
     </message>
     <message id="dapps-store-social-networks">
-        <source>Social networks</source>
-        <translation>社交网络</translation>
+      <source>Social networks</source>
+      <translation>社交网络</translation>
     </message>
     <message id="dapps-store-website">
-        <source>Website</source>
-        <translation>网站</translation>
+      <source>Website</source>
+      <translation>网站</translation>
     </message>
     <message id="dapps-store-twitter">
-        <source>Twitter</source>
-        <translation>Twitter</translation>
+      <source>Twitter</source>
+      <translation>Twitter</translation>
     </message>
     <message id="dapps-store-linkedin">
-        <source>LinkedIn</source>
-        <translation>LinkedIn</translation>
+      <source>LinkedIn</source>
+      <translation>LinkedIn</translation>
     </message>
     <message id="dapps-store-instagram">
-        <source>Instagram</source>
-        <translation>Instagram</translation>
+      <source>Instagram</source>
+      <translation>Instagram</translation>
     </message>
     <message id="dapps-store-telegram">
-        <source>Telegram</source>
-        <translation>Telegram</translation>
+      <source>Telegram</source>
+      <translation>Telegram</translation>
     </message>
     <message id="dapps-store-discord">
-        <source>Discord</source>
-        <translation>Discord</translation>
+      <source>Discord</source>
+      <translation>Discord</translation>
     </message>
     <message id="dapps-store-create-account">
-        <source>create account</source>
-        <translation>创建帐户</translation>
+      <source>create account</source>
+      <translation>创建帐户</translation>
     </message>
     <message id="dapps-store-save-changes">
-        <source>save changes</source>
-        <translation>保存更改</translation>
+      <source>save changes</source>
+      <translation>保存更改</translation>
     </message>
     <message id="dapps-store-publisher-page">
-        <source>Publisher&apos;s page</source>
-        <translation>发布者页面&apos;</translation>
+      <source>Publisher&apos;s page</source>
+      <translation>发布者页面&apos;</translation>
     </message>
     <message id="dapps-store-my-dapps">
-        <source>My DAPPs - admin panel</source>
-        <translation>我的DAPP - 管理面板</translation>
+      <source>My DAPPs - admin panel</source>
+      <translation>我的DAPP - 管理面板</translation>
     </message>
     <message id="dapps-store-publisher-have-not-dapps">
-        <source>You have no published DApps yet</source>
-        <translation>您还没有发布的DApp</translation>
+      <source>You have no published DApps yet</source>
+      <translation>您还没有发布的DApp</translation>
     </message>
     <message id="dapps-store-publisher-upload-first-dapp">
-        <source>upload your first dapp</source>
-        <translation>上传您的第一个dapp</translation>
+      <source>upload your first dapp</source>
+      <translation>上传您的第一个dapp</translation>
     </message>
     <message id="dapps-store-publisher-key">
-        <source>Publisher Key</source>
-        <translation>发布者密钥</translation>
+      <source>Publisher Key</source>
+      <translation>发布者密钥</translation>
     </message>
     <message id="dapps-store-publisher-key-dialog-note">
-        <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
-        <translation>这里是您的个人发布者密钥：&apos;。任何用户都可以使用它来将您添加到他们的个人列表中并关注您的应用程序， 您可以在您的个人页面或网站上添加它。</translation>
+      <source>Here&apos;s your personal Publisher Key. Any user can use it to add you to their personal list and follow your apps. You can add it on your personal page or website.</source>
+      <translation>这里是您的个人发布者密钥：&apos;。任何用户都可以使用它来将您添加到他们的个人列表中并关注您的应用程序， 您可以在您的个人页面或网站上添加它。</translation>
     </message>
     <message id="copy-publisher-key">
-        <source>Copy publisher key</source>
-        <translation>复制发布者密钥</translation>
+      <source>Copy publisher key</source>
+      <translation>复制发布者密钥</translation>
     </message>
     <message id="dapps-store-transacton-is-sent">
-        <source>The transaction is sent</source>
-        <translation>交易已发送</translation>
+      <source>The transaction is sent</source>
+      <translation>交易已发送</translation>
     </message>
     <message id="dapps-store-creation-of-account">
-        <source>Creation of the personal publisher account takes time.
+      <source>Creation of the personal publisher account takes time.
  You can continue as soon as transaction is completed.</source>
-        <translation>创建个人发布者账户需要时间。
+      <translation>创建个人发布者账户需要时间。
 一旦交易完成，您就可以继续。</translation>
     </message>
     <message id="dapps-store-changes-takes-time">
-        <source>Changes take time. You can continue as soon as transaction is completed.</source>
-        <translation>更改需要时间，您可以在交易完成后立即继续。</translation>
+      <source>Changes take time. You can continue as soon as transaction is completed.</source>
+      <translation>更改需要时间，您可以在交易完成后立即继续。</translation>
     </message>
     <message id="dapps-store-upload-choose-file-title">
-        <source>Select application to upload</source>
-        <translation>选择要安装的应用程序</translation>
+      <source>Select application to upload</source>
+      <translation>选择要安装的应用程序</translation>
     </message>
     <message id="dapps-store-update-dapp-title">
-        <source>Update DApp</source>
-        <translation>更新DApp</translation>
+      <source>Update DApp</source>
+      <translation>更新DApp</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-title">
-        <source>Upload new DApp</source>
-        <translation>上传新的DApp</translation>
+      <source>Upload new DApp</source>
+      <translation>上传新的DApp</translation>
     </message>
     <message id="dapps-store-update-dapp-text">
-        <source>To update %1, please add the new version of the file below</source>
-        <translation>若要更新%1，请在下方添加新版本的文件</translation>
+      <source>To update %1, please add the new version of the file below</source>
+      <translation>若要更新%1，请在下方添加新版本的文件</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-text">
-        <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
-        <translation>若要在DApp Store上传您自己的 DApp，请只使用&lt;b&gt;&lt;i&gt;.dapp 格式的文件&lt;/i&gt;&lt;/b&gt;</translation>
+      <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
+      <translation>若要在DApp Store上传您自己的 DApp，请只使用&lt;b&gt;&lt;i&gt;.dapp 格式的文件&lt;/i&gt;&lt;/b&gt;</translation>
     </message>
     <message id="dapps-store-upload-common-error">
-        <source>Something went wrong, please check your file and to try upload it again</source>
-        <translation>出错了，请检查您的文件并尝试重新上传</translation>
+      <source>Something went wrong, please check your file and to try upload it again</source>
+      <translation>出错了，请检查您的文件并尝试重新上传</translation>
     </message>
     <message id="dapp-store-load-file">
-        <source>load .dapp file</source>
-        <translation>加载 .dapp文件</translation>
+      <source>load .dapp file</source>
+      <translation>加载 .dapp文件</translation>
     </message>
     <message id="dapps-store-drop-text">
-        <source>or just drop it here</source>
-        <translation>或只是将它丢弃到这里</translation>
+      <source>or just drop it here</source>
+      <translation>或只是将它丢弃到这里</translation>
     </message>
     <message id="general-continue">
-        <source>continue</source>
-        <translation>继续</translation>
+      <source>continue</source>
+      <translation>继续</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.
+      <source>Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
 change the information in your file and upload your file again.</source>
-        <translation>检查下面的信息并选择 &quot;发布&quot;。
+      <translation>检查下面的信息并选择 &quot;发布&quot;。
 如果出现错误，请取消上传，
 然后更改您的文件中的信息并再次上传您的文件。</translation>
     </message>
     <message id="dapps-store-dapp-release-date">
-        <source>Release date:</source>
-        <translation>发布时间:</translation>
+      <source>Release date:</source>
+      <translation>发布时间:</translation>
     </message>
     <message id="dapps-store-dapp-version">
-        <source>Version:</source>
-        <translation>版本:</translation>
+      <source>Version:</source>
+      <translation>版本:</translation>
     </message>
     <message id="dapps-store-dapp-api-version">
-        <source>Api version:</source>
-        <translation>Api 版本:</translation>
+      <source>Api version:</source>
+      <translation>Api 版本:</translation>
     </message>
     <message id="dapps-store-dapp-min-api-version">
-        <source>Minimal api version:</source>
-        <translation>最小api版本:</translation>
+      <source>Minimal api version:</source>
+      <translation>最小api版本:</translation>
     </message>
     <message id="dapps-store-dapp-guid">
-        <source>Guid:</source>
-        <translation>指南:</translation>
+      <source>Guid:</source>
+      <translation>指南:</translation>
     </message>
     <message id="dapps-store-publish">
-        <source>publish</source>
-        <translation>发布</translation>
+      <source>publish</source>
+      <translation>发布</translation>
     </message>
     <message id="dapps-store-you-now-are-publisher">
-        <source>You now are a publisher!</source>
-        <translation>恭喜你成为了一个发布者！</translation>
+      <source>You now are a publisher!</source>
+      <translation>恭喜你成为了一个发布者！</translation>
     </message>
     <message id="dapps-store-congratulations">
-        <source>Congratulations %1!
+      <source>Congratulations %1!
 
 We are glad to see you at our DApp Store as a Publisher.
 Below you will see your personal Publisher Key. Any user can use it to add you to their personal
@@ -3463,7 +3463,7 @@ list and follow your apps. You can add it on your personal page or website.
 All the time you have access to it in yout personal publisher account.
 
 Let&apos;s start!</source>
-        <translation>恭喜%1！
+      <translation>恭喜%1！
 
 我们很高兴在我们的DApp商店中看到您作为发布者。
 接下来，您会看到您的个人发布者密钥，任何用户都可以使用它将您添加到他们的个人
@@ -3473,440 +3473,440 @@ Let&apos;s start!</source>
 起飞！</translation>
     </message>
     <message id="dapps-store-to-to-my-account">
-        <source>go to my account</source>
-        <translation>进入我的帐户</translation>
+      <source>go to my account</source>
+      <translation>进入我的帐户</translation>
     </message>
     <message id="apps-title-no-fork">
-        <source>DApp Store</source>
-        <translation>DApp商店</translation>
+      <source>DApp Store</source>
+      <translation>DApp商店</translation>
     </message>
     <message id="publishers-list-nickname">
-        <source>Nickname</source>
-        <translation>昵称</translation>
+      <source>Nickname</source>
+      <translation>昵称</translation>
     </message>
     <message id="publishers-list-about">
-        <source>About</source>
-        <translation>关于</translation>
+      <source>About</source>
+      <translation>关于</translation>
     </message>
     <message id="publishers-list-social-net">
-        <source>Social networks</source>
-        <translation>社交网络</translation>
+      <source>Social networks</source>
+      <translation>社交网络</translation>
     </message>
     <message id="publishers-list-publisher-link">
-        <source>Publisher link</source>
-        <translation>发布者链接</translation>
+      <source>Publisher link</source>
+      <translation>发布者链接</translation>
     </message>
     <message id="app-failed-create-publisher">
-        <source>Oops... Failed to create Publisher.
+      <source>Oops... Failed to create Publisher.
 Please check the log and try again.</source>
-        <translation>哎呀... 创建发布者失败，
+      <translation>哎呀... 创建发布者失败，
 请检查日志并再试一次。</translation>
     </message>
     <message id="app-failed-edit-publisher">
-        <source>Oops... Failed to edit Publisher.
+      <source>Oops... Failed to edit Publisher.
 Please check the log and try again.</source>
-        <translation>哎呀... 编辑发布者失败，
+      <translation>哎呀... 编辑发布者失败，
 请检查日志并再试一次。</translation>
     </message>
     <message id="app-failed-publish-dapp">
-        <source>Oops... Failed to publish DApp.
+      <source>Oops... Failed to publish DApp.
 Please check the log and try again.</source>
-        <translation>哎呀... 发布DApp失败，
+      <translation>哎呀... 发布DApp失败，
 请检查日志并再试一次。</translation>
     </message>
     <message id="app-failed-remove-dapp">
-        <source>Oops... Failed to remove DApp.
+      <source>Oops... Failed to remove DApp.
 Please check the log and try again.</source>
-        <translation>哎呀... 删除DApp失败，
+      <translation>哎呀... 删除DApp失败，
 请检查日志并再试一次。</translation>
     </message>
     <message id="dapps-store-ipfs-unavailable">
-        <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
-        <translation>IPFS服务未运行或未连接到其他节点，请检查设置</translation>
+      <source>IPFS Service is not running or is not connected to the peers. Please check the settings.</source>
+      <translation>IPFS服务未运行或未连接到其他节点，请检查设置</translation>
     </message>
     <message id="app-uninstall-success">
-        <source>Everything worked out.
+      <source>Everything worked out.
 &apos;%1&apos; DApp is uninstalled.</source>
-        <translation>一切都解决了，
+      <translation>一切都解决了，
 &apos;%1&apos;DApp已被卸载。</translation>
     </message>
     <message id="app-uninstall-fail">
-        <source>Something went wrong.
+      <source>Something went wrong.
 Uninstall failed. Please try again later.</source>
-        <translation>出了些问题，
+      <translation>出了些问题，
 卸载失败，请稍后再试。</translation>
     </message>
     <message id="app-install-success">
-        <source>Congratulations!
+      <source>Congratulations!
 &apos;%1&apos; DApp is successfully installed.</source>
-        <translation>恭喜！
+      <translation>恭喜！
 &apos;%1&apos;DApp已成功安装</translation>
     </message>
     <message id="app-install-fail">
-        <source>Sorry, the installation failed.
+      <source>Sorry, the installation failed.
 Please, check the file and try again.</source>
-        <translation>对不起，安装失败，
+      <translation>对不起，安装失败，
 请检查文件并再试一次。</translation>
     </message>
     <message id="dapp-store-dialog-title">
-        <source>Dapp Store</source>
-        <translation>DApp商店</translation>
+      <source>Dapp Store</source>
+      <translation>DApp商店</translation>
     </message>
     <message id="settings-blockchain-height">
-        <source>Blockchain height</source>
-        <translation>区块高度</translation>
+      <source>Blockchain height</source>
+      <translation>区块高度</translation>
     </message>
     <message id="assets-swap-title">
-        <source>Assets Swaps</source>
-        <translation>资产兑换</translation>
+      <source>Assets Swaps</source>
+      <translation>资产兑换</translation>
     </message>
     <message id="wallet-atomic-swap-title">
-        <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+      <source>Create Offer</source>
+      <translation type="unfinished">Create Offer</translation>
     </message>
     <message id="app-install-timeout-fail">
-        <source>Sorry, the installation failed.
+      <source>Sorry, the installation failed.
 Please, restart the wallet and try again.</source>
-        <translation>对不起，安装失败，
+      <translation>对不起，安装失败，
 请检查文件并再试一次。</translation>
     </message>
     <message id="app-update-fail">
-        <source>Sorry, the update failed.
+      <source>Sorry, the update failed.
 Please, check the file and try again.</source>
-        <translation>对不起，更新失败，
+      <translation>对不起，更新失败，
 请检查文件并再试一次。</translation>
     </message>
     <message id="app-update-timeout-fail">
-        <source>Sorry, the update failed.
+      <source>Sorry, the update failed.
 Please, restart the wallet and try again.</source>
-        <translation>对不起，更新失败，
+      <translation>对不起，更新失败，
 请重启钱包并再试一次。</translation>
     </message>
     <message id="dapps-store-installing">
-        <source>installing</source>
-        <translation>正在安装</translation>
+      <source>installing</source>
+      <translation>正在安装</translation>
     </message>
     <message id="dapps-store-updating">
-        <source>updating</source>
-        <translation>正在更新</translation>
+      <source>updating</source>
+      <translation>正在更新</translation>
     </message>
     <message id="general-receive">
-        <source>Receive</source>
-        <translation>收款</translation>
+      <source>Receive</source>
+      <translation>收款</translation>
     </message>
     <message id="swap-rate">
-        <source>Rate</source>
-        <translation>评价</translation>
+      <source>Rate</source>
+      <translation>评价</translation>
     </message>
     <message id="swap-time-created">
-        <source>Created on</source>
-        <translation>创建</translation>
+      <source>Created on</source>
+      <translation>创建</translation>
     </message>
     <message id="swap-expiration">
-        <source>Expiration</source>
-        <translation>过期</translation>
+      <source>Expiration</source>
+      <translation>过期</translation>
     </message>
     <message id="swap-cancel-offer">
-        <source>cancel offer</source>
-        <translation>取消出价</translation>
+      <source>cancel offer</source>
+      <translation>取消出价</translation>
     </message>
     <message id="swap-accept-offer">
-        <source>accept offer</source>
-        <translation>接受报价</translation>
+      <source>accept offer</source>
+      <translation>接受报价</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
-        <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+      <source>Accept Offer</source>
+      <translation type="unfinished">Accept Offer</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
-        <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+      <source>Create Offer</source>
+      <translation type="unfinished">Create Offer</translation>
     </message>
     <message id="asset-swap-fee">
-        <source>Transaction fee</source>
-        <translation>交易费</translation>
+      <source>Transaction fee</source>
+      <translation>交易费</translation>
     </message>
     <message id="amount-input-asset-search">
-        <source>Enter asset name...</source>
-        <translation>输入资产名称...</translation>
+      <source>Enter asset name...</source>
+      <translation>输入资产名称...</translation>
     </message>
     <message id="swap-active-offers-tab">
-        <source>Active offers</source>
-        <translation>有效报价</translation>
+      <source>Active offers</source>
+      <translation>有效报价</translation>
     </message>
     <message id="swap-my-offers-tab">
-        <source>My offers</source>
-        <translation>我的报价</translation>
+      <source>My offers</source>
+      <translation>我的报价</translation>
     </message>
     <message id="assets-same-accept">
-        <source>You can&apos;t accept offer with identical assets on both sides</source>
-        <translation>您不能接受双方资产相同的报价。</translation>
+      <source>You can&apos;t accept offer with identical assets on both sides</source>
+      <translation>您不能接受双方资产相同的报价。</translation>
     </message>
     <message id="assets-same-create">
-        <source>You can&apos;t create offer with identical assets on both sides</source>
-        <translation>您不能创建双方资产相同的报价。</translation>
+      <source>You can&apos;t create offer with identical assets on both sides</source>
+      <translation>您不能创建双方资产相同的报价。</translation>
     </message>
     <message id="notification-dex-completed">
-        <source>Assets Swaps transaction completed</source>
-        <translation>资产兑换交易已完成</translation>
+      <source>Assets Swaps transaction completed</source>
+      <translation>资产兑换交易已完成</translation>
     </message>
     <message id="notification-dex-expired">
-        <source>Assets Swaps transaction expired</source>
-        <translation>资产兑换交易已失效</translation>
+      <source>Assets Swaps transaction expired</source>
+      <translation>资产兑换交易已失效</translation>
     </message>
     <message id="notification-dex-failed">
-        <source>Assets Swaps transaction failed</source>
-        <translation>资产兑换交易已失败</translation>
+      <source>Assets Swaps transaction failed</source>
+      <translation>资产兑换交易已失败</translation>
     </message>
     <message id="notification-dex-canceled">
-        <source>Assets Swaps transaction canceled</source>
-        <translation>资产兑换交易已取消</translation>
+      <source>Assets Swaps transaction canceled</source>
+      <translation>资产兑换交易已取消</translation>
     </message>
     <message id="tx-asset-swap-default-comment">
-        <source>Assets Swaps transaction</source>
-        <translation>资产兑换交易</translation>
+      <source>Assets Swaps transaction</source>
+      <translation>资产兑换交易</translation>
     </message>
     <message id="assets-swap-create-confirm-dialog-title">
-        <source>Create asset swap</source>
-        <translation>创建资产兑换</translation>
+      <source>Create asset swap</source>
+      <translation>创建资产兑换</translation>
     </message>
     <message id="assets-swap-accept-confirm-dialog-title">
-        <source>Accept asset swap</source>
-        <translation>接受资产兑换</translation>
+      <source>Accept asset swap</source>
+      <translation>接受资产兑换</translation>
     </message>
     <message id="asset-swap-confirmation-create">
-        <source>Confirm asset swap creation</source>
-        <translation>确认创建资产兑换</translation>
+      <source>Confirm asset swap creation</source>
+      <translation>确认创建资产兑换</translation>
     </message>
     <message id="asset-swap-confirmation-accept">
-        <source>Accept asset swap</source>
-        <translation>接受资产兑换</translation>
+      <source>Accept asset swap</source>
+      <translation>接受资产兑换</translation>
     </message>
     <message id="assets-swap-confirm-dialog-send-amount">
-        <source>Send amount</source>
-        <translation>发送金额</translation>
+      <source>Send amount</source>
+      <translation>发送金额</translation>
     </message>
     <message id="assets-swap-confirm-dialog-receive-amount">
-        <source>Receive amount</source>
-        <translation>收款金额</translation>
+      <source>Receive amount</source>
+      <translation>收款金额</translation>
     </message>
     <message id="assets-swap-confirm-dialog-fee-label">
-        <source>Asset swap fee</source>
-        <translation>资产兑换手续费</translation>
+      <source>Asset swap fee</source>
+      <translation>资产兑换手续费</translation>
     </message>
     <message id="settings-ca">
-        <source>Confidential assets</source>
-        <translation>加密资产</translation>
+      <source>Confidential assets</source>
+      <translation>加密资产</translation>
     </message>
     <message id="settings-ca-descr">
-        <source>Confidential assets allowed to receive</source>
-        <translation>允许接收的保密资产</translation>
+      <source>Confidential assets allowed to receive</source>
+      <translation>允许接收的保密资产</translation>
     </message>
     <message id="assets-settings">
-        <source>Assets settings</source>
-        <translation>资产设置</translation>
+      <source>Assets settings</source>
+      <translation>资产设置</translation>
     </message>
     <message id="messenger-title">
-        <source>Beam Messenger</source>
-        <translation>Beam管理器</translation>
+      <source>Beam Messenger</source>
+      <translation>Beam管理器</translation>
     </message>
     <message id="messenger-new-chat">
-        <source>New chat</source>
-        <translation>新聊天</translation>
+      <source>New chat</source>
+      <translation>新聊天</translation>
     </message>
     <message id="chat-title">
-        <source>Chat with %1</source>
-        <translation>与%1的聊天</translation>
+      <source>Chat with %1</source>
+      <translation>与%1的聊天</translation>
     </message>
     <message id="chat-message-placeholder">
-        <source>[ctrl + enter] to send</source>
-        <translation>[ctrl + 回车] 发送</translation>
+      <source>[ctrl + enter] to send</source>
+      <translation>[ctrl + 回车] 发送</translation>
     </message>
     <message id="messenger-add-receiver-address-dialog-title">
-        <source>Add receiver address</source>
-        <translation>添加接收人地址</translation>
+      <source>Add receiver address</source>
+      <translation>添加接收人地址</translation>
     </message>
     <message id="messenger-add-receiver-address-address">
-        <source>Address</source>
-        <translation>地址</translation>
+      <source>Address</source>
+      <translation>地址</translation>
     </message>
     <message id="messenger-add-receiver-address-name">
-        <source>Name</source>
-        <translation>名称</translation>
+      <source>Name</source>
+      <translation>名称</translation>
     </message>
     <message id="messenger-add-receiver-address-save">
-        <source>add receiver address</source>
-        <translation>添加接收人地址</translation>
+      <source>add receiver address</source>
+      <translation>添加接收人地址</translation>
     </message>
     <message id="chat-title-anon">
-        <source>anonymous</source>
-        <translation>匿名</translation>
+      <source>anonymous</source>
+      <translation>匿名</translation>
     </message>
     <message id="chat-message-placeholder-osx">
-        <source>[command + enter] to send</source>
-        <translation>[command + enter]发送</translation>
+      <source>[command + enter] to send</source>
+      <translation>[command + enter]发送</translation>
     </message>
     <message id="verify-on-hw-wallet">
-        <source>Verify on HW wallet</source>
-        <translation>在硬件钱包上验证</translation>
+      <source>Verify on HW wallet</source>
+      <translation>在硬件钱包上验证</translation>
     </message>
     <message id="messenger-add-receiver-address-my">
-        <source>My address</source>
-        <translation>我的地址</translation>
+      <source>My address</source>
+      <translation>我的地址</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
-        <source>QR code is wrong.
+      <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <translation>二维码错误。
+      <translation>二维码错误。
 硬件钱包未连接，请连接钱包。</translation>
     </message>
     <message id="approve-on-hw-wallet-title">
-        <source>Transaction</source>
-        <translation>交易</translation>
+      <source>Transaction</source>
+      <translation>交易</translation>
     </message>
     <message id="approve-on-hw-wallet-text">
-        <source>Transaction is in process.
+      <source>Transaction is in process.
 Connect your Hardware Wallet to finalize the transaction.</source>
-        <translation>交易正在进行。
+      <translation>交易正在进行。
 连接您的硬件钱包以完成交易。</translation>
     </message>
     <message id="dapps-store-publishers-page-main-title">
-        <source>Publishers</source>
-        <translation>发布者</translation>
+      <source>Publishers</source>
+      <translation>发布者</translation>
     </message>
     <message id="dapps-store-publisher-show-dapps">
-        <source>Show DApps</source>
-        <translation>展示DApps</translation>
+      <source>Show DApps</source>
+      <translation>展示DApps</translation>
     </message>
     <message id="dapps-store-publisher-hide-dapps">
-        <source>Hide DApps</source>
-        <translation>隐藏DApps</translation>
+      <source>Hide DApps</source>
+      <translation>隐藏DApps</translation>
     </message>
     <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>接收人签名</translation>
+      <source>Receiver signature</source>
+      <translation>接收人签名</translation>
     </message>
     <message id="atomic-swap-all-coins">
-        <source>(all)</source>
-        <translation>(全部)</translation>
+      <source>(all)</source>
+      <translation>(全部)</translation>
     </message>
     <message id="general-use-hw-wallet">
-        <source>Use Hardware Wallet</source>
-        <translation>使用硬件钱包</translation>
+      <source>Use Hardware Wallet</source>
+      <translation>使用硬件钱包</translation>
     </message>
     <message id="settings-start-switch">
-        <source>Start</source>
-        <translation>开始</translation>
+      <source>Start</source>
+      <translation>开始</translation>
     </message>
     <message id="settings-dapps-switch">
-        <source>DApps</source>
-        <translation>去中心化应用</translation>
+      <source>DApps</source>
+      <translation>去中心化应用</translation>
     </message>
     <message id="settings-never-switch">
-        <source>Never</source>
-        <translation>永不</translation>
+      <source>Never</source>
+      <translation>永不</translation>
     </message>
     <message id="receive-generate-new">
-        <source>Generate new address</source>
-        <extracomment>receive screen, button to generate new address</extracomment>
-        <translation>生成新地址</translation>
+      <source>Generate new address</source>
+      <extracomment>receive screen, button to generate new address</extracomment>
+      <translation>生成新地址</translation>
     </message>
     <message id="status-logout">
-        <source>Logout</source>
-        <translation type="unfinished">Logout</translation>
+      <source>Logout</source>
+      <translation type="unfinished">Logout</translation>
     </message>
     <message id="start-account-label">
-        <source>Account</source>
-        <translation type="unfinished">Account</translation>
+      <source>Account</source>
+      <translation type="unfinished">Account</translation>
     </message>
     <message id="start-new-account-label">
-        <source>Account name</source>
-        <translation type="unfinished">Account name</translation>
+      <source>Account name</source>
+      <translation type="unfinished">Account name</translation>
     </message>
     <message id="new-account-label">
-        <source>Account %1</source>
-        <translation type="unfinished">Account %1</translation>
+      <source>Account %1</source>
+      <translation type="unfinished">Account %1</translation>
     </message>
     <message id="start-account-password-label">
-        <source>Account password</source>
-        <translation type="unfinished">Account password</translation>
+      <source>Account password</source>
+      <translation type="unfinished">Account password</translation>
     </message>
     <message id="account-label-exists-error">
-        <source>An account with the same label already exists.</source>
-        <translation type="unfinished">An account with the same label already exists.</translation>
+      <source>An account with the same label already exists.</source>
+      <translation type="unfinished">An account with the same label already exists.</translation>
     </message>
     <message id="wallet-swap-button">
-        <source>Swap</source>
-        <translation>交换</translation>
+      <source>Swap</source>
+      <translation>交换</translation>
     </message>
     <message id="apps-no-installed">
-        <source>You don&apos;t have any applications installed yet</source>
-        <translation type="unfinished">You don&apos;t have any applications installed yet</translation>
+      <source>You don&apos;t have any applications installed yet</source>
+      <translation type="unfinished">You don&apos;t have any applications installed yet</translation>
     </message>
     <message id="apps-no-at-all">
-        <source>No applications yet</source>
-        <translation type="unfinished">No applications yet</translation>
+      <source>No applications yet</source>
+      <translation type="unfinished">No applications yet</translation>
     </message>
     <message id="apps-installed-tab">
-        <source>Installed</source>
-        <translation type="unfinished">Installed</translation>
+      <source>Installed</source>
+      <translation type="unfinished">Installed</translation>
     </message>
     <message id="apps-all-tab">
-        <source>All</source>
-        <translation>所有</translation>
+      <source>All</source>
+      <translation>所有</translation>
     </message>
     <message id="help-title">
-        <source>Documentation</source>
-        <translation>文档</translation>
+      <source>Documentation</source>
+      <translation>文档</translation>
     </message>
     <message id="settings-connect-local-node">
-        <source>Integrated node</source>
-        <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
-        <translation>本地节点</translation>
+      <source>Integrated node</source>
+      <extracomment>settings tab, node section, connect to intergrated node label</extracomment>
+      <translation>本地节点</translation>
     </message>
     <message id="settings-connect-remote-node">
-        <source>Remote node</source>
-        <translation>远程节点</translation>
+      <source>Remote node</source>
+      <translation>远程节点</translation>
     </message>
     <message id="general-add-account">
-        <source>Add account</source>
-        <translation type="unfinished">Add account</translation>
+      <source>Add account</source>
+      <translation type="unfinished">Add account</translation>
     </message>
     <message id="dapps-store-dapp-details">
-        <source>dapp details</source>
-        <translation type="unfinished">dapp details</translation>
+      <source>dapp details</source>
+      <translation type="unfinished">dapp details</translation>
     </message>
     <message id="dapp-store-app-details">
-        <source>Application details</source>
-        <translation type="unfinished">Application details</translation>
+      <source>Application details</source>
+      <translation type="unfinished">Application details</translation>
     </message>
     <message id="dapp-details-name">
-        <source>Name</source>
-        <translation>名称</translation>
+      <source>Name</source>
+      <translation>名称</translation>
     </message>
     <message id="dapp-details-description">
-        <source>Description</source>
-        <translation>描述</translation>
+      <source>Description</source>
+      <translation>描述</translation>
     </message>
     <message id="dapp-details-release-date">
-        <source>Release date</source>
-        <translation type="unfinished">Release date</translation>
+      <source>Release date</source>
+      <translation type="unfinished">Release date</translation>
     </message>
     <message id="dapp-details-publisher-key">
-        <source>Publisher key</source>
-        <translation type="unfinished">Publisher key</translation>
+      <source>Publisher key</source>
+      <translation type="unfinished">Publisher key</translation>
     </message>
     <message id="dapp-details-publisher-name">
-        <source>Publisher name</source>
-        <translation type="unfinished">Publisher name</translation>
+      <source>Publisher name</source>
+      <translation type="unfinished">Publisher name</translation>
     </message>
     <message id="dapp-details-category">
-        <source>Category</source>
-        <translation type="unfinished">Category</translation>
+      <source>Category</source>
+      <translation type="unfinished">Category</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
-        <source>copy SBBS address and close</source>
-        <translation type="unfinished">copy SBBS address and close</translation>
+      <source>copy SBBS address and close</source>
+      <translation type="unfinished">copy SBBS address and close</translation>
     </message>
-</context>
+  </context>
 </TS>
