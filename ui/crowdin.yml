@@ -27,14 +27,14 @@ files: [
       # Where translations will be placed
       # e.g. "/resources/%two_letters_code%/%original_file_name%"
       #
-      "translation": "/i18n/%locale_with_underscore%.ts",
+      "translation": "/i18n/%locale%.ts",
 
 
       #
       # Files or directories for ignore
       # e.g. ["/**/?.txt", "/**/[0-9].txt", "/**/*\?*.txt"]
       #
-      "ignore": ["Localizable.strings", "strings.xml", "Website"],
+      #"ignore": ["Localizable.strings", "strings.xml", "Website"],
 
       #
       # The dest allows you to specify a file name in Crowdin
