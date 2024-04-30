@@ -412,8 +412,8 @@
         <translation>คุณกำลังดำเนินการกู้กระเป๋า กรุณาเข้าใจว่าถ้าคุณกำลังจะใช้งานกระเป๋าที่จะกู้นี้ในอุปกรณ์อื่น ยอดคงเหลือที่จะแสดงผลในอุปกรณ์นี้จะถูกอัพเดทเป็นปัจจุบัน แต่รายการประวัติธุรกรรมและที่อยู่นั้นจะถูกแยกเก็บในแต่ละอุปกรณ์</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

@@ -412,7 +412,7 @@
         <translation>Вы пытаетесь восстановить существующий кошелек. Пожалуйста, обратите внимание, если ваш кошелек используется на другом устройстве, ваш баланс будет восстановлен до актуального состояния, но история транзакций и адреса будут хранится эксклюзивно для каждого устройства.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
+        <source>Your wallet will be migrated to v</source>
         <translation>Ваш кошелек будет обновлен до версии </translation>
     </message>
     <message id="start-migration-button">

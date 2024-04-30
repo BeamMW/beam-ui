@@ -412,8 +412,8 @@
         <translation>Pokoušíte se obnovit již existující peněženku Beam. Vezměte prosím na vědomí, že pokud používáte peněženku na jiném zařízení, Váš zůstatek bude aktuální, ale historie transakcí a adresy budou uchovávány na každém zařízení zvlášť.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>Vaše peněženka bude převedena do v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation>Vaše peněženka bude převedena do v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

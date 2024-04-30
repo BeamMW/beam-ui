@@ -412,8 +412,8 @@
         <translation>Você está tentando restaurar uma Carteira de Beam existente. Por favor, note que se você usar sua carteira em outro dispositivo, seu saldo estará atualizado, mas o histórico de transações e endereços serão mantidos separadamente em cada dispositivo.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>Sua carteira será migrada para v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation>Sua carteira será migrada para v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

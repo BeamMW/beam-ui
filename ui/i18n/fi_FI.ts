@@ -412,8 +412,8 @@
         <translation>Olet palauttamassa vanhaa lompakkoa. Huomioithan, että jos olet jo käyttänyt lompakkoa toisella laitteella, historiatiedot tilitapahtumista sekä tallentamasi osoitteet eivät siirry uudelle laitteelle palautuksen yhteydessä. Tilitapahtumat sekä osoitteet tallennetaan erikseen kullekin laitteelle. Lompakkosi saldo kuitenkin palautetaan ja on käytettävissä ajantasaisena uudessa laitteessa.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

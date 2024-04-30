@@ -412,8 +412,8 @@
         <translation>Mevcut bir Beam cüzdanını geri yüklemeye çalışıyorsunuz. Lütfen cüzdanınızı başka bir cihazda kullanırsanız, bakiyenizin güncel olacağını, ancak işlem geçmişinin ve adreslerin iki cihazda ayrı ayrı tutulacağını unutmayın.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

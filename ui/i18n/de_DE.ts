@@ -413,7 +413,7 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v </source>
-        <translation>Ihre Wallet wird nach v. migriert </translation>
+        <translation>Ihr Wallet wird nach v. migriert </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

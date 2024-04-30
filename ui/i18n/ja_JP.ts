@@ -412,7 +412,7 @@
         <translation>あなたはすでに存在するBeamウォレットを復元しようとしています。あなたが他のデバイスで使用しているウォレットを復元しようとすると、残高は最新になりますが、トランザクション履歴とアドレス情報はそれぞれのデバイスで保管されている為、再現されません。</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
+        <source>Your wallet will be migrated to v</source>
         <translation>ウォレットはvに移行されます </translation>
     </message>
     <message id="start-migration-button">

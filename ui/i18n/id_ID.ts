@@ -412,8 +412,8 @@
         <translation>Anda mencoba memulihkan Dompet Beam yang ada. Harap perhatikan bahwa jika Anda menggunakan dompet Anda di perangkat lain, saldo Anda akan diperbarui, namun riwayat transaksi dan alamat akan disimpan secara terpisah di setiap perangkat.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>Dompet Anda akan dimigrasikan ke v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation>Dompet Anda akan dimigrasikan ke v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

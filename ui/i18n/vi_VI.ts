@@ -414,8 +414,8 @@
         <translation>Bạn đang cố gắng khôi phục một ví Beam hiện có. Xin lưu ý rằng nếu bạn sử dụng ví của mình trên một thiết bị khác, số dư của bạn sẽ được cập nhật, nhưng lịch sử giao dịch và địa chỉ sẽ được giữ riêng trên mỗi thiết bị.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

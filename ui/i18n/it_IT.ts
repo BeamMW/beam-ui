@@ -412,7 +412,7 @@
         <translation>Stai tentando di ripristinare un wallet Beam già esistente. Si prega di tener presente che se si utilizza il wallet su un altro dispositivo, il saldo sarà aggiornato, ma la cronologia delle transazioni e gli indirizzi verranno consevati separatamente su ogni dispositivo.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
+        <source>Your wallet will be migrated to v</source>
         <translation>Il tuo wallet verrà migrato alla v</translation>
     </message>
     <message id="start-migration-button">

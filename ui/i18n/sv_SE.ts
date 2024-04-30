@@ -412,8 +412,8 @@
         <translation>Du försöker nu återställa en befintlig Beam-plånbok. Notera att om du använder din plånbok på en annan enhet kommer balansen vara uppdaterad men transaktionshistorik och adresser kommer hållas separat per enhet.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

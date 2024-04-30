@@ -412,8 +412,8 @@
         <translation>Está intentando restaurar un monedero de Beam existente. Tenga en cuenta que si usa su monedero en otro dispositivo, su saldo estará actualizado, pero el historial de transacciones y las direcciones se guardarán por separado en cada dispositivo.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>Su wallet se migrará a v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation>Su wallet se migrará a v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

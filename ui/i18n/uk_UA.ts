@@ -412,7 +412,7 @@
         <translation>Ви намагаєтесь відновити існуючий гаманець Beam. Будь ласка, зверніть увагу, якщо ви користуєтесь гаманцем на іншому пристрої, ваш баланс буде актуальним, але історія транзакцій та адреси залишуться окремо на кожному пристрої.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
+        <source>Your wallet will be migrated to v</source>
         <translation>Ваш гаманець буде мігровано до версії </translation>
     </message>
     <message id="start-migration-button">

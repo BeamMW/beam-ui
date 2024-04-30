@@ -412,8 +412,8 @@
         <translation>현재 이미 존재하는 Beam 지갑을 복구하려고 하고 있습니다. 지갑을 다른 기기에서 사용한다면 그 잔고는 지속적으로 업데이트 되지만, 거래 내역은 기기 별로 분리되어서 저장될 것입니다.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

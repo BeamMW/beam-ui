@@ -412,8 +412,8 @@
         <translation>Vous essayez de restaurer un portefeuille Beam existant. Veuillez noter que si vous utilisez votre portefeuille sur un autre appareil, votre solde sera à jour, mais l&apos;historique et les adresses des transactions seront conservés séparément sur chaque appareil.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>Votre portefeuille sera migré vers v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation>Votre portefeuille sera migré vers v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>

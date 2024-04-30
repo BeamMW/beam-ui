@@ -415,7 +415,7 @@
 请注意：如果您在其他设备上使用该钱包，您的余额将是最新的，但交易历史和地址将分别保存在每个设备上</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
+        <source>Your wallet will be migrated to v</source>
         <translation>您的钱包将被迁移到当前版本</translation>
     </message>
     <message id="start-migration-button">
