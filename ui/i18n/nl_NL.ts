@@ -1322,7 +1322,6 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Transactiegeschiedenis exporteren</translation>
     </message>
@@ -1851,8 +1850,10 @@ Uw versie is: %2. Controleer op updates.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
-(use for CEX withdrawals)</source>
-        <translation>SBBS Adres
+(use for CEX withdrawals and mining)</source>
+        <oldsource>SBBS Address
+(use for CEX withdrawals)</oldsource>
+        <translation type="unfinished">SBBS Adres
 (gebruik voor CEX opnames)</translation>
     </message>
     <message id="address-info-address">
