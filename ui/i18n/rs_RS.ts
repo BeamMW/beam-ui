@@ -2650,8 +2650,11 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished">Тип</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation type="unfinished">Online (SBBS) Address</translation>
+        <source>SBBS Address
+(use for CEX withdrawals and mining)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
+        <translation type="unfinished">SBBS Address
+(use for CEX withdrawals and mining)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>

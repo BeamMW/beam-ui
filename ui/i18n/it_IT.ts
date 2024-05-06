@@ -1321,7 +1321,6 @@ Si prega di controllare il token di swap e riprovare.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Esporta cronologia transazioni</translation>
     </message>
@@ -1852,8 +1851,10 @@ La tua versione è: %2. Per favore, controlla gli aggiornamenti.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
-(use for CEX withdrawals)</source>
-        <translation>Indirizzo SBBS
+(use for CEX withdrawals and mining)</source>
+        <oldsource>SBBS Address
+(use for CEX withdrawals)</oldsource>
+        <translation type="unfinished">Indirizzo SBBS
 (utilizzo per prelievi CEX)</translation>
     </message>
     <message id="address-info-address">
