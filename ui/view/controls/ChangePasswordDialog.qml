@@ -43,7 +43,7 @@ CustomDialog {
             width: parent.width
             spacing: 8
             SFText {
-                //% "Enter old password"
+                //% "Enter your current password"
                 text: qsTrId("change-pwd-old-pwd-label")
                 color: Style.content_main
                 font.pixelSize: 12
@@ -143,7 +143,7 @@ CustomDialog {
                     }
                     else if(!settingsViewModel.checkWalletPassword(oldPass.text))
                     {
-                        //% "The old password you have entered is incorrect"
+                        //% "Current password is incorrect"
                         error.text = qsTrId("change-pwd-old-fail");
                     }
                     else if(newPass.text == oldPass.text)

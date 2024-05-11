@@ -302,12 +302,14 @@
         <translation>New password doesn&apos;t match the confirm password</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>The old password you have entered is incorrect</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation>Current password is incorrect</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Enter old password</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation>Enter your current password</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
