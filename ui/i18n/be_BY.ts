@@ -412,8 +412,9 @@
         <translation>Вы спрабуеце аднавіць існуючы гаманец. Калі ласка, звярніце ўвагу, калі ваш гаманец выкарыстоўваецца на іншым прыстасаваннi, ваш баланс будзе адноўлены да актуальнага стану, але гісторыя транзакцый і адрасы будуць захоўвацца эксклюзіўна для кожнага прыстасавання.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>Ваш гаманец будзе абноўлены да версіі </translation>
+        <source>Your wallet will be migrated to v</source>
+        <oldsource>Your wallet will be migrated to v </oldsource>
+        <translation type="unfinished">Ваш гаманец будзе абноўлены да версіі </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
@@ -735,12 +736,17 @@
         <translation>Стварыць новы пароль для доступу да вашага кашальку</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
+•  the length must be at least 10 characters<byte value="xd"/>
+•  must contain at least one lowercase letter<byte value="xd"/>
+•  must contain at least one uppercase letter<byte value="xd"/>
+•  must contain at least one number</source>
+        <oldsource>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</source>
-        <translation>Добры пароль павінен адпавядаць наступным патрабаванням:
+•  must contain at least one number</oldsource>
+        <translation type="unfinished">Добры пароль павінен адпавядаць наступным патрабаванням:
 •  даўжыня мінімум 10 сімвалаў
 •  змяшчае хаця б адну маленькую літару
 •  змяшчае хаця б адну вялікую літару
@@ -761,10 +767,12 @@
         <translation>Ваш адрас</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2
+        <source>Allow access to %1 and %2<byte value="xd"/>
 (to fetch exchanges and transaction data)</source>
+        <oldsource>Allow access to %1 and %2
+(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation>Дазволіць доступ да %1 і %2
+        <translation type="unfinished">Дазволіць доступ да %1 і %2
 (абменнікі і інфармацыя аб транзакцыях)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
@@ -957,9 +965,11 @@
         <translation>Электрум</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, 
+        <source>%1 is not connected, <byte value="xd"/>
 please review your settings and try again</source>
-        <translation>%1 is not connected, 
+        <oldsource>%1 is not connected, 
+please review your settings and try again</oldsource>
+        <translation type="unfinished">%1 is not connected, 
 please review your settings and try again.</translation>
     </message>
     <message id="send-not-enough">
@@ -1147,9 +1157,11 @@ please review your settings and try again.</translation>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.
+        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
 Please check the swap token and try again.</source>
-        <translation>Прапанова з гэтым токенам транзакцыі ўжо прынята.
+        <oldsource>The offer with this transaction token is already accepted.
+Please check the swap token and try again.</oldsource>
+        <translation type="unfinished">Прапанова з гэтым токенам транзакцыі ўжо прынята.
 Калі ласка, праверце токен для свопу і паўтарыце спробу.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
@@ -1361,11 +1373,14 @@ Please check the swap token and try again.</source>
         <translation>Ключ уладальніка</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
+        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
+know all your funds (UTXO). Make sure that you<byte value="xd"/>
 deploy the key at the node you trust completely.</source>
+        <oldsource>Please notice, that knowing your owner key allows to
+know all your funds (UTXO). Make sure that you
+deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation>Звярніце ўвагу, што веданне вашага ключа ўладальніка дазваляе
+        <translation type="unfinished">Звярніце ўвагу, што веданне вашага ключа ўладальніка дазваляе
 ведаць усе вашыя сродкі (UTXO). Пераканайцеся, што вы
 даёце гэты ключ вузлу, якому цалкам давяраеце.</translation>
     </message>
@@ -1827,9 +1842,11 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Адпраўнік не можа атрымаць ваўчары для макс. прыватнай транзакцыi</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed 
+        <source>Random node address and port will be displayed <byte value="xd"/>
 when connection is established</source>
-        <translation>Будзе паказаны выпадковы адрас і порт вузла
+        <oldsource>Random node address and port will be displayed 
+when connection is established</oldsource>
+        <translation type="unfinished">Будзе паказаны выпадковы адрас і порт вузла
 калі злучэнне будзе ўстаноўлена</translation>
     </message>
     <message id="swap-token-newer-lib">
@@ -1853,10 +1870,10 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Тып адраса</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address
+        <source>SBBS Address<byte value="xd"/>
 (use for CEX withdrawals and mining)</source>
         <oldsource>SBBS Address
-(use for CEX withdrawals)</oldsource>
+(use for CEX withdrawals and mining)</oldsource>
         <translation type="unfinished">SBBS адрас
 (выкарыстоўвайце для зняцця з CEX)</translation>
     </message>
@@ -2095,10 +2112,13 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Максімальная камісія %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
+Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
 much longer for a transaction to complete.</source>
-        <translation>Памылка падлучэння: не ўдаецца вылічыць рэкамендаваны збор за транзакцыю.
+        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</oldsource>
+        <translation type="unfinished">Памылка падлучэння: не ўдаецца вылічыць рэкамендаваны збор за транзакцыю.
 Праверце блокчейн% 1 самастойна. Нізкія зборы могуць прывесцi да таго,
 што для здзяйснення транзакцыі будзе запатрабавана значна больш часу.</translation>
     </message>
@@ -2215,9 +2235,11 @@ much longer for a transaction to complete.</source>
         <translation>Калі ласка, пачакайце, прапановы загружаюцца.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
+        <source>There are no active offers at the moment.<byte value="xd"/>
 Please try again later or create an offer yourself.</source>
-        <translation>На дадзены момант няма актыўных прапаноў.
+        <oldsource>There are no active offers at the moment.
+Please try again later or create an offer yourself.</oldsource>
+        <translation type="unfinished">На дадзены момант няма актыўных прапаноў.
 Паўтарыце спробу пазней альбо стварыце прапанову самастойна.</translation>
     </message>
     <message id="atomic-swap-amount-send">
@@ -2269,9 +2291,11 @@ Please try again later or create an offer yourself.</source>
         <translation>няўдала</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
+        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</source>
-        <translation>У вас няма звязаных валют.
+        <oldsource>You do not have any 3rd-party currencies connected.
+Update your settings and try again.</oldsource>
+        <translation type="unfinished">У вас няма звязаных валют.
 Абнавіце налады і паўтарыце спробу.</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
@@ -3041,9 +3065,11 @@ cannot be canceled.</source>
         <translation>Падрабязнасці токена</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit
+        <source>No limit<byte value="xd"/>
 (transaction can last indefinitely)</source>
-        <translation>Без абмежаванняў
+        <oldsource>No limit
+(transaction can last indefinitely)</oldsource>
+        <translation type="unfinished">Без абмежаванняў
 (транзакцыя можа доўжыцца бясконца)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
@@ -3423,10 +3449,13 @@ cannot be canceled.</source>
         <translation>працягнуць</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.
-If something is wrong, please cancel the uploading,
+        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
+If something is wrong, please cancel the uploading,<byte value="xd"/>
 change the information in your file and upload your file again.</source>
-        <translation>Праверце інфармацыю ніжэй і абярыце &quot;апублікаваць&quot;.
+        <oldsource>Check the information below and select &quot;publish&quot;.
+If something is wrong, please cancel the uploading,
+change the information in your file and upload your file again.</oldsource>
+        <translation type="unfinished">Праверце інфармацыю ніжэй і абярыце &quot;апублікаваць&quot;.
 Калі нешта не так, адмяніце загрузку,
 змяніце інфармацыю ў вашым файле і загрузіце файл зноў.</translation>
     </message>
@@ -3759,9 +3788,11 @@ Please, restart the wallet and try again.</source>
         <translation>Мой адрас</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
-        <source>QR code is wrong.
+        <source>QR code is wrong.<byte value="xd"/>
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <translation>QR-код няправільны.
+        <oldsource>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</oldsource>
+        <translation type="unfinished">QR-код няправільны.
 Апаратны гаманец не падключаны. Калі ласка, падключыце яго</translation>
     </message>
     <message id="approve-on-hw-wallet-title">

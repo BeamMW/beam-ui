@@ -735,12 +735,17 @@
         <translation>Nieuw wachtwoord aanmaken om toegang te krijgen tot uw wallet</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
+•  the length must be at least 10 characters<byte value="xd"/>
+•  must contain at least one lowercase letter<byte value="xd"/>
+•  must contain at least one uppercase letter<byte value="xd"/>
+•  must contain at least one number</source>
+        <oldsource>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</source>
-        <translation>Een sterk wachtwoord moet voldoen aan de volgende vereisten:
+•  must contain at least one number</oldsource>
+        <translation type="unfinished">Een sterk wachtwoord moet voldoen aan de volgende vereisten:
 •  Wachtwoord moet uit ten minste 10 tekens bestaan
 •  moet ten minste één kleine letter bevatten
 •  moet ten minste één hoofdletter bevatten
@@ -761,10 +766,12 @@
         <translation>Uw adres</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2
+        <source>Allow access to %1 and %2<byte value="xd"/>
 (to fetch exchanges and transaction data)</source>
+        <oldsource>Allow access to %1 and %2
+(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation>Verleen toegang tot %1 en %2
+        <translation type="unfinished">Verleen toegang tot %1 en %2
 (om exchanges- en transactiegegevens op te halen)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
@@ -955,9 +962,11 @@
         <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, 
+        <source>%1 is not connected, <byte value="xd"/>
 please review your settings and try again</source>
-        <translation>%1 is niet verbonden,
+        <oldsource>%1 is not connected, 
+please review your settings and try again</oldsource>
+        <translation type="unfinished">%1 is niet verbonden,
 controleer uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="send-not-enough">
@@ -1145,9 +1154,11 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.
+        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
 Please check the swap token and try again.</source>
-        <translation>Het aanbod met deze transactietoken is al geaccepteerd.
+        <oldsource>The offer with this transaction token is already accepted.
+Please check the swap token and try again.</oldsource>
+        <translation type="unfinished">Het aanbod met deze transactietoken is al geaccepteerd.
 Controleer de swaptoken en probeer het opnieuw.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
@@ -1359,11 +1370,14 @@ Controleer de swaptoken en probeer het opnieuw.</translation>
         <translation>Eigenaarssleutel</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
+        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
+know all your funds (UTXO). Make sure that you<byte value="xd"/>
 deploy the key at the node you trust completely.</source>
+        <oldsource>Please notice, that knowing your owner key allows to
+know all your funds (UTXO). Make sure that you
+deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation>Let op dat het kennen van uw eigenaarssleutel inzicht in al uw tegoeden (UTXO) geeft. Zorg ervoor dat u de sleutel op een node invoert die u volledig vertrouwt.</translation>
+        <translation type="unfinished">Let op dat het kennen van uw eigenaarssleutel inzicht in al uw tegoeden (UTXO) geeft. Zorg ervoor dat u de sleutel op een node invoert die u volledig vertrouwt.</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
@@ -1823,9 +1837,11 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>De verzender kan geen vouchers voor max privacy transactie krijgen</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed 
+        <source>Random node address and port will be displayed <byte value="xd"/>
 when connection is established</source>
-        <translation>Willekeurig node adres en poort worden weergegeven 
+        <oldsource>Random node address and port will be displayed 
+when connection is established</oldsource>
+        <translation type="unfinished">Willekeurig node adres en poort worden weergegeven 
 wanneer verbinding is gemaakt</translation>
     </message>
     <message id="swap-token-newer-lib">
@@ -1849,10 +1865,10 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>Adrestype</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address
+        <source>SBBS Address<byte value="xd"/>
 (use for CEX withdrawals and mining)</source>
         <oldsource>SBBS Address
-(use for CEX withdrawals)</oldsource>
+(use for CEX withdrawals and mining)</oldsource>
         <translation type="unfinished">SBBS Adres
 (gebruik voor CEX opnames)</translation>
     </message>
@@ -2087,10 +2103,13 @@ Uw versie is: %2. Controleer op updates.</translation>
         <translation>De maximale vergoeding is %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
+Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
 much longer for a transaction to complete.</source>
-        <translation>Verbindingsfout: kan de aanbevolen fee niet berekenen.
+        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</oldsource>
+        <translation type="unfinished">Verbindingsfout: kan de aanbevolen fee niet berekenen.
 Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernstig vertragen.</translation>
     </message>
     <message id="ethereum-show-addresses-title">
@@ -2206,9 +2225,11 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
         <translation>Een ogenblik geduld, aanbiedingen worden geladen.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
+        <source>There are no active offers at the moment.<byte value="xd"/>
 Please try again later or create an offer yourself.</source>
-        <translation>Er zijn momenteel geen actieve aanbiedingen.
+        <oldsource>There are no active offers at the moment.
+Please try again later or create an offer yourself.</oldsource>
+        <translation type="unfinished">Er zijn momenteel geen actieve aanbiedingen.
 Probeer het later opnieuw of maak zelf een aanbieding.</translation>
     </message>
     <message id="atomic-swap-amount-send">
@@ -2260,9 +2281,11 @@ Probeer het later opnieuw of maak zelf een aanbieding.</translation>
         <translation>mislukken</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
+        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</source>
-        <translation>U heeft geen 3rd-party valuta gekoppeld.
+        <oldsource>You do not have any 3rd-party currencies connected.
+Update your settings and try again.</oldsource>
+        <translation type="unfinished">U heeft geen 3rd-party valuta gekoppeld.
 Update uw instellingen en probeer opnieuw.</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
@@ -3028,9 +3051,11 @@ cannot be canceled.</source>
         <translation>Token details</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit
+        <source>No limit<byte value="xd"/>
 (transaction can last indefinitely)</source>
-        <translation>Geen limiet
+        <oldsource>No limit
+(transaction can last indefinitely)</oldsource>
+        <translation type="unfinished">Geen limiet
 (transactie kan onbepaalde tijd in beslag nemen)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
@@ -3409,10 +3434,13 @@ cannot be canceled.</source>
         <translation>doorgaan</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.
-If something is wrong, please cancel the uploading,
+        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
+If something is wrong, please cancel the uploading,<byte value="xd"/>
 change the information in your file and upload your file again.</source>
-        <translation>Controleer onderstaande informatie en selecteer &quot;publiceren&quot;.
+        <oldsource>Check the information below and select &quot;publish&quot;.
+If something is wrong, please cancel the uploading,
+change the information in your file and upload your file again.</oldsource>
+        <translation type="unfinished">Controleer onderstaande informatie en selecteer &quot;publiceren&quot;.
 Als er iets fout gaat, annuleer dan de uploading,
 verander de informatie in uw bestand en upload opnieuw.</translation>
     </message>
@@ -3745,9 +3773,11 @@ Herstart de wallet en probeer het opnieuw.</translation>
         <translation>Mijn adres</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
-        <source>QR code is wrong.
+        <source>QR code is wrong.<byte value="xd"/>
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <translation>QR code is niet juist
+        <oldsource>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</oldsource>
+        <translation type="unfinished">QR code is niet juist
 Er is geen hardware wallet verbonden. Maak verbinding met de wallet</translation>
     </message>
     <message id="approve-on-hw-wallet-title">

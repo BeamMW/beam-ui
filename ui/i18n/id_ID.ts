@@ -736,12 +736,17 @@
         <translation>Buat kata sandi baru untuk mengakses dompet Anda</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
+•  the length must be at least 10 characters<byte value="xd"/>
+•  must contain at least one lowercase letter<byte value="xd"/>
+•  must contain at least one uppercase letter<byte value="xd"/>
+•  must contain at least one number</source>
+        <oldsource>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</source>
-        <translation>Kata sandi yang kuat harus memenuhi persyaratan berikut:
+•  must contain at least one number</oldsource>
+        <translation type="unfinished">Kata sandi yang kuat harus memenuhi persyaratan berikut:
 •\u0020\u0020panjang harus minimal 10 karakter
 •\u0020\u0020harus berisi setidaknya satu huruf kecil
 •\u0020\u0020harus berisi setidaknya satu huruf besar
@@ -762,10 +767,12 @@
         <translation>Alamat Anda</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2
+        <source>Allow access to %1 and %2<byte value="xd"/>
 (to fetch exchanges and transaction data)</source>
+        <oldsource>Allow access to %1 and %2
+(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation>Izinkan akses ke %1 dan %2
+        <translation type="unfinished">Izinkan akses ke %1 dan %2
 (untuk mengambil pertukaran dan data transaksi)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
@@ -954,9 +961,11 @@
         <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, 
+        <source>%1 is not connected, <byte value="xd"/>
 please review your settings and try again</source>
-        <translation>%1 tidak tersambung, 
+        <oldsource>%1 is not connected, 
+please review your settings and try again</oldsource>
+        <translation type="unfinished">%1 tidak tersambung, 
 silakan tinjau pengaturan Anda dan coba lagi</translation>
     </message>
     <message id="send-not-enough">
@@ -1142,9 +1151,11 @@ silakan tinjau pengaturan Anda dan coba lagi</translation>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.
+        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
 Please check the swap token and try again.</source>
-        <translation>Penawaran dengan token transaksi ini sudah diterima.
+        <oldsource>The offer with this transaction token is already accepted.
+Please check the swap token and try again.</oldsource>
+        <translation type="unfinished">Penawaran dengan token transaksi ini sudah diterima.
 Silakan periksa token swap dan coba lagi.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
@@ -1356,11 +1367,14 @@ Silakan periksa token swap dan coba lagi.</translation>
         <translation>Kunci pemilik</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to
-know all your funds (UTXO). Make sure that you
+        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
+know all your funds (UTXO). Make sure that you<byte value="xd"/>
 deploy the key at the node you trust completely.</source>
+        <oldsource>Please notice, that knowing your owner key allows to
+know all your funds (UTXO). Make sure that you
+deploy the key at the node you trust completely.</oldsource>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation>Harap diperhatikan, bahwa dengan mengetahui kunci pemilik Anda, Anda dapat
+        <translation type="unfinished">Harap diperhatikan, bahwa dengan mengetahui kunci pemilik Anda, Anda dapat
 mengetahui semua dana Anda (UTXO). Pastikan bahwa Anda
 menggunakan kunci tersebut pada node yang Anda percayai sepenuhnya.</translation>
     </message>
@@ -1822,9 +1836,11 @@ Versi Anda adalah: %2. Silakan periksa pembaruan.</translation>
         <translation>Pengirim tidak dapat memperoleh voucher untuk transaksi privasi maksimal</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed 
+        <source>Random node address and port will be displayed <byte value="xd"/>
 when connection is established</source>
-        <translation>Alamat node dan port acak akan ditampilkan 
+        <oldsource>Random node address and port will be displayed 
+when connection is established</oldsource>
+        <translation type="unfinished">Alamat node dan port acak akan ditampilkan 
 ketika koneksi dibuat</translation>
     </message>
     <message id="swap-token-newer-lib">
@@ -1848,10 +1864,10 @@ Versi Anda adalah: %2. Silakan periksa pembaruan.</translation>
         <translation>Jenis alamat</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address
+        <source>SBBS Address<byte value="xd"/>
 (use for CEX withdrawals and mining)</source>
         <oldsource>SBBS Address
-(use for CEX withdrawals)</oldsource>
+(use for CEX withdrawals and mining)</oldsource>
         <translation type="unfinished">Alamat SBBS
 (digunakan untuk penarikan CEX)</translation>
     </message>
@@ -2084,10 +2100,13 @@ Versi Anda adalah: %2. Silakan periksa pembaruan.</translation>
         <translation>Biaya maksimum adalah %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. 
-Check on the %1 blockchain by yourself. Low fees might take 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
+Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
 much longer for a transaction to complete.</source>
-        <translation>Kesalahan koneksi: tidak&apos; dapat menghitung tarif biaya yang disarankan. 
+        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+Check on the %1 blockchain by yourself. Low fees might take 
+much longer for a transaction to complete.</oldsource>
+        <translation type="unfinished">Kesalahan koneksi: tidak&apos; dapat menghitung tarif biaya yang disarankan. 
 Periksa sendiri blockchain %1. Biaya rendah mungkin diperlukan 
 lebih lama untuk menyelesaikan transaksi.</translation>
     </message>
@@ -2204,9 +2223,11 @@ lebih lama untuk menyelesaikan transaksi.</translation>
         <translation>Mohon tunggu, penawaran sedang dimuat.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.
+        <source>There are no active offers at the moment.<byte value="xd"/>
 Please try again later or create an offer yourself.</source>
-        <translation>Tidak ada penawaran aktif saat ini.
+        <oldsource>There are no active offers at the moment.
+Please try again later or create an offer yourself.</oldsource>
+        <translation type="unfinished">Tidak ada penawaran aktif saat ini.
 Silakan coba lagi nanti atau buat penawaran sendiri.</translation>
     </message>
     <message id="atomic-swap-amount-send">
@@ -2258,9 +2279,11 @@ Silakan coba lagi nanti atau buat penawaran sendiri.</translation>
         <translation>gagal</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.
+        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
 Update your settings and try again.</source>
-        <translation>Anda tidak memiliki mata uang pihak ketiga yang terhubung.
+        <oldsource>You do not have any 3rd-party currencies connected.
+Update your settings and try again.</oldsource>
+        <translation type="unfinished">Anda tidak memiliki mata uang pihak ketiga yang terhubung.
 Perbarui pengaturan Anda dan coba lagi.</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
@@ -3024,9 +3047,11 @@ tidak dapat dibatalkan.</translation>
         <translation>Rincian token</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit
+        <source>No limit<byte value="xd"/>
 (transaction can last indefinitely)</source>
-        <translation>Tanpa batas
+        <oldsource>No limit
+(transaction can last indefinitely)</oldsource>
+        <translation type="unfinished">Tanpa batas
 (transaksi dapat berlangsung tanpa batas waktu)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
@@ -3405,10 +3430,13 @@ tidak dapat dibatalkan.</translation>
         <translation>lanjutkan</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.
-If something is wrong, please cancel the uploading,
+        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
+If something is wrong, please cancel the uploading,<byte value="xd"/>
 change the information in your file and upload your file again.</source>
-        <translation>Periksa informasi di bawah ini dan pilih &quot;publikasikan&quot;.
+        <oldsource>Check the information below and select &quot;publish&quot;.
+If something is wrong, please cancel the uploading,
+change the information in your file and upload your file again.</oldsource>
+        <translation type="unfinished">Periksa informasi di bawah ini dan pilih &quot;publikasikan&quot;.
 Jika ada yang salah, batalkan pengunggahan,
 ubah informasi dalam file Anda dan unggah kembali file Anda.</translation>
     </message>
@@ -3741,9 +3769,11 @@ Silakan mulai ulang dompet dan coba lagi.</translation>
         <translation>Alamat saya</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
-        <source>QR code is wrong.
+        <source>QR code is wrong.<byte value="xd"/>
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <translation>Kode QR salah.
+        <oldsource>QR code is wrong.
+A hardware wallet is not connected. Please, connect the wallet</oldsource>
+        <translation type="unfinished">Kode QR salah.
 Dompet perangkat keras tidak terhubung. Harap hubungkan dompet</translation>
     </message>
     <message id="approve-on-hw-wallet-title">
