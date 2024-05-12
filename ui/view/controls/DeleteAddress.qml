@@ -80,7 +80,7 @@ CustomDialog {
                 Layout.preferredHeight: 40
                 Layout.alignment: Qt.AlignHCenter
 
-                //% "delete"
+                //% "Delete"
                 text: qsTrId("general-delete")
                 icon.source: "qrc:/assets/icon-done.svg"
                 onClicked: {

@@ -1321,7 +1321,6 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Exporter l&apos;historique des transactions</translation>
     </message>
@@ -1850,8 +1849,10 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
-(use for CEX withdrawals)</source>
-        <translation>Adresse SBBS
+(use for CEX withdrawals and mining)</source>
+        <oldsource>SBBS Address
+(use for CEX withdrawals)</oldsource>
+        <translation type="unfinished">Adresse SBBS
 (utilisée pour les retraits depuis les CEX)</translation>
     </message>
     <message id="address-info-address">
