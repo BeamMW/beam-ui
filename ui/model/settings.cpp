@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -182,11 +182,11 @@ const char* WalletSettings::TrezorWalletDBFile = "trezor-wallet.db";
 WalletSettings::AccountSettings::AccountSettings(QString settingsPath)
     : m_data{ settingsPath, QSettings::IniFormat }
 {
-    LOG_INFO() << "User UI Settings file: " << m_data.fileName().toStdString();
+    BEAM_LOG_INFO() << "User UI Settings file: " << m_data.fileName().toStdString();
     const auto devapp = m_data.value(kDevAppName).toString().toStdString();
     if (!devapp.empty())
     {
-        LOG_INFO() << "DevApp Name: " << devapp;
+        BEAM_LOG_INFO() << "DevApp Name: " << devapp;
     }
 }
 
@@ -198,7 +198,7 @@ WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicatio
     , m_globalData{ appDataDir.filePath(SettingsFile), QSettings::IniFormat }
     , m_applicationDirPath{applicationDirPath}
 {
-    LOG_INFO () << "Global UI Settings file: " << m_globalData.fileName().toStdString();
+    BEAM_LOG_INFO () << "Global UI Settings file: " << m_globalData.fileName().toStdString();
 }
 
 void WalletSettings::changeAccount(int accountIndex)
@@ -1028,7 +1028,7 @@ QString WalletSettings::getIPFSNodeStart() const
     auto start = settings.value(keyNodeStart, defStart).toString();
 
     if (start != "clientstart" && start != "dapps" && start != "never") {
-        LOG_WARNING() << "Unknown IPFS start setting '" << start.toStdString()
+        BEAM_LOG_WARNING() << "Unknown IPFS start setting '" << start.toStdString()
                       << "'. Defaulting to '" << defStart.toStdString() << "'";
         settings.setValue(keyNodeStart, defStart);
         return defStart;

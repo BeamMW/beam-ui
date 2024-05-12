@@ -1,4 +1,4 @@
-// Copyright 2020 The Beam Team
+// Copyright 2020-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -71,7 +71,7 @@ bool isSwapFeeOK(beam::Amount amount, beam::Amount fee, OldWalletCurrency::OldCu
     }
     catch (const std::runtime_error& err)
     {
-        LOG_ERROR() << err.what();
+        BEAM_LOG_ERROR() << err.what();
     }
     
     return result;

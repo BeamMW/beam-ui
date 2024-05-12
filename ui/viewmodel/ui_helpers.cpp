@@ -583,7 +583,7 @@ namespace beamui
         assert(reasons.size() > static_cast<size_t>(reason));
         if (static_cast<size_t>(reason) >= reasons.size())
         {
-            LOG_WARNING()  << "Unknown failure reason code " << reason << ". Defaulting to 0";
+            BEAM_LOG_WARNING()  << "Unknown failure reason code " << reason << ". Defaulting to 0";
             reason = beam::wallet::TxFailureReason::Unknown;
         }
 

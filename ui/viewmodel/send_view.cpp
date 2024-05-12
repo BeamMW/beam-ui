@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ void SendViewModel::setAssetId(int value)
     auto valueId = value < 0 ? beam::Asset::s_BeamID : static_cast<beam::Asset::ID>(value);
     if (m_Csi.m_assetID != valueId)
     {
-        LOG_INFO () << "Selected asset id: " << value;
+        BEAM_LOG_INFO () << "Selected asset id: " << value;
         m_Csi.m_assetID = valueId;
         emit assetIdChanged();
         RefreshCsiAsync();
