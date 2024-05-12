@@ -1,4 +1,4 @@
-// Copyright 2020 The Beam Team
+// Copyright 2020-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 
 namespace
 {
-    const unsigned char ACAlpha = 252;
+    static constexpr uint8_t ACAlpha = 252;
 
     beam::Asset::ID GetBeamXID()
     {
@@ -32,8 +32,9 @@ namespace
         case Rules::Network::testnet:
             return 12;
         default:
-            return 31;
+            ;
         }
+        return 31;
     }
 }
 
@@ -46,48 +47,21 @@ AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr 
     connect(_rates.get(),  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
     connect(_wallet, &WalletModel::verificationInfoUpdate, this, &AssetsManager::onAssetVerification);
     _wallet->getAsync()->getVerificationInfo();
+    
+    static const auto predefined_color_strings = 
+    { 
+        "#72fdff", "#2acf1d", "#ffbb54", "#d885ff", "#008eff", "#ff746b", "#91e300", "#ffe75a", "#9643ff", "#395bff",
+        "#ff3b3b", "#73ff7c", "#ffa86c", "#ff3abe", "#00aee1", "#ff5200", "#6464ff", "#ff7a21", "#63afff", "#c81f68"
+    };
 
-    _icons[0]  = "qrc:/assets/asset-0.svg";
-    _icons[1]  = "qrc:/assets/asset-1.svg";
-    _icons[2]  = "qrc:/assets/asset-2.svg";
-    _icons[3]  = "qrc:/assets/asset-3.svg";
-    _icons[4]  = "qrc:/assets/asset-4.svg";
-    _icons[5]  = "qrc:/assets/asset-5.svg";
-    _icons[6]  = "qrc:/assets/asset-6.svg";
-    _icons[7]  = "qrc:/assets/asset-7.svg";
-    _icons[8]  = "qrc:/assets/asset-8.svg";
-    _icons[9]  = "qrc:/assets/asset-9.svg";
-    _icons[10]  = "qrc:/assets/asset-10.svg";
-    _icons[11]  = "qrc:/assets/asset-11.svg";
-    _icons[12]  = "qrc:/assets/asset-12.svg";
-    _icons[13]  = "qrc:/assets/asset-13.svg";
-    _icons[14]  = "qrc:/assets/asset-14.svg";
-    _icons[15]  = "qrc:/assets/asset-15.svg";
-    _icons[16]  = "qrc:/assets/asset-16.svg";
-    _icons[17]  = "qrc:/assets/asset-17.svg";
-    _icons[18]  = "qrc:/assets/asset-18.svg";
-    _icons[19]  = "qrc:/assets/asset-19.svg";
-
-    _colors[0] = QColor("#72fdff"); _colors[0].setAlpha(ACAlpha);
-    _colors[1] = QColor("#2acf1d"); _colors[1].setAlpha(ACAlpha);
-    _colors[2] = QColor("#ffbb54"); _colors[2].setAlpha(ACAlpha);
-    _colors[3] = QColor("#d885ff"); _colors[3].setAlpha(ACAlpha);
-    _colors[4] = QColor("#008eff"); _colors[4].setAlpha(ACAlpha);
-    _colors[5] = QColor("#ff746b"); _colors[5].setAlpha(ACAlpha);
-    _colors[6] = QColor("#91e300"); _colors[6].setAlpha(ACAlpha);
-    _colors[7] = QColor("#ffe75a"); _colors[7].setAlpha(ACAlpha);
-    _colors[8] = QColor("#9643ff"); _colors[8].setAlpha(ACAlpha);
-    _colors[9] = QColor("#395bff"); _colors[9].setAlpha(ACAlpha);
-    _colors[10] = QColor("#ff3b3b"); _colors[10].setAlpha(ACAlpha);
-    _colors[11] = QColor("#73ff7c"); _colors[11].setAlpha(ACAlpha);
-    _colors[12] = QColor("#ffa86c"); _colors[12].setAlpha(ACAlpha);
-    _colors[13] = QColor("#ff3abe"); _colors[13].setAlpha(ACAlpha);
-    _colors[14] = QColor("#00aee1"); _colors[14].setAlpha(ACAlpha);
-    _colors[15] = QColor("#ff5200"); _colors[15].setAlpha(ACAlpha);
-    _colors[16] = QColor("#6464ff"); _colors[16].setAlpha(ACAlpha);
-    _colors[17] = QColor("#ff7a21"); _colors[17].setAlpha(ACAlpha);
-    _colors[18] = QColor("#63afff"); _colors[18].setAlpha(ACAlpha);
-    _colors[19] = QColor("#c81f68"); _colors[19].setAlpha(ACAlpha);
+    std::size_t i{};
+    for (auto it= predefined_color_strings.begin(); it != predefined_color_strings.end(); ++it, ++i)
+    {
+        _icons[i] = QString::fromStdString(std::format("qrc:/assets/asset-{}.svg", i));
+        
+        _colors[i] = QColor(*it);
+        _colors[i].setAlpha(ACAlpha);
+    }
 }
 
 void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
@@ -161,11 +135,9 @@ QString AssetsManager::getIcon(beam::Asset::ID id)
     {
         if(!it->second.m_icon.empty())
         {
-            const auto iconCheck = QString(":/assets/") + QString::fromStdString(it->second.m_icon);
-            if(QFile::exists(iconCheck))
+            if(const auto iconCheck = QString(":/assets/") + QString::fromStdString(it->second.m_icon); QFile::exists(iconCheck))
             {
-                auto iconRet = QString("qrc:/assets/") + QString::fromStdString(it->second.m_icon);
-                return iconRet;
+                return QString("qrc") + iconCheck;
             }
         }
     }
@@ -190,7 +162,7 @@ QString AssetsManager::getUnitName(beam::Asset::ID id, Shorten shorten)
     QString unitName;
     if (auto meta = getAsset(id))
     {
-        unitName = meta->GetUnitName().c_str();
+        unitName = QString::fromStdString(meta->GetUnitName());
     }
 
     if (unitName.isEmpty())
@@ -198,17 +170,10 @@ QString AssetsManager::getUnitName(beam::Asset::ID id, Shorten shorten)
         unitName = "ASSET";
     }
 
-    const int kMaxUnitLen = 6;
+    static constexpr auto kMaxUnitLen = 6;
     if (shorten != NoShorten && unitName.length() > kMaxUnitLen)
     {
-        if (shorten == ShortenHtml)
-        {
-            unitName = unitName.left(kMaxUnitLen) + "&#2026;";
-        }
-        else
-        {
-            unitName = unitName.left(kMaxUnitLen) + u8"\u2026";
-        }
+        unitName = unitName.left(kMaxUnitLen) + ((shorten == ShortenHtml)? "&#2026;": "\u2026");
     }
 
     return unitName;
@@ -224,14 +189,12 @@ QString AssetsManager::getName(beam::Asset::ID id)
     QString name;
     if (auto meta = getAsset(id))
     {
-        name = meta->GetName().c_str();
+        name = QString::fromStdString(meta->GetName());
     }
 
     if (name.isEmpty())
     {
-        std::ostringstream ss;
-        ss << "Asset " << static_cast<int>(id);
-        name = QString(ss.str().c_str());
+        name = QString::fromStdString(std::format("Asset {}", id));
     }
 
     return name;
@@ -247,7 +210,7 @@ QString AssetsManager::getSmallestUnitName(beam::Asset::ID id)
     QString name;
     if (auto meta = getAsset(id))
     {
-        name = meta->GetNthUnitName().c_str();
+        name = QString::fromStdString(meta->GetNthUnitName());
     }
 
     if (name.isEmpty())
@@ -268,7 +231,7 @@ QString AssetsManager::getShortDesc(beam::Asset::ID id)
     QString desc;
     if (auto meta = getAsset(id))
     {
-        desc = meta->GetShortDesc().c_str();
+        desc = QString::fromStdString(meta->GetShortDesc());
     }
 
     if (desc.isEmpty() && id == GetBeamXID())
@@ -289,12 +252,15 @@ QString AssetsManager::getLongDesc(beam::Asset::ID id)
     QString desc;
     if (auto meta = getAsset(id))
     {
-        desc = meta->GetLongDesc().c_str();
+        desc = QString::fromStdString(meta->GetLongDesc());
     }
 
     if (desc.isEmpty() && id == GetBeamXID())
     {
-        desc = "BEAMX token is a Confidential Asset issued on top of the Beam blockchain with a fixed emission of 100,000,000 units (except for the lender of a \"last resort\" scenario). BEAMX is the governance token for the BeamX DAO, managed by the BeamX DAO Core contract. Holders can earn BeamX tokens by participating in the DAO activities: providing liquidity to the DeFi applications governed by the DAO or participating in the governance process.";
+        desc =  "BEAMX token is a Confidential Asset issued on top of the Beam blockchain with a fixed emission of 100,000,000 units "
+                "(except for the lender of a \"last resort\" scenario). BEAMX is the governance token for the BeamX DAO, managed by "
+                "the BeamX DAO Core contract. Holders can earn BeamX tokens by participating in the DAO activities: providing "
+                "liquidity to the DeFi applications governed by the DAO or participating in the governance process.";
     }
 
     return desc;
@@ -310,7 +276,7 @@ QString AssetsManager::getSiteUrl(beam::Asset::ID id)
     QString desc;
     if (auto meta = getAsset(id))
     {
-        desc = meta->GetSiteUrl().c_str();
+        desc = QString::fromStdString(meta->GetSiteUrl());
     }
 
     if (desc.isEmpty() && id == GetBeamXID())
@@ -331,7 +297,7 @@ QString AssetsManager::getPaperUrl(beam::Asset::ID id)
     QString desc;
     if (auto meta = getAsset(id))
     {
-        desc = meta->GetPaperUrl().c_str();
+        desc = QString::fromStdString(meta->GetPaperUrl());
     }
 
     if (desc.isEmpty() && id == GetBeamXID())
@@ -415,6 +381,7 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
     asset.insert("iconHeight", 22);
     asset.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
     asset.insert("verified",   isVerified(assetId));
+
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     asset.insert("allowed", _allowedAssets.contains(assetId));
     if (assetId)
@@ -431,10 +398,12 @@ QMap<QString, QVariant> AssetsManager::getAssetProps(beam::Asset::ID assetId)
 QList<QMap<QString, QVariant>> AssetsManager::getAssetsListFull()
 {
     const auto assets = _wallet->getAssetsFull();
+
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     auto& settings = AppModel::getInstance().getSettings();
     _allowedAssets = settings.getAllowedAssets();
 #endif  // BEAM_ASSET_SWAP_SUPPORT
+
     QList<QMap<QString, QVariant>> result;
 
     for(auto assetId: assets)
