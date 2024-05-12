@@ -735,17 +735,12 @@
         <translation>ウォレットにアクセスにするには新しいパスワードを作成して下さい</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
-•  the length must be at least 10 characters<byte value="xd"/>
-•  must contain at least one lowercase letter<byte value="xd"/>
-•  must contain at least one uppercase letter<byte value="xd"/>
-•  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</oldsource>
-        <translation type="unfinished">強力なパスワードは、次の要件を満たす必要があります。
+•  must contain at least one number</source>
+        <translation>強力なパスワードは、次の要件を満たす必要があります。
 • 10文字以上であること
 • 小文字が少なくとも1つ含まれていること
 • 大文字が少なくとも1つ含まれていること
@@ -766,12 +761,10 @@
         <translation>あなたのアドレス</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2<byte value="xd"/>
+        <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2
-(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation type="unfinished">%1および%2へのアクセスを許可する（取引所とトランザクションのデータを取得するため）</translation>
+        <translation>%1および%2へのアクセスを許可する（取引所とトランザクションのデータを取得するため）</translation>
     </message>
     <message id="settings-report-problem-message-l1">
         <source>1. Click on “Save wallet logs” and choose a destination folder for the log files.</source>
@@ -959,11 +952,9 @@
         <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, <byte value="xd"/>
+        <source>%1 is not connected, 
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, 
-please review your settings and try again</oldsource>
-        <translation type="unfinished">%1 は接続されていません。設定を確認のうえ、再度お試しください。</translation>
+        <translation>%1 は接続されていません。設定を確認のうえ、再度お試しください。</translation>
     </message>
     <message id="send-not-enough">
         <source>There is not enough funds to complete the transaction</source>
@@ -1148,11 +1139,9 @@ please review your settings and try again</oldsource>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
+        <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.
-Please check the swap token and try again.</oldsource>
-        <translation type="unfinished">このトランザクショントークンのオファーはすでに受け入れられています。
+        <translation>このトランザクショントークンのオファーはすでに受け入れられています。
 スワップトークンを確認して、再度お試しください。</translation>
     </message>
     <message id="swap-offer-duplicate-title">
@@ -1364,14 +1353,11 @@ Please check the swap token and try again.</oldsource>
         <translation>オーナーキー</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
-know all your funds (UTXO). Make sure that you<byte value="xd"/>
-deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to
+        <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</oldsource>
+deploy the key at the node you trust completely.</source>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation type="unfinished">所有者キーを公開することは、あなたの資金 (UTXO) を知らせることになります。完全に信頼できるノードにのみデプロイしてください。</translation>
+        <translation>所有者キーを公開することは、あなたの資金 (UTXO) を知らせることになります。完全に信頼できるノードにのみデプロイしてください。</translation>
     </message>
     <message id="settings-general-require-pwd-to-show-owner-key">
         <source>Show owner key</source>
@@ -1829,11 +1815,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>送信者は最大匿名トランザクションのクーポンを取得できません</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed <byte value="xd"/>
+        <source>Random node address and port will be displayed 
 when connection is established</source>
-        <oldsource>Random node address and port will be displayed 
-when connection is established</oldsource>
-        <translation type="unfinished">接続が確立されると、ランダムノードアドレスとポートが表示されます</translation>
+        <translation>接続が確立されると、ランダムノードアドレスとポートが表示されます</translation>
     </message>
     <message id="swap-token-newer-lib">
         <source>This address generated by newer Beam library version(%1)
@@ -1856,10 +1840,10 @@ Your version is: %2. Please, check for updates.</source>
         <translation>アドレス種別</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address<byte value="xd"/>
+        <source>SBBS Address
 (use for CEX withdrawals and mining)</source>
         <oldsource>SBBS Address
-(use for CEX withdrawals and mining)</oldsource>
+(use for CEX withdrawals)</oldsource>
         <translation type="unfinished">SBBS Address
 (CEXの出金に使用)</translation>
     </message>
@@ -2085,13 +2069,10 @@ Your version is: %2. Please, check for updates.</source>
         <translation>最大手数料は %1 %2 です</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
-Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
-much longer for a transaction to complete.</source>
-        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</oldsource>
-        <translation type="unfinished">接続エラー: 推奨された手数料レートを計算できません。%1ブロックチェーンを確認してください。低い手数料はトランザクション完了するまでに時間がかかる可能性があります。</translation>
+much longer for a transaction to complete.</source>
+        <translation>接続エラー: 推奨された手数料レートを計算できません。%1ブロックチェーンを確認してください。低い手数料はトランザクション完了するまでに時間がかかる可能性があります。</translation>
     </message>
     <message id="ethereum-show-addresses-title">
         <source>Ethereum wallet addresses</source>
@@ -2206,11 +2187,9 @@ much longer for a transaction to complete.</oldsource>
         <translation>お待ちください、オファーを読み込んでいます。</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.<byte value="xd"/>
+        <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.
-Please try again later or create an offer yourself.</oldsource>
-        <translation type="unfinished">現在アクティブなオファーはありません。
+        <translation>現在アクティブなオファーはありません。
 後でもう一度試すか、自分でオファーを作成してください。</translation>
     </message>
     <message id="atomic-swap-amount-send">
@@ -2262,11 +2241,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation>失敗しています</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
+        <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.
-Update your settings and try again.</oldsource>
-        <translation type="unfinished">サードパーティの通貨が接続されていません。
+        <translation>サードパーティの通貨が接続されていません。
 設定を更新して再度お試し下さい。</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
@@ -3024,11 +3001,9 @@ cannot be canceled.</source>
         <translation>トークンの詳細</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit<byte value="xd"/>
+        <source>No limit
 (transaction can last indefinitely)</source>
-        <oldsource>No limit
-(transaction can last indefinitely)</oldsource>
-        <translation type="unfinished">制限なし (トランザクションは無期限に継続します)</translation>
+        <translation>制限なし (トランザクションは無期限に継続します)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
         <source>%n hour(s)</source>
@@ -3405,13 +3380,10 @@ cannot be canceled.</source>
         <translation>続ける</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
-If something is wrong, please cancel the uploading,<byte value="xd"/>
-change the information in your file and upload your file again.</source>
-        <oldsource>Check the information below and select &quot;publish&quot;.
+        <source>Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
-change the information in your file and upload your file again.</oldsource>
-        <translation type="unfinished">以下の情報を確認し、&quot;公開&quot; を選択してください。
+change the information in your file and upload your file again.</source>
+        <translation>以下の情報を確認し、&quot;公開&quot; を選択してください。
 もし何か問題があれば、アップロードをキャンセルしてください、
 ファイル情報を変更し、再度アップロードしてください。</translation>
     </message>
@@ -3745,11 +3717,9 @@ Please, restart the wallet and try again.</source>
         <translation>自分のアドレス</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
-        <source>QR code is wrong.<byte value="xd"/>
+        <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <oldsource>QR code is wrong.
-A hardware wallet is not connected. Please, connect the wallet</oldsource>
-        <translation type="unfinished">QR コードが間違っています。
+        <translation>QR コードが間違っています。
 ハードウェアウォレットが接続されていません。ウォレットを接続してください</translation>
     </message>
     <message id="approve-on-hw-wallet-title">

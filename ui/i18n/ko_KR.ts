@@ -735,17 +735,12 @@
         <translation>지갑에 접근하기 위해서 새 비밀번호를 생성해야합니다.</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
-•  the length must be at least 10 characters<byte value="xd"/>
-•  must contain at least one lowercase letter<byte value="xd"/>
-•  must contain at least one uppercase letter<byte value="xd"/>
-•  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</oldsource>
-        <translation type="unfinished">보안성이 강한 비밀번호를 만들기 위해서는 아래의 조건들을 충족시켜야 합니다 : 
+•  must contain at least one number</source>
+        <translation>보안성이 강한 비밀번호를 만들기 위해서는 아래의 조건들을 충족시켜야 합니다 : 
 • 최소한 10개의 글자로 이루어져야합니다.
 • 최소한 1개의 소문자가 포함되어야 합니다.
 • 최소한 1개의 대문자가 포함되어야 합니다.
@@ -766,12 +761,10 @@
         <translation>주소</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2<byte value="xd"/>
+        <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2
-(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation type="unfinished">%1, %2로의 접근을 허용합니다.
+        <translation>%1, %2로의 접근을 허용합니다.
 (거래소 정보 및 거래 데이터 가져오기)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
@@ -960,11 +953,9 @@
         <translation>일렉트럼</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, <byte value="xd"/>
+        <source>%1 is not connected, 
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, 
-please review your settings and try again</oldsource>
-        <translation type="unfinished">%1 가 연결되지 않았습니다, 
+        <translation>%1 가 연결되지 않았습니다, 
 설정을 다시 하시고 재시도 해주세요.</translation>
     </message>
     <message id="send-not-enough">
@@ -1150,10 +1141,8 @@ please review your settings and try again</oldsource>
         <translation>큐텀 일렉트럼</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
+        <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.
-Please check the swap token and try again.</oldsource>
         <translation type="unfinished">The offer with this transaction token is already accepted.
 Please check the swap token and try again.</translation>
     </message>
@@ -1366,12 +1355,9 @@ Please check the swap token and try again.</translation>
         <translation>소유자 키</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
-know all your funds (UTXO). Make sure that you<byte value="xd"/>
-deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to
+        <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</oldsource>
+deploy the key at the node you trust completely.</source>
         <extracomment>settings tab, show owner key message</extracomment>
         <translation type="unfinished">Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
@@ -1835,10 +1821,8 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">The sender cannot get vouchers for max privacy transaction</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed <byte value="xd"/>
+        <source>Random node address and port will be displayed 
 when connection is established</source>
-        <oldsource>Random node address and port will be displayed 
-when connection is established</oldsource>
         <translation type="unfinished">Random node address and port will be displayed 
 when connection is established</translation>
     </message>
@@ -1863,10 +1847,10 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">Address type</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address<byte value="xd"/>
+        <source>SBBS Address
 (use for CEX withdrawals and mining)</source>
         <oldsource>SBBS Address
-(use for CEX withdrawals and mining)</oldsource>
+(use for CEX withdrawals)</oldsource>
         <translation type="unfinished">SBBS Address
 (use for CEX withdrawals and mining)</translation>
     </message>
@@ -2099,12 +2083,9 @@ Your version is: %2. Please, check for updates.</translation>
         <translation type="unfinished">The maximum fee is %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
-Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
-much longer for a transaction to complete.</source>
-        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</oldsource>
+much longer for a transaction to complete.</source>
         <translation type="unfinished">Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
 much longer for a transaction to complete.</translation>
@@ -2222,11 +2203,9 @@ much longer for a transaction to complete.</translation>
         <translation type="unfinished">Please wait, offers are loading.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.<byte value="xd"/>
+        <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.
-Please try again later or create an offer yourself.</oldsource>
-        <translation type="unfinished">활성화된 오퍼가 현재 없습니다.
+        <translation>활성화된 오퍼가 현재 없습니다.
 잠시 후 재시도하거나 오퍼를 만드십시오.</translation>
     </message>
     <message id="atomic-swap-amount-send">
@@ -2278,11 +2257,9 @@ Please try again later or create an offer yourself.</oldsource>
         <translation type="unfinished">failing</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
+        <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.
-Update your settings and try again.</oldsource>
-        <translation type="unfinished">서드파티에 연결된 화폐가 없습니다. 
+        <translation>서드파티에 연결된 화폐가 없습니다. 
 세팅을 업데이트한 후 재시도 하세요.</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
@@ -3046,10 +3023,8 @@ cannot be canceled.</translation>
         <translation type="unfinished">Token details</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit<byte value="xd"/>
+        <source>No limit
 (transaction can last indefinitely)</source>
-        <oldsource>No limit
-(transaction can last indefinitely)</oldsource>
         <translation type="unfinished">No limit
 (transaction can last indefinitely)</translation>
     </message>
@@ -3429,12 +3404,9 @@ cannot be canceled.</translation>
         <translation type="unfinished">continue</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
-If something is wrong, please cancel the uploading,<byte value="xd"/>
-change the information in your file and upload your file again.</source>
-        <oldsource>Check the information below and select &quot;publish&quot;.
+        <source>Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
-change the information in your file and upload your file again.</oldsource>
+change the information in your file and upload your file again.</source>
         <translation type="unfinished">Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
 change the information in your file and upload your file again.</translation>
@@ -3768,10 +3740,8 @@ Please, restart the wallet and try again.</translation>
         <translation>내 주소</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
-        <source>QR code is wrong.<byte value="xd"/>
+        <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <oldsource>QR code is wrong.
-A hardware wallet is not connected. Please, connect the wallet</oldsource>
         <translation type="unfinished">QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</translation>
     </message>

@@ -735,17 +735,12 @@
         <translation>Crea una nuova password per accedere al tuo wallet</translation>
     </message>
     <message id="start-create-pwd-strength-message">
-        <source>Strong password needs to meet the following requirements:<byte value="xd"/>
-•  the length must be at least 10 characters<byte value="xd"/>
-•  must contain at least one lowercase letter<byte value="xd"/>
-•  must contain at least one uppercase letter<byte value="xd"/>
-•  must contain at least one number</source>
-        <oldsource>Strong password needs to meet the following requirements:
+        <source>Strong password needs to meet the following requirements:
 •  the length must be at least 10 characters
 •  must contain at least one lowercase letter
 •  must contain at least one uppercase letter
-•  must contain at least one number</oldsource>
-        <translation type="unfinished">Una password forte deve soddisfare i seguenti requisiti:
+•  must contain at least one number</source>
+        <translation>Una password forte deve soddisfare i seguenti requisiti:
 • la lunghezza deve essere di almeno 10 caratteri
 • deve contenere almeno una lettera minuscola
 • deve contenere almeno una lettera maiuscola
@@ -766,12 +761,10 @@
         <translation>Il tuo indirizzo</translation>
     </message>
     <message id="settings-general-allow-beammw-label">
-        <source>Allow access to %1 and %2<byte value="xd"/>
+        <source>Allow access to %1 and %2
 (to fetch exchanges and transaction data)</source>
-        <oldsource>Allow access to %1 and %2
-(to fetch exchanges and transaction data)</oldsource>
         <extracomment>general settings, label for alow open external links</extracomment>
-        <translation type="unfinished">Consenti l&apos;accesso a %1 e %2
+        <translation>Consenti l&apos;accesso a %1 e %2
 (per recuperare gli scambi e i dati delle transazioni)</translation>
     </message>
     <message id="settings-report-problem-message-l1">
@@ -962,11 +955,9 @@
         <translation>Electrum</translation>
     </message>
     <message id="swap-currency-na-message">
-        <source>%1 is not connected, <byte value="xd"/>
+        <source>%1 is not connected, 
 please review your settings and try again</source>
-        <oldsource>%1 is not connected, 
-please review your settings and try again</oldsource>
-        <translation type="unfinished">%1 non è connesso,
+        <translation>%1 non è connesso,
 controlla le tue impostazioni e riprova</translation>
     </message>
     <message id="send-not-enough">
@@ -1153,11 +1144,9 @@ controlla le tue impostazioni e riprova</translation>
         <translation>Qtum electrum</translation>
     </message>
     <message id="swap-offer-duplicate-message">
-        <source>The offer with this transaction token is already accepted.<byte value="xd"/>
+        <source>The offer with this transaction token is already accepted.
 Please check the swap token and try again.</source>
-        <oldsource>The offer with this transaction token is already accepted.
-Please check the swap token and try again.</oldsource>
-        <translation type="unfinished">L&apos;offerta con questo token di transazione è già accettata.
+        <translation>L&apos;offerta con questo token di transazione è già accettata.
 Si prega di controllare il token di swap e riprovare.</translation>
     </message>
     <message id="swap-offer-duplicate-title">
@@ -1369,14 +1358,11 @@ Si prega di controllare il token di swap e riprovare.</translation>
         <translation>Chiave del proprietario</translation>
     </message>
     <message id="settings-show-owner-key-message">
-        <source>Please notice, that knowing your owner key allows to<byte value="xd"/>
-know all your funds (UTXO). Make sure that you<byte value="xd"/>
-deploy the key at the node you trust completely.</source>
-        <oldsource>Please notice, that knowing your owner key allows to
+        <source>Please notice, that knowing your owner key allows to
 know all your funds (UTXO). Make sure that you
-deploy the key at the node you trust completely.</oldsource>
+deploy the key at the node you trust completely.</source>
         <extracomment>settings tab, show owner key message</extracomment>
-        <translation type="unfinished">Si prega di notare che conoscere la chiave del proprietario permette di
+        <translation>Si prega di notare che conoscere la chiave del proprietario permette di
 conoscere tutti i tuoi fondi (UTXO). Assicurati che
 distribuisca la chiave al nodo che ti fidi completamente.</translation>
     </message>
@@ -1838,11 +1824,9 @@ La tua versione è: %2. Per favore, controlla gli aggiornamenti.</translation>
         <translation>Il mittente non può ottenere voucher per la transazione con massima privacy</translation>
     </message>
     <message id="settings-random-node-text">
-        <source>Random node address and port will be displayed <byte value="xd"/>
+        <source>Random node address and port will be displayed 
 when connection is established</source>
-        <oldsource>Random node address and port will be displayed 
-when connection is established</oldsource>
-        <translation type="unfinished">Verranno visualizzati l&apos;indirizzo del nodo e la porta casuali
+        <translation>Verranno visualizzati l&apos;indirizzo del nodo e la porta casuali
 quando verrà stabilita la connessione</translation>
     </message>
     <message id="swap-token-newer-lib">
@@ -1866,10 +1850,10 @@ La tua versione è: %2. Per favore, controlla gli aggiornamenti.</translation>
         <translation>Tipo di indirizzo</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>SBBS Address<byte value="xd"/>
+        <source>SBBS Address
 (use for CEX withdrawals and mining)</source>
         <oldsource>SBBS Address
-(use for CEX withdrawals and mining)</oldsource>
+(use for CEX withdrawals)</oldsource>
         <translation type="unfinished">Indirizzo SBBS
 (utilizzo per prelievi CEX)</translation>
     </message>
@@ -2105,13 +2089,10 @@ fallito
         <translation>La commissione massima è %1 %2</translation>
     </message>
     <message id="settings-recommended-fee-rate-absent">
-        <source>Connection error: can&apos;t calculate the recommended fee rate. <byte value="xd"/>
-Check on the %1 blockchain by yourself. Low fees might take <byte value="xd"/>
-much longer for a transaction to complete.</source>
-        <oldsource>Connection error: can&apos;t calculate the recommended fee rate. 
+        <source>Connection error: can&apos;t calculate the recommended fee rate. 
 Check on the %1 blockchain by yourself. Low fees might take 
-much longer for a transaction to complete.</oldsource>
-        <translation type="unfinished">Errore di connessione: può&apos;t calcolare il tasso di commissione raccomandato. 
+much longer for a transaction to complete.</source>
+        <translation>Errore di connessione: può&apos;t calcolare il tasso di commissione raccomandato. 
 Controlla la blockchain %1 da solo. Le commissioni basse potrebbero richiedere 
 molto più a lungo per completare una transazione.</translation>
     </message>
@@ -2228,11 +2209,9 @@ molto più a lungo per completare una transazione.</translation>
         <translation>Attendi, le offerte sono in corso di caricamento.</translation>
     </message>
     <message id="atomic-no-offers">
-        <source>There are no active offers at the moment.<byte value="xd"/>
+        <source>There are no active offers at the moment.
 Please try again later or create an offer yourself.</source>
-        <oldsource>There are no active offers at the moment.
-Please try again later or create an offer yourself.</oldsource>
-        <translation type="unfinished">Al momento non ci sono offerte attive.
+        <translation>Al momento non ci sono offerte attive.
 Riprova più tardi o crea un&apos;offerta.</translation>
     </message>
     <message id="atomic-swap-amount-send">
@@ -2284,11 +2263,9 @@ Riprova più tardi o crea un&apos;offerta.</translation>
         <translation>fallendo</translation>
     </message>
     <message id="swap-na-message">
-        <source>You do not have any 3rd-party currencies connected.<byte value="xd"/>
+        <source>You do not have any 3rd-party currencies connected.
 Update your settings and try again.</source>
-        <oldsource>You do not have any 3rd-party currencies connected.
-Update your settings and try again.</oldsource>
-        <translation type="unfinished">Non hai valute di terze parti collegate.
+        <translation>Non hai valute di terze parti collegate.
 Aggiorna le tue impostazioni e riprova.</translation>
     </message>
     <message id="wallet-receive-offer-expires-label">
@@ -3055,11 +3032,9 @@ non potrà essere cancellato.</translation>
         <translation>Dettagli token</translation>
     </message>
     <message id="settings-privacy-mp-time-no-limit-commented">
-        <source>No limit<byte value="xd"/>
+        <source>No limit
 (transaction can last indefinitely)</source>
-        <oldsource>No limit
-(transaction can last indefinitely)</oldsource>
-        <translation type="unfinished">Nessun limite
+        <translation>Nessun limite
 (l&apos;operazione può durare indefinitamente)</translation>
     </message>
     <message id="settings-privacy-mp-time-limit-val" numerus="yes">
@@ -3439,13 +3414,10 @@ non potrà essere cancellato.</translation>
         <translation>continua</translation>
     </message>
     <message id="dapps-store-upload-check-details-text">
-        <source>Check the information below and select &quot;publish&quot;.<byte value="xd"/>
-If something is wrong, please cancel the uploading,<byte value="xd"/>
-change the information in your file and upload your file again.</source>
-        <oldsource>Check the information below and select &quot;publish&quot;.
+        <source>Check the information below and select &quot;publish&quot;.
 If something is wrong, please cancel the uploading,
-change the information in your file and upload your file again.</oldsource>
-        <translation type="unfinished">Controllare le informazioni qui sotto e selezionare &quot;pubblicare&quot;.
+change the information in your file and upload your file again.</source>
+        <translation>Controllare le informazioni qui sotto e selezionare &quot;pubblicare&quot;.
 Se qualcosa non funziona, annullare il caricamento,
 modificare le informazioni nel file e caricare di nuovo il file.</translation>
     </message>
@@ -3776,11 +3748,9 @@ Riavviare il wallet e riprovare.</translation>
         <translation>Il mio indirizzo</translation>
     </message>
     <message id="receive-view-hw-wallet-disconnected">
-        <source>QR code is wrong.<byte value="xd"/>
+        <source>QR code is wrong.
 A hardware wallet is not connected. Please, connect the wallet</source>
-        <oldsource>QR code is wrong.
-A hardware wallet is not connected. Please, connect the wallet</oldsource>
-        <translation type="unfinished">Il codice QR è errato.
+        <translation>Il codice QR è errato.
 Un wallet hardware non è connesso. Per favore, connetti il wallet</translation>
     </message>
     <message id="approve-on-hw-wallet-title">
