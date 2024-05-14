@@ -302,12 +302,14 @@
         <translation>Het nieuwe wachtwoord komt niet overeen met het bevestigde wachtwoord</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>Het ingevoerde oude wachtwoord is onjuist</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">Het ingevoerde oude wachtwoord is onjuist</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Voer oude wachtwoord in</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">Voer oude wachtwoord in</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>

@@ -303,12 +303,14 @@
         <translation>两次密码不匹配</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>您输入的旧密码不正确</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">您输入的旧密码不正确</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>请输入旧密码</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">请输入旧密码</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>

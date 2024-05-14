@@ -302,12 +302,14 @@
         <translation>La nuova password non corrisponde alla password di conferma</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>La vecchia password immessa non è corretta</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">La vecchia password immessa non è corretta</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Inserire la vecchia password</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">Inserire la vecchia password</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
