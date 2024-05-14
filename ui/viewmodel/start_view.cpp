@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -115,7 +115,7 @@ namespace
         }
         catch (std::exception &e)
         {
-            LOG_ERROR() << e.what();
+            BEAM_LOG_ERROR() << e.what();
         }
 
         return walletDBs;
@@ -211,7 +211,7 @@ namespace
                 errmsg = qtTrId("general-open-failed");
             }
 
-            LOG_ERROR() << "Error while trying to open wallet: " << errmsg.toStdString();
+            BEAM_LOG_ERROR() << "Error while trying to open wallet: " << errmsg.toStdString();
             DoJSCallback(jsCallback, errmsg);
         }
     }
@@ -557,7 +557,7 @@ void TrezorThread::run()
 
 void StartViewModel::onTrezorOwnerKeyImported()
 {
-    LOG_INFO() << "Trezor Key imported";
+    BEAM_LOG_INFO() << "Trezor Key imported";
 
     if (m_creating)
     {
@@ -1025,7 +1025,7 @@ void StartViewModel::deleteCurrentWalletDB()
     }
     catch (std::exception& e)
     {
-        LOG_ERROR() << e.what();
+        BEAM_LOG_ERROR() << e.what();
     }
 }
 
@@ -1039,7 +1039,7 @@ void StartViewModel::migrateWalletDB(const QString& path)
     }
     catch (std::exception& e)
     {
-        LOG_ERROR() << e.what();
+        BEAM_LOG_ERROR() << e.what();
     }
 }
 

@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ namespace beamui::applications {
         //
         // This is UI thread
         //
-        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        BEAM_LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
         AnyThread_callWalletApiDirectly(request.toStdString());
     }
 
@@ -65,7 +65,7 @@ namespace beamui::applications {
         //
         // This is UI thread
         //
-        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        BEAM_LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
         AnyThread_sendApiError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 
@@ -74,7 +74,7 @@ namespace beamui::applications {
         //
         // This is UI thread
         //
-        LOG_INFO() << "Contract tx approved: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        BEAM_LOG_INFO() << "Contract tx approved: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
         AnyThread_callWalletApiDirectly(request.toStdString());
     }
 
@@ -83,7 +83,7 @@ namespace beamui::applications {
         //
         // This is UI thread
         //
-        LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
+        BEAM_LOG_INFO() << "Contract tx rejected: " << getAppName() << ", " << getAppId() << ", " << request.toStdString();
         AnyThread_sendApiError(request.toStdString(), beam::wallet::ApiError::UserRejected, std::string());
     }
 
