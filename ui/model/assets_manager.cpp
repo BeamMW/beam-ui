@@ -20,7 +20,7 @@
 
 namespace
 {
-    static constexpr uint8_t ACAlpha = 252;
+    constexpr uint8_t ACAlpha = 252;
 
     beam::Asset::ID GetBeamXID()
     {
@@ -57,7 +57,7 @@ AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr 
     uint32_t i = 0;
     for (auto it= predefined_color_strings.begin(); it != predefined_color_strings.end(); ++it, ++i)
     {
-        _icons[i] = QString::fromStdString(std::format("qrc:/assets/asset-{}.svg", i));
+        _icons[i] = QString("qrc:/assets/asset-%1.svg").arg(i);
         
         _colors[i] = QColor(*it);
         _colors[i].setAlpha(ACAlpha);
@@ -194,7 +194,7 @@ QString AssetsManager::getName(beam::Asset::ID id)
 
     if (name.isEmpty())
     {
-        name = QString::fromStdString(std::format("Asset {}", id));
+        name = QString("Asset %1").arg(id);
     }
 
     return name;
