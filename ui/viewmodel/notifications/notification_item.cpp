@@ -1,4 +1,4 @@
-﻿// Copyright 2020 The Beam Team
+﻿// Copyright 2020-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -241,7 +241,7 @@ QString NotificationItem::title() const
             }
             else
             {
-                LOG_ERROR() << "Software update notification deserialization error";
+                BEAM_LOG_ERROR() << "Software update notification deserialization error";
                 return QString();
             }
         }
@@ -365,7 +365,7 @@ QString NotificationItem::message(AssetsManager::Ptr amgr) const
             }
             else
             {
-                LOG_ERROR() << "Software update notification deserialization error";
+                BEAM_LOG_ERROR() << "Software update notification deserialization error";
                 return QString();
             }
         }

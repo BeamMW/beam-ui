@@ -1,4 +1,4 @@
-// Copyright 2019 The Beam Team
+// Copyright 2019-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ void TokenBootstrapManager::checkTokenForDuplicate(const QString& token)
     auto parameters = beam::wallet::ParseParameters(token.toStdString());
     if (!parameters)
     {
-        LOG_ERROR() << "Can't parse token params";
+        BEAM_LOG_ERROR() << "Can't parse token params";
         return;
     }
 
@@ -85,7 +85,7 @@ void TokenBootstrapManager::checkTokenForDuplicate(const QString& token)
     auto txId = parametrsValue.GetTxID();
     if (!txId)
     {
-        LOG_ERROR() << "Empty tx id in txParams";
+        BEAM_LOG_ERROR() << "Empty tx id in txParams";
         return;
     }
     auto txIdValue = txId.value();

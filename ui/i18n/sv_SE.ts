@@ -302,12 +302,14 @@
         <translation>Ditt nya lösenord matchar inte verifierings-lösenordet</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>Det gamla lösenordet du angivit är felaktigt</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">Det gamla lösenordet du angivit är felaktigt</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Mata in ditt gamla lösenord</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">Mata in ditt gamla lösenord</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
@@ -1320,7 +1322,6 @@ Vänligen kontrollera swap-token och försök igen.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Exportera Transaktionshistoriken</translation>
     </message>
@@ -1849,9 +1850,11 @@ Din version är: %2. Sök efter uppdateringar.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
-(use for CEX withdrawals)</source>
+(use for CEX withdrawals and mining)</source>
+        <oldsource>SBBS Address
+(use for CEX withdrawals)</oldsource>
         <translation type="unfinished">SBBS Address
-(use for CEX withdrawals)</translation>
+(use for CEX withdrawals and mining)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>

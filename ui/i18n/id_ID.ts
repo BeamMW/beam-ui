@@ -302,12 +302,14 @@
         <translation>password tidak cocok</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>sandi lama anda salah.</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">sandi lama anda salah.</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Masukkan sandi lama</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">Masukkan sandi lama</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
@@ -1319,7 +1321,6 @@ Silakan periksa token swap dan coba lagi.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Riwayat transaksi ekspor</translation>
     </message>
@@ -1850,8 +1851,10 @@ Versi Anda adalah: %2. Silakan periksa pembaruan.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
-(use for CEX withdrawals)</source>
-        <translation>Alamat SBBS
+(use for CEX withdrawals and mining)</source>
+        <oldsource>SBBS Address
+(use for CEX withdrawals)</oldsource>
+        <translation type="unfinished">Alamat SBBS
 (digunakan untuk penarikan CEX)</translation>
     </message>
     <message id="address-info-address">

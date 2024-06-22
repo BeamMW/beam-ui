@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -445,7 +445,7 @@ void SendSwapViewModel::sendMoney()
         auto responseHeight = txParameters.GetParameter<beam::Height>(TxParameterID::PeerResponseTime);
         auto minimalHeight = txParameters.GetParameter<beam::Height>(TxParameterID::MinHeight);
 
-        LOG_INFO() << *txID << " Accept offer.\n\t"
+        BEAM_LOG_INFO() << *txID << " Accept offer.\n\t"
                     << "isBeamSide: " << (_isBeamSide ? "true" : "false") << "\n\t"
                     << "swapCoin: " << std::to_string(*swapCoin) << "\n\t"
                     << "amount: " << *amount << "\n\t"

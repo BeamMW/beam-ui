@@ -302,12 +302,14 @@
         <translation>La nuova password non corrisponde alla password di conferma</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>La vecchia password immessa non è corretta</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">La vecchia password immessa non è corretta</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Inserire la vecchia password</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">Inserire la vecchia password</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
@@ -1321,7 +1323,6 @@ Si prega di controllare il token di swap e riprovare.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Esporta cronologia transazioni</translation>
     </message>
@@ -1852,8 +1853,10 @@ La tua versione è: %2. Per favore, controlla gli aggiornamenti.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
-(use for CEX withdrawals)</source>
-        <translation>Indirizzo SBBS
+(use for CEX withdrawals and mining)</source>
+        <oldsource>SBBS Address
+(use for CEX withdrawals)</oldsource>
+        <translation type="unfinished">Indirizzo SBBS
 (utilizzo per prelievi CEX)</translation>
     </message>
     <message id="address-info-address">
