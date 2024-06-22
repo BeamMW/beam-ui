@@ -157,7 +157,7 @@ bool QMLGlobals::needPasswordToSpend()
 bool QMLGlobals::isFork3()
 {
     const auto height = AppModel::getInstance().getWalletModel()->getCurrentHeight();
-    return beam::wallet::isFork3(height);
+    return beam::Rules::get().IsPastFork_<3>(height);
 }
 
 bool QMLGlobals::isPasswordValid(const QString& value)

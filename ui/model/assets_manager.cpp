@@ -54,7 +54,7 @@ AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr 
         "#ff3b3b", "#73ff7c", "#ffa86c", "#ff3abe", "#00aee1", "#ff5200", "#6464ff", "#ff7a21", "#63afff", "#c81f68"
     };
 
-    std::size_t i{};
+    uint32_t i = 0;
     for (auto it= predefined_color_strings.begin(); it != predefined_color_strings.end(); ++it, ++i)
     {
         _icons[i] = QString::fromStdString(std::format("qrc:/assets/asset-{}.svg", i));
