@@ -1,10 +1,10 @@
 [submodule "beam"]
 	path = beam
-	url = ../beam.git
+	url = https://github.com/BeamMW/beam.git
 	branch = master
 [submodule "3rdparty/zlib"]
 	path = 3rdparty/zlib
 	url = https://github.com/madler/zlib.git
 [submodule "3rdparty/qhttpengine"]
 	path = 3rdparty/qhttpengine
-	url = ../qhttpengine.git
+	url = https://github.com/BeamMW/qhttpengine.git
