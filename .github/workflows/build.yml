@@ -15,11 +15,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        #  os: [macos-10.15, ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, windows-2019]
-        os: [macos-11, ubuntu-20.04, windows-2019]
+        os: [macos-12, ubuntu-20.04, windows-2019]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -33,9 +32,9 @@ jobs:
       ###############################################################################
       # Create Build Environment
       ###############################################################################
-      - name: OS name [macos-11 && windows]
+      - name: OS name [macos && windows]
         shell: bash
-        if: matrix.os == 'macos-11' || matrix.os == 'windows-2019'
+        if: startsWith(matrix.os, 'macos') || matrix.os == 'windows-2019'
         run: echo "PACKAGE_NAME=${{runner.os}}" >> $GITHUB_ENV
 
       - name: OS name [ununtu all]
@@ -43,8 +42,8 @@ jobs:
         if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         run: echo "PACKAGE_NAME=Linux" >> $GITHUB_ENV
 
-      - name: Create Build Environment [macos-11]
-        if: matrix.os == 'macos-11'
+      - name: Create Build Environment [macos]
+        if: startsWith(matrix.os, 'macos')
         run: |
           echo $GITHUB_WORKSPACE
           echo "OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1" >> $GITHUB_ENV
@@ -114,8 +113,8 @@ jobs:
       ###############################################################################
       # Configure CMake
       ###############################################################################
-      - name: Configure CMake [macos-11]
-        if: matrix.os == 'macos-11'
+      - name: Configure CMake [macos]
+        if: startsWith(matrix.os, 'macos')
         run: |
           cmake $GITHUB_WORKSPACE -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
 
@@ -144,8 +143,8 @@ jobs:
       ###############################################################################
       # Build
       ###############################################################################
-      - name: Build [macos-11]
-        if: matrix.os == 'macos-11'
+      - name: Build [macos]
+        if: startsWith(matrix.os, 'macos')
         run: cmake --build . --parallel --config $BUILD_TYPE
 
       - name: Build [ununtu all]
@@ -161,7 +160,7 @@ jobs:
       ###############################################################################
       # Pack
       ###############################################################################
-      - name: CPack [macos-11 && ununtu all]
+      - name: CPack [macos && ununtu all]
         if: matrix.os != 'windows-2019'
         run: cpack
 
@@ -198,16 +197,16 @@ jobs:
       ###############################################################################
       # Collect artifacts
       ###############################################################################
-      - name: Collect [macos-11]
+      - name: Collect [macos]
         shell: bash
-        if: matrix.os == 'macos-11'
+        if: startsWith(matrix.os, 'macos')
         run: |
           cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
           codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
 
-      - name: Notarize [macos-11]
+      - name: Notarize [macos]
         shell: bash
-        if: matrix.os == 'macos-11'
+        if: startsWith(matrix.os, 'macos')
         env:
           MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
           MACOS_NOTARIZE_PASS: ${{ secrets.MACOS_NOTARIZE_PASS }}
@@ -263,8 +262,8 @@ jobs:
       ###############################################################################
       # Upload
       ###############################################################################
-      - uses: actions/upload-artifact@v2
-        if: matrix.os == 'windows-2019' || matrix.os == 'macos-11'
+      - uses: actions/upload-artifact@v4
+        if: matrix.os == 'windows-2019' || startsWith(matrix.os, 'macos')
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
           path: |
@@ -272,14 +271,14 @@ jobs:
             *checksum.txt
           if-no-files-found: error
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
           path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
           if-no-files-found: error
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: matrix.os == 'windows-2019'
         with:
           name: beam-pdb${{env.BEAM_TARGET_SUFFIX}}-${{env.BEAM_VERSION}}
