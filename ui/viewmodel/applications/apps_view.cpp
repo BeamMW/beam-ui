@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -320,7 +320,7 @@ namespace beamui::applications
         , m_appsModel(this)
         , m_publisherAppsModel(this)
     {
-        LOG_INFO() << "AppsViewModel created";
+        BEAM_LOG_INFO() << "AppsViewModel created";
     }
 
     AppsViewModel::~AppsViewModel()
@@ -329,7 +329,7 @@ namespace beamui::applications
         {
             _server.reset();
         }
-        LOG_INFO() << "AppsViewModel destroyed";
+        BEAM_LOG_INFO() << "AppsViewModel destroyed";
     }
 
     void AppsViewModel::init(bool runApp)
@@ -492,7 +492,7 @@ namespace beamui::applications
 
                 app.insert(DApp::kIcon, ipath);
 
-                LOG_INFO() << "App: " << sname << ", icon: " << ipath.toStdString();
+                BEAM_LOG_INFO() << "App: " << sname << ", icon: " << ipath.toStdString();
             }
 
             const auto& av = json[DApp::kApiVersion];
@@ -565,7 +565,7 @@ namespace beamui::applications
         }
         catch (const std::exception& ex)
         {
-            LOG_ERROR() << "Invalid manifest file. exception: " << ex.what();
+            BEAM_LOG_ERROR() << "Invalid manifest file. exception: " << ex.what();
             throw std::runtime_error("Invalid manifest file.");
         }
 
@@ -610,7 +610,7 @@ namespace beamui::applications
             }
             catch (std::runtime_error& err)
             {
-                LOG_ERROR() << "Error while reading local app from " << mpath.toStdString() << ", " << err.what();
+                BEAM_LOG_ERROR() << "Error while reading local app from " << mpath.toStdString() << ", " << err.what();
             }
         }
 
@@ -667,7 +667,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << "Failed to load dapps list from DApp Store" << ", " << err;
+                    BEAM_LOG_ERROR() << "Failed to load dapps list from DApp Store" << ", " << err;
                     return;
                 }
 
@@ -715,7 +715,7 @@ namespace beamui::applications
                                 publisherName = (*idx)[Publisher::kName].toString();
                             }
 
-                            LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisherKey.toStdString();
+                            BEAM_LOG_DEBUG() << "Parsing DApp from contract, guid - " << guid.toStdString() << ", publisher - " << publisherKey.toStdString();
 
                             // parse version
                             auto versionObj = item.value()[DApp::kVersion];
@@ -766,7 +766,7 @@ namespace beamui::applications
                         }
                         catch (std::runtime_error& err)
                         {
-                            LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
+                            BEAM_LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
                         }
                     }
 
@@ -780,7 +780,7 @@ namespace beamui::applications
                 }
                 catch (std::exception& err)
                 {
-                    LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
+                    BEAM_LOG_ERROR() << "Error while parsing app from contract" << ", " << err.what();
                 }
             }
         );
@@ -802,7 +802,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << "Failed to load publishers list" << ", " << err;
+                    BEAM_LOG_ERROR() << "Failed to load publishers list" << ", " << err;
                     return;
                 }
 
@@ -831,7 +831,7 @@ namespace beamui::applications
                 }
                 catch (std::exception& err)
                 {
-                    LOG_ERROR() << "Error while parsing publisher from contract" << ", " << err.what();
+                    BEAM_LOG_ERROR() << "Error while parsing publisher from contract" << ", " << err.what();
                 }
             }
         );
@@ -857,7 +857,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << "Failed to load my publisher info" << ", " << err;
+                    BEAM_LOG_ERROR() << "Failed to load my publisher info" << ", " << err;
                     return;
                 }
                 else
@@ -881,7 +881,7 @@ namespace beamui::applications
                     }
                     catch (std::exception& err)
                     {
-                        LOG_ERROR() << "Error while parsing publisher from contract" << ", " << err.what();
+                        BEAM_LOG_ERROR() << "Error while parsing publisher from contract" << ", " << err.what();
                     }
                 }
 
@@ -1126,7 +1126,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << (isCreating ? "Failed to create a publisher" : "Failed to change a publisher info") 
+                    BEAM_LOG_ERROR() << (isCreating ? "Failed to create a publisher" : "Failed to change a publisher info") 
                         << ", " << err;
 
                     isCreating ? emit publisherCreateFail() : emit publisherEditFail();
@@ -1170,7 +1170,7 @@ namespace beamui::applications
             return false;
         }
 
-        LOG_INFO() << "Deleting local app in folder " << path.toStdString();
+        BEAM_LOG_INFO() << "Deleting local app in folder " << path.toStdString();
 
         QDir dir(path);
         bool result = dir.removeRecursively();
@@ -1208,7 +1208,7 @@ namespace beamui::applications
             }
             catch(std::runtime_error& err)
             {
-                LOG_ERROR() << "Failed to launch local apps server: " << err.what();
+                BEAM_LOG_ERROR() << "Failed to launch local apps server: " << err.what();
             }
         }
     }
@@ -1321,7 +1321,7 @@ namespace beamui::applications
         }
         catch (std::runtime_error& err)
         {
-            LOG_ERROR() << "Failed to parse DApp: " << err.what();
+            BEAM_LOG_ERROR() << "Failed to parse DApp: " << err.what();
         }
         return {};
     }
@@ -1335,7 +1335,7 @@ namespace beamui::applications
         if (!_loadedDApp.has_value() || !_loadedDAppBuffer.has_value())
         {
             assert(false);
-            LOG_ERROR() << "Failed to publish DApp, empty buffers.";
+            BEAM_LOG_ERROR() << "Failed to publish DApp, empty buffers.";
 
             emit appPublishFail();
             return;
@@ -1349,13 +1349,13 @@ namespace beamui::applications
                     return;
                 }
 
-                LOG_INFO() << "IPFS_ID: " << ipfsID;
+                BEAM_LOG_INFO() << "IPFS_ID: " << ipfsID;
 
                 // save result to contract
                 uploadAppToStore(std::move(app), ipfsID, isUpdating);
             },
             [this](std::string&& err) {
-                LOG_ERROR() << "Failed to add to ipfs: " << err;
+                BEAM_LOG_ERROR() << "Failed to add to ipfs: " << err;
                 emit appPublishFail();
             }
         );
@@ -1369,11 +1369,11 @@ namespace beamui::applications
             auto result = compareDAppVersion(newDApp[DApp::kVersion].value<QString>(), currentDApp[DApp::kVersion].value<QString>()) > 0;
             if (!result)
             {
-                LOG_ERROR() << "checkDAppNewVersion: New DApp has the wrong version. The version of the new DApp must be larger than the current version.";
+                BEAM_LOG_ERROR() << "checkDAppNewVersion: New DApp has the wrong version. The version of the new DApp must be larger than the current version.";
             }
             return result;
         }
-        LOG_ERROR() << "checkDAppNewVersion: Guid doesn't match, it's different DApps.";
+        BEAM_LOG_ERROR() << "checkDAppNewVersion: Guid doesn't match, it's different DApps.";
         return false;
     }
 
@@ -1408,7 +1408,7 @@ namespace beamui::applications
 
         QPointer<AppsViewModel> guard(this);
 
-        LOG_INFO() << "args: " << args.args();
+        BEAM_LOG_INFO() << "args: " << args.args();
 
         AppModel::getInstance().getWalletModel()->getAsync()->callShader(AppSettings().getDappStorePath(), args.args(),
             [this, guard](const std::string& err, const std::string& output, const beam::ByteBuffer& data)
@@ -1420,7 +1420,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << "Failed to publish app" << ", " << err;
+                    BEAM_LOG_ERROR() << "Failed to publish app" << ", " << err;
 
                     emit appPublishFail();
                     return;
@@ -1428,7 +1428,7 @@ namespace beamui::applications
                 
                 if (data.empty())
                 {
-                    LOG_ERROR() << "Failed to publish app" << ", " << output;
+                    BEAM_LOG_ERROR() << "Failed to publish app" << ", " << output;
 
                     emit appPublishFail();
                     return;
@@ -1446,7 +1446,7 @@ namespace beamui::applications
             const auto app = getAppByGUID(guid);
             if (app.isEmpty())
             {
-                LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
+                BEAM_LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
                 return;
             }
 
@@ -1468,7 +1468,7 @@ namespace beamui::applications
                     try
                     {
                         // unpack & verify & install
-                        LOG_DEBUG() << "Installing DApp " << appName.toStdString() << " from ipfs";
+                        BEAM_LOG_DEBUG() << "Installing DApp " << appName.toStdString() << " from ipfs";
 
                         QByteArray qData;
                         std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
@@ -1483,13 +1483,13 @@ namespace beamui::applications
                     }
                     catch (std::runtime_error& err)
                     {
-                        LOG_ERROR() << "Failed to install DApp: " << err.what();
+                        BEAM_LOG_ERROR() << "Failed to install DApp: " << err.what();
                         emit appInstallFail(appName);
                     }
                 },
                 [this, guard, appName, guid](std::string&& err)
                 {
-                    LOG_ERROR() << "Failed to get app from ipfs: " << err;
+                    BEAM_LOG_ERROR() << "Failed to get app from ipfs: " << err;
                     emit appInstallTimeoutFail(appName);
                     emit stopProgress(guid);
                 }
@@ -1498,7 +1498,7 @@ namespace beamui::applications
         catch (const std::runtime_error& err)
         {
             assert(false);
-            LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            BEAM_LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
 
             emit appInstallFail("");
             return;
@@ -1551,7 +1551,7 @@ namespace beamui::applications
         {
             QString fname = removeFilePrefix(rawFname);
 
-            LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
+            BEAM_LOG_DEBUG() << "Installing DApp from file " << rawFname.toStdString() << " | " << fname.toStdString();
 
             QuaZip zip(fname);
             if (!zip.open(QuaZip::Mode::mdUnzip))
@@ -1621,7 +1621,7 @@ namespace beamui::applications
         }
         catch (std::exception& err)
         {
-            LOG_ERROR() << "Failed to install DApp: " << err.what();
+            BEAM_LOG_ERROR() << "Failed to install DApp: " << err.what();
             return "";
         }
     }
@@ -1651,7 +1651,7 @@ namespace beamui::applications
         }
         catch (const std::runtime_error& err)
         {
-            LOG_ERROR() << "Failed to handle shader TX data: " << err.what();
+            BEAM_LOG_ERROR() << "Failed to handle shader TX data: " << err.what();
 
             showErrorDialog(action);
         }
@@ -1674,7 +1674,7 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << "Failed to process shader TX: " << ", " << err;
+                    BEAM_LOG_ERROR() << "Failed to process shader TX: " << ", " << err;
 
                     showErrorDialog(action);
 
@@ -1683,7 +1683,7 @@ namespace beamui::applications
 
                 if (_activeTx.find(id) != _activeTx.end())
                 {
-                    LOG_ERROR() << "There is already such a transaction id = " << id;
+                    BEAM_LOG_ERROR() << "There is already such a transaction id = " << id;
                     return;
                 }
 
@@ -1712,7 +1712,7 @@ namespace beamui::applications
                 auto txId = *tx.GetTxID();
                 if (_activeTx.find(txId) != _activeTx.end())
                 {
-                    LOG_DEBUG() << "onTransactionsChanged: changeAction = " << static_cast<int>(changeAction) << ", status = " << static_cast<int>(tx.m_status);
+                    BEAM_LOG_DEBUG() << "onTransactionsChanged: changeAction = " << static_cast<int>(changeAction) << ", status = " << static_cast<int>(tx.m_status);
 
                     Action action = _activeTx[txId];
 
@@ -1846,7 +1846,7 @@ namespace beamui::applications
             const auto app = getAppByGUID(guid);
             if (app.isEmpty())
             {
-                LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
+                BEAM_LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
                 return;
             }
 
@@ -1862,7 +1862,7 @@ namespace beamui::applications
         catch (const std::runtime_error& err)
         {
             assert(false);
-            LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            BEAM_LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             emit appRemoveFail();
             return;
         }
@@ -1885,14 +1885,14 @@ namespace beamui::applications
 
                 if (!err.empty())
                 {
-                    LOG_ERROR() << "Failed to delete app" << ", " << err;
+                    BEAM_LOG_ERROR() << "Failed to delete app" << ", " << err;
                     emit appRemoveFail();
                     return;
                 }
 
                 if (data.empty())
                 {
-                    LOG_ERROR() << "Failed to delete app" << ", " << output;
+                    BEAM_LOG_ERROR() << "Failed to delete app" << ", " << output;
                     emit appRemoveFail();
                     return;
                 }
@@ -1909,7 +1909,7 @@ namespace beamui::applications
             const auto app = getAppByGUID(guid);
             if (app.isEmpty())
             {
-                LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
+                BEAM_LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
                 return;
             }
 
@@ -1931,7 +1931,7 @@ namespace beamui::applications
                     try
                     {
                         // unpack & verify & install
-                        LOG_DEBUG() << "Updating DApp " << appName.toStdString() << " from ipfs";
+                        BEAM_LOG_DEBUG() << "Updating DApp " << appName.toStdString() << " from ipfs";
 
                         QByteArray qData;
                         std::copy(data.cbegin(), data.cend(), std::back_inserter(qData));
@@ -1966,7 +1966,7 @@ namespace beamui::applications
 
                         if (!QDir(appsDir.filePath(backupName)).removeRecursively())
                         {
-                            LOG_ERROR() << "Failed to remove backup folder - " << backupName.toStdString();
+                            BEAM_LOG_ERROR() << "Failed to remove backup folder - " << backupName.toStdString();
                         }
 
                         emit appInstallOK(appName);
@@ -1974,13 +1974,13 @@ namespace beamui::applications
                     }
                     catch (std::runtime_error& err)
                     {
-                        LOG_ERROR() << "Failed to update DApp: " << err.what();
+                        BEAM_LOG_ERROR() << "Failed to update DApp: " << err.what();
                         emit appUpdateFail(appName);
                     }
                 },
                 [this, guard, appName, guid](std::string&& err)
                 {
-                    LOG_ERROR() << "Failed to get app from ipfs: " << err;
+                    BEAM_LOG_ERROR() << "Failed to get app from ipfs: " << err;
                     emit appUpdateTimeoutFail(appName);
                     emit stopProgress(guid);
                 }
@@ -1988,7 +1988,7 @@ namespace beamui::applications
         }
         catch (const std::runtime_error& err)
         {
-            LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
+            BEAM_LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
             return;
         }
 #endif // BEAM_IPFS_SUPPORT
@@ -2035,11 +2035,11 @@ namespace beamui::applications
                             {
                                 return;
                             }
-                            LOG_INFO() << "Successfully unpin app " << ipfsId.toStdString() << " from ipfs";
+                            BEAM_LOG_INFO() << "Successfully unpin app " << ipfsId.toStdString() << " from ipfs";
                         },
                         [ipfsId](std::string&& err)
                         {
-                            LOG_ERROR() << "Failed to unpin app " << ipfsId.toStdString() << " from ipfs : " << err;
+                            BEAM_LOG_ERROR() << "Failed to unpin app " << ipfsId.toStdString() << " from ipfs : " << err;
                         });
                     return true;
                 }

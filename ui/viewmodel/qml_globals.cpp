@@ -1,4 +1,4 @@
-// Copyright 2019 The Beam Team
+// Copyright 2019-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -114,7 +114,7 @@ void QMLGlobals::showMessage(const QString& message)
 
 void QMLGlobals::logInfo(const QString& message)
 {
-    LOG_INFO () << message.toStdString();
+    BEAM_LOG_INFO () << message.toStdString();
 }
 
 void QMLGlobals::copyToClipboard(const QString& text)
@@ -157,7 +157,7 @@ bool QMLGlobals::needPasswordToSpend()
 bool QMLGlobals::isFork3()
 {
     const auto height = AppModel::getInstance().getWalletModel()->getCurrentHeight();
-    return beam::wallet::isFork3(height);
+    return beam::Rules::get().IsPastFork_<3>(height);
 }
 
 bool QMLGlobals::isPasswordValid(const QString& value)

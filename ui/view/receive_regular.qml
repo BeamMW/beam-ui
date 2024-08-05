@@ -344,7 +344,7 @@ ColumnLayout {
                                             Layout.alignment:       Qt.AlignTop
                                             Layout.topMargin:       10
                                             font.pixelSize:         14
-                                            color:                  Style.content_disabled
+                                            color:                  Style.content_main
                                             text:                   qsTrId("address-info-sbbs-address") + ":"
                                         }
                                         RowLayout {

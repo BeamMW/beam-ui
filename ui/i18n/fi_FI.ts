@@ -302,12 +302,14 @@
         <translation>Salasanat eivät täsmää</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>Kirjoittamasi vanha salasana on virheellinen</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">Kirjoittamasi vanha salasana on virheellinen</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Kirjoita vanha salasanasi</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">Kirjoita vanha salasanasi</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
@@ -412,8 +414,8 @@
         <translation>Olet palauttamassa vanhaa lompakkoa. Huomioithan, että jos olet jo käyttänyt lompakkoa toisella laitteella, historiatiedot tilitapahtumista sekä tallentamasi osoitteet eivät siirry uudelle laitteelle palautuksen yhteydessä. Tilitapahtumat sekä osoitteet tallennetaan erikseen kullekin laitteelle. Lompakkosi saldo kuitenkin palautetaan ja on käytettävissä ajantasaisena uudessa laitteessa.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation type="unfinished">Your wallet will be migrated to v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
@@ -1322,7 +1324,6 @@ Tarkista swap-tunniste ja yritä uudelleen.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
-        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation type="unfinished">Vie tapahtumahistoria</translation>
     </message>
@@ -1853,9 +1854,11 @@ Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="address-info-sbbs-address">
         <source>SBBS Address
-(use for CEX withdrawals)</source>
+(use for CEX withdrawals and mining)</source>
+        <oldsource>SBBS Address
+(use for CEX withdrawals)</oldsource>
         <translation type="unfinished">SBBS Address
-(use for CEX withdrawals)</translation>
+(use for CEX withdrawals and mining)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>

@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -104,11 +104,11 @@ AppModel::AppModel(WalletSettings& settings)
 {
     Rules::get().SetNetworkParams();
     Rules::get().UpdateChecksum();
-    LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
-    LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
-    LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
-    LOG_INFO() << "AppData folder: " << QDir(QString::fromStdString(settings.getUserDataPath())).absolutePath().toStdString();
-    LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
+    BEAM_LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
+    BEAM_LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
+    BEAM_LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();
+    BEAM_LOG_INFO() << "AppData folder: " << QDir(QString::fromStdString(settings.getUserDataPath())).absolutePath().toStdString();
+    BEAM_LOG_INFO() << "WalletDB: " << settings.getWalletStorage();
 
     s_instance = this;
 
@@ -126,7 +126,7 @@ AppModel::AppModel(WalletSettings& settings)
     }
     else
     {
-        LOG_ERROR() << "Trying to start second instance of application";
+        BEAM_LOG_ERROR() << "Trying to start second instance of application";
     }
 }
 
@@ -192,7 +192,7 @@ void AppModel::backupDB(const std::string& dbFilePath)
         }
         catch(std::runtime_error& err)
         {
-            LOG_ERROR() << "failed to backup DB, " << err.what();
+            BEAM_LOG_ERROR() << "failed to backup DB, " << err.what();
         }
     }
 }
@@ -213,7 +213,7 @@ void AppModel::restoreDBFromBackup(const std::string& dbFilePath)
             }
             catch(const std::runtime_error& err)
             {
-                LOG_ERROR() << "failed to restore DB, " << err.what();
+                BEAM_LOG_ERROR() << "failed to restore DB, " << err.what();
             }
         }
     }
@@ -492,7 +492,7 @@ void AppModel::onResetWallet()
     }
     catch(std::runtime_error& err)
     {
-        LOG_ERROR() << "Error while removing files in onResetWallet: " << err.what();
+        BEAM_LOG_ERROR() << "Error while removing files in onResetWallet: " << err.what();
     }
 
     restoreDBFromBackup(getSettings().getWalletStorage());

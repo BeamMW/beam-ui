@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ namespace beamui::applications
 
     WebAPICreator::~WebAPICreator()
     {
-        LOG_INFO () << "WebAPICreator destroyed";
+        BEAM_LOG_INFO () << "WebAPICreator destroyed";
     }
 
     void WebAPICreator::createApi(const QString& verWant, const QString& verMin, const QString &appName, const QString &appUrl)
@@ -88,7 +88,7 @@ namespace beamui::applications
                 }
                 else
                 {
-                    LOG_INFO() << "WebAPICreator destroyed before api created:" << version << ", " << appName.toStdString() << ", " << appid;
+                    BEAM_LOG_INFO() << "WebAPICreator destroyed before api created:" << version << ", " << appName.toStdString() << ", " << appid;
                 }
             }
         );

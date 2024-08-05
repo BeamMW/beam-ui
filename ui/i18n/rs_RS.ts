@@ -359,12 +359,14 @@
         <translation>Нова лозинка се не слаже са лозинком за конфирмацију</translation>
     </message>
     <message id="change-pwd-old-fail">
-        <source>The old password you have entered is incorrect</source>
-        <translation>Стара лозинка коју сте унели је погрешна</translation>
+        <source>Current password is incorrect</source>
+        <oldsource>The old password you have entered is incorrect</oldsource>
+        <translation type="unfinished">Стара лозинка коју сте унели је погрешна</translation>
     </message>
     <message id="change-pwd-old-pwd-label">
-        <source>Enter old password</source>
-        <translation>Унесите стару лозинку</translation>
+        <source>Enter your current password</source>
+        <oldsource>Enter old password</oldsource>
+        <translation type="unfinished">Унесите стару лозинку</translation>
     </message>
     <message id="change-pwd-new-pwd-label">
         <source>Enter new password</source>
@@ -504,8 +506,8 @@
         <translation type="unfinished">You are trying to restore an existing Beam Wallet. Please notice that if you use your wallet on another device, your balance will be up to date, but  transaction history and addresses will be kept separately on each device.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v.</source>
-        <translation>Ваш новчаник ће бити мигриран на v </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation>Ваш новчаник ће бити мигриран на v</translation>
     </message>
     <message id="start-migration-button">
         <source>Start auto migration</source>
@@ -2650,8 +2652,11 @@ Your version is: %2. Please, check for updates.</oldsource>
         <translation type="unfinished">Тип</translation>
     </message>
     <message id="address-info-sbbs-address">
-        <source>Online (SBBS) Address</source>
-        <translation type="unfinished">Online (SBBS) Address</translation>
+        <source>SBBS Address
+(use for CEX withdrawals and mining)</source>
+        <oldsource>Online (SBBS) Address</oldsource>
+        <translation type="unfinished">SBBS Address
+(use for CEX withdrawals and mining)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>

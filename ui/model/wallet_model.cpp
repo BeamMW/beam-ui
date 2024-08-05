@@ -373,6 +373,11 @@ void WalletModel::onAssetInfo(beam::Asset::ID assetId, const beam::wallet::Walle
     emit assetInfoChanged(assetId, info);
 }
 
+void WalletModel::onWidgetWrite(std::string&& sName, ByteBuffer&& buf, uint32_t iStream)
+{
+    emit widgetWrite(sName, buf, iStream);
+}
+
 void WalletModel::onFullAssetsListLoaded()
 {
     emit fullAssetsListLoaded();

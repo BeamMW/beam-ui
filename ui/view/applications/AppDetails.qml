@@ -88,6 +88,14 @@ CustomDialog {
             FieldValue {
                 text:   !!app && !!app.description ? app.description:""
             }
+            
+            FieldTitle {
+                //% "Version:" 
+                text: qsTrId("dapps-store-dapp-version")
+            }
+            FieldValue {
+                text: !!app && !!app.version ? app.version:""
+            }
 
             FieldTitle {
                 //% "Release date"
@@ -96,7 +104,14 @@ CustomDialog {
             FieldValue {
                 text:   !!app && !!app.release_date ? app.release_date:""
             }
-
+            
+            FieldTitle {
+                //% "Guid:"
+                text: qsTrId("dapps-store-dapp-guid") + ":"
+            }
+            FieldValue: {
+                text: !!app && !!app.guid ? app.guid:""}
+            
             FieldTitle {
                 //% "Publisher key"
                 text: qsTrId("dapp-details-publisher-key") + ":"

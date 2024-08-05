@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -116,7 +116,7 @@ namespace
         {
             return;
         }
-        LOG_INFO() << "*MIGRATION* Moving \"" << folder.toStdString() << "\" ...";
+        BEAM_LOG_INFO() << "*MIGRATION* Moving \"" << folder.toStdString() << "\" ...";
         oldDataDir.rename(folder, newDataDir.filePath(folder));
     }
 
@@ -136,17 +136,17 @@ namespace
         }
         if (removeOld)
         {
-            LOG_INFO() << "*MIGRATION* Moving \"" << filePath.toStdString() << "\" ...";
+            BEAM_LOG_INFO() << "*MIGRATION* Moving \"" << filePath.toStdString() << "\" ...";
             if (!QFile::rename(filePath, newPath))
             {
-                LOG_WARNING() << "*MIGRATION* Failed to move \"" << filePath.toStdString() << "\" ...";
+                BEAM_LOG_WARNING() << "*MIGRATION* Failed to move \"" << filePath.toStdString() << "\" ...";
             }
             return;
         }
-        LOG_INFO() << "*MIGRATION* Copying \"" << filePath.toStdString() << "\" ...";
+        BEAM_LOG_INFO() << "*MIGRATION* Copying \"" << filePath.toStdString() << "\" ...";
         if (!QFile::copy(filePath, newPath))
         {
-            LOG_WARNING() << "*MIGRATION* Failed to copy \"" << filePath.toStdString() << "\" ...";
+            BEAM_LOG_WARNING() << "*MIGRATION* Failed to copy \"" << filePath.toStdString() << "\" ...";
         }
     }
 
@@ -160,7 +160,7 @@ namespace
         QDir newAccountDataDir(oldDataDir.filePath(newPath));
         if (!newAccountDataDir.exists())
         {
-            LOG_INFO() << "*MIGRATION* Creating \"" << newPath.toStdString() << "\" ...";
+            BEAM_LOG_INFO() << "*MIGRATION* Creating \"" << newPath.toStdString() << "\" ...";
             oldDataDir.mkpath(newPath);
         }
         for (const auto& dir : oldDataDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
@@ -239,7 +239,7 @@ int main (int argc, char* argv[])
             };
             if (isAppleTranslated() == 1)
             {
-                LOG_INFO() << "You are on apple M1 chipset running an Intel application, forcing NativeTextRendering";
+                BEAM_LOG_INFO() << "You are on apple M1 chipset running an Intel application, forcing NativeTextRendering";
                 QQuickWindow::setTextRenderType(QQuickWindow::TextRenderType::NativeTextRendering);
             }
             #endif
@@ -282,8 +282,8 @@ int main (int argc, char* argv[])
             rules.SetNetworkParams();
         }
 
-        int logLevel = getLogLevel(cli::LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
-        int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, LOG_LEVEL_DEBUG);
+        int logLevel = getLogLevel(cli::LOG_LEVEL, vm, BEAM_LOG_LEVEL_DEBUG);
+        int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, BEAM_LOG_LEVEL_DEBUG);
 
         beam::Crash::InstallHandler(appDataDir.filePath(QMLGlobals::getAppName()).toStdString().c_str());
 
@@ -388,7 +388,7 @@ int main (int argc, char* argv[])
             engine.load(QUrl("qrc:/root.qml"));
             if (engine.rootObjects().count() < 1)
             {
-                LOG_ERROR() << "Problem with QT";
+                BEAM_LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 
@@ -400,7 +400,7 @@ int main (int argc, char* argv[])
 
             if (!window)
             {
-                LOG_ERROR() << "Problem with QT";
+                BEAM_LOG_ERROR() << "Problem with QT";
                 return -1;
             }
 
@@ -411,7 +411,7 @@ int main (int argc, char* argv[])
         }
         catch (const po::error& e)
         {
-            LOG_ERROR() << e.what();
+            BEAM_LOG_ERROR() << e.what();
             return -1;
         }
     }

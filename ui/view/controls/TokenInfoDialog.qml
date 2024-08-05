@@ -212,7 +212,7 @@ CustomDialog {
                     font.pixelSize:         14
                     color:                  Style.content_disabled
                     /*% "SBBS Address
-(use for CEX withdrawals)"*/
+(use for CEX withdrawals and mining)"*/
                     text:                   qsTrId("address-info-sbbs-address") + ":"
                     visible:                sbbsAdrrCtrl.visible
                 }

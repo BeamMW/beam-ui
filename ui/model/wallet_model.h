@@ -58,6 +58,7 @@ signals:
     void walletStatusChanged();
     void assetInfoChanged(beam::Asset::ID assetId, const beam::wallet::WalletAsset& info);
     void iwtCallResult(const QString& callId, boost::any);
+    void widgetWrite(const std::string& sName, const beam::ByteBuffer& buf, uint32_t iStream);
 
 signals:
     void transactionsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::TxDescription>& items);
@@ -170,6 +171,7 @@ private:
     void onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats) override;
     void onGetChatMessages(const std::vector<beam::wallet::InstantMessage>& messages) override;
     void onChatRemoved(const beam::wallet::WalletID& counterpart) override;
+    void onWidgetWrite(std::string&&, beam::ByteBuffer&&, uint32_t iStream) override;
 
     #ifdef BEAM_IPFS_SUPPORT
     virtual void onIPFSStatus(bool running, const std::string& error, unsigned int peercnt) override;

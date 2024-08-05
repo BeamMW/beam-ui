@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ void Translator::loadTranslation()
         return;
     }
 
-    LOG_WARNING() << "Can't load translation from " << kDefaultTranslationsPath;
+    BEAM_LOG_WARNING() << "Can't load translation from " << kDefaultTranslationsPath;
 }
 
 void Translator::onLocaleChanged()

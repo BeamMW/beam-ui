@@ -24,7 +24,7 @@ StartLayout {
             Layout.fillWidth: true
             SFText {
                 anchors.horizontalCenter: parent.horizontalCenter
-                //% "Your wallet will be migrated to v "
+                //% "Your wallet will be migrated to v"
                 text: qsTrId("start-migration-message") + viewModel.walletVersion()
                 color: Style.content_main
                 font.pixelSize: 14

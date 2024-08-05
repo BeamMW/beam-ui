@@ -1,4 +1,4 @@
-// Copyright 2019 The Beam Team
+// Copyright 2019-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -247,7 +247,7 @@ void SwapOffersViewModel::cancelOffer(const QVariant& variantTxID)
     if (!variantTxID.isNull() && variantTxID.isValid())
     {
         auto txId = variantTxID.value<beam::wallet::TxID>();
-        LOG_INFO() << txId << " Cancel offer";
+        BEAM_LOG_INFO() << txId << " Cancel offer";
         m_walletModel->getAsync()->cancelTx(txId);
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2018 The Beam Team
+// Copyright 2018-2024 The Beam Team
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -285,7 +285,7 @@ void ReceiveViewModel::setAssetId(int value)
     auto valueId = value < 0 ? beam::Asset::s_BeamID : static_cast<beam::Asset::ID>(value);
     if (_assetId != valueId)
     {
-        LOG_INFO () << "Selected asset id" << value;
+        BEAM_LOG_INFO () << "Selected asset id" << value;
         _assetId = valueId;
         emit assetIdChanged();
         updateToken();
