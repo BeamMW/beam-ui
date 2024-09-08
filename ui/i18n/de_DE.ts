@@ -369,7 +369,7 @@
     </message>
     <message id="status-updating">
         <source>synchronizing blockchain</source>
-        <translation type="unfinished">synchronizing blockchain</translation>
+        <translation>synchronisiere Blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -414,8 +414,8 @@
         <translation>Sie versuchen eine vorhandene Beam Wallet wiederherzustellen. Bitte beachten Sie, dass wenn Sie Ihre Wallet auf einem anderen Gerät verwenden, Ihr Guthaben auf dem aktuellen Stand ist, der Transaktionsverlauf und Adressen aber separat auf jedem Gerät getrennt gehalten werden.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
-        <translation>Ihr Wallet wird nach v. migriert </translation>
+        <source>Your wallet will be migrated to v</source>
+        <translation>Ihre Wallet wird nach v. migriert </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
@@ -441,7 +441,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create a new wallet by generating a seed phrase.</source>
-        <translation>Generieren Sie einen Seed-Phrase, um ein neues Wallet zu erstellen.</translation>
+        <translation>Erstellen Sie ein neues Wallet, indem Sie einen Seed-Phrase generieren.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -726,7 +726,7 @@
     </message>
     <message id="loading-restore-message-line2">
         <source>Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</source>
-        <translation type="unfinished">Only the wallet balance (UTXO) can be restored, transaction info and addresses are always private and never kept on the blockchain.</translation>
+        <translation>Nur das Wallet-Guthaben (UTXO) kann wiederhergestellt werden, Transaktionen und Adressen sind immer privat und werden nie auf der Blockchain gespeichert.</translation>
     </message>
     <message id="start-recovery-title">
         <source>Create new password</source>
@@ -778,7 +778,7 @@
     </message>
     <message id="settings-report-problem-message-l3">
         <source>3. Don&apos;t forget to attach the log files.</source>
-        <translation>3. Nicht vergessen die Logdateien anzuhängen.</translation>
+        <translation>3. Don&apos;t vergessen die Logdateien anzuhängen.</translation>
     </message>
     <message id="explorer">
         <source>blockchain explorer</source>
@@ -929,7 +929,7 @@
     </message>
     <message id="wallet-send-swap-title">
         <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+        <translation>Angebot annehmen</translation>
     </message>
     <message id="wallet-send-swap-invalid-token">
         <source>Invalid swap token</source>
@@ -1323,6 +1323,7 @@ Bitte überprüfen Sie das Swap-Token und versuchen Sie es erneut.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
         <translation>Transaktionsverlauf exportieren</translation>
     </message>
@@ -1672,7 +1673,7 @@ Ihre Version ist: %2. Bitte suchen Sie nach Updates.</translation>
     </message>
     <message id="settings-remote-node-title">
         <source>Beam Node Connection</source>
-        <translation type="unfinished">Beam Node Connection</translation>
+        <translation>Beam Node Verbindung</translation>
     </message>
     <message id="open-show-wallet-button-hw">
         <source>Show my wallet with Trezor</source>
@@ -2103,7 +2104,7 @@ viel länger dauern, bis eine Transaktion abgeschlossen ist.</translation>
     </message>
     <message id="apps-title">
         <source>Applications</source>
-        <translation type="unfinished">Applications</translation>
+        <translation>Anwendungen</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -3553,7 +3554,7 @@ Bitte überprüfen Sie die Datei und versuchen Sie es erneut.</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Angebot erstellen</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3607,11 +3608,11 @@ Bitte starten Sie das Wallet neu und versuchen Sie es erneut.</translation>
     </message>
     <message id="wallet-accept-asset-swap-title">
         <source>Accept Offer</source>
-        <translation type="unfinished">Accept Offer</translation>
+        <translation>Angebot annehmen</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Angebot erstellen</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3800,31 +3801,31 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     <message id="receive-generate-new">
         <source>Generate new address</source>
         <extracomment>receive screen, button to generate new address</extracomment>
-        <translation type="unfinished">Generate new address</translation>
+        <translation>Neue Adresse erstellen</translation>
     </message>
     <message id="status-logout">
         <source>Logout</source>
-        <translation type="unfinished">Logout</translation>
+        <translation>Ausloggen</translation>
     </message>
     <message id="start-account-label">
         <source>Account</source>
-        <translation type="unfinished">Account</translation>
+        <translation>Account</translation>
     </message>
     <message id="start-new-account-label">
         <source>Account name</source>
-        <translation type="unfinished">Account name</translation>
+        <translation>Account Name</translation>
     </message>
     <message id="new-account-label">
         <source>Account %1</source>
-        <translation type="unfinished">Account %1</translation>
+        <translation>Account %1</translation>
     </message>
     <message id="start-account-password-label">
         <source>Account password</source>
-        <translation type="unfinished">Account password</translation>
+        <translation>Account-Passwort</translation>
     </message>
     <message id="account-label-exists-error">
         <source>An account with the same label already exists.</source>
-        <translation type="unfinished">An account with the same label already exists.</translation>
+        <translation>Ein Account mit demselben Label existiert bereits.</translation>
     </message>
     <message id="wallet-swap-button">
         <source>Swap</source>
@@ -3832,15 +3833,15 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="apps-no-installed">
         <source>You don&apos;t have any applications installed yet</source>
-        <translation type="unfinished">You don&apos;t have any applications installed yet</translation>
+        <translation>Du hast noch keine Anwendungen installiert</translation>
     </message>
     <message id="apps-no-at-all">
         <source>No applications yet</source>
-        <translation type="unfinished">No applications yet</translation>
+        <translation>Noch keine Anwendungen</translation>
     </message>
     <message id="apps-installed-tab">
         <source>Installed</source>
-        <translation type="unfinished">Installed</translation>
+        <translation>Installiert</translation>
     </message>
     <message id="apps-all-tab">
         <source>All</source>
@@ -3861,7 +3862,7 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="general-add-account">
         <source>Add account</source>
-        <translation type="unfinished">Add account</translation>
+        <translation>Account hinzufügen</translation>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
@@ -3869,7 +3870,7 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished">Application details</translation>
+        <translation>Anwendungsdetails</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
@@ -3881,7 +3882,7 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished">Release date</translation>
+        <translation>Veröffentlichungsdatum</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
@@ -3893,11 +3894,11 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished">Category</translation>
+        <translation>Kategorie</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished">copy SBBS address and close</translation>
+        <translation>SBBS Addresse kopieren und schließen</translation>
     </message>
 </context>
 </TS>

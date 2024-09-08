@@ -415,7 +415,7 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v</source>
-        <translation>Dompet Anda akan dimigrasikan ke v</translation>
+        <translation type="unfinished">Your wallet will be migrated to v</translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
@@ -441,7 +441,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create a new wallet by generating a seed phrase.</source>
-        <oldsource>Create a new wallet by generating a seed phrase..</oldsource>
+        <oldsource>Create a new wallet by generating a seed phrase.</oldsource>
         <translation type="unfinished">Buat dompet baru dengan menghasilkan frasa seed.</translation>
     </message>
     <message id="start-create-new-message-line-2">
@@ -1321,8 +1321,9 @@ Silakan periksa token swap dan coba lagi.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Riwayat transaksi ekspor</translation>
+        <translation>Ekspor riwayat transaksi</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -3861,11 +3862,11 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished">dapp details</translation>
+        <translation>rincian dapp</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished">Application details</translation>
+        <translation>Rincian aplikasi</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
@@ -3877,23 +3878,23 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished">Release date</translation>
+        <translation>Tanggal rilis</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished">Publisher key</translation>
+        <translation>Kunci penerbit</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished">Publisher name</translation>
+        <translation>Nama penerbit</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished">Category</translation>
+        <translation>Kategori</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished">copy SBBS address and close</translation>
+        <translation>salin alamat SBBS dan tutup</translation>
     </message>
 </context>
 </TS>

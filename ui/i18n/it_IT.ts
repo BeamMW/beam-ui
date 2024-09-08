@@ -441,7 +441,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create a new wallet by generating a seed phrase.</source>
-        <translation type="unfinished">Crea un nuovo wallet con la generazione della frase seme.</translation>
+        <translation>Crea un nuovo wallet con la generazione della frase seme.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1059,7 +1059,7 @@ controlla le tue impostazioni e riprova</translation>
     </message>
     <message id="swap-alert-confirm-button">
         <source>I understand</source>
-        <translation>Capisco</translation>
+        <translation>Io capisco</translation>
     </message>
     <message id="accept-own-offer-allert-head">
         <source>You cannot accept your own offer</source>
@@ -1323,8 +1323,9 @@ Si prega di controllare il token di swap e riprovare.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Esporta cronologia transazioni</translation>
+        <translation>Esporta lo storico delle transazioni</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1623,7 +1624,7 @@ La tua versione è: %2. Per favore, controlla gli aggiornamenti.</translation>
     </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
-        <translation>Wallet</translation>
+        <translation type="unfinished">Wallet</translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
@@ -2667,7 +2668,7 @@ Aggiorna le tue impostazioni e riprova.</translation>
     </message>
     <message id="source-wallet">
         <source>Wallet</source>
-        <translation>Wallet</translation>
+        <translation type="unfinished">Wallet</translation>
     </message>
     <message id="settings-general-confirmations">
         <source>Minimum confirmations</source>

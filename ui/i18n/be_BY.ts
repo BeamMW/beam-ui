@@ -414,7 +414,7 @@
         <translation>Вы спрабуеце аднавіць існуючы гаманец. Калі ласка, звярніце ўвагу, калі ваш гаманец выкарыстоўваецца на іншым прыстасаваннi, ваш баланс будзе адноўлены да актуальнага стану, але гісторыя транзакцый і адрасы будуць захоўвацца эксклюзіўна для кожнага прыстасавання.</translation>
     </message>
     <message id="start-migration-message">
-        <source>Your wallet will be migrated to v </source>
+        <source>Your wallet will be migrated to v</source>
         <translation>Ваш гаманец будзе абноўлены да версіі </translation>
     </message>
     <message id="start-migration-button">
@@ -441,7 +441,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create a new wallet by generating a seed phrase.</source>
-        <translation type="unfinished">Стварыць новы гаманец і згенераваць кантрольную фразу.</translation>
+        <translation>Стварыць новы гаманец і згенераваць кантрольную фразу.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1326,8 +1326,9 @@ Please check the swap token and try again.</source>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Экспарціраваць гісторыю транзакцый</translation>
+        <translation>Экспарціраваць гісторыю транзакцый</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

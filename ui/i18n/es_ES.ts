@@ -369,7 +369,7 @@
     </message>
     <message id="status-updating">
         <source>synchronizing blockchain</source>
-        <translation type="unfinished">synchronizing blockchain</translation>
+        <translation>sincronizando blockchain</translation>
     </message>
     <message id="settings-report-problem-save-log-button">
         <source>Save wallet logs</source>
@@ -1324,8 +1324,9 @@ Por favor, comprueba el token de intercambio e inténtalo de nuevo.</translation
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Exportar historial de transacciones</translation>
+        <translation>Exportar historial de transacciones</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -2107,7 +2108,7 @@ Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más
     </message>
     <message id="apps-title">
         <source>Applications</source>
-        <translation type="unfinished">Applications</translation>
+        <translation>Aplicaciones</translation>
     </message>
     <message id="apps-devapp">
         <source>This is your dev application</source>
@@ -2221,7 +2222,7 @@ Por favor, inténtalo de nuevo más tarde o crea una oferta usted mismo.</transl
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Todas</translation>
     </message>
     <message id="atomic-swap-in-progress-transactions-tab">
         <source>In progress</source>
@@ -2546,7 +2547,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="tx-details-sending-addr-label">
         <source>Sending address</source>
-        <translation>Enviando dirección</translation>
+        <translation>Dirección de envío</translation>
     </message>
     <message id="tx-details-sender-identity">
         <source>Sender signature</source>
@@ -2554,7 +2555,7 @@ Actualiza tus ajustes e inténtalo de nuevo.</translation>
     </message>
     <message id="tx-details-receiving-addr-label">
         <source>Receiving address</source>
-        <translation>Recibiendo dirección</translation>
+        <translation>Dirección de recepción</translation>
     </message>
     <message id="tx-details-receiver-identity">
         <source>Receiver signature</source>
@@ -2958,25 +2959,25 @@ las transacciones offline no se pueden cancelar.</translation>
     <message id="wallet-txs-status-in-progress-max-to-own">
         <source>sending to own address
 (maximum anonymity)</source>
-        <translation>Enviando a su propia dirección
-(máximo anonimato)</translation>
+        <translation>enviando a dirección propia
+(anonimato máximo)</translation>
     </message>
     <message id="wallet-txs-status-in-progress-offline-to-own">
         <source>sending to own address
 (offline)</source>
-        <translation>enviando a su propia dirección
+        <translation>enviando a dirección propia
 (offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-max-to-own">
         <source>sent to own address
 (maximum anonymity)</source>
-        <translation>enviando a su propia dirección
+        <translation>enviando a dirección propia
 (máximo anonimato)</translation>
     </message>
     <message id="wallet-txs-status-sent-offline-to-own">
         <source>sent to own address
 (offline)</source>
-        <translation>enviado a su propia dirección
+        <translation>enviado a dirección propia
 (offline)</translation>
     </message>
     <message id="apps-version-error">
@@ -3096,7 +3097,7 @@ las transacciones offline no se pueden cancelar.</translation>
     <message id="wallet-txs-status-in-progress-pub-offline-to-own">
         <source>sending to own address
 (public offline)</source>
-        <translation>enviando a su propia dirección
+        <translation>enviando a dirección propia
 (pública offline)</translation>
     </message>
     <message id="wallet-txs-status-sent-pub-offline-to-own">
@@ -3136,7 +3137,7 @@ las transacciones offline no se pueden cancelar.</translation>
     </message>
     <message id="wallet-transactions-all-tab">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Todas</translation>
     </message>
     <message id="wallet-transactions-in-progress-tab">
         <source>In progress</source>
@@ -3204,7 +3205,7 @@ las transacciones offline no se pueden cancelar.</translation>
     </message>
     <message id="multiselect-all">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Todas</translation>
     </message>
     <message id="wallet-remove-filter-button">
         <source>remove filter</source>
@@ -3220,7 +3221,7 @@ las transacciones offline no se pueden cancelar.</translation>
     </message>
     <message id="wallet-all-assets-checkbox">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Todas</translation>
     </message>
     <message id="dnd-app-install-title">
         <source>Install DApp</source>
@@ -3256,7 +3257,7 @@ las transacciones offline no se pueden cancelar.</translation>
     </message>
     <message id="apps-become-a-publisher">
         <source>become a publisher</source>
-        <translation>convertirse en editor</translation>
+        <translation>hacerse editor</translation>
     </message>
     <message id="dapps-store-update">
         <source>update</source>
@@ -3268,7 +3269,7 @@ las transacciones offline no se pueden cancelar.</translation>
     </message>
     <message id="dapps-store-become-publisher">
         <source>Become a publisher</source>
-        <translation>Convertirse en editor</translation>
+        <translation>Hacerse editor</translation>
     </message>
     <message id="dapps-store-edit-publisher-info">
         <source>Edit publisher info</source>
@@ -3557,7 +3558,7 @@ Por favor, comprueba el archivo e inténtelo de nuevo.</translation>
     </message>
     <message id="wallet-atomic-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Crear oferta</translation>
     </message>
     <message id="app-install-timeout-fail">
         <source>Sorry, the installation failed.
@@ -3615,7 +3616,7 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
     </message>
     <message id="wallet-create-asset-swap-title">
         <source>Create Offer</source>
-        <translation type="unfinished">Create Offer</translation>
+        <translation>Crear oferta</translation>
     </message>
     <message id="asset-swap-fee">
         <source>Transaction fee</source>
@@ -3844,11 +3845,11 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     </message>
     <message id="apps-installed-tab">
         <source>Installed</source>
-        <translation type="unfinished">Installed</translation>
+        <translation>Instaladas</translation>
     </message>
     <message id="apps-all-tab">
         <source>All</source>
-        <translation>Todo</translation>
+        <translation>Todas</translation>
     </message>
     <message id="help-title">
         <source>Documentation</source>

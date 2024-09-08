@@ -441,7 +441,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create a new wallet by generating a seed phrase.</source>
-        <translation type="unfinished">Создать новый кошелек и сгенерировать контрольную фразу.</translation>
+        <translation>Создать новый кошелек и сгенерировать контрольную фразу.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1326,8 +1326,9 @@ Please check the swap token and try again.</source>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Экспорт истории транзакций</translation>
+        <translation>Экспорт истории транзакций</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>

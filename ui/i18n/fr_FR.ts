@@ -208,7 +208,7 @@
     </message>
     <message id="addresses-tab-expired">
         <source>My expired addresses</source>
-        <translation>Adresses expirées</translation>
+        <translation>Mes adresses expirées</translation>
     </message>
     <message id="addresses-tab-contacts">
         <source>Contacts</source>
@@ -415,7 +415,7 @@
     </message>
     <message id="start-migration-message">
         <source>Your wallet will be migrated to v</source>
-        <translation>Votre portefeuille sera migré vers v</translation>
+        <translation>Votre portefeuille sera migré vers v </translation>
     </message>
     <message id="start-migration-button">
         <source>start auto migration</source>
@@ -441,7 +441,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create a new wallet by generating a seed phrase.</source>
-        <translation type="unfinished">Créez un nouveau portefeuille avec une phrase mnémonique générée.</translation>
+        <translation>Créez un nouveau portefeuille avec une phrase mnémonique générée.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1323,8 +1323,9 @@ Merci de vérifier le jeton d&apos;échange et de réessayer.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Exporter l&apos;historique des transactions</translation>
+        <translation>Exporter l&apos;historique des transactions</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1805,7 +1806,7 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
     </message>
     <message id="tx-failure-shielded-coin-fee">
         <source>Cannot extract shielded coin, fee is too big.</source>
-        <translation>Impossible d&apos;extraire les pièces protégées, les frais sont trop élevés.</translation>
+        <translation>Impossible d&apos;extraire les monnaies protégées, les frais sont trop élevés.</translation>
     </message>
     <message id="tx-failure-assets-disabled-receiver">
         <source>Asset transactions are disabled in the receiver wallet</source>
@@ -3394,7 +3395,7 @@ peut durer indéfiniment)</translation>
     </message>
     <message id="dapps-store-upload-new-dapp-text">
         <source>To upload your own DApp in the DApp Store, please use files in the &lt;b&gt;&lt;i&gt;.dapp format only&lt;/i&gt;&lt;/b&gt;</source>
-        <translation>Pour télécharger votre propre DApp dans le DApp Store, veuillez utiliser des fichiers au format &lt;b&gt;&lt;i&gt;.dapp uniquement&lt;/i&gt;&lt;/b&gt;</translation>
+        <translation>Pour télécharger votre propre DApp dans le DApp Store, veuillez utiliser des fichiers au &lt;b&gt;&lt;i&gt;format .dapp uniquement&lt;/i&gt;&lt;/b&gt;</translation>
     </message>
     <message id="dapps-store-upload-common-error">
         <source>Something went wrong, please check your file and to try upload it again</source>
@@ -3533,7 +3534,7 @@ La désinstallation a échoué. Veuillez réessayer plus tard.</translation>
         <source>Congratulations!
 &apos;%1&apos; DApp is successfully installed.</source>
         <translation>Félicitations !
-La Dapp &apos;%1&apos; est installée avec succès.</translation>
+La DApp &apos;%1&apos; est installée avec succès.</translation>
     </message>
     <message id="app-install-fail">
         <source>Sorry, the installation failed.
@@ -3867,11 +3868,11 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished">dapp details</translation>
+        <translation>détails de la DApp</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished">Application details</translation>
+        <translation>Détails de l&apos;application</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
@@ -3883,23 +3884,23 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished">Release date</translation>
+        <translation>Date de sortie</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished">Publisher key</translation>
+        <translation>Clé de l&apos;éditeur</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished">Publisher name</translation>
+        <translation>Nom de l&apos;éditeur</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished">Category</translation>
+        <translation>Catégorie</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished">copy SBBS address and close</translation>
+        <translation>copier l&apos;adresse SBBS et fermer</translation>
     </message>
 </context>
 </TS>

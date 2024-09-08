@@ -1324,8 +1324,9 @@ Tarkista swap-tunniste ja yritä uudelleen.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Vie tapahtumahistoria</translation>
+        <translation>Vie tapahtumahistoria</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1858,7 +1859,7 @@ Your version is: %2. Please, check for updates.</translation>
         <oldsource>SBBS Address
 (use for CEX withdrawals)</oldsource>
         <translation type="unfinished">SBBS Address
-(use for CEX withdrawals and mining)</translation>
+(use for CEX withdrawals)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>

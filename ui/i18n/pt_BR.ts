@@ -441,7 +441,7 @@
     </message>
     <message id="start-create-new-message-line-1">
         <source>Create a new wallet by generating a seed phrase.</source>
-        <translation type="unfinished">Criar uma nova carteira com geração de palavras-chave.</translation>
+        <translation>Criar uma nova carteira gerando novas palavras-chave.</translation>
     </message>
     <message id="start-create-new-message-line-2">
         <source>If you ever lose your device, you will need this phrase to recover your wallet!</source>
@@ -1323,8 +1323,9 @@ Por favor, verifique o token de swap e tente novamente.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Exportar histórico de transações</translation>
+        <translation>Exportar histórico de transações</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -3868,11 +3869,11 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="dapps-store-dapp-details">
         <source>dapp details</source>
-        <translation type="unfinished">dapp details</translation>
+        <translation>detalhes do DApp</translation>
     </message>
     <message id="dapp-store-app-details">
         <source>Application details</source>
-        <translation type="unfinished">Application details</translation>
+        <translation>Detalhes do aplicativo</translation>
     </message>
     <message id="dapp-details-name">
         <source>Name</source>
@@ -3884,23 +3885,23 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     </message>
     <message id="dapp-details-release-date">
         <source>Release date</source>
-        <translation type="unfinished">Release date</translation>
+        <translation>Data de lançamento</translation>
     </message>
     <message id="dapp-details-publisher-key">
         <source>Publisher key</source>
-        <translation type="unfinished">Publisher key</translation>
+        <translation>Chave de Editor</translation>
     </message>
     <message id="dapp-details-publisher-name">
         <source>Publisher name</source>
-        <translation type="unfinished">Publisher name</translation>
+        <translation>Nome do Editor</translation>
     </message>
     <message id="dapp-details-category">
         <source>Category</source>
-        <translation type="unfinished">Category</translation>
+        <translation>Categoria</translation>
     </message>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
-        <translation type="unfinished">copy SBBS address and close</translation>
+        <translation>copiar endereço SBBS e fechar</translation>
     </message>
 </context>
 </TS>

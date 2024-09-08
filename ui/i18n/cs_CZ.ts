@@ -1327,8 +1327,9 @@ Prosím zkontrolujte token výměny a zkuste to znovu.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Exportovat historii transakcí</translation>
+        <translation>Exportovat transakční historii</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1861,7 +1862,7 @@ Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
         <oldsource>SBBS Address
 (use for CEX withdrawals)</oldsource>
         <translation type="unfinished">SBBS Address
-(use for CEX withdrawals and mining)</translation>
+(use for CEX withdrawals)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>

@@ -1322,8 +1322,9 @@ Vänligen kontrollera swap-token och försök igen.</translation>
     </message>
     <message id="wallet-export-tx-history">
         <source>Export transaction history</source>
+        <oldsource>Export transaction history</oldsource>
         <extracomment>transaction history screen, export button tooltip and open file dialog</extracomment>
-        <translation type="unfinished">Exportera Transaktionshistoriken</translation>
+        <translation>Exportera Transaktionshistoriken</translation>
     </message>
     <message id="addresses-delete-warning-title">
         <source>Delete address</source>
@@ -1854,7 +1855,7 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <oldsource>SBBS Address
 (use for CEX withdrawals)</oldsource>
         <translation type="unfinished">SBBS Address
-(use for CEX withdrawals and mining)</translation>
+(use for CEX withdrawals)</translation>
     </message>
     <message id="address-info-address">
         <source>Address</source>
