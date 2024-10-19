@@ -88,5 +88,5 @@ beam-ui.cbp
 
 ui/view_utils_js.cpp
 
-# other
+# MacOS
 .DS_Store

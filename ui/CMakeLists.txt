@@ -389,20 +389,20 @@ if(BEAM_USE_STATIC_QT)
 
     if(APPLE)
 
-        foreach(lib lib/libQt53DAnimation lib/libQt5Concurrent lib/libQt5MultimediaWidgets lib/libQt5QuickParticles lib/libQt5WebChannel
-            lib/libQt53DCore lib/libQt5Core lib/libQt5Network lib/libQt5QuickTemplates2 lib/libQt5WebSockets lib/libQt53DExtras lib/libQt5DBus
-            lib/libQt5NetworkAuth lib/libQt5QuickTest lib/libQt5WebView lib/libQt53DInput lib/libQt5DataVisualization lib/libQt5Nfc
-            lib/libQt5QuickWidgets lib/libQt5Widgets lib/libQt53DLogic lib/libQt5DeviceDiscoverySupport lib/libQt5OpenGL lib/libQt5RemoteObjects
-            lib/libQt5Xml lib/libQt53DQuick lib/libQt5EdidSupport lib/libQt5OpenGLExtensions lib/libQt5Script lib/libQt5XmlPatterns
-            lib/libQt53DQuickAnimation lib/libQt5EventDispatcherSupport lib/libQt5PacketProtocol lib/libQt5ScriptTools lib/libclip2tri
-            lib/libQt53DQuickExtras lib/libQt5FbSupport lib/libQt5PlatformCompositorSupport lib/libQt5Scxml lib/libclipper lib/libQt53DQuickInput
-            lib/libQt5FontDatabaseSupport lib/libQt5Positioning lib/libQt5Sensors lib/libpoly2tri lib/libQt53DQuickRender lib/libQt5Gamepad
-            lib/libQt5PositioningQuick lib/libQt5SerialBus lib/libqmapboxgl lib/libQt53DQuickScene2D lib/libQt5GraphicsSupport
-            lib/libQt5SerialPort lib/libqtfreetype lib/libQt53DRender lib/libQt5Gui lib/libQt5Purchasing lib/libQt5Sql
-            lib/libqtharfbuzz lib/libQt5AccessibilitySupport lib/libQt5Help lib/libQt5Qml lib/libQt5Svg lib/libqtlibpng lib/libQt5Bluetooth
-            lib/libQt5Location lib/libQt5QmlDebug lib/libQt5Test lib/libqtopenwnn lib/libQt5Bootstrap lib/libQt5MacExtras lib/libQt5QmlDevTools
-            lib/libQt5TextToSpeech lib/libqtpcre2 lib/libQt5Charts lib/libQt5Multimedia lib/libQt5Quick lib/libQt5ThemeSupport lib/libqtpinyin
-            lib/libQt5ClipboardSupport lib/libQt5MultimediaQuick lib/libQt5QuickControls2 lib/libQt5UiTools lib/libqttcime
+        foreach(lib lib/libQt63DAnimation lib/libQt6Concurrent lib/libQt6MultimediaWidgets lib/libQt6QuickParticles lib/libQt6WebChannel
+            lib/libQt63DCore lib/libQt6Core lib/libQt6Network lib/libQt6QuickTemplates2 lib/libQt6WebSockets lib/libQt63DExtras lib/libQt6DBus
+            lib/libQt6NetworkAuth lib/libQt6QuickTest lib/libQt6WebView lib/libQt63DInput lib/libQt6DataVisualization lib/libQt6Nfc
+            lib/libQt6QuickWidgets lib/libQt6Widgets lib/libQt63DLogic lib/libQt6DeviceDiscoverySupport lib/libQt6OpenGL lib/libQt6RemoteObjects
+            lib/libQt6Xml lib/libQt63DQuick lib/libQt6EdidSupport lib/libQt6OpenGLExtensions lib/libQt6Script lib/libQt6XmlPatterns
+            lib/libQt63DQuickAnimation lib/libQt6EventDispatcherSupport lib/libQt6PacketProtocol lib/libQt6ScriptTools lib/libclip2tri
+            lib/libQt63DQuickExtras lib/libQt6FbSupport lib/libQt6PlatformCompositorSupport lib/libQt6Scxml lib/libclipper lib/libQt63DQuickInput
+            lib/libQt6FontDatabaseSupport lib/libQt6Positioning lib/libQt6Sensors lib/libpoly2tri lib/libQt63DQuickRender lib/libQt6Gamepad
+            lib/libQt6PositioningQuick lib/libQt6SerialBus lib/libqmapboxgl lib/libQt63DQuickScene2D lib/libQt6GraphicsSupport
+            lib/libQt6SerialPort lib/libqtfreetype lib/libQt63DRender lib/libQt6Gui lib/libQt6Purchasing lib/libQt6Sql
+            lib/libqtharfbuzz lib/libQt6AccessibilitySupport lib/libQt6Help lib/libQt6Qml lib/libQt6Svg lib/libqtlibpng lib/libQt6Bluetooth
+            lib/libQt6Location lib/libQt6QmlDebug lib/libQt6Test lib/libqtopenwnn lib/libQt6Bootstrap lib/libQt6MacExtras lib/libQt6QmlDevTools
+            lib/libQt6TextToSpeech lib/libqtpcre2 lib/libQt6Charts lib/libQt6Multimedia lib/libQt6Quick lib/libQt6ThemeSupport lib/libqtpinyin
+            lib/libQt6ClipboardSupport lib/libQt6MultimediaQuick lib/libQt6QuickControls2 lib/libQt6UiTools lib/libqttcime
             qml/QtQuick.2/libqtquick2plugin qml/QtQuick/Window.2/libwindowplugin qml/QtQuick/Controls/libqtquickcontrolsplugin
             qml/QtGraphicalEffects/libqtgraphicaleffectsplugin qml/QtGraphicalEffects/private/libqtgraphicaleffectsprivate
             qml/QtQuick/Layouts/libqquicklayoutsplugin qml/QtQuick/Controls.2/libqtquickcontrols2plugin qml/QtQuick/Templates.2/libqtquicktemplates2plugin
