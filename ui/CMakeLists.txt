@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.13)
 set (TARGET_NAME "beam-wallet-ui")
 
 function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
-    find_package(Qt5LinguistTools)
-    if (Qt5LinguistTools_FOUND)
+    find_package(Qt6LinguistTools)
+    if (Qt6LinguistTools_FOUND)
         if(LINUX)
             execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release 
                             OUTPUT_VARIABLE DISTR_NAME
@@ -16,20 +16,20 @@ function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
         list(APPEND TS_FILES "${TS_FILE}")
         message("update: ${TS_FILE}")
         if (${DISTR_NAME} MATCHES "Fedora")
-            execute_process(COMMAND lupdate-qt5 -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
+            execute_process(COMMAND lupdate-qt6 -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
         else()
             execute_process(COMMAND lupdate -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
         endif()
     endforeach()
     set(${out_ts_files} ${TS_FILES} PARENT_SCOPE)
     else()
-        message("Qt5LinguistTools not found, please check your QT5 instalation")
+        message("Qt6LinguistTools not found, please check your QT6 installation")
     endif()
 endfunction()
 
 function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
-    find_package(Qt5LinguistTools)
-    if (Qt5LinguistTools_FOUND)
+    find_package(Qt6LinguistTools)
+    if (Qt6LinguistTools_FOUND)
         if(LINUX)
             execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release
                             OUTPUT_VARIABLE DISTR_NAME
@@ -41,7 +41,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
         set(QM_FILE_NAME "${TS_FILE_WE}.qm")
         list(APPEND QM_FILES "${QM_FILE_NAME}")
         if (${DISTR_NAME} MATCHES "Fedora")
-            execute_process(COMMAND lrelease-qt5 -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
+            execute_process(COMMAND lrelease-qt6 -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
         else()
             execute_process(COMMAND lrelease -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
         endif()
@@ -49,7 +49,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
     endforeach()
     set(${out_qm_files} ${QM_FILES} PARENT_SCOPE)
     else()
-        message("Qt5LinguistTools not found, please check your QT5 instalation")
+        message("Qt6LinguistTools not found, please check your QT6 installation")
     endif()
 endfunction()
 
@@ -59,9 +59,10 @@ if(LINUX)
 else()
     set (OUTPUT_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
 endif()
-set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
 
-find_package(Qt5 COMPONENTS Qml Quick Svg WebEngine WebEngineWidgets REQUIRED)
+set (CMAKE_PREFIX_PATH $ENV{QT6_ROOT_DIR})
+
+find_package(Qt6 COMPONENTS Qml Quick Svg WebEngineCore WebEngineWidgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -261,11 +262,11 @@ endforeach ()
 file(APPEND "${TRANSLATIONS_QRC_FILE}" "\t</qresource>\n</RCC>")
 
 
-find_package(Qt5QuickCompiler)
-if(Qt5QuickCompiler_FOUND)
+find_package(Qt6QuickCompiler)
+if(Qt6QuickCompiler_FOUND)
     qtquick_compiler_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
 else()
-    qt5_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
+    qt6_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
 endif()
 
 if(WIN32)
@@ -345,11 +346,11 @@ target_link_libraries(${TARGET_NAME}
         wallet_client
         wallet_api
         mnemonic 
-        Qt5::Qml
-        Qt5::Quick 
-        Qt5::Svg
-        Qt5::WebEngine
-        Qt5::WebEngineWidgets
+        Qt6::Qml
+        Qt6::Quick 
+        Qt6::Svg
+        Qt6::WebEngineCore
+        Qt6::WebEngineWidgets
 )
 
 if (BEAM_SIGN_PACKAGE AND WIN32)
@@ -363,11 +364,11 @@ if(BEAM_USE_STATIC_QT)
 
     if(WIN32)
         foreach(lib
-            Qt5Core Qt5Gui Qt5Quick Qt5QuickControls2 Qt5QuickTemplates2
-            qtlibpng Qt5QuickWidgets Qt5Widgets qtpcre2 Qt5Bootstrap
-            Qt5EventDispatcherSupport Qt5RemoteObjects Qt5Svg Qt5FbSupport
-            Qt5Qml Qt5Test Qt5Concurrent Qt5FontDatabaseSupport Qt5Network
-            Qt5Xml Qt5QmlWorkerScript Qt5Scxml Qt5ThemeSupport Qt5XmlPatterns
+            Qt6Core Qt6Gui Qt6Quick Qt6QuickControls2 Qt6QuickTemplates2
+            qtlibpng Qt6QuickWidgets Qt6Widgets qtpcre2 Qt6Bootstrap
+            Qt6EventDispatcherSupport Qt6RemoteObjects Qt6Svg Qt6FbSupport
+            Qt6Qml Qt6Test Qt6Concurrent Qt6FontDatabaseSupport Qt6Network
+            Qt6Xml Qt6QmlWorkerScript Qt6Scxml Qt6ThemeSupport Qt6XmlPatterns
         )
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/lib/${lib}.lib)
         endforeach()
@@ -457,12 +458,12 @@ if(BEAM_USE_STATIC_QT)
         )
 
         foreach(lib
-            Qt5Core Qt5XcbQpa Qt5Gui Qt5Quick Qt5QuickControls2 Qt5InputSupport
-            Qt5QuickTemplates2 qtlibpng Qt5QuickWidgets Qt5Widgets qtpcre2
-            Qt5Bootstrap Qt5EventDispatcherSupport Qt5RemoteObjects Qt5Svg
-            Qt5X11Extras Qt5FbSupport Qt5Qml Qt5Test Qt5Concurrent
-            Qt5FontDatabaseSupport Qt5Network Qt5Xml Qt5QmlWorkerScript Qt5Scxml
-            Qt5ThemeSupport Qt5XmlPatterns Qt5GlxSupport
+            Qt6Core Qt6XcbQpa Qt6Gui Qt6Quick Qt6QuickControls2 Qt6InputSupport
+            Qt6QuickTemplates2 qtlibpng Qt6QuickWidgets Qt6Widgets qtpcre2
+            Qt6Bootstrap Qt6EventDispatcherSupport Qt6RemoteObjects Qt6Svg
+            Qt6X11Extras Qt6FbSupport Qt6Qml Qt6Test Qt6Concurrent
+            Qt6FontDatabaseSupport Qt6Network Qt6Xml Qt6QmlWorkerScript Qt6Scxml
+            Qt6ThemeSupport Qt6XmlPatterns Qt6GlxSupport
         )
             target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/lib/lib${lib}.a)
         endforeach()

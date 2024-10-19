@@ -87,3 +87,6 @@ beam-ui.cbp
 /ui/view/utils.jsc
 
 ui/view_utils_js.cpp
+
+# other
+.DS_Store
