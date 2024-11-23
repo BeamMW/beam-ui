@@ -8,3 +8,6 @@
 [submodule "3rdparty/qhttpengine"]
 	path = 3rdparty/qhttpengine
 	url = https://github.com/BeamMW/qhttpengine.git
+[submodule "3rdparty/quazip"]
+	path = 3rdparty/quazip
+	url = https://github.com/stachenov/quazip.git

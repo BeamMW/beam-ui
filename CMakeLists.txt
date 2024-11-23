@@ -226,9 +226,13 @@ else()
 endif()
 
 set(SKIP_INSTALL_ALL ON)
-add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
+#add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/qrcode)
+set(QUAZIP_USE_QT_ZLIB ON)
 add_subdirectory(3rdparty/quazip)
+target_compile_options(QuaZip PRIVATE
+    $<$<CXX_COMPILER_ID:MSVC>:/wd4458>
+)
 add_subdirectory(3rdparty/qhttpengine EXCLUDE_FROM_ALL)
 add_subdirectory(ui)
 

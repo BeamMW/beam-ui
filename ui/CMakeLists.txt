@@ -326,11 +326,7 @@ if (APPLE)
     target_link_libraries(${TARGET_NAME} ${CARBON_LIBRARY})
 endif()
 
-# link with QuaZip library
-target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_PREFIX_PATH}/include/QtZlib)
-target_include_directories(${TARGET_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/beam/3rdparty/quazip)
-add_definitions(-DQUAZIP_STATIC)
-target_link_libraries(${TARGET_NAME} quazip_static)
+target_link_libraries(${TARGET_NAME} QuaZip::QuaZip)
 
 #if (BEAM_WALLET_WITH_NODE)
     add_definitions(-DBEAM_WALLET_WITH_NODE)
