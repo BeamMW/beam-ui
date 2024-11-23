@@ -8,7 +8,7 @@ if(LINUX)
 else()
     set (OUTPUT_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
 endif()
-set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
+set (CMAKE_PREFIX_PATH "$ENV{QT6_ROOT_DIR};$ENV{QT5_ROOT_DIR}")
 
 find_package(
     QT NAMES Qt6 Qt5
@@ -19,8 +19,53 @@ if (NOT QT_FOUND)
 endif()
 
 set(BEAM_QT_MAJOR_VERSION ${QT_VERSION_MAJOR} CACHE STRING "Qt version to use (5 or 6), defaults to ${QT_VERSION_MAJOR}")
-
 set(BEAM_QT_PREFIX Qt${BEAM_QT_MAJOR_VERSION})
+
+find_package(${BEAM_QT_PREFIX}QuickCompiler)
+if(${BEAM_QT_PREFIX}QuickCompiler_FOUND)
+    qtquick_compiler_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
+else()
+    if (BEAM_QT_MAJOR_VERSION EQUAL 6)
+        qt6_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
+    else()
+        qt5_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
+    endif()
+endif()
+
+if (BEAM_QT_MAJOR_VERSION EQUAL 6)
+    set(BEAM_QT_COMPONENTS
+        Qml
+        Quick
+        Svg
+        WebEngineCore
+        WebEngineWidgets
+    )
+    set(BEAM_QT_LIBS
+        ${BEAM_QT_PREFIX}::Qml
+        ${BEAM_QT_PREFIX}::Quick 
+        ${BEAM_QT_PREFIX}::Svg
+        ${BEAM_QT_PREFIX}::WebEngineCore
+        ${BEAM_QT_PREFIX}::WebEngineWidgets
+    )
+elseif(BEAM_QT_MAJOR_VERSION EQUAL 5)
+    set(BEAM_QT_COMPONENTS
+        Qml
+        Quick
+        Svg
+        WebEngine
+        WebEngineWidgets
+    )
+    set(BEAM_QT_LIBS
+        ${BEAM_QT_PREFIX}::Qml
+        ${BEAM_QT_PREFIX}::Quick 
+        ${BEAM_QT_PREFIX}::Svg
+        ${BEAM_QT_PREFIX}::WebEngine
+        ${BEAM_QT_PREFIX}::WebEngineWidgets
+    )
+else()
+    message(STATUS "Unsupported Qt version ${BEAM_QT_MAJOR_VERSION}")
+endif()
+
 
 function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
     find_package(${BEAM_QT_PREFIX}LinguistTools)
@@ -73,7 +118,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
     endif()
 endfunction()
 
-find_package(${BEAM_QT_PREFIX} COMPONENTS Qml Quick Svg WebEngine WebEngineWidgets REQUIRED)
+find_package(${BEAM_QT_PREFIX} COMPONENTS ${BEAM_QT_COMPONENTS} REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -265,14 +310,6 @@ foreach (QM_FILE ${QM_FILES})
 endforeach ()
 file(APPEND "${TRANSLATIONS_QRC_FILE}" "\t</qresource>\n</RCC>")
 
-
-find_package(Qt5QuickCompiler)
-if(Qt5QuickCompiler_FOUND)
-    qtquick_compiler_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-else()
-    qt5_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-endif()
-
 if(WIN32)
     add_definitions(-DWIN32_LEAN_AND_MEAN)
 endif()
@@ -342,15 +379,11 @@ target_link_libraries(${TARGET_NAME} QuaZip::QuaZip)
 #endif()
 
 target_link_libraries(${TARGET_NAME}
-        beam
-        wallet_client
-        wallet_api
-        mnemonic 
-        ${BEAM_QT_PREFIX}::Qml
-        ${BEAM_QT_PREFIX}::Quick 
-        ${BEAM_QT_PREFIX}::Svg
-        ${BEAM_QT_PREFIX}::WebEngine
-        ${BEAM_QT_PREFIX}::WebEngineWidgets
+    beam
+    wallet_client
+    wallet_api
+    mnemonic 
+    ${BEAM_QT_LIBS}
 )
 
 if (BEAM_SIGN_PACKAGE AND WIN32)
