@@ -72,31 +72,6 @@
 #include "viewmodel/messenger_chat.h"
 #include "viewmodel/messenger_chat_list.h"
 
-#if defined(BEAM_USE_STATIC_QT)
-
-#if defined Q_OS_WIN
-Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif defined Q_OS_MACOS
-Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)
-#elif defined Q_OS_LINUX
-Q_IMPORT_PLUGIN(QtQmlPlugin)
-Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
-Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
-#endif
-
-Q_IMPORT_PLUGIN(QtQuick2Plugin)
-Q_IMPORT_PLUGIN(QtQuick2WindowPlugin)
-Q_IMPORT_PLUGIN(QtQuickControls1Plugin)
-Q_IMPORT_PLUGIN(QtQuickControls2Plugin)
-Q_IMPORT_PLUGIN(QtGraphicalEffectsPlugin)
-Q_IMPORT_PLUGIN(QtGraphicalEffectsPrivatePlugin)
-Q_IMPORT_PLUGIN(QSvgPlugin)
-Q_IMPORT_PLUGIN(QtQuickLayoutsPlugin)
-Q_IMPORT_PLUGIN(QtQuickTemplates2Plugin)
-
-
-#endif
-
 #ifdef Q_OS_MACOS
 #include <sys/types.h>
 #include <sys/sysctl.h>

@@ -35,8 +35,7 @@ if(BEAM_LINK_TYPE MATCHES "Static")
     set(BEAM_USE_STATIC TRUE)
 endif()
 
-option(BEAM_USE_STATIC_QT "Build with staticaly linked QT library" FALSE)
-if (BEAM_USE_STATIC AND NOT BEAM_USE_STATIC_QT)
+if (BEAM_USE_STATIC)
     set(BEAM_USE_STATIC_RUNTIME FALSE)
 endif()
 

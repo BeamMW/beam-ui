@@ -2,9 +2,29 @@ cmake_minimum_required(VERSION 3.13)
 
 set (TARGET_NAME "beam-wallet-ui")
 
+set(APP_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+if(LINUX)
+    set (OUTPUT_NAME "BeamWallet${BEAM_SUFFIX_UPPER_CASE}")
+else()
+    set (OUTPUT_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
+endif()
+set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
+
+find_package(
+    QT NAMES Qt6 Qt5
+    QUIET COMPONENTS Core
+)
+if (NOT QT_FOUND)
+    set(QT_VERSION_MAJOR 5)
+endif()
+
+set(BEAM_QT_MAJOR_VERSION ${QT_VERSION_MAJOR} CACHE STRING "Qt version to use (5 or 6), defaults to ${QT_VERSION_MAJOR}")
+
+set(BEAM_QT_PREFIX Qt${BEAM_QT_MAJOR_VERSION})
+
 function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
-    find_package(Qt5LinguistTools)
-    if (Qt5LinguistTools_FOUND)
+    find_package(${BEAM_QT_PREFIX}LinguistTools)
+    if (${BEAM_QT_PREFIX}LinguistTools_FOUND)
         if(LINUX)
             execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release 
                             OUTPUT_VARIABLE DISTR_NAME
@@ -16,20 +36,20 @@ function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
         list(APPEND TS_FILES "${TS_FILE}")
         message("update: ${TS_FILE}")
         if (${DISTR_NAME} MATCHES "Fedora")
-            execute_process(COMMAND lupdate-qt5 -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
+            execute_process(COMMAND lupdate-qt${BEAM_QT_MAJOR_VERSION} -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
         else()
             execute_process(COMMAND lupdate -recursive -locations none -no-obsolete ${CMAKE_CURRENT_SOURCE_DIR} -ts "${TS_FILE}")
         endif()
     endforeach()
     set(${out_ts_files} ${TS_FILES} PARENT_SCOPE)
     else()
-        message("Qt5LinguistTools not found, please check your QT5 instalation")
+        message("${BEAM_QT_PREFIX}LinguistTools not found, please check your Qt${BEAM_QT_MAJOR_VERSION} instalation")
     endif()
 endfunction()
 
 function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
-    find_package(Qt5LinguistTools)
-    if (Qt5LinguistTools_FOUND)
+    find_package(${BEAM_QT_PREFIX}LinguistTools)
+    if (${BEAM_QT_PREFIX}LinguistTools_FOUND)
         if(LINUX)
             execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release
                             OUTPUT_VARIABLE DISTR_NAME
@@ -41,7 +61,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
         set(QM_FILE_NAME "${TS_FILE_WE}.qm")
         list(APPEND QM_FILES "${QM_FILE_NAME}")
         if (${DISTR_NAME} MATCHES "Fedora")
-            execute_process(COMMAND lrelease-qt5 -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
+            execute_process(COMMAND lrelease-qt${BEAM_QT_MAJOR_VERSION} -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
         else()
             execute_process(COMMAND lrelease -idbased "${TS_FILE}" -qm "${CMAKE_CURRENT_SOURCE_DIR}/${QM_FILE_NAME}")
         endif()
@@ -49,29 +69,14 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
     endforeach()
     set(${out_qm_files} ${QM_FILES} PARENT_SCOPE)
     else()
-        message("Qt5LinguistTools not found, please check your QT5 instalation")
+        message("${BEAM_QT_PREFIX}LinguistTools not found, please check your Qt${BEAM_QT_MAJOR_VERSION} instalation")
     endif()
 endfunction()
 
-set(APP_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
-if(LINUX)
-    set (OUTPUT_NAME "BeamWallet${BEAM_SUFFIX_UPPER_CASE}")
-else()
-    set (OUTPUT_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
-endif()
-set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
-
-find_package(Qt5 COMPONENTS Qml Quick Svg WebEngine WebEngineWidgets REQUIRED)
+find_package(${BEAM_QT_PREFIX} COMPONENTS Qml Quick Svg WebEngine WebEngineWidgets REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-
-if (POLICY CMP0071)
-  # We do not require the old behaviour. It is only set to old, to prevent accidential use of
-  # the new behavour. If the new behaviour becomes important, cmake_minimum_required has to be
-  # set to "3.10".
-  cmake_policy(SET CMP0071 OLD) # Policy introduced in CMake version 3.10
-endif()
 
 if(MSVC)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -341,11 +346,11 @@ target_link_libraries(${TARGET_NAME}
         wallet_client
         wallet_api
         mnemonic 
-        Qt5::Qml
-        Qt5::Quick 
-        Qt5::Svg
-        Qt5::WebEngine
-        Qt5::WebEngineWidgets
+        ${BEAM_QT_PREFIX}::Qml
+        ${BEAM_QT_PREFIX}::Quick 
+        ${BEAM_QT_PREFIX}::Svg
+        ${BEAM_QT_PREFIX}::WebEngine
+        ${BEAM_QT_PREFIX}::WebEngineWidgets
 )
 
 if (BEAM_SIGN_PACKAGE AND WIN32)
@@ -353,137 +358,6 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
         TARGET ${TARGET_NAME} POST_BUILD
         COMMAND ${SIGNTOOL_EXECUTABLE} sign ${SIGNTOOL_OPTIONS} "${CMAKE_CURRENT_BINARY_DIR}\\${OUTPUT_NAME}.exe"
     )
-endif()
-
-if(BEAM_USE_STATIC_QT)
-
-    if(WIN32)
-        foreach(lib
-            Qt5Core Qt5Gui Qt5Quick Qt5QuickControls2 Qt5QuickTemplates2
-            qtlibpng Qt5QuickWidgets Qt5Widgets qtpcre2 Qt5Bootstrap
-            Qt5EventDispatcherSupport Qt5RemoteObjects Qt5Svg Qt5FbSupport
-            Qt5Qml Qt5Test Qt5Concurrent Qt5FontDatabaseSupport Qt5Network
-            Qt5Xml Qt5QmlWorkerScript Qt5Scxml Qt5ThemeSupport Qt5XmlPatterns
-        )
-            target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/lib/${lib}.lib)
-        endforeach()
-
-        foreach(lib qml/QtQuick.2/qtquick2plugin qml/QtQuick/Window.2/windowplugin
-            qml/QtQuick/Controls/qtquickcontrolsplugin qml/QtGraphicalEffects/qtgraphicaleffectsplugin
-            qml/QtGraphicalEffects/private/qtgraphicaleffectsprivate qml/QtQuick/Layouts/qquicklayoutsplugin
-            qml/QtQuick/Controls.2/qtquickcontrols2plugin qml/QtQuick/Templates.2/qtquicktemplates2plugin
-            plugins/platforms/qwindows qml/QtQml/qmlplugin plugins/imageformats/qsvg)
-
-            target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/${lib}.lib)
-        endforeach()
-
-        target_link_libraries(${TARGET_NAME} Netapi32.lib version.lib winmm.lib Imm32.lib Dwmapi.lib)
-
-    endif()
-
-
-    if(APPLE)
-
-        foreach(lib lib/libQt53DAnimation lib/libQt5Concurrent lib/libQt5MultimediaWidgets lib/libQt5QuickParticles lib/libQt5WebChannel
-            lib/libQt53DCore lib/libQt5Core lib/libQt5Network lib/libQt5QuickTemplates2 lib/libQt5WebSockets lib/libQt53DExtras lib/libQt5DBus
-            lib/libQt5NetworkAuth lib/libQt5QuickTest lib/libQt5WebView lib/libQt53DInput lib/libQt5DataVisualization lib/libQt5Nfc
-            lib/libQt5QuickWidgets lib/libQt5Widgets lib/libQt53DLogic lib/libQt5DeviceDiscoverySupport lib/libQt5OpenGL lib/libQt5RemoteObjects
-            lib/libQt5Xml lib/libQt53DQuick lib/libQt5EdidSupport lib/libQt5OpenGLExtensions lib/libQt5Script lib/libQt5XmlPatterns
-            lib/libQt53DQuickAnimation lib/libQt5EventDispatcherSupport lib/libQt5PacketProtocol lib/libQt5ScriptTools lib/libclip2tri
-            lib/libQt53DQuickExtras lib/libQt5FbSupport lib/libQt5PlatformCompositorSupport lib/libQt5Scxml lib/libclipper lib/libQt53DQuickInput
-            lib/libQt5FontDatabaseSupport lib/libQt5Positioning lib/libQt5Sensors lib/libpoly2tri lib/libQt53DQuickRender lib/libQt5Gamepad
-            lib/libQt5PositioningQuick lib/libQt5SerialBus lib/libqmapboxgl lib/libQt53DQuickScene2D lib/libQt5GraphicsSupport
-            lib/libQt5SerialPort lib/libqtfreetype lib/libQt53DRender lib/libQt5Gui lib/libQt5Purchasing lib/libQt5Sql
-            lib/libqtharfbuzz lib/libQt5AccessibilitySupport lib/libQt5Help lib/libQt5Qml lib/libQt5Svg lib/libqtlibpng lib/libQt5Bluetooth
-            lib/libQt5Location lib/libQt5QmlDebug lib/libQt5Test lib/libqtopenwnn lib/libQt5Bootstrap lib/libQt5MacExtras lib/libQt5QmlDevTools
-            lib/libQt5TextToSpeech lib/libqtpcre2 lib/libQt5Charts lib/libQt5Multimedia lib/libQt5Quick lib/libQt5ThemeSupport lib/libqtpinyin
-            lib/libQt5ClipboardSupport lib/libQt5MultimediaQuick lib/libQt5QuickControls2 lib/libQt5UiTools lib/libqttcime
-            qml/QtQuick.2/libqtquick2plugin qml/QtQuick/Window.2/libwindowplugin qml/QtQuick/Controls/libqtquickcontrolsplugin
-            qml/QtGraphicalEffects/libqtgraphicaleffectsplugin qml/QtGraphicalEffects/private/libqtgraphicaleffectsprivate
-            qml/QtQuick/Layouts/libqquicklayoutsplugin qml/QtQuick/Controls.2/libqtquickcontrols2plugin qml/QtQuick/Templates.2/libqtquicktemplates2plugin
-            plugins/platforms/libqcocoa plugins/platforms/libqminimal plugins/imageformats/libqsvg)
-
-            target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/${lib}.a)
-        endforeach()
-
-        target_link_libraries(${TARGET_NAME}
-            "-framework CoreFoundation"
-            "-framework Foundation"
-            "-framework DiskArbitration"
-            "-framework ApplicationServices"
-            "-framework CFNetwork"
-            "-framework CoreGraphics"
-            "-framework CoreText"
-            "-framework CoreServices"
-            "-framework AppKit"
-            "-framework OpenGL"
-            "-framework AGL"
-            "-framework Carbon"
-            "-framework Cocoa"
-            "-framework IOKit"
-            "-framework IOSurface"
-            "-framework Metal"
-            "-framework QuartzCore"
-            "-framework Security"
-            "-framework SystemConfiguration"
-            cups
-        )
-    endif()
-
-    if(LINUX)
-        target_link_libraries(${TARGET_NAME} -static-libstdc++ -static-libgcc)
-
-        target_link_libraries(${TARGET_NAME}
-            ${CMAKE_PREFIX_PATH}/plugins/platforms/libqxcb.a
-            ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations/libqxcb-glx-integration.a
-        )
-
-        target_link_libraries(${TARGET_NAME}
-            ${CMAKE_PREFIX_PATH}/qml/QtQml/libqmlplugin.a
-            ${CMAKE_PREFIX_PATH}/qml/QtQuick.2/libqtquick2plugin.a
-            ${CMAKE_PREFIX_PATH}/qml/QtQuick/Window.2/libwindowplugin.a
-            ${CMAKE_PREFIX_PATH}/qml/QtQuick/Controls/libqtquickcontrolsplugin.a
-            ${CMAKE_PREFIX_PATH}/qml/QtGraphicalEffects/libqtgraphicaleffectsplugin.a
-            ${CMAKE_PREFIX_PATH}/qml/QtGraphicalEffects/private/libqtgraphicaleffectsprivate.a
-            ${CMAKE_PREFIX_PATH}/qml/QtQuick/Layouts/libqquicklayoutsplugin.a
-            ${CMAKE_PREFIX_PATH}/qml/QtQuick/Controls.2/libqtquickcontrols2plugin.a
-            ${CMAKE_PREFIX_PATH}/qml/QtQuick/Templates.2/libqtquicktemplates2plugin.a
-
-            ${CMAKE_PREFIX_PATH}/plugins/imageformats/libqsvg.a
-        )
-
-        foreach(lib
-            Qt5Core Qt5XcbQpa Qt5Gui Qt5Quick Qt5QuickControls2 Qt5InputSupport
-            Qt5QuickTemplates2 qtlibpng Qt5QuickWidgets Qt5Widgets qtpcre2
-            Qt5Bootstrap Qt5EventDispatcherSupport Qt5RemoteObjects Qt5Svg
-            Qt5X11Extras Qt5FbSupport Qt5Qml Qt5Test Qt5Concurrent
-            Qt5FontDatabaseSupport Qt5Network Qt5Xml Qt5QmlWorkerScript Qt5Scxml
-            Qt5ThemeSupport Qt5XmlPatterns Qt5GlxSupport
-        )
-            target_link_libraries(${TARGET_NAME} ${CMAKE_PREFIX_PATH}/lib/lib${lib}.a)
-        endforeach()
-
-        target_link_libraries(${TARGET_NAME} -lX11-xcb -lX11 -lxcb -lGL -lfreetype -lfontconfig -lXi -lXext -lXfixes -lXrender -lglib-2.0 -lSM -lICE)
-
-        foreach(lib
-            icui18n icuuc icudata xcb-xinerama xcb-xkb xcb-xfixes xcb-glx
-            xcb-sync xcb-shape xcb-render xcb-render-util xcb-randr xcb-keysyms
-            xcb-shm xcb-icccm jbig jpeg xcb-image webp zstd lzma)
-            target_link_libraries(${TARGET_NAME} /usr/lib/x86_64-linux-gnu/lib${lib}.a)
-        endforeach()
-
-        #Ubuntu 16.04
-        if(EXISTS "/usr/lib/x86_64-linux-gnu/libjasper.a")
-            target_link_libraries(${TARGET_NAME} -ljasper)
-        endif()
-        #Ubuntu 18.04 && Ubuntu 20.04 
-        if(EXISTS "/usr/lib/x86_64-linux-gnu/libxcb-xinput.a")
-            target_link_libraries(${TARGET_NAME} /usr/lib/x86_64-linux-gnu/libxcb-xinput.a)
-        endif()
-
-        set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
-
-    endif()
 endif()
 
 function(set_folder_resources_properties SOURCE_PATH DESTINATION PATTERN)
@@ -519,7 +393,7 @@ elseif(APPLE)
     set_target_properties(${TARGET_NAME} PROPERTIES 
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist")
 
-    if (NOT BEAM_USE_STATIC_QT AND BEAM_SIGN_IDENTITY)
+    if (BEAM_SIGN_IDENTITY)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND macdeployqt
             "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
@@ -562,22 +436,16 @@ elseif(APPLE)
     install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
     if(WIN32)
-        if (NOT BEAM_USE_STATIC_QT)
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
-                COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
-                COMMENT "Deploying Qt..."
-            )
-            install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
+            COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
+            COMMENT "Deploying Qt..."
+        )
+        install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
             
-            set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE) # skip default behaviour
-            include(InstallRequiredSystemLibraries) #dymanic CRT
-            install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
-        else()
-            install(FILES ${CMAKE_PREFIX_PATH}/bin/opengl32sw.dll DESTINATION .)
-            install(FILES ${CMAKE_PREFIX_PATH}/bin/libEGL.dll DESTINATION .)
-            install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
-        endif()
+        set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE) # skip default behaviour
+        include(InstallRequiredSystemLibraries) #dymanic CRT
+        install(PROGRAMS ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION .)
         
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
         install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
