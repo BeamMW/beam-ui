@@ -8,7 +8,7 @@
 #include "wallet/client/extensions/news_channels/interface.h"
 #include <type_traits>
 
-Q_DECLARE_METATYPE(beam::wallet::TxID)
+//Q_DECLARE_METATYPE(beam::wallet::TxID)
 Q_DECLARE_METATYPE(beam::wallet::TxParameters)
 Q_DECLARE_METATYPE(ECC::uintBig)
 

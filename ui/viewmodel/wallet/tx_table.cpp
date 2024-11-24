@@ -30,9 +30,8 @@ namespace
 
     void writeZipFile(QuaZipFile& zipFile, const QString& data)
     {
-        QTextCodec *codec = QTextCodec::codecForName("UTF8");
         QTextStream out(&zipFile);
-        out.setCodec(codec);
+        out.setEncoding(QStringConverter::Utf8); // Set encoding to UTF-8
         out << data;
     }
 }

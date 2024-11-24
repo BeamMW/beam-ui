@@ -93,9 +93,7 @@ if(BEAM_USE_STATIC)
     add_definitions(-DBEAM_USE_STATIC)
 endif()
 
-if(BEAM_USE_STATIC_QT)
-    add_definitions(-DBEAM_USE_STATIC_QT)
-endif()
+list(APPEND CMAKE_PREFIX_PATH $ENV{QT6_ROOT_DIR}) #"$ENV{QT6_ROOT_DIR};$ENV{QT5_ROOT_DIR}")
 
 if (NOT DEFINED BEAM_DEFAULT_NETWORK)
     set(BEAM_DEFAULT_NETWORK "mainnet")
@@ -225,12 +223,32 @@ else()
 endif()
 
 set(SKIP_INSTALL_ALL ON)
+#add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
+
+
+
+include(FetchContent)
+FetchContent_Declare(
+  zlib_external
+  GIT_REPOSITORY https://github.com/madler/zlib.git
+  GIT_TAG        v1.2.11
+  FIND_PACKAGE_ARGS NAMES ZLIB
+)
+FetchContent_MakeAvailable(zlib_external)
+# Set up paths for ZLIB
+#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/zlib_ex/install")
+list(APPEND CMAKE_FIND_LIBRARY_PREFIXES ${CMAKE_BINARY_DIR}/_deps/zlib_external-build)
+set(ZLIB_ROOT ${CMAKE_BINARY_DIR}/_deps/zlib_external-build)
+#set(ZLIB_LIBRARY ${CMAKE_BINARY_DIR}/_deps/zlib_external-build)
+set(ZLIB_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/zlib_external-build ${CMAKE_BINARY_DIR}/_deps/zlib_external-src )
+find_package(ZLIB REQUIRED)
 add_subdirectory(3rdparty/qrcode)
-set(QUAZIP_USE_QT_ZLIB ON)
+#set(QUAZIP_USE_QT_ZLIB ON)
 add_subdirectory(3rdparty/quazip)
 target_compile_options(QuaZip PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:/wd4458>
 )
+
 add_subdirectory(3rdparty/qhttpengine EXCLUDE_FROM_ALL)
 add_subdirectory(ui)
 

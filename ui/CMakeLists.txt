@@ -8,7 +8,6 @@ if(LINUX)
 else()
     set (OUTPUT_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
 endif()
-set (CMAKE_PREFIX_PATH "$ENV{QT6_ROOT_DIR};$ENV{QT5_ROOT_DIR}")
 
 find_package(
     QT NAMES Qt6 Qt5
@@ -21,19 +20,20 @@ endif()
 set(BEAM_QT_MAJOR_VERSION ${QT_VERSION_MAJOR} CACHE STRING "Qt version to use (5 or 6), defaults to ${QT_VERSION_MAJOR}")
 set(BEAM_QT_PREFIX Qt${BEAM_QT_MAJOR_VERSION})
 
-find_package(${BEAM_QT_PREFIX}QuickCompiler)
-if(${BEAM_QT_PREFIX}QuickCompiler_FOUND)
-    qtquick_compiler_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-else()
+#find_package(${BEAM_QT_PREFIX}QuickCompiler)
+#if(${BEAM_QT_PREFIX}QuickCompiler_FOUND)
+#    qtquick_compiler_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
+#else()
     if (BEAM_QT_MAJOR_VERSION EQUAL 6)
         qt6_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
     else()
         qt5_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
     endif()
-endif()
+#endif()
 
 if (BEAM_QT_MAJOR_VERSION EQUAL 6)
     set(BEAM_QT_COMPONENTS
+        Core5Compat
         Qml
         Quick
         Svg
@@ -41,6 +41,7 @@ if (BEAM_QT_MAJOR_VERSION EQUAL 6)
         WebEngineWidgets
     )
     set(BEAM_QT_LIBS
+        ${BEAM_QT_PREFIX}::Core5Compat
         ${BEAM_QT_PREFIX}::Qml
         ${BEAM_QT_PREFIX}::Quick 
         ${BEAM_QT_PREFIX}::Svg

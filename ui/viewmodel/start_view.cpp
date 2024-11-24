@@ -176,19 +176,31 @@ namespace
         }
     }
 
+//    template<typename T>
+//    void DoJSCallback(QJSValue& jsCallback, const T& res)
+//    {
+//#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+//        #pragma GCC diagnostic push
+//        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+//#endif
+//        QJSValue v = jsCallback.engine()->toScriptValue(res);
+//        jsCallback.call(QJSValueList{ v });
+//#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
+//        #pragma GCC diagnostic pop
+//#endif
+//    }
+
     template<typename T>
     void DoJSCallback(QJSValue& jsCallback, const T& res)
     {
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-        #pragma GCC diagnostic push
-        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-        QJSValue v = jsCallback.engine()->toScriptValue(res);
-        jsCallback.call(QJSValueList{ v });
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-        #pragma GCC diagnostic pop
-#endif
+        if (jsCallback.isCallable())
+        {
+            QJSEngine engine;
+            QJSValue v = engine.toScriptValue(res);
+            jsCallback.call(QJSValueList{ v });
+        }
     }
+
 
     void DoOpenWallet(QJSValue& jsCallback, std::function<void ()> openFunc)
     {

@@ -15,6 +15,7 @@
 
 #include <QtCore/qsortfilterproxymodel.h>
 #include <QtQml/qqmlparserstatus.h>
+#include <QRegularExpression>
 
 class SortFilterProxyModel : public QSortFilterProxyModel, public QQmlParserStatus
 {
@@ -61,7 +62,7 @@ public:
 
     int count() const;
     Q_INVOKABLE QVariantMap get(int index) const;
-    Q_INVOKABLE QVariant getRoleValue(int index, QByteArray roleName) const;
+    Q_INVOKABLE QVariant getRoleValue(int index, const QByteArray& roleName) const;
 
     void classBegin();
     void componentComplete();
@@ -73,9 +74,11 @@ protected:
     int roleKey(const QByteArray &role) const;
     QHash<int, QByteArray> roleNames() const;
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
-
+    QRegularExpression::PatternOptions filterOptions() const;
 private:
     bool m_complete;
     QByteArray m_sortRole;
     QByteArray m_filterRole;
+    QRegularExpression m_filterPattern;
+    FilterSyntax m_filterSyntax;
 };
