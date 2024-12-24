@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+
 import Beam.Wallet 1.0
 import "."
 import "../controls"

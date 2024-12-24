@@ -20,17 +20,6 @@ endif()
 set(BEAM_QT_MAJOR_VERSION ${QT_VERSION_MAJOR} CACHE STRING "Qt version to use (5 or 6), defaults to ${QT_VERSION_MAJOR}")
 set(BEAM_QT_PREFIX Qt${BEAM_QT_MAJOR_VERSION})
 
-#find_package(${BEAM_QT_PREFIX}QuickCompiler)
-#if(${BEAM_QT_PREFIX}QuickCompiler_FOUND)
-#    qtquick_compiler_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-#else()
-    if (BEAM_QT_MAJOR_VERSION EQUAL 6)
-        qt6_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-    else()
-        qt5_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-    endif()
-#endif()
-
 if (BEAM_QT_MAJOR_VERSION EQUAL 6)
     set(BEAM_QT_COMPONENTS
         Core5Compat
@@ -311,6 +300,12 @@ foreach (QM_FILE ${QM_FILES})
 endforeach ()
 file(APPEND "${TRANSLATIONS_QRC_FILE}" "\t</qresource>\n</RCC>")
 
+if (BEAM_QT_MAJOR_VERSION EQUAL 6)
+    qt6_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
+else()
+    qt5_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
+endif()
+
 if(WIN32)
     add_definitions(-DWIN32_LEAN_AND_MEAN)
 endif()
@@ -470,11 +465,13 @@ elseif(APPLE)
     install(TARGETS ${TARGET_NAME} DESTINATION .)
 else()
     if(WIN32)
+    message(STATUS "Before .....")
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
-            COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
+            COMMAND windeployqt6 --release --no-virtualkeyboard  --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
             COMMENT "Deploying Qt..."
         )
+        message(STATUS "After.....")
         install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
             
         set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE) # skip default behaviour
