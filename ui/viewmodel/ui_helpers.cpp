@@ -131,7 +131,7 @@ namespace beamui
         return QString::fromStdString(samount) + (unitName.isEmpty() ? "" : " " + unitName);
     }
 
-     QString AmountBigToUIString(const beam::AmountBig::Type& value)
+     QString AmountBigToUIString(const beam::AmountBig::Number& value)
      {
         beam::wallet::PrintableAmount print(value, true);
 

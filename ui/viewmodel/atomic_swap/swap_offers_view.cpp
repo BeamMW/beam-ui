@@ -510,7 +510,7 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
         return true;
 
     bool isSendBeam = offer.isSendBeam();
-    beam::AmountBig::Type beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
+    beam::AmountBig::Number beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
 
     if (isSendBeam && beamOfferAmount > m_walletModel->getAvailable(beam::Asset::s_BeamID))
         return false;

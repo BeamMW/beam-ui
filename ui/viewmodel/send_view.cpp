@@ -24,10 +24,10 @@
 
 namespace
 {
-    beam::AmountBig::Type getMaxInputAmount()
+    beam::AmountBig::Number getMaxInputAmount()
     {
         // not just const because can throw and this would cause compiler warning
-        beam::AmountBig::Type kMaxInputAmount = 10000000000000000U;
+        beam::AmountBig::Number kMaxInputAmount = 10000000000000000U;
         return kMaxInputAmount;
     }
 
@@ -90,21 +90,20 @@ void SendViewModel::setAssetId(int value)
 
 QString SendViewModel::getAssetAvailable() const
 {
-    beam::AmountBig::Type available = _walletModel->getAvailable(m_Csi.m_assetID);
+    beam::AmountBig::Number available = _walletModel->getAvailable(m_Csi.m_assetID);
     return beamui::AmountBigToUIString(available);
 }
 
 QString SendViewModel::getAssetRemaining() const
 {
-    beam::AmountBig::Type amount = getTotalSpend();
-    beam::AmountBig::Type available = _walletModel->getAvailable(m_Csi.m_assetID);
+    beam::AmountBig::Number amount = getTotalSpend();
+    beam::AmountBig::Number available = _walletModel->getAvailable(m_Csi.m_assetID);
 
     if (amount < available)
     {
         auto remaining = available;
 
-        amount.Negate();
-        remaining += amount;
+        remaining -= amount;
 
         return beamui::AmountBigToUIString(remaining);
     }

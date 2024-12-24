@@ -407,8 +407,8 @@ bool ReceiveSwapViewModel::isEnough() const
     if (_amountSentGrothes == 0)
         return true;
 
-    beam::AmountBig::Type total = _amountSentGrothes;
-    total += beam::AmountBig::Type(_sentFeeGrothes);
+    beam::AmountBig::Number total = _amountSentGrothes;
+    total += beam::AmountBig::Number(_sentFeeGrothes);
 
     if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam)
     {
@@ -422,7 +422,7 @@ bool ReceiveSwapViewModel::isEnough() const
         {
             total = _amountSentGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
             
-            return beam::AmountBig::Type(AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin)) >= total;
+            return beam::AmountBig::Number(AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin)) >= total;
         }
         
         return AppModel::getInstance().getSwapEthClient()->getAvailable(swapCoin) >= _amountSentGrothes &&
@@ -431,7 +431,7 @@ bool ReceiveSwapViewModel::isEnough() const
     }
 
     // TODO sentFee is fee rate. should be corrected
-    auto swapTotal = beam::AmountBig::Type(AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable());
+    auto swapTotal = beam::AmountBig::Number(AppModel::getInstance().getSwapCoinClient(swapCoin)->getAvailable());
     return swapTotal > total;
 }
 

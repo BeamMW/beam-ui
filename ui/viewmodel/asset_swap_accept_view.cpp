@@ -44,7 +44,6 @@ void AssetSwapAcceptViewModel::startSwap()
     auto params = beam::wallet::CreateDexTransactionParams(
                     _orderId,
                     _sbbsID,
-                    _myAddress.m_BbsAddr,
                     _sendAsset,
                     _amountToSendGrothes,
                     _receiveAsset,

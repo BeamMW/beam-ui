@@ -1644,7 +1644,7 @@ namespace beamui::applications
             const auto feeRate = beamui::AmountToUIString(assetsManager->getRate(beam::Asset::s_BeamID));
             const auto rateUnit = assetsManager->getRateUnit();
             const auto tmp = QString::fromStdString(beam::to_hex(data.data(), data.size()));
-            const bool isEnough = AppModel::getInstance().getWalletModel()->getAvailable(beam::Asset::s_BeamID) > beam::AmountBig::Type(fee);
+            const bool isEnough = AppModel::getInstance().getWalletModel()->getAvailable(beam::Asset::s_BeamID) > beam::AmountBig::Number(fee);
 
             emit shaderTxData(static_cast<int>(action), tmp, QString::fromStdString(comment),
                 beamui::AmountToUIString(fee), feeRate, rateUnit, isEnough);
