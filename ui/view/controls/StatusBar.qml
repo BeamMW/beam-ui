@@ -1,5 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import Qt5Compat.GraphicalEffects
+import QtQuick.Shapes 1.8
 
 import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
@@ -123,7 +125,7 @@ Item {
         color:                  "transparent"
         visible:                !onlineTrusted.visible || !model.isExchangeRatesUpdated || model.isFailedHww
         property color gradientColor: online_indicator.color
-
+/*
         LinearGradient {
             anchors.fill: parent
             start: Qt.point(0, 0)
@@ -135,7 +137,7 @@ Item {
                 GradientStop { position: 1.0; color: Qt.rgba(rowBackground.gradientColor.r, rowBackground.gradientColor.g, rowBackground.gradientColor.b, 0)}
             }
         }
-
+*/
         ColumnLayout {
             spacing: 0
             anchors.fill: parent

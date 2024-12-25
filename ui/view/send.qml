@@ -1,7 +1,7 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.2
+//import QtQuick.Controls 1.2
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
+//import QtQuick.Controls.Styles 1.2
 
 import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
@@ -57,7 +57,7 @@ ColumnLayout {
                         color:            isValid ? Style.content_main : Style.validator_error
                         backgroundColor:  isValid ? Style.content_main : Style.validator_error
                         font.italic:      !isValid
-                        validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
+                        validator:        RegularExpressionValidator { regularExpression: /[0-9a-zA-Z]{1,}/ }
                         selectByMouse:    true
                         //% "Paste token or address here"
                         placeholderText:  qsTrId("send-swap-token-hint")

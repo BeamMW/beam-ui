@@ -154,14 +154,14 @@ BaseNotification {
             color: Qt.rgba(Style.content_main.r, Style.content_main.g, Style.content_main.b, 0.1)
             z: 101
             layer.enabled: true
-            layer.effect: OpacityMask {
+           /* layer.effect: OpacityMask {
                 maskSource: Rectangle {
                     anchors.centerIn: parent
                     width: rect.width
                     height: rect.height
                     radius: 10
                 }
-            }
+            }*/
             Rectangle {
                 anchors.bottom: parent.bottom
                 height: 6

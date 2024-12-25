@@ -109,9 +109,9 @@ CustomDialog {
                 //% "Guid:"
                 text: qsTrId("dapps-store-dapp-guid") + ":"
             }
-            FieldValue: {
+/*            FieldValue: {
                 text: !!app && !!app.guid ? app.guid:""}
-            
+*/            
             FieldTitle {
                 //% "Publisher key"
                 text: qsTrId("dapp-details-publisher-key") + ":"

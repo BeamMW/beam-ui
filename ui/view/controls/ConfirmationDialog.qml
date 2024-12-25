@@ -19,7 +19,7 @@ CustomDialog {
     property alias cancelButtonText: cancelButton.text
     property alias cancelButtonIconSource: cancelButton.icon.source
     property alias cancelButtonVisible: cancelButton.visible
-    property alias cancelButtonColor: cancelButton.palette.button
+   // property alias cancelButtonColor: okButton.palette.button //cancelButton.palette.button
     property alias cancelButtonAllLowercase: cancelButton.allLowercase
     property var   defaultFocusItem: undefined
     property var   beforeAccept: function(){return true}

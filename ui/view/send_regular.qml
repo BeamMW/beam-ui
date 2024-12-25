@@ -140,7 +140,7 @@ ColumnLayout {
                                 backgroundColor:  tokenError ? Style.validator_error : Style.content_main
                                 font.italic :     tokenError
                                 text:             viewModel.token
-                                validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
+                                validator:        RegularExpressionValidator { regularExpression: /[0-9a-zA-Z]{1,}/ }
                                 selectByMouse:    true
 
                                 //% "Paste recipient address here"

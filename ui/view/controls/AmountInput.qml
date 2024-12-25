@@ -63,7 +63,7 @@ ColumnLayout {
             font.weight:      Font.Light
             color:            !isValid ? Style.validator_error : control.color
             backgroundColor:  !isValid ? Style.validator_error : Style.content_main
-            validator:        RegExpValidator {regExp: new RegExp(ainput.getRegExpPattern())}
+            validator:        RegularExpressionValidator { regularExpression: new RegExp(ainput.getRegExpPattern())}
             selectByMouse:    true
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA

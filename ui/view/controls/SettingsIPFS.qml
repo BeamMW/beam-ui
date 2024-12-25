@@ -1,7 +1,7 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.2
+//import QtQuick.Controls 1.2
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
+//import QtQuick.Controls.Styles 1.2
 import QtQuick.Layouts 1.15
 
 import Beam.Wallet 1.0
@@ -75,7 +75,7 @@ SettingsFoldable {
                     backgroundColor: swarmPort.acceptableInput ? Style.content_main : Style.validator_error
 
                     text: (viewModel.ipfsSwarmPort || "").toString()
-                    validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
+                    validator: RegularExpressionValidator { regularExpression: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
 
                     Binding {
                         target: viewModel

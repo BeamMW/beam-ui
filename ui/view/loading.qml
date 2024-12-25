@@ -1,7 +1,7 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.2
+//import QtQuick.Controls 1.2
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
+//import QtQuick.Controls.Styles 1.2
 
 import "controls"
 import "start_wizzard"

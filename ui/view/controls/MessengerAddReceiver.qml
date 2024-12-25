@@ -110,7 +110,7 @@ CustomDialog {
                 text:             addressAddModel.address
                 font.pixelSize:   14
                 focus:            !control.nameEditMode
-                validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
+                validator:        RegularExpressionValidator { regularExpression: /[0-9a-zA-Z]{1,}/ }
                 Binding {
                     target:   addressAddModel
                     property: "address"

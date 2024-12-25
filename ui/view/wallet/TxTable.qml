@@ -1,7 +1,8 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.2
+//import QtQuick.Controls 1.2
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
+//import QtQuick.Controls.Styles 1.2
+import Qt.labs.qmlmodels
 
 import QtQuick.Layouts 1.15
 import Beam.Wallet 1.0
@@ -403,17 +404,17 @@ Control {
             property real resizableWidth: transactionsTable.width - 140
             property real columnResizeRatio: resizableWidth / (610 - (sourceVisible || actionVisible ? 0 : 140))
 
-            selectionMode: SelectionMode.NoSelection
-            sortIndicatorVisible: true
-            sortIndicatorColumn: 5
-            sortIndicatorOrder: Qt.DescendingOrder
-
+           // selectionMode: SelectionMode.NoSelection
+            //sortIndicatorVisible: true
+            //sortIndicatorColumn: 5
+           // sortIndicatorOrder: Qt.DescendingOrder
+/*
             onSortIndicatorColumnChanged: {
                 sortIndicatorOrder = sortIndicatorColumn != 1
                     ? Qt.AscendingOrder
                     : Qt.DescendingOrder;
             }
-
+*/
             model: SortFilterProxyModel {
                 id: txProxyModel
 
@@ -456,12 +457,12 @@ Control {
                     }
                 }
 
-                sortOrder: transactionsTable.sortIndicatorOrder
-                sortCaseSensitivity: Qt.CaseInsensitive
-                sortRole: transactionsTable.getColumn(transactionsTable.sortIndicatorColumn).role + "Sort"
-                filterSyntax: SortFilterProxyModel.Wildcard
+           //     sortOrder: transactionsTable.sortIndicatorOrder
+          //      sortCaseSensitivity: Qt.CaseInsensitive
+           //     sortRole: transactionsTable.getColumn(transactionsTable.sortIndicatorColumn).role + "Sort"
+           //     filterSyntax: SortFilterProxyModel.Wildcard
             }
-
+            /*
             rowDelegate: ExpandableRowDelegate {
                 id:         rowItemDelegate
                 collapsed:  true
@@ -524,8 +525,8 @@ Control {
                     }
                 }
             }
-
-            itemDelegate: Item {
+            */
+            delegate: Item {
                 width: parent.width
                 Item {
                     width: parent.width
@@ -538,7 +539,7 @@ Control {
                     }
                 }
             }
-
+            /*
             TableViewColumn {
                 role: "assetNames"
                 id: coinColumn
@@ -780,7 +781,7 @@ Control {
                 movable: false
                 resizable: false
                 delegate: txActions
-            }
+            }*/
 
             function showContextMenu(row) {
                 if (transactionsTable.model.getRoleValue(row, "isContractTx"))

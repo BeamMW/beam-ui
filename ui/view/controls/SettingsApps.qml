@@ -50,7 +50,7 @@ SettingsFoldable {
                     font.pixelSize: 14
                     color: !appsServerPort.acceptableInput ? Style.validator_error : Style.content_main
                     text:  viewModel.appsServerPort
-                    validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
+                    validator: RegularExpressionValidator { regularExpression: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
                     backgroundColor: !appsServerPort.acceptableInput ? Style.validator_error : Style.content_main
                 }
 

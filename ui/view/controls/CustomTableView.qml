@@ -1,8 +1,10 @@
 import QtQuick 2.15
-import QtQuick.Controls 1.2
+//import QtQuick.Controls 1.2
 import QtQuick.Controls.impl 2.4
 import QtQuick.Layouts 1.15
-import QtQuick.Controls.Styles 1.2
+//import QtQuick.Controls.Basic
+//import QtQuick.Controls.Styles 1.2
+
 
 import "."
 
@@ -21,9 +23,10 @@ TableView {
     }
 
     // Scrollbar fine-tuning
-    __scrollBarTopMargin: tableView.headerHeight
-    verticalScrollBarPolicy: Qt.ScrollBarAsNeeded
+   // __scrollBarTopMargin: tableView.headerHeight
+  //  verticalScrollBarPolicy: Qt.ScrollBarAsNeeded
 
+/*
     style: TableViewStyle {
         minimumHandleLength: 30
 
@@ -48,7 +51,7 @@ TableView {
             color: "transparent"
         }
     }
-
+*/
     function getAdjustedColumnWidth (column) {
         var acc = 0
         for (var i = 0; i < columnCount; ++i)
@@ -61,10 +64,10 @@ TableView {
         return width - acc
     }
 
-    frameVisible: false
-    backgroundVisible: false
-    horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
-
+   // frameVisible: false
+   // backgroundVisible: false
+  //  horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+/*
     headerDelegate: Rectangle {
         id: rect
         height: headerHeight
@@ -150,7 +153,7 @@ TableView {
             text: styleData.value
         }
     }
-
+    */
     Component.onCompleted: {
         var numchilds = __scroller.children.length;
         __scroller.children[numchilds -1].anchors.rightMargin = 0;
