@@ -108,7 +108,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: "6.8.*"
-          modules: "qtbase,qt6core5compat,qtwebengine"
+          modules: "qtbase,qt5compat,qtwebengine"
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
       ###############################################################################
