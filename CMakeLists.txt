@@ -240,7 +240,7 @@ set(ZLIB_LIBRARY zlibstatic)
 
 add_subdirectory(3rdparty/qrcode)
 add_subdirectory(3rdparty/quazip)
-target_compile_options(QuaZip PRIVATE /wd4458)
+target_compile_options(QuaZip PRIVATE /wd4458 /wd4244 /wd4267 /wd4996)
 add_subdirectory(3rdparty/qhttpengine EXCLUDE_FROM_ALL)
 add_subdirectory(ui)
 
