@@ -159,7 +159,11 @@ Item {
 
             SFText {
                 Layout.fillWidth:   true
-                text: app.name
+                text: { 
+                    console.log("Apppppppppp: " + app);
+                    console.log("app.name: " + app.name);
+                    console.log("app.publisherName: " + app.publisherName);
+                return app.name}
                 font {
                     styleName:      "DemiBold"
                     weight:         Font.DemiBold

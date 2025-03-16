@@ -45,8 +45,8 @@ CustomDialog {
             Layout.fillHeight: true
             Layout.bottomMargin: 9
             visible: tableView.model.count > 0
-            selectionMode: SelectionMode.NoSelection
-            backgroundVisible: false
+            //selectionMode: SelectionMode.NoSelection
+            //backgroundVisible: false
             headerColor: Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
             mainBackgroundRect: dialog.background
             model: SortFilterProxyModel {
@@ -57,7 +57,7 @@ CustomDialog {
                 filterSyntax: SortFilterProxyModel.Wildcard
                 filterCaseSensitivity: Qt.CaseInsensitive
             }
-            sortIndicatorVisible: true
+/*            sortIndicatorVisible: true
             sortIndicatorColumn: 1
             sortIndicatorOrder: Qt.DescendingOrder
 
@@ -68,9 +68,9 @@ CustomDialog {
                     sortIndicatorOrder = Qt.AscendingOrder;
                 }
             }
-
+*/
             property double columnResizeRatio: tableView.width / 800
-
+            /*
             TableViewColumn {
                 role: "amount"
                 //% "Coin"
@@ -260,8 +260,8 @@ CustomDialog {
                     }
                 }
             }
-
-            rowDelegate: Item {
+            */
+            /*rowDelegate: Item {
 
                 height: tableView.rowHeight
 
@@ -273,8 +273,8 @@ CustomDialog {
                     color: styleData.alternate ? Style.background_row_even : Style.background_row_odd
                 }
             }
-
-            itemDelegate: TableItem {
+            */
+            delegate: TableItem {
                 text: styleData.value
                 elide: Text.ElideRight
             }

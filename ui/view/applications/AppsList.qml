@@ -150,7 +150,7 @@ ColumnLayout {
             }
         }
         
-
+        //model:control.appsList
         delegate: AppPanel {
             width:                  gridView.cellWidth  - 10
             height:                 gridView.cellHeight - 10

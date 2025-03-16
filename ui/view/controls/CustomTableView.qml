@@ -155,7 +155,7 @@ TableView {
     }
     */
     Component.onCompleted: {
-        var numchilds = __scroller.children.length;
-        __scroller.children[numchilds -1].anchors.rightMargin = 0;
+        //var numchilds = __scroller.children.length;
+        //__scroller.children[numchilds -1].anchors.rightMargin = 0;
     }
 }
