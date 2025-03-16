@@ -225,30 +225,21 @@ endif()
 set(SKIP_INSTALL_ALL ON)
 #add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
 
-
-
 include(FetchContent)
+# Fetch Zlib (Build it if not found)
 FetchContent_Declare(
-  zlib_external
-  GIT_REPOSITORY https://github.com/madler/zlib.git
-  GIT_TAG        v1.2.11
-  FIND_PACKAGE_ARGS NAMES ZLIB
+    zlib
+    URL https://zlib.net/zlib-1.3.1.tar.gz
 )
-FetchContent_MakeAvailable(zlib_external)
-# Set up paths for ZLIB
-#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/zlib_ex/install")
-list(APPEND CMAKE_FIND_LIBRARY_PREFIXES ${CMAKE_BINARY_DIR}/_deps/zlib_external-build)
-set(ZLIB_ROOT ${CMAKE_BINARY_DIR}/_deps/zlib_external-build)
-#set(ZLIB_LIBRARY ${CMAKE_BINARY_DIR}/_deps/zlib_external-build)
-set(ZLIB_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/zlib_external-build ${CMAKE_BINARY_DIR}/_deps/zlib_external-src )
-find_package(ZLIB REQUIRED)
-add_subdirectory(3rdparty/qrcode)
-#set(QUAZIP_USE_QT_ZLIB ON)
-add_subdirectory(3rdparty/quazip)
-target_compile_options(QuaZip PRIVATE
-    $<$<CXX_COMPILER_ID:MSVC>:/wd4458>
-)
+FetchContent_MakeAvailable(zlib)
 
+# Manually set paths so find_package(ZLIB) can locate it
+set(ZLIB_FOUND TRUE)
+set(ZLIB_INCLUDE_DIR "${zlib_SOURCE_DIR}" "${zlib_BINARY_DIR}")
+set(ZLIB_LIBRARY zlibstatic)
+
+add_subdirectory(3rdparty/qrcode)
+add_subdirectory(3rdparty/quazip)
 add_subdirectory(3rdparty/qhttpengine EXCLUDE_FROM_ALL)
 add_subdirectory(ui)
 
