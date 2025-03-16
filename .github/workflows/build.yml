@@ -108,7 +108,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: "6.8.*"
-          modules: "qt5compat qtwebengine qtwebchannel"
+          modules: "qt5compat qtwebengine qtwebchannel qtpositioning"
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
       ###############################################################################
