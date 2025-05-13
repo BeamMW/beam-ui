@@ -93,7 +93,7 @@ namespace
             auto lockTime = tx.getExternalLockTime();
             if (lockTime && currentCoinHeight && *currentCoinHeight < *lockTime && blocksPerHour)
             {
-                double beamBlocksPerBlock = (kSecondsPerHour / beam::Rules().DA.Target_s) / blocksPerHour;
+                double beamBlocksPerBlock = (double(kSecondsPerHour * 1000) / double(beam::Rules().DA.Target_ms) ) / blocksPerHour;
                 double beamBlocks = (*lockTime - *currentCoinHeight) * beamBlocksPerBlock;
                 time = beamui::convertBeamHeightDiffToTime(static_cast<int32_t>(std::round(beamBlocks)));
                 coin = beamui::toString(beamui::convertSwapCoinToCurrency(tx.getSwapCoin()));

@@ -1148,7 +1148,10 @@ void StartViewModel::setCurrentNetwork(const QString& network)
     if (value == Rules::get().m_Network)
         return;
 
-    Rules::get().m_Network = value;
+    auto& r = Cast::NotConst(Rules::get()); // not pretty, but never mind
+    r.m_Network = value;
+    r.UpdateChecksum();
+
     m_accounts.clear();
     setCurrentAccountIndexForced(0);
     emit currentNetworkChanged();

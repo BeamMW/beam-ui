@@ -112,11 +112,10 @@ namespace
     const char* kTxFilterCanceled= "tx_filter/canceled";
     const char* kTxFilterFailed = "tx_filter/failed";
 
-    const std::vector<std::string> kOutDatedPeers = beam::getOutdatedDefaultPeers();
     bool isOutDatedPeer(const std::string& peer)
     {
-        return find(kOutDatedPeers.begin(), kOutDatedPeers.end(), peer) !=
-               kOutDatedPeers.end();
+        std::vector<std::string> vec = beam::getOutdatedDefaultPeers();
+        return find(vec.begin(), vec.end(), peer) != vec.end();
     }
 
     const beam::wallet::Currency& getDefaultRateUnit()
