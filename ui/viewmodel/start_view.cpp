@@ -717,12 +717,12 @@ QList<QVariantMap> StartViewModel::getNetworks() const
     network[kIconHeight] = 16; \
     networks.push_back(network); }
 
-#ifndef NDEBUG
+//#ifndef NDEBUG
     RulesNetworks(ADD_NETWORK)
-#else
-    ADD_NETWORK(mainnet);
-    ADD_NETWORK(dappnet);
-#endif
+//#else
+//    ADD_NETWORK(mainnet);
+//    ADD_NETWORK(dappnet);
+//#endif
 
 #undef ADD_NETWORK
     return networks;
