@@ -674,6 +674,8 @@ bool StartViewModel::getIsRunLocalNode() const
 QString StartViewModel::chooseRandomNode() const
 {
     auto peers = getDefaultPeers();
+    if (peers.empty())
+        return QString("");
     srand(time(0));
     return QString(peers[rand() % peers.size()].c_str());
 }
@@ -1150,6 +1152,7 @@ void StartViewModel::setCurrentNetwork(const QString& network)
 
     auto& r = Cast::NotConst(Rules::get()); // not pretty, but never mind
     r.m_Network = value;
+    r.SetNetworkParams();
     r.UpdateChecksum();
 
     m_accounts.clear();
