@@ -102,8 +102,6 @@ AppModel::AppModel(WalletSettings& settings)
     , m_memLock(m_key, 1, QSystemSemaphore::Create)
     , m_memAppGuard(m_memKey)
 {
-    Rules::get().SetNetworkParams();
-    Rules::get().UpdateChecksum();
     BEAM_LOG_INFO() << "Beam Wallet UI " << PROJECT_VERSION << " (" << BRANCH_NAME << ")";
     BEAM_LOG_INFO() << "Beam Core " << BEAM_VERSION << " (" << BEAM_BRANCH_NAME << ")";
     BEAM_LOG_INFO() << "Rules signature: " << Rules::get().get_SignatureStr();

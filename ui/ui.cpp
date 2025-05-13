@@ -182,9 +182,14 @@ namespace
     }
 }
 
+thread_local const beam::Rules* beam::Rules::s_pInstance = nullptr;
+
 int main (int argc, char* argv[])
 {
     wallet::g_AssetsEnabled = true;
+
+    beam::Rules r;
+    beam::Rules::Scope scopeRules(r);
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
@@ -243,7 +248,7 @@ int main (int argc, char* argv[])
                 QQuickWindow::setTextRenderType(QQuickWindow::TextRenderType::NativeTextRendering);
             }
             #endif
-            vm = getOptions(argc, argv, options, true);
+            vm = getOptions(argc, argv, options, r, true);
         }
         catch (const po::error& e)
         {
@@ -277,10 +282,11 @@ int main (int argc, char* argv[])
 
         if (vm.count(cli::NETWORK) == 0)
         {
-            auto& rules = Rules::get();
-            rules.m_Network = Rules::Network::BEAM_DEFAULT_NETWORK;
-            rules.SetNetworkParams();
+            r.m_Network = Rules::Network::BEAM_DEFAULT_NETWORK;
+            r.SetNetworkParams();
         }
+
+        r.UpdateChecksum();
 
         int logLevel = getLogLevel(cli::LOG_LEVEL, vm, BEAM_LOG_LEVEL_DEBUG);
         int fileLogLevel = getLogLevel(cli::FILE_LOG_LEVEL, vm, BEAM_LOG_LEVEL_DEBUG);

@@ -413,15 +413,16 @@ namespace beamui
         return toString(currency).toStdString();
     }
 
-    QString convertBeamHeightDiffToTime(int32_t dt)
+    QString convertBeamHeightDiffToTime(int64_t dh)
     {
-        if (dt <= 0)
+        if (dh <= 0)
         {
             return "";
         }
         const int32_t minute_s = 60;
         const int32_t quantum_s = 5 * minute_s;
-        int32_t time_s = dt * beam::Rules().DA.Target_s;
+        int64_t time_ms = dh * beam::Rules().DA.Target_ms;
+        int time_s = static_cast<int>(time_ms / 1000);
         time_s = (time_s + (quantum_s >> 1)) / quantum_s;
         time_s *= quantum_s;
         return beamui::getEstimateTimeStr(time_s);
