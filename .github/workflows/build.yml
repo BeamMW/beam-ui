@@ -157,6 +157,9 @@ jobs:
       - name: AppImage [ubuntu-22.04]
         if: matrix.os == 'ubuntu-22.04'
         run: |
+          echo "Installing FUSE"
+          sudo add-apt-repository universe
+          sudo apt install -y libfuse2
           echo "Creating AppImage deploy tree"
           mkdir -p ./deploy/usr/bin
           mkdir -p ./deploy/usr/share/applications
