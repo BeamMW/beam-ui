@@ -151,6 +151,8 @@ QString MainViewModel::getDaoCoreAppID() const
     case Rules::Network::masternet:
         appURL = "http://3.19.32.148:80/app/plugin-dao-core/index.html";
         break;
+    default:
+        break; // suppress warning
     }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
@@ -175,6 +177,8 @@ QString MainViewModel::getVotingAppID() const
     case Rules::Network::masternet:
         appURL = "http://3.19.32.148:80/app-same-origin/dao-voting-app/index.html";
         break;
+    default:
+        break; // suppress warning
     }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
@@ -200,6 +204,8 @@ QString MainViewModel::getFaucetAppID() const
     case Rules::Network::masternet:
         appURL = "http://3.19.32.148:80/app/plugin-faucet/index.html";
         break;
+    default:
+        break; // suppress warning
     }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
@@ -226,6 +232,8 @@ QString MainViewModel::getEthBridgeAppID() const
         appName = "Bridge app";
         appURL = "http://3.19.32.148:80/app/beam-bridge-app/index.html";
         break;
+    default:
+        break; // suppress warning
     }
 
     const auto appid = beam::wallet::GenerateAppID(appName, appURL);
