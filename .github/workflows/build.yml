@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-15, ubuntu-20.04, windows-2019]
+        os: [macos-15, ubuntu-22.04, windows-2019]
 
     steps:
       - uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
 
       - name: OS name [ununtu all]
         shell: bash
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: echo "PACKAGE_NAME=Linux" >> $GITHUB_ENV
 
       - name: Create Build Environment [macos]
@@ -59,23 +59,13 @@ jobs:
 
       - name: Create Build Environment [ununtu all]
         shell: bash
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           sudo apt update
           sudo apt install build-essential -y
           sudo apt install libssl-dev curl libcups2-dev mesa-common-dev ^libxcb.* libglu1-mesa-dev libglfw3-dev libgles2-mesa-dev libfontconfig1-dev libudev-dev -y
           sudo apt install libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev libpci-dev libicu-dev -y
           sudo apt install libwebp-dev libzstd-dev libbsd-dev uuid-dev liblzma-dev libtiff-dev -y
-
-      - name: Create Build Environment [ubuntu 16.04]
-        shell: bash
-        if: matrix.os == 'ubuntu-16.04'
-        run: |
-          sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-          sudo apt-get update
-          sudo apt-get install g++-7
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60 --slave /usr/bin/g++ g++ /usr/bin/g++-7
-          sudo update-alternatives --set gcc "/usr/bin/gcc-7"
 
       - name: Create Build Environment [windows]
         shell: bash
@@ -106,7 +96,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          #version: "5.15.2"
+          version: "5.15.2"
           modules: "qtwebengine"
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
 
@@ -119,7 +109,7 @@ jobs:
           cmake $GITHUB_WORKSPACE -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
 
       - name: Configure CMake [ununtu all]
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           cmake $GITHUB_WORKSPACE  -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
 
@@ -149,7 +139,7 @@ jobs:
 
       - name: Build [ununtu all]
         shell: bash
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: make -j$(nproc)
 
       - name: Build [windows]
@@ -164,9 +154,12 @@ jobs:
         if: matrix.os != 'windows-2019'
         run: cpack
 
-      - name: AppImage [ubuntu-16.04 || ubuntu-18.04 || ubuntu-20.04]
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+      - name: AppImage [ubuntu-22.04]
+        if: matrix.os == 'ubuntu-22.04'
         run: |
+          echo "Installing FUSE"
+          sudo add-apt-repository universe
+          sudo apt install -y libfuse2
           echo "Creating AppImage deploy tree"
           mkdir -p ./deploy/usr/bin
           mkdir -p ./deploy/usr/share/applications
@@ -219,7 +212,7 @@ jobs:
 
       - name: Configure GPG Key [ubuntu]
         shell: bash
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           echo -n "$GPG_SIGNING_KEY" | gpg2 --import
         env:
@@ -227,7 +220,7 @@ jobs:
 
       - name: Sign AppImage [ubuntu]
         shell: bash
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           mkdir signing
           cd signing
@@ -244,7 +237,7 @@ jobs:
 
       - name: Collect [ubuntu]
         shell: bash
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
           #sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
@@ -272,7 +265,7 @@ jobs:
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v4
-        if: matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04' || matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
           path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
