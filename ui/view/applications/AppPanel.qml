@@ -160,7 +160,7 @@ Item {
             SFText {
                 Layout.fillWidth:   true
                 text: { 
-                    console.log("Apppppppppp: " + app);
+                    console.log("App: " + app);
                     console.log("app.name: " + app.name);
                     console.log("app.publisherName: " + app.publisherName);
                 return app.name}
