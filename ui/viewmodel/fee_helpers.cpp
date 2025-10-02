@@ -122,7 +122,7 @@ QString calcWithdrawTxFee(OldWalletCurrency::OldCurrency currency, beam::Amount 
     }
     case OldWalletCurrency::OldCurrency::CurrLitecoin: {
         auto total = beam::wallet::LitecoinSide::CalcWithdrawTxFee(feeRate);
-        return QString::fromStdString(std::to_string(total)) + " ph";
+        return QString::fromStdString(std::to_string(total)) + " lit";
     }
     case OldWalletCurrency::OldCurrency::CurrQtum: {
         auto total = beam::wallet::QtumSide::CalcWithdrawTxFee(feeRate);
