@@ -22,7 +22,7 @@ Item {
 
     // selection
     property int  currentRow: -1
-    property int  selectionMode: 0   // 0 = NoSelection, 1 = SingleSelection
+    property int  selectionMode: 0   // 0 = noSelection, 1 = singleSelection
     property var  selection: QtObject {
         function select(row) { tableView.currentRow = row; }
         function clear()     { tableView.currentRow = -1;  }

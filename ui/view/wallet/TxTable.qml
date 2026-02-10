@@ -401,7 +401,7 @@ Control {
             property real resizableWidth: transactionsTable.width - 140
             property real columnResizeRatio: resizableWidth / (610 - (sourceVisible || actionVisible ? 0 : 140))
 
-            selectionMode: SelectionMode.NoSelection
+            selectionMode: SelectionMode.noSelection
             sortIndicatorVisible: true
             sortIndicatorColumn: 5
             sortIndicatorOrder: Qt.DescendingOrder

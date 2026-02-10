@@ -509,7 +509,7 @@ Please try again later or create an offer yourself."
                 property int columnWidth: (width - swapCoinsColumn.width) / 6
 
                 frameVisible: false
-                selectionMode: SelectionMode.NoSelection
+                selectionMode: SelectionMode.noSelection
                 backgroundVisible: false
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 1
@@ -827,7 +827,7 @@ Please try again later or create an offer yourself."
                 property int columnWidth: (width - txSwapCoinsColumn.width - txSwapActionColumn.width) / 6
 
                 frameVisible: false
-                selectionMode: SelectionMode.NoSelection
+                selectionMode: SelectionMode.noSelection
                 backgroundVisible: false
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 1

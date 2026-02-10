@@ -173,7 +173,7 @@ ColumnLayout {
             
                 anchors.fill: parent
                 frameVisible: false
-                selectionMode: SelectionMode.NoSelection
+                selectionMode: SelectionMode.noSelection
                 backgroundVisible: false
                 model: viewModel.contacts
                 sortIndicatorVisible: true

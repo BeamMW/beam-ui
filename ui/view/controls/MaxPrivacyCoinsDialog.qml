@@ -77,7 +77,7 @@ CustomDialog {
             Layout.fillWidth:    true
             Layout.fillHeight:   true
             frameVisible:        false
-            selectionMode:       SelectionMode.NoSelection
+            selectionMode:       SelectionMode.noSelection
             backgroundVisible:   false
             headerColor:         Style.background_main_top
             mainBackgroundRect:  dialog.background

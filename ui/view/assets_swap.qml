@@ -155,7 +155,7 @@ ColumnLayout {
 
         property var          selectedAssets: []
 
-        selectionMode: SelectionMode.NoSelection
+        selectionMode: SelectionMode.noSelection
         sortIndicatorVisible: true
         sortIndicatorColumn: 4
         sortIndicatorOrder: Qt.DescendingOrder
