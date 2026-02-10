@@ -1,8 +1,8 @@
-import QtQuick          2.15
-import QtQuick.Layouts  1.15
-import QtQuick.Controls 2.15
-import QtWebEngine      1.4
-import QtWebChannel     1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import QtWebEngine
+import QtWebChannel
 import Beam.Wallet      1.0
 import "../controls"
 

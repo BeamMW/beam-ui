@@ -1,7 +1,7 @@
-ï»¿import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -203,10 +203,10 @@ WizzardPage {
 
             SFText {
 /*% "Strong password needs to meet the following requirements:
-â€¢  the length must be at least 10 characters
-â€¢  must contain at least one lowercase letter
-â€¢  must contain at least one uppercase letter
-â€¢  must contain at least one number"
+•  the length must be at least 10 characters
+•  must contain at least one lowercase letter
+•  must contain at least one uppercase letter
+•  must contain at least one number"
 */
                 text: qsTrId("start-create-pwd-strength-message")
                 color: Style.content_secondary

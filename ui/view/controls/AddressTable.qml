@@ -1,6 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 import Beam.Wallet 1.0
 import "."
 import "../utils.js" as Utils
@@ -189,7 +188,7 @@ CustomTableView {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.RightButton
-            onClicked: {
+            onClicked: function(mouse) {
                 if (mouse.button == Qt.RightButton && styleData.row != undefined)
                 {
                     contextMenu.addressItem = rootControl.model[styleData.row]

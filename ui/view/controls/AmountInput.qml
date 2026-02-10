@@ -1,5 +1,5 @@
-import QtQuick.Layouts 1.15
-import QtQuick 2.15
+import QtQuick.Layouts
+import QtQuick
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
 
@@ -63,8 +63,7 @@ ColumnLayout {
             font.weight:      Font.Light
             color:            !isValid ? Style.validator_error : control.color
             backgroundColor:  !isValid ? Style.validator_error : Style.content_main
-            validator:        RegExpValidator {regExp: new RegExp(ainput.getRegExpPattern())}
-            selectByMouse:    true
+            validator:        RegularExpressionValidator {regularExpression: new RegExp(ainput.getRegExpPattern())}
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA
             rightPadding:     currCombo.width

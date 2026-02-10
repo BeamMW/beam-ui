@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.13)
 set (TARGET_NAME "beam-wallet-ui")
 
 function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
-    find_package(Qt5LinguistTools)
-    if (Qt5LinguistTools_FOUND)
+    find_package(Qt6 COMPONENTS LinguistTools QUIET)
+    if (Qt6LinguistTools_FOUND)
         if(LINUX)
             execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release 
                             OUTPUT_VARIABLE DISTR_NAME
@@ -23,13 +23,13 @@ function(BEAM_TRANSLATIONS_UPDATE_TS supported_langs out_ts_files)
     endforeach()
     set(${out_ts_files} ${TS_FILES} PARENT_SCOPE)
     else()
-        message("Qt5LinguistTools not found, please check your QT5 instalation")
+        message("Qt6 LinguistTools not found, please check your Qt6 installation")
     endif()
 endfunction()
 
 function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
-    find_package(Qt5LinguistTools)
-    if (Qt5LinguistTools_FOUND)
+    find_package(Qt6 COMPONENTS LinguistTools QUIET)
+    if (Qt6LinguistTools_FOUND)
         if(LINUX)
             execute_process(COMMAND awk -F= "/^NAME/{print $2}" /etc/os-release
                             OUTPUT_VARIABLE DISTR_NAME
@@ -49,7 +49,7 @@ function(BEAM_TRANSLATIONS_COMPILE_QM ts_files out_qm_files)
     endforeach()
     set(${out_qm_files} ${QM_FILES} PARENT_SCOPE)
     else()
-        message("Qt5LinguistTools not found, please check your QT5 instalation")
+        message("Qt6 LinguistTools not found, please check your Qt6 installation")
     endif()
 endfunction()
 
@@ -59,9 +59,9 @@ if(LINUX)
 else()
     set (OUTPUT_NAME "Beam Wallet${BEAM_DISPLAY_SUFFIX}")
 endif()
-set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
+set (CMAKE_PREFIX_PATH ${BEAM_QT_ROOT_DIR})
 
-find_package(Qt5 COMPONENTS Qml Quick Svg WebEngine WebEngineWidgets REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets Qml Quick Svg WebEngineQuick WebEngineWidgets WebChannel Core5Compat HttpServer REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -261,12 +261,7 @@ endforeach ()
 file(APPEND "${TRANSLATIONS_QRC_FILE}" "\t</qresource>\n</RCC>")
 
 
-find_package(Qt5QuickCompiler)
-if(Qt5QuickCompiler_FOUND)
-    qtquick_compiler_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-else()
-    qt5_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
-endif()
+qt_add_resources(QT_RESOURCES view/qml.qrc ${TRANSLATIONS_QRC_FILE})
 
 if(WIN32)
     add_definitions(-DWIN32_LEAN_AND_MEAN)
@@ -314,8 +309,8 @@ add_definitions(-DBEAM_CLIENT_VERSION="${PROJECT_VERSION}")
 #qrcode library
 target_link_libraries(${TARGET_NAME} qrcode cli)
 
-# QHttpEngine library
-target_link_libraries(${TARGET_NAME} qhttpengine)
+# Qt HttpServer (replaces qhttpengine)
+target_link_libraries(${TARGET_NAME} Qt6::HttpServer)
 
 if (LINUX)
     target_link_libraries(${TARGET_NAME} X11)
@@ -345,11 +340,13 @@ target_link_libraries(${TARGET_NAME}
         wallet_client
         wallet_api
         mnemonic 
-        Qt5::Qml
-        Qt5::Quick 
-        Qt5::Svg
-        Qt5::WebEngine
-        Qt5::WebEngineWidgets
+        Qt6::Qml
+        Qt6::Quick 
+        Qt6::Svg
+        Qt6::WebEngineQuick
+        Qt6::WebEngineWidgets
+        Qt6::WebChannel
+        Qt6::Core5Compat
 )
 
 if (BEAM_SIGN_PACKAGE AND WIN32)
@@ -569,7 +566,7 @@ else()
         if (NOT BEAM_USE_STATIC_QT)
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
-                COMMAND windeployqt --release --no-virtualkeyboard --no-angle --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
+                COMMAND windeployqt --release --dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt" --qmldir "${CMAKE_CURRENT_SOURCE_DIR}" "$<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_NAME:${TARGET_NAME}>"
                 COMMENT "Deploying Qt..."
             )
             install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
@@ -583,8 +580,8 @@ else()
             install(FILES ${CMAKE_PREFIX_PATH}/bin/libGLESv2.dll DESTINATION .)
         endif()
         
-        install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-1_1-x64.dll DESTINATION .)
-        install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-1_1-x64.dll DESTINATION .)
+        install(FILES ${OPENSSL_ROOT_DIR}/bin/libcrypto-3-x64.dll DESTINATION .)
+        install(FILES ${OPENSSL_ROOT_DIR}/bin/libssl-3-x64.dll DESTINATION .)
         install(FILES beam-wallet.cfg DESTINATION .)
         install(FILES dapps_store_app.wasm DESTINATION .)
         install(DIRECTORY apps DESTINATION .)

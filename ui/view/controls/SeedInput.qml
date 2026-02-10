@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Controls.impl 2.4
-import QtQuick.Templates 2.4 as T
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls.impl
+import QtQuick.Templates as T
 import Beam.Wallet 1.0
 import "."
 
@@ -18,7 +18,6 @@ T.TextField {
     selectedTextColor:     control.palette.highlightedText
     verticalAlignment:     TextInput.AlignVCenter
     horizontalAlignment:   control.activeFocus || contextMenu.visible ? Text.AlignLeft : Text.AlignHCenter
-	selectByMouse:         true
 	validator:             ELSeedValidator {}
 	wrapMode:              TextInput.Wrap
 

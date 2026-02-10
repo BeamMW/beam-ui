@@ -13,8 +13,11 @@
 // limitations under the License.
 #pragma once
 
-#include <qhttpengine/filesystemhandler.h>
-#include <qhttpengine/server.h>
+#include <QHttpServer>
+#include <QTcpServer>
+#include <QDir>
+#include <QFile>
+#include <QMimeDatabase>
 
 namespace beamui::applications
 {
@@ -25,7 +28,9 @@ namespace beamui::applications
         ~AppsServer();
 
     private:
-        std::unique_ptr<QHttpEngine::FilesystemHandler> _handler;
-        std::unique_ptr<QHttpEngine::Server> _server;
+        QDir _documentRoot;
+        QMimeDatabase _mimeDb;
+        std::unique_ptr<QHttpServer> _server;
+        QTcpServer* _tcpServer = nullptr;  // owned by _server after bind()
     };
 }

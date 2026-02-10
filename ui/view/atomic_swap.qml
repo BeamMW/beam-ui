@@ -1,8 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2 as Controls1
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
@@ -511,7 +509,7 @@ Please try again later or create an offer yourself."
                 property int columnWidth: (width - swapCoinsColumn.width) / 6
 
                 frameVisible: false
-                selectionMode: Controls1.SelectionMode.NoSelection
+                selectionMode: SelectionMode.NoSelection
                 backgroundVisible: false
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 1
@@ -564,7 +562,7 @@ Please try again later or create an offer yourself."
                     elide: Text.ElideRight
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     id: swapCoinsColumn
                     role: "swapCoin"
                     width: 61
@@ -602,7 +600,7 @@ Please try again later or create an offer yourself."
                     }
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "timeCreated"
                     //% "Created on"
                     title: qsTrId("swap-time-created")
@@ -611,7 +609,7 @@ Please try again later or create an offer yourself."
                     resizable: false
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "amountSend"
                     //% "Send"
                     title: qsTrId("atomic-swap-amount-send")
@@ -626,7 +624,7 @@ Please try again later or create an offer yourself."
                     }
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "amountReceive"
                     //% "Receive"
                     title: qsTrId("general-receive")
@@ -641,7 +639,7 @@ Please try again later or create an offer yourself."
                     }
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "rate"
                     //% "Rate"
                     title: qsTrId("swap-rate")
@@ -653,7 +651,7 @@ Please try again later or create an offer yourself."
                     }
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "expiration"
                     //% "Expiration"
                     title: qsTrId("swap-expiration")
@@ -662,7 +660,7 @@ Please try again later or create an offer yourself."
                     resizable: false
                 }
                     
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     id: offerActionsColumn
                     title: ""
                     width: offersTable.getAdjustedColumnWidth(offerActionsColumn)
@@ -829,7 +827,7 @@ Please try again later or create an offer yourself."
                 property int columnWidth: (width - txSwapCoinsColumn.width - txSwapActionColumn.width) / 6
 
                 frameVisible: false
-                selectionMode: Controls1.SelectionMode.NoSelection
+                selectionMode: SelectionMode.NoSelection
                 backgroundVisible: false
                 sortIndicatorVisible: true
                 sortIndicatorColumn: 1
@@ -905,7 +903,7 @@ Please try again later or create an offer yourself."
                     }
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     id: txSwapCoinsColumn
                     role: "swapCoin"
                     width: 61
@@ -939,7 +937,7 @@ Please try again later or create an offer yourself."
                     }
                 }
 
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "timeCreated"
                     //% "Created on"
                     title: qsTrId("atomic-swap-tx-table-created")
@@ -948,7 +946,7 @@ Please try again later or create an offer yourself."
                     movable: false
                     resizable: false
                 }
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "addressFrom"
                     //% "From"
                     title: qsTrId("atomic-swap-tx-table-from")
@@ -957,7 +955,7 @@ Please try again later or create an offer yourself."
                     movable: false
                     resizable: false
                 }
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "addressTo"
                     //% "To"
                     title: qsTrId("atomic-swap-tx-table-to")
@@ -966,7 +964,7 @@ Please try again later or create an offer yourself."
                     movable: false
                     resizable: false
                 }
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "amountSendWithCurrency"
                     //% "Sent"
                     title: qsTrId("atomic-swap-tx-table-sent")
@@ -989,7 +987,7 @@ Please try again later or create an offer yourself."
                         }
                     }
                 }
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     role: "amountReceiveWithCurrency"
                     //% "Received"
                     title: qsTrId("atomic-swap-tx-table-received")
@@ -1012,7 +1010,7 @@ Please try again later or create an offer yourself."
                         }
                     }
                 }
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     id: txStatusColumn
                     role: "status"
                     //% "Status"
@@ -1053,7 +1051,7 @@ Please try again later or create an offer yourself."
                         }
                     }
                 }
-                Controls1.TableViewColumn {
+                TableViewColumn {
                     id: txSwapActionColumn
                     elideMode: Text.ElideRight
                     width: 40

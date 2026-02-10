@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick
 
 Item {
     FontLoader { source: "qrc:/assets/fonts/Proxima Nova Black Italic.otf" }

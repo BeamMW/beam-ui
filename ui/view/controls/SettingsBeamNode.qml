@@ -1,9 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Beam.Wallet 1.0
 import "."
 
@@ -72,7 +70,7 @@ SettingsFoldable {
                     color: localNodePort.acceptableInput ? Style.content_main : Style.validator_error
                     text: (viewModel.localNodePort || "").toString()
 
-                    validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
+                    validator: RegularExpressionValidator {regularExpression: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
                     backgroundColor: localNodePort.acceptableInput ? Style.content_main : Style.validator_error
 
                     Binding {
@@ -121,7 +119,7 @@ SettingsFoldable {
                     font.pixelSize: 14
                     color: getColor()
                     backgroundColor: getColor()
-                    validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(:([1-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(\s|\x180E)*$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(:([1-9]|[1-9][0-9]{1,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?(\s|\x180E)*$/ }
 
                     function getColor () {
                         return text.length && (!acceptableInput || viewModel.hasPeer(text)) ? Style.validator_error : Style.content_main

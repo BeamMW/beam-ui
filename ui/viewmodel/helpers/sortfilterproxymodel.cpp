@@ -74,22 +74,33 @@ void SortFilterProxyModel::setFilterRole(const QByteArray &role)
 
 QString SortFilterProxyModel::filterString() const
 {
-    return filterRegExp().pattern();
+    return filterRegularExpression().pattern();
 }
 
 void SortFilterProxyModel::setFilterString(const QString &filter)
 {
-    setFilterRegExp(QRegExp(filter, filterCaseSensitivity(), static_cast<QRegExp::PatternSyntax>(filterSyntax())));
+    QRegularExpression::PatternOptions options = QRegularExpression::NoPatternOption;
+    if (filterCaseSensitivity() == Qt::CaseInsensitive)
+        options |= QRegularExpression::CaseInsensitiveOption;
+
+    QString pattern = filter;
+    if (filterSyntax() == Wildcard)
+        pattern = QRegularExpression::wildcardToRegularExpression(filter);
+    else if (filterSyntax() == FixedString)
+        pattern = QRegularExpression::escape(filter);
+
+    setFilterRegularExpression(QRegularExpression(pattern, options));
 }
 
 SortFilterProxyModel::FilterSyntax SortFilterProxyModel::filterSyntax() const
 {
-    return static_cast<FilterSyntax>(filterRegExp().patternSyntax());
+    return m_filterSyntax;
 }
 
 void SortFilterProxyModel::setFilterSyntax(SortFilterProxyModel::FilterSyntax syntax)
 {
-    setFilterRegExp(QRegExp(filterString(), filterCaseSensitivity(), static_cast<QRegExp::PatternSyntax>(syntax)));
+    m_filterSyntax = syntax;
+    setFilterString(filterString());
 }
 
 QVariantMap SortFilterProxyModel::get(int idx) const
@@ -155,8 +166,8 @@ QHash<int, QByteArray> SortFilterProxyModel::roleNames() const
 
 bool SortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QRegExp rx = filterRegExp();
-    if (rx.isEmpty())
+    QRegularExpression rx = filterRegularExpression();
+    if (!rx.isValid() || rx.pattern().isEmpty())
         return true;
     QAbstractItemModel *model = sourceModel();
     if (filterRole().isEmpty()) {

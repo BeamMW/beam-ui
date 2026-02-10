@@ -1,9 +1,7 @@
-import QtQuick 2.11
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.4
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.12
-import QtGraphicalEffects 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Beam.Wallet 1.0
 import "."
 
@@ -80,7 +78,7 @@ SettingsFoldable {
                     font.pixelSize: 14
                     color:  (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput)) ? Style.validator_error : Style.content_main
                     backgroundColor:  (nodeAddress.text.length && (!viewModel.isValidNodeAddress || !nodeAddress.acceptableInput)) ? Style.validator_error : Style.content_main
-                    validator: RegExpValidator { regExp: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(\s|\x180E)*$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^(\s|\x180E)*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])|([\w.-]+(?:\.[\w\.-]+)+))(\s|\x180E)*$/ }
                     text: viewModel.nodeAddress
                     //% "Please enter the address"
                     placeholderText:  qsTrId("settings-remote-node-address-placeholder")
@@ -130,7 +128,7 @@ SettingsFoldable {
                     text: viewModel.remoteNodePort
                     //% "Please enter the port"
                     placeholderText:  qsTrId("settings-local-node-port-placeholder")
-                    validator: RegExpValidator {regExp: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
+                    validator: RegularExpressionValidator {regularExpression: /^([1-9][0-9]{0,3}|[1-5][0-9]{2,4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/g}
                     enabled: !viewModel.connectLocalNode
                     Binding {
                         target: viewModel

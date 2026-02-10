@@ -1,8 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.Styles 1.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import "controls"
 import Beam.Wallet 1.0
 
@@ -284,7 +282,7 @@ ColumnLayout {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.RightButton
-                        onClicked: {
+                        onClicked: function(mouse) {
                             if (mouse.button == Qt.RightButton && styleData.row != undefined)
                             {
                                 contextMenu.walletID = contactsView.model[styleData.row].walletID;

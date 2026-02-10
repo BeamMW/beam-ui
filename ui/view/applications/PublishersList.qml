@@ -1,7 +1,6 @@
-import QtQuick          2.15
-import QtQuick.Layouts  1.15
-import QtQuick.Controls 1.4 as Controls1
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import Beam.Wallet      1.0
 import "../controls"
 import "../utils.js" as Utils
@@ -40,7 +39,7 @@ ColumnLayout {
         Layout.fillWidth:  true
         Layout.topMargin:  20
 
-        selectionMode:        Controls1.SelectionMode.NoSelection
+        selectionMode:        SelectionMode.NoSelection
         sortIndicatorVisible: true
         sortIndicatorColumn:  0
         sortIndicatorOrder:   Qt.DescendingOrder
@@ -64,14 +63,14 @@ ColumnLayout {
                 viewModel.sortOrder = viewModel.sortOrder == Qt.DescendingOrder ? Qt.AscendingOrder : Qt.DescendingOrder;
             }
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role:      viewModel.publisherStatusRole
             width:     44 
             movable:   false
             resizable: false
             delegate:  showDappsComponent
         }
-        Controls1.TableViewColumn { 
+        TableViewColumn { 
             id:        nickname
             role:      viewModel.nicknameRole
                        //% "Nickname"
@@ -81,7 +80,7 @@ ColumnLayout {
             resizable: false
             delegate:  nicknameComponent
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             id:        about
             role:      viewModel.aboutRole
                        //% "About"
@@ -91,7 +90,7 @@ ColumnLayout {
             resizable: false
             delegate:  aboutComponent
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             id:        socialNetworks
                        //% "Social networks"
             title:     qsTrId("publishers-list-social-net")
@@ -100,7 +99,7 @@ ColumnLayout {
             resizable: false
             delegate:  socialNetworksComponent
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             id:        publisherLink
                        //% "Publisher link"
             title:     qsTrId("publishers-list-publisher-link")

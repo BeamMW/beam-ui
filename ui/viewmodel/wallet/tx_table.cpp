@@ -16,7 +16,7 @@
 #include <QStandardPaths>
 #include <QDateTime>
 #include <QTextStream>
-#include <QTextCodec>
+#include <QStringConverter>
 #include <vector>
 #include "model/app_model.h"
 #include "quazip/quazip.h"
@@ -30,9 +30,8 @@ namespace
 
     void writeZipFile(QuaZipFile& zipFile, const QString& data)
     {
-        QTextCodec *codec = QTextCodec::codecForName("UTF8");
         QTextStream out(&zipFile);
-        out.setCodec(codec);
+        out.setEncoding(QStringConverter::Utf8);
         out << data;
     }
 }

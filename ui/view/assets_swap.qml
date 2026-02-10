@@ -1,9 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2 as Controls1
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "controls"
 import "wallet"
@@ -157,7 +155,7 @@ ColumnLayout {
 
         property var          selectedAssets: []
 
-        selectionMode: Controls1.SelectionMode.NoSelection
+        selectionMode: SelectionMode.NoSelection
         sortIndicatorVisible: true
         sortIndicatorColumn: 4
         sortIndicatorOrder: Qt.DescendingOrder
@@ -218,7 +216,7 @@ ColumnLayout {
             onCopyText: BeamGlobals.copyToClipboard(styleData.value)
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "coins"
             id: coinColumn
 
@@ -256,7 +254,7 @@ ColumnLayout {
             }
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "send"
 
             //% "Send"
@@ -283,7 +281,7 @@ ColumnLayout {
             }
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "receive"
 
             //% "Receive"
@@ -310,7 +308,7 @@ ColumnLayout {
             }
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "rate"
 
             //% "Rate"
@@ -320,7 +318,7 @@ ColumnLayout {
             resizable: false
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "created"
 
             //% "Created on"
@@ -330,7 +328,7 @@ ColumnLayout {
             resizable: false
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "expiration"
 
             //% "Expiration"
@@ -340,7 +338,7 @@ ColumnLayout {
             resizable: false
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "isMine"
             id:   actionColumn
 

@@ -15,6 +15,7 @@
 #include <QApplication>
 #include <QtQuick>
 #include <QQmlApplicationEngine>
+#include <QtWebEngineQuick>
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -86,10 +87,7 @@ Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
 
 Q_IMPORT_PLUGIN(QtQuick2Plugin)
 Q_IMPORT_PLUGIN(QtQuick2WindowPlugin)
-Q_IMPORT_PLUGIN(QtQuickControls1Plugin)
 Q_IMPORT_PLUGIN(QtQuickControls2Plugin)
-Q_IMPORT_PLUGIN(QtGraphicalEffectsPlugin)
-Q_IMPORT_PLUGIN(QtGraphicalEffectsPrivatePlugin)
 Q_IMPORT_PLUGIN(QSvgPlugin)
 Q_IMPORT_PLUGIN(QtQuickLayoutsPlugin)
 Q_IMPORT_PLUGIN(QtQuickTemplates2Plugin)
@@ -191,9 +189,9 @@ int main (int argc, char* argv[])
     beam::Rules r;
     beam::Rules::Scope scopeRules(r);
 
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    // Qt6: AA_EnableHighDpiScaling is always on, AA_ShareOpenGLContexts is default for WebEngine
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+    QtWebEngineQuick::initialize();
 
     block_sigpipe();
 

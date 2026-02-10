@@ -31,5 +31,5 @@ public:
         Incoming,
         Spent,
     };
-    Q_ENUMS(EnStatus)
+    Q_ENUM(EnStatus)
 };

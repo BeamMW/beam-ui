@@ -14,25 +14,60 @@
 #include "apps_server.h"
 
 #include <stdexcept>
+#include <QFileInfo>
+#include <QUrl>
 
 namespace beamui::applications
 {
     AppsServer::AppsServer(const QString& serveFrom, uint32_t port)
+        : _documentRoot(serveFrom)
     {
-        _handler = std::make_unique<QHttpEngine::FilesystemHandler>(serveFrom);
-        _server  = std::make_unique<QHttpEngine::Server>(_handler.get());
+        _server = std::make_unique<QHttpServer>();
 
-        if(!_server->listen(QHostAddress::LocalHost, port))
+        // Use setMissingHandler as a catch-all to serve static files for any path
+        _server->setMissingHandler(_server.get(),
+            [this](const QHttpServerRequest &request, QHttpServerResponder &responder) {
+                QString path = QUrl::fromPercentEncoding(request.url().path().toUtf8());
+                if (path.startsWith('/'))
+                    path = path.mid(1);
+
+                QString absolutePath = _documentRoot.absoluteFilePath(path);
+
+                // Prevent path traversal outside document root
+                if (!absolutePath.startsWith(_documentRoot.absolutePath())) {
+                    responder.write(QHttpServerResponder::StatusCode::Forbidden);
+                    return;
+                }
+
+                QFileInfo fileInfo(absolutePath);
+                if (!fileInfo.exists() || fileInfo.isDir()) {
+                    responder.write(QHttpServerResponder::StatusCode::NotFound);
+                    return;
+                }
+
+                QFile file(absolutePath);
+                if (!file.open(QIODevice::ReadOnly)) {
+                    responder.write(QHttpServerResponder::StatusCode::Forbidden);
+                    return;
+                }
+
+                QByteArray content = file.readAll();
+                QByteArray mimeType = _mimeDb.mimeTypeForFile(absolutePath).name().toUtf8();
+                responder.write(content, mimeType);
+            });
+
+        _tcpServer = new QTcpServer();
+        if (!_tcpServer->listen(QHostAddress::LocalHost, port))
         {
+            delete _tcpServer;
+            _tcpServer = nullptr;
             throw std::runtime_error("failed to listen");
         }
+        _server->bind(_tcpServer);
     }
 
     AppsServer::~AppsServer()
     {
-        _server->setHandler(nullptr);
-        _server->close();
-        _handler.reset();
         _server.reset();
     }
 }

@@ -650,8 +650,8 @@ void WalletSettings::reportProblem()
 
     QDir dataDir = getAccountDataDir();
 
-    QFile zipFile = dataDir.filePath("beam v" + QString::fromStdString(PROJECT_VERSION)
-        + " " + QSysInfo::productType().toLower() + " report.zip");
+    QFile zipFile(dataDir.filePath("beam v" + QString::fromStdString(PROJECT_VERSION)
+        + " " + QSysInfo::productType().toLower() + " report.zip"));
 
     QuaZip zip(zipFile.fileName());
     zip.open(QuaZip::mdCreate);

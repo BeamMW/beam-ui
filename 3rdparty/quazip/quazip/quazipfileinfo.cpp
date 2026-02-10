@@ -25,6 +25,7 @@ see quazip/(un)zip.h files for details. Basically it's the zlib license.
 #include "quazipfileinfo.h"
 
 #include <QtCore/QDataStream>
+#include <QTimeZone>
 
 static QFile::Permissions permissionsFromExternalAttr(quint32 externalAttr) {
     quint32 uPerm = (externalAttr & 0xFFFF0000u) >> 16;
@@ -117,7 +118,7 @@ static QDateTime getNTFSTime(const QByteArray &extra, int position,
     timeReader >> time;
     if (time == 0)
         return dateTime;
-    QDateTime base(QDate(1601, 1, 1), QTime(0, 0), Qt::UTC);
+    QDateTime base(QDate(1601, 1, 1), QTime(0, 0), QTimeZone::UTC);
     dateTime = base.addMSecs(time / 10000);
     if (fineTicks != nullptr) {
         *fineTicks = static_cast<int>(time % 10000);
@@ -161,7 +162,7 @@ QDateTime QuaZipFileInfo64::getExtTime(const QByteArray &extra, int flag)
         qint32 time;
         input >> time;
         if (nextFlag == flag) {
-            QDateTime base(QDate(1970, 1, 1), QTime(0, 0), Qt::UTC);
+            QDateTime base(QDate(1970, 1, 1), QTime(0, 0), QTimeZone::UTC);
             dateTime = base.addSecs(time);
             return dateTime;
         }

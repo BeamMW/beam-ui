@@ -1,9 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
@@ -565,7 +563,6 @@ please review your settings and try again"
                                         color:               rateRow.rateValid ? Style.content_main : Style.validator_error
                                         backgroundColor:     rateRow.rateValid ? Style.content_main : Style.validator_error
                                         text:                ""
-                                        selectByMouse:       true
                                         maximumLength:       30
                                         Layout.minimumWidth: 35
 

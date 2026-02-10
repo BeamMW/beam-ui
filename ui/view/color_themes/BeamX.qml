@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick
 
 AbstractTheme {
     property string navigation_logo: "qrc:/assets/beamx-logo.svg"

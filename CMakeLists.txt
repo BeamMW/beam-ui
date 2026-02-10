@@ -36,6 +36,13 @@ if(BEAM_LINK_TYPE MATCHES "Static")
 endif()
 
 option(BEAM_USE_STATIC_QT "Build with staticaly linked QT library" FALSE)
+
+# Qt6 migration: prefer QT6_ROOT_DIR, fall back to QT5_ROOT_DIR
+if(DEFINED ENV{QT6_ROOT_DIR})
+    set(BEAM_QT_ROOT_DIR $ENV{QT6_ROOT_DIR})
+elseif(DEFINED ENV{QT5_ROOT_DIR})
+    set(BEAM_QT_ROOT_DIR $ENV{QT5_ROOT_DIR})
+endif()
 if (BEAM_USE_STATIC AND NOT BEAM_USE_STATIC_QT)
     set(BEAM_USE_STATIC_RUNTIME FALSE)
 endif()
@@ -229,7 +236,7 @@ set(SKIP_INSTALL_ALL ON)
 add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/qrcode)
 add_subdirectory(3rdparty/quazip)
-add_subdirectory(3rdparty/qhttpengine EXCLUDE_FROM_ALL)
+# qhttpengine removed — replaced by Qt6::HttpServer (see QT6_MIGRATION_PLAN.md Phase 4.2)
 add_subdirectory(ui)
 
 

@@ -1,9 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -89,7 +87,7 @@ WizzardPage {
                         }
                     }
                     function elidedText(str, isPreferred){
-                        var textMetricsTemplate = 'import QtQuick 2.15; TextMetrics{font{family: "Proxima Nova";styleName: "Regular";weight: Font.Normal;pixelSize: 14;}elide: Text.ElideLeft;elideWidth: parent.width - tableView.textLeftMargin;text: "%1"}';
+                        var textMetricsTemplate = 'import QtQuick; TextMetrics{font{family: "Proxima Nova";styleName: "Regular";weight: Font.Normal;pixelSize: 14;}elide: Text.ElideLeft;elideWidth: parent.width - tableView.textLeftMargin;text: "%1"}';
                         var fullTextStr = isPreferred ? str + " " + pathLabel.bestMatchStr: str;
                         var textMetrics= Qt.createQmlObject(
                                 textMetricsTemplate.arg(fullTextStr),
