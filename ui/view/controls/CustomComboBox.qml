@@ -60,13 +60,16 @@ ComboBox {
 
     delegate: ItemDelegate {
         id: itemDelegate
+        required property var model
+        required property int index
+
         width: calculatedWidth
         padding: 0
         leftPadding: control.leftPadding
         bottomPadding: control.dropSpacing
         topPadding: 2
 
-        property var myModel : Array.isArray(control.model)  ? modelData : model
+        property var myModel : itemDelegate.model
 
         property var  iconW:    myModel["iconWidth"] || 0
         property var  iconH:    myModel["iconHeight"] || 0
@@ -112,7 +115,7 @@ ComboBox {
                 Layout.alignment: Qt.AlignVCenter
 
                 text: {
-                    var text = modelData
+                    var text = model
                     if (control.textRole) {
                         text = myModel[control.textRole]
                     }
