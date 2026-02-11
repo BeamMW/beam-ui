@@ -37,6 +37,16 @@ QObject *SortFilterProxyModel::source() const
 void SortFilterProxyModel::setSource(QObject *source)
 {
     setSourceModel(qobject_cast<QAbstractItemModel *>(source));
+    
+    // In Qt6, when the source model changes, we need to re-apply the filter/sort roles
+    // because roleKey() depends on the source model's roleNames()
+    if (m_complete && sourceModel()) {
+        if (!m_sortRole.isEmpty())
+            QSortFilterProxyModel::setSortRole(roleKey(m_sortRole));
+        if (!m_filterRole.isEmpty())
+            QSortFilterProxyModel::setFilterRole(roleKey(m_filterRole));
+        invalidateFilter();
+    }
 }
 
 QByteArray SortFilterProxyModel::sortRole() const
@@ -84,8 +94,21 @@ void SortFilterProxyModel::setFilterString(const QString &filter)
         options |= QRegularExpression::CaseInsensitiveOption;
 
     QString pattern = filter;
-    if (filterSyntax() == Wildcard)
+    if (filterSyntax() == Wildcard) {
         pattern = QRegularExpression::wildcardToRegularExpression(filter);
+        // Qt6's wildcardToRegularExpression adds anchors (\A and \z) which don't work
+        // with QString::contains(). We need to remove them for compatibility.
+        // The pattern looks like: \A(?:...)\z or similar
+        if (pattern.startsWith("\\A")) {
+            pattern = pattern.mid(2);  // Remove \A
+        }
+        if (pattern.endsWith("\\z")) {
+            pattern.chop(2);  // Remove \z
+        }
+        if (pattern.endsWith("\\Z")) {
+            pattern.chop(2);  // Remove \Z (alternate end anchor)
+        }
+    }
     else if (filterSyntax() == FixedString)
         pattern = QRegularExpression::escape(filter);
 

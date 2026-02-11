@@ -282,8 +282,8 @@ ColumnLayout {
                     anchors.rightMargin: 12
                     icon.source:         "qrc:/assets/icon-actions.svg"
                     onClicked: {
-                        publisherInfoContextMenu.publisherKey = modelData && modelData.publisherKey;
-                        publisherInfoContextMenu.publisherEnabled = modelData && modelData.enabled;
+                        publisherInfoContextMenu.publisherKey = model && model.publisherKey;
+                        publisherInfoContextMenu.publisherEnabled = model && model.enabled;
                         publisherInfoContextMenu.popup();
                     }
                 }
