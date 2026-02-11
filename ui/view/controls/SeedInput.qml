@@ -38,7 +38,7 @@ T.TextField {
         acceptedButtons: Qt.RightButton
         hoverEnabled:    true
 
-        onClicked: {
+        onClicked: function(mouse) {
             if (!control.activeFocus && control.text.length) return
             var selectStart = control.selectionStart
             var selectEnd = control.selectionEnd

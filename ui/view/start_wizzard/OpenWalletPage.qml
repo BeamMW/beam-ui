@@ -39,7 +39,7 @@ StartLayout {
         openPasswordError.text = ""
     }
 
-    Keys.onPressed: {
+    Keys.onPressed: function(event) {
         // Linux hack, X11 return caps state with delay
         if (Qt.platform.os == "linux") {
             var timer = Qt.createQmlObject('import QtQml; Timer {}', openWalletPage, "linuxCapsTimer");
@@ -51,7 +51,7 @@ StartLayout {
             viewModel.checkCapsLock();
         }
     }
-    Keys.onReleased: {
+    Keys.onReleased: function(event) {
         // OSX hack, to handle capslock shutdown
         if (Qt.platform.os == "osx") {
             viewModel.checkCapsLock();
@@ -167,7 +167,7 @@ StartLayout {
                 id: btnCurrentWallet
                 enabled: viewModel.isOnlyOneInstanceStarted && 
                          viewModel.walletExists &&
-                        (!viewModel.useHWWallet || viewModel.isTrezorConnected)
+                        (!viewModel.useHWWallet || (viewModel.isTrezorEnabled && viewModel.isTrezorConnected))
                 text: (viewModel.useHWWallet == false)
                     ?
                     //% "Show my wallet"

@@ -155,13 +155,13 @@ WizzardPage {
         }
     ]
 
-    Keys.onPressed: {
+    Keys.onPressed: function(event) {
         if (event.key == Qt.Key_Shift) {
             viewModel.validateDictionary = false;
         }
     }
 
-    Keys.onReleased: {
+    Keys.onReleased: function(event) {
         if (event.key == Qt.Key_Shift) {
             viewModel.validateDictionary = true;
         }

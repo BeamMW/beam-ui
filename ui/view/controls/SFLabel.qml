@@ -37,7 +37,7 @@ Label {
         width: control.width
         acceptedButtons: Qt.RightButton
 
-        onClicked: {
+        onClicked: function(mouse) {
             var contextMenu = contextMenuComponent.createObject(control)
             contextMenu.x = mouse.x
             contextMenu.y = mouse.y

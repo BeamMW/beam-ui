@@ -58,7 +58,7 @@ T.TextArea {
         acceptedButtons: Qt.RightButton
         hoverEnabled: true
 
-        onClicked: {
+        onClicked: function(mouse) {
             var selectStart = control.selectionStart
             var selectEnd = control.selectionEnd
             var curPos = control.cursorPosition

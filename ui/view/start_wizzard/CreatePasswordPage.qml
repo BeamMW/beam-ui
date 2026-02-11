@@ -203,10 +203,10 @@ WizzardPage {
 
             SFText {
 /*% "Strong password needs to meet the following requirements:
-•  the length must be at least 10 characters
-•  must contain at least one lowercase letter
-•  must contain at least one uppercase letter
-•  must contain at least one number"
+â€¢  the length must be at least 10 characters
+â€¢  must contain at least one lowercase letter
+â€¢  must contain at least one uppercase letter
+â€¢  must contain at least one number"
 */
                 text: qsTrId("start-create-pwd-strength-message")
                 color: Style.content_secondary

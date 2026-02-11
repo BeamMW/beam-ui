@@ -145,8 +145,8 @@ T.TextField {
         }
     }
 
-    Keys.onShortcutOverride: event.accepted = event.matches(StandardKey.Paste)
-    Keys.onPressed: {
+    Keys.onShortcutOverride: function(event) { event.accepted = event.matches(StandardKey.Paste) }
+    Keys.onPressed: function(event) {
         if (event.matches(StandardKey.Paste)) {
             event.accepted = true
             control.paste()

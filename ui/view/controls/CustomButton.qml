@@ -54,7 +54,7 @@ Button {
         }
     }
 
-    Keys.onPressed: {
+    Keys.onPressed: function(event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) control.clicked();
     }
 
