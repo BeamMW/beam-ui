@@ -33,7 +33,7 @@ ColumnLayout {
         Layout.bottomMargin: 10
         clip:                true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+        ScrollBar.vertical: CustomScrollBar {}
 
         ColumnLayout {
             width: scrollView.availableWidth

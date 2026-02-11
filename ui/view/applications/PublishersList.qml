@@ -311,7 +311,7 @@ ColumnLayout {
                                 qsTrId("dapps-store-publisher-show-dapps") : 
                                 //% "Hide DApps"
                                 qsTrId("dapps-store-publisher-hide-dapps")
-                icon.source: "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/check.png"
+                icon.source: "qrc:/qt-project.org/imports/QtQuick/Controls/Basic/images/check.png"
                 onTriggered: {
                     if (publisherInfoContextMenu.publisherEnabled) {
                         control.addUnwantedPublisherByKey(publisherInfoContextMenu.publisherKey)

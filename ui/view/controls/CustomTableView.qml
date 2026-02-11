@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls.Basic
 import QtQuick.Controls
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
@@ -190,15 +189,7 @@ Item {
         model: tableView.model
         boundsBehavior: Flickable.StopAtBounds
 
-        ScrollBar.vertical: ScrollBar {
-            policy: ScrollBar.AsNeeded
-            contentItem: Rectangle {
-                implicitWidth: 6
-                radius: 3
-                color: "white"
-                opacity: parent.pressed ? 0.12 : 0.5
-            }
-        }
+        ScrollBar.vertical: CustomScrollBar {}
 
         delegate: Item {
             id: rowRoot

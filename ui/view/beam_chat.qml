@@ -118,7 +118,7 @@ ColumnLayout {
         Layout.bottomMargin: 10
         clip:                true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+        ScrollBar.vertical:          CustomScrollBar {}
 
         property ScrollBar hScrollBar: ScrollBar.horizontal
         property ScrollBar vScrollBar: ScrollBar.vertical

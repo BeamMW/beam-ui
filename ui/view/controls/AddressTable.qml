@@ -218,10 +218,10 @@ CustomTableView {
                     CustomToolButton {
                         icon.source: "qrc:/assets/icon-actions.svg"
                         //% "Actions"
-                        ToolTip.text: qsTrId("general-actions")
-                        ToolTip.visible: hovered
-                        ToolTip.delay: 500
-                        ToolTip.timeout: 2000
+                        CustomToolTip {
+                            text:    qsTrId("general-actions")
+                            visible: parent.hovered
+                        }
                         hoverEnabled: true
                         onClicked: {
                             contextMenu.addressItem = rootControl.model[styleData.row]

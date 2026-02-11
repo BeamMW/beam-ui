@@ -130,9 +130,7 @@ ColumnLayout {
         cellWidth:                   gridView.width / Math.floor(gridView.width / 320)
         clip:                        true
         visible:                     model.count > 0
-        ScrollBar.vertical: ScrollBar {
-            policy: ScrollBar.AsNeeded
-        }
+        ScrollBar.vertical:          CustomScrollBar {}
 
         model: SortFilterProxyModel {
             id:           appFilterProxy

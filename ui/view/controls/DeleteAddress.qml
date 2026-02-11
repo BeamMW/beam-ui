@@ -39,7 +39,7 @@ CustomDialog {
             Layout.preferredWidth:        control.isOldAddr ? 510: 582
             clip:                         true
             ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+            ScrollBar.vertical:           CustomScrollBar {}
 
             SFLabel {
                 id:                       addressID

@@ -88,7 +88,7 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.bottomMargin: 10
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+        ScrollBar.vertical:          CustomScrollBar {}
         clip: true
 
         RowLayout {

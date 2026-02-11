@@ -194,7 +194,7 @@ CustomDialog {
                     Layout.maximumHeight:         200
                     clip:                         true
                     ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-                    ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                    ScrollBar.vertical:           CustomScrollBar {}
                     visible:                      viewModel.token != viewModel.address
                     SFLabel {
                         //Layout.fillWidth:       true

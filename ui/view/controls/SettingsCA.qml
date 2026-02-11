@@ -34,9 +34,7 @@ SettingsFoldable {
             model: viewModel.currenciesList
             implicitHeight: count > 6 ? Math.min(220, contentHeight) : contentHeight
 
-            ScrollBar.vertical: ScrollBar {
-                policy: ScrollBar.AsNeeded
-            }
+            ScrollBar.vertical: CustomScrollBar {}
 
             delegate: RowLayout {
                 width: listView.width

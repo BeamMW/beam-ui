@@ -61,7 +61,7 @@ else()
 endif()
 set (CMAKE_PREFIX_PATH ${BEAM_QT_ROOT_DIR})
 
-find_package(Qt6 COMPONENTS Core Gui Widgets Qml Quick Svg WebEngineQuick WebEngineWidgets WebChannel Core5Compat HttpServer REQUIRED)
+find_package(Qt6 COMPONENTS Core Gui Widgets Qml Quick QuickControls2 Svg WebEngineQuick WebEngineWidgets WebChannel Core5Compat HttpServer REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -311,6 +311,9 @@ target_link_libraries(${TARGET_NAME} qrcode cli)
 
 # Qt HttpServer (replaces qhttpengine)
 target_link_libraries(${TARGET_NAME} Qt6::HttpServer)
+
+# Qt6: QuickControls2 needed for QQuickStyle::setStyle("Basic")
+target_link_libraries(${TARGET_NAME} Qt6::QuickControls2)
 
 if (LINUX)
     target_link_libraries(${TARGET_NAME} X11)

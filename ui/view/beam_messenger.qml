@@ -71,7 +71,7 @@ ColumnLayout {
         model: chatList.chats
         clip: true
 
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: CustomScrollBar {}
 
         delegate: Item {
             implicitHeight: 72

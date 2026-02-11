@@ -313,9 +313,11 @@ ColumnLayout {
                                 CustomToolButton {
                                     icon.source: "qrc:/assets/icon-actions.svg"
                                     //% "Actions"
-                                    ToolTip.text: qsTrId("general-actions")
-                                    ToolTip.visible: hovered
-                                    ToolTip.delay: 1000
+                                    CustomToolTip {
+                                        text:    qsTrId("general-actions")
+                                        visible: parent.hovered
+                                        delay:   1000
+                                    }
                                     hoverEnabled: true
                                     onClicked: {
                                         contextMenu.walletID = contactsView.model[styleData.row].walletID;

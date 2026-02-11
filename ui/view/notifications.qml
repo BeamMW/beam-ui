@@ -97,7 +97,7 @@ ColumnLayout {
         }
         //! [transitions]
 
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: CustomScrollBar {}
 
         section.property: "state"
         section.delegate: Item {

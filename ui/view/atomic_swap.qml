@@ -1081,10 +1081,10 @@ Please try again later or create an offer yourself."
                                 anchors.rightMargin: 12
                                 icon.source: "qrc:/assets/icon-actions.svg"
                                 //% "Actions"
-                                ToolTip.text: qsTrId("general-actions")
-                                ToolTip.visible: hovered
-                                ToolTip.delay: 500
-                                ToolTip.timeout: 2000
+                                CustomToolTip {
+                                    text:    qsTrId("general-actions")
+                                    visible: parent.hovered
+                                }
                                 hoverEnabled: true
                                 onClicked: {
                                     transactionsTable.showContextMenu(styleData.row);

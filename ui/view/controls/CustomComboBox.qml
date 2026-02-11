@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Controls.Basic
 import QtQuick.Controls.impl
 import Qt5Compat.GraphicalEffects
 import QtQuick.Layouts
@@ -249,9 +248,7 @@ ComboBox {
                 implicitHeight: control.delegateModel.count > 12 ? Math.min(250, contentHeight) : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
-                ScrollBar.vertical: ScrollBar {
-                    policy: ScrollBar.AsNeeded
-                }
+                ScrollBar.vertical: CustomScrollBar {}
             }
         }
 

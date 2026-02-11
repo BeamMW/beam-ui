@@ -231,10 +231,10 @@ Control {
                 icon.source: "qrc:/assets/icon-export.svg"
                 //: transaction history screen, export button tooltip and open file dialog
                 //% "Export transaction history"
-                ToolTip.text: qsTrId("wallet-export-tx-history")
-                ToolTip.visible: hovered
-                ToolTip.delay: 500
-                ToolTip.timeout: 2000
+                CustomToolTip {
+                    text:    qsTrId("wallet-export-tx-history")
+                    visible: parent.hovered
+                }
                 hoverEnabled: true
                 onClicked: {
                     tableViewModel.exportTxHistoryToCsv();
@@ -245,10 +245,10 @@ Control {
                 Layout.alignment: Qt.AlignVCenter
                 icon.source: "qrc:/assets/icon-proof.svg"
                 //% "Verify payment"
-                ToolTip.text: qsTrId("wallet-verify-payment")
-                ToolTip.visible: hovered
-                ToolTip.delay: 500
-                ToolTip.timeout: 2000
+                CustomToolTip {
+                    text:    qsTrId("wallet-verify-payment")
+                    visible: parent.hovered
+                }
                 hoverEnabled: true
                 onClicked: {
                     var paymentInfoVerifyDialog =
@@ -808,10 +808,10 @@ Control {
                             anchors.rightMargin: 12
                             icon.source: "qrc:/assets/icon-actions.svg"
                             //% "Actions"
-                            ToolTip.text: qsTrId("general-actions")
-                            ToolTip.visible: hovered
-                            ToolTip.delay: 500
-                            ToolTip.timeout: 2000
+                            CustomToolTip {
+                                text:    qsTrId("general-actions")
+                                visible: parent.hovered
+                            }
                             hoverEnabled: true
                             onClicked: {
                                 transactionsTable.showContextMenu(styleData.row);

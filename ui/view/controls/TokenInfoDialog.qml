@@ -79,10 +79,10 @@ CustomDialog {
                         Layout.topMargin:       -8
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
-                        ToolTip.text:           qsTrId("general-copy")
-                        ToolTip.visible: hovered
-                        ToolTip.delay: 500
-                        ToolTip.timeout: 2000
+                        CustomToolTip {
+                            text:    qsTrId("general-copy")
+                            visible: parent.hovered
+                        }
                         hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.address)
@@ -151,7 +151,7 @@ CustomDialog {
                         Layout.maximumHeight:         200
                         clip:                         true
                         ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-                        ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                        ScrollBar.vertical:           CustomScrollBar {}
 
                         Column {
                             spacing: 10
@@ -186,10 +186,10 @@ CustomDialog {
                         Layout.topMargin:       -8
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
-                        ToolTip.text:           qsTrId("general-copy")
-                        ToolTip.visible: hovered
-                        ToolTip.delay: 500
-                        ToolTip.timeout: 2000
+                        CustomToolTip {
+                            text:    qsTrId("general-copy")
+                            visible: parent.hovered
+                        }
                         hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.token)
@@ -242,10 +242,10 @@ CustomDialog {
                         Layout.topMargin:       -8
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
-                        ToolTip.text:           qsTrId("general-copy")
-                        ToolTip.visible: hovered
-                        ToolTip.delay: 500
-                        ToolTip.timeout: 2000
+                        CustomToolTip {
+                            text:    qsTrId("general-copy")
+                            visible: parent.hovered
+                        }
                         hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.address)
@@ -288,10 +288,10 @@ CustomDialog {
                         Layout.topMargin:       -8
                         icon.source:            "qrc:/assets/icon-copy-blue.svg"
                         //% "Copy"
-                        ToolTip.text:           qsTrId("general-copy")
-                        ToolTip.visible: hovered
-                        ToolTip.delay: 500
-                        ToolTip.timeout: 2000
+                        CustomToolTip {
+                            text:    qsTrId("general-copy")
+                            visible: parent.hovered
+                        }
                         hoverEnabled: true
                         onClicked: function () {
                             BeamGlobals.copyToClipboard(viewModel.identity)

@@ -202,7 +202,9 @@ Control {
 
         implicitHeight: control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+        ScrollBar.vertical: CustomScrollBar {
+            policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+        }
 
         clip: true
         hoverEnabled: true

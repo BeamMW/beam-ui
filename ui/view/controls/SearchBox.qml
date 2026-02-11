@@ -59,10 +59,10 @@ FocusScope {
             icon.source: "qrc:/assets/icon-cancel-16.svg"
             visible:     input.text.length > 0
             //% "Clear search"
-            ToolTip.text: qsTrId("wallet-clear-search")
-            ToolTip.visible: hovered
-            ToolTip.delay: 500
-            ToolTip.timeout: 2000
+            CustomToolTip {
+                text:    qsTrId("wallet-clear-search")
+                visible: parent.hovered
+            }
             hoverEnabled: true
             onClicked: {
                 input.text = "";
@@ -75,10 +75,10 @@ FocusScope {
             icon.source: "qrc:/assets/icon-search.svg"
             visible:     input.text.length == 0
             //% "Search"
-            ToolTip.text: qsTrId("wallet-search")
-            ToolTip.visible: hovered
-            ToolTip.delay: 500
-            ToolTip.timeout: 2000
+            CustomToolTip {
+                text:    qsTrId("wallet-search")
+                visible: parent.hovered
+            }
             hoverEnabled: true
             onClicked: {
                 if (control.alwaysVisibleInput) return;

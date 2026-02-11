@@ -662,7 +662,7 @@ CustomDialog {
                     Layout.maximumHeight:         120
                     clip:                         true
                     ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-                    ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+                    ScrollBar.vertical:           CustomScrollBar {}
                     SFText {
                         width:              425
                         wrapMode:           Text.Wrap
