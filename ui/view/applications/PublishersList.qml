@@ -129,7 +129,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_main
-                        text:                modelData && modelData.nickname 
+                        text:                model && model.nickname 
                     }
 
                     SFLabel {
@@ -139,7 +139,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_secondary
-                        text:                modelData && modelData.shortTitle
+                        text:                model && model.shortTitle
                     }
 
                 }
@@ -163,7 +163,7 @@ ColumnLayout {
                     elide:                Text.ElideRight
                     wrapMode:             Text.WrapAtWordBoundaryOrAnywhere
                     color:                Style.content_main
-                    text:                 modelData && modelData.aboutMe
+                    text:                 model && model.aboutMe
                 }
             }
         }
@@ -180,62 +180,62 @@ ColumnLayout {
                     Layout.topMargin:  4
 
                    CustomToolButton {
-                       visible:     modelData && !!modelData.website
+                       visible:     model && !!model.website
                        icon.source: "qrc:/assets/icon-dapps-store-website-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                modelData && modelData.website
+                                model && model.website
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.discord
+                       visible:     model && !!model.discord
                        icon.source: "qrc:/assets/icon-dapps-store-discord-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://discord.gg/" + modelData && modelData.discord
+                                "https://discord.gg/" + model && model.discord
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.twitter
+                       visible:     model && !!model.twitter
                        icon.source: "qrc:/assets/icon-dapps-store-twitter-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://twitter.com/" + modelData && modelData.twitter
+                                "https://twitter.com/" + model && model.twitter
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.instagram
+                       visible:     model && !!model.instagram
                        icon.source: "qrc:/assets/icon-dapps-store-instagram-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://instagram.com/" + modelData && modelData.instagram
+                                "https://instagram.com/" + model && model.instagram
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.linkedin
+                       visible:     model && !!model.linkedin
                        icon.source: "qrc:/assets/icon-dapps-store-linkedin-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://linkedin.com/" + modelData && modelData.linkedin
+                               "https://linkedin.com/" + model && model.linkedin
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.telegram
+                       visible:     model && !!model.telegram
                        icon.source: "qrc:/assets/icon-dapps-store-telegram-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://t.me/" + modelData && modelData.telegram
+                               "https://t.me/" + model && model.telegram
                             );
                        }
                    }
@@ -252,14 +252,14 @@ ColumnLayout {
                     anchors.right:          parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     checked: {
-                        if (!modelData) {
+                        if (!model) {
                             return false;
                         }
-                        return modelData.enabled
+                        return model.enabled
                     }
                     onClicked : {
-                        let publisherKey = modelData.publisherKey;
-                        if (modelData.enabled) {
+                        let publisherKey = model.publisherKey;
+                        if (model.enabled) {
                             control.addUnwantedPublisherByKey(publisherKey)
                         } else {
                             control.removeUnwantedPublisherByKey(publisherKey)
