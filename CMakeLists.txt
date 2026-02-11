@@ -23,7 +23,7 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
 
     #if(EXISTS ${WINDOWS_IDENTITIY_PFX_FILE})
     #    message(STATUS "Signing executables with: " ${WINDOWS_IDENTITIY_PFX_FILE})
-    #    if(${WINDOWS_IDENTITIY_PFX_PASSWORD})
+    #    if(${WINDOWS_IDENTITIY_PFX_PASSWORD})  
     #        message(WARNING "USE WITH CAUTION: Password for the PFX file has been set!")
     #    endif()
     #else()
@@ -229,6 +229,7 @@ else()
        CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|Clang" AND
        (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 15 OR CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 15))
        add_compile_definitions(_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION) # boost@1.76/1.76.0_4/include/boost/container_hash/hash.hpp:131:33
+       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-enum-constexpr-conversion -Wno-error=enum-constexpr-conversion")
     endif()
 endif()
 
