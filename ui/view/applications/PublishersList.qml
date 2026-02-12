@@ -195,7 +195,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://discord.gg/" + model && model.discord
+                                "https://discord.gg/" + (model && model.discord)
                             );
                        }
                    }
@@ -205,7 +205,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://twitter.com/" + model && model.twitter
+                                "https://x.com/" + (model && model.twitter)
                             );
                        }
                    }
@@ -215,7 +215,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://instagram.com/" + model && model.instagram
+                                "https://instagram.com/" + (model && model.instagram)
                             );
                        }
                    }
@@ -225,7 +225,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://linkedin.com/" + model && model.linkedin
+                               "https://linkedin.com/" + (model && model.linkedin)
                             );
                        }
                    }
@@ -235,7 +235,7 @@ ColumnLayout {
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://t.me/" + model && model.telegram
+                               "https://t.me/" + (model && model.telegram)
                             );
                        }
                    }
