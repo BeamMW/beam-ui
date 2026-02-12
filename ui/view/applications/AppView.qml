@@ -448,19 +448,19 @@ ColumnLayout {
                     }
                 }
 
-                onNewViewRequested: function (ev) {
+                onNewWindowRequested: function (ev) {
                     var url = ev.requestedUrl.toString()
                     Utils.openExternalWithConfirmation(url)
                 }
 
-                onLoadingChanged: {
+                onLoadingChanged: function (loadingInfo) {
                     // do not change this to declarative style, it flickers somewhy, probably because of delays
                     if (control.activeApp && !this.loading) {
                         viewModel.onCompleted(webView)
 
-                        if(loadRequest.status === WebEngineLoadRequest.LoadFailedStatus) {
+                        if(loadingInfo.status === WebEngineView.LoadFailedStatus) {
                             // code in this 'if' will cause next 'if' to be called
-                            control.errorMessage = ["Failed to load", JSON.stringify(loadRequest, null, 4)].join('\n')
+                            control.errorMessage = ["Failed to load", JSON.stringify(loadingInfo, null, 4)].join('\n')
                             // no return
                         }
 
