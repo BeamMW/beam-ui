@@ -78,6 +78,6 @@ Button {
         samples: 9
         color:   control.shadowColor
         source:  rect
-        visible: control.hasShadow && (control.visualFocus || control.hovered || control.checked)
+        visible: control.enabled && control.hasShadow && (control.visualFocus || control.hovered || control.checked)
     }
 }

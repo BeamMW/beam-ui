@@ -12,7 +12,7 @@ CustomDialog {
     property alias okButtonText: okButton.text
     property alias okButtonIconSource: okButton.icon.source
     property alias okButtonVisible: okButton.visible
-    property color okButtonColor: Style.background_button
+    property color okButtonColor: Style.active
     property bool okButtonAllLowercase: okButton.allLowercase
     property alias cancelButton: cancelButton
     property alias cancelButtonEnable: cancelButton.enabled
