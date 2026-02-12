@@ -14,8 +14,8 @@ CustomDialog {
     closePolicy: Popup.NoAutoClose
 
     property bool newPublisher: true
-    property var nickname
-    property var publisherKey
+    property string nickname: ""
+    property string publisherKey: ""
 
     signal goToMyAccount()
 

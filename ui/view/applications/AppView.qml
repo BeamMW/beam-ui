@@ -218,8 +218,10 @@ ColumnLayout {
             onApiCreated: function (api) {
                 control.errorMessage = ""
 
-                webView.profile.cachePath = viewModel.getAppCachePath(control.activeApp["appid"])
-                webView.profile.persistentStoragePath = viewModel.getAppStoragePath(control.activeApp["appid"])
+                // Create profile from C++ to avoid deprecated QML WebEngineProfile
+                if (control.activeApp && control.activeApp["appid"]) {
+                    viewModel.setupAppProfile(webView, control.activeApp["appid"])
+                }
                 webView.url = control.activeApp.url
 
                 var onCallWalletApi = function (request) {
@@ -422,15 +424,6 @@ ColumnLayout {
                 visible:         true
                 backgroundColor: "transparent"
 
-                profile: WebEngineProfile {
-                    httpCacheType:           WebEngineProfile.DiskHttpCache
-                    persistentCookiesPolicy: WebEngineProfile.AllowPersistentCookies
-                    offTheRecord:            false
-                    spellCheckEnabled:       false
-                    httpUserAgent:           viewModel.userAgent
-                    httpCacheMaximumSize:    536870912 // 5GB
-                }
-
                 settings {
                     javascriptCanOpenWindows: false
                 }
@@ -506,18 +499,18 @@ ColumnLayout {
             height: dappsLayout.height
             z: 42
             AppInfoPanel {
-                id:                  txPanel
-                folded:              !control.openedTxID
-                state:               control.openedTxID ? "transactions" : "balance"
-                width:               parent.width
-                anchors.bottom:      parent.bottom
-                anchors.bottomMargin: 10
-                contentItemHeight:   parent.height * (txPanel.maximized ? 0.79 : 0.36)
-                foldsUp:             false
-                visible:             webLayout.visible
-                bkColor:             Style.background_appstx
-                dappName:            (control.activeApp || {}).name || ""
-                dappFilter:          (control.activeApp || {}).appid || "all"
+            id:                  txPanel
+            folded:              !control.openedTxID
+            state:               control.openedTxID ? "transactions" : "balance"
+            width:               parent.width
+            anchors.bottom:      parent.bottom
+            anchors.bottomMargin: 10
+            contentItemHeight:   parent.height * (txPanel.maximized ? 0.79 : 0.36)
+            foldsUp:             false
+            visible:             webLayout.visible
+            bkColor:             Style.background_appstx
+            dappName:            control.activeApp ? control.activeApp.name || "" : ""
+            dappFilter:          control.activeApp ? control.activeApp.appid || "all" : "all"
                 tableOwner:          control
             }
         }
@@ -564,8 +557,8 @@ ColumnLayout {
 
     YouArePublisher {
         id:           youArePublisher
-        nickname:     viewModel.publisherInfo.name
-        publisherKey: viewModel.publisherInfo.pubkey
+        nickname:     !!viewModel.publisherInfo ? viewModel.publisherInfo.name || "" : ""
+        publisherKey: !!viewModel.publisherInfo ? viewModel.publisherInfo.pubkey || "" : ""
 
         onGoToMyAccount: {
             youArePublisher.close()

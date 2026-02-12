@@ -384,6 +384,27 @@ namespace beamui::applications
         disconnect(m_walletModel, &WalletModel::walletStatusChanged, this, &AppsViewModel::loadApps);
     }
 
+    void AppsViewModel::setupAppProfile(QObject* webView, const QString& appid)
+    {
+        if (!webView)
+        {
+            BEAM_LOG_ERROR() << "setupAppProfile: webView is null";
+            return;
+        }
+
+        auto storageName = QString::fromStdString(beam::wallet::StripAppIDPrefix(appid.toStdString()));
+        auto* profile = new QWebEngineProfile(storageName, webView);
+        profile->setHttpCacheType(QWebEngineProfile::DiskHttpCache);
+        profile->setPersistentCookiesPolicy(QWebEngineProfile::AllowPersistentCookies);
+        profile->setSpellCheckEnabled(false);
+        profile->setHttpUserAgent(_userAgent);
+        profile->setHttpCacheMaximumSize(536870912); // 512MB
+        profile->setCachePath(AppSettings().getAppsCachePath(appid));
+        profile->setPersistentStoragePath(AppSettings().getAppsStoragePath(appid));
+
+        webView->setProperty("profile", QVariant::fromValue(profile));
+    }
+
     QString AppsViewModel::getAppsUrl() const
     {
         auto& settings = AppModel::getInstance().getSettings();

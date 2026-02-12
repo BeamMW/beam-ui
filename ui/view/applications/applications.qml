@@ -477,8 +477,8 @@ ColumnLayout {
 
     YouArePublisher {
         id:           youArePublisher
-        nickname:     !!viewModel.publisherInfo ? viewModel.publisherInfo.name : ""
-        publisherKey: !!viewModel.publisherInfo ? viewModel.publisherInfo.pubkey : ""
+        nickname:     !!viewModel.publisherInfo ? viewModel.publisherInfo.name || "" : ""
+        publisherKey: !!viewModel.publisherInfo ? viewModel.publisherInfo.pubkey || "" : ""
 
         onGoToMyAccount: {
             youArePublisher.close()
