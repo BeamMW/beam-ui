@@ -80,9 +80,12 @@ ComboBox {
             id: contentRow
             spacing: 0
             property int parentHeight: 0
+            property string resolvedText: control.textRole
+                ? (myModel[control.textRole] || "")
+                : (itemDelegate.model.modelData !== undefined ? itemDelegate.model.modelData : "")
             property bool showRow: control.filterAssets
-                ? containSearchSubStr(myModel[control.textRole]) && myModel["allowed"]
-                : containSearchSubStr(myModel[control.textRole])
+                ? containSearchSubStr(resolvedText) && myModel["allowed"]
+                : containSearchSubStr(resolvedText)
 
             visible: showRow
             onVisibleChanged: {
@@ -115,10 +118,9 @@ ComboBox {
                 Layout.alignment: Qt.AlignVCenter
 
                 text: {
-                    var text = model
-                    if (control.textRole) {
-                        text = myModel[control.textRole]
-                    }
+                    var text = control.textRole
+                        ? myModel[control.textRole]
+                        : (itemDelegate.model.modelData !== undefined ? itemDelegate.model.modelData : itemDelegate.model)
                     return (transformText && typeof(transformText) == "function")
                         ? transformText(text)
                         : text;
