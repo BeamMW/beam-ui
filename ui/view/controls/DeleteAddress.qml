@@ -20,7 +20,7 @@ CustomDialog {
     property var     walletID:      addressItem.walletID
     property var     isOldAddr:     addressItem.token == addressItem.walletID
 
-    contentItem: Item { ColumnLayout {
+    contentItem: ColumnLayout {
         spacing: 0
 
         SFText {
@@ -89,5 +89,5 @@ CustomDialog {
                 }
             }
         }
-    }}
+    }
 }

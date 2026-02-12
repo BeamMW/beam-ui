@@ -139,8 +139,7 @@ Pane {
             anchors.right: parent.right
             anchors.top: parent.top
             height:  control.topPadding + headerRow.height +
-                    ( control.folded ? control.bottomPadding : 0 ) +
-                    ( placeholder.visible ? placeholder.Layout.topMargin : 0 )
+                    ( control.folded ? control.bottomPadding : 0 )
 
             cursorShape:  Qt.PointingHandCursor
             onClicked: {

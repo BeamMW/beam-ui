@@ -26,7 +26,7 @@ CustomDialog {
     property bool    commentValid:  comment == "" || comment == addressItem.name || viewModel.commentValid(comment)
     property bool    extended:      false
 
-    contentItem: Item { ColumnLayout {
+    contentItem: ColumnLayout {
         spacing: 0
 
         SFText {
@@ -224,5 +224,5 @@ CustomDialog {
                 }
             }
         }
-    }}
+    }
 }
