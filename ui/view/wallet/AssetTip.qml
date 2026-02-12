@@ -71,7 +71,7 @@ AlphaTipPopup {
 
     property var maxScrollHeight: main.height - assetTip.y - tabsRow.height - stateLayout.spacing - assetTip.topPadding - assetTip.bottomPadding
 
-    contentItem: Item { ColumnLayout {
+    contentItem: ColumnLayout {
         id: stateLayout
         spacing: 15
 
@@ -570,5 +570,5 @@ AlphaTipPopup {
                 }
             }
         }
-    }}
+    }
 }

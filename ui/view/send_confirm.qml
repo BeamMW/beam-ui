@@ -114,7 +114,7 @@ ConfirmationDialog {
     }
 
     topPadding: 30
-    contentItem: Item { ColumnLayout {
+    contentItem: ColumnLayout {
         spacing: 22
 
         GridLayout {
@@ -395,5 +395,5 @@ ConfirmationDialog {
         Item {
             height: 1
         }
-    }}
+    }
 }

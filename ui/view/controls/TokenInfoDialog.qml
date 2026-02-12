@@ -28,310 +28,308 @@ CustomDialog {
         forceActiveFocus();
     }
 
-    contentItem: Item {
-        ColumnLayout {
-            id: contentColumn
+    contentItem: ColumnLayout {
+        id: contentColumn
 
-            GridLayout {
-                id: contentOnlineGrid
-                Layout.margins:         30
-                columns:                2
-                visible:                !dialog.isShieldedSupported
+        GridLayout {
+            id: contentOnlineGrid
+            Layout.margins:         30
+            columns:                2
+            visible:                !dialog.isShieldedSupported
 
-                RowLayout {
-                    Layout.columnSpan: 2
+            RowLayout {
+                Layout.columnSpan: 2
 
-                    SFText {
-                        Layout.fillWidth:   true
-                        horizontalAlignment:Text.AlignHCenter
-                        leftPadding:        30
-                        font.pixelSize:     18
-                        font.styleName:     "Bold"
-                        font.weight:        Font.Bold
-                        color:              Style.content_main
+                SFText {
+                    Layout.fillWidth:   true
+                    horizontalAlignment:Text.AlignHCenter
+                    leftPadding:        30
+                    font.pixelSize:     18
+                    font.styleName:     "Bold"
+                    font.weight:        Font.Bold
+                    color:              Style.content_main
 
-                        //% "Online (SBBS) address details"
-                        text: qsTrId("address-info-title-online")
+                    //% "Online (SBBS) address details"
+                    text: qsTrId("address-info-title-online")
+                }
+            }
+
+            RowLayout {
+                Layout.columnSpan: 2
+                Layout.topMargin:  20
+
+                SFLabel {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.preferredWidth:  510
+                    wrapMode:               Text.Wrap
+                    font.pixelSize:         14
+                    color:                  Style.content_main
+                    text:                   viewModel.address
+                    copyMenuEnabled:        true
+                    elide:                  Text.ElideMiddle
+                    onCopyText: function () {
+                        BeamGlobals.copyToClipboard(text)
                     }
                 }
 
-                RowLayout {
-                    Layout.columnSpan: 2
-                    Layout.topMargin:  20
-
-                    SFLabel {
-                        Layout.alignment:       Qt.AlignTop
-                        Layout.preferredWidth:  510
-                        wrapMode:               Text.Wrap
-                        font.pixelSize:         14
-                        color:                  Style.content_main
-                        text:                   viewModel.address
-                        copyMenuEnabled:        true
-                        elide:                  Text.ElideMiddle
-                        onCopyText: function () {
-                            BeamGlobals.copyToClipboard(text)
-                        }
+                CustomToolButton {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.leftMargin:      4
+                    Layout.topMargin:       -8
+                    icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                    //% "Copy"
+                    CustomToolTip {
+                        text:    qsTrId("general-copy")
+                        visible: parent.hovered
                     }
-
-                    CustomToolButton {
-                        Layout.alignment:       Qt.AlignTop
-                        Layout.leftMargin:      4
-                        Layout.topMargin:       -8
-                        icon.source:            "qrc:/assets/icon-copy-blue.svg"
-                        //% "Copy"
-                        CustomToolTip {
-                            text:    qsTrId("general-copy")
-                            visible: parent.hovered
-                        }
-                        hoverEnabled: true
-                        onClicked: function () {
-                            BeamGlobals.copyToClipboard(viewModel.address)
-                        }
-                    }
-                }
-
-                RowLayout {
-                    Layout.columnSpan: 2
-
-                    SFText {
-                        Layout.fillWidth:   true
-                        horizontalAlignment:Text.AlignHCenter
-                        leftPadding:        30
-                        color:              Style.content_secondary
-                        font.italic:        true
-                        //% "You are currently connected to node that supports only online transactions."
-                        text: qsTrId("address-info-remote-node-warning")
+                    hoverEnabled: true
+                    onClicked: function () {
+                        BeamGlobals.copyToClipboard(viewModel.address)
                     }
                 }
             }
 
-            GridLayout {
-                id: contentGrid
-                Layout.margins:         30
-                rowSpacing:             25
-                columnSpacing:          25
-                columns:                2
-                visible:                dialog.isShieldedSupported
+            RowLayout {
+                Layout.columnSpan: 2
 
-                RowLayout {
-                    Layout.columnSpan: 2
-
-                    SFText {
-                        Layout.fillWidth:   true
-                        horizontalAlignment:Text.AlignHCenter
-                        leftPadding:        30
-                        font.pixelSize:     18
-                        font.styleName:     "Bold"
-                        font.weight:        Font.Bold
-                        color:              Style.content_main
-
-                        text: viewModel.isMaxPrivacy ?
-                                //% "Address details with max anonymity set"
-                                qsTrId("address-info-title-mp") :
-                                //% "address details"
-                                viewModel.transactionType + " " + qsTrId("address-info-title")
-                    }
-                }
-
-                // Address
                 SFText {
-                    Layout.alignment:       Qt.AlignTop
-                    font.pixelSize:         14
-                    color:                  Style.content_disabled
-                    //% "Address"
-                    text:                   qsTrId("address-info-address") + ":"
-                    visible:                !viewModel.isMaxPrivacy
+                    Layout.fillWidth:   true
+                    horizontalAlignment:Text.AlignHCenter
+                    leftPadding:        30
+                    color:              Style.content_secondary
+                    font.italic:        true
+                    //% "You are currently connected to node that supports only online transactions."
+                    text: qsTrId("address-info-remote-node-warning")
                 }
+            }
+        }
 
-                RowLayout {
-                    Layout.fillWidth: true
+        GridLayout {
+            id: contentGrid
+            Layout.margins:         30
+            rowSpacing:             25
+            columnSpacing:          25
+            columns:                2
+            visible:                dialog.isShieldedSupported
 
-                    ScrollView {
-                        Layout.preferredWidth:        578
-                        Layout.maximumHeight:         200
-                        clip:                         true
-                        ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-                        ScrollBar.vertical:           CustomScrollBar {}
+            RowLayout {
+                Layout.columnSpan: 2
 
-                        Column {
-                            spacing: 10
-
-                            SFLabel {
-                                width:                    578
-                                copyMenuEnabled:          true
-                                wrapMode:                 Text.Wrap
-                                font.pixelSize:           14
-                                color:                    Style.content_main
-                                text:                     viewModel.token
-                                onCopyText: function () {
-                                    BeamGlobals.copyToClipboard(text)
-                                }
-                            }
-
-                            SFText {
-                                width:          578
-                                font.pixelSize: 14
-                                font.italic:    true
-                                color:          Style.content_disabled
-                                visible:        !viewModel.isMaxPrivacy
-                                //% "Regular address includes both online and offline addresses."
-                                text: qsTrId("address-info-regular-notice")
-                            }
-                        }
-                    }
-
-                    CustomToolButton {
-                        Layout.alignment:       Qt.AlignTop
-                        Layout.leftMargin:      4
-                        Layout.topMargin:       -8
-                        icon.source:            "qrc:/assets/icon-copy-blue.svg"
-                        //% "Copy"
-                        CustomToolTip {
-                            text:    qsTrId("general-copy")
-                            visible: parent.hovered
-                        }
-                        hoverEnabled: true
-                        onClicked: function () {
-                            BeamGlobals.copyToClipboard(viewModel.token)
-                        }
-                    }
-                }
-
-                Rectangle {
-                    Layout.columnSpan: 2
-                    Layout.fillWidth: true
-                    height:  1
-                    color:   "white"
-                    opacity: 0.1
-                    visible: sbbsAdrrCtrl.visible || endpointCtrl.visible
-                }
-
-                // SBBS Address
                 SFText {
+                    Layout.fillWidth:   true
+                    horizontalAlignment:Text.AlignHCenter
+                    leftPadding:        30
+                    font.pixelSize:     18
+                    font.styleName:     "Bold"
+                    font.weight:        Font.Bold
+                    color:              Style.content_main
+
+                    text: viewModel.isMaxPrivacy ?
+                            //% "Address details with max anonymity set"
+                            qsTrId("address-info-title-mp") :
+                            //% "address details"
+                            viewModel.transactionType + " " + qsTrId("address-info-title")
+                }
+            }
+
+            // Address
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Address"
+                text:                   qsTrId("address-info-address") + ":"
+                visible:                !viewModel.isMaxPrivacy
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+
+                ScrollView {
+                    Layout.preferredWidth:        578
+                    Layout.maximumHeight:         200
+                    clip:                         true
+                    ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
+                    ScrollBar.vertical:           CustomScrollBar {}
+
+                    Column {
+                        spacing: 10
+
+                        SFLabel {
+                            width:                    578
+                            copyMenuEnabled:          true
+                            wrapMode:                 Text.Wrap
+                            font.pixelSize:           14
+                            color:                    Style.content_main
+                            text:                     viewModel.token
+                            onCopyText: function () {
+                                BeamGlobals.copyToClipboard(text)
+                            }
+                        }
+
+                        SFText {
+                            width:          578
+                            font.pixelSize: 14
+                            font.italic:    true
+                            color:          Style.content_disabled
+                            visible:        !viewModel.isMaxPrivacy
+                            //% "Regular address includes both online and offline addresses."
+                            text: qsTrId("address-info-regular-notice")
+                        }
+                    }
+                }
+
+                CustomToolButton {
                     Layout.alignment:       Qt.AlignTop
-                    font.pixelSize:         14
-                    color:                  Style.content_disabled
-                    /*% "SBBS Address
+                    Layout.leftMargin:      4
+                    Layout.topMargin:       -8
+                    icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                    //% "Copy"
+                    CustomToolTip {
+                        text:    qsTrId("general-copy")
+                        visible: parent.hovered
+                    }
+                    hoverEnabled: true
+                    onClicked: function () {
+                        BeamGlobals.copyToClipboard(viewModel.token)
+                    }
+                }
+            }
+
+            Rectangle {
+                Layout.columnSpan: 2
+                Layout.fillWidth: true
+                height:  1
+                color:   "white"
+                opacity: 0.1
+                visible: sbbsAdrrCtrl.visible || endpointCtrl.visible
+            }
+
+            // SBBS Address
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                /*% "SBBS Address
 (use for CEX withdrawals and mining)"*/
-                    text:                   qsTrId("address-info-sbbs-address") + ":"
-                    visible:                sbbsAdrrCtrl.visible
-                }
+                text:                   qsTrId("address-info-sbbs-address") + ":"
+                visible:                sbbsAdrrCtrl.visible
+            }
 
-                RowLayout {
-                    id: sbbsAdrrCtrl
-                    Layout.fillWidth:  true
-                    visible:           viewModel.address.length && !viewModel.isMaxPrivacy
+            RowLayout {
+                id: sbbsAdrrCtrl
+                Layout.fillWidth:  true
+                visible:           viewModel.address.length && !viewModel.isMaxPrivacy
 
-                    SFLabel {
-                        Layout.alignment:       Qt.AlignTop
-                        Layout.preferredWidth:  578
-                        wrapMode:               Text.Wrap
-                        font.pixelSize:         14
-                        color:                  Style.content_main
-                        text:                   viewModel.address
-                        copyMenuEnabled:        true
-                        elide:                  Text.ElideMiddle
-                        onCopyText: function () {
-                            BeamGlobals.copyToClipboard(text)
-                        }
-                    }
-
-                    CustomToolButton {
-                        Layout.alignment:       Qt.AlignTop
-                        Layout.leftMargin:      4
-                        Layout.topMargin:       -8
-                        icon.source:            "qrc:/assets/icon-copy-blue.svg"
-                        //% "Copy"
-                        CustomToolTip {
-                            text:    qsTrId("general-copy")
-                            visible: parent.hovered
-                        }
-                        hoverEnabled: true
-                        onClicked: function () {
-                            BeamGlobals.copyToClipboard(viewModel.address)
-                        }
-                    }
-                }
-
-                // Signature
-                SFText {
+                SFLabel {
                     Layout.alignment:       Qt.AlignTop
+                    Layout.preferredWidth:  578
+                    wrapMode:               Text.Wrap
                     font.pixelSize:         14
-                    color:                  Style.content_disabled
-                    //% "Signature"
-                    text:                   qsTrId("general-wallet-signature") + ":"
-                    visible:                endpointCtrl.visible
+                    color:                  Style.content_main
+                    text:                   viewModel.address
+                    copyMenuEnabled:        true
+                    elide:                  Text.ElideMiddle
+                    onCopyText: function () {
+                        BeamGlobals.copyToClipboard(text)
+                    }
                 }
 
-                RowLayout {
-                    id: endpointCtrl
-                    Layout.fillWidth:  true
-                    visible:           viewModel.identity.length
-
-                    SFLabel {
-                        Layout.alignment:       Qt.AlignTop
-                        Layout.preferredWidth:  578
-                        wrapMode:               Text.Wrap
-                        font.pixelSize:         14
-                        color:                  Style.content_main
-                        text:                   viewModel.identity
-                        copyMenuEnabled:        true
-                        elide:                  Text.ElideMiddle
-                        onCopyText: function () {
-                            BeamGlobals.copyToClipboard(text)
-                        }
+                CustomToolButton {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.leftMargin:      4
+                    Layout.topMargin:       -8
+                    icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                    //% "Copy"
+                    CustomToolTip {
+                        text:    qsTrId("general-copy")
+                        visible: parent.hovered
                     }
-
-                    CustomToolButton {
-                        Layout.alignment:       Qt.AlignTop
-                        Layout.leftMargin:      4
-                        Layout.topMargin:       -8
-                        icon.source:            "qrc:/assets/icon-copy-blue.svg"
-                        //% "Copy"
-                        CustomToolTip {
-                            text:    qsTrId("general-copy")
-                            visible: parent.hovered
-                        }
-                        hoverEnabled: true
-                        onClicked: function () {
-                            BeamGlobals.copyToClipboard(viewModel.identity)
-                        }
+                    hoverEnabled: true
+                    onClicked: function () {
+                        BeamGlobals.copyToClipboard(viewModel.address)
                     }
                 }
             }
 
-            Row {
-                id:                     buttonsLayout
-                Layout.fillHeight:      true
-                Layout.alignment:       Qt.AlignHCenter
-                Layout.leftMargin:      30
-                Layout.rightMargin:     30
-                Layout.bottomMargin:    30
-                spacing:                20
+            // Signature
+            SFText {
+                Layout.alignment:       Qt.AlignTop
+                font.pixelSize:         14
+                color:                  Style.content_disabled
+                //% "Signature"
+                text:                   qsTrId("general-wallet-signature") + ":"
+                visible:                endpointCtrl.visible
+            }
 
-                CustomButton {
-                    icon.source:    "qrc:/assets/icon-cancel-16.svg"
-                    //% "Close"
-                    text:           qsTrId("general-close")
-                    onClicked: {
-                        dialog.close()
+            RowLayout {
+                id: endpointCtrl
+                Layout.fillWidth:  true
+                visible:           viewModel.identity.length
+
+                SFLabel {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.preferredWidth:  578
+                    wrapMode:               Text.Wrap
+                    font.pixelSize:         14
+                    color:                  Style.content_main
+                    text:                   viewModel.identity
+                    copyMenuEnabled:        true
+                    elide:                  Text.ElideMiddle
+                    onCopyText: function () {
+                        BeamGlobals.copyToClipboard(text)
                     }
                 }
 
-                PrimaryButton {
-                    icon.source:        "qrc:/assets/icon-copy-blue.svg"
-                    palette.buttonText: Style.content_opposite
-                    icon.color:         Style.content_opposite
-                    palette.button:     dialog.incoming ? Style.accent_incoming : Style.accent_outgoing
-                    //% "copy address and close"
-                    text:               qsTrId("address-info-copy-and-close")
-                    onClicked: {
-                        if (dialog.isShieldedSupported)
-                            BeamGlobals.copyToClipboard(viewModel.token);
-                        else
-                            BeamGlobals.copyToClipboard(viewModel.address);
-                        dialog.close();
+                CustomToolButton {
+                    Layout.alignment:       Qt.AlignTop
+                    Layout.leftMargin:      4
+                    Layout.topMargin:       -8
+                    icon.source:            "qrc:/assets/icon-copy-blue.svg"
+                    //% "Copy"
+                    CustomToolTip {
+                        text:    qsTrId("general-copy")
+                        visible: parent.hovered
                     }
+                    hoverEnabled: true
+                    onClicked: function () {
+                        BeamGlobals.copyToClipboard(viewModel.identity)
+                    }
+                }
+            }
+        }
+
+        Row {
+            id:                     buttonsLayout
+            Layout.fillHeight:      true
+            Layout.alignment:       Qt.AlignHCenter
+            Layout.leftMargin:      30
+            Layout.rightMargin:     30
+            Layout.bottomMargin:    30
+            spacing:                20
+
+            CustomButton {
+                icon.source:    "qrc:/assets/icon-cancel-16.svg"
+                //% "Close"
+                text:           qsTrId("general-close")
+                onClicked: {
+                    dialog.close()
+                }
+            }
+
+            PrimaryButton {
+                icon.source:        "qrc:/assets/icon-copy-blue.svg"
+                palette.buttonText: Style.content_opposite
+                icon.color:         Style.content_opposite
+                palette.button:     dialog.incoming ? Style.accent_incoming : Style.accent_outgoing
+                //% "copy address and close"
+                text:               qsTrId("address-info-copy-and-close")
+                onClicked: {
+                    if (dialog.isShieldedSupported)
+                        BeamGlobals.copyToClipboard(viewModel.token);
+                    else
+                        BeamGlobals.copyToClipboard(viewModel.address);
+                    dialog.close();
                 }
             }
         }
