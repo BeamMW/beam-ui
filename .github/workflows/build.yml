@@ -2,10 +2,18 @@ name: Build
 
 on: [push]
 
+permissions:
+  contents: read
+
 env:
   BUILD_TYPE: Release
   BUILD_CONFIG: RelWithDebInfo
   BEAM_DEFAULT_NETWORK: mainnet
+  QT_VERSION: "6.8.3"
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   ###############################################################################
@@ -13,9 +21,11 @@ jobs:
   ###############################################################################
   build_desktop:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
     strategy:
+      fail-fast: false
       matrix:
-        os: [macos-15, ubuntu-22.04, windows-2019]
+        os: [macos-15, ubuntu-22.04, windows-2022]
 
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +33,6 @@ jobs:
           fetch-depth: 0
 
       - name: Submodule update
-        shell: bash
         run: |
           git submodule update --init --recursive --jobs 4
           cd beam
@@ -33,20 +42,18 @@ jobs:
       # Create Build Environment
       ###############################################################################
       - name: OS name [macos && windows]
-        shell: bash
-        if: startsWith(matrix.os, 'macos') || matrix.os == 'windows-2019'
+        if: startsWith(matrix.os, 'macos') || startsWith(matrix.os, 'windows')
         run: echo "PACKAGE_NAME=${{runner.os}}" >> $GITHUB_ENV
 
-      - name: OS name [ununtu all]
-        shell: bash
-        if: matrix.os == 'ubuntu-22.04'
+      - name: OS name [ubuntu]
+        if: startsWith(matrix.os, 'ubuntu')
         run: echo "PACKAGE_NAME=Linux" >> $GITHUB_ENV
 
       - name: Create Build Environment [macos]
         if: startsWith(matrix.os, 'macos')
         run: |
           echo $GITHUB_WORKSPACE
-          echo "OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1" >> $GITHUB_ENV
+          echo "OPENSSL_ROOT_DIR=$(brew --prefix openssl@3)" >> $GITHUB_ENV
           export TZ=GMT-3
           sudo systemsetup -gettimezone
           security create-keychain -p github macos-build.keychain
@@ -57,9 +64,8 @@ jobs:
           security import certificate.p12 -k macos-build.keychain -P ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }} -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k github macos-build.keychain
 
-      - name: Create Build Environment [ununtu all]
-        shell: bash
-        if: matrix.os == 'ubuntu-22.04'
+      - name: Create Build Environment [ubuntu]
+        if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt update
           sudo apt install build-essential -y
@@ -68,37 +74,31 @@ jobs:
           sudo apt install libwebp-dev libzstd-dev libbsd-dev uuid-dev liblzma-dev libtiff-dev -y
 
       - name: Create Build Environment [windows]
-        shell: bash
-        if: matrix.os == 'windows-2019'
+        if: startsWith(matrix.os, 'windows')
         run: |
           git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
           echo "OPENSSL_ROOT_DIR=c:\beam-libs\openssl" >> $GITHUB_ENV
-          git clone https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git c:/boost_prebuild
+          git clone --depth=1 https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git c:/boost_prebuild
           echo "BOOST_ROOT=c:\boost_prebuild" >> $GITHUB_ENV
 
       - name: Download boost [ubuntu && macos]
-        if: matrix.os != 'windows-2019'
-        shell: bash
+        if: "!startsWith(matrix.os, 'windows')"
         run: |
           git clone --depth=1 https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git ${{runner.workspace}}/boost_prebuild
           echo "BOOST_INCLUDEDIR=${{runner.workspace}}/boost_prebuild/include" >> $GITHUB_ENV
           echo "BOOST_LIBRARYDIR=${{runner.workspace}}/boost_prebuild/lib/" >> $GITHUB_ENV
 
       ###############################################################################
-      # Install Qt5
+      # Install Qt6
       ###############################################################################
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v4
-        with:
-          path: ../Qt
-          key: ${{ matrix.os }}-QtCache
-      - name: Install Qt
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v4
         with:
-          version: "5.15.2"
-          modules: "qtwebengine"
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
+          version: ${{ env.QT_VERSION }}
+          modules: "qthttpserver qt5compat qtwebchannel qtpositioning qtshadertools"
+          extra: "--extensions qtwebengine"
+          cache: true
+          cache-key-prefix: "qt-${{ matrix.os }}"
 
       ###############################################################################
       # Configure CMake
@@ -106,60 +106,88 @@ jobs:
       - name: Configure CMake [macos]
         if: startsWith(matrix.os, 'macos')
         run: |
-          cmake $GITHUB_WORKSPACE -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_SIGN_MACOS_BINARY=On -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" -DBEAM_HW_WALLET=Off .
+          cmake -B build -S $GITHUB_WORKSPACE \
+            -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK \
+            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+            -DDEBUG_MESSAGES_IN_RELEASE_MODE=On \
+            -DBEAM_LINK_TYPE=Static \
+            -DBEAM_USE_STATIC_QT=FALSE \
+            -DBRANCH_NAME=${GITHUB_REF##*/} \
+            -DBEAM_SIGN_MACOS_BINARY=On \
+            -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" \
+            -DBEAM_HW_WALLET=Off
 
-      - name: Configure CMake [ununtu all]
-        if: matrix.os == 'ubuntu-22.04'
+      - name: Configure CMake [ubuntu]
+        if: startsWith(matrix.os, 'ubuntu')
         run: |
-          cmake $GITHUB_WORKSPACE  -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr -DDEBUG_MESSAGES_IN_RELEASE_MODE=On -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+          cmake -B build -S $GITHUB_WORKSPACE \
+            -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK \
+            -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DDEBUG_MESSAGES_IN_RELEASE_MODE=On \
+            -DBEAM_LINK_TYPE=Static \
+            -DBEAM_USE_STATIC_QT=FALSE \
+            -DBRANCH_NAME=${GITHUB_REF##*/} \
+            -DBEAM_HW_WALLET=Off
 
       - name: Configure CMake [windows]
-        shell: bash
-        if: matrix.os == 'windows-2019'
+        if: startsWith(matrix.os, 'windows')
         run: |
-          cmake -G "Visual Studio 16 2019" -A x64  -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK -DOPENSSL_ROOT_DIR=/c/beam-libs/openssl -DCMAKE_CONFIGURATION_TYPES:STRING=$BUILD_CONFIG -DBEAM_LINK_TYPE=Static -DBEAM_USE_STATIC_QT=FALSE -DBRANCH_NAME=${GITHUB_REF##*/} -DBEAM_HW_WALLET=Off .
+          cmake -B build -S $GITHUB_WORKSPACE \
+            -G "Visual Studio 17 2022" -A x64 \
+            -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK \
+            -DOPENSSL_ROOT_DIR=/c/beam-libs/openssl \
+            -DCMAKE_CONFIGURATION_TYPES:STRING=$BUILD_CONFIG \
+            -DBEAM_LINK_TYPE=Static \
+            -DBEAM_USE_STATIC_QT=FALSE \
+            -DBRANCH_NAME=${GITHUB_REF##*/} \
+            -DBEAM_HW_WALLET=Off
 
       - name: Save version info
-        shell: bash
         run: |
-          echo "BEAM_VERSION=$(cat beam_version.gen)" >> $GITHUB_ENV
+          echo "BEAM_VERSION=$(cat build/beam_version.gen)" >> $GITHUB_ENV
           echo "BEAM_TARGET_SUFFIX=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX2=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX3=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX4=" >> $GITHUB_ENV
-          rm beam_version.gen
+          rm build/beam_version.gen
 
       ###############################################################################
       # Build
       ###############################################################################
       - name: Build [macos]
         if: startsWith(matrix.os, 'macos')
-        run: cmake --build . --parallel --config $BUILD_TYPE
+        run: cmake --build build --parallel --config $BUILD_TYPE
 
-      - name: Build [ununtu all]
-        shell: bash
-        if: matrix.os == 'ubuntu-22.04'
-        run: make -j$(nproc)
+      - name: Build [ubuntu]
+        if: startsWith(matrix.os, 'ubuntu')
+        run: cmake --build build --parallel --config $BUILD_TYPE
 
       - name: Build [windows]
-        shell: bash
-        if: matrix.os == 'windows-2019'
-        run: cmake --build . --config $BUILD_CONFIG --parallel
+        if: startsWith(matrix.os, 'windows')
+        run: cmake --build build --parallel --config $BUILD_CONFIG
 
       ###############################################################################
       # Pack
       ###############################################################################
-      - name: CPack [macos && ununtu all]
-        if: matrix.os != 'windows-2019'
-        run: cpack
+      - name: CPack [macos && ubuntu]
+        if: "!startsWith(matrix.os, 'windows')"
+        run: cd build && cpack
 
-      - name: AppImage [ubuntu-22.04]
-        if: matrix.os == 'ubuntu-22.04'
+      - name: AppImage [ubuntu]
+        if: startsWith(matrix.os, 'ubuntu')
+        env:
+          QMAKE: ${{ env.QT_ROOT_DIR }}/bin/qmake
+          QML_SOURCES_PATHS: ${{ github.workspace }}/ui/view
         run: |
           echo "Installing FUSE"
           sudo add-apt-repository universe
           sudo apt install -y libfuse2
+          echo "Downloading linuxdeploy and Qt plugin"
+          wget -q "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
+          wget -q "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage"
+          chmod a+x linuxdeploy*.AppImage
           echo "Creating AppImage deploy tree"
           mkdir -p ./deploy/usr/bin
           mkdir -p ./deploy/usr/share/applications
@@ -167,38 +195,39 @@ jobs:
           mkdir -p ./deploy/usr/share/icons/hicolor/256x256/mimetypes
           mkdir -p ./deploy/usr/share/mime/packages
           echo "Copying files to AppImage deploy tree"
-          cp ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
-          cp ui/dapps_store_app.wasm deploy/usr/bin/
-          cp -r ui/apps deploy/usr/bin/
-          cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
-          cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
+          cp build/ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
+          cp build/ui/dapps_store_app.wasm deploy/usr/bin/
+          cp -r build/ui/apps deploy/usr/bin/
+          cp build/ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
+          cp build/ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
           cp ui/x-beam-dapp.xml deploy/usr/share/mime/packages
-          cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
+          cp build/ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
           cp ui/beam-wallet.cfg deploy/usr/bin/
           echo "Creating AppImage"
-          wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" 
-          chmod a+x linuxdeployqt*.AppImage
           export VERSION=${{env.BEAM_VERSION}}
-          # Below -exclude-libs is a work around for https://github.com/probonopd/linuxdeployqt/issues/35
-          ./linuxdeployqt*.AppImage ./deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop -appimage -no-translations -always-overwrite -qmldir="./ui/view" -no-copy-copyright-files -exclude-libs="libnss3.so,libnssutil3.so"
+          ./linuxdeploy-x86_64.AppImage \
+            --appdir deploy \
+            --desktop-file deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop \
+            --icon-file deploy/usr/share/icons/hicolor/256x256/apps/beam.png \
+            --plugin qt \
+            --output appimage \
+            --exclude-library "libnss3.so" \
+            --exclude-library "libnssutil3.so"
 
       - name: CPack [windows]
-        shell: bash
-        if: matrix.os == 'windows-2019'
-        run: cpack.exe --verbose -G NSIS -C $BUILD_CONFIG
+        if: startsWith(matrix.os, 'windows')
+        run: cd build && cpack.exe --verbose -G NSIS -C $BUILD_CONFIG
 
       ###############################################################################
       # Collect artifacts
       ###############################################################################
       - name: Collect [macos]
-        shell: bash
         if: startsWith(matrix.os, 'macos')
         run: |
-          cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
+          cp build/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Darwin.dmg Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
           codesign --deep --force -v -s "${{secrets.MACOS_SIGN_IDENTITY}}" -o runtime --timestamp Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg
 
       - name: Notarize [macos]
-        shell: bash
         if: startsWith(matrix.os, 'macos')
         env:
           MACOS_NOTARIZE_USER: ${{ secrets.MACOS_NOTARIZE_USER }}
@@ -211,16 +240,14 @@ jobs:
           shasum -a 256 Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.dmg > checksum.txt
 
       - name: Configure GPG Key [ubuntu]
-        shell: bash
-        if: matrix.os == 'ubuntu-22.04'
+        if: startsWith(matrix.os, 'ubuntu')
         run: |
           echo -n "$GPG_SIGNING_KEY" | gpg2 --import
         env:
           GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
 
       - name: Sign AppImage [ubuntu]
-        shell: bash
-        if: matrix.os == 'ubuntu-22.04'
+        if: startsWith(matrix.os, 'ubuntu')
         run: |
           mkdir signing
           cd signing
@@ -236,27 +263,23 @@ jobs:
           ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-signature
 
       - name: Collect [ubuntu]
-        shell: bash
-        if: matrix.os == 'ubuntu-22.04'
+        if: startsWith(matrix.os, 'ubuntu')
         run: |
-          #cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-Linux.deb Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb
-          #sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.deb > checksum.txt
           cp Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
           sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
           chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
 
       - name: Collect [windows]
-        shell: bash
-        if: matrix.os == 'windows-2019'
+        if: startsWith(matrix.os, 'windows')
         run: |
-          cp BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-win64.exe Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.exe
+          cp build/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}-${{env.BEAM_VERSION}}-win64.exe Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.exe
           certUtil -hashfile Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.exe SHA256 > checksum.txt
 
       ###############################################################################
       # Upload
       ###############################################################################
       - uses: actions/upload-artifact@v4
-        if: matrix.os == 'windows-2019' || startsWith(matrix.os, 'macos')
+        if: startsWith(matrix.os, 'windows') || startsWith(matrix.os, 'macos')
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
           path: |
@@ -265,15 +288,17 @@ jobs:
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v4
-        if: matrix.os == 'ubuntu-22.04'
+        if: startsWith(matrix.os, 'ubuntu')
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
-          path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+          path: |
+            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v4
-        if: matrix.os == 'windows-2019'
+        if: startsWith(matrix.os, 'windows')
         with:
           name: beam-pdb${{env.BEAM_TARGET_SUFFIX}}-${{env.BEAM_VERSION}}
-          path: ui/${{env.BUILD_CONFIG}}/Beam Wallet${{env.BEAM_DISPLAY_SUFFIX3}}.pdb
+          path: build/ui/${{env.BUILD_CONFIG}}/Beam Wallet${{env.BEAM_DISPLAY_SUFFIX3}}.pdb
           if-no-files-found: error
