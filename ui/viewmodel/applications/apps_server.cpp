@@ -21,7 +21,11 @@ namespace beamui::applications
 {
     AppsServer::AppsServer(const QString& serveFrom, uint32_t port)
         : _documentRoot(serveFrom)
+        , _canonicalRoot(_documentRoot.canonicalPath())
     {
+        if (_canonicalRoot.isEmpty())
+            throw std::runtime_error("document root does not exist");
+
         _server = std::make_unique<QHttpServer>();
 
         // Use setMissingHandler as a catch-all to serve static files for any path
@@ -33,27 +37,30 @@ namespace beamui::applications
 
                 QString absolutePath = _documentRoot.absoluteFilePath(path);
 
-                // Prevent path traversal outside document root
-                if (!absolutePath.startsWith(_documentRoot.absolutePath())) {
+                // Resolve symlinks and ".." to a canonical path for safe comparison
+                QString canonical = QFileInfo(absolutePath).canonicalFilePath();
+                if (canonical.isEmpty() || !canonical.startsWith(_canonicalRoot)) {
                     responder.write(QHttpServerResponder::StatusCode::Forbidden);
                     return;
                 }
 
-                QFileInfo fileInfo(absolutePath);
-                if (!fileInfo.exists() || fileInfo.isDir()) {
+                QFileInfo fileInfo(canonical);
+                if (fileInfo.isDir()) {
                     responder.write(QHttpServerResponder::StatusCode::NotFound);
                     return;
                 }
 
-                QFile file(absolutePath);
-                if (!file.open(QIODevice::ReadOnly)) {
+                // Stream via QIODevice — avoids loading entire file into memory
+                auto *file = new QFile(canonical);
+                if (!file->open(QIODevice::ReadOnly)) {
+                    delete file;
                     responder.write(QHttpServerResponder::StatusCode::Forbidden);
                     return;
                 }
 
-                QByteArray content = file.readAll();
-                QByteArray mimeType = _mimeDb.mimeTypeForFile(absolutePath).name().toUtf8();
-                responder.write(content, mimeType);
+                QByteArray mimeType = _mimeDb.mimeTypeForFile(canonical).name().toUtf8();
+                // Note: This function takes the ownership of data.
+                responder.write(file, mimeType);
             });
 
         _tcpServer = new QTcpServer();
@@ -63,7 +70,13 @@ namespace beamui::applications
             _tcpServer = nullptr;
             throw std::runtime_error("failed to listen");
         }
-        _server->bind(_tcpServer);
+        if (!_server->bind(_tcpServer))
+        {
+            // listen() succeeded but bind() failed; _tcpServer was not reparented
+            delete _tcpServer;
+            _tcpServer = nullptr;
+            throw std::runtime_error("failed to bind");
+        }
     }
 
     AppsServer::~AppsServer()

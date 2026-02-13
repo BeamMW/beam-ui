@@ -29,6 +29,7 @@ namespace beamui::applications
 
     private:
         QDir _documentRoot;
+        QString _canonicalRoot;  // resolved once at construction for path-traversal checks
         QMimeDatabase _mimeDb;
         std::unique_ptr<QHttpServer> _server;
         QTcpServer* _tcpServer = nullptr;  // owned by _server after bind()
