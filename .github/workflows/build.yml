@@ -144,13 +144,13 @@ jobs:
 
       - name: Save version info
         run: |
-          echo "BEAM_VERSION=$(cat build/beam_version.gen)" >> $GITHUB_ENV
+          echo "BEAM_VERSION=$(cat beam_version.gen)" >> $GITHUB_ENV
           echo "BEAM_TARGET_SUFFIX=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX2=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX3=" >> $GITHUB_ENV
           echo "BEAM_DISPLAY_SUFFIX4=" >> $GITHUB_ENV
-          rm build/beam_version.gen
+          rm beam_version.gen
 
       ###############################################################################
       # Build
