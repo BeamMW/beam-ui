@@ -45,7 +45,6 @@ void SortFilterProxyModel::setSource(QObject *source)
             QSortFilterProxyModel::setSortRole(roleKey(m_sortRole));
         if (!m_filterRole.isEmpty())
             QSortFilterProxyModel::setFilterRole(roleKey(m_filterRole));
-        endFilterChange();
     }
 }
 
