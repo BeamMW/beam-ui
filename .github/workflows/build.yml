@@ -95,8 +95,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
-          modules: "qthttpserver qt5compat qtwebchannel qtpositioning qtshadertools"
-          extra: "--extensions qtwebengine"
+          modules: "qthttpserver qt5compat qtwebchannel qtpositioning qtshadertools qtwebengine"
           cache: true
           cache-key-prefix: "qt-${{ matrix.os }}"
 
