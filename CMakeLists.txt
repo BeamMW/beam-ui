@@ -237,7 +237,6 @@ set(SKIP_INSTALL_ALL ON)
 add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/qrcode)
 add_subdirectory(3rdparty/quazip)
-# qhttpengine removed — replaced by Qt6::HttpServer (see QT6_MIGRATION_PLAN.md Phase 4.2)
 add_subdirectory(ui)
 
 
