@@ -75,9 +75,24 @@ jobs:
 
       - name: Create Build Environment [windows]
         if: startsWith(matrix.os, 'windows')
+        shell: powershell
         run: |
-          git clone --depth=1 https://github.com/BeamMW/libs.git c:/beam-libs
-          echo "OPENSSL_ROOT_DIR=c:\beam-libs\openssl" >> $GITHUB_ENV
+          $ErrorActionPreference = 'Stop'
+
+          choco install openssl --version=3.6.1 -y
+
+          $possibleRoots = @(
+            "C:\Program Files\OpenSSL-Win64"
+          )
+
+          $opensslPath = $possibleRoots | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $opensslPath -or -not (Test-Path (Join-Path $opensslPath 'include'))) {
+            Write-Error "OpenSSL not found (checked: $($possibleRoots -join ', '))"
+          }
+
+          "OPENSSL_ROOT_DIR=$opensslPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "Found OpenSSL at: $opensslPath"
+          
           git clone --depth=1 https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git c:/boost_prebuild
           echo "BOOST_ROOT=c:\boost_prebuild" >> $GITHUB_ENV
 
@@ -135,7 +150,6 @@ jobs:
           cmake -B build -S $GITHUB_WORKSPACE \
             -G "Visual Studio 17 2022" -A x64 \
             -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK \
-            -DOPENSSL_ROOT_DIR=/c/beam-libs/openssl \
             -DCMAKE_CONFIGURATION_TYPES:STRING=$BUILD_CONFIG \
             -DBEAM_LINK_TYPE=Static \
             -DBEAM_USE_STATIC_QT=FALSE \
