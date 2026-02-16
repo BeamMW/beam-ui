@@ -203,7 +203,7 @@ jobs:
 
       - name: Build [ubuntu]
         if: startsWith(matrix.os, 'ubuntu')
-        run: cmake --build build --parallel --config $BUILD_TYPE
+        run: cmake --build build --parallel 4 --config $BUILD_TYPE
 
       - name: Build [windows]
         if: startsWith(matrix.os, 'windows')
