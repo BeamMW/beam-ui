@@ -239,10 +239,10 @@ jobs:
           cp build/ui/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}} deploy/usr/bin/
           cp build/ui/dapps_store_app.wasm deploy/usr/bin/
           cp -r build/ui/apps deploy/usr/bin/
-          cp build/ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
-          cp build/ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
+          cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/apps/
+          cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
           cp ui/x-beam-dapp.xml deploy/usr/share/mime/packages
-          cp build/ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
+          cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
           cp ui/beam-wallet.cfg deploy/usr/bin/
           echo "Creating AppImage"
           export VERSION=${{env.BEAM_VERSION}}
