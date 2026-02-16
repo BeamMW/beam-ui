@@ -122,7 +122,10 @@ jobs:
 
           "OPENSSL_ROOT_DIR=$opensslPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "Found OpenSSL at: $opensslPath"
-          
+
+      - name: Download Boost [windows]
+        if: startsWith(matrix.os, 'windows')
+        run: |
           git clone --depth=1 https://github.com/BeamMW/boost_prebuild_${{matrix.os}}.git c:/boost_prebuild
           echo "BOOST_ROOT=c:\boost_prebuild" >> $GITHUB_ENV
 
