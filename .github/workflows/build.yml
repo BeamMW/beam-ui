@@ -55,6 +55,12 @@ jobs:
           echo "OPENSSL_ROOT_DIR=$(brew --prefix openssl@3)" >> $GITHUB_ENV
           export TZ=GMT-3
           sudo systemsetup -gettimezone
+
+          # Go proxy configuration for IPFS dependencies (if enabled)
+          echo "GOPROXY=https://proxy.golang.org,direct" >> $GITHUB_ENV
+          echo "GOSUMDB=sum.golang.org" >> $GITHUB_ENV
+          echo "GOPRIVATE=" >> $GITHUB_ENV
+
           security create-keychain -p github macos-build.keychain
           security default-keychain -s macos-build.keychain
           security unlock-keychain -p github macos-build.keychain
@@ -199,7 +205,7 @@ jobs:
       ###############################################################################
       - name: Build [macos]
         if: startsWith(matrix.os, 'macos')
-        run: cmake --build build --parallel --config $BUILD_TYPE
+        run: cmake --build build --parallel 3 --config $BUILD_TYPE
 
       - name: Build [ubuntu]
         if: startsWith(matrix.os, 'ubuntu')
