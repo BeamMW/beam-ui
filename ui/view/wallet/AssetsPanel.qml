@@ -62,6 +62,7 @@ Control {
 
     readonly property real itemWidth: {
         var assetsCount = control.showSelected ? control.selectedIds.length : control.assetsCount
+        // TODO QT6 review this line
         if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         if (assetsCount == 1) return minimalItemWidth
         let colums = control.gridColumns
@@ -180,6 +181,7 @@ Control {
             leftPadding: 0
             rightPadding: 0
             spacing: 0
+            enabled: control.selectedIds.length != 0
 
             Binding {
                 target: control
