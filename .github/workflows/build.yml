@@ -188,7 +188,8 @@ jobs:
             -DBEAM_LINK_TYPE=Static \
             -DBEAM_USE_STATIC_QT=FALSE \
             -DBRANCH_NAME=${GITHUB_REF##*/} \
-            -DBEAM_HW_WALLET=Off
+            -DBEAM_HW_WALLET=Off \
+            -DOPENSSL_ROOT_DIR="$env:OPENSSL_ROOT_DIR"
 
       - name: Save version info
         run: |
