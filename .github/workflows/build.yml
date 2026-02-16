@@ -214,7 +214,7 @@ jobs:
 
       - name: Build [windows]
         if: startsWith(matrix.os, 'windows')
-        run: cmake --build build --parallel --config $BUILD_CONFIG
+        run: cmake --build build --parallel 4 --config $BUILD_CONFIG
 
       ###############################################################################
       # Pack
@@ -250,6 +250,8 @@ jobs:
           cp ui/beam.png deploy/usr/share/icons/hicolor/256x256/mimetypes/application-x-beam-dapp.png
           cp ui/x-beam-dapp.xml deploy/usr/share/mime/packages
           cp ui/beam.desktop deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
+          # Fix Exec path for AppImage - use relative path instead of absolute system path
+          sed -i 's|Exec=/usr/bin/BeamWallet|Exec=BeamWallet|g' deploy/usr/share/applications/BeamWallet${{env.BEAM_DISPLAY_SUFFIX}}.desktop
           cp ui/beam-wallet.cfg deploy/usr/bin/
           echo "Creating AppImage"
           export VERSION=${{env.BEAM_VERSION}}
