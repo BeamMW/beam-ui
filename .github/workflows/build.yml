@@ -78,13 +78,10 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
 
+          Write-Host "Installing OpenSSL 3.6.1 via Chocolatey..."
           choco install openssl --version=3.6.1 -y --limit-output
 
-          # Refresh environment variables after installation
-          refreshenv
-
-          # Locate OpenSSL (retry a few times to handle slow installs)
-          $opensslPath = $null
+          Write-Host "Locating OpenSSL installation..."
           $candidateRoots = @(
             "C:\Program Files\OpenSSL-Win64",
             "C:\Program Files\OpenSSL",
@@ -92,36 +89,34 @@ jobs:
             "C:\OpenSSL"
           )
 
-          for ($i = 0; $i -lt 3 -and -not $opensslPath; $i++) {
-            $opensslPath = $candidateRoots | Where-Object { Test-Path $_ } | Select-Object -First 1
+          $opensslPath = $candidateRoots | Where-Object { Test-Path $_ } | Select-Object -First 1
 
-            if (-not $opensslPath) {
-              $probe = Get-ChildItem "C:\Program Files" -Filter "OpenSSL*" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
-              if ($probe) { $opensslPath = $probe.FullName }
-            }
-
-            if (-not $opensslPath -and $i -lt 2) { Start-Sleep -Seconds 2 }
+          if (-not $opensslPath) {
+            $probe = Get-ChildItem "C:\Program Files" -Filter "OpenSSL*" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($probe) { $opensslPath = $probe.FullName }
           }
 
           if (-not $opensslPath) {
-            Write-Error "OpenSSL not found after install. Checked: $($candidateRoots -join ', ') and Program Files probes."
+            throw "OpenSSL not found after installation. Checked: $($candidateRoots -join ', ')"
           }
 
+          # Validate required components
           $includePath = Join-Path $opensslPath 'include'
           $binPath = Join-Path $opensslPath 'bin'
           $cryptoDll = Join-Path $binPath 'libcrypto-3-x64.dll'
-          $sslDll    = Join-Path $binPath 'libssl-3-x64.dll'
+          $sslDll = Join-Path $binPath 'libssl-3-x64.dll'
 
           if (-not (Test-Path $includePath)) {
-            Write-Error "OpenSSL include directory not found at $includePath"
+            throw "OpenSSL include directory not found at: $includePath"
           }
 
           if (-not (Test-Path $cryptoDll) -or -not (Test-Path $sslDll)) {
-            Write-Error "OpenSSL DLLs not found at $binPath (expected libcrypto-3-x64.dll and libssl-3-x64.dll)"
+            throw "OpenSSL DLLs not found at: $binPath"
           }
 
-          "OPENSSL_ROOT_DIR=$opensslPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          "Found OpenSSL at: $opensslPath"
+          # Export to GitHub environment
+          Add-Content -Path $env:GITHUB_ENV -Value "OPENSSL_ROOT_DIR=$opensslPath"
+          Write-Host "OpenSSL configured at: $opensslPath"
 
       - name: Download Boost [windows]
         if: startsWith(matrix.os, 'windows')
