@@ -317,7 +317,7 @@ CustomDialog {
                     color:            Style.content_main
                     //% "Confirmed (%1)"
                     text:             qsTrId("tx-details-confirmation-progress-label").arg(dialog.confirmationsProgress)
-                    visible:          dialog.minConfirmations && stm.state == "tx_info"
+                    visible:          dialog.minConfirmations > 0 && stm.state == "tx_info"
                 }
 
                 ColumnLayout {
@@ -343,64 +343,72 @@ CustomDialog {
                     Repeater {
                         model: dialog.assetCount
 
-                        RowLayout {
+                        ColumnLayout {
                             Layout.fillWidth: true
-                            Layout.maximumWidth : dialog.width - 60
-                            Layout.maximumHeight: 34
+                            spacing: 4
 
-                            BeamAmount {
-                                id: amountField
+                            RowLayout {
                                 Layout.fillWidth: true
+                                Layout.maximumHeight: 34
 
-                                visible:      true
-                                amount:       dialog.assetAmounts ? (dialog.assetAmounts[index] || "") : ""
-                                unitName:     dialog.assetNames[index] || ""
-                                iconSource:   dialog.assetIcons[index] || ""
-                                verified:     dialog.assetVerified[index] || false
-                                iconSize:     Qt.size(20, 20)
-                                color:        dialog.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
-                                prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
-                                rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
-                                rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
-                                rateFontSize:     12
-                                showTip:          false
-                                maxUnitChars:     25
-                                maxPaintedWidth:  false
-                                iconAnchorCenter: false
-                                font {
-                                    styleName:  "Bold"
-                                    weight:     Font.Bold
-                                    pixelSize:  14
+                                BeamAmount {
+                                    id: amountField
+                                    Layout.fillWidth: true
+
+                                    visible:      true
+                                    amount:       dialog.assetAmounts ? (dialog.assetAmounts[index] || "") : ""
+                                    unitName:     dialog.assetNames[index] || ""
+                                    iconSource:   dialog.assetIcons[index] || ""
+                                    verified:     dialog.assetVerified[index] || false
+                                    iconSize:     Qt.size(20, 20)
+                                    color:        dialog.assetIncome[index] ? Style.accent_incoming : Style.accent_outgoing
+                                    prefix:       this.amount == "0" ? "" : (dialog.assetIncome[index] ? "+ " : "- ")
+                                    rate:         dialog.assetRates ? (dialog.assetRates[index] || "") : ""
+                                    rateUnit:     this.rate != "0" ? dialog.rateUnit : ""
+                                    rateFontSize:     12
+                                    showTip:          false
+                                    maxUnitChars:     25
+                                    maxPaintedWidth:  false
+                                    iconAnchorCenter: false
+                                    font {
+                                        styleName:  "Bold"
+                                        weight:     Font.Bold
+                                        pixelSize:  14
+                                    }
                                 }
                             }
 
-                            SFText {
-                                Layout.alignment: Qt.AlignTop
-                                font.pixelSize: 14
-                                color: Style.content_secondary
-                                //% "Confidential asset ID"
-                                text: qsTrId("general-ca-id") + ":"
-                                visible: assetIdField.visible
-                            }
-                            SFLabel {
-                                id: assetIdField
-                                Layout.alignment: Qt.AlignTop
-                                copyMenuEnabled: true
-                                font.pixelSize: 14
-                                color: Style.content_main
-                                text: dialog.assetIDs[index] || ""
-                                onCopyText: textCopied(dialog.assetIDs[index])
+                            RowLayout {
+                                Layout.fillWidth: true
                                 visible: dialog.assetIDs[index] != "0"
-                            }
 
-                            OpenInBlockchainExplorer {
-                                Layout.alignment: Qt.AlignTop
-                                Layout.rightMargin: 8
-                                visible: dialog.assetIDs[index] != "0"
-                                showText: false
-                                onTriggered: function(kernelID) {
-                                    var url = BeamGlobals.getExplorerUrl() + "assets/details/" + dialog.assetIDs[index];
-                                    Utils.openExternalWithConfirmation(url);
+                                SFText {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    font.pixelSize: 14
+                                    color: Style.content_secondary
+                                    //% "Confidential asset ID"
+                                    text: qsTrId("general-ca-id") + ":"
+                                }
+                                SFLabel {
+                                    id: assetIdField
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Layout.fillWidth: true
+                                    copyMenuEnabled: true
+                                    font.pixelSize: 14
+                                    color: Style.content_main
+                                    elide: Text.ElideMiddle
+                                    text: dialog.assetIDs[index] || ""
+                                    onCopyText: textCopied(dialog.assetIDs[index])
+                                }
+
+                                OpenInBlockchainExplorer {
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Layout.rightMargin: 8
+                                    showText: false
+                                    onTriggered: function(kernelID) {
+                                        var url = BeamGlobals.getExplorerUrl() + "assets/details/" + dialog.assetIDs[index];
+                                        Utils.openExternalWithConfirmation(url);
+                                    }
                                 }
                             }
                         }
