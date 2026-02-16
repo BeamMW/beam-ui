@@ -377,7 +377,7 @@ ColumnLayout {
                                             cursorShape:     Qt.PointingHandCursor
                                             onClicked:       function () {
                                                 sendAmountInput.clearFocus()
-                                                viewModel.setMaxAvailableAmount()
+                                                viewModel.setMaxPossibleAmount()
                                             }
                                         }
                                     }

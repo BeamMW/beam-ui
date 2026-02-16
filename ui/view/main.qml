@@ -313,8 +313,7 @@ Rectangle {
         var params = {
             "onAccepted":    goBack,
             "onClosed":      goBack,
-            "receiverToken": receiver,
-            "assetId":       assetId
+            "receiverToken": receiver
         }
         if (assetId != undefined)
         {
@@ -326,8 +325,7 @@ Rectangle {
     function openReceiveDialog(token, assetId) {
         var params = {
             "onClosed": goBack,
-            "token":    token,
-            "assetId":  assetId
+            "token":    token
             };
         if (assetId != undefined)
         {

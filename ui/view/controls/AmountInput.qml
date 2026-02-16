@@ -143,7 +143,7 @@ ColumnLayout {
             //% "Enter asset name..."
             searchPlaseholder: qsTrId("amount-input-asset-search")
 
-            onActivated: {
+            onActivated: function(index) {
                 if (multi) {
                     ainput.text = "0"
                     control.amount = "0"

@@ -32,8 +32,7 @@ ColumnLayout {
         var params = {
             "onAccepted":    onAccepted,
             "onClosed":      onClosed,
-            "receiverToken": root.token,
-            "assetId":       assetId
+            "receiverToken": root.token
         }
 
         if (assetId != undefined)
