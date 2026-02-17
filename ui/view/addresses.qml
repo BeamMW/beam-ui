@@ -167,7 +167,6 @@ ColumnLayout {
             CustomTableView {
                 id: contactsView
             
-                property int rowHeight: 56
                 property int resizableWidth: parent.width - actions.width
                 property double columnResizeRatio: resizableWidth / 914
             

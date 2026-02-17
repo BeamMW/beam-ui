@@ -8,8 +8,6 @@ CustomTableView {
     id: rootControl
 
     property bool isShieldedSupported: true
-
-    property int rowHeight: 56
     property int resizableWidth: parent.width - actions.width
     property double columnResizeRatio: resizableWidth / 914
 

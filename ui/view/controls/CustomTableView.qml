@@ -1,7 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
-import Qt5Compat.GraphicalEffects
 import "."
 
 Item {
@@ -15,7 +13,7 @@ Item {
     property var  backgroundRect: mainBackgroundRect != null ? mainBackgroundRect : (typeof main !== "undefined" ? main.backgroundRect : null)
     property color headerColor: Style.table_header
     property bool headerShaderVisible: true
-    property var  isSortIndicatorHidenForColumn: function(col) { return true; }
+    property var  isSortIndicatorHiddenForColumn: function(col) { return true; }
 
     property bool frameVisible: false
     property bool backgroundVisible: false
@@ -35,6 +33,9 @@ Item {
 
     // model
     property var model
+
+    // row height (callers may override)
+    property int rowHeight: 56
 
     // delegates (compat)
     property Component rowDelegate: null
@@ -67,14 +68,8 @@ Item {
     }
 
     function getColumn(index) {
-        var cnt = 0;
-        for (var i = 0; i < columns.length; ++i) {
-            if (columns[i].visible) {
-                if (cnt === index) return columns[i];
-                ++cnt;
-            }
-        }
-        return null;
+        if (index < 0 || index >= columns.length) return null;
+        return columns[index];
     }
 
     function getAdjustedColumnWidth(column) {
@@ -122,7 +117,37 @@ Item {
                 }
                 property bool isFirstOrLast: isFirst || isLast
 
-                // background
+                // frosted-glass effect (samples backgroundRect behind the header)
+                function _updateShaderRect() {
+                    if (tableView.headerShaderVisible && tableView.backgroundRect && visible) {
+                        var mapped = mapToItem(tableView.backgroundRect, 0, 0);
+                        shaderSrc.sourceRect = Qt.rect(mapped.x, mapped.y, width, height);
+                    }
+                }
+
+                Component.onCompleted: _updateShaderRect()
+                onXChanged:     _updateShaderRect()
+                onWidthChanged: _updateShaderRect()
+
+                Connections {
+                    target: tableView
+                    function onWidthChanged()   { _updateShaderRect(); }
+                    function onHeightChanged()  { _updateShaderRect(); }
+                    function onXChanged()       { _updateShaderRect(); }
+                    function onYChanged()       { _updateShaderRect(); }
+                    function onVisibleChanged() { _updateShaderRect(); }
+                }
+
+                ShaderEffectSource {
+                    id: shaderSrc
+                    width:      parent.width
+                    height:     parent.height
+                    sourceItem: tableView.backgroundRect
+                    visible:    tableView.headerShaderVisible
+                                && tableView.backgroundRect !== null
+                }
+
+                // header background color (overlays shader)
                 Rectangle {
                     x: isLast ? -12 : 0
                     width: parent.width + (isFirstOrLast ? 12 : 0)
@@ -139,7 +164,6 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 4
                     spacing: 6
-                    layoutDirection: Qt.RightToLeft
 
                     SFText {
                         anchors.verticalCenter: parent.verticalCenter
@@ -154,7 +178,7 @@ Item {
                     SvgImage {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: tableView.sortIndicatorVisible
-                                 && !tableView.isSortIndicatorHidenForColumn({"column": colIndex, "value": tableView.columns[colIndex].title})
+                                 && !tableView.isSortIndicatorHiddenForColumn({"column": colIndex, "value": tableView.columns[colIndex].title})
                                  && tableView.columns[colIndex].title !== ""
                         source: tableView.sortIndicatorColumn === colIndex
                                     ? "qrc:/assets/icon-sort-active.svg"
@@ -165,6 +189,7 @@ Item {
 
                 MouseArea {
                     anchors.fill: parent
+                    enabled: tableView.sortIndicatorVisible
                     onClicked: {
                         if (tableView.sortIndicatorColumn === colIndex) {
                             tableView.sortIndicatorOrder = (tableView.sortIndicatorOrder === Qt.AscendingOrder)
@@ -195,7 +220,7 @@ Item {
             id: rowRoot
             width: listView.width
             height: rowDelegateLoader.item ? rowDelegateLoader.item.height
-                        : (tableView.rowDelegate ? 56 : rowContent.height)
+                        : (tableView.rowDelegate ? tableView.rowHeight : rowContent.height)
 
             // expose model data to child delegates
             property var    rowModel: model
@@ -236,7 +261,7 @@ Item {
                     delegate: Item {
                         visible: tableView.columns[index].visible
                         width:   tableView.columns[index].visible ? tableView.columns[index].width : 0
-                        height:  rowDelegateLoader.item ? rowDelegateLoader.item.height : 56
+                        height:  rowDelegateLoader.item ? rowDelegateLoader.item.height : tableView.rowHeight
 
                         property var columnObj: tableView.columns[index]
                         property string roleName: columnObj.role

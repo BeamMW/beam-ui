@@ -72,7 +72,6 @@ CustomDialog {
 
         CustomTableView {
             id: tableView
-            property int rowHeight: 56
 
             Layout.fillWidth:    true
             Layout.fillHeight:   true

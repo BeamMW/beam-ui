@@ -43,11 +43,11 @@ ColumnLayout {
         sortIndicatorVisible: true
         sortIndicatorColumn:  0
         sortIndicatorOrder:   Qt.DescendingOrder
-        isSortIndicatorHidenForColumn: function(styleData) {
+        isSortIndicatorHiddenForColumn: function(styleData) {
             return styleData.column != 0;
         }
 
-        property int rowHeight:            109
+        rowHeight:                         109
         property real resizableWidth:      parent.width - 144
         property real columnResizeRatio:   resizableWidth / 828
 

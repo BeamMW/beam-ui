@@ -33,7 +33,7 @@ WizzardPage {
     CustomTableView {
         id: tableView
         mainBackgroundRect: root.background
-        property int rowHeight: 44
+        rowHeight: 44
         property int minWidth: 894
         property int textLeftMargin: 20
         Layout.alignment: Qt.AlignHCenter 

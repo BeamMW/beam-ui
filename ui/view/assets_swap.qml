@@ -195,7 +195,6 @@ ColumnLayout {
         }
         visible: tabSelector.state != "transactions" && model.count > 0
 
-        property real rowHeight: 56
         property double columnResizeRatio: width / 1000
 
         rowDelegate: Item {

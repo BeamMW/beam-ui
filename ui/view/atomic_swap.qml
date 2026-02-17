@@ -505,7 +505,6 @@ Please try again later or create an offer yourself."
                 Layout.topMargin: 14
                 visible: offersTable.model.count > 0 && !loadingPlaceholder.visible
 
-                property int rowHeight: 56
                 property int columnWidth: (width - swapCoinsColumn.width) / 6
 
                 frameVisible: false
@@ -823,7 +822,6 @@ Please try again later or create an offer yourself."
                 Layout.topMargin:       14
                 visible:                transactionsTable.model.count > 0
 
-                property int rowHeight: 56
                 property int columnWidth: (width - txSwapCoinsColumn.width - txSwapActionColumn.width) / 6
 
                 frameVisible: false

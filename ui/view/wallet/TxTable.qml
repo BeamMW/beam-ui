@@ -397,7 +397,6 @@ Control {
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
 
-            property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
             property real columnResizeRatio: resizableWidth / (610 - (sourceVisible || actionVisible ? 0 : 140))
 
@@ -543,7 +542,7 @@ Control {
 
                 //% "Coin"
                 title:     qsTrId("general-coin")
-                width:     106
+                width:     126
                 movable:   false
                 resizable: false
 
