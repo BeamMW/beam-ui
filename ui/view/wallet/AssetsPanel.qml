@@ -62,7 +62,6 @@ Control {
 
     readonly property real itemWidth: {
         var assetsCount = control.showSelected ? control.selectedIds.length : control.assetsCount
-        // TODO QT6 review this line
         if (assetsCount == 1) return (control.availableWidth - control.hSpacing) / (assetsCount + 1)
         if (assetsCount == 1) return minimalItemWidth
         let colums = control.gridColumns
@@ -204,9 +203,7 @@ Control {
 
         implicitHeight: control.scrollViewHeight
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical: CustomScrollBar {
-            policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
-        }
+        ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
         clip: true
         hoverEnabled: true
@@ -214,7 +211,7 @@ Control {
         Column {
             spacing: 10
             height: grid.implicitHeight + (control.showValidationPromo ? 85 : 0)
-            width: parent.width
+            width: scroll.availableWidth
             Grid {
                 id: grid
 
