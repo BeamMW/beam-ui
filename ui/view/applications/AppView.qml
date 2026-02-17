@@ -178,375 +178,376 @@ ColumnLayout {
         id: settings
     }
 
-    ColumnLayout {
-        id:                dappsLayout
+    Item {
         Layout.fillWidth:  true
         Layout.fillHeight: true
-        spacing:           0
 
-        //
-        // This object is visible to web. We create such proxy
-        // to ensure that nothing (methods, events, props &c)
-        // is leaked to the web from real API
-        //
-        QtObject {
-            id:            webapiBEAM
-            WebChannel.id: "BEAM"
+        ColumnLayout {
+            id:                dappsLayout
+            anchors.fill:      parent
+            spacing:           0
 
-            property var style: Style
-            property var api: QtObject
-            {
-                function callWalletApi (request)
+            //
+            // This object is visible to web. We create such proxy
+            // to ensure that nothing (methods, events, props &c)
+            // is leaked to the web from real API
+            //
+            QtObject {
+                id:            webapiBEAM
+                WebChannel.id: "BEAM"
+
+                property var style: Style
+                property var api: QtObject
                 {
-                    callWalletApiCall(request)
-                }
-
-                signal callWalletApiResult (string result)
-                signal callWalletApiCall   (string request)
-            }
-        }
-
-        WebChannel {
-            id:                apiChannel
-            registeredObjects: [webapiBEAM]
-        }
-
-        WebAPICreator {
-            id: webapiCreator
-            property var releaseApi
-
-            onApiCreated: function (api) {
-                control.errorMessage = ""
-
-                // Create profile from C++ to avoid deprecated QML WebEngineProfile
-                if (control.activeApp && control.activeApp["appid"]) {
-                    viewModel.setupAppProfile(webView, control.activeApp["appid"])
-                }
-                webView.url = control.activeApp.url
-
-                var onCallWalletApi = function (request) {
-                    api.callWalletApi(request)
-                }
-
-                var onCallWalletApiResult = function (result) {
-                    webapiBEAM.api.callWalletApiResult(result)
-                }
-
-                var onApproveSend = function(request, info, amounts) {
-                    info = JSON.parse(info)
-                    amounts = JSON.parse(amounts)
-                    var dialog = Qt.createComponent("qrc:/send_confirm.qml")
-                    var instance = dialog.createObject(control,
-                        {
-                            amounts:        amounts,
-                            addressText:    info["token"],
-                            typeText:       info["tokenType"],
-                            isOnline:       info["isOnline"],
-                            rateUnit:       info["rateUnit"],
-                            fee:            info["fee"],
-                            feeRate:        info["feeRate"],
-                            comment:        info["comment"],
-                            appMode:        true,
-                            appName:        activeApp.name,
-                            showPrefix:     true,
-                            assetsProvider: api,
-                            isEnough:       info.isEnough
-                        })
-
-                    instance.Component.onDestruction.connect(function () {
-                         if (instance.result == Dialog.Accepted) {
-                            api.sendApproved(request)
-                            return
-                        }
-                        api.sendRejected(request)
-                        return
-                    })
-
-                    instance.open()
-                }
-
-                var onApproveContractInfo = function(request, info, amounts) {
-                    info = JSON.parse(info)
-                    amounts = JSON.parse(amounts)
-                    const dialog = Qt.createComponent("qrc:/send_confirm.qml")
-                    const instance = dialog.createObject(control,
-                        {
-                            amounts:        amounts,
-                            rateUnit:       info["rateUnit"],
-                            fee:            info["fee"],
-                            feeRate:        info["feeRate"],
-                            comment:        info["comment"],
-                            isSpend:        info["isSpend"],
-                            appMode:        true,
-                            appName:        activeApp.name,
-                            isOnline:       false,
-                            showPrefix:     true,
-                            assetsProvider: api,
-                            isEnough:       info.isEnough
-                        })
-
-                    instance.Component.onDestruction.connect(function () {
-                         if (instance.result == Dialog.Accepted) {
-                            api.contractInfoApproved(request)
-                            return
-                        }
-                        api.contractInfoRejected(request)
-                        return
-                    })
-
-                    instance.open()
-                }
-
-                webapiBEAM.api.callWalletApiCall.connect(onCallWalletApi)
-                api.callWalletApiResult.connect(onCallWalletApiResult)
-                api.approveSend.connect(onApproveSend)
-                api.approveContractInfo.connect(onApproveContractInfo)
-
-                releaseApi = function () {
-                    webapiBEAM.api.callWalletApiCall.disconnect(onCallWalletApi)
-                    api.callWalletApiResult.disconnect(onCallWalletApiResult)
-                    api.approveSend.disconnect(onApproveSend)
-                    api.approveContractInfo.disconnect(onApproveContractInfo)
-                    webapiCreator.destroyApi()
-                    webapiCreator.releaseApi = undefined
-                }
-            }
-        }
-
-        function appSupported(app) {
-            return webapiCreator.apiSupported(app.api_version || "current") ||
-                   webapiCreator.apiSupported(app.min_api_version || "")
-        }
-
-        function createApi(app) {
-            try
-            {
-               // temporary hack
-               viewModel.prepareToLaunchApp()
-
-               var verWant = app.api_version || "current"
-               var verMin  = app.min_api_version || ""
-               webapiCreator.createApi(verWant, verMin, app.name, app.url)
-            }
-            catch (err)
-            {
-               control.errorMessage = err.toString()
-            }
-        }
-
-        function launchApp(app) {
-            app["appid"] = webapiCreator.generateAppID(app.name, app.url)
-            control.activeApp = app
-
-            if (app.local) {
-                viewModel.launchAppServer()
-            }
-
-            createApi(app)
-        }
-
-        Item {
-            Layout.fillHeight: true
-            Layout.fillWidth:  true
-            visible:           !webLayout.visible
-
-            ColumnLayout {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y:                        parent.height / 2 - this.height / 2 - 40
-                spacing:                  40
-
-                SFText {
-                    Layout.alignment: Qt.AlignHCenter
-                    color:            control.errorMessage.length ? Style.validator_error : Style.content_main
-                    opacity:          0.5
-
-                    font {
-                        italic:    true
-                        pixelSize: 16
+                    function callWalletApi (request)
+                    {
+                        callWalletApiCall(request)
                     }
 
-                    text: {
-                        if (control.errorMessage.length) {
-                            return control.errorMessage
-                        }
-                        if (control.activeApp || control.appToOpen) {
-                            //% "Please wait, %1 is loading"
-                            return qsTrId("apps-loading-app").arg(
-                                (control.activeApp || control.appToOpen).name
-                            )
-                        }
+                    signal callWalletApiResult (string result)
+                    signal callWalletApiCall   (string request)
+                }
+            }
 
-                        if (!control.appsList) {
-                            //% "Loading..."
-                            return qsTrId("apps-loading")
-                        }
+            WebChannel {
+                id:                apiChannel
+                registeredObjects: [webapiBEAM]
+            }
 
-                        //% "There are no applications at the moment"
-                        return qsTrId("apps-nothing")
+            WebAPICreator {
+                id: webapiCreator
+                property var releaseApi
+
+                onApiCreated: function (api) {
+                    control.errorMessage = ""
+
+                    // Create profile from C++ to avoid deprecated QML WebEngineProfile
+                    if (control.activeApp && control.activeApp["appid"]) {
+                        viewModel.setupAppProfile(webView, control.activeApp["appid"])
+                    }
+                    webView.url = control.activeApp.url
+
+                    var onCallWalletApi = function (request) {
+                        api.callWalletApi(request)
+                    }
+
+                    var onCallWalletApiResult = function (result) {
+                        webapiBEAM.api.callWalletApiResult(result)
+                    }
+
+                    var onApproveSend = function(request, info, amounts) {
+                        info = JSON.parse(info)
+                        amounts = JSON.parse(amounts)
+                        var dialog = Qt.createComponent("qrc:/send_confirm.qml")
+                        var instance = dialog.createObject(control,
+                            {
+                                amounts:        amounts,
+                                addressText:    info["token"],
+                                typeText:       info["tokenType"],
+                                isOnline:       info["isOnline"],
+                                rateUnit:       info["rateUnit"],
+                                fee:            info["fee"],
+                                feeRate:        info["feeRate"],
+                                comment:        info["comment"],
+                                appMode:        true,
+                                appName:        activeApp.name,
+                                showPrefix:     true,
+                                assetsProvider: api,
+                                isEnough:       info.isEnough
+                            })
+
+                        instance.Component.onDestruction.connect(function () {
+                            if (instance.result == Dialog.Accepted) {
+                                api.sendApproved(request)
+                                return
+                            }
+                            api.sendRejected(request)
+                            return
+                        })
+
+                        instance.open()
+                    }
+
+                    var onApproveContractInfo = function(request, info, amounts) {
+                        info = JSON.parse(info)
+                        amounts = JSON.parse(amounts)
+                        const dialog = Qt.createComponent("qrc:/send_confirm.qml")
+                        const instance = dialog.createObject(control,
+                            {
+                                amounts:        amounts,
+                                rateUnit:       info["rateUnit"],
+                                fee:            info["fee"],
+                                feeRate:        info["feeRate"],
+                                comment:        info["comment"],
+                                isSpend:        info["isSpend"],
+                                appMode:        true,
+                                appName:        activeApp.name,
+                                isOnline:       false,
+                                showPrefix:     true,
+                                assetsProvider: api,
+                                isEnough:       info.isEnough
+                            })
+
+                        instance.Component.onDestruction.connect(function () {
+                            if (instance.result == Dialog.Accepted) {
+                                api.contractInfoApproved(request)
+                                return
+                            }
+                            api.contractInfoRejected(request)
+                            return
+                        })
+
+                        instance.open()
+                    }
+
+                    webapiBEAM.api.callWalletApiCall.connect(onCallWalletApi)
+                    api.callWalletApiResult.connect(onCallWalletApiResult)
+                    api.approveSend.connect(onApproveSend)
+                    api.approveContractInfo.connect(onApproveContractInfo)
+
+                    releaseApi = function () {
+                        webapiBEAM.api.callWalletApiCall.disconnect(onCallWalletApi)
+                        api.callWalletApiResult.disconnect(onCallWalletApiResult)
+                        api.approveSend.disconnect(onApproveSend)
+                        api.approveContractInfo.disconnect(onApproveContractInfo)
+                        webapiCreator.destroyApi()
+                        webapiCreator.releaseApi = undefined
                     }
                 }
+            }
 
-                SvgImage {
-                    Layout.alignment: Qt.AlignHCenter
-                    source:           "qrc:/assets/dapp-loading.svg"
-                    sourceSize:       Qt.size(245, 140)
+            function appSupported(app) {
+                return webapiCreator.apiSupported(app.api_version || "current") ||
+                    webapiCreator.apiSupported(app.min_api_version || "")
+            }
 
-                    visible: {
-                        if (control.errorMessage.length) {
+            function createApi(app) {
+                try
+                {
+                // temporary hack
+                viewModel.prepareToLaunchApp()
+
+                var verWant = app.api_version || "current"
+                var verMin  = app.min_api_version || ""
+                webapiCreator.createApi(verWant, verMin, app.name, app.url)
+                }
+                catch (err)
+                {
+                control.errorMessage = err.toString()
+                }
+            }
+
+            function launchApp(app) {
+                app["appid"] = webapiCreator.generateAppID(app.name, app.url)
+                control.activeApp = app
+
+                if (app.local) {
+                    viewModel.launchAppServer()
+                }
+
+                createApi(app)
+            }
+
+            Item {
+                Layout.fillHeight: true
+                Layout.fillWidth:  true
+                visible:           !webLayout.visible
+
+                ColumnLayout {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y:                        parent.height / 2 - this.height / 2 - 40
+                    spacing:                  40
+
+                    SFText {
+                        Layout.alignment: Qt.AlignHCenter
+                        color:            control.errorMessage.length ? Style.validator_error : Style.content_main
+                        opacity:          0.5
+
+                        font {
+                            italic:    true
+                            pixelSize: 16
+                        }
+
+                        text: {
+                            if (control.errorMessage.length) {
+                                return control.errorMessage
+                            }
+                            if (control.activeApp || control.appToOpen) {
+                                //% "Please wait, %1 is loading"
+                                return qsTrId("apps-loading-app").arg(
+                                    (control.activeApp || control.appToOpen).name
+                                )
+                            }
+
+                            if (!control.appsList) {
+                                //% "Loading..."
+                                return qsTrId("apps-loading")
+                            }
+
+                            //% "There are no applications at the moment"
+                            return qsTrId("apps-nothing")
+                        }
+                    }
+
+                    SvgImage {
+                        Layout.alignment: Qt.AlignHCenter
+                        source:           "qrc:/assets/dapp-loading.svg"
+                        sourceSize:       Qt.size(245, 140)
+
+                        visible: {
+                            if (control.errorMessage.length) {
+                                return false
+                            }
+
+                            if (control.activeApp || control.appToOpen) {
+                                return true
+                            }
+
                             return false
                         }
-
-                        if (control.activeApp || control.appToOpen) {
-                            return true
-                        }
-
-                        return false
                     }
                 }
+            }
+
+            Item {
+                id:                  webLayout
+
+                Layout.fillHeight:   true
+                Layout.fillWidth:    true
+                Layout.bottomMargin: 90
+                Layout.topMargin:    20
+                visible:             false
+                opacity:             txPanel.folded ? 1.0 : 0.25
+                clip:                true
+
+                WebEngineView {
+                    id:              webView
+                    anchors.fill:    parent
+                    webChannel:      apiChannel
+                    visible:         true
+                    backgroundColor: "transparent"
+
+                    settings {
+                        javascriptCanOpenWindows: false
+                    }
+
+                    onNavigationRequested: function (ev) {
+                        if (ev.navigationType == WebEngineNavigationRequest.ReloadNavigation) {
+
+                            if (webapiCreator.releaseApi) {
+                                webapiCreator.releaseApi()
+                            }
+
+                            if (control.activeApp) {
+                                dappsLayout.createApi(control.activeApp)
+                            }
+                        }
+                    }
+
+                    onNewWindowRequested: function (ev) {
+                        var url = ev.requestedUrl.toString()
+                        Utils.openExternalWithConfirmation(url)
+                    }
+
+                    onLoadingChanged: function (loadingInfo) {
+                        // do not change this to declarative style, it flickers somewhy, probably because of delays
+                        if (control.activeApp && !this.loading) {
+                            viewModel.onCompleted(webView)
+
+                            if(loadingInfo.status === WebEngineView.LoadFailedStatus) {
+                                // code in this 'if' will cause next 'if' to be called
+                                control.errorMessage = ["Failed to load", JSON.stringify(loadingInfo, null, 4)].join('\n')
+                                // no return
+                            }
+
+                            if (control.errorMessage.length) {
+                                webLayout.visible = false
+                                return
+                            }
+
+                            webLayout.visible = true
+                        }
+                    }
+
+                    onContextMenuRequested: function (req) {
+                        if (req.mediaType == ContextMenuRequest.MediaTypeNone && !req.linkText) {
+                            if (req.isContentEditable) {
+                                req.accepted = true
+                                return
+                            }
+                            if (req.selectedText) return
+                        }
+                        req.accepted = true
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    visible:      !txPanel.folded
+                    hoverEnabled: true
+
+                    onClicked: function (ev) {
+                        txPanel.folded = true
+                        ev.accepted = true
+                    }
+
+                    onWheel: function (ev) {
+                        ev.accepted = true
+                    }
+                }
+            }
+
+            function loadAppsList () {
+                control.appsList = viewModel.apps;
+                if (control.appToOpen) {
+                    for (let i = 0; i < control.appsList.rowCount(); ++i) {
+                        let app = control.appsList.get(i);
+                        if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
+                            if (dappsLayout.appSupported(app)) {
+                                dappsLayout.launchApp(app)
+                            } else {
+                                //% "Update Wallet to launch %1 application"
+                                BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
+                            }
+                        }
+                    }
+                }
+            }
+
+            Component.onCompleted: {
+                viewModel.appsChanged.connect(loadAppsList)
+                control.reloadWebEngineView.connect(webView.reload)
+                control.showTxDetails.connect(txPanel.showTxDetails)
+
+                viewModel.init(!!appToOpen);
+            }
+
+            Component.onDestruction: {
+                if (webapiCreator.releaseApi) {
+                    webapiCreator.releaseApi()
+                }
+                viewModel.appsChanged.disconnect(loadAppsList)
+                control.reloadWebEngineView.disconnect(webView.reload)
+                control.showTxDetails.disconnect(txPanel.showTxDetails)
             }
         }
 
-        Item {
-            id:                  webLayout
-
-            Layout.fillHeight:   true
-            Layout.fillWidth:    true
-            Layout.bottomMargin: 90
-            Layout.topMargin:    20
-            visible:             false
-            opacity:             txPanel.folded ? 1.0 : 0.25
-            clip:                true
-
-            WebEngineView {
-                id:              webView
-                anchors.fill:    parent
-                webChannel:      apiChannel
-                visible:         true
-                backgroundColor: "transparent"
-
-                settings {
-                    javascriptCanOpenWindows: false
-                }
-
-                onNavigationRequested: function (ev) {
-                    if (ev.navigationType == WebEngineNavigationRequest.ReloadNavigation) {
-
-                        if (webapiCreator.releaseApi) {
-                            webapiCreator.releaseApi()
-                        }
-
-                        if (control.activeApp) {
-                            dappsLayout.createApi(control.activeApp)
-                        }
-                    }
-                }
-
-                onNewWindowRequested: function (ev) {
-                    var url = ev.requestedUrl.toString()
-                    Utils.openExternalWithConfirmation(url)
-                }
-
-                onLoadingChanged: function (loadingInfo) {
-                    // do not change this to declarative style, it flickers somewhy, probably because of delays
-                    if (control.activeApp && !this.loading) {
-                        viewModel.onCompleted(webView)
-
-                        if(loadingInfo.status === WebEngineView.LoadFailedStatus) {
-                            // code in this 'if' will cause next 'if' to be called
-                            control.errorMessage = ["Failed to load", JSON.stringify(loadingInfo, null, 4)].join('\n')
-                            // no return
-                        }
-
-                        if (control.errorMessage.length) {
-                            webLayout.visible = false
-                            return
-                        }
-
-                        webLayout.visible = true
-                    }
-                }
-
-                onContextMenuRequested: function (req) {
-                    if (req.mediaType == ContextMenuRequest.MediaTypeNone && !req.linkText) {
-                        if (req.isContentEditable) {
-                            req.accepted = true
-                            return
-                        }
-                        if (req.selectedText) return
-                    }
-                    req.accepted = true
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                visible:      !txPanel.folded
-                hoverEnabled: true
-
-                onClicked: function (ev) {
-                    txPanel.folded = true
-                    ev.accepted = true
-                }
-
-                onWheel: function (ev) {
-                    ev.accepted = true
-                }
-            }
-        }
-
-        Item {
-            width:  dappsLayout.width
-            height: dappsLayout.height
-            z: 42
-            AppInfoPanel {
-            id:                  txPanel
-            folded:              !control.openedTxID
-            state:               control.openedTxID ? "transactions" : "balance"
-            width:               parent.width
-            anchors.bottom:      parent.bottom
+        AppInfoPanel {
+            id:                   txPanel
+            z:                    42
+            folded:               !control.openedTxID
+            state:                control.openedTxID ? "transactions" : "balance"
+            anchors.bottom:       dappsLayout.bottom
+            anchors.left:         dappsLayout.left
+            anchors.right:        dappsLayout.right
             anchors.bottomMargin: 10
-            contentItemHeight:   parent.height * (txPanel.maximized ? 0.79 : 0.36)
-            foldsUp:             false
-            visible:             webLayout.visible
-            bkColor:             Style.background_appstx
-            dappName:            control.activeApp ? control.activeApp.name || "" : ""
-            dappFilter:          control.activeApp ? control.activeApp.appid || "all" : "all"
-                tableOwner:          control
-            }
-        }
-
-        function loadAppsList () {
-            control.appsList = viewModel.apps;
-            if (control.appToOpen) {
-                for (let i = 0; i < control.appsList.rowCount(); ++i) {
-                    let app = control.appsList.get(i);
-                    if (webapiCreator.generateAppID(app.name, app.url) == appToOpen.appid) {
-                        if (dappsLayout.appSupported(app)) {
-                            dappsLayout.launchApp(app)
-                        } else {
-                            //% "Update Wallet to launch %1 application"
-                            BeamGlobals.showMessage(qsTrId("apps-update-message").arg(app.name))
-                        }
-                    }
-                }
-            }
-        }
-
-        Component.onCompleted: {
-            viewModel.appsChanged.connect(loadAppsList)
-            control.reloadWebEngineView.connect(webView.reload)
-            control.showTxDetails.connect(txPanel.showTxDetails)
-
-            viewModel.init(!!appToOpen);
-        }
-
-        Component.onDestruction: {
-            if (webapiCreator.releaseApi) {
-                webapiCreator.releaseApi()
-            }
-            viewModel.appsChanged.disconnect(loadAppsList)
-            control.reloadWebEngineView.disconnect(webView.reload)
-            control.showTxDetails.disconnect(txPanel.showTxDetails)
+            contentItemHeight:    dappsLayout.height * (txPanel.maximized ? 0.79 : 0.36)
+            foldsUp:              false
+            visible:              webLayout.visible
+            bkColor:              Style.background_appstx
+            dappName:             control.activeApp ? control.activeApp.name || "" : ""
+            dappFilter:           control.activeApp ? control.activeApp.appid || "all" : "all"
+            tableOwner:           control
         }
     }
 
