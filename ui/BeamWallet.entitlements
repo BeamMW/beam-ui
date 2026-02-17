@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Allow app to act as network client (for connecting to nodes, IPFS, etc.) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <!-- Allow app to act as network server (for local dApp HTTP server on localhost) -->
+    <key>com.apple.security.network.server</key>
+    <true/>
+    <!-- Required for Qt/WebEngine JIT compilation -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <!-- Required for Qt WebEngine -->
+    <key>com.apple.security.cs.disable-executable-page-protection</key>
+    <true/>
+    <!-- Allow loading of unsigned plugins/libraries -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+</dict>
+</plist>
