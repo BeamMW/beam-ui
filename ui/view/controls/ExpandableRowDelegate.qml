@@ -26,7 +26,9 @@ Rectangle {
     }
 
     onRowInModelChanged: {
-        collapsed = !rowInModel;
+        if (!rowInModel) {
+            collapsed = true;
+        }
         rowMouseArea.hoverEnabled = false;
         hoverEnabler.start();
     }
