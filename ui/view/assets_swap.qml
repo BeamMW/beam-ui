@@ -355,6 +355,7 @@ ColumnLayout {
                 anchors.topMargin: 16
 
                 RowLayout {
+                    id: cancelRow
                     visible: styleData.value
                     Layout.fillWidth: true
                     SvgImage {
@@ -374,20 +375,19 @@ ColumnLayout {
                         color: Style.accent_fail
                         copyMenuEnabled: false
                     }
-                    MouseArea {
-                        x: parent.x
-                        y: parent.y
-                        width: parent.width
-                        height: parent.height
-                        acceptedButtons: Qt.LeftButton
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
-                            ordersModel.cancelOrder(orderId);
-                        }
+                }
+                MouseArea {
+                    anchors.fill: cancelRow
+                    visible: cancelRow.visible
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
+                        ordersModel.cancelOrder(orderId);
                     }
                 }
                 RowLayout {
+                    id: acceptRow
                     visible: !styleData.value && !!ordersTable.model.getRoleValue(styleData.row, "hasAssetToSend");
                     SvgImage {
                         z: 1
@@ -405,22 +405,20 @@ ColumnLayout {
                         color: Style.accent_incoming
                         copyMenuEnabled: false
                     }
-                    MouseArea {
-                        x: parent.x
-                        y: parent.y
-                        width: parent.width
-                        height: parent.height
-                        acceptedButtons: Qt.LeftButton
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
-                            assetsSwapStackView.push(
-                                Qt.createComponent("accept_asset_swap.qml"),
-                                {
-                                    "onClosed": assetsSwapLayout.onClosed,
-                                    "orderId": orderId
-                                });
-                        }
+                }
+                MouseArea {
+                    anchors.fill: acceptRow
+                    visible: acceptRow.visible
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
+                        assetsSwapStackView.push(
+                            Qt.createComponent("accept_asset_swap.qml"),
+                            {
+                                "onClosed": assetsSwapLayout.onClosed,
+                                "orderId": orderId
+                            });
                     }
                 }
             }
