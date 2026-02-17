@@ -238,7 +238,7 @@ Item {
                     readonly property bool selected:  rowRoot.isSelected
                     readonly property bool alternate: rowRoot.isAlternate
                 }
-                property var model: rowRoot.rowModel
+                property var model: rowRoot.rowModel || {}
             }
 
             // click for selection
@@ -284,7 +284,7 @@ Item {
                                 readonly property bool alternate: rowRoot.isAlternate
                                 readonly property int  elideMode: columnObj.elideMode
                             }
-                            property var model: rowRoot.rowModel
+                            property var model: rowRoot.rowModel || {}
                         }
                     }
                 }
