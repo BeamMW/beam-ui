@@ -76,8 +76,15 @@ void SortFilterProxyModel::setFilterRole(const QByteArray &role)
 {
     if (m_filterRole != role) {
         m_filterRole = role;
-        if (m_complete)
+        if (m_complete) {
+            if (role.isEmpty()) {
+                // Clear the filter pattern first to avoid an intermediate state
+                // where an empty role with a leftover pattern causes
+                // filterAcceptsRow to search all roles
+                setFilterRegularExpression(QRegularExpression());
+            }
             QSortFilterProxyModel::setFilterRole(roleKey(role));
+        }
     }
 }
 

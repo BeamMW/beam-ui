@@ -52,6 +52,7 @@ Control {
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
+            PropertyChanges { target: txProxyModel; filterRole: ""; filterString: "" }
             PropertyChanges { target: emptyMessage; 
                 text: tableViewModel.showAll
                     //% "Your transaction list is empty"
