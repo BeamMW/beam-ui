@@ -206,15 +206,15 @@ jobs:
       ###############################################################################
       - name: Build [macos]
         if: startsWith(matrix.os, 'macos')
-        run: cmake --build build --parallel 5 --config $BUILD_TYPE
+        run: cmake --build build --parallel 3 --config $BUILD_TYPE
 
       - name: Build [ubuntu]
         if: startsWith(matrix.os, 'ubuntu')
-        run: cmake --build build --parallel 8 --config $BUILD_TYPE
+        run: cmake --build build --parallel 4 --config $BUILD_TYPE
 
       - name: Build [windows]
         if: startsWith(matrix.os, 'windows')
-        run: cmake --build build --parallel 8 --config $BUILD_CONFIG
+        run: cmake --build build --parallel 4 --config $BUILD_CONFIG
 
       ###############################################################################
       # Pack
