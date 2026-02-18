@@ -544,7 +544,7 @@ elseif(APPLE)
                 -s "${BEAM_SIGN_IDENTITY}"
                 -o runtime
                 --timestamp
-                --entitlements ${CMAKE_CURRENT_SOURCE_DIR}/BeamWallet.entitlements
+                # --entitlements ${CMAKE_CURRENT_SOURCE_DIR}/BeamWallet.entitlements
                 "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
                 COMMENT "Signing Beam Wallet${BEAM_DISPLAY_SUFFIX}.app..."
             )
