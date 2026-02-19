@@ -9,12 +9,8 @@
 #include <type_traits>
 #include <QtGlobal>
 
-// TODO (QT6): fix that
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-Q_DECLARE_METATYPE(beam::wallet::TxID)
-Q_DECLARE_METATYPE(beam::wallet::TxParameters)
-Q_DECLARE_METATYPE(ECC::uintBig)
-#endif
+// Qt6 automatically registers meta-types used in signals/slots
+// Manual Q_DECLARE_METATYPE removed to prevent conflicts with Qt6 MOC(Meta-Object Compiler)
 
 namespace beamui
 {

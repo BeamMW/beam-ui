@@ -309,7 +309,7 @@ int main (int argc, char* argv[])
             // even while being destroyed. Do not move engine above AppModel
             WalletSettings settings(appDataDir, app.applicationDirPath());
             AppModel appModel(settings);
-            // TODO (Qt6): check
+
             QQuickStyle::setStyle("Basic");
             QQmlApplicationEngine engine;
             Translator translator(settings, engine);
