@@ -93,11 +93,12 @@ ColumnLayout {
                 receiverAddrDialog.peerAddr = thisView.receiverAddr;
                 receiverAddrDialog.open();
             }
-        }
-        ColorOverlay {
-            anchors.fill: editIcon
-            source: editIcon
-            color: Style.content_main
+
+            ColorOverlay {
+                anchors.fill: parent
+                source: parent
+                color: Style.content_main
+            }
         }
 
         CustomToolButton {
