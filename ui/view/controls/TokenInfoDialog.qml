@@ -143,7 +143,8 @@ CustomDialog {
             }
 
             RowLayout {
-                Layout.fillWidth: true
+                Layout.columnSpan: viewModel.isMaxPrivacy ? 2 : 1
+                Layout.fillWidth:  !viewModel.isMaxPrivacy
 
                 ScrollView {
                     Layout.preferredWidth:        578
@@ -269,13 +270,12 @@ CustomDialog {
 
                 SFLabel {
                     Layout.alignment:       Qt.AlignTop
-                    Layout.preferredWidth:  578
+                    Layout.fillWidth:       true
                     wrapMode:               Text.Wrap
                     font.pixelSize:         14
                     color:                  Style.content_main
                     text:                   viewModel.identity
                     copyMenuEnabled:        true
-                    elide:                  Text.ElideMiddle
                     onCopyText: function () {
                         BeamGlobals.copyToClipboard(text)
                     }
