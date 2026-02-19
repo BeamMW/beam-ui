@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Controls.impl 2.4
-import QtQuick.Templates 2.4 as T
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls.impl
+import QtQuick.Templates as T
 import "."
 
 T.TextArea {
@@ -30,8 +30,6 @@ T.TextArea {
     property alias backgroundColor : backgroundRect.color
     backgroundColor: Style.content_main
 
-	selectByMouse: true
-	
     PlaceholderText {
         id: placeholder
         x: control.leftPadding
@@ -60,7 +58,7 @@ T.TextArea {
         acceptedButtons: Qt.RightButton
         hoverEnabled: true
 
-        onClicked: {
+        onClicked: function(mouse) {
             var selectStart = control.selectionStart
             var selectEnd = control.selectionEnd
             var curPos = control.cursorPosition

@@ -1,8 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import "controls"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
@@ -99,12 +97,12 @@ ColumnLayout {
         }
         //! [transitions]
 
-        ScrollBar.vertical: ScrollBar {}
+        ScrollBar.vertical: CustomScrollBar {}
 
         section.property: "state"
         section.delegate: Item {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.left: parent ? parent.left : undefined
+            anchors.right: parent ? parent.right : undefined
             property bool isRead: section == "read" 
             height: isRead ? 24 : 0
             
@@ -121,8 +119,8 @@ ColumnLayout {
         }
 
         delegate: Item {
-            anchors.left: parent.left
-            anchors.right: parent.right
+            anchors.left: parent ? parent.left : undefined
+            anchors.right: parent ? parent.right : undefined
             height: 121+10
 
             property bool isUnread: model.state == "unread" 

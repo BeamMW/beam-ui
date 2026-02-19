@@ -1,6 +1,6 @@
-import QtQuick          2.15
-import QtQuick.Layouts  1.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import Beam.Wallet      1.0
 import "../utils.js" as Utils
 import "../controls"
@@ -17,9 +17,15 @@ ColumnLayout {
     property bool showActions:               true
 
     onAppsListChanged: function() {
-        if (!!appsList && appsList.length > 0) {
-            for (let idx = 0; idx < 2; ++idx) {
-                if (appsList[idx].local) {
+        // In Qt6, we need to explicitly set the source model when appsList changes
+        if (appsList) {
+            searchProxyModel.source = appsList
+        }
+        
+        if (!!appsList && appsList.rowCount && appsList.rowCount() > 0) {
+            for (let idx = 0; idx < Math.min(2, appsList.rowCount()); ++idx) {
+                let app = appsList.get(idx)
+                if (app && app.local) {
                     hasLocal = true
                     return
                 }
@@ -130,9 +136,7 @@ ColumnLayout {
         cellWidth:                   gridView.width / Math.floor(gridView.width / 320)
         clip:                        true
         visible:                     model.count > 0
-        ScrollBar.vertical: ScrollBar {
-            policy: ScrollBar.AsNeeded
-        }
+        ScrollBar.vertical:          CustomScrollBar {}
 
         model: SortFilterProxyModel {
             id:           appFilterProxy
@@ -146,7 +150,6 @@ ColumnLayout {
                         filterString:           searchBox.text
                         filterSyntax:           SortFilterProxyModel.Wildcard
                         filterCaseSensitivity:  Qt.CaseInsensitive
-                        source:                 control.appsList
             }
         }
         

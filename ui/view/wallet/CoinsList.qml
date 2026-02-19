@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Layouts
 import "../controls"
 
 RowLayout {
@@ -24,7 +24,7 @@ RowLayout {
 
              SvgImage {
                 source: "qrc:/assets/icon-verified-asset.svg";
-                visible: verified && verified[index]
+                visible: !!(verified && verified[index])
 
                 x: parent.width - width / 1.6
                 y: - height / 3.6

@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtGraphicalEffects 1.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
@@ -112,7 +112,7 @@ ColumnLayout {
         Layout.bottomMargin: 10
         clip:                true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-        ScrollBar.vertical.policy:   ScrollBar.AsNeeded
+        ScrollBar.vertical:          CustomScrollBar {}
 
         ColumnLayout {
             width: scrollView.availableWidth
@@ -293,10 +293,10 @@ ColumnLayout {
                                     CustomToolButton {
                                         Layout.alignment: Qt.AlignVCenter
                                         icon.source: "qrc:/assets/icon-copy.svg"
-                                        ToolTip.text: qsTrId("settings-swap-copy-address")
-                                        ToolTip.visible: hovered
-                                        ToolTip.delay: 500
-                                        ToolTip.timeout: 2000
+                                        CustomToolTip {
+                                            text:    qsTrId("settings-swap-copy-address")
+                                            visible: parent.hovered
+                                        }
                                         enabled: control.isValid()
                                         onClicked: {
                                             control.copyAndSave()
@@ -307,10 +307,10 @@ ColumnLayout {
                                         icon.source: "qrc:/assets/icon-refresh.svg"
                                         //: receive screen, button to generate new address
                                         //% "Generate new address"
-                                        ToolTip.text: qsTrId("receive-generate-new")
-                                        ToolTip.visible: hovered
-                                        ToolTip.delay: 500
-                                        ToolTip.timeout: 2000
+                                        CustomToolTip {
+                                            text:    qsTrId("receive-generate-new")
+                                            visible: parent.hovered
+                                        }
                                         hoverEnabled: true
                                         onClicked: {
                                             viewModel.generateNewAddress()
@@ -365,10 +365,10 @@ ColumnLayout {
                                             CustomToolButton {
                                                 Layout.alignment: Qt.AlignVCenter
                                                 icon.source: "qrc:/assets/icon-copy.svg"
-                                                ToolTip.text: qsTrId("settings-swap-copy-address")
-                                                ToolTip.visible: hovered
-                                                ToolTip.delay: 500
-                                                ToolTip.timeout: 2000
+                                                CustomToolTip {
+                                                    text:    qsTrId("settings-swap-copy-address")
+                                                    visible: parent.hovered
+                                                }
                                                 enabled: control.isValid()
                                                 onClicked: {
                                                     control.copySBBSAndSave()

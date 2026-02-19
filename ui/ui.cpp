@@ -15,6 +15,9 @@
 #include <QApplication>
 #include <QtQuick>
 #include <QQmlApplicationEngine>
+#include <QQuickStyle>
+#include <QtWebEngineQuick>
+#include <QResource>
 
 #include <QInputDialog>
 #include <QMessageBox>
@@ -86,14 +89,12 @@ Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
 
 Q_IMPORT_PLUGIN(QtQuick2Plugin)
 Q_IMPORT_PLUGIN(QtQuick2WindowPlugin)
-Q_IMPORT_PLUGIN(QtQuickControls1Plugin)
 Q_IMPORT_PLUGIN(QtQuickControls2Plugin)
-Q_IMPORT_PLUGIN(QtGraphicalEffectsPlugin)
-Q_IMPORT_PLUGIN(QtGraphicalEffectsPrivatePlugin)
 Q_IMPORT_PLUGIN(QSvgPlugin)
 Q_IMPORT_PLUGIN(QtQuickLayoutsPlugin)
 Q_IMPORT_PLUGIN(QtQuickTemplates2Plugin)
-
+// Qt6: required for Qt5Compat.GraphicalEffects (DropShadow, etc.)
+Q_IMPORT_PLUGIN(Qt5CompatGraphicalEffectsPlugin)
 
 #endif
 
@@ -191,9 +192,9 @@ int main (int argc, char* argv[])
     beam::Rules r;
     beam::Rules::Scope scopeRules(r);
 
-    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    // Qt6: AA_EnableHighDpiScaling is always on, AA_ShareOpenGLContexts is default for WebEngine
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+    QtWebEngineQuick::initialize();
 
     block_sigpipe();
 
@@ -308,6 +309,8 @@ int main (int argc, char* argv[])
             // even while being destroyed. Do not move engine above AppModel
             WalletSettings settings(appDataDir, app.applicationDirPath());
             AppModel appModel(settings);
+
+            QQuickStyle::setStyle("Basic");
             QQmlApplicationEngine engine;
             Translator translator(settings, engine);
             
@@ -391,10 +394,47 @@ int main (int argc, char* argv[])
             WindowEventFilter filter;
             app.installEventFilter(&filter);
 
+            // Set up error handling for QML engine
+            QList<QQmlError> qmlErrors;
+            
+            // Connect to warnings signal to capture QML errors
+            QObject::connect(&engine, &QQmlApplicationEngine::warnings, [&](const QList<QQmlError> &warnings) {
+                qmlErrors.append(warnings);
+            });
+            
             engine.load(QUrl("qrc:/root.qml"));
             if (engine.rootObjects().count() < 1)
             {
-                BEAM_LOG_ERROR() << "Problem with QT";
+                BEAM_LOG_ERROR() << "Failed to load QML engine - No root objects created";
+                BEAM_LOG_ERROR() << "QML URL: qrc:/root.qml";
+                
+                // Check for QML errors collected via signal
+                if (!qmlErrors.isEmpty())
+                {
+                    BEAM_LOG_ERROR() << "QML Engine errors detected:";
+                    for (const auto& error : qmlErrors)
+                    {
+                        BEAM_LOG_ERROR() << "  -" << error.toString().toStdString();
+                    }
+                }
+                else
+                {
+                    BEAM_LOG_ERROR() << "No QML engine errors reported, but no root objects created";
+                    BEAM_LOG_ERROR() << "Possible causes: missing qrc:/root.qml, QML syntax errors, or missing dependencies";
+                }
+                
+                // Check if resource file exists
+                BEAM_LOG_ERROR() << "Checking resource availability...";
+                if (QResource(":/root.qml").isValid())
+                {
+                    BEAM_LOG_ERROR() << "Resource :/root.qml is valid and accessible";
+                }
+                else
+                {
+                    BEAM_LOG_ERROR() << "Resource :/root.qml is NOT valid or NOT accessible";
+                    BEAM_LOG_ERROR() << "Check qrc file compilation and resource registration";
+                }
+                
                 return -1;
             }
 
@@ -406,7 +446,17 @@ int main (int argc, char* argv[])
 
             if (!window)
             {
-                BEAM_LOG_ERROR() << "Problem with QT";
+                BEAM_LOG_ERROR() << "Failed to cast root object to QQuickWindow";
+                BEAM_LOG_ERROR() << "Root object type:" << topLevel->metaObject()->className();
+                BEAM_LOG_ERROR() << "Root objects count:" << engine.rootObjects().count();
+                
+                // List all root objects for debugging
+                for (int i = 0; i < engine.rootObjects().count(); ++i)
+                {
+                    QObject* obj = engine.rootObjects()[i];
+                    BEAM_LOG_ERROR() << "Root object" << i << "type:" << obj->metaObject()->className();
+                }
+                
                 return -1;
             }
 

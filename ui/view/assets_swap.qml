@@ -1,9 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2 as Controls1
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "controls"
 import "wallet"
@@ -157,7 +155,7 @@ ColumnLayout {
 
         property var          selectedAssets: []
 
-        selectionMode: Controls1.SelectionMode.NoSelection
+        selectionMode: SelectionMode.noSelection
         sortIndicatorVisible: true
         sortIndicatorColumn: 4
         sortIndicatorOrder: Qt.DescendingOrder
@@ -197,7 +195,6 @@ ColumnLayout {
         }
         visible: tabSelector.state != "transactions" && model.count > 0
 
-        property real rowHeight: 56
         property double columnResizeRatio: width / 1000
 
         rowDelegate: Item {
@@ -218,7 +215,7 @@ ColumnLayout {
             onCopyText: BeamGlobals.copyToClipboard(styleData.value)
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "coins"
             id: coinColumn
 
@@ -256,7 +253,7 @@ ColumnLayout {
             }
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "send"
 
             //% "Send"
@@ -283,7 +280,7 @@ ColumnLayout {
             }
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "receive"
 
             //% "Receive"
@@ -310,7 +307,7 @@ ColumnLayout {
             }
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "rate"
 
             //% "Rate"
@@ -320,7 +317,7 @@ ColumnLayout {
             resizable: false
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "created"
 
             //% "Created on"
@@ -330,7 +327,7 @@ ColumnLayout {
             resizable: false
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "expiration"
 
             //% "Expiration"
@@ -340,7 +337,7 @@ ColumnLayout {
             resizable: false
         }
 
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role: "isMine"
             id:   actionColumn
 
@@ -357,6 +354,7 @@ ColumnLayout {
                 anchors.topMargin: 16
 
                 RowLayout {
+                    id: cancelRow
                     visible: styleData.value
                     Layout.fillWidth: true
                     SvgImage {
@@ -376,20 +374,19 @@ ColumnLayout {
                         color: Style.accent_fail
                         copyMenuEnabled: false
                     }
-                    MouseArea {
-                        x: parent.x
-                        y: parent.y
-                        width: parent.width
-                        height: parent.height
-                        acceptedButtons: Qt.LeftButton
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
-                            ordersModel.cancelOrder(orderId);
-                        }
+                }
+                MouseArea {
+                    anchors.fill: cancelRow
+                    visible: cancelRow.visible
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
+                        ordersModel.cancelOrder(orderId);
                     }
                 }
                 RowLayout {
+                    id: acceptRow
                     visible: !styleData.value && !!ordersTable.model.getRoleValue(styleData.row, "hasAssetToSend");
                     SvgImage {
                         z: 1
@@ -407,22 +404,20 @@ ColumnLayout {
                         color: Style.accent_incoming
                         copyMenuEnabled: false
                     }
-                    MouseArea {
-                        x: parent.x
-                        y: parent.y
-                        width: parent.width
-                        height: parent.height
-                        acceptedButtons: Qt.LeftButton
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
-                            assetsSwapStackView.push(
-                                Qt.createComponent("accept_asset_swap.qml"),
-                                {
-                                    "onClosed": assetsSwapLayout.onClosed,
-                                    "orderId": orderId
-                                });
-                        }
+                }
+                MouseArea {
+                    anchors.fill: acceptRow
+                    visible: acceptRow.visible
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        var orderId = ordersTable.model.getRoleValue(styleData.row, "id");
+                        assetsSwapStackView.push(
+                            Qt.createComponent("accept_asset_swap.qml"),
+                            {
+                                "onClosed": assetsSwapLayout.onClosed,
+                                "orderId": orderId
+                            });
                     }
                 }
             }

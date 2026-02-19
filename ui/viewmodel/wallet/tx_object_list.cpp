@@ -335,7 +335,10 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::TimeCreatedSort:
             return static_cast<qulonglong>(value->timeCreated());
         case Roles::AmountGeneralSort:
-            return static_cast<qulonglong>(beamui::UIStringToAmount(value->getAmountGeneral()));
+        {
+            auto amount = static_cast<qlonglong>(beamui::UIStringToAmount(value->getAmountGeneral()));
+            return value->isIncome() ? amount : -amount;
+        }
         case Roles::AmountGeneral:
             return value->getAmountGeneral();
         case Roles::Rate:

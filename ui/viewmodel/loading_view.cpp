@@ -38,7 +38,6 @@ const int kBpsRecessionCountThreshold = 60;
 
 }  // namespace
 
-Q_DECLARE_METATYPE(uint64_t);
 
 LoadingViewModel::LoadingViewModel()
     : m_walletModel(AppModel::getInstance().getWalletModel())

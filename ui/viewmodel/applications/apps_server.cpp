@@ -14,25 +14,73 @@
 #include "apps_server.h"
 
 #include <stdexcept>
+#include <QFileInfo>
+#include <QUrl>
 
 namespace beamui::applications
 {
     AppsServer::AppsServer(const QString& serveFrom, uint32_t port)
+        : _documentRoot(serveFrom)
+        , _canonicalRoot(_documentRoot.canonicalPath())
     {
-        _handler = std::make_unique<QHttpEngine::FilesystemHandler>(serveFrom);
-        _server  = std::make_unique<QHttpEngine::Server>(_handler.get());
+        if (_canonicalRoot.isEmpty())
+            throw std::runtime_error("document root does not exist");
 
-        if(!_server->listen(QHostAddress::LocalHost, port))
+        _server = std::make_unique<QHttpServer>();
+
+        // Use setMissingHandler as a catch-all to serve static files for any path
+        _server->setMissingHandler(_server.get(),
+            [this](const QHttpServerRequest &request, QHttpServerResponder &responder) {
+                QString path = QUrl::fromPercentEncoding(request.url().path().toUtf8());
+                if (path.startsWith('/'))
+                    path = path.mid(1);
+
+                QString absolutePath = _documentRoot.absoluteFilePath(path);
+
+                // Resolve symlinks and ".." to a canonical path for safe comparison
+                QString canonical = QFileInfo(absolutePath).canonicalFilePath();
+                if (canonical.isEmpty() || !canonical.startsWith(_canonicalRoot)) {
+                    responder.write(QHttpServerResponder::StatusCode::Forbidden);
+                    return;
+                }
+
+                QFileInfo fileInfo(canonical);
+                if (fileInfo.isDir()) {
+                    responder.write(QHttpServerResponder::StatusCode::NotFound);
+                    return;
+                }
+
+                // Stream via QIODevice — avoids loading entire file into memory
+                auto *file = new QFile(canonical);
+                if (!file->open(QIODevice::ReadOnly)) {
+                    delete file;
+                    responder.write(QHttpServerResponder::StatusCode::Forbidden);
+                    return;
+                }
+
+                QByteArray mimeType = _mimeDb.mimeTypeForFile(canonical).name().toUtf8();
+                // Note: This function takes the ownership of data.
+                responder.write(file, mimeType);
+            });
+
+        _tcpServer = new QTcpServer();
+        if (!_tcpServer->listen(QHostAddress::LocalHost, port))
         {
+            delete _tcpServer;
+            _tcpServer = nullptr;
             throw std::runtime_error("failed to listen");
+        }
+        if (!_server->bind(_tcpServer))
+        {
+            // listen() succeeded but bind() failed; _tcpServer was not reparented
+            delete _tcpServer;
+            _tcpServer = nullptr;
+            throw std::runtime_error("failed to bind");
         }
     }
 
     AppsServer::~AppsServer()
     {
-        _server->setHandler(nullptr);
-        _server->close();
-        _handler.reset();
         _server.reset();
     }
 }

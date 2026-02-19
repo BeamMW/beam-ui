@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Window 2.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Window
 import "."
 
 Label {
@@ -37,7 +37,7 @@ Label {
         width: control.width
         acceptedButtons: Qt.RightButton
 
-        onClicked: {
+        onClicked: function(mouse) {
             var contextMenu = contextMenuComponent.createObject(control)
             contextMenu.x = mouse.x
             contextMenu.y = mouse.y

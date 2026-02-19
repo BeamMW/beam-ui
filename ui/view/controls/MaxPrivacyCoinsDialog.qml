@@ -1,7 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.Styles 1.2
+import QtQuick
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import "."
@@ -74,12 +72,11 @@ CustomDialog {
 
         CustomTableView {
             id: tableView
-            property int rowHeight: 56
 
             Layout.fillWidth:    true
             Layout.fillHeight:   true
             frameVisible:        false
-            selectionMode:       SelectionMode.NoSelection
+            selectionMode:       SelectionMode.noSelection
             backgroundVisible:   false
             headerColor:         Style.background_main_top
             mainBackgroundRect:  dialog.background

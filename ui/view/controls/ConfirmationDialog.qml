@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import "."
 
 CustomDialog {
@@ -12,15 +12,25 @@ CustomDialog {
     property alias okButtonText: okButton.text
     property alias okButtonIconSource: okButton.icon.source
     property alias okButtonVisible: okButton.visible
-    property alias okButtonColor: okButton.palette.button
-    property alias okButtonAllLowercase: okButton.allLowercase
+    property color okButtonColor: Style.active
+    property bool okButtonAllLowercase: okButton.allLowercase
     property alias cancelButton: cancelButton
     property alias cancelButtonEnable: cancelButton.enabled
     property alias cancelButtonText: cancelButton.text
     property alias cancelButtonIconSource: cancelButton.icon.source
     property alias cancelButtonVisible: cancelButton.visible
-    property alias cancelButtonColor: cancelButton.palette.button
-    property alias cancelButtonAllLowercase: cancelButton.allLowercase
+    property color cancelButtonColor: Style.background_button
+    property bool cancelButtonAllLowercase: cancelButton.allLowercase
+
+    // Update palette when custom properties change
+    onOkButtonColorChanged: okButton.palette.button = okButtonColor
+    onCancelButtonColorChanged: cancelButton.palette.button = cancelButtonColor
+
+    // Initialize palette values
+    Component.onCompleted: {
+        okButton.palette.button = okButtonColor
+        cancelButton.palette.button = cancelButtonColor
+    }
     property var   defaultFocusItem: undefined
     property var   beforeAccept: function(){return true}
 

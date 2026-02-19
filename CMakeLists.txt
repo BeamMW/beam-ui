@@ -23,7 +23,7 @@ if (BEAM_SIGN_PACKAGE AND WIN32)
 
     #if(EXISTS ${WINDOWS_IDENTITIY_PFX_FILE})
     #    message(STATUS "Signing executables with: " ${WINDOWS_IDENTITIY_PFX_FILE})
-    #    if(${WINDOWS_IDENTITIY_PFX_PASSWORD})
+    #    if(${WINDOWS_IDENTITIY_PFX_PASSWORD})  
     #        message(WARNING "USE WITH CAUTION: Password for the PFX file has been set!")
     #    endif()
     #else()
@@ -36,6 +36,13 @@ if(BEAM_LINK_TYPE MATCHES "Static")
 endif()
 
 option(BEAM_USE_STATIC_QT "Build with staticaly linked QT library" FALSE)
+
+# Qt6 migration: prefer QT6_ROOT_DIR, fall back to QT5_ROOT_DIR
+if(DEFINED ENV{QT6_ROOT_DIR})
+    set(BEAM_QT_ROOT_DIR $ENV{QT6_ROOT_DIR})
+elseif(DEFINED ENV{QT5_ROOT_DIR})
+    set(BEAM_QT_ROOT_DIR $ENV{QT5_ROOT_DIR})
+endif()
 if (BEAM_USE_STATIC AND NOT BEAM_USE_STATIC_QT)
     set(BEAM_USE_STATIC_RUNTIME FALSE)
 endif()
@@ -222,6 +229,7 @@ else()
        CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|Clang" AND
        (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 15 OR CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 15))
        add_compile_definitions(_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION) # boost@1.76/1.76.0_4/include/boost/container_hash/hash.hpp:131:33
+       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-enum-constexpr-conversion -Wno-error=enum-constexpr-conversion")
     endif()
 endif()
 
@@ -229,7 +237,6 @@ set(SKIP_INSTALL_ALL ON)
 add_subdirectory(3rdparty/zlib EXCLUDE_FROM_ALL)
 add_subdirectory(3rdparty/qrcode)
 add_subdirectory(3rdparty/quazip)
-add_subdirectory(3rdparty/qhttpengine EXCLUDE_FROM_ALL)
 add_subdirectory(ui)
 
 

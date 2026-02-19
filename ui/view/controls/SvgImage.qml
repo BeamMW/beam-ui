@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Window 2.2
+import QtQuick
+import QtQuick.Window
 
 Image {
     id: root

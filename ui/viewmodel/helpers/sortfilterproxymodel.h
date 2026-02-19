@@ -15,12 +15,22 @@
 
 #include <QtCore/qsortfilterproxymodel.h>
 #include <QtQml/qqmlparserstatus.h>
+#include <QRegularExpression>
 
 class SortFilterProxyModel : public QSortFilterProxyModel, public QQmlParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
 
+public:
+    enum FilterSyntax {
+        RegExp,
+        Wildcard,
+        FixedString
+    };
+    Q_ENUM(FilterSyntax)
+
+private:
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QObject *source READ source WRITE setSource)
 
@@ -30,8 +40,6 @@ class SortFilterProxyModel : public QSortFilterProxyModel, public QQmlParserStat
     Q_PROPERTY(QByteArray filterRole READ filterRole WRITE setFilterRole)
     Q_PROPERTY(QString filterString READ filterString WRITE setFilterString)
     Q_PROPERTY(FilterSyntax filterSyntax READ filterSyntax WRITE setFilterSyntax)
-
-    Q_ENUMS(FilterSyntax)
 
 public:
     explicit SortFilterProxyModel(QObject *parent = 0);
@@ -49,12 +57,6 @@ public:
 
     QString filterString() const;
     void setFilterString(const QString &filter);
-
-    enum FilterSyntax {
-        RegExp,
-        Wildcard,
-        FixedString
-    };
 
     FilterSyntax filterSyntax() const;
     void setFilterSyntax(FilterSyntax syntax);
@@ -78,4 +80,5 @@ private:
     bool m_complete;
     QByteArray m_sortRole;
     QByteArray m_filterRole;
+    FilterSyntax m_filterSyntax = RegExp;
 };

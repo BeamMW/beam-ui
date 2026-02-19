@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "../controls"
 
@@ -180,6 +180,7 @@ Control {
             leftPadding: 0
             rightPadding: 0
             spacing: 0
+            enabled: control.selectedIds.length != 0
 
             Binding {
                 target: control
@@ -210,7 +211,7 @@ Control {
         Column {
             spacing: 10
             height: grid.implicitHeight + (control.showValidationPromo ? 85 : 0)
-            width: parent.width
+            width: scroll.availableWidth
             Grid {
                 id: grid
 

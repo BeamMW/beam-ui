@@ -1,6 +1,6 @@
-import QtQuick          2.15
-import QtQuick.Layouts  1.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import Beam.Wallet      1.0
 import "../controls"
 
@@ -14,8 +14,8 @@ CustomDialog {
     closePolicy: Popup.NoAutoClose
 
     property bool newPublisher: true
-    property var nickname
-    property var publisherKey
+    property string nickname: ""
+    property string publisherKey: ""
 
     signal goToMyAccount()
 

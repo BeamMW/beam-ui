@@ -1,6 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 import Beam.Wallet 1.0
 import "."
 import "../utils.js" as Utils
@@ -9,8 +8,6 @@ CustomTableView {
     id: rootControl
 
     property bool isShieldedSupported: true
-
-    property int rowHeight: 56
     property int resizableWidth: parent.width - actions.width
     property double columnResizeRatio: resizableWidth / 914
 
@@ -19,7 +16,7 @@ CustomTableView {
     property var showQRDialog
     anchors.fill: parent
     frameVisible: false
-    selectionMode: SelectionMode.NoSelection
+    selectionMode: SelectionMode.noSelection
     backgroundVisible: false
     sortIndicatorVisible: true
     sortIndicatorColumn: 0
@@ -189,7 +186,7 @@ CustomTableView {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.RightButton
-            onClicked: {
+            onClicked: function(mouse) {
                 if (mouse.button == Qt.RightButton && styleData.row != undefined)
                 {
                     contextMenu.addressItem = rootControl.model[styleData.row]
@@ -219,10 +216,10 @@ CustomTableView {
                     CustomToolButton {
                         icon.source: "qrc:/assets/icon-actions.svg"
                         //% "Actions"
-                        ToolTip.text: qsTrId("general-actions")
-                        ToolTip.visible: hovered
-                        ToolTip.delay: 500
-                        ToolTip.timeout: 2000
+                        CustomToolTip {
+                            text:    qsTrId("general-actions")
+                            visible: parent.hovered
+                        }
                         hoverEnabled: true
                         onClicked: {
                             contextMenu.addressItem = rootControl.model[styleData.row]

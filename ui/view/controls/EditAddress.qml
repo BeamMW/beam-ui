@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import "."
@@ -26,7 +26,7 @@ CustomDialog {
     property bool    commentValid:  comment == "" || comment == addressItem.name || viewModel.commentValid(comment)
     property bool    extended:      false
 
-    contentItem: Item { ColumnLayout {
+    contentItem: ColumnLayout {
         spacing: 0
 
         SFText {
@@ -53,7 +53,7 @@ CustomDialog {
             Layout.preferredWidth:        control.isOldAddr ? 510: 582
             clip:                         true
             ScrollBar.horizontal.policy:  ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy:    ScrollBar.AsNeeded
+            ScrollBar.vertical:           CustomScrollBar {}
 
             SFLabel {
                 id:                       addressID
@@ -224,5 +224,5 @@ CustomDialog {
                 }
             }
         }
-    }}
+    }
 }

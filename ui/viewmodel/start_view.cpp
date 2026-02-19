@@ -176,18 +176,9 @@ namespace
         }
     }
 
-    template<typename T>
-    void DoJSCallback(QJSValue& jsCallback, const T& res)
+    void DoJSCallback(QJSValue& jsCallback, const QString& res)
     {
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-        #pragma GCC diagnostic push
-        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-        QJSValue v = jsCallback.engine()->toScriptValue(res);
-        jsCallback.call(QJSValueList{ v });
-#if defined(__clang__) || defined(__GNUC__) || defined(__GNUG__)
-        #pragma GCC diagnostic pop
-#endif
+        jsCallback.call(QJSValueList{ QJSValue(res) });
     }
 
     void DoOpenWallet(QJSValue& jsCallback, std::function<void ()> openFunc)

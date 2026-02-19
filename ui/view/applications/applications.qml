@@ -1,8 +1,8 @@
-import QtQuick          2.11
-import QtQuick.Layouts  1.12
-import QtQuick.Controls 2.15
-import QtWebEngine      1.4
-import QtWebChannel     1.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import QtWebEngine
+import QtWebChannel
 import Beam.Wallet      1.0
 import "../controls"
 import "../wallet"
@@ -477,8 +477,8 @@ ColumnLayout {
 
     YouArePublisher {
         id:           youArePublisher
-        nickname:     !!viewModel.publisherInfo ? viewModel.publisherInfo.name : ""
-        publisherKey: !!viewModel.publisherInfo ? viewModel.publisherInfo.pubkey : ""
+        nickname:     !!viewModel.publisherInfo ? viewModel.publisherInfo.name || "" : ""
+        publisherKey: !!viewModel.publisherInfo ? viewModel.publisherInfo.pubkey || "" : ""
 
         onGoToMyAccount: {
             youArePublisher.close()

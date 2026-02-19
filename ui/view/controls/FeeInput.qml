@@ -1,5 +1,5 @@
-import QtQuick.Layouts 1.15
-import QtQuick 2.15
+import QtQuick.Layouts
+import QtQuick
 import Beam.Wallet 1.0
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
@@ -39,7 +39,6 @@ ColumnLayout {
             font.weight:           Font.Normal
             color:                 isValid ? control.color : Style.validator_error
             backgroundColor:       isValid ? Style.content_main : Style.validator_error
-            selectByMouse:         true
             validator:             IntValidator {bottom: control.minFee}
             readOnly:              control.readOnly
 

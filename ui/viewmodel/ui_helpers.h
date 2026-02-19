@@ -7,10 +7,10 @@
 #endif  // BEAM_ATOMIC_SWAP_SUPPORT
 #include "wallet/client/extensions/news_channels/interface.h"
 #include <type_traits>
+#include <QtGlobal>
 
-Q_DECLARE_METATYPE(beam::wallet::TxID)
-Q_DECLARE_METATYPE(beam::wallet::TxParameters)
-Q_DECLARE_METATYPE(ECC::uintBig)
+// Qt6 automatically registers meta-types used in signals/slots
+// Manual Q_DECLARE_METATYPE removed to prevent conflicts with Qt6 MOC(Meta-Object Compiler)
 
 namespace beamui
 {

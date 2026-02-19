@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import "."
 
 ConfirmationDialog {
@@ -13,33 +13,30 @@ ConfirmationDialog {
     defaultFocusItem:         okButton
     property alias text:      message.text
 
-    contentItem: Item {
+    contentItem: ColumnLayout {
         id: confirmationContent
-        Column {
-            anchors.fill: parent
-            spacing: 30
+        spacing: 30
 
-            SFText {
-                width:                parent.width
-                topPadding:           20
-                font.pixelSize:       18
-                color:                Style.content_main
-                horizontalAlignment:  Text.AlignHCenter
-                //% "Swap"
-                text:                 qsTrId("general-swap")
-            }
+        SFText {
+            Layout.fillWidth:     true
+            topPadding:           20
+            font.pixelSize:       18
+            color:                Style.content_main
+            horizontalAlignment:  Text.AlignHCenter
+            //% "Swap"
+            text:                 qsTrId("general-swap")
+        }
 
-            SFText {
-                id:                   message
-                width:                parent.width
-                leftPadding:          20
-                rightPadding:         20
-                bottomPadding:        30
-                font.pixelSize:       14
-                color:                Style.content_main
-                wrapMode:             Text.Wrap
-                horizontalAlignment:  Text.AlignHCenter
-            }
+        SFText {
+            id:                   message
+            Layout.fillWidth:     true
+            leftPadding:          20
+            rightPadding:         20
+            bottomPadding:        30
+            font.pixelSize:       14
+            color:                Style.content_main
+            wrapMode:             Text.Wrap
+            horizontalAlignment:  Text.AlignHCenter
         }
     }
 }

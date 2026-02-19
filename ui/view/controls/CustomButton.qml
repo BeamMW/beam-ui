@@ -1,9 +1,8 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.impl 2.4
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQuick.Controls.impl
+import Qt5Compat.GraphicalEffects
 import "."
 
 Button {
@@ -54,7 +53,7 @@ Button {
         }
     }
 
-    Keys.onPressed: {
+    Keys.onPressed: function(event) {
         if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) control.clicked();
     }
 
@@ -79,6 +78,6 @@ Button {
         samples: 9
         color:   control.shadowColor
         source:  rect
-        visible: control.hasShadow && (control.visualFocus || control.hovered || control.checked)
+        visible: control.enabled && control.hasShadow && (control.visualFocus || control.hovered || control.checked)
     }
 }

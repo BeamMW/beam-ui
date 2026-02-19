@@ -1,9 +1,8 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Controls.impl 2.4
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls.impl
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 import "."
 import "../utils.js" as Utils
 
@@ -61,13 +60,16 @@ ComboBox {
 
     delegate: ItemDelegate {
         id: itemDelegate
+        required property var model
+        required property int index
+
         width: calculatedWidth
         padding: 0
         leftPadding: control.leftPadding
         bottomPadding: control.dropSpacing
         topPadding: 2
 
-        property var myModel : Array.isArray(control.model)  ? modelData : model
+        property var myModel : itemDelegate.model
 
         property var  iconW:    myModel["iconWidth"] || 0
         property var  iconH:    myModel["iconHeight"] || 0
@@ -78,9 +80,12 @@ ComboBox {
             id: contentRow
             spacing: 0
             property int parentHeight: 0
+            property string resolvedText: control.textRole
+                ? (myModel[control.textRole] || "")
+                : (itemDelegate.model.modelData !== undefined ? itemDelegate.model.modelData : "")
             property bool showRow: control.filterAssets
-                ? containSearchSubStr(myModel[control.textRole]) && myModel["allowed"]
-                : containSearchSubStr(myModel[control.textRole])
+                ? containSearchSubStr(resolvedText) && myModel["allowed"]
+                : containSearchSubStr(resolvedText)
 
             visible: showRow
             onVisibleChanged: {
@@ -113,10 +118,9 @@ ComboBox {
                 Layout.alignment: Qt.AlignVCenter
 
                 text: {
-                    var text = modelData
-                    if (control.textRole) {
-                        text = myModel[control.textRole]
-                    }
+                    var text = control.textRole
+                        ? myModel[control.textRole]
+                        : (itemDelegate.model.modelData !== undefined ? itemDelegate.model.modelData : itemDelegate.model)
                     return (transformText && typeof(transformText) == "function")
                         ? transformText(text)
                         : text;
@@ -246,9 +250,7 @@ ComboBox {
                 implicitHeight: control.delegateModel.count > 12 ? Math.min(250, contentHeight) : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
                 currentIndex: control.highlightedIndex
-                ScrollBar.vertical: ScrollBar {
-                    policy: ScrollBar.AsNeeded
-                }
+                ScrollBar.vertical: CustomScrollBar {}
             }
         }
 

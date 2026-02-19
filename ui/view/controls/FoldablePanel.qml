@@ -1,8 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import "."
 
 Pane {
@@ -22,16 +20,18 @@ Pane {
     spacing: 0
     padding: 20
 
-    contentItem: Item {
-        ColumnLayout {
-            spacing: 0
-            clip:    folded
-            width: parent.width
+    contentItem: ColumnLayout {
+        spacing: 0
+        clip:    folded
+
+        Item {
+            Layout.fillWidth:  true
+            Layout.alignment:  Qt.AlignTop
+            height: headerRow.height
 
             RowLayout {
                 id: headerRow
-                Layout.alignment: Qt.AlignTop
-                Layout.fillWidth: true
+                width: parent.width
                 spacing: 0
 
                 RowLayout {
@@ -51,14 +51,6 @@ Pane {
                             letterSpacing:  3.11
                             capitalization: Font.AllUppercase
                         }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape:  Qt.PointingHandCursor
-                            onClicked: {
-                                control.folded = !control.folded;
-                            }
-                        }
                     }
 
                     Item {
@@ -77,14 +69,6 @@ Pane {
                             weight:         Font.Bold
                             pixelSize:      14
                             letterSpacing:  0.35
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape:  Qt.PointingHandCursor
-                            onClicked: {
-                                control.folded = !control.folded;
-                            }
                         }
                     }
                 }
@@ -114,25 +98,33 @@ Pane {
                 }
             }
 
-            Control {
-                id:                     placeholder
-                Layout.fillWidth:       true
-                Layout.topMargin:       folded ? 0 : 20
-                Layout.alignment:       Qt.AlignTop
-                contentItem:            control.content
+            MouseArea {
+                anchors.fill: parent
+                cursorShape:  Qt.PointingHandCursor
+                onClicked: {
+                    control.folded = !control.folded;
+                }
+            }
+        }
 
-                Layout.preferredHeight: folded ? 0 : (control.contentItemHeight ? control.contentItemHeight : placeholder.implicitHeight)
-                opacity:                folded ? 0.0 : 1.0
+        Control {
+            id:                     placeholder
+            Layout.fillWidth:       true
+            Layout.topMargin:       folded ? 0 : 20
+            Layout.alignment:       Qt.AlignTop
+            contentItem:            control.content
 
-                Behavior on Layout.preferredHeight {
-                    NumberAnimation { duration:  100 }
-                }
-                Behavior on Layout.topMargin {
-                    NumberAnimation { duration:  100 }
-                }
-                Behavior on opacity {
-                    NumberAnimation { duration:  200 }
-                }
+            Layout.preferredHeight: folded ? 0 : (control.contentItemHeight ? control.contentItemHeight : placeholder.implicitHeight)
+            opacity:                folded ? 0.0 : 1.0
+
+            Behavior on Layout.preferredHeight {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on Layout.topMargin {
+                NumberAnimation { duration:  100 }
+            }
+            Behavior on opacity {
+                NumberAnimation { duration:  200 }
             }
         }
     }
@@ -147,8 +139,7 @@ Pane {
             anchors.right: parent.right
             anchors.top: parent.top
             height:  control.topPadding + headerRow.height +
-                    ( control.folded ? control.bottomPadding : 0 ) +
-                    ( placeholder.visible ? placeholder.Layout.topMargin : 0 )
+                    ( control.folded ? control.bottomPadding : 0 )
 
             cursorShape:  Qt.PointingHandCursor
             onClicked: {

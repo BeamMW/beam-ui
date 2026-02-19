@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
 CheckBox {
     id: control
@@ -16,7 +16,7 @@ CheckBox {
         color:          control.checked ? mainColor : "transparent"
         Image {
             visible: control.checked
-            source:  "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/check.png"
+            source:  "qrc:/qt-project.org/imports/QtQuick/Controls/Basic/images/check.png"
             anchors.fill: parent
         }
     }

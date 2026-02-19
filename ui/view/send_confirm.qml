@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "controls"
 import "./utils.js" as Utils
@@ -114,7 +114,7 @@ ConfirmationDialog {
     }
 
     topPadding: 30
-    contentItem: Item { ColumnLayout {
+    contentItem: ColumnLayout {
         spacing: 22
 
         GridLayout {
@@ -395,5 +395,5 @@ ConfirmationDialog {
         Item {
             height: 1
         }
-    }}
+    }
 }

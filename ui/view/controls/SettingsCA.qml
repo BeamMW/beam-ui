@@ -1,8 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "."
 
@@ -36,9 +34,7 @@ SettingsFoldable {
             model: viewModel.currenciesList
             implicitHeight: count > 6 ? Math.min(220, contentHeight) : contentHeight
 
-            ScrollBar.vertical: ScrollBar {
-                policy: ScrollBar.AsNeeded
-            }
+            ScrollBar.vertical: CustomScrollBar {}
 
             delegate: RowLayout {
                 width: listView.width

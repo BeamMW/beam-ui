@@ -1,6 +1,6 @@
-import QtQuick          2.15
-import QtQuick.Layouts  1.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import Beam.Wallet      1.0
 import "../controls"
 
@@ -201,7 +201,7 @@ CustomDialog {
                     maximumLength: 100
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/ }
                 }
             }
 
@@ -227,7 +227,7 @@ CustomDialog {
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^[A-Za-z0-9_]+$/ }
                 }
             }
 
@@ -253,7 +253,7 @@ CustomDialog {
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^in\/[A-Za-z0-9_\-]+|company\/[A-Za-z0-9_\-]+$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^in\/[A-Za-z0-9_\-]+|company\/[A-Za-z0-9_\-]+$/ }
                 }
             }
 
@@ -279,7 +279,7 @@ CustomDialog {
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^[A-Za-z0-9_]+$/ }
                 }
             }
 
@@ -305,7 +305,7 @@ CustomDialog {
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^[A-Za-z0-9_]+$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^[A-Za-z0-9_]+$/ }
                 }
             }
 
@@ -331,7 +331,7 @@ CustomDialog {
                     maximumLength: 50
                     color: isValid ? Style.content_main : Style.validator_error
                     backgroundColor: isValid ? Style.content_main : Style.validator_error
-                    validator: RegExpValidator { regExp: /^https:\/\/discord.gg\/[A-Za-z0-9]+$/ }
+                    validator: RegularExpressionValidator { regularExpression: /^https:\/\/discord.gg\/[A-Za-z0-9]+$/ }
                 }
             }
         }

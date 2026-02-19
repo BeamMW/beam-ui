@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "."
 
@@ -36,11 +36,11 @@ CustomDialog {
 
         // body
         ScrollView {
-            Layout.fillWidth:          true
-            Layout.fillHeight:         true
-            Layout.topMargin:          35
-            ScrollBar.vertical.policy: ScrollBar.AsNeeded
-            clip:                      true
+            Layout.fillWidth:   true
+            Layout.fillHeight:  true
+            Layout.topMargin:   35
+            ScrollBar.vertical: CustomScrollBar {}
+            clip:               true
 
             ColumnLayout {
                 Layout.fillWidth:  true
@@ -73,10 +73,10 @@ CustomDialog {
                             Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
                             icon.source: "qrc:/assets/icon-copy.svg"
                             //% "Copy address"
-                            ToolTip.text: qsTrId("settings-swap-copy-address")
-                            ToolTip.visible: hovered
-                            ToolTip.delay: 500
-                            ToolTip.timeout: 2000
+                            CustomToolTip {
+                                text:    qsTrId("settings-swap-copy-address")
+                                visible: parent.hovered
+                            }
                             hoverEnabled: true
                             onClicked: BeamGlobals.copyToClipboard(addressId.text)
                         }

@@ -23,6 +23,7 @@ see quazip/(un)zip.h files for details. Basically it's the zlib license.
 */
 
 #include <QtCore/QFileInfo>
+#include <QTimeZone>
 
 #include "quazipnewinfo.h"
 
@@ -251,7 +252,7 @@ static void setNTFSTime(QByteArray &extra, const QDateTime &time, int position,
         extra[timesPos + 2] = static_cast<char>(ntfsTimesLength);
         extra[timesPos + 3] = static_cast<char>(ntfsTimesLength >> 8);
     }
-    QDateTime base(QDate(1601, 1, 1), QTime(0, 0), Qt::UTC);
+    QDateTime base(QDate(1601, 1, 1), QTime(0, 0), QTimeZone::UTC);
 #if (QT_VERSION >= 0x040700)
     quint64 ticks = base.msecsTo(time) * 10000 + fineTicks;
 #else

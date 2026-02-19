@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick
 
 Rectangle {
     id: rowItem
@@ -26,7 +26,9 @@ Rectangle {
     }
 
     onRowInModelChanged: {
-        collapsed = !rowInModel;
+        if (!rowInModel) {
+            collapsed = true;
+        }
         rowMouseArea.hoverEnabled = false;
         hoverEnabler.start();
     }
@@ -83,7 +85,7 @@ Rectangle {
         hoverEnabled:     false
         propagateComposedEvents: true
 
-        onClicked: {
+        onClicked: function(mouse) {
             if (!rowInModel)
             {
                 return;

@@ -30,5 +30,5 @@ public:
         Change,
         Treasury
     };
-    Q_ENUMS(EnType)
+    Q_ENUM(EnType)
 };

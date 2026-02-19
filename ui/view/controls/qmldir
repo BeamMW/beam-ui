@@ -1,1 +1,2 @@
 singleton Style 1.0 Style.qml
+singleton SelectionMode 1.0 SelectionMode.qml

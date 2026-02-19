@@ -1,13 +1,11 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
 import "controls"
 import "start_wizzard"
 import "utils.js" as Utils
 import Beam.Wallet 1.0
-import QtQuick.Layouts 1.15
+import QtQuick.Layouts
 
 Item
 {

@@ -1,7 +1,7 @@
-﻿import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -155,13 +155,13 @@ WizzardPage {
         }
     ]
 
-    Keys.onPressed: {
+    Keys.onPressed: function(event) {
         if (event.key == Qt.Key_Shift) {
             viewModel.validateDictionary = false;
         }
     }
 
-    Keys.onReleased: {
+    Keys.onReleased: function(event) {
         if (event.key == Qt.Key_Shift) {
             viewModel.validateDictionary = true;
         }

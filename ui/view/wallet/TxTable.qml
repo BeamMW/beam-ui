@@ -1,9 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "../controls"
 import "../utils.js" as Utils
@@ -54,6 +52,7 @@ Control {
         State {
             name: "all"
             PropertyChanges { target: allTab; state: "active" }
+            PropertyChanges { target: txProxyModel; filterRole: ""; filterString: "" }
             PropertyChanges { target: emptyMessage; 
                 text: tableViewModel.showAll
                     //% "Your transaction list is empty"
@@ -233,10 +232,10 @@ Control {
                 icon.source: "qrc:/assets/icon-export.svg"
                 //: transaction history screen, export button tooltip and open file dialog
                 //% "Export transaction history"
-                ToolTip.text: qsTrId("wallet-export-tx-history")
-                ToolTip.visible: hovered
-                ToolTip.delay: 500
-                ToolTip.timeout: 2000
+                CustomToolTip {
+                    text:    qsTrId("wallet-export-tx-history")
+                    visible: parent.hovered
+                }
                 hoverEnabled: true
                 onClicked: {
                     tableViewModel.exportTxHistoryToCsv();
@@ -247,10 +246,10 @@ Control {
                 Layout.alignment: Qt.AlignVCenter
                 icon.source: "qrc:/assets/icon-proof.svg"
                 //% "Verify payment"
-                ToolTip.text: qsTrId("wallet-verify-payment")
-                ToolTip.visible: hovered
-                ToolTip.delay: 500
-                ToolTip.timeout: 2000
+                CustomToolTip {
+                    text:    qsTrId("wallet-verify-payment")
+                    visible: parent.hovered
+                }
                 hoverEnabled: true
                 onClicked: {
                     var paymentInfoVerifyDialog =
@@ -399,11 +398,10 @@ Control {
             Layout.bottomMargin:  9
             visible:              transactionsTable.model.count > 0
 
-            property real rowHeight: 56
             property real resizableWidth: transactionsTable.width - 140
             property real columnResizeRatio: resizableWidth / (610 - (sourceVisible || actionVisible ? 0 : 140))
 
-            selectionMode: SelectionMode.NoSelection
+            selectionMode: SelectionMode.noSelection
             sortIndicatorVisible: true
             sortIndicatorColumn: 5
             sortIndicatorOrder: Qt.DescendingOrder
@@ -545,7 +543,7 @@ Control {
 
                 //% "Coin"
                 title:     qsTrId("general-coin")
-                width:     106
+                width:     126
                 movable:   false
                 resizable: false
 
@@ -810,10 +808,10 @@ Control {
                             anchors.rightMargin: 12
                             icon.source: "qrc:/assets/icon-actions.svg"
                             //% "Actions"
-                            ToolTip.text: qsTrId("general-actions")
-                            ToolTip.visible: hovered
-                            ToolTip.delay: 500
-                            ToolTip.timeout: 2000
+                            CustomToolTip {
+                                text:    qsTrId("general-actions")
+                                visible: parent.hovered
+                            }
                             hoverEnabled: true
                             onClicked: {
                                 transactionsTable.showContextMenu(styleData.row);

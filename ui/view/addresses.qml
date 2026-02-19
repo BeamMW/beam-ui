@@ -1,8 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.Styles 1.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import "controls"
 import Beam.Wallet 1.0
 
@@ -169,13 +167,12 @@ ColumnLayout {
             CustomTableView {
                 id: contactsView
             
-                property int rowHeight: 56
                 property int resizableWidth: parent.width - actions.width
                 property double columnResizeRatio: resizableWidth / 914
             
                 anchors.fill: parent
                 frameVisible: false
-                selectionMode: SelectionMode.NoSelection
+                selectionMode: SelectionMode.noSelection
                 backgroundVisible: false
                 model: viewModel.contacts
                 sortIndicatorVisible: true
@@ -284,7 +281,7 @@ ColumnLayout {
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.RightButton
-                        onClicked: {
+                        onClicked: function(mouse) {
                             if (mouse.button == Qt.RightButton && styleData.row != undefined)
                             {
                                 contextMenu.walletID = contactsView.model[styleData.row].walletID;
@@ -315,9 +312,11 @@ ColumnLayout {
                                 CustomToolButton {
                                     icon.source: "qrc:/assets/icon-actions.svg"
                                     //% "Actions"
-                                    ToolTip.text: qsTrId("general-actions")
-                                    ToolTip.visible: hovered
-                                    ToolTip.delay: 1000
+                                    CustomToolTip {
+                                        text:    qsTrId("general-actions")
+                                        visible: parent.hovered
+                                        delay:   1000
+                                    }
                                     hoverEnabled: true
                                     onClicked: {
                                         contextMenu.walletID = contactsView.model[styleData.row].walletID;

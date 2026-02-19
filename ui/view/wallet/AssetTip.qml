@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Beam.Wallet 1.0
 import "../controls"
 import "../utils.js" as Utils
@@ -71,7 +71,7 @@ AlphaTipPopup {
 
     property var maxScrollHeight: main.height - assetTip.y - tabsRow.height - stateLayout.spacing - assetTip.topPadding - assetTip.bottomPadding
 
-    contentItem: Item { ColumnLayout {
+    contentItem: ColumnLayout {
         id: stateLayout
         spacing: 15
 
@@ -115,7 +115,9 @@ AlphaTipPopup {
         ScrollView {
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+            ScrollBar.vertical: CustomScrollBar {
+                policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+            }
             visible: stateLayout.state == "balance"
 
             property var minWidth: tabsRow.width + tabsRow.Layout.leftMargin + tabsRow.Layout.rightMargin
@@ -370,7 +372,9 @@ AlphaTipPopup {
         ScrollView {
             clip: true
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-            ScrollBar.vertical.policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            ScrollBar.vertical: CustomScrollBar {
+                policy: assetTip.visible && contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
+            }
             visible: stateLayout.state == "ainfo"
 
             property var minWidth: tabsRow.width + tabsRow.Layout.leftMargin + tabsRow.Layout.rightMargin
@@ -566,5 +570,5 @@ AlphaTipPopup {
                 }
             }
         }
-    }}
+    }
 }

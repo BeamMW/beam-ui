@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
 import Beam.Wallet 1.0
 import "."
 import "../controls"
@@ -24,7 +24,7 @@ StartLayout {
         viewModel.checkCapsLock();
         // OSX hack, to handle capslock shutdonw
         if (Qt.platform.os == "osx" && viewModel.isCapsLockOn) {
-            var timer = Qt.createQmlObject('import QtQml 2.11; Timer {}', openWalletPage, "osxCapsTimer");
+            var timer = Qt.createQmlObject('import QtQml; Timer {}', openWalletPage, "osxCapsTimer");
             timer.interval = 500;
             timer.repeat = true;
             timer.triggered.connect(viewModel.checkCapsLock);
@@ -39,10 +39,10 @@ StartLayout {
         openPasswordError.text = ""
     }
 
-    Keys.onPressed: {
+    Keys.onPressed: function(event) {
         // Linux hack, X11 return caps state with delay
         if (Qt.platform.os == "linux") {
-            var timer = Qt.createQmlObject('import QtQml 2.11; Timer {}', openWalletPage, "linuxCapsTimer");
+            var timer = Qt.createQmlObject('import QtQml; Timer {}', openWalletPage, "linuxCapsTimer");
             timer.interval = 500;
             timer.repeat = false;
             timer.triggered.connect(viewModel.checkCapsLock);
@@ -51,7 +51,7 @@ StartLayout {
             viewModel.checkCapsLock();
         }
     }
-    Keys.onReleased: {
+    Keys.onReleased: function(event) {
         // OSX hack, to handle capslock shutdown
         if (Qt.platform.os == "osx") {
             viewModel.checkCapsLock();
@@ -167,7 +167,7 @@ StartLayout {
                 id: btnCurrentWallet
                 enabled: viewModel.isOnlyOneInstanceStarted && 
                          viewModel.walletExists &&
-                        (!viewModel.useHWWallet || viewModel.isTrezorConnected)
+                        (!viewModel.useHWWallet || (viewModel.isTrezorEnabled && viewModel.isTrezorConnected))
                 text: (viewModel.useHWWallet == false)
                     ?
                     //% "Show my wallet"

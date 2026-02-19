@@ -167,6 +167,7 @@ namespace beamui::applications
         Q_INVOKABLE void contractInfoApproved(int action, const QString& data);
         Q_INVOKABLE void contractInfoRejected();
         Q_INVOKABLE void prepareToLaunchApp();
+        Q_INVOKABLE void setupAppProfile(QObject* webView, const QString& appid);
 
         Q_INVOKABLE [[nodiscard]] QAbstractItemModel* getPublisherDApps(const QString& publisherKey);
 

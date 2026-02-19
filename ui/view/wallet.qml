@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtGraphicalEffects 1.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import Qt5Compat.GraphicalEffects
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "controls"
 import "wallet"
@@ -32,8 +32,7 @@ ColumnLayout {
         var params = {
             "onAccepted":    onAccepted,
             "onClosed":      onClosed,
-            "receiverToken": root.token,
-            "assetId":       assetId
+            "receiverToken": root.token
         }
 
         if (assetId != undefined)

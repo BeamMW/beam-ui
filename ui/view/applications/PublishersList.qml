@@ -1,7 +1,6 @@
-import QtQuick          2.15
-import QtQuick.Layouts  1.15
-import QtQuick.Controls 1.4 as Controls1
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import Beam.Wallet      1.0
 import "../controls"
 import "../utils.js" as Utils
@@ -40,15 +39,15 @@ ColumnLayout {
         Layout.fillWidth:  true
         Layout.topMargin:  20
 
-        selectionMode:        Controls1.SelectionMode.NoSelection
+        selectionMode:        SelectionMode.noSelection
         sortIndicatorVisible: true
         sortIndicatorColumn:  0
         sortIndicatorOrder:   Qt.DescendingOrder
-        isSortIndicatorHidenForColumn: function(styleData) {
+        isSortIndicatorHiddenForColumn: function(styleData) {
             return styleData.column != 0;
         }
 
-        property int rowHeight:            109
+        rowHeight:                         109
         property real resizableWidth:      parent.width - 144
         property real columnResizeRatio:   resizableWidth / 828
 
@@ -64,14 +63,14 @@ ColumnLayout {
                 viewModel.sortOrder = viewModel.sortOrder == Qt.DescendingOrder ? Qt.AscendingOrder : Qt.DescendingOrder;
             }
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             role:      viewModel.publisherStatusRole
             width:     44 
             movable:   false
             resizable: false
             delegate:  showDappsComponent
         }
-        Controls1.TableViewColumn { 
+        TableViewColumn { 
             id:        nickname
             role:      viewModel.nicknameRole
                        //% "Nickname"
@@ -81,7 +80,7 @@ ColumnLayout {
             resizable: false
             delegate:  nicknameComponent
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             id:        about
             role:      viewModel.aboutRole
                        //% "About"
@@ -91,7 +90,7 @@ ColumnLayout {
             resizable: false
             delegate:  aboutComponent
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             id:        socialNetworks
                        //% "Social networks"
             title:     qsTrId("publishers-list-social-net")
@@ -100,7 +99,7 @@ ColumnLayout {
             resizable: false
             delegate:  socialNetworksComponent
         }
-        Controls1.TableViewColumn {
+        TableViewColumn {
             id:        publisherLink
                        //% "Publisher link"
             title:     qsTrId("publishers-list-publisher-link")
@@ -130,7 +129,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_main
-                        text:                modelData && modelData.nickname 
+                        text:                model && model.nickname 
                     }
 
                     SFLabel {
@@ -140,7 +139,7 @@ ColumnLayout {
                         elide:               Text.ElideRight
                         wrapMode:            Text.WrapAtWordBoundaryOrAnywhere
                         color:               Style.content_secondary
-                        text:                modelData && modelData.shortTitle
+                        text:                model && model.shortTitle
                     }
 
                 }
@@ -164,7 +163,7 @@ ColumnLayout {
                     elide:                Text.ElideRight
                     wrapMode:             Text.WrapAtWordBoundaryOrAnywhere
                     color:                Style.content_main
-                    text:                 modelData && modelData.aboutMe
+                    text:                 model && model.aboutMe
                 }
             }
         }
@@ -181,62 +180,62 @@ ColumnLayout {
                     Layout.topMargin:  4
 
                    CustomToolButton {
-                       visible:     modelData && !!modelData.website
+                       visible:     model && !!model.website
                        icon.source: "qrc:/assets/icon-dapps-store-website-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                modelData && modelData.website
+                                model && model.website
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.discord
+                       visible:     model && !!model.discord
                        icon.source: "qrc:/assets/icon-dapps-store-discord-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://discord.gg/" + modelData && modelData.discord
+                                "https://discord.gg/" + (model && model.discord)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.twitter
+                       visible:     model && !!model.twitter
                        icon.source: "qrc:/assets/icon-dapps-store-twitter-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://twitter.com/" + modelData && modelData.twitter
+                                "https://x.com/" + (model && model.twitter)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.instagram
+                       visible:     model && !!model.instagram
                        icon.source: "qrc:/assets/icon-dapps-store-instagram-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                                "https://instagram.com/" + modelData && modelData.instagram
+                                "https://instagram.com/" + (model && model.instagram)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.linkedin
+                       visible:     model && !!model.linkedin
                        icon.source: "qrc:/assets/icon-dapps-store-linkedin-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://linkedin.com/" + modelData && modelData.linkedin
+                               "https://linkedin.com/" + (model && model.linkedin)
                             );
                        }
                    }
                    CustomToolButton {
-                       visible:     modelData && !!modelData.telegram
+                       visible:     model && !!model.telegram
                        icon.source: "qrc:/assets/icon-dapps-store-telegram-green.svg"
                        icon.color: Style.active
                        onClicked: {
                            Utils.openExternalWithConfirmation(
-                               "https://t.me/" + modelData && modelData.telegram
+                               "https://t.me/" + (model && model.telegram)
                             );
                        }
                    }
@@ -253,14 +252,14 @@ ColumnLayout {
                     anchors.right:          parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     checked: {
-                        if (!modelData) {
+                        if (!model) {
                             return false;
                         }
-                        return modelData.enabled
+                        return model.enabled
                     }
                     onClicked : {
-                        let publisherKey = modelData.publisherKey;
-                        if (modelData.enabled) {
+                        let publisherKey = model.publisherKey;
+                        if (model.enabled) {
                             control.addUnwantedPublisherByKey(publisherKey)
                         } else {
                             control.removeUnwantedPublisherByKey(publisherKey)
@@ -283,8 +282,8 @@ ColumnLayout {
                     anchors.rightMargin: 12
                     icon.source:         "qrc:/assets/icon-actions.svg"
                     onClicked: {
-                        publisherInfoContextMenu.publisherKey = modelData && modelData.publisherKey;
-                        publisherInfoContextMenu.publisherEnabled = modelData && modelData.enabled;
+                        publisherInfoContextMenu.publisherKey = model && model.publisherKey;
+                        publisherInfoContextMenu.publisherEnabled = model && model.enabled;
                         publisherInfoContextMenu.popup();
                     }
                 }
@@ -312,7 +311,7 @@ ColumnLayout {
                                 qsTrId("dapps-store-publisher-show-dapps") : 
                                 //% "Hide DApps"
                                 qsTrId("dapps-store-publisher-hide-dapps")
-                icon.source: "qrc:/qt-project.org/imports/QtQuick/Controls.2/images/check.png"
+                icon.source: "qrc:/qt-project.org/imports/QtQuick/Controls/Basic/images/check.png"
                 onTriggered: {
                     if (publisherInfoContextMenu.publisherEnabled) {
                         control.addUnwantedPublisherByKey(publisherInfoContextMenu.publisherKey)

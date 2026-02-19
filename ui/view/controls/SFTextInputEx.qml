@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Controls.impl 2.4
-import QtQuick.Templates 2.4 as T
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls.impl
+import QtQuick.Templates as T
 import Beam.Wallet 1.0
 import "."
 
@@ -40,8 +40,6 @@ T.TextField {
     backgroundColor: Style.content_main
     property bool highlight: false
     property var icon: undefined
-
-    selectByMouse: true
 
     PlaceholderText {
         id:                  placeholder
@@ -147,8 +145,8 @@ T.TextField {
         visible: !!control.icon
     }
 
-    Keys.onShortcutOverride: event.accepted = event.matches(StandardKey.Paste)
-    Keys.onPressed: {
+    Keys.onShortcutOverride: function(event) { event.accepted = event.matches(StandardKey.Paste) }
+    Keys.onPressed: function(event) {
         if (event.matches(StandardKey.Paste)) {
             event.accepted = true
             control.paste()

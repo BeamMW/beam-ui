@@ -1,5 +1,5 @@
-import QtQuick.Layouts 1.15
-import QtQuick 2.15
+import QtQuick.Layouts
+import QtQuick
 import "../utils.js" as Utils
 import Beam.Wallet 1.0
 
@@ -52,19 +52,20 @@ ColumnLayout {
         visible:          text.length > 0
     }
 
-    RowLayout {
+    Item {
         Layout.fillWidth: true
+        implicitHeight: ainput.implicitHeight
 
         SFTextInput {
             id:               ainput
-            Layout.fillWidth: true
+            anchors.left:     parent.left
+            anchors.right:    parent.right
             font.pixelSize:   36
             font.styleName:   "Light"
             font.weight:      Font.Light
             color:            !isValid ? Style.validator_error : control.color
             backgroundColor:  !isValid ? Style.validator_error : Style.content_main
-            validator:        RegExpValidator {regExp: new RegExp(ainput.getRegExpPattern())}
-            selectByMouse:    true
+            validator:        RegularExpressionValidator {regularExpression: new RegExp(ainput.getRegExpPattern())}
             text:             formatDisplayedAmount()
             readOnly:         control.readOnlyA
             rightPadding:     currCombo.width
@@ -117,48 +118,46 @@ ColumnLayout {
             }
         }
 
-        Item {
-            x: ainput.width - currCombo.width
-            y: 10
-            CustomComboBox {
-                id:                  currCombo
-                dropSpacing:         18
-                spacing:             0
-                fontPixelSize:       20
-                dropFontPixelSize:   14
-                currentIndex:        control.currencyIdx
-                color:               !isValid ? Style.validator_error : control.currColor
-                underlineColor:      "transparent"
-                enabled:             multi
-                colorConst:          true
-                model:               control.currencies
-                textRole:            "unitNameWithId"
-                textMaxLenDrop:      10
-                enableScroll:        true
-                showBackground:      false
-                leftPadding:         30
-                maxTextWidth:        100
-                dropDownIconSixe:    Qt.size(9, 5)
-                dropDownIconRightMargin: 14
-                //% "Enter asset name..."
-                searchPlaseholder: qsTrId("amount-input-asset-search")
+        CustomComboBox {
+            id:                  currCombo
+            x:                   ainput.width - currCombo.width
+            y:                   10
+            dropSpacing:         18
+            spacing:             0
+            fontPixelSize:       20
+            dropFontPixelSize:   14
+            currentIndex:        control.currencyIdx
+            color:               !isValid ? Style.validator_error : control.currColor
+            underlineColor:      "transparent"
+            enabled:             multi
+            colorConst:          true
+            model:               control.currencies
+            textRole:            "unitNameWithId"
+            textMaxLenDrop:      10
+            enableScroll:        true
+            showBackground:      false
+            leftPadding:         30
+            maxTextWidth:        100
+            dropDownIconSixe:    Qt.size(9, 5)
+            dropDownIconRightMargin: 14
+            //% "Enter asset name..."
+            searchPlaseholder: qsTrId("amount-input-asset-search")
 
-                onActivated: {
-                    if (multi) {
-                        ainput.text = "0"
-                        control.amount = "0"
-                        control.currencyIdx = index
-                    }
+            onActivated: function(index) {
+                if (multi) {
+                    ainput.text = "0"
+                    control.amount = "0"
+                    control.currencyIdx = index
                 }
+            }
 
-                onModelChanged: {
-                    // changing model resets index selection, restore
-                    if (multi) currentIndex = control.currencyIdx
-                }
+            onModelChanged: {
+                // changing model resets index selection, restore
+                if (multi) currentIndex = control.currencyIdx
+            }
 
-                onHoveredChanged: {
-                    ainput.highlight = currCombo.hovered;
-                }
+            onHoveredChanged: {
+                ainput.highlight = currCombo.hovered;
             }
         }
     }

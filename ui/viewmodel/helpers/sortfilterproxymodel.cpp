@@ -37,6 +37,15 @@ QObject *SortFilterProxyModel::source() const
 void SortFilterProxyModel::setSource(QObject *source)
 {
     setSourceModel(qobject_cast<QAbstractItemModel *>(source));
+    
+    // In Qt6, when the source model changes, we need to re-apply the filter/sort roles
+    // because roleKey() depends on the source model's roleNames()
+    if (m_complete && sourceModel()) {
+        if (!m_sortRole.isEmpty())
+            QSortFilterProxyModel::setSortRole(roleKey(m_sortRole));
+        if (!m_filterRole.isEmpty())
+            QSortFilterProxyModel::setFilterRole(roleKey(m_filterRole));
+    }
 }
 
 QByteArray SortFilterProxyModel::sortRole() const
@@ -67,29 +76,60 @@ void SortFilterProxyModel::setFilterRole(const QByteArray &role)
 {
     if (m_filterRole != role) {
         m_filterRole = role;
-        if (m_complete)
+        if (m_complete) {
+            if (role.isEmpty()) {
+                // Clear the filter pattern first to avoid an intermediate state
+                // where an empty role with a leftover pattern causes
+                // filterAcceptsRow to search all roles
+                setFilterRegularExpression(QRegularExpression());
+            }
             QSortFilterProxyModel::setFilterRole(roleKey(role));
+        }
     }
 }
 
 QString SortFilterProxyModel::filterString() const
 {
-    return filterRegExp().pattern();
+    return filterRegularExpression().pattern();
 }
 
 void SortFilterProxyModel::setFilterString(const QString &filter)
 {
-    setFilterRegExp(QRegExp(filter, filterCaseSensitivity(), static_cast<QRegExp::PatternSyntax>(filterSyntax())));
+    QRegularExpression::PatternOptions options = QRegularExpression::NoPatternOption;
+    if (filterCaseSensitivity() == Qt::CaseInsensitive)
+        options |= QRegularExpression::CaseInsensitiveOption;
+
+    QString pattern = filter;
+    if (filterSyntax() == Wildcard) {
+        pattern = QRegularExpression::wildcardToRegularExpression(filter);
+        // Qt6's wildcardToRegularExpression adds anchors (\A and \z) which don't work
+        // with QString::contains(). We need to remove them for compatibility.
+        // The pattern looks like: \A(?:...)\z or similar
+        if (pattern.startsWith("\\A")) {
+            pattern = pattern.mid(2);  // Remove \A
+        }
+        if (pattern.endsWith("\\z")) {
+            pattern.chop(2);  // Remove \z
+        }
+        if (pattern.endsWith("\\Z")) {
+            pattern.chop(2);  // Remove \Z (alternate end anchor)
+        }
+    }
+    else if (filterSyntax() == FixedString)
+        pattern = QRegularExpression::escape(filter);
+
+    setFilterRegularExpression(QRegularExpression(pattern, options));
 }
 
 SortFilterProxyModel::FilterSyntax SortFilterProxyModel::filterSyntax() const
 {
-    return static_cast<FilterSyntax>(filterRegExp().patternSyntax());
+    return m_filterSyntax;
 }
 
 void SortFilterProxyModel::setFilterSyntax(SortFilterProxyModel::FilterSyntax syntax)
 {
-    setFilterRegExp(QRegExp(filterString(), filterCaseSensitivity(), static_cast<QRegExp::PatternSyntax>(syntax)));
+    m_filterSyntax = syntax;
+    setFilterString(filterString());
 }
 
 QVariantMap SortFilterProxyModel::get(int idx) const
@@ -155,8 +195,8 @@ QHash<int, QByteArray> SortFilterProxyModel::roleNames() const
 
 bool SortFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    QRegExp rx = filterRegExp();
-    if (rx.isEmpty())
+    QRegularExpression rx = filterRegularExpression();
+    if (!rx.isValid() || rx.pattern().isEmpty())
         return true;
     QAbstractItemModel *model = sourceModel();
     if (filterRole().isEmpty()) {

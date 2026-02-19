@@ -4,5 +4,11 @@
 <dict>
     <key>com.apple.security.cs.disable-executable-page-protection</key>
     <true/>
+    <!-- Required for WebEngine JavaScript JIT -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <!-- Required for network access from WebEngine content -->
+    <key>com.apple.security.network.client</key>
+    <true/>
 </dict>
 </plist>

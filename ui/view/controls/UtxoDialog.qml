@@ -1,8 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.2
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.Styles 1.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "."
 
@@ -40,12 +38,12 @@ CustomDialog {
 
         CustomTableView {
             id: tableView
-            property int rowHeight: 72
+            rowHeight: 72
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.bottomMargin: 9
             visible: tableView.model.count > 0
-            selectionMode: SelectionMode.NoSelection
+            selectionMode: SelectionMode.noSelection
             backgroundVisible: false
             headerColor: Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
             mainBackgroundRect: dialog.background

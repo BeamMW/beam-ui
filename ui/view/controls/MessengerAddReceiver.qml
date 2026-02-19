@@ -1,6 +1,6 @@
-import QtQuick          2.15
-import QtQuick.Layouts  1.12
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
 import Beam.Wallet      1.0
 import "../controls"
 
@@ -110,7 +110,7 @@ CustomDialog {
                 text:             addressAddModel.address
                 font.pixelSize:   14
                 focus:            !control.nameEditMode
-                validator:        RegExpValidator { regExp: /[0-9a-zA-Z]{1,}/ }
+                validator:        RegularExpressionValidator { regularExpression: /[0-9a-zA-Z]{1,}/ }
                 Binding {
                     target:   addressAddModel
                     property: "address"

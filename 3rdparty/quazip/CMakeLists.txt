@@ -1,12 +1,12 @@
 set (TARGET_NAME "quazip_static")
 
-set (CMAKE_PREFIX_PATH $ENV{QT5_ROOT_DIR})
+set (CMAKE_PREFIX_PATH ${BEAM_QT_ROOT_DIR})
 
 if(LINUX)
 	set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
-find_package(Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Core Core5Compat REQUIRED)
 
 set(QUAZIP_SRCS
     quazip/JlCompress.cpp
@@ -42,14 +42,15 @@ set(PUBLIC_HEADERS
     quazip/zip.h
 )
 
-qt5_wrap_cpp(MOC_SRCS ${PUBLIC_HEADERS})
+qt_wrap_cpp(MOC_SRCS ${PUBLIC_HEADERS})
 set(QUAZIP_ALL_SRCS ${QUAZIP_SRCS} ${MOC_SRCS})
 
 add_library(${TARGET_NAME} STATIC ${QUAZIP_ALL_SRCS})
 
 add_definitions(-DQUAZIP_STATIC)
 
-target_include_directories(${TARGET_NAME} PRIVATE ${Qt5Core_INCLUDE_DIRS})
+target_include_directories(${TARGET_NAME} PRIVATE ${Qt6Core_INCLUDE_DIRS})
+target_link_libraries(${TARGET_NAME} Qt6::Core Qt6::Core5Compat)
 target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/3rdparty/quazip)
 
 target_include_directories(${TARGET_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/3rdparty/zlib)

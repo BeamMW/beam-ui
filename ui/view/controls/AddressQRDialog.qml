@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import Beam.Wallet 1.0
 import "."
 
@@ -50,10 +50,10 @@ CustomDialog {
             CustomToolButton {
                 icon.source:            "qrc:/assets/icon-cancel-16.svg"
                 //% "Close"
-                ToolTip.text:           qsTrId("general-close")
-                ToolTip.visible: hovered
-                ToolTip.delay: 500
-                ToolTip.timeout: 2000
+                CustomToolTip {
+                    text:    qsTrId("general-close")
+                    visible: parent.hovered
+                }
                 hoverEnabled: true
                 onClicked: {
                     dialog.close();

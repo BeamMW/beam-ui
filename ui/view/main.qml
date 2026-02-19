@@ -1,10 +1,8 @@
-import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQuick.Controls.Styles 1.2
-import QtGraphicalEffects 1.15
-import QtQuick.Window 2.2
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import Qt5Compat.GraphicalEffects
+import QtQuick.Window
 import "controls"
 import Beam.Wallet 1.0
 import "utils.js" as Utils
@@ -315,8 +313,7 @@ Rectangle {
         var params = {
             "onAccepted":    goBack,
             "onClosed":      goBack,
-            "receiverToken": receiver,
-            "assetId":       assetId
+            "receiverToken": receiver
         }
         if (assetId != undefined)
         {
@@ -328,8 +325,7 @@ Rectangle {
     function openReceiveDialog(token, assetId) {
         var params = {
             "onClosed": goBack,
-            "token":    token,
-            "assetId":  assetId
+            "token":    token
             };
         if (assetId != undefined)
         {
