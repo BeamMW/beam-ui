@@ -10,6 +10,12 @@ import "../utils.js" as Utils
 StartLayout {
     property Item defaultFocusItem: createNewWallet
 
+    onVisibleChanged: {
+        if (visible) {
+            viewModel.useHWWallet = false;
+        }
+    }
+
     ConfirmationDialog {
         id: restoreWalletConfirmation
 
@@ -60,6 +66,9 @@ StartLayout {
                 else
                     startWizzardView.push(restoreWalletPage);
             }
+        }
+        onRejected: {
+            viewModel.useHWWallet = false;
         }
     }
 
