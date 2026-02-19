@@ -38,10 +38,6 @@ const int kBpsRecessionCountThreshold = 60;
 
 }  // namespace
 
-// TODO (QT6): fix that
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-Q_DECLARE_METATYPE(uint64_t);
-#endif
 
 LoadingViewModel::LoadingViewModel()
     : m_walletModel(AppModel::getInstance().getWalletModel())

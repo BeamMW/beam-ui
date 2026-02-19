@@ -47,10 +47,6 @@ WalletModel::WalletModel(beam::wallet::IWalletDB::Ptr walletDB, const std::strin
     qRegisterMetaType<beam::wallet::VersionInfo>("beam::wallet::VersionInfo");
     qRegisterMetaType<beam::wallet::WalletImplVerInfo>("beam::wallet::WalletImplVerInfo");
     qRegisterMetaType<ECC::uintBig>("ECC::uintBig");
-// TODO (QT6): fix that
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    qRegisterMetaType<boost::optional<beam::wallet::WalletAddress>>("boost::optional<beam::wallet::WalletAddress>");
-#endif
     qRegisterMetaType<beam::wallet::CoinsSelectionInfo>("beam::wallet::CoinsSelectionInfo");
     qRegisterMetaType<vector<beam::wallet::DexOrder>>("std::vector<beam::wallet::DexOrder>");
     qRegisterMetaType<beam::wallet::DexOrder>("beam::wallet::DexOrder");

@@ -17,10 +17,7 @@
 #include <memory>
 
 #include <QAbstractListModel>
-// TODO (QT6): fix that
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-Q_DECLARE_METATYPE(QModelIndex)
-#endif
+
 template <typename T>
 class ListModel : public QAbstractListModel
 {

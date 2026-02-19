@@ -176,7 +176,6 @@ namespace
         }
     }
 
-    // TODO (QT6): check
     void DoJSCallback(QJSValue& jsCallback, const QString& res)
     {
         jsCallback.call(QJSValueList{ QJSValue(res) });
