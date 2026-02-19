@@ -13,6 +13,22 @@ RowLayout {
     property alias          canNavigate:    navigationBar.visible
     signal                  navigate(int item)
 
+    readonly property var collapsedPath: {
+        if (path.length <= 2) return path;
+        var result = [];
+        result.push(path[0]);
+        result.push("...");
+        result.push(path[path.length - 1]);
+        return result;
+    }
+
+    function mapCollapsedIndex(collapsedIdx) {
+        if (path.length <= 2) return collapsedIdx;
+        if (collapsedIdx === 0) return 0;
+        if (collapsedIdx === 2) return path.length - 1;
+        return -1;
+    }
+
     spacing:             0
     Layout.fillHeight:   false
 
@@ -42,12 +58,13 @@ RowLayout {
 
             Repeater {
                 Layout.alignment:          Qt.AlignVCenter
-                model: path
-                visible: path.length > 0
+                model: collapsedPath
+                visible: collapsedPath.length > 0
 
                 RowLayout {
                     id:         navItem
                     spacing:    8
+                    property bool isEllipsis: modelData === "..."
                     Item {
                         Layout.alignment:          Qt.AlignVCenter
                         width:  navText.width
@@ -60,9 +77,11 @@ RowLayout {
                         }
                         MouseArea {
                             anchors.fill: parent
-                            cursorShape:  Qt.PointingHandCursor 
+                            cursorShape:  navItem.isEllipsis ? Qt.ArrowCursor : Qt.PointingHandCursor
+                            enabled:      !navItem.isEllipsis
                             onClicked: function () {
-                                control.navigate(index)
+                                var originalIndex = control.mapCollapsedIndex(index)
+                                if (originalIndex >= 0) control.navigate(originalIndex)
                             }
                         }
                     }
