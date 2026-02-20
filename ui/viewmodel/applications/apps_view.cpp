@@ -597,6 +597,7 @@ namespace beamui::applications
     {
         loadLocalApps();
         loadDevApps();
+        loadDefaultApps();
         loadAppsFromStore();
     }
 
@@ -670,6 +671,58 @@ namespace beamui::applications
             _devApps = result;
             emit appsChanged();
         }
+    }
+
+    void AppsViewModel::loadDefaultApps()
+    {
+        QList<QVariantMap> result;
+        const auto dappFiles = AppSettings().getAppPathsToInstall();
+
+        for (const auto& finfo : dappFiles)
+        {
+            try
+            {
+                QuaZip zip(finfo.absoluteFilePath());
+                if (!zip.open(QuaZip::Mode::mdUnzip))
+                {
+                    BEAM_LOG_WARNING() << "Failed to open bundled DApp " << finfo.absoluteFilePath().toStdString();
+                    continue;
+                }
+
+                for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+                {
+                    if (zip.getCurrentFileName() == kManifestFile)
+                    {
+                        QuaZipFile mfile(&zip);
+                        if (!mfile.open(QIODevice::ReadOnly))
+                        {
+                            BEAM_LOG_WARNING() << "Failed to read manifest from " << finfo.absoluteFilePath().toStdString();
+                            break;
+                        }
+
+                        QTextStream in(&mfile);
+                        auto app = parseAppManifestImpl(in, "", {}, false);
+
+                        app.insert(DApp::kNotInstalled, true);
+                        app.insert(DApp::kLocal, false);
+                        app.insert(DApp::kSupported, isAppSupported(app));
+                        app.insert(DApp::kDefaultDappPath, finfo.absoluteFilePath());
+                        // Clear icon — not resolvable from zip; UI falls back to default icon
+                        app.insert(DApp::kIcon, QString());
+
+                        result.push_back(app);
+                        break;
+                    }
+                }
+            }
+            catch (std::exception& err)
+            {
+                BEAM_LOG_ERROR() << "Error reading bundled DApp from "
+                                 << finfo.absoluteFilePath().toStdString() << ", " << err.what();
+            }
+        }
+
+        _defaultApps = result;
     }
 
     void AppsViewModel::loadAppsFromStore()
@@ -1053,6 +1106,24 @@ namespace beamui::applications
                 {
                     result.push_back(app);
                 }
+            }
+        }
+
+        // Bundled default apps: show only those not already present (locally or in store)
+        auto guidExists = [&result](const QString& guid) -> bool {
+            return std::any_of(result.cbegin(), result.cend(),
+                [&guid](const auto& existing) -> bool {
+                    const auto it = existing.find(DApp::kGuid);
+                    return it != existing.cend() && it->toString() == guid;
+                });
+        };
+
+        for (const auto& app : _defaultApps)
+        {
+            const auto guid = app[DApp::kGuid].toString();
+            if (!guid.isEmpty() && !guidExists(guid))
+            {
+                result.push_back(app);
             }
         }
 
@@ -1461,16 +1532,35 @@ namespace beamui::applications
 
     void AppsViewModel::installApp(const QString& guid)
     {
+        const auto app = getAppByGUID(guid);
+        if (app.isEmpty())
+        {
+            BEAM_LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
+            return;
+        }
+
+        // Bundled default app — install from local .dapp file, no IPFS required
+        const auto defaultPath = app[DApp::kDefaultDappPath].toString();
+        if (!defaultPath.isEmpty())
+        {
+            const auto appName = installFromFileImpl(defaultPath,
+                [](const QString&) { return false; },
+                [this]() { loadApps(); });
+
+            if (!appName.isEmpty())
+            {
+                emit appInstallOK(appName);
+            }
+            else
+            {
+                emit appInstallFail(app[DApp::kName].toString());
+            }
+            return;
+        }
+
 #ifdef BEAM_IPFS_SUPPORT
         try
         {
-            const auto app = getAppByGUID(guid);
-            if (app.isEmpty())
-            {
-                BEAM_LOG_ERROR() << "Failed to find Dapp by guid " << guid.toStdString();
-                return;
-            }
-
             const auto ipfsID = app[DApp::kIpfsId].toString();
             const auto appName = app[DApp::kName].toString();
 

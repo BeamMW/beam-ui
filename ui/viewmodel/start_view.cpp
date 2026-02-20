@@ -879,8 +879,6 @@ void StartViewModel::openWallet(const QString& pass, const QJSValue& callback)
     // TODO make this secure
     if (AppModel::getInstance().isOnlyOneInstanceStarted())
     {
-        installApps(AppModel::getInstance().getSettings().getAppPathsToInstall());
-
         DoOpenWallet(m_callback, [pass] () {
             SecString secret = pass.toStdString();
             AppModel::getInstance().openWalletThrow(secret);
