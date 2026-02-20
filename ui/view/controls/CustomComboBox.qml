@@ -69,6 +69,9 @@ ComboBox {
         bottomPadding: control.dropSpacing
         topPadding: 2
 
+        visible: contentRow.showRow
+        height: visible ? implicitHeight : 0
+
         property var myModel : itemDelegate.model
 
         property var  iconW:    myModel["iconWidth"] || 0
@@ -79,18 +82,12 @@ ComboBox {
         contentItem: RowLayout {
             id: contentRow
             spacing: 0
-            property int parentHeight: 0
             property string resolvedText: control.textRole
                 ? (myModel[control.textRole] || "")
                 : (itemDelegate.model.modelData !== undefined ? itemDelegate.model.modelData : "")
             property bool showRow: control.filterAssets
                 ? containSearchSubStr(resolvedText) && myModel["allowed"]
                 : containSearchSubStr(resolvedText)
-
-            visible: showRow
-            onVisibleChanged: {
-                parent.height = visible ? parentHeight : 0;
-            }
 
             SvgImage {
                 source: iconS
@@ -131,10 +128,6 @@ ComboBox {
                 font.letterSpacing: fontLetterSpacing
                 font.styleName: highlighted ? "DemiBold" : "Normal"
                 font.weight: highlighted ? Font.DemiBold : Font.Normal
-            }
-
-            Component.onCompleted: {
-                contentRow.parentHeight = contentRow.parent.height
             }
         }
 
@@ -231,6 +224,11 @@ ComboBox {
         leftPadding:   0
         rightPadding:  0
 
+        onOpened: {
+            searchInput.text = "";
+            listView.resetOnce = true;
+        }
+
         contentItem: ColumnLayout {
             spacing: 0
             SearchBox {
@@ -249,8 +247,19 @@ ComboBox {
                 clip: true
                 implicitHeight: control.delegateModel.count > 12 ? Math.min(250, contentHeight) : contentHeight
                 model: control.popup.visible ? control.delegateModel : null
-                currentIndex: control.highlightedIndex
+                currentIndex: -1
+                highlight: Item {}
+                highlightFollowsCurrentItem: false
                 ScrollBar.vertical: CustomScrollBar {}
+
+                property bool resetOnce: false
+                onContentYChanged: {
+                    if (resetOnce) {
+                        resetOnce = false;
+                        currentIndex = -1;
+                        positionViewAtBeginning();
+                    }
+                }
             }
         }
 
