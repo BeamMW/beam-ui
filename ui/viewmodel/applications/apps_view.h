@@ -49,6 +49,7 @@ namespace beamui::applications
     macro(HasUpdate, "hasUpdate") \
     macro(ReleaseDate, "release_date") \
     macro(Local, "local") \
+    macro(DefaultDappPath, "defaultDappPath") \
 
     class AppsModel : public ListModel<QVariantMap>
     {
@@ -208,6 +209,7 @@ namespace beamui::applications
         void loadApps();
         void loadLocalApps();
         void loadDevApps();
+        void loadDefaultApps();
         void loadAppsFromStore();
         void loadPublishers();
         void loadUserPublishers();
@@ -230,6 +232,7 @@ namespace beamui::applications
         std::unique_ptr<AppsServer> _server;
         QList<QVariantMap> _localApps;
         QList<QVariantMap> _devApps;
+        QList<QVariantMap> _defaultApps;
         QList<QVariantMap> _shaderApps;
         QList<QVariantMap> _publishers;
         QStringList _userUnwantedPublishersKeys;

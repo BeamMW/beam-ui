@@ -42,7 +42,8 @@ Item {
         if (!app.supported) {
             return false
         } else if (!!app.notInstalled || (!app.notInstalled && !!app.hasUpdate)) {
-            return isIPFSAvailable
+            // Bundled default apps install from local file, no IPFS required
+            return !!app.defaultDappPath || isIPFSAvailable
         }
         return true
      }
