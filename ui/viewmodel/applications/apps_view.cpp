@@ -35,6 +35,7 @@ namespace
     const QString kBeamPublisherKey = "";
     const QString kLocalapp = "localapp";
     const QString kManifestFile = "manifest.json";
+    const QString kDefaultDappIconsFolder = ".default_icons";
     const qint64 kMaxFileSize = 50 * 1024 * 1024;
     const uint32_t kIpfsTimeout = 20 * 1000; // 20 seconds
 
@@ -677,6 +678,7 @@ namespace beamui::applications
     {
         QList<QVariantMap> result;
         const auto dappFiles = AppSettings().getAppPathsToInstall();
+        const auto iconCacheDir = QDir(AppSettings().getLocalAppsPath()).filePath(kDefaultDappIconsFolder);
 
         for (const auto& finfo : dappFiles)
         {
@@ -689,31 +691,69 @@ namespace beamui::applications
                     continue;
                 }
 
-                for (bool ok = zip.goToFirstFile(); ok; ok = zip.goToNextFile())
+                if (!zip.setCurrentFile(kManifestFile))
                 {
-                    if (zip.getCurrentFileName() == kManifestFile)
+                    BEAM_LOG_WARNING() << "No manifest found in bundled DApp " << finfo.absoluteFilePath().toStdString();
+                    continue;
+                }
+
+                QuaZipFile mfile(&zip);
+                if (!mfile.open(QIODevice::ReadOnly))
+                {
+                    BEAM_LOG_WARNING() << "Failed to read manifest from " << finfo.absoluteFilePath().toStdString();
+                    continue;
+                }
+
+                QTextStream in(&mfile);
+                auto app = parseAppManifestImpl(in, "", {}, false);
+                mfile.close();
+
+                app.insert(DApp::kNotInstalled, true);
+                app.insert(DApp::kLocal, false);
+                app.insert(DApp::kSupported, isAppSupported(app));
+                app.insert(DApp::kDefaultDappPath, finfo.absoluteFilePath());
+
+                // Extract icon from zip to a persistent cache, serving via file:/// URL
+                // consistent with how installed app icons are resolved by expandLocalFile()
+                const auto iconRelPath = app[DApp::kIcon].toString();
+                const auto guid = app[DApp::kGuid].toString();
+
+                if (!iconRelPath.isEmpty() && !guid.isEmpty())
+                {
+                    const auto ext = QFileInfo(iconRelPath).suffix();
+                    const auto version = app[DApp::kVersion].toString();
+                    const auto iconCachePath = QDir(iconCacheDir).filePath(
+                        guid + "_" + version + (ext.isEmpty() ? QString() : QString(".") + ext));
+
+                    if (!QFile::exists(iconCachePath) && zip.setCurrentFile(iconRelPath))
                     {
-                        QuaZipFile mfile(&zip);
-                        if (!mfile.open(QIODevice::ReadOnly))
+                        QuaZipFile iconFile(&zip);
+                        if (iconFile.open(QIODevice::ReadOnly))
                         {
-                            BEAM_LOG_WARNING() << "Failed to read manifest from " << finfo.absoluteFilePath().toStdString();
-                            break;
+                            QDir().mkpath(iconCacheDir);
+                            QFile outFile(iconCachePath);
+                            if (outFile.open(QIODevice::WriteOnly))
+                            {
+                                outFile.write(iconFile.readAll());
+                            }
                         }
+                    }
 
-                        QTextStream in(&mfile);
-                        auto app = parseAppManifestImpl(in, "", {}, false);
-
-                        app.insert(DApp::kNotInstalled, true);
-                        app.insert(DApp::kLocal, false);
-                        app.insert(DApp::kSupported, isAppSupported(app));
-                        app.insert(DApp::kDefaultDappPath, finfo.absoluteFilePath());
-                        // Clear icon — not resolvable from zip; UI falls back to default icon
+                    if (QFile::exists(iconCachePath))
+                    {
+                        app.insert(DApp::kIcon, QString("file:///") + iconCachePath);
+                    }
+                    else
+                    {
                         app.insert(DApp::kIcon, QString());
-
-                        result.push_back(app);
-                        break;
                     }
                 }
+                else
+                {
+                    app.insert(DApp::kIcon, QString());
+                }
+
+                result.push_back(app);
             }
             catch (std::exception& err)
             {
@@ -722,7 +762,11 @@ namespace beamui::applications
             }
         }
 
-        _defaultApps = result;
+        if (_defaultApps != result)
+        {
+            _defaultApps = result;
+            emit appsChanged();
+        }
     }
 
     void AppsViewModel::loadAppsFromStore()
