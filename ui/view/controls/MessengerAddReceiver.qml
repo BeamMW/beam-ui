@@ -110,7 +110,12 @@ CustomDialog {
                 text:             addressAddModel.address
                 font.pixelSize:   14
                 focus:            !control.nameEditMode
-                validator:        RegularExpressionValidator { regularExpression: /[0-9a-zA-Z]{1,}/ }
+                validator:        RegularExpressionValidator { regularExpression: /\s*[0-9a-zA-Z]*\s*/ }
+                Keys.onPressed: function (event) {
+                    if (event.key === Qt.Key_Space) {
+                        event.accepted = true
+                    }
+                }
                 Binding {
                     target:   addressAddModel
                     property: "address"
