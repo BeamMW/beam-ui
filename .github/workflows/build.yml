@@ -159,7 +159,6 @@ jobs:
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
             -DDEBUG_MESSAGES_IN_RELEASE_MODE=On \
             -DBEAM_LINK_TYPE=Static \
-            -DBEAM_USE_STATIC_QT=FALSE \
             -DBRANCH_NAME=${GITHUB_REF##*/} \
             -DBEAM_SIGN_MACOS_BINARY=On \
             -DBEAM_SIGN_IDENTITY="${{secrets.MACOS_SIGN_IDENTITY}}" \
@@ -174,7 +173,6 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=/usr \
             -DDEBUG_MESSAGES_IN_RELEASE_MODE=On \
             -DBEAM_LINK_TYPE=Static \
-            -DBEAM_USE_STATIC_QT=FALSE \
             -DBRANCH_NAME=${GITHUB_REF##*/} \
             -DBEAM_HW_WALLET=Off
 
@@ -186,7 +184,6 @@ jobs:
             -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK \
             -DCMAKE_CONFIGURATION_TYPES:STRING=$BUILD_CONFIG \
             -DBEAM_LINK_TYPE=Static \
-            -DBEAM_USE_STATIC_QT=FALSE \
             -DBRANCH_NAME=${GITHUB_REF##*/} \
             -DBEAM_HW_WALLET=Off \
             -DOPENSSL_ROOT_DIR="$OPENSSL_ROOT_DIR"
