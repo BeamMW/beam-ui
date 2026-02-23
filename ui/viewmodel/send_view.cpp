@@ -236,10 +236,11 @@ QString SendViewModel::getToken() const
 
 void SendViewModel::setToken(const QString& value)
 {
-    if (_token != value)
+    const auto trimmed = value.trimmed();
+    if (_token != trimmed)
     {
         _newTokenMsg.clear();
-        _token = value;
+        _token = trimmed;
         _choiceOffline = false;
 
         if (QMLGlobals::isSwapToken(value))

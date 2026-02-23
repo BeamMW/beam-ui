@@ -50,9 +50,10 @@ QString MessengerAddressAdd::getPeerID() const
 
 void MessengerAddressAdd::setAddress(const QString& addr)
 {
-    if (_address != addr)
+    const auto trimmed = addr.trimmed();
+    if (_address != trimmed)
     {
-        _address = addr;
+        _address = trimmed;
         emit addressChanged();
 
         auto p = beam::wallet::ParseParameters(_address.toStdString());

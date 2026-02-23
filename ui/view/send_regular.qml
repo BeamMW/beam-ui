@@ -140,7 +140,13 @@ ColumnLayout {
                                 backgroundColor:  tokenError ? Style.validator_error : Style.content_main
                                 font.italic :     tokenError
                                 text:             viewModel.token
-                                validator:        RegularExpressionValidator { regularExpression: /[0-9a-zA-Z]{1,}/ }
+                                validator:        RegularExpressionValidator { regularExpression: /\s*[0-9a-zA-Z]*\s*/ }
+
+                                Keys.onPressed: function (event) {
+                                    if (event.key === Qt.Key_Space) {
+                                        event.accepted = true
+                                    }
+                                }
 
                                 //% "Paste recipient address here"
                                 placeholderText:  qsTrId("send-contact-address-placeholder")
