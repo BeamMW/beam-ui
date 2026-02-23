@@ -214,6 +214,7 @@ CustomTableView {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 10
                     CustomToolButton {
+                        id: actionsButton
                         icon.source: "qrc:/assets/icon-actions.svg"
                         //% "Actions"
                         CustomToolTip {
@@ -223,7 +224,7 @@ CustomTableView {
                         hoverEnabled: true
                         onClicked: {
                             contextMenu.addressItem = rootControl.model[styleData.row]
-                            contextMenu.popup()
+                            contextMenu.popup(actionsButton, actionsButton.width - contextMenu.implicitWidth, actionsButton.height)
                         }
                     }
                 }

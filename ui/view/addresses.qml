@@ -310,6 +310,7 @@ ColumnLayout {
                                 anchors.verticalCenter: parent.verticalCenter
                                 spacing: 10
                                 CustomToolButton {
+                                    id: contactActionsButton
                                     icon.source: "qrc:/assets/icon-actions.svg"
                                     //% "Actions"
                                     CustomToolTip {
@@ -321,7 +322,7 @@ ColumnLayout {
                                     onClicked: {
                                         contextMenu.walletID = contactsView.model[styleData.row].walletID;
                                         contextMenu.token = contactsView.model[styleData.row].token;
-                                        contextMenu.popup();
+                                        contextMenu.popup(contactActionsButton, contactActionsButton.width - contextMenu.implicitWidth, contactActionsButton.height);
                                     }
                                 }
                             }
