@@ -147,6 +147,7 @@ StartLayout {
                 }
                 else
                 {
+                    openPassword.echoMode = TextInput.Password
                     openWallet(openPassword.text, function (errmsg) {
                         if(errmsg.length)
                         {

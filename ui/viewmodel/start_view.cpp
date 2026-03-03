@@ -183,6 +183,12 @@ namespace
 
     void DoOpenWallet(QJSValue& jsCallback, std::function<void ()> openFunc)
     {
+        // Flush pending UI events (including repaints) before the
+        // blocking openFunc() call.  This ensures that any QML property
+        // changes made right before invoking openWallet (e.g. hiding
+        // the password) are rendered on screen.
+        QApplication::processEvents();
+
         try
         {
             openFunc();
