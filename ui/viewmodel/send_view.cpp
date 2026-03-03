@@ -263,7 +263,7 @@ void SendViewModel::setToken(const QString& value)
 
 bool SendViewModel::getEndpointValid() const
 {
-    if ((_receiverWalletID.m_Pk == beam::Zero) && (_receiverIdentity == beam::Zero))
+    if (_receiverIdentity == beam::Zero)
         return false;
 
     return getTokenValid();
@@ -271,8 +271,10 @@ bool SendViewModel::getEndpointValid() const
 
 QString SendViewModel::getEndpoint() const
 {
-    const beam::PeerID& pid = (_receiverIdentity != beam::Zero) ? _receiverIdentity : _receiverWalletID.m_Pk;
-    auto sTxt = std::to_base58(pid);
+    if (_receiverIdentity == beam::Zero)
+        return {};
+
+    auto sTxt = std::to_base58(_receiverIdentity);
     return QString::fromStdString(sTxt);
 }
 
@@ -496,6 +498,7 @@ void SendViewModel::onGetAddressReturned(const boost::optional<beam::wallet::Wal
 
     _vouchersLeft = offlinePayments;
     emit tokenTipChanged();
+    emit endpointChanged();
 }
 
 void SendViewModel::extractParameters()
