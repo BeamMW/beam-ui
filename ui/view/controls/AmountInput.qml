@@ -94,7 +94,10 @@ ColumnLayout {
             }
 
             function getRegExpPattern() {
-                var pattern = "^(([1-9][0-9]{0,7})|(1[0-9]{8})|(2[0-4][0-9]{7})|(25[0-3][0-9]{6})|(0))(\\.[0-9]{0,%1}[1-9])?$";
+                // Allow integers up to 12 digits (max safe for uint64 with 8 decimals).
+                // Exact overflow protection is handled by the C++ backend (decode_base10)
+                // and the isEnoughAmount / balance validation.
+                var pattern = "^([1-9][0-9]{0,11}|0)(\\.[0-9]{0,%1}[1-9])?$";
                 return pattern.arg(currencies[currencyIdx].decimals - 1);
             }
 

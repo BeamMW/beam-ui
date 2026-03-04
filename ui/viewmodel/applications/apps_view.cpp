@@ -612,6 +612,12 @@ namespace beamui::applications
         {
             const auto fullFolder = finfo.absoluteFilePath();
             const auto justFolder = finfo.fileName();
+
+            // Skip .default_icons directory
+            if (justFolder == kDefaultDappIconsFolder) {
+                continue;
+            }
+
             auto mpath = QDir(fullFolder).absoluteFilePath(kManifestFile);
 
             try

@@ -18,19 +18,10 @@
 #include "ui_helpers.h"
 #include "qml_globals.h"
 #include "fee_helpers.h"
-#include <algorithm>
-#include <regex>
 #include <QLocale>
 
 namespace
 {
-    beam::AmountBig::Number getMaxInputAmount()
-    {
-        // not just const because can throw and this would cause compiler warning
-        beam::AmountBig::Number kMaxInputAmount = 10000000000000000U;
-        return kMaxInputAmount;
-    }
-
     void CopyParameter(beam::wallet::TxParameterID paramID, const beam::wallet::TxParameters& input, beam::wallet::TxParameters& dest)
     {
         beam::ByteBuffer buf;
@@ -355,11 +346,10 @@ void SendViewModel::setChoiceOffline(bool value)
 
 void SendViewModel::setMaxPossibleAmount()
 {
-    const auto amount = _walletModel->getAvailable(m_Csi.m_assetID);
-    const auto maxAmount = std::min(amount, getMaxInputAmount());
+    const auto available = _walletModel->getAvailable(m_Csi.m_assetID);
 
     _maxPossible = true;
-    m_Csi.m_requestedSum = beam::AmountBig::get_Lo(maxAmount);
+    m_Csi.m_requestedSum = beam::AmountBig::get_Lo(available);
 
     RefreshCsiAsync();
 }
