@@ -2447,6 +2447,10 @@ Update uw instellingen en probeer opnieuw.</translation>
         <source>Invalid wallet address</source>
         <translation>Ongeldig wallet adres of swaptoken</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>Offline</translation>
@@ -3774,10 +3778,6 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>Verbergen DApps</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>Handtekening ontvanger</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
