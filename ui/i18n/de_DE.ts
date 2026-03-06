@@ -2445,6 +2445,10 @@ Aktualisieren Sie Ihre Einstellungen und versuchen Sie es erneut.</translation>
         <source>Invalid wallet address</source>
         <translation>Ungültige Wallet-Adresse oder Swap-Token</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>Offline</translation>
@@ -3773,10 +3777,6 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>DApps ausblenden</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>Empfängersignatur</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
