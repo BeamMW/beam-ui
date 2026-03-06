@@ -2427,6 +2427,10 @@ Update your settings and try again.</source>
         <source>Invalid wallet address</source>
         <translation>ウォレットアドレスが無効です</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>オフライン</translation>
@@ -3746,10 +3750,6 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>DAppsを非表示にする</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>受信者の署名</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>

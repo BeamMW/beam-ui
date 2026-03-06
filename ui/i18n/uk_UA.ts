@@ -2455,6 +2455,10 @@ Update your settings and try again.</source>
         <source>Invalid wallet address</source>
         <translation>Невірна адреса гаманця</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>Не в мережі</translation>
@@ -3785,10 +3789,6 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>Приховати DApps</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>Підпис отримувача</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>
