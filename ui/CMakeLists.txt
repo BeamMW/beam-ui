@@ -396,7 +396,7 @@ elseif(APPLE)
     if (BEAM_SIGN_IDENTITY)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND macdeployqt
-            "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+            "$<TARGET_BUNDLE_DIR:${TARGET_NAME}>"
             -always-overwrite
             -qmldir=${CMAKE_CURRENT_SOURCE_DIR}
             -sign-for-notarization="${BEAM_SIGN_IDENTITY}"
@@ -414,7 +414,7 @@ elseif(APPLE)
                 -s "${BEAM_SIGN_IDENTITY}"
                 -o runtime
                 --timestamp
-                "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app"
+                "$<TARGET_BUNDLE_DIR:${TARGET_NAME}>"
                 COMMENT "Signing Beam Wallet${BEAM_DISPLAY_SUFFIX}.app..."
             )
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -427,7 +427,7 @@ elseif(APPLE)
                 -o runtime
                 --timestamp
                 --entitlements ${CMAKE_CURRENT_SOURCE_DIR}/QtWebEngineProcess.entitlements
-                "${CMAKE_CURRENT_BINARY_DIR}/Beam Wallet${BEAM_DISPLAY_SUFFIX}.app/Contents/Frameworks/QtWebEngineCore.framework/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess"
+                "$<TARGET_BUNDLE_DIR:${TARGET_NAME}>/Contents/Frameworks/QtWebEngineCore.framework/Helpers/QtWebEngineProcess.app/Contents/MacOS/QtWebEngineProcess"
                 COMMENT "Signing QtWebEngineProcess..."
             )
         endif()
