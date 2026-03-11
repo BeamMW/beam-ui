@@ -95,7 +95,7 @@ namespace
 
             for (fs::recursive_directory_iterator endDirIt, it{ appDataPath }; it != endDirIt; ++it)
             {
-                if (it.level() > 1)
+                if (it.depth() > 1)
                 {
                     it.pop();
                     if (it == endDirIt)
