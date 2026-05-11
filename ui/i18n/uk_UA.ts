@@ -1625,9 +1625,17 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Ця адреса створена новішою версією бібліотеки Beam (%1)
 Ваша версія: %2. Будь ласка, перевірте наявність оновлень.</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation>Гаманець</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No settings found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>

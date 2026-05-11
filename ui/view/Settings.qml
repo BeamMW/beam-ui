@@ -14,8 +14,135 @@ ColumnLayout {
     property string  linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string  unfoldSection:   ""
     property bool    creating: true
+    property string  searchText: ""
+    readonly property bool searchActive: searchText.trim().length > 0
 
     property bool settingsPrivacyFolded: true
+
+    function searchTerms(query) {
+        var cleaned = query.trim().toLowerCase();
+        if (cleaned.length == 0) {
+            return [];
+        }
+
+        var terms = [cleaned];
+        var words = cleaned.split(/\s+/);
+        for (var i = 0; i < words.length; ++i) {
+            if (words[i].length > 0 && terms.indexOf(words[i]) == -1) {
+                terms.push(words[i]);
+            }
+        }
+        return terms;
+    }
+
+    function valueMatches(value, terms) {
+        if (value === undefined || value === null) {
+            return false;
+        }
+
+        var text = value.toString().toLowerCase();
+        for (var i = 0; i < terms.length; ++i) {
+            if (text.indexOf(terms[i]) != -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function matchesObject(item, terms, depth) {
+        if (!item || depth > 16) {
+            return false;
+        }
+
+        var properties = [
+            "title",
+            "generalTitle",
+            "showSeedDialogTitle",
+            "showAddressesDialogTitle",
+            "text",
+            "placeholderText",
+            "currentText",
+            "displayText",
+            "value",
+            "address",
+            "port",
+            "username",
+            "infuraProjectID",
+            "accountIndex",
+            "connectionStatus",
+            "connectionError"
+        ];
+
+        for (var i = 0; i < properties.length; ++i) {
+            try {
+                if (valueMatches(item[properties[i]], terms)) {
+                    return true;
+                }
+            } catch (e) {
+            }
+        }
+
+        try {
+            for (var childIndex = 0; childIndex < item.children.length; ++childIndex) {
+                if (matchesObject(item.children[childIndex], terms, depth + 1)) {
+                    return true;
+                }
+            }
+        } catch (e) {
+        }
+
+        try {
+            if (item.contentItem && matchesObject(item.contentItem, terms, depth + 1)) {
+                return true;
+            }
+        } catch (e) {
+        }
+
+        return false;
+    }
+
+    function matchesSearch(item) {
+        return matchesObject(item, searchTerms(searchText), 0);
+    }
+
+    function showForSearch(item) {
+        return !searchActive || matchesSearch(item);
+    }
+
+    function markSearchMatch(item) {
+        return searchActive && matchesSearch(item);
+    }
+
+    function matchesSearchIfReady(item) {
+        return item && matchesSearch(item);
+    }
+
+    function hasAnySearchResult() {
+        try {
+            if (matchesSearchIfReady(generalBlock) ||
+                matchesSearchIfReady(notificationsBlock) ||
+                matchesSearchIfReady(utilitiesBlock) ||
+                matchesSearchIfReady(privacyBlock) ||
+                matchesSearchIfReady(appsBlock) ||
+                matchesSearchIfReady(caBlock) ||
+                matchesSearchIfReady(resourcesBlock) ||
+                matchesSearchIfReady(reportBlock) ||
+                matchesSearchIfReady(remoteNodeBlock) ||
+                matchesSearchIfReady(nodeBlock) ||
+                matchesSearchIfReady(ipfsBlock) ||
+                matchesSearchIfReady(swapEthSettings)) {
+                return true;
+            }
+
+            for (var i = 0; i < swapSettingsList.count; ++i) {
+                if (matchesSearchIfReady(swapSettingsList.itemAt(i))) {
+                    return true;
+                }
+            }
+        } catch (e) {
+        }
+        return false;
+    }
 
     Component.onCompleted: {
         settingsView.creating = false
@@ -31,6 +158,17 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignCenter | Qt.AlignRight
+            SearchBox {
+                id: settingsSearch
+                Layout.alignment: Qt.AlignCenter
+                Layout.preferredWidth: settingsSearch.searchInput.visible || settingsSearch.text.length > 0 ? 260 : 32
+                Layout.preferredHeight: 32
+                Layout.rightMargin: 20
+                //% "Search settings..."
+                placeholderText: qsTrId("settings-search-placeholder")
+                onTextChanged: settingsView.searchText = text
+            }
+
             SFText {
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
@@ -92,6 +230,7 @@ ColumnLayout {
         clip: true
 
         RowLayout {
+            id: settingsColumns
             width: settingsView.width
             spacing: 10
 
@@ -101,6 +240,14 @@ ColumnLayout {
                 spacing: 10
 
                 SettingsTitle {
+                    id: walletTitle
+                    visible: !settingsView.searchActive ||
+                             settingsView.showForSearch(generalBlock) ||
+                             settingsView.showForSearch(notificationsBlock) ||
+                             settingsView.showForSearch(utilitiesBlock) ||
+                             settingsView.showForSearch(privacyBlock) ||
+                             settingsView.showForSearch(appsBlock) ||
+                             settingsView.showForSearch(caBlock)
                     //% "Wallet"
                     text:  qsTrId("settings-wallet-title")
                 }
@@ -108,36 +255,58 @@ ColumnLayout {
                 SettingsGeneral {
                     id: generalBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(generalBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(generalBlock)
                 }
 
                 SettingsNotifications {
                     id: notificationsBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(notificationsBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(notificationsBlock)
                 }
 
                 SettingsUtilities {
                     id: utilitiesBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(utilitiesBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(utilitiesBlock)
                 }
 
                 SettingsPrivacy {
                     id: privacyBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(privacyBlock)
                     folded: settingsPrivacyFolded
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(privacyBlock)
                 }
 
                 SettingsApps {
                     id: appsBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(appsBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(appsBlock)
                 }
 
                 SettingsCA {
                     id: caBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(caBlock)
                     folded: unfoldSection != "CA"
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(caBlock)
                 }
 
                 SettingsTitle {
+                    id: troubleshootingTitle
+                    visible: !settingsView.searchActive ||
+                             settingsView.showForSearch(resourcesBlock) ||
+                             settingsView.showForSearch(reportBlock)
                     topPadding: 30
                     //% "Troubleshooting"
                     text:  qsTrId("settings-troubleshooting-title")
@@ -146,11 +315,26 @@ ColumnLayout {
                 SettingsResources {
                     id: resourcesBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(resourcesBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(resourcesBlock)
                 }
 
                 SettingsReport {
                     id: reportBlock
                     viewModel: viewModel
+                    visible: settingsView.showForSearch(reportBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(reportBlock)
+                }
+
+                SFText {
+                    Layout.topMargin: 30
+                    visible: settingsView.searchActive && !settingsView.hasAnySearchResult()
+                    //% "No settings found"
+                    text: qsTrId("settings-search-no-results")
+                    color: Style.content_secondary
+                    font.pixelSize: 14
                 }
             }
 
@@ -160,6 +344,12 @@ ColumnLayout {
                 spacing: 10
 
                 SettingsTitle {
+                    id: connectivityTitle
+                    visible: !settingsView.searchActive ||
+                             settingsView.showForSearch(remoteNodeBlock) ||
+                             settingsView.showForSearch(nodeBlock) ||
+                             settingsView.showForSearch(ipfsBlock) ||
+                             settingsView.showForSearch(swapEthSettings)
                     //% "Connectivity"
                     text:  qsTrId("settings-connectivity-title")
                 }
@@ -171,7 +361,10 @@ ColumnLayout {
                     showStatus: true
                     connectionStatus: getStatus()
                     connectionError:  main.statusBar.walletError
+                    visible: settingsView.showForSearch(remoteNodeBlock)
                     folded: unfoldSection != "BEAM_NODE"
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(remoteNodeBlock)
 
                     function getStatus() {
                         var sbar = main.statusBar.model
@@ -188,7 +381,10 @@ ColumnLayout {
                     showStatus: true
                     connectionStatus: getStatus()
                     connectionError:  main.statusBar.localNodeError
+                    visible: settingsView.showForSearch(nodeBlock)
                     folded: unfoldSection != "BEAM_NODE"
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(nodeBlock)
                     syncProgress: main.statusBar.nodeSyncProgress
                     function getStatus() {
                         var sbar = main.statusBar.model
@@ -201,8 +397,10 @@ ColumnLayout {
                 SettingsIPFS {
                     id: ipfsBlock
                     viewModel: viewModel
-                    visible: viewModel.ipfsSupported
+                    visible: viewModel.ipfsSupported && settingsView.showForSearch(ipfsBlock)
                     folded: unfoldSection != "IPFS_NODE"
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.markSearchMatch(ipfsBlock)
 
                     showStatus: true
                     connectionStatus: main.statusBar.model.ipfsStatus
@@ -226,8 +424,11 @@ ColumnLayout {
                         connectionStatus:         modelData.connectionStatus
                         connectionError:          modelData.connectionError
                         getAddressesElectrum:     modelData.getAddressesElectrum
+                        visible:                  settingsView.showForSearch(settingsControl)
                         folded:                   creating ? modelData.folded :
                                                              (unfoldSection == modelData.coinID ? false : (unfoldSection == "ALL_COINS" ? modelData.isConnected : true))
+                        searchActive:             settingsView.searchActive
+                        searchMatched:            settingsView.markSearchMatch(settingsControl)
 
 
                         mainSettingsViewModel:    viewModel
@@ -393,6 +594,9 @@ ColumnLayout {
                     connectionError:          viewModel.ethSettings.connectionError
                     infuraProjectID:          viewModel.ethSettings.infuraProjectID
                     accountIndex:             viewModel.ethSettings.accountIndex
+                    visible:                  settingsView.showForSearch(swapEthSettings)
+                    searchActive:             settingsView.searchActive
+                    searchMatched:            settingsView.markSearchMatch(swapEthSettings)
 
                     Connections {
                         target: viewModel.ethSettings

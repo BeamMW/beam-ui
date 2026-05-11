@@ -1625,9 +1625,17 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Tato adresa je vygenerovaná novější verzí Beam klienta (%1)
 Vaše verze je: %2. Zkontrolujte prosím aktualizace.</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation>Peněženka</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No settings found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>

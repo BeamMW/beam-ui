@@ -1625,9 +1625,17 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Этот адрес сгенерирован новой версией клиента Beam (%1)
 Ваша версия: %2. Пожалуйста, проверьте наличие обновлений.</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation>Кошелек</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No settings found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>

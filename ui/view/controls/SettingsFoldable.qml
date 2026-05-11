@@ -12,6 +12,9 @@ Control {
     property bool   folded: true
     property var    content: null
     spacing: 10
+    property bool   searchActive: false
+    property bool   searchMatched: false
+    readonly property bool effectiveFolded: searchActive && searchMatched ? false : folded
 
     // Status indicator
     property bool   showStatus: false
@@ -20,7 +23,7 @@ Control {
 
     contentItem: ColumnLayout {
         spacing:    0
-        clip:       folded
+        clip:       control.effectiveFolded
 
         Item {
             Layout.fillWidth:  true
@@ -65,7 +68,7 @@ Control {
                     id:     originalSizeImage
                     Layout.maximumHeight:   8
                     Layout.maximumWidth:    13
-                    source: control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
+                    source: control.effectiveFolded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
                 }
             }
 
@@ -112,12 +115,12 @@ Control {
         Control {
             id:                     contentControl
             Layout.fillWidth:       true
-            Layout.topMargin:       folded ? 0 : connectionStatus == "error" ? Math.max(5, 25 - errorRow.height) : 25
+            Layout.topMargin:       control.effectiveFolded ? 0 : connectionStatus == "error" ? Math.max(5, 25 - errorRow.height) : 25
             Layout.leftMargin:      20
             Layout.alignment:       Qt.AlignTop
             contentItem:            content
-            Layout.preferredHeight: folded ? 0 : contentControl.implicitHeight
-            opacity:                folded ? 0.0 : 1.0
+            Layout.preferredHeight: control.effectiveFolded ? 0 : contentControl.implicitHeight
+            opacity:                control.effectiveFolded ? 0.0 : 1.0
 
             Behavior on Layout.preferredHeight {
                 NumberAnimation { duration:  200 }
@@ -136,13 +139,15 @@ Control {
     background: Rectangle {
         radius:  10
         color:   Style.background_second
+        border.color: control.searchActive && control.searchMatched ? Style.accent_incoming : "transparent"
+        border.width: control.searchActive && control.searchMatched ? 1 : 0
 
         MouseArea {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
             height: control.topPadding + header.height +
-                    ( control.folded ? control.bottomPadding : 0 ) +
+                    ( control.effectiveFolded ? control.bottomPadding : 0 ) +
                     ( errorRow.visible ? errorRow.height : 0 ) +
                     ( contentControl.visible ? contentControl.Layout.topMargin : 0 )
 
@@ -156,5 +161,5 @@ Control {
     leftPadding:   0
     rightPadding:  22
     topPadding:    20
-    bottomPadding: connectionStatus == "error" && control.folded ? 16 : 20
+    bottomPadding: connectionStatus == "error" && control.effectiveFolded ? 16 : 20
 }

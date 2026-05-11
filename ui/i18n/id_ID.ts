@@ -1620,9 +1620,17 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Alamat ini dihasilkan oleh versi klien Beam yang lebih baru (%1)
 Versi Anda adalah: %2. Silakan periksa pembaruan.</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation>Dompet</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No settings found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>

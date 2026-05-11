@@ -1631,9 +1631,17 @@ Your version is: %2. Please, check for updates.</source>
         <translation>此令牌由新的Beam客户端版本生成(%1)
 你的版本是： %2。请检查更新。</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation>钱包</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No settings found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>

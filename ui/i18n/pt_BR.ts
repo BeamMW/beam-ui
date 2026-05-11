@@ -1622,9 +1622,17 @@ Your version is: %2. Please, check for updates.</source>
         <translation>Este endereço gerado pela versão mais recente do cliente Beam (%1)
 Sua versão é: %2. Por favor, verifique se há atualizações.</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="settings-wallet-title">
         <source>Wallet</source>
         <translation>Carteira</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No settings found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">
         <source>Connectivity</source>
