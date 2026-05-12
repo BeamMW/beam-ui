@@ -68,6 +68,7 @@ SettingsViewModel::SettingsViewModel()
     connect(m_walletModel, SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
     connect(m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
+    connect(&AppModel::getInstance(), &AppModel::walletResetCompleted, this, &SettingsViewModel::currentWalletRemoved);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 
@@ -572,6 +573,11 @@ bool SettingsViewModel::importData() const
 void SettingsViewModel::changeWalletPassword(const QString& pass)
 {
     AppModel::getInstance().changeWalletPassword(pass.toStdString());
+}
+
+void SettingsViewModel::removeCurrentWallet()
+{
+    AppModel::getInstance().resetWallet();
 }
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT

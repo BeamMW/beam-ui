@@ -165,6 +165,7 @@ public:
     Q_INVOKABLE bool hasPeer(const QString& peer) const;
     Q_INVOKABLE void reportProblem();
     Q_INVOKABLE void changeWalletPassword(const QString& pass);
+    Q_INVOKABLE void removeCurrentWallet();
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     Q_INVOKABLE void allowAssetId(quint32 asset);
     Q_INVOKABLE void disallowAssetId(quint32 asset);
@@ -207,6 +208,7 @@ signals:
     void minConfirmationsChanged();
     void stateChanged();
     void appsPortChanged();
+    void currentWalletRemoved();
 
     #ifdef BEAM_IPFS_SUPPORT
     void IPFSSwarmPortChanged();

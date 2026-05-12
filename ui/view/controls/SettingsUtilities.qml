@@ -18,12 +18,62 @@ SettingsFoldable {
         settingsViewModel: viewModel
     }
 
+    ConfirmationDialog {
+        id: removeWalletConfirmationDialog
+        parent: main
+        //% "Remove current wallet"
+        title: qsTrId("settings-remove-wallet")
+        //% "All data will be erased. Make sure you've saved your seed phrase if you want to restore this wallet later on!"
+        text: qsTrId("settings-remove-wallet-confirm-message") + "\n\n" +
+              //% "Are you sure you want to remove your wallet?"
+              qsTrId("settings-remove-wallet-confirm-question")
+        //% "proceed"
+        okButtonText: qsTrId("settings-remove-wallet-proceed")
+        okButtonIconSource: "qrc:/assets/icon-next-white.svg"
+        okButtonColor: Style.swapStateIndicator
+        cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
+        cancelButtonVisible: true
+        width: 460
+        height: 252
+
+        onAccepted: {
+            removeWalletPasswordDialog.open()
+        }
+    }
+
+    ConfirmPasswordDialog {
+        id: removeWalletPasswordDialog
+        parent: main
+        settingsViewModel: viewModel
+        //% "Confirm wallet removal"
+        dialogTitle: qsTrId("settings-remove-wallet-password-title")
+        dialogMessage: ""
+        //% "Enter your password to remove the wallet"
+        passwordPlaceholderText: qsTrId("settings-remove-wallet-password-placeholder")
+        //% "remove"
+        okButtonText: qsTrId("settings-remove-wallet-password-button")
+        okButtonIcon: "qrc:/assets/icon-delete.svg"
+        okButtonColor: Style.swapStateIndicator
+
+        onDialogAccepted: {
+            viewModel.removeCurrentWallet()
+        }
+        onDialogRejected: {}
+    }
+
     PublicOfflineAddressDialog {
         id: publicOfflineAddressDialog;
     }
 
     UtxoDialog {
         id: utxoDialog
+    }
+
+    Connections {
+        target: viewModel
+        function onCurrentWalletRemoved() {
+            main.parent.setSource("qrc:/start.qml")
+        }
     }
 
     content: ColumnLayout {
@@ -89,6 +139,16 @@ SettingsFoldable {
             bold: true
             onClicked: {
                 utxoDialog.open()
+            }
+        }
+
+        LinkButton {
+            //% "Remove current wallet"
+            text: qsTrId("settings-remove-wallet")
+            linkColor: Style.validator_error
+            bold: true
+            onClicked: {
+                removeWalletConfirmationDialog.open()
             }
         }
     }
