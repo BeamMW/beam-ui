@@ -385,6 +385,14 @@
         <source>Settings</source>
         <translation>Settings</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings</source>
+        <translation>Search settings</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No matching settings</source>
+        <translation>No matching settings</translation>
+    </message>
     <message id="cant-send-to-expired-message">
         <source>Can&apos;t send to the expired address.</source>
         <translation>Can&apos;t send to the expired address.</translation>

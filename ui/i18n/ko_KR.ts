@@ -385,6 +385,14 @@
         <source>Settings</source>
         <translation>설정</translation>
     </message>
+    <message id="settings-search-placeholder">
+        <source>Search settings</source>
+        <translation>설정 검색</translation>
+    </message>
+    <message id="settings-search-no-results">
+        <source>No matching settings</source>
+        <translation>일치하는 설정이 없습니다</translation>
+    </message>
     <message id="cant-send-to-expired-message">
         <source>Can&apos;t send to the expired address.</source>
         <translation>만료된 주소에는 보낼 수 없습니다.</translation>

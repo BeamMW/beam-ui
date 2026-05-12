@@ -12,6 +12,8 @@ Control {
     property bool   folded: true
     property var    content: null
     spacing: 10
+    property bool   searchActive: false
+    property bool   searchMatched: false
 
     // Status indicator
     property bool   showStatus: false
@@ -135,7 +137,11 @@ Control {
 
     background: Rectangle {
         radius:  10
-        color:   Style.background_second
+        color:   control.searchActive && control.searchMatched
+                    ? Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.12)
+                    : Style.background_second
+        border.color: control.searchActive && control.searchMatched ? Style.active : "transparent"
+        border.width: control.searchActive && control.searchMatched ? 1 : 0
 
         MouseArea {
             anchors.left: parent.left

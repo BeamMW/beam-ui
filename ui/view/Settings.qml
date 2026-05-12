@@ -14,6 +14,8 @@ ColumnLayout {
     property string  linkStyle: "<style>a:link {color: '#00f6d2'; text-decoration: none;}</style>"
     property string  unfoldSection:   ""
     property bool    creating: true
+    property string  searchText: ""
+    readonly property bool searchActive: searchText.trim().length > 0
 
     property bool settingsPrivacyFolded: true
 
@@ -23,6 +25,83 @@ ColumnLayout {
 
     SettingsViewModel {
         id: viewModel
+    }
+
+    function searchTerms() {
+        var query = searchText.trim().toLowerCase()
+        if (!query.length) return []
+        var words = query.split(/\s+/)
+        return words.indexOf(query) === -1 ? [query].concat(words) : words
+    }
+
+    function itemMatches(item, terms) {
+        if (!item || !terms.length) return false
+
+        var values = []
+        if (item.title !== undefined) values.push(item.title)
+        if (item.text !== undefined) values.push(item.text)
+        if (item.displayText !== undefined) values.push(item.displayText)
+        if (item.currentText !== undefined) values.push(item.currentText)
+
+        for (var i = 0; i < values.length; ++i) {
+            var value = String(values[i]).toLowerCase()
+            for (var j = 0; j < terms.length; ++j) {
+                if (value.indexOf(terms[j]) !== -1) return true
+            }
+        }
+
+        if (!item.children) return false
+        for (var k = 0; k < item.children.length; ++k) {
+            if (itemMatches(item.children[k], terms)) return true
+        }
+        return false
+    }
+
+    function blockMatches(block) {
+        return !searchActive || itemMatches(block, searchTerms())
+    }
+
+    function hasSearchResults() {
+        if (!searchActive) return true
+
+        var blocks = [
+            generalBlock, notificationsBlock, utilitiesBlock, privacyBlock,
+            appsBlock, caBlock, resourcesBlock, reportBlock, remoteNodeBlock,
+            nodeBlock, ipfsBlock, swapEthSettings
+        ]
+
+        for (var i = 0; i < blocks.length; ++i) {
+            if (blockMatches(blocks[i])) return true
+        }
+
+        for (var j = 0; j < swapSettingsList.count; ++j) {
+            if (blockMatches(swapSettingsList.itemAt(j))) return true
+        }
+
+        return false
+    }
+
+    function applySearchToBlock(block, defaultFolded) {
+        if (searchActive) {
+            block.folded = !blockMatches(block)
+        } else if (defaultFolded !== undefined) {
+            block.folded = defaultFolded
+        }
+    }
+
+    onSearchTextChanged: {
+        applySearchToBlock(generalBlock, true)
+        applySearchToBlock(notificationsBlock, true)
+        applySearchToBlock(utilitiesBlock, true)
+        applySearchToBlock(privacyBlock, settingsPrivacyFolded)
+        applySearchToBlock(appsBlock, true)
+        applySearchToBlock(caBlock, unfoldSection != "CA")
+        applySearchToBlock(resourcesBlock, true)
+        applySearchToBlock(reportBlock, true)
+        applySearchToBlock(remoteNodeBlock, unfoldSection != "BEAM_NODE")
+        applySearchToBlock(nodeBlock, unfoldSection != "BEAM_NODE")
+        applySearchToBlock(ipfsBlock, unfoldSection != "IPFS_NODE")
+        applySearchToBlock(swapEthSettings, creating ? (unfoldSection == viewModel.ethSettings.coinID ? false : (unfoldSection == "ALL_COINS" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded)
     }
 
     //% "Settings"
@@ -84,6 +163,28 @@ ColumnLayout {
         }
     }
 
+    SearchBox {
+        Layout.fillWidth: true
+        Layout.leftMargin: 20
+        Layout.rightMargin: 20
+        Layout.bottomMargin: 10
+        alwaysVisibleInput: true
+        //% "Search settings"
+        placeholderText: qsTrId("settings-search-placeholder")
+        onTextChanged: settingsView.searchText = text
+    }
+
+    SFText {
+        Layout.leftMargin: 20
+        Layout.rightMargin: 20
+        Layout.bottomMargin: 10
+        visible: settingsView.searchActive && !settingsView.hasSearchResults()
+        color: Style.content_secondary
+        font.pixelSize: 14
+        //% "No matching settings"
+        text: qsTrId("settings-search-no-results")
+    }
+
     ScrollView {
         Layout.fillHeight: true
         Layout.bottomMargin: 10
@@ -108,33 +209,51 @@ ColumnLayout {
                 SettingsGeneral {
                     id: generalBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(generalBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(generalBlock)
                 }
 
                 SettingsNotifications {
                     id: notificationsBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(notificationsBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(notificationsBlock)
                 }
 
                 SettingsUtilities {
                     id: utilitiesBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(utilitiesBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(utilitiesBlock)
                 }
 
                 SettingsPrivacy {
                     id: privacyBlock
                     viewModel: viewModel
                     folded: settingsPrivacyFolded
+                    visible: settingsView.blockMatches(privacyBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(privacyBlock)
                 }
 
                 SettingsApps {
                     id: appsBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(appsBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(appsBlock)
                 }
 
                 SettingsCA {
                     id: caBlock
                     viewModel: viewModel
                     folded: unfoldSection != "CA"
+                    visible: settingsView.blockMatches(caBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(caBlock)
                 }
 
                 SettingsTitle {
@@ -146,11 +265,17 @@ ColumnLayout {
                 SettingsResources {
                     id: resourcesBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(resourcesBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(resourcesBlock)
                 }
 
                 SettingsReport {
                     id: reportBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(reportBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(reportBlock)
                 }
             }
 
@@ -167,6 +292,9 @@ ColumnLayout {
                 SettingsBeamRemoteNode {
                     id: remoteNodeBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(remoteNodeBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(remoteNodeBlock)
 
                     showStatus: true
                     connectionStatus: getStatus()
@@ -184,6 +312,9 @@ ColumnLayout {
                 SettingsBeamNode {
                     id: nodeBlock
                     viewModel: viewModel
+                    visible: settingsView.blockMatches(nodeBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(nodeBlock)
 
                     showStatus: true
                     connectionStatus: getStatus()
@@ -201,7 +332,9 @@ ColumnLayout {
                 SettingsIPFS {
                     id: ipfsBlock
                     viewModel: viewModel
-                    visible: viewModel.ipfsSupported
+                    visible: viewModel.ipfsSupported && settingsView.blockMatches(ipfsBlock)
+                    searchActive: settingsView.searchActive
+                    searchMatched: settingsView.blockMatches(ipfsBlock)
                     folded: unfoldSection != "IPFS_NODE"
 
                     showStatus: true
@@ -232,6 +365,9 @@ ColumnLayout {
 
                         mainSettingsViewModel:    viewModel
                         showStatus:               true
+                        visible:                  settingsView.blockMatches(settingsControl)
+                        searchActive:             settingsView.searchActive
+                        searchMatched:            settingsView.blockMatches(settingsControl)
 
                         //
                         // Node
@@ -386,6 +522,9 @@ ColumnLayout {
                     mainSettingsViewModel:    viewModel
                     showStatus:               true
                     getEthereumAddresses:     viewModel.ethSettings.getEthereumAddresses
+                    visible:                  settingsView.blockMatches(swapEthSettings)
+                    searchActive:             settingsView.searchActive
+                    searchMatched:            settingsView.blockMatches(swapEthSettings)
                     folded:                   creating ? (unfoldSection == viewModel.ethSettings.coinID ? false : (unfoldSection == "ALL_COINS" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
                     canChangeConnection:      viewModel.ethSettings.canChangeConnection
                     isConnected:              viewModel.ethSettings.isConnected
