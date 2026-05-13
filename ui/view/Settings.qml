@@ -16,6 +16,7 @@ ColumnLayout {
     property bool    creating: true
     property string  searchText: ""
     readonly property bool searchActive: searchText.trim().length > 0
+    readonly property bool noSearchResults: searchActive && !hasAnySearchResult()
 
     property bool settingsPrivacyFolded: true
 
@@ -49,16 +50,39 @@ ColumnLayout {
         return false;
     }
 
+    function isButtonItem(item) {
+        if (!item) {
+            return false;
+        }
+
+        var typeName = item.toString();
+        return typeName.indexOf("Button") != -1 ||
+               typeName.indexOf("MenuItem") != -1;
+    }
+
+    function hasMouseAreaChild(item) {
+        try {
+            for (var childIndex = 0; childIndex < item.children.length; ++childIndex) {
+                var child = item.children[childIndex];
+                if (child.toString().indexOf("MouseArea") != -1 &&
+                    child.enabled &&
+                    child.acceptedButtons != Qt.NoButton) {
+                    return true;
+                }
+            }
+        } catch (e) {
+        }
+        return false;
+    }
+
     function matchesObject(item, terms, depth) {
         if (!item || depth > 16) {
             return false;
         }
 
-        var properties = [
+        var properties = isButtonItem(item) || hasMouseAreaChild(item) ? [] : [
             "title",
             "generalTitle",
-            "showSeedDialogTitle",
-            "showAddressesDialogTitle",
             "text",
             "placeholderText",
             "currentText",
@@ -84,6 +108,9 @@ ColumnLayout {
 
         try {
             for (var childIndex = 0; childIndex < item.children.length; ++childIndex) {
+                if (isButtonItem(item.children[childIndex])) {
+                    continue;
+                }
                 if (matchesObject(item.children[childIndex], terms, depth + 1)) {
                     return true;
                 }
@@ -92,7 +119,7 @@ ColumnLayout {
         }
 
         try {
-            if (item.contentItem && matchesObject(item.contentItem, terms, depth + 1)) {
+            if (item.contentItem && !isButtonItem(item.contentItem) && matchesObject(item.contentItem, terms, depth + 1)) {
                 return true;
             }
         } catch (e) {
@@ -154,24 +181,18 @@ ColumnLayout {
 
     //% "Settings"
     property string title:       qsTrId("settings-title")
-    property var titleContent: RowLayout {
+    property var titleContent: Item {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 56
+
         RowLayout {
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignCenter | Qt.AlignRight
-            SearchBox {
-                id: settingsSearch
-                Layout.alignment: Qt.AlignCenter
-                Layout.preferredWidth: settingsSearch.searchInput.visible || settingsSearch.text.length > 0 ? 260 : 32
-                Layout.preferredHeight: 32
-                Layout.rightMargin: 20
-                //% "Search settings..."
-                placeholderText: qsTrId("settings-search-placeholder")
-                onTextChanged: settingsView.searchText = text
-            }
+            id: settingsHeaderStats
+            anchors.top: parent.top
+            anchors.right: parent.right
+            spacing: 6
 
             SFText {
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignRight
+                visible: !settingsSearch.searchInput.visible && settingsSearch.text.length == 0
                 //% "Blockchain height"
                 text: qsTrId("settings-blockchain-height")
                 color: Style.content_secondary
@@ -179,7 +200,7 @@ ColumnLayout {
             }
 
             SFLabel {
-                horizontalAlignment: Text.AlignRight
+                visible: !settingsSearch.searchInput.visible && settingsSearch.text.length == 0
                 color: Style.content_main
                 text: viewModel.currentHeight
                 font.pixelSize: 14
@@ -189,55 +210,145 @@ ColumnLayout {
 
             SFText {
                 id: versionText
-                horizontalAlignment: Text.AlignRight
-                Layout.leftMargin: 20
+                Layout.leftMargin: !settingsSearch.searchInput.visible && settingsSearch.text.length == 0 ? 14 : 0
                 font.pixelSize: 14
                 color: Style.content_secondary
                 //: settings tab, version label
                 //% "v"
                 text: qsTrId("settings-version") + viewModel.version
-                
+
                 MouseArea {
-                anchors.fill:parent
-                acceptedButtons: Qt.LeftButton
-                cursorShape: Qt.PointingHandCursor
-                onClicked: function () {
-		                    BeamGlobals.copyToClipboard(versionText.text)
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: function () {
+                        BeamGlobals.copyToClipboard(versionText.text)
+                    }
                 }
-           } 
             }
-                
         }
 
         PrimaryButton {
-            Layout.alignment: Qt.AlignCenter
-            Layout.leftMargin: 20
-            Layout.preferredHeight: 38
+            id: updateWalletButton
+            anchors.right: settingsSearch.left
+            anchors.rightMargin: 20
+            anchors.verticalCenter: settingsSearch.verticalCenter
+            height: 38
             //: settings update wallet button
             //% "update wallet"
             text: qsTrId("settings-update-wallet")
             icon.source: "qrc:/assets/icon-repeat.svg"
-            visible: main.hasNewerVersion
+            visible: main.hasNewerVersion && !settingsSearch.searchInput.visible && settingsSearch.text.length == 0
             onClicked: Utils.navigateToDownloads()
+        }
+
+        SearchBox {
+            id: settingsSearch
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            width: settingsSearch.searchInput.visible || settingsSearch.text.length > 0 ? Math.min(480, parent.width) : 32
+            height: 32
+            //% "Search by section name or parameter"
+            placeholderText: qsTrId("settings-search-placeholder")
+            onTextChanged: settingsView.searchText = text
         }
     }
 
     ScrollView {
+        id: settingsScroll
+        Layout.fillWidth: true
         Layout.fillHeight: true
         Layout.bottomMargin: 10
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical:          ScrollBar.AsNeeded
         clip: true
 
-        RowLayout {
-            id: settingsColumns
-            width: settingsView.width
-            spacing: 10
+            Item {
+                id: settingsContent
+                width: settingsView.width
+                height: implicitHeight
+                implicitWidth: settingsView.width
+                implicitHeight: settingsView.noSearchResults
+                                ? Math.max(settingsScroll.height, noSearchResultsColumn.implicitHeight)
+                                : settingsColumns.implicitHeight
 
             ColumnLayout {
-                Layout.preferredWidth: parent.width / 2 - parent.spacing / 2
-                Layout.alignment: Qt.AlignTop
+                id: noSearchResultsColumn
+                anchors.centerIn: parent
+                visible: settingsView.noSearchResults
+                spacing: 18
+
+                Item {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.preferredWidth: 72
+                    Layout.preferredHeight: 72
+
+                    Rectangle {
+                        x: 5
+                        y: 5
+                        width: 44
+                        height: 44
+                        radius: 22
+                        color: "transparent"
+                        border.color: Style.content_secondary
+                        border.width: 5
+                        opacity: 0.45
+                    }
+
+                    Rectangle {
+                        x: 45
+                        y: 43
+                        width: 26
+                        height: 6
+                        radius: 3
+                        color: Style.content_secondary
+                        opacity: 0.45
+                        rotation: 45
+                        transformOrigin: Item.Left
+                    }
+
+                    Rectangle {
+                        x: 22
+                        y: 25
+                        width: 16
+                        height: 5
+                        radius: 2
+                        color: Style.content_secondary
+                        opacity: 0.45
+                        rotation: 45
+                    }
+
+                    Rectangle {
+                        x: 22
+                        y: 25
+                        width: 16
+                        height: 5
+                        radius: 2
+                        color: Style.content_secondary
+                        opacity: 0.45
+                        rotation: -45
+                    }
+                }
+
+                SFText {
+                    Layout.alignment: Qt.AlignHCenter
+                    //% "No results found"
+                    text: qsTrId("settings-search-no-results")
+                    color: Style.content_secondary
+                    font.pixelSize: 16
+                }
+            }
+
+            RowLayout {
+                id: settingsColumns
+                width: parent.width
+                visible: !settingsView.noSearchResults
                 spacing: 10
+
+                ColumnLayout {
+                    Layout.preferredWidth: parent.width / 2 - parent.spacing / 2
+                    Layout.alignment: Qt.AlignTop
+                    spacing: 10
 
                 SettingsTitle {
                     id: walletTitle
@@ -327,21 +438,12 @@ ColumnLayout {
                     searchActive: settingsView.searchActive
                     searchMatched: settingsView.markSearchMatch(reportBlock)
                 }
-
-                SFText {
-                    Layout.topMargin: 30
-                    visible: settingsView.searchActive && !settingsView.hasAnySearchResult()
-                    //% "No settings found"
-                    text: qsTrId("settings-search-no-results")
-                    color: Style.content_secondary
-                    font.pixelSize: 14
                 }
-            }
 
-            ColumnLayout {
-                Layout.preferredWidth: parent.width / 2 - parent.spacing / 2
-                Layout.alignment: Qt.AlignTop
-                spacing: 10
+                ColumnLayout {
+                    Layout.preferredWidth: parent.width / 2 - parent.spacing / 2
+                    Layout.alignment: Qt.AlignTop
+                    spacing: 10
 
                 SettingsTitle {
                     id: connectivityTitle
@@ -665,4 +767,5 @@ ColumnLayout {
             }
         }
     }
+}
 }

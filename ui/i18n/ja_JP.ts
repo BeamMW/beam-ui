@@ -1616,7 +1616,7 @@ Your version is: %2. Please, check for updates.</source>
 あなたのバージョンは %2です。アップデートを確認してください。</translation>
     </message>
     <message id="settings-search-placeholder">
-        <source>Search settings...</source>
+        <source>Search by section name or parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-wallet-title">
@@ -1624,7 +1624,7 @@ Your version is: %2. Please, check for updates.</source>
         <translation>ウォレット</translation>
     </message>
     <message id="settings-search-no-results">
-        <source>No settings found</source>
+        <source>No results found</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">

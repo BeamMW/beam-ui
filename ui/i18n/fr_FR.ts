@@ -1621,7 +1621,7 @@ Your version is: %2. Please, check for updates.</source>
 Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
     </message>
     <message id="settings-search-placeholder">
-        <source>Search settings...</source>
+        <source>Search by section name or parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-wallet-title">
@@ -1629,7 +1629,7 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
         <translation>Portefeuille</translation>
     </message>
     <message id="settings-search-no-results">
-        <source>No settings found</source>
+        <source>No results found</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">

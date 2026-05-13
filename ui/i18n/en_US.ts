@@ -1622,7 +1622,7 @@ Your version is: %2. Please, check for updates.</source>
 Your version is: %2. Please, check for updates.</translation>
     </message>
     <message id="settings-search-placeholder">
-        <source>Search settings...</source>
+        <source>Search by section name or parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-wallet-title">
@@ -1630,7 +1630,7 @@ Your version is: %2. Please, check for updates.</translation>
         <translation>Wallet</translation>
     </message>
     <message id="settings-search-no-results">
-        <source>No settings found</source>
+        <source>No results found</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="settings-connectivity-title">
