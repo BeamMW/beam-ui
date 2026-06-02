@@ -669,6 +669,7 @@ namespace beamui::applications
             devapp.insert(DApp::kMinApiVersion, AppSettings().getDevAppMinApiVer());
             devapp.insert(DApp::kAppid, appid);
             devapp.insert(DApp::kSupported, true);
+            devapp.insert(DApp::kNotInstalled, false);
             devapp.insert(DApp::kDevApp, true);
             result.push_back(devapp);
         }
