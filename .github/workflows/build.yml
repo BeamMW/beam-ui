@@ -84,8 +84,8 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
 
-          Write-Host "Installing OpenSSL 3.6.3 via Chocolatey..."
-          choco install openssl --version=3.6.3 -y --limit-output
+          Write-Host "Installing OpenSSL 3.6.2 via Chocolatey..."
+          choco install openssl --version=3.6.2 -y --limit-output
 
           Write-Host "Locating OpenSSL installation..."
           $candidateRoots = @(
