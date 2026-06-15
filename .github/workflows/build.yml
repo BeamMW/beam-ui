@@ -140,7 +140,18 @@ jobs:
       ###############################################################################
       # Install Qt6
       ###############################################################################
-      - name: Install Qt6
+      - name: Install Qt6  [macos]
+        if: startsWith(matrix.os, 'macos')
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          arch: clang_arm64
+          modules: "qthttpserver qt5compat qtwebchannel qtpositioning qtshadertools qtwebengine qtwebsockets qtserialport"
+          cache: true
+          cache-key-prefix: "qt-${{ matrix.os }}"
+      
+      - name: Install Qt6  [not macos]
+        if: "!startsWith(matrix.os, 'macos')"
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
@@ -157,6 +168,7 @@ jobs:
           cmake -B build -S $GITHUB_WORKSPACE \
             -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 \
             -DDEBUG_MESSAGES_IN_RELEASE_MODE=On \
             -DBEAM_LINK_TYPE=Static \
             -DBRANCH_NAME=${GITHUB_REF##*/} \
