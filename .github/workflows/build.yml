@@ -148,6 +148,26 @@ jobs:
           cache: true
           cache-key-prefix: "qt-${{ matrix.os }}"
 
+      - name: Strip x86_64 from Qt runtime [macos]
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          set -euo pipefail
+
+          echo "QT_ROOT_DIR=$QT_ROOT_DIR"
+
+          for dir in lib plugins qml resources translations; do
+            [ -d "$QT_ROOT_DIR/$dir" ] || continue
+
+            find "$QT_ROOT_DIR/$dir" -type f -print0 | while IFS= read -r -d '' file; do
+              if lipo -info "$file" >/dev/null 2>&1; then
+                if lipo -info "$file" 2>/dev/null | grep -q "x86_64"; then
+                  echo "Thinning: $file"
+                  lipo "$file" -remove x86_64 -output "$file.tmp"
+                  mv "$file.tmp" "$file"
+                fi
+              fi
+            done
+          done
       ###############################################################################
       # Configure CMake
       ###############################################################################
