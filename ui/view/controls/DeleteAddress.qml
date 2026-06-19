@@ -16,6 +16,11 @@ CustomDialog {
     property var  addressItem
     property bool isShieldedSupported: true
 
+    //% "Delete address"
+    property string dialogTitle: qsTrId("address-table-cm-delete")
+
+    property string name:          (addressItem && addressItem.name) ? addressItem.name : ""
+
     property var     token:         addressItem.token
     property var     walletID:      addressItem.walletID
     property var     isOldAddr:     addressItem.token == addressItem.walletID
@@ -26,11 +31,23 @@ CustomDialog {
         SFText {
             Layout.alignment: Qt.AlignHCenter
 
-            //% "Delete address"
-            text:           qsTrId("address-table-cm-delete")
+            text:           control.dialogTitle
             color:          Style.content_main
             font.pixelSize: 18
             font.weight:    Font.Bold
+        }
+
+        SFText {
+            Layout.alignment:      Qt.AlignHCenter
+            Layout.topMargin:      10
+            Layout.preferredWidth: control.isOldAddr ? 510: 582
+            visible:               control.name.length > 0
+            horizontalAlignment:   Text.AlignHCenter
+            wrapMode:              Text.Wrap
+            text:                  control.name
+            color:                 Style.content_main
+            font.pixelSize:        14
+            font.weight:           Font.Bold
         }
 
         ScrollView {
@@ -84,7 +101,7 @@ CustomDialog {
                 text: qsTrId("general-delete")
                 icon.source: "qrc:/assets/icon-done.svg"
                 onClicked: {
-                viewModel.deleteAddress(contextMenu.addressItem.token)
+                viewModel.deleteAddress(control.token)
                 control.destroy()
                 }
             }
