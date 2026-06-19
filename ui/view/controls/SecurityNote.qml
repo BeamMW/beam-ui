@@ -12,11 +12,13 @@ ColumnLayout {
 
     Item {
         Layout.fillWidth: true
+        Layout.preferredHeight:76
         Layout.maximumHeight:76
         Layout.minimumHeight:76
         SvgImage {
             id: icon
             anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
         }
         DropShadow {
             anchors.fill: icon

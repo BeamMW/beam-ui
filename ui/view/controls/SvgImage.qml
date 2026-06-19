@@ -1,15 +1,14 @@
 import QtQuick
-import QtQuick.Window
 
 Image {
     id: root
 
-    property real dpr: (Screen.devicePixelRatio == 1.0 ? 2 : Screen.devicePixelRatio)
+    // Display at the SVG's logical size, but render at device-pixel
+    // resolution (sourceSize) so it stays crisp on HiDPI screens.
+    sourceSize: originalSizeImage.sourceSize
 
-    sourceSize: Qt.size(originalSizeImage.sourceSize.width * dpr, originalSizeImage.sourceSize.height * dpr)
-
-    width:  originalSizeImage.sourceSize.width
-    height: originalSizeImage.sourceSize.height
+    width:  originalSizeImage.implicitWidth
+    height: originalSizeImage.implicitHeight
     smooth: true
 
     Image {
