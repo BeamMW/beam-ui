@@ -318,7 +318,10 @@ ColumnLayout {
 
             TabButton {
                 id: txTab
-                label:              qsTrId("wallet-transactions-title")
+                label:              qsTrId("wallet-transactions-title") +
+                                    (txTable.activeTxCnt > 0
+                                        ? " " + qsTrId("apps-inprogress-tip").arg(txTable.activeTxCnt)
+                                        : "")
                 Layout.alignment:   Qt.AlignVCenter
                 onClicked:          appsRoot.state = "transactions"
             }
