@@ -83,15 +83,46 @@ ColumnLayout {
                 opacity:      hoverArea.containsMouse ? 0.15 : 0.1
             }
 
+            // Accent strip on the left edge, clipped to the pill's rounded
+            // shape so its ends follow the corner curve instead of overhanging.
+            Item {
+                anchors.fill: parent
+                visible:      haveUnread
+
+                Item {
+                    id: accentSource
+                    anchors.fill: parent
+                    visible:      false
+                    Rectangle {
+                        anchors.left:   parent.left
+                        anchors.top:    parent.top
+                        anchors.bottom: parent.bottom
+                        width:          5
+                        color:          Style.active
+                    }
+                }
+
+                Rectangle {
+                    id: pillMask
+                    anchors.fill: parent
+                    radius:       10
+                    visible:      false
+                }
+
+                OpacityMask {
+                    anchors.fill: parent
+                    source:       accentSource
+                    maskSource:   pillMask
+                }
+            }
+
             ColumnLayout {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                Layout.alignment: Qt.AlignVCenter
+                anchors.fill:     parent
+                anchors.leftMargin: 25
+                anchors.topMargin:  15
                 spacing: 7
 
                 SFText {
-                    Layout.topMargin: 15
-                    Layout.leftMargin: 25
                     text: name
                     font {
                         styleName:  "DemiBold"
@@ -103,32 +134,13 @@ ColumnLayout {
                 }
 
                 SFText {
-                    Layout.leftMargin: 25
                     text: cid
                     font.pixelSize: 14
                     color: Style.content_secondary
                     wrapMode: Text.Wrap
                 }
 
-                Item {
-                    Rectangle {
-                        id: not_read_indicator
-                        y: 6
-                        width: 4
-                        height: 64
-                        color: Style.active
-                    }
-
-                    DropShadow {
-                        anchors.fill: not_read_indicator
-                        radius: 5
-                        samples: 9
-                        color: Style.active
-                        source: not_read_indicator
-                    }
-
-                    visible: haveUnread
-                }
+                Item { Layout.fillHeight: true }
             }
 
             MouseArea {

@@ -153,9 +153,11 @@ ColumnLayout {
                 SvgImage {
                     anchors.left: parent.left
                     anchors.leftMargin: 30
-                    anchors.verticalCenter: parent.verticalCenter 
-        
+                    anchors.verticalCenter: parent.verticalCenter
+
                     source: getIconSource(type)
+                    width:  60
+                    height: 60
                 }
         
                 ColumnLayout {
