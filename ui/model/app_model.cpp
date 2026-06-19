@@ -452,7 +452,19 @@ void AppModel::resetWallet()
         return;
     }
 
-    onResetWallet();
+    // No integrated node to stop: defer the reset to the next event-loop
+    // iteration so that any UI which triggered it can tear itself down first,
+    // releasing its references to the asset managers (onResetWallet asserts
+    // that it uniquely owns them).
+    QMetaObject::invokeMethod(this, &AppModel::onResetWallet, Qt::QueuedConnection);
+}
+
+void AppModel::removeCurrentWallet()
+{
+    // Unlike resetWallet() (which is used to undo a restore/creation and keeps
+    // a backup), removing the wallet must wipe the whole account permanently.
+    m_removeAccount = true;
+    resetWallet();
 }
 
 void AppModel::onResetWallet()
@@ -477,6 +489,23 @@ void AppModel::onResetWallet()
     resetSwapClients();
     assert(m_db);
     m_db.reset();
+
+    if (m_removeAccount)
+    {
+        m_removeAccount = false;
+
+        // Permanently wipe the whole account directory (all wallet DBs across
+        // versions, local node storage, app data, settings) so the account no
+        // longer appears in the wallet/account list.
+        const auto accountDir = QString::fromStdString(getSettings().getUserDataPath());
+        if (!QDir(accountDir).removeRecursively())
+        {
+            BEAM_LOG_ERROR() << "Failed to remove account directory: " << accountDir.toStdString();
+        }
+
+        emit walletRemoved();
+        return;
+    }
 
     try
     {

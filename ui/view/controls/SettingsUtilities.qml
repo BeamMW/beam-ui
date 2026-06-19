@@ -18,6 +18,62 @@ SettingsFoldable {
         settingsViewModel: viewModel
     }
 
+    ConfirmationDialog {
+        id: removeWalletConfirmationDialog
+        parent: main
+        //% "Remove current wallet"
+        title: qsTrId("settings-remove-wallet")
+        //% "All data will be erased. Make sure you've saved your seed phrase if you want to restore this wallet later on!"
+        text: qsTrId("settings-remove-wallet-confirm-message") + "\n\n" +
+              //% "Are you sure you want to remove your wallet?"
+              qsTrId("settings-remove-wallet-confirm-question")
+        //% "proceed"
+        okButtonText: qsTrId("settings-remove-wallet-proceed")
+        okButtonIconSource: "qrc:/assets/icon-next-white.svg"
+        okButtonColor: Style.swapStateIndicator
+        cancelButtonIconSource: "qrc:/assets/icon-cancel-white.svg"
+        cancelButtonVisible: true
+        width: 460
+        height: 252
+
+        onAccepted: {
+            removeWalletPasswordDialog.open()
+        }
+    }
+
+    ConfirmPasswordDialog {
+        id: removeWalletPasswordDialog
+        parent: main
+        settingsViewModel: viewModel
+        //% "Confirm wallet removal"
+        dialogTitle: qsTrId("settings-remove-wallet-password-title")
+        dialogMessage: ""
+        //% "Enter your password to remove the wallet"
+        passwordPlaceholderText: qsTrId("settings-remove-wallet-password-placeholder")
+        //% "remove"
+        okButtonText: qsTrId("settings-remove-wallet-password-button")
+        okButtonIcon: "qrc:/assets/icon-delete.svg"
+        okButtonColor: Style.swapStateIndicator
+
+        onDialogAccepted: function() {
+            // Defer one turn so this (modal) dialog finishes closing and releases
+            // its input grab on the window overlay before we navigate away;
+            // otherwise the grab leaks and blocks input on the start screen.
+            //
+            // Inside the callback: drop the main wallet UI first (setSource
+            // schedules deferred deletion of every main view-model, releasing
+            // their references to the asset managers), then removeCurrentWallet()
+            // - viewModel is only marked for deletion and still alive here - so
+            // the reset is posted AFTER those deletions and AppModel::onResetWallet()
+            // sees the asset managers uniquely owned.
+            Qt.callLater(function() {
+                main.parent.setSource("qrc:/start.qml")
+                viewModel.removeCurrentWallet()
+            })
+        }
+        onDialogRejected: function() {}
+    }
+
     PublicOfflineAddressDialog {
         id: publicOfflineAddressDialog;
     }
@@ -89,6 +145,16 @@ SettingsFoldable {
             bold: true
             onClicked: {
                 utxoDialog.open()
+            }
+        }
+
+        LinkButton {
+            //% "Remove current wallet"
+            text: qsTrId("settings-remove-wallet")
+            linkColor: Style.validator_error
+            bold: true
+            onClicked: {
+                removeWalletConfirmationDialog.open()
             }
         }
     }

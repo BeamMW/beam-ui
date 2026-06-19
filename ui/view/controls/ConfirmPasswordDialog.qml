@@ -5,6 +5,7 @@
     import "."
 
     CustomDialog {
+    id: control
     property var settingsViewModel: function() {
         return {
             checkWalletPassword: function() {
@@ -16,11 +17,13 @@
 
     property string dialogTitle: "title"
     property string dialogMessage: "message"
+    property color okButtonColor: Style.active
     property alias okButtonText: okButton.text
     property alias okButtonIcon: okButton.icon.source
     property alias cancelButtonText: cancelButton.text
     property alias cancelButtonIcon: cancelButton.icon.source
     property alias pwd: pwd.text
+    property alias passwordPlaceholderText: pwd.placeholderText
     property bool showError: false
     property var onDialogAccepted: function() {
         console.log("Accepted");
@@ -65,6 +68,7 @@
                 Layout.fillWidth:       true
                 Layout.alignment:       Qt.AlignHCenter
                 text:                   dialogMessage
+                visible:                dialogMessage.length > 0
                 color:                  Style.content_main
                 font.pixelSize:         14
                 wrapMode:               Text.Wrap
@@ -77,6 +81,8 @@
                 font.pixelSize: 14
                 rightPadding:   0
                 hasError: showError
+                // keep the placeholder visible while the (empty) field is focused
+                focusablePlaceholder: placeholderText.length > 0
                 onTextEdited: {
                     showError = false;
                 }
@@ -130,6 +136,7 @@
                 //: confirm password dialog, ok button
                 //% "Proceed"
                 text: qsTrId("general-proceed")
+                palette.button: control.okButtonColor
                 enabled: !showError
                 icon.source: "qrc:/assets/icon-done.svg"
                 onClicked: {
