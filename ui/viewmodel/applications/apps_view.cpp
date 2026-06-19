@@ -643,10 +643,11 @@ namespace beamui::applications
             }
         }
 
-        _localApps = result;
-
-        //if (!_runApp)
+        if (_localApps != result)
+        {
+            _localApps = result;
             emit appsChanged();
+        }
     }
 
     void AppsViewModel::loadDevApps()
