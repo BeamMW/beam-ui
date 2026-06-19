@@ -93,12 +93,6 @@ ColumnLayout {
                 receiverAddrDialog.peerAddr = thisView.receiverAddr;
                 receiverAddrDialog.open();
             }
-
-            ColorOverlay {
-                anchors.fill: parent
-                source: parent
-                color: Style.content_main
-            }
         }
 
         CustomToolButton {
@@ -154,34 +148,40 @@ ColumnLayout {
                         visible: !is_income
                     }
 
-                    ColumnLayout {
-                        Layout.alignment: is_income ? Qt.AlignLeft : Qt.AlignRight
-                        spacing: 0
-                        Layout.margins: 4
-
-                        SFText {
-                            Layout.margins: 7
-                            text: time
-                            font.pixelSize: 12
-                            color: Style.content_secondary
-                        }
-                        SFText {
-                            Layout.margins: 7
-                            Layout.topMargin: 0
-                            Layout.maximumWidth: scrollView.width - 70
-                            text: message
-                            textFormat: Text.PlainText
-                            wrapMode: Text.Wrap
-                            font.pixelSize: 16
-                            color: Style.content_main
-                        }
+                    Item {
+                        Layout.alignment:    is_income ? Qt.AlignLeft : Qt.AlignRight
+                        Layout.margins:      4
+                        implicitWidth:       bubbleContent.implicitWidth
+                        implicitHeight:      bubbleContent.implicitHeight
 
                         Rectangle {
-                            width: parent.width
-                            height: parent.height
+                            anchors.fill: parent
                             radius:       10
                             color:        is_income ? Style.accent_incoming : Style.accent_outgoing
                             opacity:      0.5
+                        }
+
+                        ColumnLayout {
+                            id: bubbleContent
+                            anchors.fill: parent
+                            spacing: 0
+
+                            SFText {
+                                Layout.margins: 7
+                                text: time
+                                font.pixelSize: 12
+                                color: Style.content_secondary
+                            }
+                            SFText {
+                                Layout.margins: 7
+                                Layout.topMargin: 0
+                                Layout.maximumWidth: scrollView.width - 70
+                                text: message
+                                textFormat: Text.PlainText
+                                wrapMode: Text.Wrap
+                                font.pixelSize: 16
+                                color: Style.content_main
+                            }
                         }
                     }
 
