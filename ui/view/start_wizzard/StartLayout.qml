@@ -60,7 +60,7 @@ Rectangle {
         anchors.topMargin:   40
         languages:           viewModel.supportedLanguages
         languageIndex:       viewModel.currentLanguageIndex
-        onLanguageActivated: viewModel.currentLanguage = language
+        onLanguageActivated: (language) => { viewModel.currentLanguage = language }
     }
 
     VersionFooter {
