@@ -13,6 +13,7 @@ Rectangle {
     color: Style.background_main
     default property alias content:     contentLayout.data
     property alias showNetworkSelector: networkSelector.visible
+    property alias showLanguageSelector: languageSelector.visible
 
     Image {
         fillMode: Image.PreserveAspectCrop
@@ -51,12 +52,23 @@ Rectangle {
         }
     }
 
+    LanguageComboBox {
+        id:                  languageSelector
+        anchors.right:       parent.right
+        anchors.top:         parent.top
+        anchors.rightMargin: 40
+        anchors.topMargin:   40
+        languages:           viewModel.supportedLanguages
+        languageIndex:       viewModel.currentLanguageIndex
+        onLanguageActivated: viewModel.currentLanguage = language
+    }
+
     VersionFooter {
-        id:                     version
-        anchors.right:          parent.right
-        anchors.top:            parent.top
-        anchors.rightMargin:    40
-        anchors.topMargin:      40
+        id:                  version
+        anchors.right:       parent.right
+        anchors.top:         languageSelector.bottom
+        anchors.rightMargin: 40
+        anchors.topMargin:   12
     }
 
     CustomComboBox {
