@@ -11,6 +11,12 @@ StartLayout {
     id:    startLayout
     property Item defaultFocusItem: openPassword
 
+    // optional leading button (e.g. "Back" during DB migration); driven by push() initial properties
+    property bool   firstButtonVisible: false
+    property string firstButtonText:    ""
+    property string firstButtonIcon:    ""
+    property var    firstButtonAction:   function() {}
+
     // default methods for open wallet, can be changed for unlock wallet
     property var openWallet: function (pass, callback) {
         viewModel.openWallet(pass, callback);
@@ -161,6 +167,14 @@ StartLayout {
                         }
                     })
                 }
+            }
+
+            CustomButton {
+                anchors.verticalCenter: parent.verticalCenter
+                visible:     startLayout.firstButtonVisible
+                text:        startLayout.firstButtonText
+                icon.source: startLayout.firstButtonIcon
+                onClicked:   startLayout.firstButtonAction()
             }
 
             PrimaryButton {
