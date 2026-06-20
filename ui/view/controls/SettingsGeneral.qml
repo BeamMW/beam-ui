@@ -36,7 +36,7 @@ SettingsFoldable {
                     Layout.preferredWidth: secondCurrencySwitch.width
                     languages:     viewModel.supportedLanguages
                     languageIndex: viewModel.currentLanguageIndex
-                    onLanguageActivated: viewModel.currentLanguage = language
+                    onLanguageActivated: (language) => { viewModel.currentLanguage = language }
                 }
             }
             //visible: false  // Remove to enable language dropdown
