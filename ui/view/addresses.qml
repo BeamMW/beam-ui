@@ -286,6 +286,7 @@ ColumnLayout {
                             {
                                 contextMenu.walletID = contactsView.model[styleData.row].walletID;
                                 contextMenu.token = contactsView.model[styleData.row].token;
+                                contextMenu.name = contactsView.model[styleData.row].name;
                                 contextMenu.popup();
                             }
                         }
@@ -322,6 +323,7 @@ ColumnLayout {
                                     onClicked: {
                                         contextMenu.walletID = contactsView.model[styleData.row].walletID;
                                         contextMenu.token = contactsView.model[styleData.row].token;
+                                        contextMenu.name = contactsView.model[styleData.row].name;
                                         contextMenu.popup(contactActionsButton, contactActionsButton.width - contextMenu.implicitWidth, contactActionsButton.height);
                                     }
                                 }
@@ -336,6 +338,7 @@ ColumnLayout {
                     dim: false
                     property string walletID
                     property string token
+                    property string name
                     Action {
                         //% "Send"
                         text: qsTrId("general-send")
@@ -349,7 +352,14 @@ ColumnLayout {
                         text: qsTrId("address-table-cm-delete-contact")
                         icon.source: "qrc:/assets/icon-delete.svg"
                         onTriggered: {
-                            viewModel.deleteAddress(contextMenu.token);
+                            var dialog = Qt.createComponent("controls/DeleteAddress.qml").createObject(main, {
+                                viewModel:           viewModel,
+                                addressItem:         { "token": contextMenu.token, "walletID": contextMenu.walletID, "name": contextMenu.name },
+                                isShieldedSupported: control.isShieldedSupported,
+                                //% "Delete contact"
+                                dialogTitle:         qsTrId("address-table-cm-delete-contact")
+                            })
+                            dialog.open();
                         }
                     }
                 }
