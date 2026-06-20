@@ -26,6 +26,7 @@
 #include "settings_view.h"
 #include "applications/apps_view.h"
 #include "model/app_model.h"
+#include "model/settings.h"
 #include "model/keyboard.h"
 #include "version.h"
 #include "wallet/core/secstring.h"
@@ -1160,6 +1161,31 @@ void StartViewModel::setCurrentNetwork(const QString& network)
 int StartViewModel::getCurrentNetworkIndex() const
 {
     return (int)Rules::get().m_Network;
+}
+
+QStringList StartViewModel::getSupportedLanguages() const
+{
+    return WalletSettings::getSupportedLanguages();
+}
+
+QString StartViewModel::getCurrentLanguage() const
+{
+    return AppModel::getInstance().getSettings().getLanguageName();
+}
+
+void StartViewModel::setCurrentLanguage(const QString& value)
+{
+    auto& settings = AppModel::getInstance().getSettings();
+    if (settings.getLanguageName() == value)
+        return;
+
+    settings.setLocaleByLanguageName(value);   // emits localeChanged -> Translator retranslates
+    emit currentLanguageChanged();             // refreshes currentLanguageIndex binding
+}
+
+int StartViewModel::getCurrentLanguageIndex() const
+{
+    return getSupportedLanguages().indexOf(getCurrentLanguage());
 }
 
 const QList<QVariantMap>& StartViewModel::getAccounts() const
