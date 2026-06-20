@@ -21,6 +21,7 @@
 #include <QThread>
 #include <QJSValue>
 #include <QDir>
+#include <QStringList>
 #include "wallet/core/wallet_db.h"
 #include "mnemonic/mnemonic.h"
 #include "messages_view.h"
@@ -145,6 +146,9 @@ class StartViewModel : public QObject
     Q_PROPERTY(QList<QVariantMap> networks READ getNetworks CONSTANT)
     Q_PROPERTY(QString currentNetwork READ getCurrentNetwork WRITE setCurrentNetwork NOTIFY currentNetworkChanged)
     Q_PROPERTY(int currentNetworkIndex READ getCurrentNetworkIndex NOTIFY currentNetworkChanged)
+    Q_PROPERTY(QStringList  supportedLanguages   READ getSupportedLanguages   CONSTANT)
+    Q_PROPERTY(QString      currentLanguage      READ getCurrentLanguage      WRITE setCurrentLanguage NOTIFY currentLanguageChanged)
+    Q_PROPERTY(int          currentLanguageIndex READ getCurrentLanguageIndex NOTIFY currentLanguageChanged)
     Q_PROPERTY(QList<QVariantMap> accounts READ getAccounts NOTIFY currentNetworkChanged)
     Q_PROPERTY(int currentAccountIndex READ getCurrentAccountIndex WRITE setCurrentAccountIndex NOTIFY currentAccountChanged)
     Q_PROPERTY(bool accountLabelExists READ getAccountLabelExists WRITE setAccountLabelExists NOTIFY accountLabelExistsChanged)
@@ -181,6 +185,10 @@ public:
     const QList<QObject*>& getWalletDBpaths();
     QList<QVariantMap> getNetworks() const;
     int getCurrentNetworkIndex() const;
+    QStringList getSupportedLanguages() const;
+    QString getCurrentLanguage() const;
+    void setCurrentLanguage(const QString& value);
+    int getCurrentLanguageIndex() const;
     bool isCapsLockOn() const;
     bool getValidateDictionary() const;
     void setValidateDictionary(bool value);
@@ -233,6 +241,7 @@ signals:
     void isUseHWWalletChanged();
     void saveSeedChanged();
     void currentNetworkChanged();
+    void currentLanguageChanged();
     void currentAccountChanged();
     void newAccountLabelChanged();
     void accountLabelExistsChanged();
