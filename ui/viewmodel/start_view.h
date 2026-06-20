@@ -249,6 +249,7 @@ public slots:
     bool checkWalletPassword(const QString& password) const;
     void setPassword(const QString& pass);
     void onNodeSettingsChanged();
+    void onWalletRemoved();
 
 #if defined(BEAM_HW_WALLET)
     void onTrezorOwnerKeyImported();

@@ -55,6 +55,18 @@ set (CMAKE_PREFIX_PATH ${BEAM_QT_ROOT_DIR})
 
 find_package(Qt6 COMPONENTS Core Gui Widgets Qml Quick QuickControls2 Svg WebEngineQuick WebEngineWidgets WebChannel Core5Compat HttpServer REQUIRED)
 
+# Qt's FindWrapOpenGL unconditionally links Apple's AGL framework, which has been
+# removed from recent macOS SDKs (Xcode 16+/macOS 15+). AGL is a legacy pre-OpenGL-3
+# framework that Qt 6 does not actually use, so drop the vestigial entry from the
+# WrapOpenGL interface to let the app link against the modern SDK.
+if (APPLE AND TARGET WrapOpenGL::WrapOpenGL)
+    get_target_property(_wrap_opengl_libs WrapOpenGL::WrapOpenGL INTERFACE_LINK_LIBRARIES)
+    if (_wrap_opengl_libs)
+        list(FILTER _wrap_opengl_libs EXCLUDE REGEX "AGL")
+        set_target_properties(WrapOpenGL::WrapOpenGL PROPERTIES INTERFACE_LINK_LIBRARIES "${_wrap_opengl_libs}")
+    endif()
+endif()
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
@@ -325,10 +337,19 @@ target_link_libraries(${TARGET_NAME} quazip_static)
 #if (BEAM_WALLET_WITH_NODE)
     add_definitions(-DBEAM_WALLET_WITH_NODE)
     target_link_libraries(${TARGET_NAME}
-            node 
+            node
             external_pow
     )
 #endif()
+
+# beam exposes its source root as a SYSTEM include path, so #include "node/node.h"
+# is meant to resolve to beam/node/node.h. On some toolchains (e.g. Apple clang 21)
+# /usr/local/include is searched ahead of -isystem paths; if a Node.js dev install
+# lives there it ships a node/ directory too and shadows beam's header. -iquote puts
+# beam's tree first for quote-includes only, without altering <angled> resolution.
+if (NOT MSVC)
+    target_compile_options(${TARGET_NAME} PRIVATE "-iquote" "${PROJECT_SOURCE_DIR}/beam")
+endif()
 
 target_link_libraries(${TARGET_NAME}
         beam

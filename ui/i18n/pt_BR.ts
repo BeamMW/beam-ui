@@ -3903,5 +3903,33 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>copy SBBS address and close</source>
         <translation>copiar endereço SBBS e fechar</translation>
     </message>
+    <message id="settings-remove-wallet">
+        <source>Remove current wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remove-wallet-confirm-message">
+        <source>All data will be erased. Make sure you&apos;ve saved your seed phrase if you want to restore this wallet later on!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remove-wallet-confirm-question">
+        <source>Are you sure you want to remove your wallet?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remove-wallet-proceed">
+        <source>proceed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remove-wallet-password-title">
+        <source>Confirm wallet removal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remove-wallet-password-placeholder">
+        <source>Enter your password to remove the wallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-remove-wallet-password-button">
+        <source>remove</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

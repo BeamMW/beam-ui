@@ -232,7 +232,9 @@ else()
        CMAKE_CXX_COMPILER_ID MATCHES "AppleClang|Clang" AND
        (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 15 OR CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 15))
        add_compile_definitions(_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION) # boost@1.76/1.76.0_4/include/boost/container_hash/hash.hpp:131:33
+       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unknown-warning-option") # newer clang (21) dropped -Wenum-constexpr-conversion
        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-enum-constexpr-conversion -Wno-error=enum-constexpr-conversion")
+       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-literal-operator -Wno-error=deprecated-literal-operator")
     endif()
 endif()
 

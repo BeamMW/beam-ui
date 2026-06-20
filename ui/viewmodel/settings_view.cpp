@@ -574,6 +574,11 @@ void SettingsViewModel::changeWalletPassword(const QString& pass)
     AppModel::getInstance().changeWalletPassword(pass.toStdString());
 }
 
+void SettingsViewModel::removeCurrentWallet()
+{
+    AppModel::getInstance().removeCurrentWallet();
+}
+
 #ifdef BEAM_ASSET_SWAP_SUPPORT
 void SettingsViewModel::allowAssetId(quint32 asset)
 {
