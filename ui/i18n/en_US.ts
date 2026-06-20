@@ -2813,6 +2813,34 @@ Update your settings and try again.</translation>
         <source>Show UTXO</source>
         <translation>Show UTXO</translation>
     </message>
+    <message id="settings-remove-wallet">
+        <source>Remove current wallet</source>
+        <translation>Remove current wallet</translation>
+    </message>
+    <message id="settings-remove-wallet-confirm-message">
+        <source>All data will be erased. Make sure you&apos;ve saved your seed phrase if you want to restore this wallet later on!</source>
+        <translation>All data will be erased. Make sure you&apos;ve saved your seed phrase if you want to restore this wallet later on!</translation>
+    </message>
+    <message id="settings-remove-wallet-confirm-question">
+        <source>Are you sure you want to remove your wallet?</source>
+        <translation>Are you sure you want to remove your wallet?</translation>
+    </message>
+    <message id="settings-remove-wallet-proceed">
+        <source>proceed</source>
+        <translation>proceed</translation>
+    </message>
+    <message id="settings-remove-wallet-password-title">
+        <source>Confirm wallet removal</source>
+        <translation>Confirm wallet removal</translation>
+    </message>
+    <message id="settings-remove-wallet-password-placeholder">
+        <source>Enter your password to remove the wallet</source>
+        <translation>Enter your password to remove the wallet</translation>
+    </message>
+    <message id="settings-remove-wallet-password-button">
+        <source>remove</source>
+        <translation>remove</translation>
+    </message>
     <message id="general-coin">
         <source>Coin</source>
         <translation>Coin</translation>

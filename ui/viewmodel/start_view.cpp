@@ -330,6 +330,8 @@ StartViewModel::StartViewModel()
 {
     findExistingWalletDBIfNeeded();
 
+    connect(&AppModel::getInstance(), &AppModel::walletRemoved, this, &StartViewModel::onWalletRemoved);
+
 #if defined(BEAM_HW_WALLET)
     connect(&m_trezorThread, SIGNAL(ownerKeyImported()), this, SLOT(onTrezorOwnerKeyImported()));
     connect(&m_trezorTimer, SIGNAL(timeout()), this, SLOT(checkTrezor()));
@@ -1279,4 +1281,23 @@ QString StartViewModel::getAccountPictureByIndex(int index) const
 void StartViewModel::resetModel()
 {
     setCurrentAccountIndexForced(0);
+}
+
+void StartViewModel::onWalletRemoved()
+{
+    // The current account directory was deleted. Drop the cached account list so
+    // getAccounts() rescans and the removed account disappears.
+    m_accounts.clear();
+    emit currentNetworkChanged();
+
+    // Re-point the model at the first remaining account. This is required because
+    // the AppModel still references the just-removed account; without it, picking
+    // the intended account at the same (now shifted) list position would be a
+    // no-op and walletExists would stay false (blocking the password field).
+    // Deferred to the next event-loop turn because setCurrentAccountIndexForced()
+    // calls AppModel::resetInstance(), which must not run inside the
+    // AppModel::walletRemoved emission (it would destroy the emitting instance).
+    QMetaObject::invokeMethod(this, [this]() {
+        setCurrentAccountIndexForced(0);
+    }, Qt::QueuedConnection);
 }

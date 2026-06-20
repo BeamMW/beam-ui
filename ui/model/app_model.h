@@ -71,6 +71,7 @@ public:
 
     void nodeSettingsChanged();
     void resetWallet();
+    void removeCurrentWallet();
     bool exportData();
     bool importData();
     bool isSeedValidationMode() const;
@@ -105,6 +106,7 @@ public slots:
 signals:
     void walletReset();
     void walletResetCompleted();
+    void walletRemoved();
 
 private:
     void start();
@@ -146,6 +148,7 @@ private:
     Connections m_walletConnections;
     static AppModel* s_instance;
     std::string m_walletDBBackupPath;
+    bool m_removeAccount = false;
 
     bool m_isSeedValidationMode = false;
     bool m_isSeedValidationTriggeredFromSettings = false;
