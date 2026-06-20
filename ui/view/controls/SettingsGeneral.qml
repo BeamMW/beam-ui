@@ -31,17 +31,12 @@ SettingsFoldable {
             }
 
             ColumnLayout {
-                CustomComboBox {
+                LanguageComboBox {
                     id: language
                     Layout.preferredWidth: secondCurrencySwitch.width
-                    fontPixelSize: 14
-                    enableScroll: true
-
-                    model: viewModel.supportedLanguages
-                    currentIndex: viewModel.currentLanguageIndex
-                    onActivated: {
-                        viewModel.currentLanguage = currentText;
-                    }
+                    languages:     viewModel.supportedLanguages
+                    languageIndex: viewModel.currentLanguageIndex
+                    onLanguageActivated: viewModel.currentLanguage = language
                 }
             }
             //visible: false  // Remove to enable language dropdown
