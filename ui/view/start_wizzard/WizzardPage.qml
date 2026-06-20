@@ -46,10 +46,21 @@ Item {
             Layout.maximumHeight: 143
         }
     }
-    VersionFooter {
-        anchors.right: parent.right
-        anchors.top: parent.top
+    LanguageComboBox {
+        id:                  languageSelector
+        anchors.right:       parent.right
+        anchors.top:         parent.top
         anchors.rightMargin: 40
-        anchors.topMargin: 40
+        anchors.topMargin:   40
+        languages:           viewModel.supportedLanguages
+        languageIndex:       viewModel.currentLanguageIndex
+        onLanguageActivated: viewModel.currentLanguage = language
+    }
+
+    VersionFooter {
+        anchors.right:       parent.right
+        anchors.top:         languageSelector.bottom
+        anchors.rightMargin: 40
+        anchors.topMargin:   12
     }
 }
