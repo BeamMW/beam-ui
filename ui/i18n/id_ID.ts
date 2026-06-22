@@ -2444,6 +2444,10 @@ Perbarui pengaturan Anda dan coba lagi.</translation>
         <source>Invalid wallet address</source>
         <translation>Alamat dompet tidak valid</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>Offline</translation>
@@ -3769,10 +3773,6 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>Sembunyikan DApps</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>Tanda tangan penerima</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>

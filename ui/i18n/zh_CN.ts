@@ -2460,6 +2460,10 @@ Update your settings and try again.</source>
         <source>Invalid wallet address</source>
         <translation>无效的钱包地址</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>离线</translation>
@@ -3785,10 +3789,6 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>隐藏DApps</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>接收人签名</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>

@@ -2448,6 +2448,10 @@ Atualize suas configurações e tente novamente.</translation>
         <source>Invalid wallet address</source>
         <translation>Endereço inválido da carteira</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>Offline</translation>
@@ -3776,10 +3780,6 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>Ocultar DApps</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>Assinatura do destinatário</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>

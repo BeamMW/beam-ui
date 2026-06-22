@@ -2447,6 +2447,10 @@ Mettez à jour vos paramètres et réessayez.</translation>
         <source>Invalid wallet address</source>
         <translation>Adresse de portefeuille non valide</translation>
     </message>
+    <message id="Receiver endpoint">
+        <source>Receiver endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="tx-offline">
         <source>Offline</source>
         <translation>Hors ligne</translation>
@@ -3775,10 +3779,6 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     <message id="dapps-store-publisher-hide-dapps">
         <source>Hide DApps</source>
         <translation>Occulter les DApps</translation>
-    </message>
-    <message id="Receiver signature">
-        <source>Receiver signature</source>
-        <translation>Signature du destinataire</translation>
     </message>
     <message id="atomic-swap-all-coins">
         <source>(all)</source>

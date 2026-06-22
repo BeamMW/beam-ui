@@ -194,8 +194,8 @@ ColumnLayout {
                     }
 
                     Panel {
-                        //% "Receiver signature"
-                        title:            qsTrId("Receiver signature")
+                        //% "Receiver endpoint"
+                        title:            qsTrId("Receiver endpoint")
                         Layout.fillWidth: true
                         content: ColumnLayout {
                             spacing: 0
