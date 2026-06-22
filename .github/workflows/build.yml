@@ -84,27 +84,8 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
 
-          Write-Host "Installing OpenSSL 3.6.1 via Chocolatey..."
-          choco install openssl --version=3.6.1 -y --limit-output
-
-          Write-Host "Locating OpenSSL installation..."
-          $candidateRoots = @(
-            "C:\Program Files\OpenSSL-Win64",
-            "C:\Program Files\OpenSSL",
-            "C:\OpenSSL-Win64",
-            "C:\OpenSSL"
-          )
-
-          $opensslPath = $candidateRoots | Where-Object { Test-Path $_ } | Select-Object -First 1
-
-          if (-not $opensslPath) {
-            $probe = Get-ChildItem "C:\Program Files" -Filter "OpenSSL*" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
-            if ($probe) { $opensslPath = $probe.FullName }
-          }
-
-          if (-not $opensslPath) {
-            throw "OpenSSL not found after installation. Checked: $($candidateRoots -join ', ')"
-          }
+          Write-Host "Using preinstalled OpenSSL..."
+          $opensslPath = "C:\Program Files\OpenSSL"
 
           # Validate required components
           $includePath = Join-Path $opensslPath 'include'
@@ -148,6 +129,26 @@ jobs:
           cache: true
           cache-key-prefix: "qt-${{ matrix.os }}"
 
+      - name: Strip x86_64 from Qt runtime [macos]
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          set -euo pipefail
+
+          echo "QT_ROOT_DIR=$QT_ROOT_DIR"
+
+          for dir in lib plugins qml resources translations; do
+            [ -d "$QT_ROOT_DIR/$dir" ] || continue
+
+            find "$QT_ROOT_DIR/$dir" -type f -print0 | while IFS= read -r -d '' file; do
+              if lipo -info "$file" >/dev/null 2>&1; then
+                if lipo -info "$file" 2>/dev/null | grep -q "x86_64"; then
+                  echo "Thinning: $file"
+                  lipo "$file" -remove x86_64 -output "$file.tmp"
+                  mv "$file.tmp" "$file"
+                fi
+              fi
+            done
+          done
       ###############################################################################
       # Configure CMake
       ###############################################################################
@@ -157,6 +158,7 @@ jobs:
           cmake -B build -S $GITHUB_WORKSPACE \
             -DBEAM_DEFAULT_NETWORK=$BEAM_DEFAULT_NETWORK \
             -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 \
             -DDEBUG_MESSAGES_IN_RELEASE_MODE=On \
             -DBEAM_LINK_TYPE=Static \
             -DBRANCH_NAME=${GITHUB_REF##*/} \
