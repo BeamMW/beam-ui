@@ -3550,12 +3550,6 @@ Uninstall failed. Please try again later.</source>
         <translation>恭喜！
 &apos;%1&apos;DApp已成功安装</translation>
     </message>
-    <message id="app-install-fail">
-        <source>Sorry, the installation failed.
-Please, check the file and try again.</source>
-        <translation>对不起，安装失败，
-请检查文件并再试一次。</translation>
-    </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation>DApp商店</translation>
@@ -3939,6 +3933,34 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="settings-remove-wallet-password-button">
         <source>remove</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-install-err-cant-open">
+        <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
+        <translation>无法打开 DApp 文件，该文件可能已损坏。</translation>
+    </message>
+    <message id="dapp-install-err-cant-read-manifest">
+        <source>Couldn&apos;t read the DApp manifest.</source>
+        <translation>无法读取 DApp 清单文件。</translation>
+    </message>
+    <message id="dapp-install-err-unsupported">
+        <source>This DApp is not supported by your wallet version.</source>
+        <translation>您的钱包版本不支持此 DApp。</translation>
+    </message>
+    <message id="dapp-install-err-invalid">
+        <source>Invalid DApp file: the manifest is missing or incomplete.</source>
+        <translation>无效的 DApp 文件：清单缺失或不完整。</translation>
+    </message>
+    <message id="dapp-install-err-already-installed">
+        <source>This DApp is already installed.</source>
+        <translation>此 DApp 已安装。</translation>
+    </message>
+    <message id="dapp-install-err-folder">
+        <source>Couldn&apos;t prepare the installation folder.</source>
+        <translation>无法准备安装文件夹。</translation>
+    </message>
+    <message id="dapp-install-err-extract">
+        <source>Couldn&apos;t extract the DApp files.</source>
+        <translation>无法解压 DApp 文件。</translation>
     </message>
 </context>
 </TS>
