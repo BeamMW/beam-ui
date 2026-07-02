@@ -107,9 +107,8 @@ ColumnLayout {
             dappStoreOk.open()
         }
 
-        onAppInstallFail: function (appName) {
-            //% "Sorry, the installation failed.\nPlease, check the file and try again."
-            dappStoreFail.text = qsTrId("app-install-fail")
+        onAppInstallFail: function (errorCode, appName) {
+            dappStoreFail.text = DAppInstallErrors.text(errorCode)
             dappStoreFail.open()
         }
 

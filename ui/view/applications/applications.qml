@@ -85,12 +85,13 @@ ColumnLayout {
             if (!fname) return
         }
 
-        var appName = viewModel.installFromFile(fname)
-        if (appName.length) {
+        var res = viewModel.installFromFile(fname)
+        if (res.errorCode === ApplicationsViewModel.Ok) {
             dndDialog.isOk = true;
-            dndDialog.appName = appName;
+            dndDialog.appName = res.appName;
         } else {
             dndDialog.isFail = true;
+            dndDialog.errorText = DAppInstallErrors.text(res.errorCode);
         }
     }
 
@@ -132,9 +133,8 @@ ColumnLayout {
             dappStoreOk.open()
         }
 
-        onAppInstallFail: function (appName) {
-            //% "Sorry, the installation failed.\nPlease, check the file and try again."
-            dappStoreFail.text = qsTrId("app-install-fail")
+        onAppInstallFail: function (errorCode, appName) {
+            dappStoreFail.text = DAppInstallErrors.text(errorCode)
             dappStoreFail.open()
         }
 

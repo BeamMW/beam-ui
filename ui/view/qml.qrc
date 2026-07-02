@@ -33,6 +33,7 @@
         <file>controls/CustomScrollBar.qml</file>
         <file>controls/TableViewColumn.qml</file>
         <file>controls/SelectionMode.qml</file>
+        <file>controls/DAppInstallErrors.qml</file>
         <file>controls/FeeSlider.qml</file>
         <file>controls/SFFontLoader.qml</file>
         <file>controls/SFTextArea.qml</file>
