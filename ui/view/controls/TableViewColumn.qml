@@ -1,3 +1,4 @@
+import QtQml
 import QtQuick
 
 QtObject {
