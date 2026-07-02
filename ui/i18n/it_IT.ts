@@ -3542,12 +3542,6 @@ Disinstallazione fallita. Per favore riprova più tardi.</translation>
         <translation>Congratulazioni!
 &apos;%1&apos; DApp è stato installato correttamente.</translation>
     </message>
-    <message id="app-install-fail">
-        <source>Sorry, the installation failed.
-Please, check the file and try again.</source>
-        <translation>Siamo spiacenti, l&apos;installazione è fallita.
-Controllare il file e riprovare.</translation>
-    </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation>Dapp Store</translation>
@@ -3931,6 +3925,34 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     <message id="settings-remove-wallet-password-button">
         <source>remove</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-install-err-cant-open">
+        <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
+        <translation>Impossibile aprire il file della DApp. Potrebbe essere danneggiato.</translation>
+    </message>
+    <message id="dapp-install-err-cant-read-manifest">
+        <source>Couldn&apos;t read the DApp manifest.</source>
+        <translation>Impossibile leggere il manifesto della DApp.</translation>
+    </message>
+    <message id="dapp-install-err-unsupported">
+        <source>This DApp is not supported by your wallet version.</source>
+        <translation>Questa DApp non è supportata dalla tua versione del wallet.</translation>
+    </message>
+    <message id="dapp-install-err-invalid">
+        <source>Invalid DApp file: the manifest is missing or incomplete.</source>
+        <translation>File DApp non valido: il manifesto è mancante o incompleto.</translation>
+    </message>
+    <message id="dapp-install-err-already-installed">
+        <source>This DApp is already installed.</source>
+        <translation>Questa DApp è già installata.</translation>
+    </message>
+    <message id="dapp-install-err-folder">
+        <source>Couldn&apos;t prepare the installation folder.</source>
+        <translation>Impossibile preparare la cartella di installazione.</translation>
+    </message>
+    <message id="dapp-install-err-extract">
+        <source>Couldn&apos;t extract the DApp files.</source>
+        <translation>Impossibile estrarre i file della DApp.</translation>
     </message>
 </context>
 </TS>

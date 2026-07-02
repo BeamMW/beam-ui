@@ -3544,12 +3544,6 @@ Uninstall failed. Please try again later.</translation>
         <translation type="unfinished">Congratulations!
 &apos;%1&apos; DApp is successfully installed.</translation>
     </message>
-    <message id="app-install-fail">
-        <source>Sorry, the installation failed.
-Please, check the file and try again.</source>
-        <translation type="unfinished">Sorry, the installation failed.
-Please, check the file and try again.</translation>
-    </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation type="unfinished">Dapp Store</translation>
@@ -3933,6 +3927,34 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="settings-remove-wallet-password-button">
         <source>remove</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-install-err-cant-open">
+        <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
+        <translation>DApp-tiedostoa ei voitu avata. Se voi olla vioittunut.</translation>
+    </message>
+    <message id="dapp-install-err-cant-read-manifest">
+        <source>Couldn&apos;t read the DApp manifest.</source>
+        <translation>DApp-manifestia ei voitu lukea.</translation>
+    </message>
+    <message id="dapp-install-err-unsupported">
+        <source>This DApp is not supported by your wallet version.</source>
+        <translation>Lompakkoversiosi ei tue tätä DAppia.</translation>
+    </message>
+    <message id="dapp-install-err-invalid">
+        <source>Invalid DApp file: the manifest is missing or incomplete.</source>
+        <translation>Virheellinen DApp-tiedosto: manifesti puuttuu tai on puutteellinen.</translation>
+    </message>
+    <message id="dapp-install-err-already-installed">
+        <source>This DApp is already installed.</source>
+        <translation>Tämä DApp on jo asennettu.</translation>
+    </message>
+    <message id="dapp-install-err-folder">
+        <source>Couldn&apos;t prepare the installation folder.</source>
+        <translation>Asennuskansiota ei voitu valmistella.</translation>
+    </message>
+    <message id="dapp-install-err-extract">
+        <source>Couldn&apos;t extract the DApp files.</source>
+        <translation>DApp-tiedostoja ei voitu purkaa.</translation>
     </message>
 </context>
 </TS>

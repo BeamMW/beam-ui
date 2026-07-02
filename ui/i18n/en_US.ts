@@ -3570,12 +3570,6 @@ Uninstall failed. Please try again later.</translation>
         <translation>Congratulations!
 &apos;%1&apos; DApp is successfully installed.</translation>
     </message>
-    <message id="app-install-fail">
-        <source>Sorry, the installation failed.
-Please, check the file and try again.</source>
-        <translation>Sorry, the installation failed.
-Please, check the file and try again.</translation>
-    </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation>Dapp Store</translation>
@@ -3931,6 +3925,34 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="general-copy-SBBS-and-close">
         <source>copy SBBS address and close</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-install-err-cant-open">
+        <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
+        <translation>Couldn&apos;t open the DApp file. It may be corrupted.</translation>
+    </message>
+    <message id="dapp-install-err-cant-read-manifest">
+        <source>Couldn&apos;t read the DApp manifest.</source>
+        <translation>Couldn&apos;t read the DApp manifest.</translation>
+    </message>
+    <message id="dapp-install-err-unsupported">
+        <source>This DApp is not supported by your wallet version.</source>
+        <translation>This DApp is not supported by your wallet version.</translation>
+    </message>
+    <message id="dapp-install-err-invalid">
+        <source>Invalid DApp file: the manifest is missing or incomplete.</source>
+        <translation>Invalid DApp file: the manifest is missing or incomplete.</translation>
+    </message>
+    <message id="dapp-install-err-already-installed">
+        <source>This DApp is already installed.</source>
+        <translation>This DApp is already installed.</translation>
+    </message>
+    <message id="dapp-install-err-folder">
+        <source>Couldn&apos;t prepare the installation folder.</source>
+        <translation>Couldn&apos;t prepare the installation folder.</translation>
+    </message>
+    <message id="dapp-install-err-extract">
+        <source>Couldn&apos;t extract the DApp files.</source>
+        <translation>Couldn&apos;t extract the DApp files.</translation>
     </message>
 </context>
 </TS>
