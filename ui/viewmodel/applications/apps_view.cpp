@@ -26,9 +26,21 @@
 #include "viewmodel/qml_globals.h"
 #include "wallet/api/i_wallet_api.h"
 #include "wallet/client/apps_api/apps_utils.h"
+#include <stdexcept>
 
 namespace
 {
+    using DAppInstallError = beamui::applications::AppsViewModel::DAppInstallError;
+
+    // Carries the specific reason of a DApp installation failure so it can be
+    // surfaced in the UI instead of being flattened into a generic message.
+    struct DAppInstallException : std::runtime_error
+    {
+        DAppInstallError code;
+        DAppInstallException(DAppInstallError c, const char* what)
+            : std::runtime_error(what), code(c) {}
+    };
+
     const uint8_t kCountApiVersionParts = 2;
     const uint8_t kCountDAppVersionParts = 4;
     const QString kBeamPublisherName = "Beam Development Limited";
@@ -1594,17 +1606,18 @@ namespace beamui::applications
         const auto defaultPath = app[DApp::kDefaultDappPath].toString();
         if (!defaultPath.isEmpty())
         {
-            const auto appName = installFromFileImpl(defaultPath,
+            const auto result = installFromFileImpl(defaultPath,
                 [](const QString&) { return false; },
                 [this]() { loadApps(); });
 
-            if (!appName.isEmpty())
+            const auto errorCode = result["errorCode"].toInt();
+            if (errorCode == static_cast<int>(DAppInstallError::Ok))
             {
-                emit appInstallOK(appName);
+                emit appInstallOK(result["appName"].toString());
             }
             else
             {
-                emit appInstallFail(app[DApp::kName].toString());
+                emit appInstallFail(errorCode, app[DApp::kName].toString());
             }
             return;
         }
@@ -1643,10 +1656,15 @@ namespace beamui::applications
                         emit appInstallOK(appName);
                         loadApps();
                     }
+                    catch (const DAppInstallException& err)
+                    {
+                        BEAM_LOG_ERROR() << "Failed to install DApp: " << err.what();
+                        emit appInstallFail(static_cast<int>(err.code), appName);
+                    }
                     catch (std::runtime_error& err)
                     {
                         BEAM_LOG_ERROR() << "Failed to install DApp: " << err.what();
-                        emit appInstallFail(appName);
+                        emit appInstallFail(static_cast<int>(DAppInstallError::Unknown), appName);
                     }
                 },
                 [this, guard, appName, guid](std::string&& err)
@@ -1662,7 +1680,7 @@ namespace beamui::applications
             assert(false);
             BEAM_LOG_ERROR() << "Failed to get properties for " << guid.toStdString() << ", " << err.what();
 
-            emit appInstallFail("");
+            emit appInstallFail(static_cast<int>(DAppInstallError::Unknown), "");
             return;
         }
 #endif // BEAM_IPFS_SUPPORT
@@ -1677,37 +1695,49 @@ namespace beamui::applications
         {
             if (!QDir(appFolder).removeRecursively())
             {
-                throw std::runtime_error("Failed to prepare folder");
+                throw DAppInstallException(DAppInstallError::FolderPrepFailed, "Failed to prepare folder");
             }
         }
 
         QDir(appsPath).mkdir(guid);
         if (JlCompress::extractDir(ioDevice, appFolder).isEmpty())
         {
-            throw std::runtime_error("DApp Installation failed");
+            throw DAppInstallException(DAppInstallError::ExtractFailed, "DApp Installation failed");
         }
     }
 
-    QString AppsViewModel::installFromFile(const QString& rawFname)
+    namespace
     {
-        return installFromFileImpl(rawFname, 
+        // Builds the QVariantMap returned by installFromFile* : { appName, errorCode }.
+        QVariantMap makeInstallResult(const QString& appName, DAppInstallError code)
+        {
+            QVariantMap result;
+            result["appName"] = appName;
+            result["errorCode"] = static_cast<int>(code);
+            return result;
+        }
+    }
+
+    QVariantMap AppsViewModel::installFromFile(const QString& rawFname)
+    {
+        return installFromFileImpl(rawFname,
             [this](const QString& guid)
             {
                 const auto app = getAppByGUID(guid);
                 return !app.isEmpty();
             },
-            [this]() 
+            [this]()
             {
                 loadApps();
             });
     }
 
-    QString AppsViewModel::installFromFile2(const QString& rawFname)
+    QVariantMap AppsViewModel::installFromFile2(const QString& rawFname)
     {
         return installFromFileImpl(rawFname, [](const QString&) {return false; }, []() {});
     }
 
-    QString AppsViewModel::installFromFileImpl(const QString& rawFname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction)
+    QVariantMap AppsViewModel::installFromFileImpl(const QString& rawFname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction)
     {
         try
         {
@@ -1718,7 +1748,7 @@ namespace beamui::applications
             QuaZip zip(fname);
             if (!zip.open(QuaZip::Mode::mdUnzip))
             {
-                throw std::runtime_error("Failed to open the DApp file");
+                throw DAppInstallException(DAppInstallError::CantOpenFile, "Failed to open the DApp file");
             }
 
             QString guid, appName;
@@ -1730,7 +1760,7 @@ namespace beamui::applications
                     QuaZipFile mfile(zip.getZipName(), zipFname);
                     if (!mfile.open(QIODevice::ReadOnly))
                     {
-                        throw std::runtime_error("Failed to read the DApp file");
+                        throw DAppInstallException(DAppInstallError::CantReadManifest, "Failed to read the DApp file");
                     }
 
                     QTextStream in(&mfile);
@@ -1740,19 +1770,19 @@ namespace beamui::applications
 
                     if (!isAppSupported(app))
                     {
-                        throw std::runtime_error("DApp is unsupported.");
+                        throw DAppInstallException(DAppInstallError::Unsupported, "DApp is unsupported.");
                     }
                 }
             }
 
             if (guid.isEmpty())
             {
-                throw std::runtime_error("Invalid DApp file");
+                throw DAppInstallException(DAppInstallError::InvalidFile, "Invalid DApp file");
             }
 
             if (appExists && appExists(guid))
             {
-                throw std::runtime_error("DApp with same guid already installed!");
+                throw DAppInstallException(DAppInstallError::AlreadyInstalled, "DApp with same guid already installed!");
             }
 
             const auto appsPath = AppSettings().getLocalAppsPath();
@@ -1762,7 +1792,7 @@ namespace beamui::applications
             {
                 if (!QDir(appFolder).removeRecursively())
                 {
-                    throw std::runtime_error("Failed to prepare folder");
+                    throw DAppInstallException(DAppInstallError::FolderPrepFailed, "Failed to prepare folder");
                 }
             }
 
@@ -1770,7 +1800,7 @@ namespace beamui::applications
             if (JlCompress::extractDir(fname, appFolder).isEmpty())
             {
                 //cleanupFolder(appFolder)
-                throw std::runtime_error("DApp Installation failed");
+                throw DAppInstallException(DAppInstallError::ExtractFailed, "DApp Installation failed");
             }
 
             // refresh
@@ -1779,12 +1809,17 @@ namespace beamui::applications
                 afterInstallAction();
             }
 
-            return appName;
+            return makeInstallResult(appName, DAppInstallError::Ok);
+        }
+        catch (const DAppInstallException& err)
+        {
+            BEAM_LOG_ERROR() << "Failed to install DApp: " << err.what();
+            return makeInstallResult("", err.code);
         }
         catch (std::exception& err)
         {
             BEAM_LOG_ERROR() << "Failed to install DApp: " << err.what();
-            return "";
+            return makeInstallResult("", DAppInstallError::Unknown);
         }
     }
 
@@ -2123,7 +2158,7 @@ namespace beamui::applications
                                 throw std::runtime_error("Failed to restore folder");
                             }
 
-                            throw std::runtime_error("DApp Installation failed");
+                            throw DAppInstallException(DAppInstallError::ExtractFailed, "DApp Installation failed");
                         }
 
                         if (!QDir(appsDir.filePath(backupName)).removeRecursively())
@@ -2237,7 +2272,7 @@ namespace beamui::applications
         QuaZip zip(ioDevice);
         if (!zip.open(QuaZip::Mode::mdUnzip))
         {
-            throw std::runtime_error("Failed to open the DApp archive");
+            throw DAppInstallException(DAppInstallError::CantOpenFile, "Failed to open the DApp archive");
         }
 
         bool isFound = false;
@@ -2249,18 +2284,18 @@ namespace beamui::applications
                 QuaZipFile mfile(&zip);
                 if (!mfile.open(QIODevice::ReadOnly))
                 {
-                    throw std::runtime_error("Failed to read the DApp archive");
+                    throw DAppInstallException(DAppInstallError::CantReadManifest, "Failed to read the DApp archive");
                 }
 
                 QTextStream in(&mfile);
                 const auto app = parseAppManifest(in, "");
                 if (expectedGuid != app[DApp::kGuid].value<QString>())
                 {
-                    throw std::runtime_error("Wrong guid");
+                    throw DAppInstallException(DAppInstallError::InvalidFile, "Wrong guid");
                 }
                 if (expectedAppName != app[DApp::kName].value<QString>())
                 {
-                    throw std::runtime_error("Wrong name of app");
+                    throw DAppInstallException(DAppInstallError::InvalidFile, "Wrong name of app");
                 }
                 isFound = true;
             }
@@ -2268,7 +2303,7 @@ namespace beamui::applications
 
         if (!isFound)
         {
-            throw std::runtime_error("Maybe dapp file is broken");
+            throw DAppInstallException(DAppInstallError::InvalidFile, "Maybe dapp file is broken");
         }
     }
 }

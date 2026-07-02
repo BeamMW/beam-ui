@@ -129,6 +129,20 @@ namespace beamui::applications
             Governance
         };
 
+        enum class DAppInstallError
+        {
+            Ok = 0,
+            CantOpenFile,       // zip won't open
+            CantReadManifest,   // manifest unreadable
+            Unsupported,        // isAppSupported == false
+            InvalidFile,        // no guid / missing manifest
+            AlreadyInstalled,   // same guid already installed
+            FolderPrepFailed,   // couldn't prepare target folder
+            ExtractFailed,      // extraction failed
+            Unknown             // any other failure
+        };
+        Q_ENUM(DAppInstallError)
+
         AppsViewModel();
         ~AppsViewModel() override;
 
@@ -157,8 +171,8 @@ namespace beamui::applications
         Q_INVOKABLE void removeDApp(const QString& guid);
         Q_INVOKABLE bool checkDAppNewVersion(const QVariantMap& currentDApp, const QVariantMap& newDApp);
         Q_INVOKABLE void installApp(const QString& guid);
-        Q_INVOKABLE [[nodiscard]] QString installFromFile(const QString& fname);
-        static QString installFromFile2(const QString& fname);
+        Q_INVOKABLE [[nodiscard]] QVariantMap installFromFile(const QString& fname);
+        static QVariantMap installFromFile2(const QString& fname);
         Q_INVOKABLE void updateDApp(const QString& guid);
         Q_INVOKABLE void launchAppServer();
         Q_INVOKABLE [[nodiscard]] bool uninstallLocalApp(const QString& appid);
@@ -190,7 +204,7 @@ namespace beamui::applications
         void publisherCreateFail();
         void publisherEditFail();
         void appInstallOK(const QString& appName);
-        void appInstallFail(const QString& appName);
+        void appInstallFail(int errorCode, const QString& appName);
         void appInstallTimeoutFail(const QString& appName);
         void appUpdateFail(const QString& appName);
         void appUpdateTimeoutFail(const QString& appName);
@@ -205,7 +219,7 @@ namespace beamui::applications
         [[nodiscard]] static QString expandLocalFile(const QString& folder, const std::string& url);
         QVariantMap parseAppManifest(QTextStream& io, const QString& appFolder, bool needExpandIcon = true);
         static QVariantMap parseAppManifestImpl(QTextStream& io, const QString& appFolder, const QString& serverAddr = {}, bool needExpandIcon = true);
-        static QString installFromFileImpl(const QString& fname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction);
+        static QVariantMap installFromFileImpl(const QString& fname, std::function<bool(const QString&)> appExists, std::function<void()> afterInstallAction);
         void loadApps();
         void loadLocalApps();
         void loadDevApps();

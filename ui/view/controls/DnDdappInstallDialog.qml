@@ -13,11 +13,13 @@ CustomDialog {
     property bool isOk: false
     property bool isFail: false
     property string appName: ""
+    property string errorText: ""
 
     onOpened: {
         control.isOk = false;
         control.isFail = false;
         control.appName = "";
+        control.errorText = "";
     }
 
     modal: true
@@ -131,8 +133,11 @@ CustomDialog {
                 }
                 color: Style.validator_error
                 //% "The DApp installation error."
-                text: qsTrId("dnd-install-fail")
+                text: control.errorText.length ? control.errorText : qsTrId("dnd-install-fail")
                 visible: control.isFail
+                wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
             }
 
             SvgImage {
