@@ -3534,12 +3534,6 @@ Uninstall failed. Please try again later.</translation>
         <translation type="unfinished">Congratulations!
 &apos;%1&apos; DApp is successfully installed.</translation>
     </message>
-    <message id="app-install-fail">
-        <source>Sorry, the installation failed.
-Please, check the file and try again.</source>
-        <translation type="unfinished">Sorry, the installation failed.
-Please, check the file and try again.</translation>
-    </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation type="unfinished">Dapp Store</translation>
@@ -3923,6 +3917,34 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="settings-remove-wallet-password-button">
         <source>remove</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-install-err-cant-open">
+        <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
+        <translation>DApp 파일을 열 수 없습니다. 파일이 손상되었을 수 있습니다.</translation>
+    </message>
+    <message id="dapp-install-err-cant-read-manifest">
+        <source>Couldn&apos;t read the DApp manifest.</source>
+        <translation>DApp 매니페스트를 읽을 수 없습니다.</translation>
+    </message>
+    <message id="dapp-install-err-unsupported">
+        <source>This DApp is not supported by your wallet version.</source>
+        <translation>이 DApp은 현재 지갑 버전에서 지원되지 않습니다.</translation>
+    </message>
+    <message id="dapp-install-err-invalid">
+        <source>Invalid DApp file: the manifest is missing or incomplete.</source>
+        <translation>잘못된 DApp 파일: 매니페스트가 없거나 불완전합니다.</translation>
+    </message>
+    <message id="dapp-install-err-already-installed">
+        <source>This DApp is already installed.</source>
+        <translation>이 DApp은 이미 설치되어 있습니다.</translation>
+    </message>
+    <message id="dapp-install-err-folder">
+        <source>Couldn&apos;t prepare the installation folder.</source>
+        <translation>설치 폴더를 준비할 수 없습니다.</translation>
+    </message>
+    <message id="dapp-install-err-extract">
+        <source>Couldn&apos;t extract the DApp files.</source>
+        <translation>DApp 파일의 압축을 풀 수 없습니다.</translation>
     </message>
 </context>
 </TS>

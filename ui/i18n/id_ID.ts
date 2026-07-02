@@ -3535,12 +3535,6 @@ Pencopotan pemasangan gagal. Silakan coba lagi nanti.</translation>
         <translation>Selamat!
 &apos;%1&apos; DApp berhasil diinstal.</translation>
     </message>
-    <message id="app-install-fail">
-        <source>Sorry, the installation failed.
-Please, check the file and try again.</source>
-        <translation>Maaf, penginstalan gagal.
-Silakan periksa file dan coba lagi.</translation>
-    </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation>Dapp Store</translation>
@@ -3923,6 +3917,34 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="settings-remove-wallet-password-button">
         <source>remove</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-install-err-cant-open">
+        <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
+        <translation>Tidak dapat membuka berkas DApp. Berkas mungkin rusak.</translation>
+    </message>
+    <message id="dapp-install-err-cant-read-manifest">
+        <source>Couldn&apos;t read the DApp manifest.</source>
+        <translation>Tidak dapat membaca manifest DApp.</translation>
+    </message>
+    <message id="dapp-install-err-unsupported">
+        <source>This DApp is not supported by your wallet version.</source>
+        <translation>DApp ini tidak didukung oleh versi dompet Anda.</translation>
+    </message>
+    <message id="dapp-install-err-invalid">
+        <source>Invalid DApp file: the manifest is missing or incomplete.</source>
+        <translation>Berkas DApp tidak valid: manifest hilang atau tidak lengkap.</translation>
+    </message>
+    <message id="dapp-install-err-already-installed">
+        <source>This DApp is already installed.</source>
+        <translation>DApp ini sudah terpasang.</translation>
+    </message>
+    <message id="dapp-install-err-folder">
+        <source>Couldn&apos;t prepare the installation folder.</source>
+        <translation>Tidak dapat menyiapkan folder pemasangan.</translation>
+    </message>
+    <message id="dapp-install-err-extract">
+        <source>Couldn&apos;t extract the DApp files.</source>
+        <translation>Tidak dapat mengekstrak berkas DApp.</translation>
     </message>
 </context>
 </TS>

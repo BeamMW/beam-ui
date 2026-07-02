@@ -3511,12 +3511,6 @@ Uninstall failed. Please try again later.</source>
         <translation>おめでとうございます！
 %1 DAppのインストールに成功しました。</translation>
     </message>
-    <message id="app-install-fail">
-        <source>Sorry, the installation failed.
-Please, check the file and try again.</source>
-        <translation>インストールに失敗しました。
-ファイルを確認してもう一度お試しください。</translation>
-    </message>
     <message id="dapp-store-dialog-title">
         <source>Dapp Store</source>
         <translation>DAPP Store</translation>
@@ -3900,6 +3894,34 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="settings-remove-wallet-password-button">
         <source>remove</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message id="dapp-install-err-cant-open">
+        <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
+        <translation>DAppファイルを開けませんでした。破損している可能性があります。</translation>
+    </message>
+    <message id="dapp-install-err-cant-read-manifest">
+        <source>Couldn&apos;t read the DApp manifest.</source>
+        <translation>DAppのマニフェストを読み取れませんでした。</translation>
+    </message>
+    <message id="dapp-install-err-unsupported">
+        <source>This DApp is not supported by your wallet version.</source>
+        <translation>このDAppはお使いのウォレットのバージョンではサポートされていません。</translation>
+    </message>
+    <message id="dapp-install-err-invalid">
+        <source>Invalid DApp file: the manifest is missing or incomplete.</source>
+        <translation>無効なDAppファイル：マニフェストが見つからないか、不完全です。</translation>
+    </message>
+    <message id="dapp-install-err-already-installed">
+        <source>This DApp is already installed.</source>
+        <translation>このDAppはすでにインストールされています。</translation>
+    </message>
+    <message id="dapp-install-err-folder">
+        <source>Couldn&apos;t prepare the installation folder.</source>
+        <translation>インストールフォルダーを準備できませんでした。</translation>
+    </message>
+    <message id="dapp-install-err-extract">
+        <source>Couldn&apos;t extract the DApp files.</source>
+        <translation>DAppファイルを展開できませんでした。</translation>
     </message>
 </context>
 </TS>
