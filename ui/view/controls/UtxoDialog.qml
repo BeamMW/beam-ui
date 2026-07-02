@@ -43,7 +43,7 @@ CustomDialog {
             Layout.fillHeight: true
             Layout.bottomMargin: 9
             visible: tableView.model.count > 0
-            selectionMode: SelectionMode.noSelection
+            selectionMode: 0
             backgroundVisible: false
             headerColor: Qt.rgba(Style.active.r, Style.active.g, Style.active.b, 0.1)
             mainBackgroundRect: dialog.background

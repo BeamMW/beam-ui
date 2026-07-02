@@ -46,7 +46,7 @@ WizzardPage {
         Layout.minimumWidth: minWidth
         Layout.maximumWidth: minWidth
         frameVisible: false
-        selectionMode: SelectionMode.singleSelection
+        selectionMode: 1
         backgroundVisible: false
         model: viewModel.walletDBpaths
 

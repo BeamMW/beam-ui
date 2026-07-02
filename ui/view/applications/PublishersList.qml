@@ -39,7 +39,7 @@ ColumnLayout {
         Layout.fillWidth:  true
         Layout.topMargin:  20
 
-        selectionMode:        SelectionMode.noSelection
+        selectionMode:        0
         sortIndicatorVisible: true
         sortIndicatorColumn:  0
         sortIndicatorOrder:   Qt.DescendingOrder

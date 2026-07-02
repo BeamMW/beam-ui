@@ -16,7 +16,7 @@ CustomTableView {
     property var showQRDialog
     anchors.fill: parent
     frameVisible: false
-    selectionMode: SelectionMode.noSelection
+    selectionMode: 0
     backgroundVisible: false
     sortIndicatorVisible: true
     sortIndicatorColumn: 0
