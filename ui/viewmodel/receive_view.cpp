@@ -26,6 +26,13 @@ ReceiveViewModel::ReceiveViewModel()
 
     connect(_walletModel, &WalletModel::newAddressFailed, this, &ReceiveViewModel::newAddressFailed);
     connect(_amgr.get(), &AssetsManager::assetsListChanged, this, &ReceiveViewModel::assetsListChanged);
+    connect(_walletModel, &WalletModel::fullAssetsListLoaded, this, [this] () {
+        _fullAssetsList = true;
+        emit assetsListChanged();
+    });
+    // Load the full on-chain asset list in the background so any CA can be
+    // requested; until it arrives the wallet's own assets are shown.
+    _walletModel->getAsync()->loadFullAssetsList();
     updateToken(); // default address
 }
 
@@ -277,7 +284,10 @@ int ReceiveViewModel::getMPTimeLimit() const
 
 QList<QMap<QString, QVariant>> ReceiveViewModel::getAssetsList() const
 {
-    return _amgr->getAssetsList();
+    // Show the full on-chain list (so a CA can be requested even if the wallet
+    // doesn't hold it) once it has loaded; until then show the wallet's own
+    // assets so the picker is populated immediately.
+    return _fullAssetsList ? _amgr->getAssetsListFull() : _amgr->getAssetsList();
 }
 
 void ReceiveViewModel::setAssetId(int value)
