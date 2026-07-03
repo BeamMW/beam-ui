@@ -1,6 +1,6 @@
 pragma Singleton
 
-import QtQuick
+import QtQml
 import Beam.Wallet 1.0
 
 // Maps AppsViewModel::DAppInstallError codes to translatable, user-facing text.
