@@ -298,9 +298,6 @@ jobs:
       - name: Sign AppImage [ubuntu]
         if: startsWith(matrix.os, 'ubuntu')
         env:
-          # appimagetool self-mounts via FUSE; extract-and-run avoids requiring
-          # FUSE for the tools themselves in CI. ARCH is required by appimagetool.
-          APPIMAGE_EXTRACT_AND_RUN: "1"
           ARCH: x86_64
         run: |
           mkdir signing
@@ -312,16 +309,15 @@ jobs:
           cp ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage .
           # Extract, sign and repack under the final release name, embedding zsync
           # update info (also emits the matching .zsync next to the AppImage).
+          # appimagetool self-mounts via FUSE; extract-and-run avoids needing it.
           ./Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-extract
-          ./appimagetool-x86_64.AppImage \
+          APPIMAGE_EXTRACT_AND_RUN=1 ./appimagetool-x86_64.AppImage \
             --sign \
             -u "gh-releases-zsync|BeamMW|beam-ui|latest|*x86_64.AppImage.zsync" \
             squashfs-root \
             ../Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage
-          # Output signature
           cd ..
           chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage
-          ./Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-signature
 
       - name: Collect [ubuntu]
         if: startsWith(matrix.os, 'ubuntu')
