@@ -21,6 +21,7 @@
 namespace
 {
     constexpr uint8_t ACAlpha = 252;
+    constexpr int AssetsListChangedDebounceMs = 100;
 
     beam::Asset::ID GetBeamXID()
     {
@@ -43,7 +44,7 @@ AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr 
     , _rates(std::move(rates))
 {
     _assetsListChangedTimer.setSingleShot(true);
-    _assetsListChangedTimer.setInterval(100);
+    _assetsListChangedTimer.setInterval(AssetsListChangedDebounceMs);
     connect(&_assetsListChangedTimer, &QTimer::timeout, this, &AssetsManager::assetsListChanged);
 
     connect(_wallet, &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
