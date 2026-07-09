@@ -21,6 +21,7 @@
 namespace
 {
     constexpr uint8_t ACAlpha = 252;
+    constexpr int AssetsListChangedDebounceMs = 100;
 
     beam::Asset::ID GetBeamXID()
     {
@@ -42,6 +43,10 @@ AssetsManager::AssetsManager(WalletModel::Ptr wallet, ExchangeRatesManager::Ptr 
     : _wallet(std::move(wallet))
     , _rates(std::move(rates))
 {
+    _assetsListChangedTimer.setSingleShot(true);
+    _assetsListChangedTimer.setInterval(AssetsListChangedDebounceMs);
+    connect(&_assetsListChangedTimer, &QTimer::timeout, this, &AssetsManager::assetsListChanged);
+
     connect(_wallet, &WalletModel::assetInfoChanged, this, &AssetsManager::onAssetInfo);
     connect(_rates.get(),  &ExchangeRatesManager::rateUnitChanged,   this,  &AssetsManager::assetsListChanged);
     connect(_rates.get(),  &ExchangeRatesManager::activeRateChanged, this,  &AssetsManager::assetsListChanged);
@@ -81,6 +86,13 @@ void AssetsManager::collectAssetInfo(beam::Asset::ID assetId)
     }
 }
 
+void AssetsManager::scheduleAssetsListChanged()
+{
+    // Restart on each update so a burst of asset-info replies (e.g. when the
+    // full on-chain list is loaded) collapses into a single assetsListChanged.
+    _assetsListChangedTimer.start();
+}
+
 void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAsset& asset)
 {
     _requested.erase(id);
@@ -104,7 +116,7 @@ void AssetsManager::onAssetInfo(beam::Asset::ID id, const beam::wallet::WalletAs
         emit assetInfo(id);
     }
 
-    emit assetsListChanged();
+    scheduleAssetsListChanged();
 }
 
 AssetsManager::MetaPtr AssetsManager::getAsset(beam::Asset::ID id)
@@ -446,7 +458,7 @@ void AssetsManager::onAssetVerification(const std::vector<beam::wallet::Verifica
         m_vi[info.m_assetID] = info;
         emit assetInfo(info.m_assetID);
     }
-    emit assetsListChanged();
+    scheduleAssetsListChanged();
 }
 
 bool AssetsManager::isVerified(beam::Asset::ID assetId) const

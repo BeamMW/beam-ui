@@ -45,6 +45,13 @@ ColumnLayout {
         syncIdx()
     }
 
+    Connections {
+        target: viewModel
+        // The asset list can grow (held assets -> full on-chain list) while an
+        // asset is selected; re-map the selection by asset id so it stays put.
+        function onAssetsListChanged() { control.syncIdx() }
+    }
+
     Component.onCompleted: function () {
         // asset id might be passed by other parts of the UI as a parameter to the receive view
         syncIdx()
@@ -151,7 +158,9 @@ ColumnLayout {
                             id:          amountInput
                             amount:      viewModel.amount
                             currencies:  viewModel.assetsList
-                            multi:       viewModel.assetsList.length > 1
+                            // Always enable the picker so any on-chain CA can be
+                            // requested, even in a wallet that only holds BEAM.
+                            multi:       true
                             resetAmount: false
 
                            onCurrencyIdxChanged: function () {

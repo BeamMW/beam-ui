@@ -18,6 +18,7 @@
 #include <QMap>
 #include <QList>
 #include <QVariant>
+#include <QTimer>
 #include "wallet_model.h"
 #include "exchange_rates_manager.h"
 
@@ -69,6 +70,10 @@ private:
     // ASYNC
     void collectAssetInfo(beam::Asset::ID);
 
+    // Coalesce bursts of asset-info updates into a single assetsListChanged so
+    // consumers rebuild the (potentially large) list once, not once per asset.
+    void scheduleAssetsListChanged();
+
     typedef std::shared_ptr<beam::wallet::WalletAssetMeta> MetaPtr;
     typedef std::shared_ptr<beam::wallet::WalletAsset> AssetPtr;
     typedef std::pair<AssetPtr, MetaPtr> InfoPair;
@@ -83,6 +88,8 @@ private:
 
     std::map<int, QColor>  _colors;
     std::map<int, QString> _icons;
+
+    QTimer _assetsListChangedTimer;
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     QVector<beam::Asset::ID> _allowedAssets;

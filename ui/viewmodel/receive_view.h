@@ -83,4 +83,5 @@ private:
     ExchangeRatesManager::Ptr _rates;
     AssetsManager::Ptr    _amgr;
     bool _newAddress = false;
+    bool _fullAssetsList = false;
 };
