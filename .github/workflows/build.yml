@@ -297,26 +297,38 @@ jobs:
 
       - name: Sign AppImage [ubuntu]
         if: startsWith(matrix.os, 'ubuntu')
+        env:
+          ARCH: x86_64
         run: |
           mkdir signing
           cd signing
-          # Download AppImageTool
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          # Download appimagetool. The old AppImageKit build embeds a runtime that
+          # needs libfuse2 at runtime; the modern appimagetool embeds a static one.
+          wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           sudo chmod +x appimagetool-x86_64.AppImage
           cp ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage .
-          # Extract, sign and pack AppImage
+          # Extract, sign and repack under the final release name, embedding zsync
+          # update info. appimagetool emits the matching .zsync next to the AppImage
+          # (in the current dir), so pack in place here and move both up together —
+          # writing the AppImage to ../ would leave the .zsync behind in signing/.
+          # appimagetool self-mounts via FUSE; extract-and-run avoids needing it.
           ./Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-extract
-          ./appimagetool-x86_64.AppImage squashfs-root --sign
-          mv Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-x86_64.AppImage ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage
-          # Output signature
-          ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-signature
+          APPIMAGE_EXTRACT_AND_RUN=1 ./appimagetool-x86_64.AppImage \
+            --sign \
+            -u "gh-releases-zsync|BeamMW|beam-ui|latest|*x86_64.AppImage.zsync" \
+            squashfs-root \
+            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage
+          cd ..
+          mv signing/Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage* .
+          chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage
+          # Fail loudly if the .zsync went missing (upload's if-no-files-found only
+          # errors when *no* path matches, not when one of several is absent).
+          ls Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage.zsync
 
       - name: Collect [ubuntu]
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          cp Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
-          sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage > Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
-          chmod a+x Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+          sha256sum Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage > Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage-checksum.txt
 
       - name: Collect [windows]
         if: startsWith(matrix.os, 'windows')
@@ -341,8 +353,9 @@ jobs:
         with:
           name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
           path: |
-            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
-            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
+            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage
+            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage.zsync
+            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}-x86_64.AppImage-checksum.txt
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v4
