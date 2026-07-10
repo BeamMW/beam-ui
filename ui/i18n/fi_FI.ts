@@ -1497,11 +1497,6 @@ avaimen palvelimeen (node), johon luotat täysin.</translation>
         <source>Asset is still locked</source>
         <translation type="unfinished">Asset is still locked</translation>
     </message>
-    <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation type="unfinished">Show amounts in</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation type="unfinished">New version v %1 is available</translation>
@@ -3955,6 +3950,11 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>DApp-tiedostoja ei voitu purkaa.</translation>
+    </message>
+    <message id="settings-oracle-price">
+        <source>Oracle price</source>
+        <extracomment>settings tab, header oracle price label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

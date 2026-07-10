@@ -1494,11 +1494,6 @@ deploy the key at the node you trust completely.</source>
         <source>Asset is still locked</source>
         <translation>Asset ist noch gesperrt</translation>
     </message>
-    <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>Zeige Guthaben in</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation>Neue Version %s ist verfügbar</translation>
@@ -3949,6 +3944,11 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Die DApp-Dateien konnten nicht entpackt werden.</translation>
+    </message>
+    <message id="settings-oracle-price">
+        <source>Oracle price</source>
+        <extracomment>settings tab, header oracle price label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

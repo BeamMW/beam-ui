@@ -1496,11 +1496,6 @@ distribuisca la chiave al nodo che ti fidi completamente.</translation>
         <source>Asset is still locked</source>
         <translation>L&apos;asset è ancora bloccato</translation>
     </message>
-    <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>Mostra importi in</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation>La nuova versione v %1 è disponibile</translation>
@@ -3953,6 +3948,11 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Impossibile estrarre i file della DApp.</translation>
+    </message>
+    <message id="settings-oracle-price">
+        <source>Oracle price</source>
+        <extracomment>settings tab, header oracle price label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

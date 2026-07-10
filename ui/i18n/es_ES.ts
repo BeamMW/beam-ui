@@ -1497,11 +1497,6 @@ despliegue la clave en el nodo en el que confía completamente.</translation>
         <source>Asset is still locked</source>
         <translation>Activo todavía está bloqueado</translation>
     </message>
-    <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>Mostrar cantidades en</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation>La nueva versión v %1 está disponible</translation>
@@ -3953,6 +3948,11 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>No se pudieron extraer los archivos de la DApp.</translation>
+    </message>
+    <message id="settings-oracle-price">
+        <source>Oracle price</source>
+        <extracomment>settings tab, header oracle price label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
