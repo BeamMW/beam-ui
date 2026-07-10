@@ -35,7 +35,6 @@ public:
 
 public slots:
     void onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates);
-    void onRateUnitChanged();
 
 signals:
     void rateUnitChanged();
@@ -43,13 +42,12 @@ signals:
     void updateTimeChanged();
 
 private:
-    void setRateUnit();
     void setUpdateTime(beam::Timestamp value);
 
     WalletModel::Ptr _wallet;
     WalletSettings& _settings;
 
-    beam::wallet::Currency m_rateUnit = beam::wallet::Currency::UNKNOWN();
+    beam::wallet::Currency m_rateUnit = beam::wallet::Currency::USD();
     std::map<beam::wallet::Currency, beam::Amount> m_rates;
     beam::Timestamp m_updateTime;
 };
