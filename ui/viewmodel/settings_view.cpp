@@ -407,17 +407,12 @@ void SettingsViewModel::setCurrentLanguage(QString value)
 
 QString SettingsViewModel::getSecondCurrency() const
 {
-    return QString::fromStdString(m_rateCurrency.m_value);
+    return QString::fromStdString(beam::wallet::Currency::USD().m_value);
 }
 
-void SettingsViewModel::setSecondCurrency(const QString& value)
+void SettingsViewModel::setSecondCurrency(const QString&)
 {
-    const auto currency = beam::wallet::Currency(value.toStdString());
-
-    m_rateCurrency = currency;
-    m_settings.setRateCurrency(currency);
-
-    emit secondCurrencyChanged();
+    // USD-only: second-currency selection removed. No-op.
 }
 
 const QString& SettingsViewModel::getPublicAddress() const
