@@ -31,8 +31,33 @@ ColumnLayout {
         RowLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignCenter | Qt.AlignRight
+
+            // fill spacer keeps the height/version group right-aligned (moved off the height label
+            // so the Oracle price can sit immediately to its left).
+            Item { Layout.fillWidth: true }
+
             SFText {
-                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+                visible: viewModel.oraclePrice.length > 0
+                //: settings tab, header oracle price label
+                //% "Oracle price"
+                text: qsTrId("settings-oracle-price")
+                color: Style.content_secondary
+                font.pixelSize: 14
+            }
+
+            SFLabel {
+                horizontalAlignment: Text.AlignRight
+                Layout.rightMargin: 20
+                visible: viewModel.oraclePrice.length > 0
+                color: Style.content_main
+                text: viewModel.oraclePrice
+                font.pixelSize: 14
+                font.styleName:      "Bold"
+                font.weight:         Font.Bold
+            }
+
+            SFText {
                 horizontalAlignment: Text.AlignRight
                 //% "Blockchain height"
                 text: qsTrId("settings-blockchain-height")
