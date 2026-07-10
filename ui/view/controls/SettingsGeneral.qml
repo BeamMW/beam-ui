@@ -7,6 +7,7 @@ import "."
 SettingsFoldable {
     id: generalBlock
     property var viewModel
+    readonly property int settingsControlWidth: 210
     //: settings tab, general section, title
     //% "General"
     title: qsTrId("settings-general-title")
@@ -33,7 +34,7 @@ SettingsFoldable {
             ColumnLayout {
                 LanguageComboBox {
                     id: language
-                    Layout.preferredWidth: secondCurrencySwitch.width
+                    Layout.preferredWidth: settingsControlWidth
                     languages:     viewModel.supportedLanguages
                     languageIndex: viewModel.currentLanguageIndex
                     onLanguageActivated: (language) => { viewModel.currentLanguage = language }
@@ -55,7 +56,7 @@ SettingsFoldable {
             CustomComboBox {
                 id: lockTimeoutControl
                 fontPixelSize: 14
-                Layout.preferredWidth: secondCurrencySwitch.width
+                Layout.preferredWidth: settingsControlWidth
                 currentIndex: viewModel.lockTimeout
                 model: [
                     //% "Never"
@@ -90,36 +91,11 @@ SettingsFoldable {
             CustomComboBox {
                 id: minConfirmationsControl
                 fontPixelSize: 14
-                Layout.preferredWidth: secondCurrencySwitch.width
+                Layout.preferredWidth: settingsControlWidth
                 currentIndex: viewModel.minConfirmations
                 model: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                 onActivated: {
                     viewModel.minConfirmations = minConfirmationsControl.currentIndex
-                }
-            }
-        }
-
-        RowLayout {
-            SFText {
-                Layout.fillWidth: true
-                //: settings tab, general section, amounts unit label
-                //% "Show amounts in"
-                text: qsTrId("settings-general-amounts-unit")
-                color: Style.content_secondary
-                font.pixelSize: 14
-            }
-            Item {}
-            TristateSwitch {
-                id: secondCurrencySwitch
-                width: 210
-                height: 20
-                choices: ["usd", "btc", "eth"]
-                labels:  ["USD", "BTC", "ETH"]
-                state: viewModel.secondCurrency
-                Binding {
-                    target: viewModel
-                    property: "secondCurrency"
-                    value: secondCurrencySwitch.state
                 }
             }
         }
