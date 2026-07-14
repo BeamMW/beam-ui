@@ -51,23 +51,23 @@ bool ExchangeRatesManager::isUpToDate() const
 
 void ExchangeRatesManager::onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates)
 {
-    bool isActiveRateChanged = false;
+    std::map<beam::wallet::Currency, beam::Amount> newRates;
     for (const auto& rate : rates)
     {
-        if (rate.m_to != m_rateUnit) 
+        if (rate.m_to != m_rateUnit)
             continue;
 
-        m_rates[rate.m_from] = rate.m_rate;
+        newRates[rate.m_from] = rate.m_rate;
         if (m_updateTime < rate.m_updateTime)
         {
             m_updateTime = rate.m_updateTime;
             emit updateTimeChanged();
         }
-        isActiveRateChanged = true;
     }
 
-    if (isActiveRateChanged)
+    if (newRates != m_rates)
     {
+        m_rates = std::move(newRates);
         emit activeRateChanged();
     }
 }

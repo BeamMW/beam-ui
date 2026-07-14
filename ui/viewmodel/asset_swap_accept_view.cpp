@@ -220,8 +220,8 @@ QList<QMap<QString, QVariant>> AssetSwapAcceptViewModel::getCurrenciesList(
     info.insert("iconWidth",  22);
     info.insert("iconHeight", 22);
     info.insert("decimals",   static_cast<uint8_t>(std::log10(beam::Rules::Coin)));
-    info.insert("rate",       "-");
-    info.insert("rateUnit",   "-");
+    info.insert("rate",       "");
+    info.insert("rateUnit",   "");
 
     result.push_back(info);
 

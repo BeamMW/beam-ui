@@ -15,6 +15,9 @@ ColumnLayout {
 
     function clearFocus() {
         ainput.focus = false
+        secondInput.focus = false
+        control.activeFieldIsSecond = false   // clear BEFORE amount so the USD row re-derives
+        secondInput.userText = ""
     }
 
     property var               currencies
@@ -40,7 +43,7 @@ ColumnLayout {
     property bool     resetAmount:  true
     property var      amountInput:  ainput
     property bool     showRate:     control.rateUnit != "" && control.rateUnit != control.currencyUnitNoId
-    readonly property bool isExchangeRateAvailable: control.rate != "0"
+    readonly property bool isExchangeRateAvailable: control.rate !== "0" && control.rate !== "-" && control.rate !== ""
     property alias    filterAssets: currCombo.filterAssets
     property bool     activeFieldIsSecond: false
 
@@ -187,6 +190,8 @@ ColumnLayout {
 
                     onActivated: function(index) {
                         if (multi) {
+                            control.activeFieldIsSecond = false   // clear BEFORE amount so the USD row re-derives
+                            secondInput.userText = ""
                             ainput.text = "0"
                             control.amount = "0"
                             control.currencyIdx = index
@@ -245,19 +250,25 @@ ColumnLayout {
                                           ? BeamGlobals.calcAmountInSecondCurrency(control.amount, control.rate, control.rateUnit)
                                           : "")
                     onTextEdited: {
-                        control.activeFieldIsSecond = true
+                        // save the typed text BEFORE flipping the flag, otherwise the live text
+                        // binding re-evaluates against the old (empty) userText and loses the first char
                         secondInput.userText = secondInput.text
-                        control.amount = Utils.calcAmountFromSecondCurrency(secondInput.text, control.rate, currencies[currencyIdx].decimals)
+                        control.activeFieldIsSecond = true
+                        control.amount = Utils.calcAmountFromSecondCurrency(secondInput.userText, control.rate, currencies[currencyIdx].decimals)
+                    }
+                    // re-derive the USD display only when BEAM (not this field) is the active driver;
+                    // the guard preserves the sub-cent behaviour (while USD drives, echo userText verbatim)
+                    function refreshFromPrimary() {
+                        if (!control.activeFieldIsSecond)
+                            secondInput.text = control.isExchangeRateAvailable
+                                ? BeamGlobals.calcAmountInSecondCurrency(control.amount, control.rate, control.rateUnit)
+                                : ""
                     }
                     Connections {
                         target: control
-                        function onAmountChanged() {
-                            // re-derive the USD display only when BEAM (not this field) is the active driver
-                            if (!control.activeFieldIsSecond)
-                                secondInput.text = control.isExchangeRateAvailable
-                                    ? BeamGlobals.calcAmountInSecondCurrency(control.amount, control.rate, control.rateUnit)
-                                    : ""
-                        }
+                        function onAmountChanged()   { secondInput.refreshFromPrimary() }
+                        function onRateChanged()     { secondInput.refreshFromPrimary() }
+                        function onRateUnitChanged() { secondInput.refreshFromPrimary() }
                     }
                 }
                 SFText {
