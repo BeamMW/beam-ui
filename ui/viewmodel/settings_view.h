@@ -23,6 +23,7 @@
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 
 #include "model/settings.h"
+#include "model/exchange_rates_manager.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/client.h"
 #include "wallet/transactions/swaps/bridges/bitcoin/settings.h"
 #include "viewmodel/notifications/notifications_settings.h"
@@ -34,6 +35,7 @@ class SettingsViewModel : public QObject
 
     Q_PROPERTY(QString      nodeAddress                     READ getNodeAddress                 WRITE setNodeAddress    NOTIFY nodeAddressChanged)
     Q_PROPERTY(QString      version                         READ getVersion                     CONSTANT)
+    Q_PROPERTY(QString      oraclePrice                     READ getOraclePrice                 NOTIFY oraclePriceChanged)
     Q_PROPERTY(bool         connectLocalNode                READ getConnectLocalNode            WRITE setConnectLocalNode   NOTIFY connectLocalNodeChanged)
     Q_PROPERTY(bool         localNodeRun                    READ getLocalNodeRun                WRITE setLocalNodeRun   NOTIFY localNodeRunChanged)
     Q_PROPERTY(unsigned int localNodePort                   READ getLocalNodePort               WRITE setLocalNodePort  NOTIFY localNodePortChanged)
@@ -151,6 +153,7 @@ public:
     void setAppsPort(int port);
 
     QString getCurrentHeight() const;
+    QString getOraclePrice() const;
 
     Q_INVOKABLE uint coreAmount() const;
     Q_INVOKABLE void addLocalNodePeer(const QString& localNodePeer);
@@ -207,6 +210,7 @@ signals:
     void maxPrivacyLockTimeLimitChanged();
     void minConfirmationsChanged();
     void stateChanged();
+    void oraclePriceChanged();
     void appsPortChanged();
 
     #ifdef BEAM_IPFS_SUPPORT
@@ -258,6 +262,7 @@ private:
     mutable int m_mpAnonymitySetIndex = 0;
     mutable int m_mpLockTimeLimitIndex = 1;
     WalletModel::Ptr m_walletModel;
+    ExchangeRatesManager::Ptr m_exchangeRatesManager;
     const int CHECK_INTERVAL = 1000;
 
 #ifdef BEAM_ASSET_SWAP_SUPPORT

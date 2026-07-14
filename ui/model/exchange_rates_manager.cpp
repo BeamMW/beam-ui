@@ -24,40 +24,14 @@
 ExchangeRatesManager::ExchangeRatesManager(WalletModel::Ptr wallet, WalletSettings& settings)
     : _wallet(std::move(wallet))
     , _settings(settings)
+    , m_rateUnit(beam::wallet::Currency::USD())
     , m_updateTime(0)
 {
-
     qRegisterMetaType<std::vector<beam::wallet::ExchangeRate>>("std::vector<beam::wallet::ExchangeRate>");
-
     connect(_wallet,
             SIGNAL(exchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&)),
             SLOT(onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>&)));
-
-    connect(&_settings,
-            SIGNAL(secondCurrencyChanged()),
-            SLOT(onRateUnitChanged()));
-
-    m_rateUnit = _settings.getRateCurrency();
-    if (m_rateUnit != beam::wallet::Currency::UNKNOWN())
-    {
-        _wallet->getAsync()->getExchangeRates();
-    }
-}
-
-void ExchangeRatesManager::setRateUnit()
-{
-    auto newCurrency = _settings.getRateCurrency();
-    if (m_rateUnit == newCurrency)
-        return;
-
-    auto turnedOn = newCurrency != beam::wallet::Currency::UNKNOWN();
-    _wallet->getAsync()->switchOnOffExchangeRates(turnedOn);
-    if (turnedOn)
-    {
-        _wallet->getAsync()->getExchangeRates();
-    }
-    m_rateUnit = newCurrency;
-    setUpdateTime(0);
+    _wallet->getAsync()->getExchangeRates();
 }
 
 void ExchangeRatesManager::setUpdateTime(beam::Timestamp value)
@@ -77,33 +51,25 @@ bool ExchangeRatesManager::isUpToDate() const
 
 void ExchangeRatesManager::onExchangeRatesUpdate(const std::vector<beam::wallet::ExchangeRate>& rates)
 {
-    if (m_rateUnit == beam::wallet::Currency::UNKNOWN()) return;  /// Second currency is turned OFF
-
-    bool isActiveRateChanged = false;
+    std::map<beam::wallet::Currency, beam::Amount> newRates;
     for (const auto& rate : rates)
     {
-        if (rate.m_to != m_rateUnit) 
+        if (rate.m_to != m_rateUnit)
             continue;
 
-        m_rates[rate.m_from] = rate.m_rate;
+        newRates[rate.m_from] = rate.m_rate;
         if (m_updateTime < rate.m_updateTime)
         {
             m_updateTime = rate.m_updateTime;
             emit updateTimeChanged();
         }
-        isActiveRateChanged = true;
     }
 
-    if (isActiveRateChanged)
+    if (newRates != m_rates)
     {
+        m_rates = std::move(newRates);
         emit activeRateChanged();
     }
-}
-
-void ExchangeRatesManager::onRateUnitChanged()
-{
-    setRateUnit();
-    emit rateUnitChanged();
 }
 
 beam::wallet::Currency ExchangeRatesManager::getRateCurrency() const

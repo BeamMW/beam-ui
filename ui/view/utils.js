@@ -58,6 +58,25 @@ function formatFeeToSecondCurrency(amount, exchangeRate, secondCurrLabel) {
     return formatSecondCurrency(convertedAmount, amount, exchangeRate, secondCurrLabel);
 }
 
+// second-currency amount -> primary (BEAM/asset) amount, "C"-locale string.
+// `decimals` = the PRIMARY currency's decimal count (asset the amount is denominated in).
+function calcAmountFromSecondCurrency(secondAmount, exchangeRate, decimals) {
+    if (exchangeRate === "" || exchangeRate === "0" || secondAmount === "")
+        return "0";
+    // The field's validator accepts a single '.' OR ',' as the decimal mark and forbids grouping,
+    // so treat BOTH as the decimal point by normalizing ',' -> '.'.  Do NOT use
+    // localeDecimalToCString here: in a comma-decimal locale it treats '.' as the GROUP separator
+    // and strips it, turning "0.0001" into "00001" (=1) -- the #844 input bug.
+    // divideWithPrecision throws (crashing QML) on ',' and on bare "." / "," -- the parseFloat
+    // guard rejects those incomplete inputs before we call it.
+    var clean = secondAmount.replace(/,/g, '.');
+    // Only a plain decimal (at most one '.') is safe for divideWithPrecision; reject anything
+    // else ("1.2.3", bare ".", non-numeric) so it can't throw. parseFloat rejects "" / ".".
+    if (!/^[0-9]*\.?[0-9]*$/.test(clean) || isNaN(parseFloat(clean)))
+        return "0";
+    return BeamGlobals.divideWithPrecision(clean, exchangeRate, decimals);
+}
+
 // @arg amount - any number or float string in "C" locale
 function uiStringToLocale (amount) {
     var locale = Qt.locale();

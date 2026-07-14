@@ -1494,11 +1494,6 @@ deploy the key at the node you trust completely.</translation>
         <source>Asset is still locked</source>
         <translation>สินทรัพย์ยังคงถูกล็อคไว้</translation>
     </message>
-    <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>แสดงยอดเงิน</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation>พบเวอร์ชั่นใหม่หมายเลข %1 พร้อมให้ใช้งาน</translation>
@@ -3945,6 +3940,11 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>ไม่สามารถแตกไฟล์ DApp ได้</translation>
+    </message>
+    <message id="settings-oracle-price">
+        <source>Oracle price</source>
+        <extracomment>settings tab, header oracle price label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

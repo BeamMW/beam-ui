@@ -1496,11 +1496,6 @@ implante a sua chave apenas em nó em que você confia completamente.</translati
         <source>Asset is still locked</source>
         <translation>O ativo ainda está bloqueado</translation>
     </message>
-    <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>Mostrar valores em</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation>Nova versão v %1 está disponível</translation>
@@ -3952,6 +3947,11 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Não foi possível extrair os arquivos da DApp.</translation>
+    </message>
+    <message id="settings-oracle-price">
+        <source>Oracle price</source>
+        <extracomment>settings tab, header oracle price label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

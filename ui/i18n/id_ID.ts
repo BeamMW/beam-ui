@@ -1494,11 +1494,6 @@ menggunakan kunci tersebut pada node yang Anda percayai sepenuhnya.</translation
         <source>Asset is still locked</source>
         <translation>Aset masih terkunci</translation>
     </message>
-    <message id="settings-general-amounts-unit">
-        <source>Show amounts in</source>
-        <extracomment>settings tab, general section, amounts unit label</extracomment>
-        <translation>Tampilkan jumlah dalam</translation>
-    </message>
     <message id="notification-update-title">
         <source>New version v %1 is available</source>
         <translation>Versi baru v %1 tersedia</translation>
@@ -3945,6 +3940,11 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Tidak dapat mengekstrak berkas DApp.</translation>
+    </message>
+    <message id="settings-oracle-price">
+        <source>Oracle price</source>
+        <extracomment>settings tab, header oracle price label</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

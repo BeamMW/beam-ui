@@ -50,6 +50,7 @@ SettingsViewModel::SettingsViewModel()
     , m_supportedLanguages(WalletSettings::getSupportedLanguages())
     , m_rateCurrency(beam::wallet::Currency::UNKNOWN())
     , m_walletModel(AppModel::getInstance().getWalletModel())
+    , m_exchangeRatesManager(AppModel::getInstance().getRates())
 #ifdef BEAM_ASSET_SWAP_SUPPORT
     , m_amgr(AppModel::getInstance().getAssets())
 #endif  // BEAM_ASSET_SWAP_SUPPORT
@@ -68,6 +69,7 @@ SettingsViewModel::SettingsViewModel()
     connect(m_walletModel, SIGNAL(publicAddressChanged(const QString&)), SLOT(onPublicAddressChanged(const QString&)));
     connect(&m_settings, SIGNAL(beamMWLinksChanged()), SIGNAL(beamMWLinksPermissionChanged()));
     connect(m_walletModel, &WalletModel::walletStatusChanged, this, &SettingsViewModel::stateChanged);
+    connect(m_exchangeRatesManager.get(), &ExchangeRatesManager::activeRateChanged, this, &SettingsViewModel::oraclePriceChanged);
 
     m_timerId = startTimer(CHECK_INTERVAL);
 
@@ -373,6 +375,15 @@ QString SettingsViewModel::getCurrentHeight() const
     return QString::fromStdString(to_string(m_walletModel->getCurrentStateID().m_Height));
 }
 
+QString SettingsViewModel::getOraclePrice() const
+{
+    // BEAM/USD from the on-chain oracle. Empty when unavailable (blank over wrong).
+    auto rate = m_exchangeRatesManager->getRate(beam::wallet::Currency::BEAM());
+    if (!rate)
+        return QString();
+    return "$" + beamui::AmountToUIString(rate, beamui::Currencies::Unknown, false);
+}
+
 QStringList SettingsViewModel::getSupportedLanguages() const
 {
     return m_supportedLanguages;
@@ -407,17 +418,12 @@ void SettingsViewModel::setCurrentLanguage(QString value)
 
 QString SettingsViewModel::getSecondCurrency() const
 {
-    return QString::fromStdString(m_rateCurrency.m_value);
+    return QString::fromStdString(beam::wallet::Currency::USD().m_value);
 }
 
-void SettingsViewModel::setSecondCurrency(const QString& value)
+void SettingsViewModel::setSecondCurrency(const QString&)
 {
-    const auto currency = beam::wallet::Currency(value.toStdString());
-
-    m_rateCurrency = currency;
-    m_settings.setRateCurrency(currency);
-
-    emit secondCurrencyChanged();
+    // USD-only: second-currency selection removed. No-op.
 }
 
 const QString& SettingsViewModel::getPublicAddress() const

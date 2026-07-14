@@ -126,10 +126,7 @@ namespace
     const std::vector<beam::wallet::Currency>& getSupportedRateUnits()
     {
         static const std::vector<beam::wallet::Currency> supportedUnits {
-            beam::wallet::Currency::UNKNOWN(),
-            beam::wallet::Currency::USD(),
-            beam::wallet::Currency::BTC(),
-            beam::wallet::Currency::ETH()
+            beam::wallet::Currency::USD()
         };
         return supportedUnits;
     }
