@@ -67,6 +67,23 @@ namespace
         return "";
     }
 
+    QString getCoinsUnlockNoteStr(const beam::wallet::SwapTxDescription& tx, Height currentHeight)
+    {
+        if (tx.isRedeemTxRegistered())
+        {
+            return "";
+        }
+
+        auto minHeightRefund = tx.getMinRefundTxHeight();
+        if (minHeightRefund && currentHeight < *minHeightRefund)
+        {
+            QString time = beamui::convertBeamHeightDiffToTime(*minHeightRefund - currentHeight);
+            //% "While the swap is in progress, if the other side goes offline your coins will be automatically unlocked in %1 at most."
+            return qtTrId("swap-details-unlock-note").arg(time);
+        }
+        return "";
+    }
+
     QString getInProgressRefundingStr(const beam::wallet::SwapTxDescription& tx, double blocksPerHour, Height currentBeamHeight)
     {
         
@@ -335,6 +352,42 @@ QString SwapTxObject::getStateDetails() const
             else
             {
                 return getWaitingPeerStr(m_swapTx, currentHeight);
+            }
+            break;
+        }
+        default:
+            break;
+        }
+    }
+    return "";
+}
+
+QString SwapTxObject::getCoinsUnlockNote() const
+{
+    if (getTxDescription().m_txType == beam::wallet::TxType::AtomicSwap)
+    {
+        switch (getTxDescription().m_status)
+        {
+        case beam::wallet::TxStatus::Pending:
+        case beam::wallet::TxStatus::InProgress:
+        {
+            Height currentHeight = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+            auto state = m_swapTx.getState();
+            if (state)
+            {
+                switch (*state)
+                {
+                case wallet::AtomicSwapTransaction::State::BuildingBeamLockTX:
+                case wallet::AtomicSwapTransaction::State::BuildingBeamRefundTX:
+                case wallet::AtomicSwapTransaction::State::BuildingBeamRedeemTX:
+                case wallet::AtomicSwapTransaction::State::HandlingContractTX:
+                case wallet::AtomicSwapTransaction::State::SendingBeamLockTX:
+                case wallet::AtomicSwapTransaction::State::SendingRedeemTX:
+                case wallet::AtomicSwapTransaction::State::SendingBeamRedeemTX:
+                    return getCoinsUnlockNoteStr(m_swapTx, currentHeight);
+                default:
+                    break;
+                }
             }
             break;
         }

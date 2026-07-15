@@ -3947,5 +3947,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>I receive</source>
         <translation>I receive</translation>
     </message>
+    <message id="swap-details-unlock-note">
+        <source>While the swap is in progress, if the other side goes offline your coins will be automatically unlocked in %1 at most.</source>
+        <translation>While the swap is in progress, if the other side goes offline your coins will be automatically unlocked in %1 at most.</translation>
+    </message>
 </context>
 </TS>

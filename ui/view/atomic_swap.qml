@@ -881,6 +881,7 @@ Please try again later or create an offer yourself."
                             beamRedeemTxKernelId:           txRolesMap && txRolesMap.beamRedeemTxKernelId ? txRolesMap.beamRedeemTxKernelId : ""
                             beamRefundTxKernelId:           txRolesMap && txRolesMap.beamRefundTxKernelId ? txRolesMap.beamRefundTxKernelId : ""
                             stateDetails:                   txRolesMap && txRolesMap.stateDetails ? txRolesMap.stateDetails : ""
+                            coinsUnlockNote:                txRolesMap && txRolesMap.coinsUnlockNote ? txRolesMap.coinsUnlockNote : ""
                             failureReason:                  txRolesMap && txRolesMap.failureReason ? txRolesMap.failureReason : ""
                                     
                             onTextCopied: function (text) {

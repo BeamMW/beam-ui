@@ -48,6 +48,7 @@ public:
     auto getFee() const -> QString override;
     auto getFailureReason() const -> QString override;
     QString getStateDetails() const override;
+    QString getCoinsUnlockNote() const;
     beam::wallet::AtomicSwapCoin getSwapCoinType() const;
     auto getStatus() const -> QString override;
     QString getAmountWithCurrency() const;

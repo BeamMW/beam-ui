@@ -3946,5 +3946,9 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>I receive</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="swap-details-unlock-note">
+        <source>While the swap is in progress, if the other side goes offline your coins will be automatically unlocked in %1 at most.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
