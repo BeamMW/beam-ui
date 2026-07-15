@@ -63,7 +63,7 @@ CustomDialog {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                text:                   qsTrId("sent-amount-label") + ":"
+                text:                   qsTrId("atomic-swap-i-send") + ":"
                 visible:                viewModel.sendAmount.length
             }
 
@@ -82,7 +82,7 @@ CustomDialog {
                 Layout.alignment:       Qt.AlignTop
                 font.pixelSize:         14
                 color:                  Style.content_disabled
-                text:                   qsTrId("receive-amount-swap-label") + ":"
+                text:                   qsTrId("atomic-swap-i-receive") + ":"
                 visible:                viewModel.receiveAmount.length
             }
 

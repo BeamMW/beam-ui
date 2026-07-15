@@ -915,14 +915,6 @@
         <source>Password</source>
         <translation>Lösenord</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Ta emot belopp</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Skicka belopp</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Växelkurs</translation>
@@ -2212,10 +2204,6 @@ mycket längre tid för en transaktion att slutföras.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Det finns inga aktiva erbjudanden för tillfället. 
 Vänligen testa igen senare eller skapa ett erbjudande själv.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Skicka</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3582,10 +3570,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>uppdaterar</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Ta emot</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Kurs</translation>
@@ -3951,6 +3935,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Det gick inte att extrahera DApp-filerna.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

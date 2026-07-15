@@ -918,14 +918,6 @@
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Отримати суму</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Відправити суму</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Обмінний курс</translation>
@@ -2220,10 +2212,6 @@ much longer for a transaction to complete.</source>
 Please try again later or create an offer yourself.</source>
         <translation>На цей час немає активних пропозицій.
 Спробуйте пізніше або створіть пропозицію самостійно.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Надіслати</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3592,10 +3580,6 @@ Please, restart the wallet and try again.</source>
         <source>updating</source>
         <translation>оновлення</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Отримати</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Оцінити</translation>
@@ -3961,6 +3945,14 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Не вдалося розпакувати файли DApp.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

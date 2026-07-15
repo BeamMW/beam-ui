@@ -916,14 +916,6 @@
         <source>Password</source>
         <translation>Wachtwoord</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Ontvang bedrag</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Verzend bedrag</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Wisselkoers</translation>
@@ -2213,10 +2205,6 @@ Controleer de %1 blockchain. Lage fees kunnen het voltooien een transactie ernst
 Please try again later or create an offer yourself.</source>
         <translation>Er zijn momenteel geen actieve aanbiedingen.
 Probeer het later opnieuw of maak zelf een aanbieding.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Verzend</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3581,10 +3569,6 @@ Herstart de wallet en probeer het opnieuw.</translation>
         <source>updating</source>
         <translation>bijwerken</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Ontvang</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Rate</translation>
@@ -3950,6 +3934,14 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Kan de DApp-bestanden niet uitpakken.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

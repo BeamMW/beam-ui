@@ -916,14 +916,6 @@
         <source>Password</source>
         <translation>Senha</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Receber valor</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Enviar valor</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Taxa de Câmbio</translation>
@@ -2214,10 +2206,6 @@ Verifique a blockchain %1 por su própria conta. Taxas baixas podem levar muito 
 Please try again later or create an offer yourself.</source>
         <translation>Não há ofertas ativas no momento.
 Por favor, tente novamente mais tarde ou crie uma oferta.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Mandar</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3583,10 +3571,6 @@ Por favor, reinicie a carteira e tente novamente.</translation>
         <source>updating</source>
         <translation>atualizando</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Receber</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Taxa</translation>
@@ -3952,6 +3936,14 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Não foi possível extrair os arquivos da DApp.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

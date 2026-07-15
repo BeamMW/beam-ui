@@ -922,14 +922,6 @@
         <source>Password</source>
         <translation>密码</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>收款金额</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>发送金额</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>汇率</translation>
@@ -2226,10 +2218,6 @@ much longer for a transaction to complete.</source>
 Please try again later or create an offer yourself.</source>
         <translation>目前没有活动的报价。
 请稍后再试或自己创建报价。</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>付款</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3592,10 +3580,6 @@ Please, restart the wallet and try again.</source>
         <source>updating</source>
         <translation>正在更新</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>收款</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>评价</translation>
@@ -3961,6 +3945,14 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>无法解压 DApp 文件。</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

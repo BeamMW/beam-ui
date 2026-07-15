@@ -915,14 +915,6 @@
         <source>Password</source>
         <translation>Kata sandi</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Jumlah yang diterima</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Jumlah kirim</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Kurs</translation>
@@ -2211,10 +2203,6 @@ lebih lama untuk menyelesaikan transaksi.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Tidak ada penawaran aktif saat ini.
 Silakan coba lagi nanti atau buat penawaran sendiri.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Kirim</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3577,10 +3565,6 @@ Silakan mulai ulang dompet dan coba lagi.</translation>
         <source>updating</source>
         <translation>memperbarui</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Terima</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Rate</translation>
@@ -3945,6 +3929,14 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Tidak dapat mengekstrak berkas DApp.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

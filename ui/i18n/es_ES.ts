@@ -916,14 +916,6 @@
         <source>Password</source>
         <translation>Contraseña</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Recibir cantidad</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Enviar cantidad</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Tipo de cambio</translation>
@@ -2215,10 +2207,6 @@ Compruebe usted en la %1 blockchain. Las tarifas bajas pueden demorar mucho más
 Please try again later or create an offer yourself.</source>
         <translation>No hay ofertas activas en este momento.
 Por favor, inténtalo de nuevo más tarde o crea una oferta usted mismo.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Enviar</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3584,10 +3572,6 @@ Por favor, reinicie el wallet e inténtelo de nuevo.</translation>
         <source>updating</source>
         <translation>actualizando</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Recibe</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Valorar</translation>
@@ -3953,6 +3937,14 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>No se pudieron extraer los archivos de la DApp.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

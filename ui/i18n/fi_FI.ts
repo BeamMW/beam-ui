@@ -916,14 +916,6 @@
         <source>Password</source>
         <translation>Salasana</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Vastaanotettava summa</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Summa</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Vaihtokurssi</translation>
@@ -2216,10 +2208,6 @@ much longer for a transaction to complete.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Ei yhtään voimassa olevaa tarjousta.
 Tee oma tarjous tai yritä myöhemmin uudelleen.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Lähetä</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3586,10 +3574,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>päivittää</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Vastaanota</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Vaihtomaksu</translation>
@@ -3955,6 +3939,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>DApp-tiedostoja ei voitu purkaa.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -115,8 +115,8 @@ Update your settings and try again."
                     // Send amount
                     //
                     Panel {
-                        //% "Send amount"
-                        title:                   qsTrId("sent-amount-label")
+                        //% "I send"
+                        title:                   qsTrId("atomic-swap-i-send")
                         Layout.fillWidth:        true
                         content:
                         AmountInput {
@@ -348,8 +348,8 @@ please review your settings and try again"
                     // Receive amount
                     //
                     Panel {
-                        //% "Receive amount"
-                        title: qsTrId("receive-amount-swap-label")
+                        //% "I receive"
+                        title: qsTrId("atomic-swap-i-receive")
                         Layout.fillWidth: true
                         content:
                         AmountInput {

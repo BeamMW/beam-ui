@@ -914,14 +914,6 @@
         <source>Password</source>
         <translation>비밀번호</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>송금 받기</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>송금하기</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>환율</translation>
@@ -2210,10 +2202,6 @@ much longer for a transaction to complete.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>활성화된 오퍼가 현재 없습니다.
 잠시 후 재시도하거나 오퍼를 만드십시오.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>보내기</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3576,10 +3564,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>업데이트 중</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>받기</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Rate</translation>
@@ -3945,6 +3929,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>DApp 파일의 압축을 풀 수 없습니다.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -915,14 +915,6 @@
         <source>Password</source>
         <translation>Passwort</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Betrag erhalten</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Betrag senden</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Wechselkurs</translation>
@@ -2211,10 +2203,6 @@ viel länger dauern, bis eine Transaktion abgeschlossen ist.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Momentan gibt es keine aktiven Angebote.
 Bitte versuchen Sie es später noch einmal oder erstellen Sie selbst ein Angebot.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Senden</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3580,10 +3568,6 @@ Bitte starten Sie das Wallet neu und versuchen Sie es erneut.</translation>
         <source>updating</source>
         <translation>aktualisiere</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Erhalten</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Rate</translation>
@@ -3949,6 +3933,14 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Die DApp-Dateien konnten nicht entpackt werden.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

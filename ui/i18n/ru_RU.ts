@@ -918,14 +918,6 @@
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Сумма к получению</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Отправляемая сумма</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Обменный курс</translation>
@@ -2223,10 +2215,6 @@ much longer for a transaction to complete.</source>
 Please try again later or create an offer yourself.</source>
         <translation>В данный момент нет активных предложений.
 Пожалуйста, повторите попытку позже или создайте предложение самостоятельно.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Отправить</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3597,10 +3585,6 @@ Please, restart the wallet and try again.</source>
         <source>updating</source>
         <translation>обновление</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Получить</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Курс</translation>
@@ -3966,6 +3950,14 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Не удалось распаковать файлы DApp.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

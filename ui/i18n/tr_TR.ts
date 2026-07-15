@@ -914,14 +914,6 @@
         <source>Password</source>
         <translation>Şifre</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation type="unfinished">Receive amount</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation type="unfinished">Send amount</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation type="unfinished">Exchange rate</translation>
@@ -2210,10 +2202,6 @@ much longer for a transaction to complete.</translation>
 Please try again later or create an offer yourself.</source>
         <translation type="unfinished">There are no active offers at the moment.
 Please try again later or create an offer yourself.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Gönder</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3576,10 +3564,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>güncelleniyor</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Al</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation type="unfinished">Rate</translation>
@@ -3945,6 +3929,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>DApp dosyaları çıkarılamadı.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

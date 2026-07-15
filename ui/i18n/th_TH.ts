@@ -914,14 +914,6 @@
         <source>Password</source>
         <translation>รหัสผ่าน</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>จำนวนที่ได้รับ</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>จำนวนที่โอน</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>อัตราแลกเปลี่ยน</translation>
@@ -2211,10 +2203,6 @@ much longer for a transaction to complete.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>ไม่มีข้อเสนอการแลกเปลี่ยนใดๆในตอนนี้
 กรุณาลองอีกครั้งหรือสร้างข้อเสนอของตัวเองเลย</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>โอน</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3576,10 +3564,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>กำลังอัพเดท</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>รับ</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>เรท</translation>
@@ -3945,6 +3929,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>ไม่สามารถแตกไฟล์ DApp ได้</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

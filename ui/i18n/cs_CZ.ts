@@ -918,14 +918,6 @@
         <source>Password</source>
         <translation>Heslo</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Přijmout částku</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Odeslat částku</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Směnný kurz</translation>
@@ -2221,10 +2213,6 @@ Zkontrolujte na %1 blockchainu sami. Nízké poplatky mohou způsobit
 Please try again later or create an offer yourself.</source>
         <translation>Momentálně nejsou žádné aktivní nabídky.
 Zkuste to prosím později nebo vytvořte svou nabídku.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Odeslat</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3595,10 +3583,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>probíhá aktualizace</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Přijmout</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Sazba</translation>
@@ -3964,6 +3948,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Soubory DApp se nepodařilo rozbalit.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

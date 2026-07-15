@@ -916,14 +916,6 @@
         <source>Password</source>
         <translation>Password</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Ricevi importo</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Inviare importo</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Tasso di cambio</translation>
@@ -2216,10 +2208,6 @@ molto più a lungo per completare una transazione.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Al momento non ci sono offerte attive.
 Riprova più tardi o crea un&apos;offerta.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Invia</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3584,10 +3572,6 @@ Riavviare il wallet e riprovare.</translation>
         <source>updating</source>
         <translation>in aggiornamento</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Ricevere</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Vota</translation>
@@ -3953,6 +3937,14 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Impossibile estrarre i file della DApp.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -924,14 +924,6 @@
         <source>Password</source>
         <translation type="unfinished">Password</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Износ који примате</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Износ који шаљете</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Стопа Мењачнице</translation>
@@ -2230,10 +2222,6 @@ much longer for a transaction to complete.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Тренутно нема активних понуда.
 Молим проверите поново касније или сами креирајте понуду.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation type="unfinished">Send</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3601,10 +3589,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>ажурирање</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation type="unfinished">Receive</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Курс</translation>
@@ -3977,6 +3961,14 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Nije moguće raspakovati DApp datoteke.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -610,8 +610,8 @@ Please try again later or create an offer yourself."
 
                 TableViewColumn {
                     role: "amountSend"
-                    //% "Send"
-                    title: qsTrId("atomic-swap-amount-send")
+                    //% "I send"
+                    title: qsTrId("atomic-swap-i-send")
                     width: offersTable.columnWidth
                     movable: false
                     resizable: false
@@ -625,8 +625,8 @@ Please try again later or create an offer yourself."
 
                 TableViewColumn {
                     role: "amountReceive"
-                    //% "Receive"
-                    title: qsTrId("general-receive")
+                    //% "I receive"
+                    title: qsTrId("atomic-swap-i-receive")
                     width: offersTable.columnWidth
                     movable: false
                     resizable: false

@@ -916,14 +916,6 @@
         <source>Password</source>
         <translation>Mot de passe</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Recevoir montant</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Envoyer montant</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Taux de change</translation>
@@ -2213,10 +2205,6 @@ prendre beaucoup plus de temps pour compléter une transaction.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Il n&apos;y a pas d&apos;offre active pour le moment.
 Veuillez réessayer plus tard ou créer une offre vous-même.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Envoyer</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3582,10 +3570,6 @@ Veuillez redémarrer le portefeuille et réessayer.</translation>
         <source>updating</source>
         <translation>mise à jour en cours</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Recevoir</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Taux</translation>
@@ -3926,7 +3910,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-cant-open">
         <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
-        <translation>Impossible d'ouvrir le fichier DApp. Il est peut-être corrompu.</translation>
+        <translation>Impossible d&apos;ouvrir le fichier DApp. Il est peut-être corrompu.</translation>
     </message>
     <message id="dapp-install-err-cant-read-manifest">
         <source>Couldn&apos;t read the DApp manifest.</source>
@@ -3934,7 +3918,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-unsupported">
         <source>This DApp is not supported by your wallet version.</source>
-        <translation>Cette DApp n'est pas prise en charge par votre version du portefeuille.</translation>
+        <translation>Cette DApp n&apos;est pas prise en charge par votre version du portefeuille.</translation>
     </message>
     <message id="dapp-install-err-invalid">
         <source>Invalid DApp file: the manifest is missing or incomplete.</source>
@@ -3946,11 +3930,19 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-folder">
         <source>Couldn&apos;t prepare the installation folder.</source>
-        <translation>Impossible de préparer le dossier d'installation.</translation>
+        <translation>Impossible de préparer le dossier d&apos;installation.</translation>
     </message>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
-        <translation>Impossible d'extraire les fichiers de la DApp.</translation>
+        <translation>Impossible d&apos;extraire les fichiers de la DApp.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
