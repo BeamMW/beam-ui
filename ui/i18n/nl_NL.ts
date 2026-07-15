@@ -3948,5 +3948,49 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>While the swap is in progress, if the other side goes offline your coins will be automatically unlocked in %1 at most.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="settings-eth-infura">
+        <source>Infura</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-custom-rpc">
+        <source>Custom RPC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-rpc-endpoint">
+        <source>Ethereum RPC endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-rpc-note">
+        <source>Supports Infura, Alchemy, QuickNode, Chainstack, Ankr, or your own Ethereum node.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-check-connection">
+        <source>Check connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-endpoint-failed">
+        <source>Unable to connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-chain-mainnet">
+        <source>Ethereum Mainnet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-chain-sepolia">
+        <source>Sepolia Testnet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-chain-other">
+        <source>chain %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-endpoint-ok">
+        <source>Connected to %1. Latest block: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-endpoint-wrong-network">
+        <source>Connected to %1, but Ethereum Mainnet is required</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

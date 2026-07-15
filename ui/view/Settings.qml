@@ -393,6 +393,10 @@ ColumnLayout {
                     connectionError:          viewModel.ethSettings.connectionError
                     infuraProjectID:          viewModel.ethSettings.infuraProjectID
                     accountIndex:             viewModel.ethSettings.accountIndex
+                    useCustomRpc:             viewModel.ethSettings.useCustomRpc
+                    customRpcUrl:             viewModel.ethSettings.customRpcUrl
+                    endpointCheckResult:      viewModel.ethSettings.endpointCheckResult
+                    endpointCheckOk:          viewModel.ethSettings.endpointCheckOk
 
                     Connections {
                         target: viewModel.ethSettings
@@ -422,6 +426,19 @@ ColumnLayout {
                             swapEthSettings.accountIndex = viewModel.ethSettings.accountIndex
                         }
 
+                        function onUseCustomRpcChanged () {
+                            swapEthSettings.useCustomRpc = viewModel.ethSettings.useCustomRpc
+                        }
+
+                        function onCustomRpcUrlChanged () {
+                            swapEthSettings.customRpcUrl = viewModel.ethSettings.customRpcUrl
+                        }
+
+                        function onEndpointCheckResultChanged () {
+                            swapEthSettings.endpointCheckResult = viewModel.ethSettings.endpointCheckResult
+                            swapEthSettings.endpointCheckOk     = viewModel.ethSettings.endpointCheckOk
+                        }
+
                         function onSeedPhrasesChanged () {
                             swapEthSettings.seedPhrases = viewModel.ethSettings.seedPhrases
                         }
@@ -439,6 +456,7 @@ ColumnLayout {
                     onRestoreSeedPhrases:        viewModel.ethSettings.restoreSeedPhrases()
                     onCopySeedPhrases:           viewModel.ethSettings.copySeedPhrases()
                     onValidateCurrentSeedPhrase: viewModel.ethSettings.validateCurrentSeedPhrase()
+                    onValidateEndpoint:          viewModel.ethSettings.validateEndpoint()
 
                     Binding {
                         target:   viewModel.ethSettings
@@ -456,6 +474,18 @@ ColumnLayout {
                         target:   viewModel.ethSettings
                         property: "accountIndex"
                         value:    swapEthSettings.accountIndex
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "useCustomRpc"
+                        value:    swapEthSettings.useCustomRpc
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "customRpcUrl"
+                        value:    swapEthSettings.customRpcUrl
                     }
                 }
             }

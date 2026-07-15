@@ -94,6 +94,11 @@ beam::ethereum::IBridge::ErrorType SwapEthClientModel::getConnectionError() cons
     return m_connectionError;
 }
 
+void SwapEthClientModel::validateEndpoint()
+{
+    GetAsync()->ValidateEndpoint();
+}
+
 void SwapEthClientModel::OnBalance(wallet::AtomicSwapCoin swapCoin, Amount balance)
 {
     emit gotBalance(swapCoin, balance);
@@ -118,6 +123,11 @@ void SwapEthClientModel::OnChangedSettings()
 void SwapEthClientModel::OnConnectionError(beam::ethereum::IBridge::ErrorType error)
 {
     emit gotConnectionError(error);
+}
+
+void SwapEthClientModel::OnEndpointValidated(uint64_t chainID, uint64_t blockNumber, const beam::ethereum::IBridge::Error& error)
+{
+    emit endpointValidated(chainID, blockNumber, error.m_type == beam::ethereum::IBridge::None);
 }
 
 void SwapEthClientModel::requestBalance()

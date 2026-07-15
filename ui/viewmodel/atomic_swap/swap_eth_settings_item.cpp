@@ -14,8 +14,11 @@
 
 #include "swap_eth_settings_item.h"
 
+#include <QLocale>
+
 #include "mnemonic/mnemonic.h"
 #include "model/app_model.h"
+#include "model/swap_eth_client_model.h"
 #include "viewmodel/qml_globals.h"
 #include "seed_phrase_item.h"
 #include "viewmodel/settings_helpers.h"
@@ -35,6 +38,7 @@ SwapEthSettingsItem::SwapEthSettingsItem()
     auto coinClient = m_coinClient.lock();
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(connectionStatusChanged()));
     connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorChanged()));
+    connect(coinClient.get(), &SwapEthClientModel::endpointValidated, this, &SwapEthSettingsItem::onEndpointValidated);
     LoadSettings();
 }
 
@@ -58,8 +62,11 @@ void SwapEthSettingsItem::applySettings()
     m_settings->m_shouldConnect = m_shouldConnect;
     m_settings->m_projectID = m_infuraProjectID.toStdString();
     m_settings->m_secretWords = GetSeedPhraseFromSeedItems();
+    m_settings->m_useCustomRpc = m_useCustomRpc;
+    m_settings->m_customRpcUrl = m_customRpcUrl.trimmed().toStdString();
 
     coinClient->SetSettings(*m_settings);
+    clearEndpointCheck();
 }
 
 void SwapEthSettingsItem::clearSettings()
@@ -107,6 +114,14 @@ void SwapEthSettingsItem::validateCurrentSeedPhrase()
     }
 
     setIsCurrentSeedValid(isValidMnemonic(seedPhrases, language::en));
+}
+
+void SwapEthSettingsItem::validateEndpoint()
+{
+    if (auto c = m_coinClient.lock())
+    {
+        c->validateEndpoint();
+    }
 }
 
 QStringList SwapEthSettingsItem::getEthereumAddresses() const
@@ -206,6 +221,8 @@ void SwapEthSettingsItem::LoadSettings()
     {
         SetSeedPhrase(m_settings->m_secretWords);
         infuraProjectID(str2qstr(m_settings->m_projectID));
+        setUseCustomRpc(m_settings->m_useCustomRpc);
+        setCustomRpcUrl(str2qstr(m_settings->m_customRpcUrl));
 
         setAccountIndex(m_settings->m_accountIndex);
         shouldConnect(m_settings->m_shouldConnect);
@@ -256,6 +273,8 @@ void SwapEthSettingsItem::SetDefaultSettings(bool clearSeed)
 {
     infuraProjectID("");
     setAccountIndex(0);
+    setUseCustomRpc(false);
+    setCustomRpcUrl("");
 
     if (clearSeed)
     {
@@ -274,6 +293,7 @@ void SwapEthSettingsItem::infuraProjectID(const QString& value)
     {
         m_infuraProjectID = value;
         emit infuraProjectIDChanged();
+        clearEndpointCheck();
     }
 }
 
@@ -336,6 +356,97 @@ QString SwapEthSettingsItem::getConnectionError() const
 
     default:
         return QString();
+    }
+}
+
+bool SwapEthSettingsItem::useCustomRpc() const
+{
+    return m_useCustomRpc;
+}
+
+void SwapEthSettingsItem::setUseCustomRpc(bool value)
+{
+    if (value != m_useCustomRpc)
+    {
+        m_useCustomRpc = value;
+        emit useCustomRpcChanged();
+        clearEndpointCheck();
+    }
+}
+
+QString SwapEthSettingsItem::customRpcUrl() const
+{
+    return m_customRpcUrl;
+}
+
+void SwapEthSettingsItem::setCustomRpcUrl(const QString& value)
+{
+    if (value != m_customRpcUrl)
+    {
+        m_customRpcUrl = value;
+        emit customRpcUrlChanged();
+        clearEndpointCheck();
+    }
+}
+
+QString SwapEthSettingsItem::endpointCheckResult() const
+{
+    return m_endpointCheckResult;
+}
+
+bool SwapEthSettingsItem::endpointCheckOk() const
+{
+    return m_endpointCheckOk;
+}
+
+QString SwapEthSettingsItem::getChainName(quint64 chainID)
+{
+    switch (chainID)
+    {
+    //% "Ethereum Mainnet"
+    case 1:  return qtTrId("settings-eth-chain-mainnet");
+    //% "Sepolia Testnet"
+    case 11155111: return qtTrId("settings-eth-chain-sepolia");
+    default:
+        //% "chain %1"
+        return qtTrId("settings-eth-chain-other").arg(chainID);
+    }
+}
+
+void SwapEthSettingsItem::onEndpointValidated(quint64 chainID, quint64 blockNumber, bool ok)
+{
+    m_endpointCheckOk = ok;   // 'ok' is false for BOTH connection failures and
+                              // wrong-network endpoints (core enforces chain id)
+    if (!ok)
+    {
+        if (chainID != 0)
+        {
+            // core was able to identify the chain even though it's not the required one
+            //% "Connected to %1, but Ethereum Mainnet is required"
+            m_endpointCheckResult = qtTrId("settings-eth-endpoint-wrong-network").arg(getChainName(chainID));
+        }
+        else
+        {
+            //% "Unable to connect"
+            m_endpointCheckResult = qtTrId("settings-eth-endpoint-failed");
+        }
+    }
+    else
+    {
+        //% "Connected to %1. Latest block: %2"
+        m_endpointCheckResult = qtTrId("settings-eth-endpoint-ok")
+            .arg(getChainName(chainID)).arg(QLocale().toString((qulonglong)blockNumber));
+    }
+    emit endpointCheckResultChanged();
+}
+
+void SwapEthSettingsItem::clearEndpointCheck()
+{
+    if (!m_endpointCheckResult.isEmpty() || m_endpointCheckOk)
+    {
+        m_endpointCheckResult.clear();
+        m_endpointCheckOk = false;
+        emit endpointCheckResultChanged();
     }
 }
 

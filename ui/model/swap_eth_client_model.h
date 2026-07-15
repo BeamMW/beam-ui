@@ -35,6 +35,7 @@ public:
     beam::ethereum::Client::Status getStatus() const;
     bool canModifySettings() const;
     beam::ethereum::IBridge::ErrorType getConnectionError() const;
+    void validateEndpoint();
 
 signals:
     void gotStatus(beam::ethereum::Client::Status status);
@@ -48,6 +49,7 @@ signals:
     void estimatedFeeRateChanged();
     void statusChanged();
     void connectionErrorChanged();
+    void endpointValidated(quint64 chainID, quint64 blockNumber, bool ok);
 
 private:
     void OnStatus(Status status) override;
@@ -56,6 +58,7 @@ private:
     void OnCanModifySettingsChanged(bool canModify) override;
     void OnChangedSettings() override;
     void OnConnectionError(beam::ethereum::IBridge::ErrorType error) override;
+    void OnEndpointValidated(uint64_t chainID, uint64_t blockNumber, const beam::ethereum::IBridge::Error& error) override;
 
 private slots:
     void requestBalance();

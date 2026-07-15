@@ -22,10 +22,15 @@ SettingsFoldable {
 
     property alias  infuraProjectID:      infuraProjectIDInput.text
     property alias  accountIndex:         accountIndexInput.text
+    property alias  useCustomRpc:         useCustomRpcSwitch.checked
+    property alias  customRpcUrl:         customRpcUrlInput.text
 
     property alias seedPhrases:        seedPhraseDialog.seedPhrasesElectrum
     property alias phrasesSeparator:   seedPhraseDialog.phrasesSeparatorElectrum
     property bool  isCurrentSeedValid: false
+
+    property string endpointCheckResult: ""
+    property bool   endpointCheckOk:     false
 
     // function to get ethereum addresses
     property var   getEthereumAddresses:       undefined
@@ -61,12 +66,15 @@ SettingsFoldable {
     signal restoreSeedPhrases
     signal copySeedPhrases
     signal validateCurrentSeedPhrase
+    signal validateEndpoint
 
     QtObject {
         id: internalValues
         property string initialInfuraProjectID
         property string initialSeed
         property string initialAccountIndex
+        property bool   initialUseCustomRpc
+        property string initialCustomRpcUrl
 
         property bool   isSeedChanged: false
 
@@ -76,16 +84,21 @@ SettingsFoldable {
             control.restoreSeedPhrases()
 
             accountIndex = initialAccountIndex
+            useCustomRpc = initialUseCustomRpc
+            customRpcUrl = initialCustomRpcUrl
         }
 
         function save() {
             initialInfuraProjectID = infuraProjectID
             isSeedChanged = false
             initialAccountIndex = accountIndex
+            initialUseCustomRpc = useCustomRpc
+            initialCustomRpcUrl = customRpcUrl
         }
 
         function isChanged() {
-            return initialInfuraProjectID !== infuraProjectID || isSeedChanged ||initialAccountIndex != accountIndex
+            return initialInfuraProjectID !== infuraProjectID || isSeedChanged || initialAccountIndex != accountIndex ||
+                   initialUseCustomRpc !== useCustomRpc || initialCustomRpcUrl !== customRpcUrl
         }
     }
 
@@ -134,6 +147,41 @@ SettingsFoldable {
     content: ColumnLayout {
         spacing: 0
 
+        // Infura & Custom RPC switch
+        RowLayout {
+            height:   20
+            spacing:  10
+            Layout.fillWidth: true
+            SFText {
+                //% "Infura"
+                text:  qsTrId("settings-eth-infura")
+                color: useCustomRpcSwitch.checked ? control.color : Style.active
+                font.pixelSize: 14
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: useCustomRpcSwitch.checked = !useCustomRpcSwitch.checked
+                }
+            }
+            CustomSwitch {
+                id:          useCustomRpcSwitch
+                alwaysGreen: true
+                spacing:     0
+                enabled:     canEdit
+            }
+            SFText {
+                //% "Custom RPC"
+                text: qsTrId("settings-eth-custom-rpc")
+                color: useCustomRpcSwitch.checked ? Style.active : control.color
+                font.pixelSize: 14
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: useCustomRpcSwitch.checked = !useCustomRpcSwitch.checked
+                }
+            }
+        }
+
         GridLayout {
             Layout.topMargin: 20
             columns:          2
@@ -141,6 +189,7 @@ SettingsFoldable {
             rowSpacing:       13
 
             SFText {
+                visible:        !useCustomRpcSwitch.checked
                 font.pixelSize: 14
                 color:          control.color
                 //% "Infura project ID"
@@ -149,6 +198,7 @@ SettingsFoldable {
 
             SFTextInput {
                 id:               infuraProjectIDInput
+                visible:          !useCustomRpcSwitch.checked
                 Layout.fillWidth: true
                 color:            Style.content_main
                 font.pixelSize:     14
@@ -177,6 +227,38 @@ SettingsFoldable {
                     top: 20
                 }
             }
+        }
+
+        SFText {
+            visible:        useCustomRpcSwitch.checked
+            Layout.topMargin: 20
+            font.pixelSize: 14
+            color:          control.color
+            //% "Ethereum RPC endpoint"
+            text:           qsTrId("settings-eth-rpc-endpoint")
+        }
+
+        SFTextInput {
+            id:               customRpcUrlInput
+            visible:          useCustomRpcSwitch.checked
+            Layout.fillWidth: true
+            color:            Style.content_main
+            font.pixelSize:   14
+            activeFocusOnTab: true
+            underlineVisible: canEdit
+            readOnly:         !canEdit
+            placeholderText:  "https://mainnet.infura.io/v3/..."
+        }
+
+        SFText {
+            visible:        useCustomRpcSwitch.checked
+            Layout.fillWidth: true
+            Layout.topMargin: 7
+            font.pixelSize: 12
+            color:          Style.content_secondary
+            wrapMode:       Text.Wrap
+            //% "Supports Infura, Alchemy, QuickNode, Chainstack, Ankr, or your own Ethereum node."
+            text:           qsTrId("settings-eth-rpc-note")
         }
 
         // seed: new || edit
@@ -318,6 +400,18 @@ SettingsFoldable {
             }
 
             CustomButton {
+                Layout.preferredHeight: 38
+                Layout.preferredWidth:  164
+                leftPadding:  25
+                rightPadding: 25
+                //% "Check connection"
+                text:         qsTrId("settings-eth-check-connection")
+                // don't allow checking the last-applied endpoint while there are unapplied edits on screen
+                enabled:      (isConnected || canApplySettings()) && !isSettingsChanged()
+                onClicked:    validateEndpoint()
+            }
+
+            CustomButton {
                 visible:                applySettingsButtonId.visible
                 Layout.preferredHeight: 38
                 Layout.preferredWidth:  130
@@ -393,6 +487,16 @@ SettingsFoldable {
             Item {
                 Layout.fillWidth: true
             }
+        }
+
+        SFText {
+            visible:          endpointCheckResult !== ""
+            Layout.fillWidth: true
+            Layout.topMargin: 10
+            font.pixelSize:   14
+            wrapMode:         Text.Wrap
+            color:            endpointCheckOk ? Style.active : Style.validator_error
+            text:             (endpointCheckOk ? "✓ " : "✗ ") + endpointCheckResult
         }
     }
 }
