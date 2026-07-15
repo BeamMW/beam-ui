@@ -2057,8 +2057,9 @@ Votre version est : %2. Veuillez vérifier les mises à jour.</translation>
         <translation>Ethereum</translation>
     </message>
     <message id="settings-swap-ethereum-node">
-        <source>Ethereum node</source>
-        <translation>Nœud Ethereum</translation>
+        <source>Ethereum</source>
+        <oldsource>Ethereum node</oldsource>
+        <translation type="unfinished">Nœud Ethereum</translation>
     </message>
     <message id="ethereum-show-seed-title">
         <source>Ethereum seed phrase</source>

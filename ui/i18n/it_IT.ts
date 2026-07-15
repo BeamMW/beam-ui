@@ -2060,8 +2060,9 @@ fallito
         <translation>Ethereum</translation>
     </message>
     <message id="settings-swap-ethereum-node">
-        <source>Ethereum node</source>
-        <translation>Nodo Ethereum</translation>
+        <source>Ethereum</source>
+        <oldsource>Ethereum node</oldsource>
+        <translation type="unfinished">Nodo Ethereum</translation>
     </message>
     <message id="ethereum-show-seed-title">
         <source>Ethereum seed phrase</source>

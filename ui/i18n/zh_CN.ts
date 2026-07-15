@@ -2070,8 +2070,9 @@ Your version is: %2. Please, check for updates.</source>
         <translation>以太坊</translation>
     </message>
     <message id="settings-swap-ethereum-node">
-        <source>Ethereum node</source>
-        <translation>以太坊节点</translation>
+        <source>Ethereum</source>
+        <oldsource>Ethereum node</oldsource>
+        <translation type="unfinished">以太坊节点</translation>
     </message>
     <message id="ethereum-show-seed-title">
         <source>Ethereum seed phrase</source>

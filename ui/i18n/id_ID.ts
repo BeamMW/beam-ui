@@ -2055,8 +2055,9 @@ Versi Anda adalah: %2. Silakan periksa pembaruan.</translation>
         <translation>Ethereum</translation>
     </message>
     <message id="settings-swap-ethereum-node">
-        <source>Ethereum node</source>
-        <translation>Ethereum node</translation>
+        <source>Ethereum</source>
+        <oldsource>Ethereum node</oldsource>
+        <translation type="unfinished">Ethereum node</translation>
     </message>
     <message id="ethereum-show-seed-title">
         <source>Ethereum seed phrase</source>

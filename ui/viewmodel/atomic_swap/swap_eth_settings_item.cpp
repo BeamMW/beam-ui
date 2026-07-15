@@ -131,7 +131,7 @@ QString SwapEthSettingsItem::getTitle() const
 {
     if (m_settings->m_shouldConnect)
     {
-        //% "Ethereum node"
+        //% "Ethereum"
         return qtTrId("settings-swap-ethereum-node");
     }
     
