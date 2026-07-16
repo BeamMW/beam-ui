@@ -227,7 +227,7 @@ ColumnLayout {
                         connectionError:          modelData.connectionError
                         getAddressesElectrum:     modelData.getAddressesElectrum
                         folded:                   creating ? modelData.folded :
-                                                             (unfoldSection == modelData.coinID ? false : (unfoldSection == "ALL_COINS" ? modelData.isConnected : true))
+                                                             (unfoldSection == modelData.coinID ? false : true)
 
 
                         mainSettingsViewModel:    viewModel
@@ -387,7 +387,7 @@ ColumnLayout {
                     mainSettingsViewModel:    viewModel
                     showStatus:               true
                     getEthereumAddresses:     viewModel.ethSettings.getEthereumAddresses
-                    folded:                   creating ? (unfoldSection == viewModel.ethSettings.coinID ? false : (unfoldSection == "ALL_COINS" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
+                    folded:                   creating ? (unfoldSection == viewModel.ethSettings.coinID ? false : true) : viewModel.ethSettings.folded
                     canChangeConnection:      viewModel.ethSettings.canChangeConnection
                     isConnected:              viewModel.ethSettings.isConnected
                     connectionStatus:         viewModel.ethSettings.connectionStatus
