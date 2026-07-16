@@ -63,6 +63,8 @@ class SendSwapViewModel: public QObject
     Q_PROPERTY(uint    beamAssetId        READ getBeamAssetId     NOTIFY tokenChanged)
     Q_PROPERTY(QString beamAssetUnitName  READ getBeamAssetUnitName NOTIFY tokenChanged)
     Q_PROPERTY(bool    needsBeamForRedeemFee READ needsBeamForRedeemFee NOTIFY tokenChanged)
+    // bumped on estimatedFeeRateChanged so QML fee bindings re-evaluate
+    Q_PROPERTY(unsigned int feeRatesRevision  READ getFeeRatesRevision NOTIFY feeRatesRevisionChanged)
 
 public:
     SendSwapViewModel();
@@ -130,6 +132,7 @@ public:
     uint getBeamAssetId() const;
     QString getBeamAssetUnitName() const;
     bool needsBeamForRedeemFee() const;
+    unsigned int getFeeRatesRevision() const;
 
 public:
     Q_INVOKABLE void setParameters(const QVariant& parameters);    /// used to pass TxParameters directly without Token generation
@@ -157,6 +160,7 @@ signals:
     void tokenGeneratebByNewAppVersion();
     void minimalBeamFeeGrothesChanged();
     void currListChanged();
+    void feeRatesRevisionChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId);
@@ -192,6 +196,7 @@ private:
 
     beam::Amount _minimalBeamFeeGrothes;
     bool _feeChangedByUI = false;
+    unsigned int _feeRatesRevision = 0;
 
     // extended-offer fields (params 41-45), empty/0 when the offer is a
     // classic swap

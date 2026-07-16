@@ -135,8 +135,32 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     connect(this, &ReceiveSwapViewModel::selectedBeamAssetChanged, this, &ReceiveSwapViewModel::sentCurrencyIndexChanged);
     connect(this, &ReceiveSwapViewModel::selectedBeamAssetChanged, this, &ReceiveSwapViewModel::receiveCurrencyIndexChanged);
 
+    const auto onFeeRates = [this]()
+    {
+        ++_feeRatesRevision;
+        emit feeRatesRevisionChanged();
+    };
+    if (auto ethClient = AppModel::getInstance().getSwapEthClient(); ethClient)
+    {
+        connect(ethClient.get(), &SwapEthClientModel::estimatedFeeRateChanged, this, onFeeRates);
+    }
+    for (auto coin : {beam::wallet::AtomicSwapCoin::Bitcoin, beam::wallet::AtomicSwapCoin::Litecoin,
+                      beam::wallet::AtomicSwapCoin::Qtum, beam::wallet::AtomicSwapCoin::Dogecoin,
+                      beam::wallet::AtomicSwapCoin::Dash, beam::wallet::AtomicSwapCoin::Bitcoin_Cash})
+    {
+        if (auto client = AppModel::getInstance().getSwapCoinClient(coin); client)
+        {
+            connect(client.get(), &SwapCoinClientModel::estimatedFeeRateChanged, this, onFeeRates);
+        }
+    }
+
     generateNewAddress();
     updateTransactionToken();
+}
+
+unsigned int ReceiveSwapViewModel::getFeeRatesRevision() const
+{
+    return _feeRatesRevision;
 }
 
 //void ReceiveSwapViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)

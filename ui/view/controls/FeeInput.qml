@@ -27,6 +27,14 @@ ColumnLayout {
     property string  rateUnit:                   ""
     property string  minimumFeeNotificationText: ""
 
+    // the recommended rate arrives asynchronously; adopt it if no fee is set
+    // yet and the user is not editing the field
+    onRecommendedFeeChanged: {
+        if (control.fee === 0 && control.recommendedFee > 0 && !control.readOnly && !feeInput.activeFocus) {
+            control.fee = BeamGlobals.getDefaultFee(control.currency)
+        }
+    }
+
     RowLayout {
         Layout.fillWidth: true
 

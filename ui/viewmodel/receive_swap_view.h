@@ -59,6 +59,8 @@ class ReceiveSwapViewModel: public QObject
     // sentCurrency==CurrEthereum + the underlying _selectedTokenContract stamp.
     Q_PROPERTY(int           sentCurrencyIndex                   READ getSentCurrencyIndex     WRITE setSentCurrencyIndex     NOTIFY sentCurrencyIndexChanged)
     Q_PROPERTY(int           receiveCurrencyIndex                READ getReceiveCurrencyIndex  WRITE setReceiveCurrencyIndex  NOTIFY receiveCurrencyIndexChanged)
+    // bumped on estimatedFeeRateChanged so QML fee bindings re-evaluate
+    Q_PROPERTY(unsigned int  feeRatesRevision                    READ getFeeRatesRevision      NOTIFY feeRatesRevisionChanged)
 
 public:
     ReceiveSwapViewModel();
@@ -89,6 +91,7 @@ signals:
     void selectedTokenChanged();
     void sentCurrencyIndexChanged();
     void receiveCurrencyIndexChanged();
+    void feeRatesRevisionChanged();
 
 public:
     Q_INVOKABLE void generateNewAddress();
@@ -173,6 +176,8 @@ private:
     int currencyToListIndex(OldWalletCurrency::OldCurrency currency) const;
     void selectCurrencyByListIndex(bool isSent, int index);
 
+    unsigned int getFeeRatesRevision() const;
+
 private slots:
     //void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
     void onSwapParamsLoaded(const beam::ByteBuffer& token);
@@ -207,4 +212,6 @@ private:
     QString _selectedTokenContract;
     QString _selectedTokenSymbol;
     unsigned int _selectedTokenDecimals = 0;
+
+    unsigned int _feeRatesRevision = 0;
 };

@@ -42,6 +42,30 @@ SendSwapViewModel::SendSwapViewModel()
     connect(_walletModel, &WalletModel::coinsSelected, this, &SendSwapViewModel::onCoinsSelected);
     connect(_rates.get(), SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
     connect(_rates.get(), SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
+
+    const auto onFeeRates = [this]()
+    {
+        ++_feeRatesRevision;
+        emit feeRatesRevisionChanged();
+    };
+    if (auto ethClient = AppModel::getInstance().getSwapEthClient(); ethClient)
+    {
+        connect(ethClient.get(), &SwapEthClientModel::estimatedFeeRateChanged, this, onFeeRates);
+    }
+    for (auto coin : {beam::wallet::AtomicSwapCoin::Bitcoin, beam::wallet::AtomicSwapCoin::Litecoin,
+                      beam::wallet::AtomicSwapCoin::Qtum, beam::wallet::AtomicSwapCoin::Dogecoin,
+                      beam::wallet::AtomicSwapCoin::Dash, beam::wallet::AtomicSwapCoin::Bitcoin_Cash})
+    {
+        if (auto client = AppModel::getInstance().getSwapCoinClient(coin); client)
+        {
+            connect(client.get(), &SwapCoinClientModel::estimatedFeeRateChanged, this, onFeeRates);
+        }
+    }
+}
+
+unsigned int SendSwapViewModel::getFeeRatesRevision() const
+{
+    return _feeRatesRevision;
 }
 
 QString SendSwapViewModel::getToken() const

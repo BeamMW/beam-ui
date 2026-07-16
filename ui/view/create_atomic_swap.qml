@@ -207,7 +207,8 @@ please review your settings and try again"
                             currency:                 viewModel.sentCurrency
                             minFee:                   currency == OldWalletCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
-                            recommendedFee:           BeamGlobals.getRecommendedFee(currency)
+                            // feeRatesRevision makes the binding re-query the cached rate
+                            recommendedFee:           { viewModel.feeRatesRevision; return BeamGlobals.getRecommendedFee(currency); }
                             feeLabel:                 BeamGlobals.getFeeRateLabel(currency)
                             color:                    Style.accent_outgoing
                             readOnly:                 false
@@ -437,7 +438,7 @@ please review your settings and try again"
                             currency:                   viewModel.receiveCurrency
                             minFee:                     BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
-                            recommendedFee:             BeamGlobals.getRecommendedFee(currency)
+                            recommendedFee:             { viewModel.feeRatesRevision; return BeamGlobals.getRecommendedFee(currency); }
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
