@@ -97,8 +97,10 @@ ColumnLayout {
                 // Allow integers up to 12 digits (max safe for uint64 with 8 decimals).
                 // Exact overflow protection is handled by the C++ backend (decode_base10)
                 // and the isEnoughAmount / balance validation.
+                var decimals = currencies[currencyIdx].decimals
+                if (decimals < 1) return "^([1-9][0-9]{0,11}|0)$"; // e.g. 0-decimals ERC-20 tokens
                 var pattern = "^([1-9][0-9]{0,11}|0)(\\.[0-9]{0,%1}[1-9])?$";
-                return pattern.arg(currencies[currencyIdx].decimals - 1);
+                return pattern.arg(decimals - 1);
             }
 
             Connections {

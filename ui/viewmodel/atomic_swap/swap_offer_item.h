@@ -42,6 +42,8 @@ public:
     beam::wallet::TxParameters getTxParameters() const;
     beam::wallet::TxID getTxID() const;
     QString getSwapCoinName() const;
+    QString getBeamSideName() const; // "beam", or the CA's unit name for extended offers
+    beam::wallet::AtomicSwapCoin resolvedSwapCoin() const; // SwapOffer::ResolveCoin()
 protected:
     void reset(const beam::wallet::SwapOffer& offer);
 
@@ -49,6 +51,8 @@ signals:
 
 private:
     beamui::Currencies getSwapCoinType() const;
+    QString amountBeamSide(beam::Amount value) const;
+    QString amountSwapCoinSide(beam::Amount value) const;
 
     beam::wallet::SwapOffer m_offer;          /// TxParameters subclass
     bool m_isBeamSide;                        /// pay beam to receive other coin

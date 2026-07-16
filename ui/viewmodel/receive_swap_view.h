@@ -47,6 +47,19 @@ class ReceiveSwapViewModel: public QObject
     Q_PROPERTY(unsigned int minimalBeamFeeGrothes           READ getMinimalBeamFeeGrothes       NOTIFY  minimalBeamFeeGrothesChanged)
     Q_PROPERTY(QList<QMap<QString, QVariant>> currList      READ getCurrList                    NOTIFY  currListChanged)
 
+    Q_PROPERTY(unsigned int  selectedBeamAssetId                 READ getSelectedBeamAssetId    WRITE setSelectedBeamAssetId  NOTIFY  selectedBeamAssetChanged)
+    Q_PROPERTY(QString       selectedBeamAssetUnitName            READ getSelectedBeamAssetUnitName                     NOTIFY  selectedBeamAssetChanged)
+
+    // custom ERC-20 tokens stored per wallet (settings, added via the ethereum
+    // settings pane): each is appended to currList as its own entry (after the
+    // classic currencies) so it is picked in the SAME combo as BEAM/BTC/.../WBTC.
+    // OldCurrency stays a closed enum (extending it would ripple through every
+    // exhaustive switch over it); instead the combo index identifies the entry,
+    // and sentCurrencyIndex/receiveCurrencyIndex translate that index to/from
+    // sentCurrency==CurrEthereum + the underlying _selectedTokenContract stamp.
+    Q_PROPERTY(int           sentCurrencyIndex                   READ getSentCurrencyIndex     WRITE setSentCurrencyIndex     NOTIFY sentCurrencyIndexChanged)
+    Q_PROPERTY(int           receiveCurrencyIndex                READ getReceiveCurrencyIndex  WRITE setReceiveCurrencyIndex  NOTIFY receiveCurrencyIndexChanged)
+
 public:
     ReceiveSwapViewModel();
 
@@ -72,6 +85,10 @@ signals:
     void secondCurrencyUnitNameChanged();
     void minimalBeamFeeGrothesChanged();
     void currListChanged();
+    void selectedBeamAssetChanged();
+    void selectedTokenChanged();
+    void sentCurrencyIndexChanged();
+    void receiveCurrencyIndexChanged();
 
 public:
     Q_INVOKABLE void generateNewAddress();
@@ -119,6 +136,13 @@ private:
     void loadSwapParams();
     void storeSwapParams();
 
+    // true when @currency is the pair side the selected custom ERC-20 token rides on
+    bool isTokenSide(OldWalletCurrency::OldCurrency currency) const;
+    // token side -> min(token decimals, 9) (WalletUnitsPerToken rule), otherwise the classic table
+    uint8_t effectiveDecimals(OldWalletCurrency::OldCurrency currency) const;
+    // drops the asset/token selections that no longer match the chosen pair
+    void syncExtendedSelections();
+
     bool isSendBeam() const;
     QString getRate() const;
 
@@ -130,6 +154,24 @@ private:
 
     unsigned int getMinimalBeamFeeGrothes() const;
     QList<QMap<QString, QVariant>> getCurrList() const;
+
+    unsigned int getSelectedBeamAssetId() const;
+    void setSelectedBeamAssetId(unsigned int value);
+    QString getSelectedBeamAssetUnitName() const;
+
+    QList<QMap<QString, QVariant>> getCustomTokensList() const;
+    QString getSelectedTokenContract() const;
+    void setSelectedTokenContract(const QString& value);
+    QString getSelectedTokenSymbol() const;
+    unsigned int getSelectedTokenDecimals() const;
+
+    // combo index (into currList) <-> (sentCurrency/receiveCurrency, _selectedTokenContract)
+    int getSentCurrencyIndex() const;
+    void setSentCurrencyIndex(int index);
+    int getReceiveCurrencyIndex() const;
+    void setReceiveCurrencyIndex(int index);
+    int currencyToListIndex(OldWalletCurrency::OldCurrency currency) const;
+    void selectCurrencyByListIndex(bool isSent, int index);
 
 private slots:
     //void onGeneratedNewAddress(const beam::wallet::WalletAddress& walletAddr);
@@ -157,4 +199,12 @@ private:
 
     beam::Amount _minimalBeamFeeGrothes;
     bool _feeChangedByUI = false;
+
+    // Confidential Asset being offered on the BEAM side, 0 == plain BEAM
+    beam::Asset::ID _selectedBeamAssetId = 0;
+
+    // custom ERC-20 token being offered on the non-BEAM side, empty == none
+    QString _selectedTokenContract;
+    QString _selectedTokenSymbol;
+    unsigned int _selectedTokenDecimals = 0;
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include <QObject>
+#include <QColor>
 #include <QQmlListProperty>
 #include "wallet/core/common.h"
 #ifdef BEAM_ATOMIC_SWAP_SUPPORT
@@ -74,6 +75,9 @@ namespace beamui
     /// Convert amount to ui string with "." as a separator. With the default @coinType, no currency label added.
     QString AmountToUIString(const beam::Amount& value, Currencies coinType = Currencies::Unknown, bool currencyLabel = true);
     QString AmountToUIString(const beam::Amount& value, const QString& unitName, uint8_t decimalPlaces = 0);
+    /// exact-decimals conversions: 0 is a valid decimal count here, unlike the overloads above/below
+    QString AmountToUIStringExactDecimals(const beam::Amount& value, uint8_t decimalPlaces);
+    beam::Amount UIStringToAmountExactDecimals(const QString& value, uint8_t decimalPlaces);
     QString AmountBigToUIString(const beam::AmountBig::Number& value);
 
     // value -> s"value GROTH"
@@ -102,6 +106,11 @@ namespace beamui
     quint32 getCurrentUIRevision();
 
     QString GetTokenTypeUIString(const std::string& token, bool choiceOffline);
+
+    // deterministic, local-only color for a string identifier (e.g. an ERC-20 contract
+    // address), drawn from the same fixed palette AssetsManager uses for Confidential
+    // Assets -- no network lookups, so the same address always maps to the same color.
+    QColor ColorFromString(const QString& identifier);
 
     QString getReasonString(beam::wallet::TxFailureReason reason);
 }  // namespace beamui

@@ -131,6 +131,18 @@ namespace beamui
         return QString::fromStdString(samount) + (unitName.isEmpty() ? "" : " " + unitName);
     }
 
+    QString AmountToUIStringExactDecimals(const Amount& value, uint8_t decimalPlaces)
+    {
+        return QString::fromStdString(libbitcoin::encode_base10(value, decimalPlaces));
+    }
+
+    beam::Amount UIStringToAmountExactDecimals(const QString& value, uint8_t decimalPlaces)
+    {
+        beam::Amount amount = 0;
+        libbitcoin::decode_base10(amount, value.toStdString(), decimalPlaces, true);
+        return amount;
+    }
+
      QString AmountBigToUIString(const beam::AmountBig::Number& value)
      {
         beam::wallet::PrintableAmount print(value, true);
@@ -464,6 +476,22 @@ namespace beamui
 
         //% "Online"
         return qtTrId("tx-regular");
+    }
+
+    QColor ColorFromString(const QString& identifier)
+    {
+        // same fixed palette AssetsManager uses for Confidential Assets (assets_manager.cpp),
+        // indexed by a hash of the identifier instead of a numeric asset id -- keeps custom
+        // ERC-20 token icons visually consistent with the rest of the app, purely locally.
+        static const QColor palette[] = {
+            QColor("#72fdff"), QColor("#2acf1d"), QColor("#ffbb54"), QColor("#d885ff"), QColor("#008eff"),
+            QColor("#ff746b"), QColor("#91e300"), QColor("#ffe75a"), QColor("#9643ff"), QColor("#395bff"),
+            QColor("#ff3b3b"), QColor("#73ff7c"), QColor("#ffa86c"), QColor("#ff3abe"), QColor("#00aee1"),
+            QColor("#ff5200"), QColor("#6464ff"), QColor("#ff7a21"), QColor("#63afff"), QColor("#c81f68")
+        };
+        constexpr int paletteSize = sizeof(palette) / sizeof(palette[0]);
+        const auto idx = static_cast<uint32_t>(qHash(identifier.toLower())) % paletteSize;
+        return palette[idx];
     }
 
     QString getReasonString(beam::wallet::TxFailureReason reason)

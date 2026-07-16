@@ -32,6 +32,29 @@ ColumnLayout {
         }
     }
 
+    // currencyIdx is a plain int property: the first imperative write to it
+    // (combo onActivated, swap-arrow, Beam-invariant enforcement) destroys the
+    // declarative "currencyIdx: viewModel.sentCurrencyIndex" binding. Resync
+    // manually whenever the VM re-derives the index (e.g. currList mutated by
+    // adding/removing a token in settings).
+    Connections {
+        target: viewModel
+        function onCurrListChanged() {
+            if (sentAmountInput.currencyIdx !== viewModel.sentCurrencyIndex)
+                sentAmountInput.currencyIdx = viewModel.sentCurrencyIndex
+            if (receiveAmountInput.currencyIdx !== viewModel.receiveCurrencyIndex)
+                receiveAmountInput.currencyIdx = viewModel.receiveCurrencyIndex
+        }
+        function onSentCurrencyIndexChanged() {
+            if (sentAmountInput.currencyIdx !== viewModel.sentCurrencyIndex)
+                sentAmountInput.currencyIdx = viewModel.sentCurrencyIndex
+        }
+        function onReceiveCurrencyIndexChanged() {
+            if (receiveAmountInput.currencyIdx !== viewModel.receiveCurrencyIndex)
+                receiveAmountInput.currencyIdx = viewModel.receiveCurrencyIndex
+        }
+    }
+
     SwapTokenInfoDialog {
         id:               tokenInfoDialog
         token:            viewModel.transactionToken
@@ -123,21 +146,21 @@ Update your settings and try again."
                             id:                         sentAmountInput
                             color:                      Style.accent_outgoing
                             currencies:                 viewModel.currList
-                            currencyIdx:                viewModel.sentCurrency
+                            currencyIdx:                viewModel.sentCurrencyIndex
                             amount:                     viewModel.amountSent
                             rate:                       viewModel.secondCurrencySendRateValue
                             rateUnit:                   viewModel.secondCurrencyUnitName
                             multi:                      true
                             resetAmount:                false
-                            currColor:                  currencyError() || !BeamGlobals.canReceive(currencyIdx) ? Style.validator_error : Style.content_main
+                            currColor:                  currencyError() || !BeamGlobals.canReceive(viewModel.sentCurrency) ? Style.validator_error : Style.content_main
                             error:                      getErrorText()
 
                             function getErrorText() {
-                                if(!BeamGlobals.canReceive(currencyIdx)) {
+                                if(!BeamGlobals.canReceive(viewModel.sentCurrency)) {
 /*% "%1 is not connected, 
 please review your settings and try again"
 */
-                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(currencyIdx)).replace("\n", "")
+                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(viewModel.sentCurrency)).replace("\n", "")
                                 }
                                 if(!viewModel.isSendFeeOK) {
                                     //% "The swap amount must be greater than the transaction fee"
@@ -151,8 +174,8 @@ please review your settings and try again"
                             }
 
                             onCurrencyIdxChanged: {
-                                if(sentAmountInput.currencyIdx != OldWalletCurrency.CurrBeam &&
-                                   receiveAmountInput.currencyIdx != OldWalletCurrency.CurrBeam) {
+                                // asset entries are BEAM-side too, so key on isBEAM, not the index
+                                if(!sentAmountInput.isBeam && !receiveAmountInput.isBeam) {
                                     receiveAmountInput.currencyIdx = OldWalletCurrency.CurrBeam
                                 }
                             }
@@ -166,7 +189,7 @@ please review your settings and try again"
 
                         Binding {
                             target:   viewModel
-                            property: "sentCurrency"
+                            property: "sentCurrencyIndex"
                             value:    sentAmountInput.currencyIdx
                         }
                     }
@@ -355,21 +378,21 @@ please review your settings and try again"
                         AmountInput {
                             id:             receiveAmountInput
                             currencies:     viewModel.currList
-                            currencyIdx:    viewModel.receiveCurrency
+                            currencyIdx:    viewModel.receiveCurrencyIndex
                             amount:         viewModel.amountToReceive
                             rate:           viewModel.secondCurrencyReceiveRateValue
                             rateUnit:       viewModel.secondCurrencyUnitName
                             multi:          true
                             resetAmount:    false
-                            currColor:      currencyError() || !BeamGlobals.canReceive(currencyIdx) ? Style.validator_error : Style.content_main
+                            currColor:      currencyError() || !BeamGlobals.canReceive(viewModel.receiveCurrency) ? Style.validator_error : Style.content_main
                             error:          getErrorText()
 
                             function getErrorText() {
-                                if(!BeamGlobals.canReceive(currencyIdx)) {
+                                if(!BeamGlobals.canReceive(viewModel.receiveCurrency)) {
 /*% "%1 is not connected, 
 please review your settings and try again"
 */
-                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(currencyIdx)).replace("\n", "")
+                                    return qsTrId("swap-currency-na-message").arg(BeamGlobals.getCurrencyName(viewModel.receiveCurrency)).replace("\n", "")
                                 }
                                 if(!viewModel.isReceiveFeeOK) {
                                     //% "The swap amount must be greater than the transaction fee"
@@ -383,8 +406,7 @@ please review your settings and try again"
                             }
 
                             onCurrencyIdxChanged: {
-                                if(receiveAmountInput.currencyIdx != OldWalletCurrency.CurrBeam &&
-                                   sentAmountInput.currencyIdx != OldWalletCurrency.CurrBeam) {
+                                if(!receiveAmountInput.isBeam && !sentAmountInput.isBeam) {
                                     sentAmountInput.currencyIdx = OldWalletCurrency.CurrBeam
                                 }
                             }
@@ -398,7 +420,7 @@ please review your settings and try again"
 
                         Binding {
                             target:   viewModel
-                            property: "receiveCurrency"
+                            property: "receiveCurrencyIndex"
                             value:    receiveAmountInput.currencyIdx
                         }
                     }

@@ -557,6 +557,9 @@ void AppModel::startWallet()
         swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Dai, secondSideFactory);
         swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Usdt, secondSideFactory);
         swapTransactionCreator->RegisterFactory(AtomicSwapCoin::WBTC, secondSideFactory);
+        // per-offer custom ERC-20 tokens: EthereumSide resolves the contract and
+        // decimals from the tx params (AtomicSwapTokenContract/Decimals)
+        swapTransactionCreator->RegisterFactory(AtomicSwapCoin::Erc20Token, secondSideFactory);
     }
 
     additionalTxCreators->emplace(TxType::AtomicSwap, swapTransactionCreator);

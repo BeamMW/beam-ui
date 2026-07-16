@@ -376,6 +376,7 @@ ColumnLayout {
 
                 SwapEthSettings {
                     id:                       swapEthSettings
+                    ethSettings:              viewModel.ethSettings
                     title:                    viewModel.ethSettings.title
                     generalTitle:             viewModel.ethSettings.generalTitle
                     showSeedDialogTitle:      viewModel.ethSettings.showSeedDialogTitle

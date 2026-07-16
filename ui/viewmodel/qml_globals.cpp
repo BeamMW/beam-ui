@@ -265,7 +265,8 @@ bool QMLGlobals::haveSwapClient(OldWalletCurrency::OldCurrency currency)
     {
         return AppModel::getInstance().getSwapEthClient()->GetSettings().IsActivated();
     }
-    return AppModel::getInstance().getSwapCoinClient(swapCoin)->GetSettings().IsActivated();
+    auto client = AppModel::getInstance().getSwapCoinClient(swapCoin);
+    return client && client->GetSettings().IsActivated();
 }
 
 QString QMLGlobals::rawTxParametrsToTokenStr(const QVariant& variantTxParams)
@@ -292,7 +293,7 @@ bool QMLGlobals::canReceive(OldWalletCurrency::OldCurrency currency)
         return client->GetSettings().IsActivated() && client->getStatus() == beam::ethereum::Client::Status::Connected;
     }
     auto client = AppModel::getInstance().getSwapCoinClient(swapCoin);
-    return client->GetSettings().IsActivated() && client->getStatus() == beam::bitcoin::Client::Status::Connected;
+    return client && client->GetSettings().IsActivated() && client->getStatus() == beam::bitcoin::Client::Status::Connected;
 }
 
 QString QMLGlobals::getBeamUnit() const
@@ -407,7 +408,8 @@ QString QMLGlobals::getRecommendedFee(OldWalletCurrency::OldCurrency currency)
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
+    auto client = AppModel::getInstance().getSwapCoinClient(swapCoin);
+    return client ? QString::fromStdString(std::to_string(client->getEstimatedFeeRate())) : QString::fromStdString(std::to_string(0));
 }
 
 QString QMLGlobals::getDefaultFee(OldWalletCurrency::OldCurrency currency)
@@ -423,7 +425,8 @@ QString QMLGlobals::getDefaultFee(OldWalletCurrency::OldCurrency currency)
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(currency);
-    return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapCoinClient(swapCoin)->getEstimatedFeeRate()));
+    auto client = AppModel::getInstance().getSwapCoinClient(swapCoin);
+    return client ? QString::fromStdString(std::to_string(client->getEstimatedFeeRate())) : QString::fromStdString(std::to_string(0));
 }
 
 QString QMLGlobals::divideWithPrecision(const QString& dividend, const QString& divider, uint precision)

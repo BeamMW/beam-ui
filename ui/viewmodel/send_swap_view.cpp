@@ -20,6 +20,7 @@
 #include "fee_helpers.h"
 #include "atomic_swap/swap_utils.h"
 #include "wallet/transactions/swaps/bridges/ethereum/ethereum_side.h"
+#include "wallet/transactions/swaps/bridges/ethereum/common.h"
 #include <algorithm>
 #include <regex>
 
@@ -66,19 +67,39 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
     if (peerAddr && swapAmount && beamAmount && swapCoin && isBeamSide
         && peerResponseTime && offeredTime && minHeight)
     {
+        // extended-offer fields first: the amount/currency setters below key the
+        // conversion decimals on them for ERC-20 offers
+        auto tokenContract = parameters.GetParameter<std::string>(TxParameterID::AtomicSwapTokenContract);
+        auto tokenSymbol = parameters.GetParameter<std::string>(TxParameterID::AtomicSwapTokenSymbol);
+        auto tokenDecimals = parameters.GetParameter<uint8_t>(TxParameterID::AtomicSwapTokenDecimals);
+        _tokenContract = tokenContract ? QString::fromStdString(*tokenContract) : QString();
+        _tokenSymbol = tokenSymbol ? QString::fromStdString(*tokenSymbol) : QString();
+        _tokenDecimals = tokenDecimals ? *tokenDecimals : 0;
+
+        auto beamAssetId = parameters.GetParameter<Asset::ID>(TxParameterID::AtomicSwapBeamAssetID);
+        auto beamAssetName = parameters.GetParameter<std::string>(TxParameterID::AtomicSwapBeamAssetName);
+        _beamAssetId = beamAssetId ? *beamAssetId : 0;
+        _beamAssetUnitName = beamAssetName ? QString::fromStdString(*beamAssetName) : QString();
+
+        // Erc20Token has no OldCurrency of its own: it is handled as the
+        // Ethereum currency slot plus the token params above
+        const auto swapSideCurrency = (*swapCoin == AtomicSwapCoin::Erc20Token)
+            ? OldWalletCurrency::OldCurrency::CurrEthereum
+            : convertSwapCoinToCurrency(*swapCoin);
+
         if (*isBeamSide) // other participant is not a beam side
         {
             // Do not set fee, it is set automatically based on the currency param
             setSendCurrency(OldWalletCurrency::OldCurrency::CurrBeam);
             setSendAmount(beamui::AmountToUIString(*beamAmount));
-            setReceiveCurrency(convertSwapCoinToCurrency(*swapCoin));
-            setReceiveAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
+            setReceiveCurrency(swapSideCurrency);
+            setReceiveAmount(beamui::AmountToUIStringExactDecimals(*swapAmount, effectiveDecimals(swapSideCurrency)));
         }
         else
         {
             // Do not set fee, it is set automatically based on the currency param
-            setSendCurrency(convertSwapCoinToCurrency(*swapCoin));
-            setSendAmount(beamui::AmountToUIString(*swapAmount, beamui::convertSwapCoinToCurrency(*swapCoin), false));
+            setSendCurrency(swapSideCurrency);
+            setSendAmount(beamui::AmountToUIStringExactDecimals(*swapAmount, effectiveDecimals(swapSideCurrency)));
             setReceiveCurrency(OldWalletCurrency::OldCurrency::CurrBeam);
             setReceiveAmount(beamui::AmountToUIString(*beamAmount));
         }
@@ -92,6 +113,8 @@ void SendSwapViewModel::fillParameters(const beam::wallet::TxParameters& paramet
 
         _txParameters = parameters;
         _isBeamSide = *isBeamSide;
+
+        emit currListChanged(); // unit names/decimals follow the token/asset fields
     }
 
     _tokenGeneratebByNewAppVersionMessage.clear();
@@ -158,12 +181,12 @@ bool SendSwapViewModel::getParametersValid() const
 
 QString SendSwapViewModel::getSendAmount() const
 {
-    return beamui::AmountToUIString(_sendAmountGrothes, convertCurrency(_sendCurrency), false);
+    return beamui::AmountToUIStringExactDecimals(_sendAmountGrothes, effectiveDecimals(_sendCurrency));
 }
 
 void SendSwapViewModel::setSendAmount(QString value)
 {
-    const auto amount = beamui::UIStringToAmount(value, convertCurrency(_sendCurrency));
+    const auto amount = beamui::UIStringToAmountExactDecimals(value, effectiveDecimals(_sendCurrency));
     if (amount != _sendAmountGrothes)
     {
         _sendAmountGrothes = amount;
@@ -173,7 +196,7 @@ void SendSwapViewModel::setSendAmount(QString value)
 
         if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel->hasShielded(beam::Asset::s_BeamID))
         {
-            _walletModel->getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel->getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, _beamAssetId);
         }
     }
 }
@@ -195,7 +218,7 @@ void SendSwapViewModel::setSendFee(unsigned int value)
         if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrBeam && _walletModel->hasShielded(beam::Asset::s_BeamID) && _sendAmountGrothes)
         {
             _feeChangedByUI = true;
-            _walletModel->getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+            _walletModel->getAsync()->selectCoins(_sendAmountGrothes, _sendFeeGrothes, _beamAssetId);
         }
     }
 }
@@ -220,12 +243,12 @@ void SendSwapViewModel::setSendCurrency(OldWalletCurrency::OldCurrency value)
 
 QString SendSwapViewModel::getReceiveAmount() const
 {
-    return beamui::AmountToUIString(_receiveAmountGrothes, convertCurrency(_receiveCurrency), false);
+    return beamui::AmountToUIStringExactDecimals(_receiveAmountGrothes, effectiveDecimals(_receiveCurrency));
 }
 
 void SendSwapViewModel::setReceiveAmount(QString value)
 {
-    const auto amount = beamui::UIStringToAmount(value, convertCurrency(_receiveCurrency));
+    const auto amount = beamui::UIStringToAmountExactDecimals(value, effectiveDecimals(_receiveCurrency));
     if (amount != _receiveAmountGrothes)
     {
         _receiveAmountGrothes = amount;
@@ -314,12 +337,12 @@ void SendSwapViewModel::onChangeCalculated(beam::Amount changeAsset, beam::Amoun
 {
     using namespace beam;
 
-    // only BEAM used in swap for the moment
-    assert(assetID == Asset::s_BeamID);
     assert(AmountBig::get_Hi(changeAsset) == 0);
-    assert(changeBeam == AmountBig::get_Lo(changeAsset));
 
-    _changeGrothes = changeBeam;
+    // the balance check needs the change of what is being spent: the asset's
+    // change for an asset spend, BEAM change otherwise (the values coincide
+    // when assetID is BEAM)
+    _changeGrothes = AmountBig::get_Lo(changeAsset);
     emit enoughChanged();
     emit canSendChanged();
 }
@@ -344,8 +367,29 @@ void SendSwapViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInfo& 
 bool SendSwapViewModel::isEnough() const
 {
     auto total = _sendAmountGrothes + _sendFeeGrothes + _changeGrothes;
+
+    // acceptor receives a Confidential Asset on the peer's BEAM side: the
+    // redeem tx fee is a separate BEAM spend on top of whatever is checked below
+    if (needsBeamForRedeemFee())
+    {
+        auto beamAvailable = beam::AmountBig::get_Lo(_walletModel->getAvailable(beam::Asset::s_BeamID));
+        if (beamAvailable < _receiveFeeGrothes)
+        {
+            return false;
+        }
+    }
+
     if (OldWalletCurrency::OldCurrency::CurrBeam == _sendCurrency)
     {
+        if (_beamAssetId != 0)
+        {
+            // sending a Confidential Asset; the tx fee is still paid in BEAM
+            auto assetAvailable = beam::AmountBig::get_Lo(_walletModel->getAvailable(_beamAssetId));
+            auto beamAvailable = beam::AmountBig::get_Lo(_walletModel->getAvailable(beam::Asset::s_BeamID));
+            return assetAvailable >= _sendAmountGrothes + _changeGrothes &&
+                   beamAvailable >= _sendFeeGrothes;
+        }
+
         auto available = beam::AmountBig::get_Lo(_walletModel->getAvailable(beam::Asset::s_BeamID));
         return available >= total;
     }
@@ -353,6 +397,15 @@ bool SendSwapViewModel::isEnough() const
     auto swapCoin = convertCurrencyToSwapCoin(_sendCurrency);
     if (isEthereumBased(_sendCurrency))
     {
+        if (isTokenSide(_sendCurrency))
+        {
+            // no live balance for arbitrary custom tokens: only check the ETH
+            // that pays the lock gas (incl. the approve calls, kApproveTxGasLimit)
+            const beam::Amount lockFee = _sendFeeGrothes *
+                (beam::ethereum::kLockTxGasLimit + 2 * beam::ethereum::kApproveTxGasLimit);
+            return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >= lockFee;
+        }
+
         if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrEthereum)
         {
             total = _sendAmountGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sendFeeGrothes, swapCoin);
@@ -387,7 +440,7 @@ void SendSwapViewModel::recalcAvailable()
     {
     case OldWalletCurrency::OldCurrency::CurrBeam:
         _changeGrothes = 0;
-        _walletModel->getAsync()->calcChange(_sendAmountGrothes, _sendFeeGrothes, beam::Asset::s_BeamID);
+        _walletModel->getAsync()->calcChange(_sendAmountGrothes, _sendFeeGrothes, _beamAssetId);
         return;
     default:
         // TODO:SWAP implement for all currencies
@@ -481,13 +534,13 @@ QString SendSwapViewModel::getRate() const
 
     if (!beamAmount) return QString();
 
-    beamui::Currencies otherCurrency =
-        convertCurrency(isSendBeam() ? _receiveCurrency : _sendCurrency);
+    auto otherOldCurrency = isSendBeam() ? _receiveCurrency : _sendCurrency;
+    uint8_t otherDecimals = effectiveDecimals(otherOldCurrency);
 
     return QMLGlobals::divideWithPrecision(
-        beamui::AmountToUIString(otherCoinAmount, otherCurrency, false),
+        beamui::AmountToUIStringExactDecimals(otherCoinAmount, otherDecimals),
         beamui::AmountToUIString(beamAmount),
-        beamui::getCurrencyDecimals(otherCurrency));
+        otherDecimals);
 }
 
 QString SendSwapViewModel::getSecondCurrencySendRateValue() const
@@ -536,5 +589,82 @@ QString SendSwapViewModel::getReceiveFeeTitle() const
 
 QList<QMap<QString, QVariant>> SendSwapViewModel::getCurrList() const
 {
-    return swapui::getUICurrList();
+    auto list = swapui::getUICurrList();
+
+    // show the offer's real unit instead of "BEAM"/"ETH" for asset/token offers;
+    // the token entry also carries the token's wallet decimals
+    if (_beamAssetId != 0 && !_beamAssetUnitName.isEmpty())
+    {
+        auto& beamEntry = list[static_cast<int>(OldWalletCurrency::OldCurrency::CurrBeam)];
+        beamEntry["unitName"] = _beamAssetUnitName;
+        beamEntry["unitNameWithId"] = _beamAssetUnitName;
+        beamEntry["assetId"] = static_cast<uint>(_beamAssetId);
+    }
+
+    if (!_tokenContract.isEmpty())
+    {
+        auto& ethEntry = list[static_cast<int>(OldWalletCurrency::OldCurrency::CurrEthereum)];
+        const QString symbol = _tokenSymbol.isEmpty() ? QString("ERC20") : _tokenSymbol;
+        ethEntry["unitName"] = symbol;
+        ethEntry["unitNameWithId"] = symbol;
+        ethEntry["decimals"] = static_cast<uint>(std::min<uint8_t>(_tokenDecimals, 9));
+    }
+
+    return list;
+}
+
+bool SendSwapViewModel::isErc20Swap() const
+{
+    return !_tokenContract.isEmpty();
+}
+
+QString SendSwapViewModel::getTokenContract() const
+{
+    return _tokenContract;
+}
+
+QString SendSwapViewModel::getTokenSymbol() const
+{
+    return _tokenSymbol;
+}
+
+uint SendSwapViewModel::getTokenDecimals() const
+{
+    return _tokenDecimals;
+}
+
+bool SendSwapViewModel::isBeamAssetSwap() const
+{
+    return _beamAssetId != 0;
+}
+
+uint SendSwapViewModel::getBeamAssetId() const
+{
+    return static_cast<uint>(_beamAssetId);
+}
+
+QString SendSwapViewModel::getBeamAssetUnitName() const
+{
+    return _beamAssetUnitName;
+}
+
+bool SendSwapViewModel::needsBeamForRedeemFee() const
+{
+    return isBeamAssetSwap() && !isSendBeam();
+}
+
+bool SendSwapViewModel::isTokenSide(OldWalletCurrency::OldCurrency currency) const
+{
+    return currency == OldWalletCurrency::OldCurrency::CurrEthereum && !_tokenContract.isEmpty();
+}
+
+uint8_t SendSwapViewModel::effectiveDecimals(OldWalletCurrency::OldCurrency currency) const
+{
+    if (isTokenSide(currency))
+    {
+        // core stores AtomicSwapAmount in 10^min(decimals, 9) units per token
+        // (WalletUnitsPerToken, swaps/bridges/ethereum/common.cpp)
+        return std::min<uint8_t>(_tokenDecimals, 9);
+    }
+    return beamui::getCurrencyDecimals(convertCurrency(currency));
 }

@@ -17,6 +17,8 @@
 #include <QSettings>
 #include <QDir>
 #include <QStringList>
+#include <QMap>
+#include <QVariant>
 #include <chrono>
 #include <mutex>
 #include "model/wallet_model.h"
@@ -134,6 +136,11 @@ public:
     void removeAllowedAsset(beam::Asset::ID asset);
 #endif  // BEAM_ASSET_SWAP_SUPPORT
 
+    // per-wallet custom ERC-20 tokens added for atomic-swap offers
+    // (beam::ethereum::Settings has no free-form storage for this)
+    QList<QMap<QString, QVariant>> getEthCustomTokens() const;
+    void setEthCustomTokens(const QList<QMap<QString, QVariant>>& tokens);
+
     uint8_t getMaxPrivacyAnonymitySet() const;
     void setMaxPrivacyAnonymitySet(uint8_t anonymitySet);
 
@@ -207,6 +214,7 @@ signals:
     void secondCurrencyChanged();
     void IPFSSettingsChanged();
     void generalMouseEvent();
+    void ethCustomTokensChanged();
 
 private:
     struct AccountSettings

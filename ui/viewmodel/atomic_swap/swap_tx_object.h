@@ -71,6 +71,7 @@ signals:
 private:
     auto getSwapAmountValue(bool sent) const -> beam::Amount;
     auto getSwapAmountWithCurrency(bool sent) const -> QString;
+    QString getSwapCoinAmountString(beam::Amount value, bool withCurrency) const;
 
     beam::wallet::SwapTxDescription m_swapTx;
     uint32_t m_lockTxMinConfirmations = 0;

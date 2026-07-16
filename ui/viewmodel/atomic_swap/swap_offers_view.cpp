@@ -12,8 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 #include <qdebug.h>
+#include <algorithm>
+#include <QRegularExpression>
 #include "model/app_model.h"
 #include "model/settings.h"
+#include "model/assets_manager.h"
 #include "swap_offers_view.h"
 #include "viewmodel/ui_helpers.h"
 #include "viewmodel/qml_globals.h"
@@ -211,6 +214,16 @@ SwapOffersViewModel::SwapOffersViewModel()
             SLOT(onSwapOffersDataModelChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::SwapOffer>&)));
 
     monitorAllOffersFitBalance();
+
+    connect(AppModel::getInstance().getAssets().get(), &AssetsManager::assetsListChanged, this, &SwapOffersViewModel::coinFilterListChanged);
+    connect(&AppModel::getInstance().getSettings(), &WalletSettings::ethCustomTokensChanged, this, &SwapOffersViewModel::coinFilterListChanged);
+    connect(&AppModel::getInstance().getSettings(), &WalletSettings::ethCustomTokensChanged, this, &SwapOffersViewModel::customTokenCardsChanged);
+
+    {
+        auto ethClient = AppModel::getInstance().getSwapEthClient();
+        connect(ethClient.get(), SIGNAL(tokenBalancesChanged()), this, SIGNAL(customTokenCardsChanged()));
+        connect(ethClient.get(), SIGNAL(statusChanged()), this, SIGNAL(customTokenCardsChanged()));
+    }
 
     m_walletModel->getAsync()->getSwapOffers();
     m_walletModel->getAsync()->getTransactions();
@@ -512,13 +525,43 @@ bool SwapOffersViewModel::isOfferFitBalance(const SwapOfferItem& offer)
     bool isSendBeam = offer.isSendBeam();
     beam::AmountBig::Number beamOfferAmount = isSendBeam ? offer.rawAmountSend() : offer.rawAmountReceive();
 
-    if (isSendBeam && beamOfferAmount > m_walletModel->getAvailable(beam::Asset::s_BeamID))
-        return false;
-    
+    if (isSendBeam)
+    {
+        // when the user would send a Confidential Asset, check that asset's
+        // balance rather than plain BEAM (0 == plain BEAM, getAvailable(0)
+        // is the BEAM balance, so this covers both cases)
+        beam::Asset::ID beamAssetId = 0;
+        offer.getTxParameters().GetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetID, beamAssetId);
+        if (beamOfferAmount > m_walletModel->getAvailable(beamAssetId))
+            return false;
+    }
+
     auto swapCoinOfferAmount = isSendBeam ? offer.rawAmountReceive() : offer.rawAmountSend();
-    // TODO: find better solution to get AtomicSwapCoin
-    auto swapCoin = offer.getTxParameters().GetParameter<beam::wallet::AtomicSwapCoin>(beam::wallet::TxParameterID::AtomicSwapCoin);
-    auto swapCoinClientWrapper = getSwapCoinClientWrapper(*swapCoin);
+    auto swapCoin = offer.resolvedSwapCoin();
+
+    if (swapCoin == beam::wallet::AtomicSwapCoin::Erc20Token)
+    {
+        if (isSendBeam)
+            return true; // sending BEAM/asset, receiving the token: no lock-side balance to check
+
+        // no live per-token balance tracking here (out of scope for the list
+        // filter); an offer "fits" only if the user has already added the
+        // contract in the ethereum settings
+        std::string contract;
+        offer.getTxParameters().GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenContract, contract);
+        // contract addresses are hex and commonly EIP-55 mixed-case; compare
+        // case-insensitively
+        const auto offerContract = QString::fromStdString(contract);
+        const auto storedTokens = AppModel::getInstance().getSettings().getEthCustomTokens();
+        for (const auto& token : storedTokens)
+        {
+            if (token.value("contract").toString().compare(offerContract, Qt::CaseInsensitive) == 0)
+                return true;
+        }
+        return false;
+    }
+
+    auto swapCoinClientWrapper = getSwapCoinClientWrapper(swapCoin);
 
     if (swapCoinClientWrapper->getIsConnected())
     {
@@ -614,6 +657,97 @@ void SwapOffersViewModel::InitSwapClientWrappers()
 QQmlListProperty<SwapCoinClientWrapper> SwapOffersViewModel::getSwapClients()
 {
     return beamui::CreateQmlListProperty<SwapCoinClientWrapper>(this, m_swapClientWrappers);
+}
+
+namespace
+{
+    QMap<QString, QVariant> MakeCoinFilterEntry(const QString& text, const QString& pairName)
+    {
+        // matches the classic-pair separator convention (atomic_swap.qml):
+        // one side of "pair" equals this name, delimited by '-'
+        auto escaped = QRegularExpression::escape(pairName);
+        QMap<QString, QVariant> entry;
+        entry.insert("text", text);
+        entry.insert("pair", "^(" + escaped + "-)|(-" + escaped + ")$");
+        return entry;
+    }
+}
+
+QList<QMap<QString, QVariant>> SwapOffersViewModel::getCoinFilterList() const
+{
+    QList<QMap<QString, QVariant>> result;
+
+    QMap<QString, QVariant> allEntry;
+    //% "(all)"
+    allEntry.insert("text", qtTrId("atomic-swap-all-coins"));
+    allEntry.insert("pair", "");
+    result.push_back(allEntry);
+
+    static const char* classicCoins[] = { "BTC", "DAI", "DASH", "DOGE", "ETH", "LTC", "QTUM", "USDT", "WBTC" };
+    for (const auto* coin : classicCoins)
+    {
+        result.push_back(MakeCoinFilterEntry(coin, coin));
+    }
+
+    for (const auto& token : AppModel::getInstance().getSettings().getEthCustomTokens())
+    {
+        auto symbol = token.value("symbol").toString();
+        if (!symbol.isEmpty())
+        {
+            result.push_back(MakeCoinFilterEntry(symbol, symbol));
+        }
+    }
+
+    for (const auto& asset : AppModel::getInstance().getAssets()->getAssetsList())
+    {
+        auto assetId = asset.value("assetId").toUInt();
+        if (assetId == 0)
+        {
+            continue; // plain BEAM is covered by the classic pairs already
+        }
+        auto unitName = asset.value("unitName").toString();
+        if (!unitName.isEmpty())
+        {
+            result.push_back(MakeCoinFilterEntry(unitName, unitName));
+        }
+    }
+
+    return result;
+}
+
+QList<QMap<QString, QVariant>> SwapOffersViewModel::getCustomTokenCards() const
+{
+    QList<QMap<QString, QVariant>> result;
+
+    auto ethClient = AppModel::getInstance().getSwapEthClient();
+    if (!ethClient || ethClient->GetSettings().IsActivated() == false)
+    {
+        return result; // match the DAI/USDT/WBTC cards' visibility rule: eth client must be connected
+    }
+
+    for (const auto& token : AppModel::getInstance().getSettings().getEthCustomTokens())
+    {
+        const auto contract = token.value("contract").toString();
+        const auto symbol = token.value("symbol").toString();
+        const auto decimals = static_cast<uint8_t>(token.value("decimals").toUInt());
+        if (contract.isEmpty() || symbol.isEmpty())
+        {
+            continue;
+        }
+
+        const auto walletDecimals = std::min<uint8_t>(decimals, 9);
+        const auto balance = ethClient->getTokenBalance(contract);
+
+        QMap<QString, QVariant> card;
+        card.insert("contract", contract);
+        card.insert("symbol", symbol);
+        card.insert("available", beamui::AmountToUIStringExactDecimals(balance, walletDecimals));
+        card.insert("color", beamui::ColorFromString(contract));
+        card.insert("isConnected", ethClient->getStatus() == beam::ethereum::Client::Status::Connected);
+        result.push_back(card);
+    }
+
+    return result;
 }
 
 SwapCoinClientWrapper* SwapOffersViewModel::getSwapCoinClientWrapper(beam::wallet::AtomicSwapCoin swapCoinType) const

@@ -22,8 +22,11 @@
 #include "viewmodel/qml_globals.h"
 #include "seed_phrase_item.h"
 #include "viewmodel/settings_helpers.h"
+#include "viewmodel/ui_helpers.h"
 
 #include "wallet/transactions/swaps/bridges/ethereum/common.h"
+#include "wallet/transactions/swaps/common.h"
+#include "model/settings.h"
 
 using namespace beam;
 
@@ -39,7 +42,9 @@ SwapEthSettingsItem::SwapEthSettingsItem()
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(connectionStatusChanged()));
     connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorChanged()));
     connect(coinClient.get(), &SwapEthClientModel::endpointValidated, this, &SwapEthSettingsItem::onEndpointValidated);
+    connect(coinClient.get(), &SwapEthClientModel::gotTokenInfo, this, &SwapEthSettingsItem::onGotTokenInfo);
     LoadSettings();
+    loadCustomTokens();
 }
 
 SwapEthSettingsItem::~SwapEthSettingsItem()
@@ -122,6 +127,132 @@ void SwapEthSettingsItem::validateEndpoint()
     {
         c->validateEndpoint();
     }
+}
+
+void SwapEthSettingsItem::lookupToken(const QString& contractAddress)
+{
+    const auto address = contractAddress.trimmed().toStdString();
+    if (!wallet::IsValidEthContractAddress(address))
+    {
+        //% "Invalid contract address"
+        emit tokenInfoReady(contractAddress, QString(), 0, qtTrId("settings-swap-token-invalid-address"));
+        return;
+    }
+
+    if (auto c = m_coinClient.lock())
+    {
+        c->requestTokenInfo(address);
+    }
+}
+
+void SwapEthSettingsItem::onGotTokenInfo(const QString& contract, const QString& symbol, uint decimals, const QString& error)
+{
+    emit tokenInfoReady(contract, symbol, decimals, error);
+}
+
+void SwapEthSettingsItem::addCustomToken(const QString& contractAddress, const QString& symbol, uint decimals)
+{
+    const auto address = contractAddress.trimmed().toStdString();
+    if (!wallet::IsValidEthContractAddress(address) || symbol.isEmpty())
+    {
+        return;
+    }
+
+    const auto normalized = QString::fromStdString(address).toLower();
+    if (isBuiltinTokenContract(normalized))
+    {
+        //% "This token is already supported"
+        emit tokenInfoReady(contractAddress, QString(), 0, qtTrId("settings-swap-token-already-added"));
+        return;
+    }
+    for (const auto& token : m_customTokens)
+    {
+        if (token.value("contract").toString().toLower() == normalized)
+        {
+            //% "This token is already supported"
+            emit tokenInfoReady(contractAddress, QString(), 0, qtTrId("settings-swap-token-already-added"));
+            return; // already added
+        }
+    }
+
+    QMap<QString, QVariant> token;
+    token.insert("contract", QString::fromStdString(address));
+    token.insert("symbol", symbol);
+    token.insert("decimals", decimals);
+    m_customTokens.push_back(token);
+
+    saveCustomTokens();
+    emit customTokensChanged();
+}
+
+void SwapEthSettingsItem::removeCustomToken(const QString& contractAddress)
+{
+    const auto normalized = contractAddress.trimmed().toLower();
+    for (int i = 0; i < m_customTokens.size(); ++i)
+    {
+        if (m_customTokens[i].value("contract").toString().toLower() == normalized)
+        {
+            m_customTokens.removeAt(i);
+            saveCustomTokens();
+            emit customTokensChanged();
+            return;
+        }
+    }
+}
+
+QList<QMap<QString, QVariant>> SwapEthSettingsItem::getCustomTokens() const
+{
+    QList<QMap<QString, QVariant>> result;
+    for (auto token : m_customTokens)
+    {
+        token.insert("color", beamui::ColorFromString(token.value("contract").toString()));
+        result.push_back(token);
+    }
+    return result;
+}
+
+QList<QMap<QString, QVariant>> SwapEthSettingsItem::getBuiltinTokens() const
+{
+    QList<QMap<QString, QVariant>> result;
+    static const std::tuple<wallet::AtomicSwapCoin, const char*, const char*> builtins[] = {
+        { wallet::AtomicSwapCoin::Usdt, "USDT", "qrc:/assets/icon-usdt.svg" },
+        { wallet::AtomicSwapCoin::Dai,  "DAI",  "qrc:/assets/icon-dai.svg" },
+        { wallet::AtomicSwapCoin::WBTC, "WBTC", "qrc:/assets/icon-wbtc.svg" },
+    };
+
+    for (const auto& [coin, symbol, icon] : builtins)
+    {
+        QMap<QString, QVariant> token;
+        const auto contract = QString::fromStdString(m_settings->GetTokenContractAddress(coin));
+        token.insert("symbol", QString(symbol));
+        token.insert("contract", contract);
+        token.insert("color", beamui::ColorFromString(contract));
+        token.insert("icon", QString(icon));
+        result.push_back(token);
+    }
+    return result;
+}
+
+bool SwapEthSettingsItem::isBuiltinTokenContract(const QString& normalizedAddress) const
+{
+    for (const auto& token : getBuiltinTokens())
+    {
+        if (token.value("contract").toString().toLower() == normalizedAddress)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void SwapEthSettingsItem::loadCustomTokens()
+{
+    m_customTokens = AppModel::getInstance().getSettings().getEthCustomTokens();
+}
+
+void SwapEthSettingsItem::saveCustomTokens()
+{
+    AppModel::getInstance().getSettings().setEthCustomTokens(m_customTokens);
 }
 
 QStringList SwapEthSettingsItem::getEthereumAddresses() const
@@ -413,15 +544,13 @@ QString SwapEthSettingsItem::getChainName(quint64 chainID)
     }
 }
 
-void SwapEthSettingsItem::onEndpointValidated(quint64 chainID, quint64 blockNumber, bool ok)
+void SwapEthSettingsItem::onEndpointValidated(quint64 chainID, quint64 blockNumber, bool ok, bool wrongNetwork, const QString& errorMsg)
 {
-    m_endpointCheckOk = ok;   // 'ok' is false for BOTH connection failures and
-                              // wrong-network endpoints (core enforces chain id)
+    m_endpointCheckOk = ok;
     if (!ok)
     {
-        if (chainID != 0)
+        if (wrongNetwork)
         {
-            // core was able to identify the chain even though it's not the required one
             //% "Connected to %1, but Ethereum Mainnet is required"
             m_endpointCheckResult = qtTrId("settings-eth-endpoint-wrong-network").arg(getChainName(chainID));
         }
@@ -429,6 +558,10 @@ void SwapEthSettingsItem::onEndpointValidated(quint64 chainID, quint64 blockNumb
         {
             //% "Unable to connect"
             m_endpointCheckResult = qtTrId("settings-eth-endpoint-failed");
+            if (!errorMsg.isEmpty())
+            {
+                m_endpointCheckResult += " (" + errorMsg + ")";
+            }
         }
     }
     else

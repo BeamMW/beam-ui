@@ -3964,8 +3964,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <translation>Ethereum RPC endpoint</translation>
     </message>
     <message id="settings-eth-rpc-note">
-        <source>Supports Infura, Alchemy, QuickNode, Chainstack, Ankr, or your own Ethereum node.</source>
-        <translation type="unfinished"></translation>
+        <source>Works with any Ethereum JSON-RPC endpoint. Keyless public options: ethereum-rpc.publicnode.com, eth.drpc.org, rpc.mevblocker.io - or run your own node.</source>
+        <oldsource>Supports Infura, Alchemy, QuickNode, Chainstack, Ankr, or your own Ethereum node.</oldsource>
+        <translation>Works with any Ethereum JSON-RPC endpoint. Keyless public options: ethereum-rpc.publicnode.com, eth.drpc.org, rpc.mevblocker.io - or run your own node.</translation>
     </message>
     <message id="settings-eth-check-connection">
         <source>Check connection</source>
@@ -3994,6 +3995,82 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="settings-eth-endpoint-wrong-network">
         <source>Connected to %1, but Ethereum Mainnet is required</source>
         <translation>Connected to %1, but Ethereum Mainnet is required</translation>
+    </message>
+    <message id="settings-swap-token-section-title">
+        <source>Custom ERC-20 tokens</source>
+        <translation>Custom ERC-20 tokens</translation>
+    </message>
+    <message id="settings-swap-token-remove">
+        <source>remove</source>
+        <translation>remove</translation>
+    </message>
+    <message id="settings-swap-token-address-placeholder">
+        <source>0x contract address</source>
+        <translation>0x contract address</translation>
+    </message>
+    <message id="settings-swap-token-lookup">
+        <source>Look up</source>
+        <translation>Look up</translation>
+    </message>
+    <message id="settings-swap-token-add">
+        <source>Add</source>
+        <translation>Add</translation>
+    </message>
+    <message id="settings-swap-token-info">
+        <source>%1, %2 decimals</source>
+        <translation>%1, %2 decimals</translation>
+    </message>
+    <message id="swap-accept-token-title">
+        <source>Token</source>
+        <translation>Token</translation>
+    </message>
+    <message id="swap-accept-token-contract-label">
+        <source>Contract address</source>
+        <translation>Contract address</translation>
+    </message>
+    <message id="swap-accept-token-symbol-label">
+        <source>Symbol / decimals</source>
+        <translation>Symbol / decimals</translation>
+    </message>
+    <message id="swap-accept-token-warning">
+        <source>Verify this token contract address carefully. Anyone can create a token with any name.</source>
+        <translation>Verify this token contract address carefully. Anyone can create a token with any name.</translation>
+    </message>
+    <message id="swap-accept-asset-title">
+        <source>Confidential Asset</source>
+        <translation>Confidential Asset</translation>
+    </message>
+    <message id="swap-accept-asset-id-unit">
+        <source>Asset id %1, unit %2</source>
+        <translation>Asset id %1, unit %2</translation>
+    </message>
+    <message id="swap-accept-asset-beam-fee">
+        <source>You are receiving a Confidential Asset. A small BEAM balance is required to pay the redeem transaction fee.</source>
+        <translation>You are receiving a Confidential Asset. A small BEAM balance is required to pay the redeem transaction fee.</translation>
+    </message>
+    <message id="swap-accept-token-warning-confirm">
+        <source>%1 contract: %2. Verify this token contract address carefully. Anyone can create a token with any name.</source>
+        <translation>%1 contract: %2. Verify this token contract address carefully. Anyone can create a token with any name.</translation>
+    </message>
+    <message id="settings-swap-token-invalid-address">
+        <source>Invalid contract address</source>
+        <translation>Invalid contract address</translation>
+    </message>
+    <message id="settings-swap-token-builtin">
+        <source>built-in</source>
+        <translation>built-in</translation>
+    </message>
+    <message id="settings-swap-token-add-open">
+        <source>+ Add token</source>
+        <translation>+ Add token</translation>
+    </message>
+    <message id="settings-swap-token-add-cancel">
+        <source>cancel</source>
+        <translation>cancel</translation>
+    </message>
+    <message id="settings-swap-token-already-added">
+        <source>This token is already supported</source>
+        <translation>This token is already supported</translation>
     </message>
 </context>
 </TS>
