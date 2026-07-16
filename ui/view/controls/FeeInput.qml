@@ -75,16 +75,13 @@ ColumnLayout {
             }
         }
 
-        Item {
-            x: feeInput.width - feeCurrencyLabel.width - 8
-            y: 6
-            SFText {
-                id: feeCurrencyLabel
-                font.pixelSize: 14
-                color:          isValid ? Style.content_main : Style.validator_error
-                text:           control.feeLabel
-                visible:        (control.feeLabel || "").length
-            }
+        SFText {
+            id:               feeCurrencyLabel
+            Layout.alignment: Qt.AlignVCenter
+            font.pixelSize:   14
+            color:            isValid ? Style.content_main : Style.validator_error
+            text:             control.feeLabel
+            visible:          (control.feeLabel || "").length
         }
 
         Item {
