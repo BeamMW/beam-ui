@@ -4072,5 +4072,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This token is already supported</source>
         <translation>This token is already supported</translation>
     </message>
+    <message id="swap-not-enough-eth-redeem">
+        <source>Not enough ETH to pay the redeem transaction fee (%1 needed)</source>
+        <translation>Not enough ETH to pay the redeem transaction fee (%1 needed)</translation>
+    </message>
 </context>
 </TS>

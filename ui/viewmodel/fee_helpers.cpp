@@ -25,6 +25,7 @@
 #include "wallet/transactions/swaps/bridges/dogecoin/dogecoin_side.h"
 #include "wallet/transactions/swaps/bridges/ethereum/ethereum_side.h"
 #include "wallet/transactions/swaps/utils.h"
+#include "ui_helpers.h"
 
 beam::Amount minFeeBeam(bool isShielded)
 {
@@ -148,7 +149,8 @@ QString calcWithdrawTxFee(OldWalletCurrency::OldCurrency currency, beam::Amount 
     case OldWalletCurrency::OldCurrency::CurrWrappedBTC: {
         auto swapCoin = convertCurrencyToSwapCoin(currency);
         auto total = beam::wallet::EthereumSide::CalcWithdrawTxFee(feeRate, swapCoin);
-        return QString::fromStdString(std::to_string(total)) + " gwei";
+        // the withdraw tx fee is paid in ETH, also for token withdrawals
+        return beamui::AmountToUIString(total, beamui::Currencies::Ethereum);
     }
     default: {
         return QString();

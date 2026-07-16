@@ -367,8 +367,11 @@ please review your settings and try again"
                                     return qsTrId("send-less-than-fee")
                                 }
                                 if(!viewModel.isEnoughToReceive) {
-                                    //% "There is not enough funds to complete the transaction"
-                                    return qsTrId("send-not-enough")
+                                    // isEnoughToReceive only fails for an Ethereum-based receive
+                                    // side: the redeem tx gas is paid in ETH
+/*% "Not enough ETH to pay the redeem transaction fee (%1 needed)"
+*/
+                                    return qsTrId("swap-not-enough-eth-redeem").arg(BeamGlobals.calcWithdrawTxFee(viewModel.receiveCurrency, viewModel.receiveFee))
                                 }
                                 return ""
                             }

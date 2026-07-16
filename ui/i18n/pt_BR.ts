@@ -4071,5 +4071,9 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>This token is already supported</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="swap-not-enough-eth-redeem">
+        <source>Not enough ETH to pay the redeem transaction fee (%1 needed)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
