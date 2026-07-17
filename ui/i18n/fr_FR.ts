@@ -3926,7 +3926,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-cant-open">
         <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
-        <translation>Impossible d'ouvrir le fichier DApp. Il est peut-être corrompu.</translation>
+        <translation>Impossible d&apos;ouvrir le fichier DApp. Il est peut-être corrompu.</translation>
     </message>
     <message id="dapp-install-err-cant-read-manifest">
         <source>Couldn&apos;t read the DApp manifest.</source>
@@ -3934,7 +3934,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-unsupported">
         <source>This DApp is not supported by your wallet version.</source>
-        <translation>Cette DApp n'est pas prise en charge par votre version du portefeuille.</translation>
+        <translation>Cette DApp n&apos;est pas prise en charge par votre version du portefeuille.</translation>
     </message>
     <message id="dapp-install-err-invalid">
         <source>Invalid DApp file: the manifest is missing or incomplete.</source>
@@ -3946,11 +3946,47 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-folder">
         <source>Couldn&apos;t prepare the installation folder.</source>
-        <translation>Impossible de préparer le dossier d'installation.</translation>
+        <translation>Impossible de préparer le dossier d&apos;installation.</translation>
     </message>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
-        <translation>Impossible d'extraire les fichiers de la DApp.</translation>
+        <translation>Impossible d&apos;extraire les fichiers de la DApp.</translation>
+    </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

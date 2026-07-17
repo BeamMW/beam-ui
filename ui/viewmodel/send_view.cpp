@@ -44,8 +44,6 @@ SendViewModel::SendViewModel()
     connect(_amgr.get(),         &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
     connect(_walletModel,  &WalletModel::coinsSelected,              this,  &SendViewModel::onCoinsSelected);
     connect(_walletModel,  &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
-    connect(_walletModel,  &WalletModel::slatepackReady,              this,
-            [this](const beam::wallet::TxID&, const QString& armored) { emit newSlatepack(armored); });
     connect(_walletModel,  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
     connect(_walletModel,  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
 

@@ -16,6 +16,16 @@
 
 
 WalletViewModel::WalletViewModel()
+    : _model(AppModel::getInstance().getWalletModel())
 {
+    connect(_model, &WalletModel::slatepackReady, this,
+            [this](const beam::wallet::TxID&, const QString& armored) { emit slatepackProduced(armored); });
+    connect(_model, &WalletModel::slatepackImportResult, this,
+            [this](bool ok, const QString& error) { emit slatepackImported(ok, error); });
+}
+
+void WalletViewModel::importSlatepack(const QString& text)
+{
+    _model->getAsync()->importSlatepack(text.toStdString());
 }
 

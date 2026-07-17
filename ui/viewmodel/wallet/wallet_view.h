@@ -22,4 +22,13 @@ class WalletViewModel : public QObject
 public:
     WalletViewModel();
     ~WalletViewModel() = default;
+
+    Q_INVOKABLE void importSlatepack(const QString& text);
+
+signals:
+    void slatepackProduced(const QString& armored);
+    void slatepackImported(bool ok, const QString& error);
+
+private:
+    WalletModel::Ptr _model;
 };

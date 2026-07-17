@@ -3962,5 +3962,41 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>无法解压 DApp 文件。</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

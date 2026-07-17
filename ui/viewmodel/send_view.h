@@ -114,7 +114,6 @@ signals:
     void endpointChanged();
     void tokenTipChanged();
     void manualExchangeChanged();
-    void newSlatepack(const QString& armored);
     void choiceChanged();
     void sendMoneyVerified();
     void cantSendToExpired();

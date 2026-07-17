@@ -22,12 +22,6 @@ ColumnLayout {
                 .createObject(control)
                 .open();
         }
-
-        onNewSlatepack: function (armored) {
-            Qt.createComponent("controls/SlatepackDialog.qml")
-                .createObject(control, { "armored": armored })
-                .open();
-        }
     }
 
     TokenDuplicateChecker {

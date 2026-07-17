@@ -24,6 +24,28 @@ ColumnLayout {
         id: viewModel
     }
 
+    Connections {
+        target: viewModel
+        function onSlatepackProduced(armored) {
+            Qt.createComponent("controls/SlatepackDialog.qml")
+                .createObject(root, { "armored": armored })
+                .open();
+        }
+        function onSlatepackImported(ok, error) {
+            if (!ok) {
+                Qt.createComponent("controls/ConfirmationDialog.qml")
+                    .createObject(root, {
+                        //% "Import failed"
+                        "title": qsTrId("slatepack-import-failed"),
+                        "text": error,
+                        "okButtonText": qsTrId("general-close"),
+                        "cancelButtonVisible": false
+                    })
+                    .open();
+            }
+        }
+    }
+
     property bool openSend:     false
     property bool openReceive:  false
     property string token:      ""
@@ -85,6 +107,19 @@ ColumnLayout {
             font.pixelSize: 12
             onClicked: {
                 navigateReceive(assets.selectedId);
+            }
+        }
+
+        CustomButton {
+            Layout.preferredHeight: 32
+            icon.source: "qrc:/assets/icon-copy-blue.svg"
+            //% "Slatepack"
+            text: qsTrId("slatepack-button")
+            font.pixelSize: 12
+            onClicked: {
+                Qt.createComponent("controls/SlatepackImportDialog.qml")
+                    .createObject(root, { "onImport": function (text) { viewModel.importSlatepack(text) } })
+                    .open();
             }
         }
 
