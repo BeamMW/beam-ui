@@ -72,7 +72,8 @@ auto SwapTxObjectList::roleNames() const -> QHash<int, QByteArray>
         { static_cast<int>(Roles::BeamLockTxKernelId), "beamLockTxKernelId" },
         { static_cast<int>(Roles::BeamRedeemTxKernelId), "beamRedeemTxKernelId" },
         { static_cast<int>(Roles::BeamRefundTxKernelId), "beamRefundTxKernelId" },
-        { static_cast<int>(Roles::StateDetails), "stateDetails" }
+        { static_cast<int>(Roles::StateDetails), "stateDetails" },
+        { static_cast<int>(Roles::CoinsUnlockNote), "coinsUnlockNote" }
     };
     return roles;
 }
@@ -240,6 +241,9 @@ auto SwapTxObjectList::data(const QModelIndex &index, int role) const -> QVarian
 
         case Roles::StateDetails:
             return value->getStateDetails();
+
+        case Roles::CoinsUnlockNote:
+            return value->getCoinsUnlockNote();
 
         default:
             return QVariant();

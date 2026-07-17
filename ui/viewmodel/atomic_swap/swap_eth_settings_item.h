@@ -15,6 +15,8 @@
 #pragma once
 
 #include <QObject>
+#include <QMap>
+#include <QVariant>
 #include <memory>
 #include <boost/optional.hpp>
 #include "wallet/transactions/swaps/bridges/ethereum/settings.h"
@@ -36,12 +38,20 @@ class SwapEthSettingsItem : public QObject
     Q_PROPERTY(bool            isCurrentSeedValid       READ isCurrentSeedValid                                     NOTIFY isCurrentSeedValidChanged)
     Q_PROPERTY(QString         infuraProjectID          READ infuraProjectID          WRITE infuraProjectID         NOTIFY infuraProjectIDChanged)
     Q_PROPERTY(unsigned int    accountIndex             READ getAccountIndex          WRITE setAccountIndex         NOTIFY accountIndexChanged)
-                                                        
+
     Q_PROPERTY(bool            canChangeConnection      READ canChangeConnection                                    NOTIFY canChangeConnectionChanged)
     Q_PROPERTY(bool            isConnected              READ getIsConnected                                         NOTIFY connectionChanged)
     Q_PROPERTY(QString         connectionStatus         READ getConnectionStatus                                    NOTIFY connectionStatusChanged)
     Q_PROPERTY(QString         connectionError          READ getConnectionError                                     NOTIFY connectionErrorChanged)
+    Q_PROPERTY(bool            useCustomRpc             READ useCustomRpc             WRITE setUseCustomRpc         NOTIFY useCustomRpcChanged)
+    Q_PROPERTY(QString         customRpcUrl             READ customRpcUrl             WRITE setCustomRpcUrl         NOTIFY customRpcUrlChanged)
+    Q_PROPERTY(QString         endpointCheckResult      READ endpointCheckResult                                    NOTIFY endpointCheckResultChanged)
+    Q_PROPERTY(bool            endpointCheckOk          READ endpointCheckOk                                        NOTIFY endpointCheckResultChanged)
 
+    Q_PROPERTY(QList<QMap<QString, QVariant>> customTokens READ getCustomTokens                                     NOTIFY customTokensChanged)
+    // fixed DAI/USDT/WBTC contracts the wallet already supports natively, shown as
+    // non-removable rows above the user-added custom tokens
+    Q_PROPERTY(QList<QMap<QString, QVariant>> builtinTokens READ getBuiltinTokens                                   CONSTANT)
 
 public:
     SwapEthSettingsItem();
@@ -56,6 +66,11 @@ public:
     Q_INVOKABLE void copySeedPhrases();
     Q_INVOKABLE void validateCurrentSeedPhrase();
     Q_INVOKABLE QStringList getEthereumAddresses() const;
+    Q_INVOKABLE void validateEndpoint();
+
+    Q_INVOKABLE void lookupToken(const QString& contractAddress);
+    Q_INVOKABLE void addCustomToken(const QString& contractAddress, const QString& symbol, uint decimals);
+    Q_INVOKABLE void removeCustomToken(const QString& contractAddress);
 
 private:
     QString getTitle() const;
@@ -83,7 +98,23 @@ private:
     QString getConnectionStatus() const;
     QString getConnectionError() const;
 
+    bool useCustomRpc() const;
+    void setUseCustomRpc(bool value);
+    QString customRpcUrl() const;
+    void setCustomRpcUrl(const QString& value);
+    QString endpointCheckResult() const;
+    bool endpointCheckOk() const;
+    void onEndpointValidated(quint64 chainID, quint64 blockNumber, bool ok, bool wrongNetwork, const QString& errorMsg);
+
     std::vector<std::string> GetSeedPhraseFromSeedItems() const;
+    static QString getChainName(quint64 chainID);
+    void clearEndpointCheck();
+
+    QList<QMap<QString, QVariant>> getCustomTokens() const;
+    QList<QMap<QString, QVariant>> getBuiltinTokens() const;
+    bool isBuiltinTokenContract(const QString& normalizedAddress) const;
+    void loadCustomTokens();
+    void saveCustomTokens();
 
 signals:
     void infuraProjectIDChanged();
@@ -95,6 +126,11 @@ signals:
     void connectionStatusChanged();
     void connectionErrorChanged();
     void foldedChanged();
+    void useCustomRpcChanged();
+    void customRpcUrlChanged();
+    void endpointCheckResultChanged();
+    void customTokensChanged();
+    void tokenInfoReady(const QString& contract, const QString& symbol, uint decimals, const QString& error);
 
 private:
     std::weak_ptr<SwapEthClientModel> m_coinClient;
@@ -105,4 +141,9 @@ private:
     QString m_infuraProjectID;
     unsigned int m_accountIndex;
     bool m_isFolded = true;
+    bool m_useCustomRpc = false;
+    QString m_customRpcUrl;
+    QString m_endpointCheckResult;
+    bool m_endpointCheckOk = false;
+    QList<QMap<QString, QVariant>> m_customTokens; // {"contract","symbol","decimals"}, persisted per wallet
 };

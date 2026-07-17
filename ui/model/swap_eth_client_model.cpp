@@ -49,6 +49,7 @@ SwapEthClientModel::SwapEthClientModel(beam::ethereum::IBridgeHolder::Ptr bridge
     connect(this, SIGNAL(gotStatus(beam::ethereum::Client::Status)), this, SLOT(setStatus(beam::ethereum::Client::Status)));
     connect(this, SIGNAL(gotCanModifySettings(bool)), this, SLOT(setCanModifySettings(bool)));
     connect(this, SIGNAL(gotConnectionError(beam::ethereum::IBridge::ErrorType)), this, SLOT(setConnectionError(beam::ethereum::IBridge::ErrorType)));
+    connect(this, &SwapEthClientModel::gotTokenBalance, this, &SwapEthClientModel::setTokenBalance);
 
     requestBalance();
     requestEstimatedFeeRate();
@@ -94,6 +95,11 @@ beam::ethereum::IBridge::ErrorType SwapEthClientModel::getConnectionError() cons
     return m_connectionError;
 }
 
+void SwapEthClientModel::validateEndpoint()
+{
+    GetAsync()->ValidateEndpoint();
+}
+
 void SwapEthClientModel::OnBalance(wallet::AtomicSwapCoin swapCoin, Amount balance)
 {
     emit gotBalance(swapCoin, balance);
@@ -120,6 +126,14 @@ void SwapEthClientModel::OnConnectionError(beam::ethereum::IBridge::ErrorType er
     emit gotConnectionError(error);
 }
 
+void SwapEthClientModel::OnEndpointValidated(uint64_t chainID, uint64_t blockNumber, const beam::ethereum::IBridge::Error& error)
+{
+    emit endpointValidated(chainID, blockNumber,
+                           error.m_type == beam::ethereum::IBridge::None,
+                           error.m_type == beam::ethereum::IBridge::InvalidNetwork,
+                           QString::fromStdString(error.m_message));
+}
+
 void SwapEthClientModel::requestBalance()
 {
     if (GetSettings().IsActivated())
@@ -130,6 +144,17 @@ void SwapEthClientModel::requestBalance()
         for (auto token : beam::wallet::kEthTokens)
         {
             GetAsync()->GetBalance(token);
+        }
+
+        // same cadence, for user-stored custom ERC-20 tokens
+        for (const auto& token : AppModel::getInstance().getSettings().getEthCustomTokens())
+        {
+            const auto contract = token.value("contract").toString().toStdString();
+            const auto decimals = static_cast<uint8_t>(token.value("decimals").toUInt());
+            if (!contract.empty())
+            {
+                GetAsync()->GetTokenBalance(contract, decimals);
+            }
         }
     }
 }
@@ -186,11 +211,60 @@ void SwapEthClientModel::setCanModifySettings(bool canModify)
     }
 }
 
+void SwapEthClientModel::requestTokenInfo(const std::string& contractAddress)
+{
+    GetAsync()->GetTokenInfo(contractAddress);
+}
+
+void SwapEthClientModel::OnTokenInfo(const std::string& tokenContract, const std::string& symbol, uint8_t decimals, const beam::ethereum::IBridge::Error& error)
+{
+    QString errorStr;
+    if (error.m_type != beam::ethereum::IBridge::None)
+    {
+        errorStr = error.m_message.empty()
+            //% "Cannot connect to node. Please check your network connection."
+            ? qtTrId("swap-connection-error")
+            : QString::fromStdString(error.m_message);
+    }
+
+    emit gotTokenInfo(QString::fromStdString(tokenContract),
+                      QString::fromStdString(symbol),
+                      decimals,
+                      errorStr);
+}
+
 void SwapEthClientModel::setConnectionError(beam::ethereum::IBridge::ErrorType error)
 {
     if (m_connectionError != error)
     {
         m_connectionError = error;
         emit connectionErrorChanged();
+    }
+}
+
+void SwapEthClientModel::OnTokenBalance(const std::string& tokenContract, beam::Amount balance)
+{
+    emit gotTokenBalance(QString::fromStdString(tokenContract), balance);
+}
+
+beam::Amount SwapEthClientModel::getTokenBalance(const QString& contract) const
+{
+    auto it = m_tokenBalances.find(contract.toLower());
+    return it != m_tokenBalances.end() ? it->second : 0;
+}
+
+void SwapEthClientModel::setTokenBalance(const QString& contract, beam::Amount balance)
+{
+    auto key = contract.toLower();
+    auto it = m_tokenBalances.find(key);
+    if (it == m_tokenBalances.end())
+    {
+        m_tokenBalances.emplace(key, balance);
+        emit tokenBalancesChanged();
+    }
+    else if (it->second != balance)
+    {
+        it->second = balance;
+        emit tokenBalancesChanged();
     }
 }

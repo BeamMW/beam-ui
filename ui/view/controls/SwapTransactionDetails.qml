@@ -37,6 +37,7 @@ RowLayout {
     property var    swapCoinRefundTxConfirmations
 
     property var    stateDetails
+    property var    coinsUnlockNote
 
     // property var onOpenExternal: null
     signal textCopied(string text)
@@ -361,6 +362,26 @@ RowLayout {
                 wrapMode: Text.Wrap
                 elide: Text.ElideMiddle
                 text: root.stateDetails
+                onCopyText: textCopied(text)
+            }
+        }
+
+        RowLayout {
+            Layout.columnSpan: 2
+            Layout.fillWidth: true
+            visible: root.coinsUnlockNote != ""
+            SvgImage {
+                sourceSize: Qt.size(16, 16)
+                source:  "qrc:/assets/icon-attention.svg"
+            }
+            SFLabel {
+                Layout.fillWidth: true
+                copyMenuEnabled: true
+                font.pixelSize: 14
+                color: Style.content_main
+                wrapMode: Text.Wrap
+                elide: Text.ElideMiddle
+                text: root.coinsUnlockNote
                 onCopyText: textCopied(text)
             }
         }

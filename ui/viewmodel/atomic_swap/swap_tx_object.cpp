@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "swap_tx_object.h"
+#include "swap_utils.h"
 #include "wallet/transactions/swaps/common.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
 #include "core/ecc.h"
@@ -20,6 +21,7 @@
 #include "model/app_model.h"
 #include "viewmodel/fee_helpers.h"
 #include "viewmodel/ui_helpers.h"
+#include <algorithm>
 
 using namespace beam;
 
@@ -63,6 +65,23 @@ namespace
                 //% "If the other side will not sign the transaction in %1, the offer will be canceled automatically."
                 return qtTrId("swap-tx-state-in-progress-negotiation").arg(time);
             }
+        }
+        return "";
+    }
+
+    QString getCoinsUnlockNoteStr(const beam::wallet::SwapTxDescription& tx, Height currentHeight)
+    {
+        if (tx.isRedeemTxRegistered())
+        {
+            return "";
+        }
+
+        auto minHeightRefund = tx.getMinRefundTxHeight();
+        if (minHeightRefund && currentHeight < *minHeightRefund)
+        {
+            QString time = beamui::convertBeamHeightDiffToTime(*minHeightRefund - currentHeight);
+            //% "While the swap is in progress, if the other side goes offline your coins will be automatically unlocked in %1 at most."
+            return qtTrId("swap-details-unlock-note").arg(time);
         }
         return "";
     }
@@ -175,6 +194,10 @@ bool SwapTxObject::isDeleteAvailable() const
 
 auto SwapTxObject::getSwapCoinName() const -> QString
 {
+    if (m_swapTx.getSwapCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
+    {
+        return swapui::erc20Symbol(_tx);
+    }
     return toString(beamui::convertSwapCoinToCurrency(m_swapTx.getSwapCoin()));
 }
 
@@ -189,12 +212,38 @@ QString SwapTxObject::getSentAmountWithCurrency() const
 
 QString SwapTxObject::getAmountWithCurrency() const
 {
+    beam::Asset::ID assetId = 0;
+    _tx.GetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetID, assetId);
+    if (assetId != 0)
+    {
+        std::string assetName;
+        _tx.GetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetName, assetName);
+        return beamui::AmountToUIString(_tx.m_amount, QString::fromStdString(assetName));
+    }
     return AmountToUIString(_tx.m_amount, beamui::Currencies::Beam);
+}
+
+QString SwapTxObject::getSwapCoinAmountString(beam::Amount value, bool withCurrency) const
+{
+    if (m_swapTx.getSwapCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
+    {
+        return swapui::erc20AmountString(_tx, value, withCurrency);
+    }
+    return withCurrency ? AmountToUIString(value, beamui::convertSwapCoinToCurrency(m_swapTx.getSwapCoin()))
+                         : beamui::AmountToUIString(value);
 }
 
 QString SwapTxObject::getSentAmount() const
 {
-    QString amount = beamui::AmountToUIString(getSentAmountValue());
+    QString amount;
+    if (_tx.m_txType == beam::wallet::TxType::AtomicSwap && !m_swapTx.isBeamSide())
+    {
+        amount = getSwapCoinAmountString(getSentAmountValue(), false);
+    }
+    else
+    {
+        amount = beamui::AmountToUIString(getSentAmountValue());
+    }
     return amount == "0" ? "" : amount;
 }
 
@@ -219,7 +268,15 @@ QString SwapTxObject::getReceivedAmountWithCurrency() const
 
 QString SwapTxObject::getReceivedAmount() const
 {
-    QString amount = beamui::AmountToUIString(getReceivedAmountValue());
+    QString amount;
+    if (_tx.m_txType == beam::wallet::TxType::AtomicSwap && m_swapTx.isBeamSide())
+    {
+        amount = getSwapCoinAmountString(getReceivedAmountValue(), false);
+    }
+    else
+    {
+        amount = beamui::AmountToUIString(getReceivedAmountValue());
+    }
     return amount == "0" ? "" : amount;
 }
 
@@ -238,7 +295,7 @@ QString SwapTxObject::getSwapAmountWithCurrency(bool sent) const
     bool s = sent ? !isBeamSide : isBeamSide;
     if (s)
     {
-        return AmountToUIString(m_swapTx.getSwapAmount(), beamui::convertSwapCoinToCurrency(m_swapTx.getSwapCoin()));
+        return getSwapCoinAmountString(m_swapTx.getSwapAmount(), true);
     }
     return getAmountWithCurrency();
 }
@@ -335,6 +392,42 @@ QString SwapTxObject::getStateDetails() const
             else
             {
                 return getWaitingPeerStr(m_swapTx, currentHeight);
+            }
+            break;
+        }
+        default:
+            break;
+        }
+    }
+    return "";
+}
+
+QString SwapTxObject::getCoinsUnlockNote() const
+{
+    if (getTxDescription().m_txType == beam::wallet::TxType::AtomicSwap)
+    {
+        switch (getTxDescription().m_status)
+        {
+        case beam::wallet::TxStatus::Pending:
+        case beam::wallet::TxStatus::InProgress:
+        {
+            Height currentHeight = AppModel::getInstance().getWalletModel()->getCurrentHeight();
+            auto state = m_swapTx.getState();
+            if (state)
+            {
+                switch (*state)
+                {
+                case wallet::AtomicSwapTransaction::State::BuildingBeamLockTX:
+                case wallet::AtomicSwapTransaction::State::BuildingBeamRefundTX:
+                case wallet::AtomicSwapTransaction::State::BuildingBeamRedeemTX:
+                case wallet::AtomicSwapTransaction::State::HandlingContractTX:
+                case wallet::AtomicSwapTransaction::State::SendingBeamLockTX:
+                case wallet::AtomicSwapTransaction::State::SendingRedeemTX:
+                case wallet::AtomicSwapTransaction::State::SendingBeamRedeemTX:
+                    return getCoinsUnlockNoteStr(m_swapTx, currentHeight);
+                default:
+                    break;
+                }
             }
             break;
         }

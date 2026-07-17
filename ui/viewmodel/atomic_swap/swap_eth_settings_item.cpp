@@ -14,13 +14,19 @@
 
 #include "swap_eth_settings_item.h"
 
+#include <QLocale>
+
 #include "mnemonic/mnemonic.h"
 #include "model/app_model.h"
+#include "model/swap_eth_client_model.h"
 #include "viewmodel/qml_globals.h"
 #include "seed_phrase_item.h"
 #include "viewmodel/settings_helpers.h"
+#include "viewmodel/ui_helpers.h"
 
 #include "wallet/transactions/swaps/bridges/ethereum/common.h"
+#include "wallet/transactions/swaps/common.h"
+#include "model/settings.h"
 
 using namespace beam;
 
@@ -35,7 +41,10 @@ SwapEthSettingsItem::SwapEthSettingsItem()
     auto coinClient = m_coinClient.lock();
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(connectionStatusChanged()));
     connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorChanged()));
+    connect(coinClient.get(), &SwapEthClientModel::endpointValidated, this, &SwapEthSettingsItem::onEndpointValidated);
+    connect(coinClient.get(), &SwapEthClientModel::gotTokenInfo, this, &SwapEthSettingsItem::tokenInfoReady);
     LoadSettings();
+    loadCustomTokens();
 }
 
 SwapEthSettingsItem::~SwapEthSettingsItem()
@@ -58,8 +67,11 @@ void SwapEthSettingsItem::applySettings()
     m_settings->m_shouldConnect = m_shouldConnect;
     m_settings->m_projectID = m_infuraProjectID.toStdString();
     m_settings->m_secretWords = GetSeedPhraseFromSeedItems();
+    m_settings->m_useCustomRpc = m_useCustomRpc;
+    m_settings->m_customRpcUrl = m_customRpcUrl.trimmed().toStdString();
 
     coinClient->SetSettings(*m_settings);
+    clearEndpointCheck();
 }
 
 void SwapEthSettingsItem::clearSettings()
@@ -109,6 +121,135 @@ void SwapEthSettingsItem::validateCurrentSeedPhrase()
     setIsCurrentSeedValid(isValidMnemonic(seedPhrases, language::en));
 }
 
+void SwapEthSettingsItem::validateEndpoint()
+{
+    if (auto c = m_coinClient.lock())
+    {
+        c->validateEndpoint();
+    }
+}
+
+void SwapEthSettingsItem::lookupToken(const QString& contractAddress)
+{
+    const auto address = contractAddress.trimmed().toStdString();
+    if (!wallet::IsValidEthContractAddress(address))
+    {
+        //% "Invalid contract address"
+        emit tokenInfoReady(contractAddress, QString(), 0, qtTrId("settings-swap-token-invalid-address"));
+        return;
+    }
+
+    if (auto c = m_coinClient.lock())
+    {
+        c->requestTokenInfo(address);
+    }
+}
+
+void SwapEthSettingsItem::addCustomToken(const QString& contractAddress, const QString& symbol, uint decimals)
+{
+    const auto address = contractAddress.trimmed().toStdString();
+    if (!wallet::IsValidEthContractAddress(address) || symbol.isEmpty())
+    {
+        return;
+    }
+
+    const auto normalized = QString::fromStdString(address).toLower();
+    if (isBuiltinTokenContract(normalized))
+    {
+        //% "This token is already supported"
+        emit tokenInfoReady(contractAddress, QString(), 0, qtTrId("settings-swap-token-already-added"));
+        return;
+    }
+    for (const auto& token : m_customTokens)
+    {
+        if (token.value("contract").toString().toLower() == normalized)
+        {
+            //% "This token is already supported"
+            emit tokenInfoReady(contractAddress, QString(), 0, qtTrId("settings-swap-token-already-added"));
+            return; // already added
+        }
+    }
+
+    QMap<QString, QVariant> token;
+    token.insert("contract", QString::fromStdString(address));
+    token.insert("symbol", symbol);
+    token.insert("decimals", decimals);
+    m_customTokens.push_back(token);
+
+    saveCustomTokens();
+    emit customTokensChanged();
+}
+
+void SwapEthSettingsItem::removeCustomToken(const QString& contractAddress)
+{
+    const auto normalized = contractAddress.trimmed().toLower();
+    for (int i = 0; i < m_customTokens.size(); ++i)
+    {
+        if (m_customTokens[i].value("contract").toString().toLower() == normalized)
+        {
+            m_customTokens.removeAt(i);
+            saveCustomTokens();
+            emit customTokensChanged();
+            return;
+        }
+    }
+}
+
+QList<QMap<QString, QVariant>> SwapEthSettingsItem::getCustomTokens() const
+{
+    QList<QMap<QString, QVariant>> result;
+    for (auto token : m_customTokens)
+    {
+        token.insert("color", beamui::ColorFromString(token.value("contract").toString()));
+        result.push_back(token);
+    }
+    return result;
+}
+
+QList<QMap<QString, QVariant>> SwapEthSettingsItem::getBuiltinTokens() const
+{
+    QList<QMap<QString, QVariant>> result;
+    static const std::tuple<wallet::AtomicSwapCoin, const char*, const char*> builtins[] = {
+        { wallet::AtomicSwapCoin::Usdt, "USDT", "qrc:/assets/icon-usdt.svg" },
+        { wallet::AtomicSwapCoin::Dai,  "DAI",  "qrc:/assets/icon-dai.svg" },
+        { wallet::AtomicSwapCoin::WBTC, "WBTC", "qrc:/assets/icon-wbtc.svg" },
+    };
+
+    for (const auto& [coin, symbol, icon] : builtins)
+    {
+        QMap<QString, QVariant> token;
+        const auto contract = QString::fromStdString(m_settings->GetTokenContractAddress(coin));
+        token.insert("symbol", QString(symbol));
+        token.insert("contract", contract);
+        token.insert("color", beamui::ColorFromString(contract));
+        token.insert("icon", QString(icon));
+        result.push_back(token);
+    }
+    return result;
+}
+
+bool SwapEthSettingsItem::isBuiltinTokenContract(const QString& normalizedAddress) const
+{
+    for (const auto& token : getBuiltinTokens())
+    {
+        if (token.value("contract").toString().toLower() == normalizedAddress)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void SwapEthSettingsItem::loadCustomTokens()
+{
+    m_customTokens = AppModel::getInstance().getSettings().getEthCustomTokens();
+}
+
+void SwapEthSettingsItem::saveCustomTokens()
+{
+    AppModel::getInstance().getSettings().setEthCustomTokens(m_customTokens);
+}
+
 QStringList SwapEthSettingsItem::getEthereumAddresses() const
 {
     QStringList result;
@@ -131,7 +272,7 @@ QString SwapEthSettingsItem::getTitle() const
 {
     if (m_settings->m_shouldConnect)
     {
-        //% "Ethereum node"
+        //% "Ethereum"
         return qtTrId("settings-swap-ethereum-node");
     }
     
@@ -206,6 +347,8 @@ void SwapEthSettingsItem::LoadSettings()
     {
         SetSeedPhrase(m_settings->m_secretWords);
         infuraProjectID(str2qstr(m_settings->m_projectID));
+        setUseCustomRpc(m_settings->m_useCustomRpc);
+        setCustomRpcUrl(str2qstr(m_settings->m_customRpcUrl));
 
         setAccountIndex(m_settings->m_accountIndex);
         shouldConnect(m_settings->m_shouldConnect);
@@ -256,6 +399,8 @@ void SwapEthSettingsItem::SetDefaultSettings(bool clearSeed)
 {
     infuraProjectID("");
     setAccountIndex(0);
+    setUseCustomRpc(false);
+    setCustomRpcUrl("");
 
     if (clearSeed)
     {
@@ -274,6 +419,7 @@ void SwapEthSettingsItem::infuraProjectID(const QString& value)
     {
         m_infuraProjectID = value;
         emit infuraProjectIDChanged();
+        clearEndpointCheck();
     }
 }
 
@@ -336,6 +482,99 @@ QString SwapEthSettingsItem::getConnectionError() const
 
     default:
         return QString();
+    }
+}
+
+bool SwapEthSettingsItem::useCustomRpc() const
+{
+    return m_useCustomRpc;
+}
+
+void SwapEthSettingsItem::setUseCustomRpc(bool value)
+{
+    if (value != m_useCustomRpc)
+    {
+        m_useCustomRpc = value;
+        emit useCustomRpcChanged();
+        clearEndpointCheck();
+    }
+}
+
+QString SwapEthSettingsItem::customRpcUrl() const
+{
+    return m_customRpcUrl;
+}
+
+void SwapEthSettingsItem::setCustomRpcUrl(const QString& value)
+{
+    if (value != m_customRpcUrl)
+    {
+        m_customRpcUrl = value;
+        emit customRpcUrlChanged();
+        clearEndpointCheck();
+    }
+}
+
+QString SwapEthSettingsItem::endpointCheckResult() const
+{
+    return m_endpointCheckResult;
+}
+
+bool SwapEthSettingsItem::endpointCheckOk() const
+{
+    return m_endpointCheckOk;
+}
+
+QString SwapEthSettingsItem::getChainName(quint64 chainID)
+{
+    switch (chainID)
+    {
+    //% "Ethereum Mainnet"
+    case 1:  return qtTrId("settings-eth-chain-mainnet");
+    //% "Sepolia Testnet"
+    case 11155111: return qtTrId("settings-eth-chain-sepolia");
+    default:
+        //% "chain %1"
+        return qtTrId("settings-eth-chain-other").arg(chainID);
+    }
+}
+
+void SwapEthSettingsItem::onEndpointValidated(quint64 chainID, quint64 blockNumber, bool ok, bool wrongNetwork, const QString& errorMsg)
+{
+    m_endpointCheckOk = ok;
+    if (!ok)
+    {
+        if (wrongNetwork)
+        {
+            //% "Connected to %1, but Ethereum Mainnet is required"
+            m_endpointCheckResult = qtTrId("settings-eth-endpoint-wrong-network").arg(getChainName(chainID));
+        }
+        else
+        {
+            //% "Unable to connect"
+            m_endpointCheckResult = qtTrId("settings-eth-endpoint-failed");
+            if (!errorMsg.isEmpty())
+            {
+                m_endpointCheckResult += " (" + errorMsg + ")";
+            }
+        }
+    }
+    else
+    {
+        //% "Connected to %1. Latest block: %2"
+        m_endpointCheckResult = qtTrId("settings-eth-endpoint-ok")
+            .arg(getChainName(chainID)).arg(QLocale().toString((qulonglong)blockNumber));
+    }
+    emit endpointCheckResultChanged();
+}
+
+void SwapEthSettingsItem::clearEndpointCheck()
+{
+    if (!m_endpointCheckResult.isEmpty() || m_endpointCheckOk)
+    {
+        m_endpointCheckResult.clear();
+        m_endpointCheckOk = false;
+        emit endpointCheckResultChanged();
     }
 }
 

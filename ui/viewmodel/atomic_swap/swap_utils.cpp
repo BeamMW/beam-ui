@@ -13,6 +13,9 @@
 // limitations under the License.
 #include "swap_utils.h"
 #include "viewmodel/qml_globals.h"
+#include "viewmodel/ui_helpers.h"
+#include "model/app_model.h"
+#include "wallet/transactions/swaps/bridges/ethereum/common.h"
 
 namespace swapui
 {
@@ -61,5 +64,68 @@ namespace swapui
         append(OldWalletCurrency::OldCurrency::CurrWrappedBTC, "qrc:/assets/icon-wbtc.svg");
 
         return result;
+    }
+
+    QString erc20Symbol(const beam::wallet::TxParameters& params)
+    {
+        std::string symbol;
+        params.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenSymbol, symbol);
+        return symbol.empty() ? QString("ERC20") : QString::fromStdString(symbol);
+    }
+
+    QString erc20AmountString(const beam::wallet::TxParameters& params, beam::Amount value, bool withSymbol)
+    {
+        uint8_t onChainDecimals = 0;
+        params.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenDecimals, onChainDecimals);
+        // exact-decimals variant: tokenWalletDecimals(0) is a valid 0, which the
+        // unitName overload would silently replace with the BEAM default
+        auto amountStr = beamui::AmountToUIStringExactDecimals(value, beamui::tokenWalletDecimals(onChainDecimals));
+        if (!withSymbol)
+        {
+            return amountStr;
+        }
+        std::string symbol;
+        params.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenSymbol, symbol);
+        return symbol.empty() ? amountStr : amountStr + " " + QString::fromStdString(symbol);
+    }
+
+    bool isTokenSide(OldWalletCurrency::OldCurrency currency, const QString& tokenContract)
+    {
+        return currency == OldWalletCurrency::OldCurrency::CurrEthereum && !tokenContract.isEmpty();
+    }
+
+    uint8_t effectiveSwapDecimals(OldWalletCurrency::OldCurrency currency, const QString& tokenContract, uint32_t tokenDecimals)
+    {
+        if (isTokenSide(currency, tokenContract))
+        {
+            return beamui::tokenWalletDecimals(tokenDecimals);
+        }
+        return beamui::getCurrencyDecimals(convertCurrency(currency));
+    }
+
+    void connectFeeRateClients(QObject* receiver, const std::function<void()>& onChanged)
+    {
+        if (auto ethClient = AppModel::getInstance().getSwapEthClient(); ethClient)
+        {
+            QObject::connect(ethClient.get(), &SwapEthClientModel::estimatedFeeRateChanged, receiver, onChanged);
+        }
+        for (auto coin : {beam::wallet::AtomicSwapCoin::Bitcoin, beam::wallet::AtomicSwapCoin::Litecoin,
+                          beam::wallet::AtomicSwapCoin::Qtum, beam::wallet::AtomicSwapCoin::Dogecoin,
+                          beam::wallet::AtomicSwapCoin::Dash, beam::wallet::AtomicSwapCoin::Bitcoin_Cash})
+        {
+            if (auto client = AppModel::getInstance().getSwapCoinClient(coin); client)
+            {
+                QObject::connect(client.get(), &SwapCoinClientModel::estimatedFeeRateChanged, receiver, onChanged);
+            }
+        }
+    }
+
+    bool enoughEthForTokenLock(beam::Amount feeRate)
+    {
+        // no live balance for arbitrary custom tokens: only check the ETH
+        // that pays the lock gas (incl. the approve calls, kApproveTxGasLimit)
+        const beam::Amount lockFee = feeRate *
+            (beam::ethereum::kLockTxGasLimit + 2 * beam::ethereum::kApproveTxGasLimit);
+        return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >= lockFee;
     }
 }

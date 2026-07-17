@@ -35,6 +35,16 @@ ConfirmationDialog {
     property string rateUnit:  ""
     property bool   showRate:  rateUnit.length > 0
 
+    // CA / ERC-20 extended offer info, set by the caller (send_swap.qml)
+    property bool   isErc20Swap:           false
+    property string tokenContract:         ""
+    property string tokenSymbol:           ""
+    property int    tokenDecimals:         0
+    property bool   isBeamAssetSwap:       false
+    property int    beamAssetId:           0
+    property string beamAssetUnitName:     ""
+    property bool   needsBeamForRedeemFee: false
+
     readonly property string feeLabel: {
         //% "Fee"
         if (!control.swapMode) return [qsTrId("send-regular-fee"), ":"].join("")
@@ -281,6 +291,33 @@ ConfirmationDialog {
                 color:                  Style.content_disabled
                 wrapMode:               Text.WordWrap
                 text:                   control.onlineMessage
+            }
+
+            //
+            // ERC-20 token / Confidential Asset confirmation notes
+            //
+            SFText {
+                visible:                control.isErc20Swap
+                Layout.columnSpan:      2
+                horizontalAlignment:    Text.AlignHCenter
+                Layout.fillWidth:       true
+                font.pixelSize:         12
+                color:                  Style.validator_error
+                wrapMode:               Text.WordWrap
+                //% "%1 contract: %2. Verify this token contract address carefully. Anyone can create a token with any name."
+                text:                   qsTrId("swap-accept-token-warning-confirm").arg(control.tokenSymbol).arg(control.tokenContract)
+            }
+
+            SFText {
+                visible:                control.needsBeamForRedeemFee
+                Layout.columnSpan:      2
+                horizontalAlignment:    Text.AlignHCenter
+                Layout.fillWidth:       true
+                font.pixelSize:         12
+                color:                  Style.content_disabled
+                wrapMode:               Text.WordWrap
+                //% "You are receiving a Confidential Asset. A small BEAM balance is required to pay the redeem transaction fee."
+                text:                   qsTrId("swap-accept-asset-beam-fee")
             }
         }
     }

@@ -26,6 +26,9 @@ Rectangle {
     property alias amountWrapMode: amountField.wrapMode
     property var onClick: function() {}
     property string swapSettingsPane: ""
+    // custom-token cards have no static svg logo (item 4): a locally-generated
+    // colored-circle+letter icon is supplied here instead of currencyIcon
+    property Component iconDelegate: null
    
     id: control
     Layout.fillWidth: true
@@ -60,7 +63,14 @@ Rectangle {
                 source: currencyIcon
                 width: 26
                 height: 26
-                visible: currencyIcon.length
+                visible: currencyIcon.length && !control.iconDelegate
+            }
+
+            Loader {
+                anchors.verticalCenter: parent.verticalCenter
+                active: control.iconDelegate !== null
+                visible: active
+                sourceComponent: control.iconDelegate
             }
 
             Repeater {
@@ -135,7 +145,7 @@ Rectangle {
                 id:                clickArea
                 anchors.fill:      parent
                 acceptedButtons:   Qt.LeftButton
-                onClicked:         main.openSwapSettings(swapSettingsPane)
+                onClicked:         main.openSettings(swapSettingsPane)
                 hoverEnabled:      true
                 onPositionChanged: clickArea.cursorShape = Qt.PointingHandCursor;
             }

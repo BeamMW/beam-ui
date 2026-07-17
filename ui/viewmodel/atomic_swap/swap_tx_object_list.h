@@ -75,7 +75,8 @@ public:
         BeamLockTxKernelId,
         BeamRedeemTxKernelId,
         BeamRefundTxKernelId,
-        StateDetails
+        StateDetails,
+        CoinsUnlockNote
     };
 
     Q_ENUM(Roles)

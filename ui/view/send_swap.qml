@@ -141,8 +141,8 @@ please review your settings and try again"
                     // Send amount
                     //
                     Panel {
-                        //% "Send amount"
-                        title:                   qsTrId("sent-amount-label")
+                        //% "I send"
+                        title:                   qsTrId("atomic-swap-i-send")
                         Layout.fillWidth:        true
 
                         content:
@@ -199,7 +199,7 @@ please review your settings and try again"
                             currency:                   viewModel.sendCurrency
                             minFee:                     currency == OldWalletCurrency.CurrBeam ? viewModel.minimalBeamFeeGrothes : BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
-                            recommendedFee:             BeamGlobals.getRecommendedFee(currency)
+                            recommendedFee:             { viewModel.feeRatesRevision; return BeamGlobals.getRecommendedFee(currency); }
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
@@ -251,6 +251,84 @@ please review your settings and try again"
                             }
                         }
                     }
+
+                    //
+                    // ERC-20 token details
+                    //
+                    FoldablePanel {
+                        visible:                 viewModel.isErc20Swap
+                        //% "Token"
+                        title:                   qsTrId("swap-accept-token-title")
+                        Layout.fillWidth:        true
+
+                        content: ColumnLayout {
+                            SFText {
+                                font.pixelSize:   14
+                                color:            Style.content_secondary
+                                //% "Contract address"
+                                text:             qsTrId("swap-accept-token-contract-label")
+                            }
+                            SFLabel {
+                                Layout.fillWidth:    true
+                                font.pixelSize:      14
+                                font.family:         "Monospace"
+                                color:               Style.content_main
+                                wrapMode:            Text.WrapAnywhere
+                                copyMenuEnabled:     true
+                                text:                viewModel.tokenContract
+                            }
+                            SFText {
+                                Layout.topMargin: 10
+                                font.pixelSize:   14
+                                color:            Style.content_secondary
+                                //% "Symbol / decimals"
+                                text:             qsTrId("swap-accept-token-symbol-label")
+                            }
+                            SFText {
+                                font.pixelSize: 14
+                                color:          Style.content_main
+                                text:           viewModel.tokenSymbol + " / " + viewModel.tokenDecimals
+                            }
+                            SFText {
+                                Layout.topMargin:  10
+                                Layout.fillWidth:  true
+                                font.pixelSize:    12
+                                color:             Style.validator_error
+                                wrapMode:          Text.Wrap
+                                //% "Verify this token contract address carefully. Anyone can create a token with any name."
+                                text:              qsTrId("swap-accept-token-warning")
+                            }
+                        }
+                    }
+
+                    //
+                    // Confidential Asset details
+                    //
+                    FoldablePanel {
+                        visible:                 viewModel.isBeamAssetSwap
+                        //% "Confidential Asset"
+                        title:                   qsTrId("swap-accept-asset-title")
+                        Layout.fillWidth:        true
+
+                        content: ColumnLayout {
+                            SFText {
+                                font.pixelSize: 14
+                                color:          Style.content_main
+                                //% "Asset id %1, unit %2"
+                                text:           qsTrId("swap-accept-asset-id-unit").arg(viewModel.beamAssetId).arg(viewModel.beamAssetUnitName)
+                            }
+                            SFText {
+                                visible:           viewModel.needsBeamForRedeemFee
+                                Layout.topMargin:  10
+                                Layout.fillWidth:  true
+                                font.pixelSize:    12
+                                color:             Style.content_secondary
+                                wrapMode:          Text.Wrap
+                                //% "You are receiving a Confidential Asset. A small BEAM balance is required to pay the redeem transaction fee."
+                                text:              qsTrId("swap-accept-asset-beam-fee")
+                            }
+                        }
+                    }
                 }
 
                 //
@@ -265,8 +343,8 @@ please review your settings and try again"
                     // Receive amount
                     //
                     Panel {
-                        //% "Receive amount"
-                        title:                   qsTrId("receive-amount-swap-label")
+                        //% "I receive"
+                        title:                   qsTrId("atomic-swap-i-receive")
                         Layout.fillWidth:        true
                         content:
 
@@ -289,8 +367,11 @@ please review your settings and try again"
                                     return qsTrId("send-less-than-fee")
                                 }
                                 if(!viewModel.isEnoughToReceive) {
-                                    //% "There is not enough funds to complete the transaction"
-                                    return qsTrId("send-not-enough")
+                                    // isEnoughToReceive only fails for an Ethereum-based receive
+                                    // side: the redeem tx gas is paid in ETH
+/*% "Not enough ETH to pay the redeem transaction fee (%1 needed)"
+*/
+                                    return qsTrId("swap-not-enough-eth-redeem").arg(BeamGlobals.calcWithdrawTxFee(viewModel.receiveCurrency, viewModel.receiveFee))
                                 }
                                 return ""
                             }
@@ -322,7 +403,7 @@ please review your settings and try again"
                             currency:                   viewModel.receiveCurrency
                             minFee:                     BeamGlobals.getMinimalFee(currency, false)
                             maxFee:                     BeamGlobals.getMaximumFee(currency)
-                            recommendedFee:             BeamGlobals.getRecommendedFee(currency)
+                            recommendedFee:             { viewModel.feeRatesRevision; return BeamGlobals.getRecommendedFee(currency); }
                             feeLabel:                   BeamGlobals.getFeeRateLabel(currency)
                             color:                      Style.accent_outgoing
                             readOnly:                   false
@@ -506,6 +587,14 @@ please review your settings and try again"
                             flatFee:        viewModel.sendCurrency == OldWalletCurrency.CurrBeam,
                             rate:           viewModel.secondCurrencySendRateValue,
                             rateUnit:       viewModel.secondCurrencyUnitName,
+                            isErc20Swap:           viewModel.isErc20Swap,
+                            tokenContract:         viewModel.tokenContract,
+                            tokenSymbol:           viewModel.tokenSymbol,
+                            tokenDecimals:         viewModel.tokenDecimals,
+                            isBeamAssetSwap:       viewModel.isBeamAssetSwap,
+                            beamAssetId:           viewModel.beamAssetId,
+                            beamAssetUnitName:     viewModel.beamAssetUnitName,
+                            needsBeamForRedeemFee: viewModel.needsBeamForRedeemFee,
                         })
 
                     dialogObject.onAccepted.connect(function () {

@@ -83,6 +83,13 @@ class SwapOffersViewModel : public QObject
     Q_PROPERTY(bool                                      isOffersLoaded      READ isOffersLoaded         NOTIFY offersLoaded)
     Q_PROPERTY(int                                       activeTxCount       READ getActiveTxCount       NOTIFY allTransactionsChanged)
     Q_PROPERTY(QQmlListProperty<SwapCoinClientWrapper>   swapClientList      READ getSwapClients         CONSTANT)
+    // {"text","pair"} entries for the currency filter combo: the fixed classic
+    // coins plus one entry per stored custom ERC-20 token and (if the wallet
+    // holds any) per Confidential Asset
+    Q_PROPERTY(QList<QMap<QString, QVariant>>            coinFilterList      READ getCoinFilterList      NOTIFY coinFilterListChanged)
+    // one card per stored custom ERC-20 token, live balance from the eth client;
+    // {"contract","symbol","available","color"} -- only meaningful while the eth client is connected
+    Q_PROPERTY(QList<QMap<QString, QVariant>>            customTokenCards    READ getCustomTokenCards    NOTIFY customTokenCardsChanged)
 
 public:
     SwapOffersViewModel();
@@ -96,6 +103,8 @@ public:
     bool isOffersLoaded() const;
     int getActiveTxCount() const;
     QQmlListProperty<SwapCoinClientWrapper> getSwapClients();
+    QList<QMap<QString, QVariant>> getCoinFilterList() const;
+    QList<QMap<QString, QVariant>> getCustomTokenCards() const;
 
     Q_INVOKABLE void cancelOffer(const QVariant& variantTxID);
     Q_INVOKABLE void cancelTx(const QVariant& variantTxID);
@@ -118,6 +127,8 @@ signals:
     void beamAvailableChanged();
     void offerRemovedFromTable(QVariant variantTxID);
     void offersLoaded();
+    void coinFilterListChanged();
+    void customTokenCardsChanged();
 
 private:
     void monitorAllOffersFitBalance();

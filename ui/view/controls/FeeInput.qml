@@ -27,6 +27,14 @@ ColumnLayout {
     property string  rateUnit:                   ""
     property string  minimumFeeNotificationText: ""
 
+    // the recommended rate arrives asynchronously; adopt it if no fee is set
+    // yet and the user is not editing the field
+    onRecommendedFeeChanged: {
+        if (control.fee === 0 && control.recommendedFee > 0 && !control.readOnly && !feeInput.activeFocus) {
+            control.fee = BeamGlobals.getDefaultFee(control.currency)
+        }
+    }
+
     RowLayout {
         Layout.fillWidth: true
 
@@ -75,16 +83,13 @@ ColumnLayout {
             }
         }
 
-        Item {
-            x: feeInput.width - feeCurrencyLabel.width - 8
-            y: 6
-            SFText {
-                id: feeCurrencyLabel
-                font.pixelSize: 14
-                color:          isValid ? Style.content_main : Style.validator_error
-                text:           control.feeLabel
-                visible:        (control.feeLabel || "").length
-            }
+        SFText {
+            id:               feeCurrencyLabel
+            Layout.alignment: Qt.AlignVCenter
+            font.pixelSize:   14
+            color:            isValid ? Style.content_main : Style.validator_error
+            text:             control.feeLabel
+            visible:          (control.feeLabel || "").length
         }
 
         Item {

@@ -15,9 +15,11 @@
 #include "swap_offer_item.h"
 #include "utility/helpers.h"
 #include "wallet/core/common.h"
+#include "wallet/transactions/swaps/common.h"
 #include "viewmodel/ui_helpers.h"
 #include "viewmodel/qml_globals.h"
-
+#include "swap_utils.h"
+#include <algorithm>
 
 SwapOfferItem::SwapOfferItem(QObject* parent /* = nullptr*/)
     : QObject(parent)
@@ -69,22 +71,57 @@ QString SwapOfferItem::rate() const
 
     if (!beamAmount) return QString();
 
+    QString otherAmountStr;
+    uint8_t otherDecimals = beamui::getCurrencyDecimals(getSwapCoinType());
+
+    if (m_offer.ResolveCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
+    {
+        uint8_t onChainDecimals = 0;
+        m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenDecimals, onChainDecimals);
+        otherDecimals = beamui::tokenWalletDecimals(onChainDecimals);
+        otherAmountStr = beamui::AmountToUIStringExactDecimals(otherCoinAmount, otherDecimals);
+    }
+    else
+    {
+        otherAmountStr = beamui::AmountToUIString(otherCoinAmount, getSwapCoinType(), false);
+    }
+
     return QMLGlobals::divideWithPrecision(
-        beamui::AmountToUIString(otherCoinAmount, getSwapCoinType(), false),
-        beamui::AmountToUIString(beamAmount), 
-        beamui::getCurrencyDecimals(getSwapCoinType()));
+        otherAmountStr,
+        beamui::AmountToUIString(beamAmount),
+        otherDecimals);
 }
 
 QString SwapOfferItem::amountSend() const
 {
-    auto coinType = isSendBeam() ? beamui::Currencies::Beam : getSwapCoinType();
-    return beamui::AmountToUIString(rawAmountSend(), coinType);
+    return isSendBeam() ? amountBeamSide(rawAmountSend()) : amountSwapCoinSide(rawAmountSend());
 }
 
 QString SwapOfferItem::amountReceive() const
 {
-    auto coinType = isSendBeam() ? getSwapCoinType() : beamui::Currencies::Beam;
-    return beamui::AmountToUIString(rawAmountReceive(), coinType);
+    return isSendBeam() ? amountSwapCoinSide(rawAmountReceive()) : amountBeamSide(rawAmountReceive());
+}
+
+QString SwapOfferItem::amountBeamSide(beam::Amount value) const
+{
+    beam::Asset::ID assetId = 0;
+    m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetID, assetId);
+    if (assetId != 0)
+    {
+        std::string assetName;
+        m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetName, assetName);
+        return beamui::AmountToUIString(value, QString::fromStdString(assetName));
+    }
+    return beamui::AmountToUIString(value, beamui::Currencies::Beam);
+}
+
+QString SwapOfferItem::amountSwapCoinSide(beam::Amount value) const
+{
+    if (m_offer.ResolveCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
+    {
+        return swapui::erc20AmountString(m_offer, value, true);
+    }
+    return beamui::AmountToUIString(value, getSwapCoinType());
 }
 
 bool SwapOfferItem::isOwnOffer() const
@@ -114,7 +151,29 @@ beamui::Currencies SwapOfferItem::getSwapCoinType() const
 
 QString SwapOfferItem::getSwapCoinName() const
 {
+    if (m_offer.ResolveCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
+    {
+        return swapui::erc20Symbol(m_offer);
+    }
     return toString(getSwapCoinType());
+}
+
+beam::wallet::AtomicSwapCoin SwapOfferItem::resolvedSwapCoin() const
+{
+    return m_offer.ResolveCoin();
+}
+
+QString SwapOfferItem::getBeamSideName() const
+{
+    beam::Asset::ID assetId = 0;
+    m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetID, assetId);
+    if (assetId != 0)
+    {
+        std::string assetName;
+        m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetName, assetName);
+        return assetName.empty() ? QString("beam") : QString::fromStdString(assetName);
+    }
+    return "beam";
 }
 
 void SwapOfferItem::reset(const beam::wallet::SwapOffer& offer)

@@ -915,14 +915,6 @@
         <source>Password</source>
         <translation>Lösenord</translation>
     </message>
-    <message id="receive-amount-swap-label">
-        <source>Receive amount</source>
-        <translation>Ta emot belopp</translation>
-    </message>
-    <message id="sent-amount-label">
-        <source>Send amount</source>
-        <translation>Skicka belopp</translation>
-    </message>
     <message id="general-rate">
         <source>Exchange rate</source>
         <translation>Växelkurs</translation>
@@ -2064,7 +2056,8 @@ Din version är: %2. Sök efter uppdateringar.</translation>
         <translation type="unfinished">Ethereum</translation>
     </message>
     <message id="settings-swap-ethereum-node">
-        <source>Ethereum node</source>
+        <source>Ethereum</source>
+        <oldsource>Ethereum node</oldsource>
         <translation type="unfinished">Ethereum node</translation>
     </message>
     <message id="ethereum-show-seed-title">
@@ -2212,10 +2205,6 @@ mycket längre tid för en transaktion att slutföras.</translation>
 Please try again later or create an offer yourself.</source>
         <translation>Det finns inga aktiva erbjudanden för tillfället. 
 Vänligen testa igen senare eller skapa ett erbjudande själv.</translation>
-    </message>
-    <message id="atomic-swap-amount-send">
-        <source>Send</source>
-        <translation>Skicka</translation>
     </message>
     <message id="atomic-swap-all-transactions-tab">
         <source>All</source>
@@ -3582,10 +3571,6 @@ Please, restart the wallet and try again.</translation>
         <source>updating</source>
         <translation>uppdaterar</translation>
     </message>
-    <message id="general-receive">
-        <source>Receive</source>
-        <translation>Ta emot</translation>
-    </message>
     <message id="swap-rate">
         <source>Rate</source>
         <translation>Kurs</translation>
@@ -3951,6 +3936,143 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Det gick inte att extrahera DApp-filerna.</translation>
+    </message>
+    <message id="atomic-swap-i-send">
+        <source>I send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="atomic-swap-i-receive">
+        <source>I receive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-details-unlock-note">
+        <source>While the swap is in progress, if the other side goes offline your coins will be automatically unlocked in %1 at most.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-infura">
+        <source>Infura</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-custom-rpc">
+        <source>Custom RPC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-rpc-endpoint">
+        <source>Ethereum RPC endpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-rpc-note">
+        <source>Works with any Ethereum JSON-RPC endpoint. Keyless public options: ethereum-rpc.publicnode.com, eth.drpc.org, rpc.mevblocker.io - or run your own node.</source>
+        <oldsource>Supports Infura, Alchemy, QuickNode, Chainstack, Ankr, or your own Ethereum node.</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-check-connection">
+        <source>Check connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-endpoint-failed">
+        <source>Unable to connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-chain-mainnet">
+        <source>Ethereum Mainnet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-chain-sepolia">
+        <source>Sepolia Testnet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-chain-other">
+        <source>chain %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-endpoint-ok">
+        <source>Connected to %1. Latest block: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-eth-endpoint-wrong-network">
+        <source>Connected to %1, but Ethereum Mainnet is required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-section-title">
+        <source>Custom ERC-20 tokens</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-remove">
+        <source>remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-address-placeholder">
+        <source>0x contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-lookup">
+        <source>Look up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-add">
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-info">
+        <source>%1, %2 decimals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-accept-token-title">
+        <source>Token</source>
+        <translation type="unfinished">Token</translation>
+    </message>
+    <message id="swap-accept-token-contract-label">
+        <source>Contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-accept-token-symbol-label">
+        <source>Symbol / decimals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-accept-token-warning">
+        <source>Verify this token contract address carefully. Anyone can create a token with any name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-accept-asset-title">
+        <source>Confidential Asset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-accept-asset-id-unit">
+        <source>Asset id %1, unit %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-accept-asset-beam-fee">
+        <source>You are receiving a Confidential Asset. A small BEAM balance is required to pay the redeem transaction fee.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-accept-token-warning-confirm">
+        <source>%1 contract: %2. Verify this token contract address carefully. Anyone can create a token with any name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-invalid-address">
+        <source>Invalid contract address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-builtin">
+        <source>built-in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-add-open">
+        <source>+ Add token</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-add-cancel">
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="settings-swap-token-already-added">
+        <source>This token is already supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="swap-not-enough-eth-redeem">
+        <source>Not enough ETH to pay the redeem transaction fee (%1 needed)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

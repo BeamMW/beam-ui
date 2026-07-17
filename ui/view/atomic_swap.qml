@@ -223,6 +223,30 @@ ColumnLayout {
             }
         }
 
+        // one card per stored custom ERC-20 token, live balance
+        // shown only while the eth client is connected - matches the DAI/USDT/WBTC rule
+        Repeater {
+            model: viewModel.customTokenCards
+
+            SwapCurrencyAmountPane {
+                gradLeft: modelData.color
+                amount:   modelData.available
+                unitName: modelData.symbol
+                isOk:     modelData.isConnected
+                swapSettingsPane: "ETH"
+                //% "Connecting..."
+                textConnecting: qsTrId("swap-connecting")
+                //% "Cannot connect to peer. Please check the address in Settings and try again."
+                textConnectionError: qsTrId("swap-beta-connection-error")
+                iconDelegate: Component {
+                    TokenIcon {
+                        tokenColor: modelData.color
+                        symbol:     modelData.symbol
+                    }
+                }
+            }
+        }
+
         Rectangle {
             id:                         swapOptions
             Layout.fillWidth:           true
@@ -413,22 +437,26 @@ ColumnLayout {
                     fontLetterSpacing: 0.47
                     color: Style.content_main
                     textRole: 'text'
-                    model: [
-                        {
-                            //% "(all)"
-                            text: qsTrId("atomic-swap-all-coins"),
-                            pair: ""
-                        },
-                        {text: "BTC",  pair: "^(btc-)|(-btc)$"}, // We need a separator '-' to distinguish 'btc' and 'wbtc' 
-                        {text: "DAI",  pair: "^(dai-)|(-dai)$"},
-                        {text: "DASH", pair: "^(dash-)|(-dash)$"},
-                        {text: "DOGE", pair: "^(doge-)|(-doge)$"},
-                        {text: "ETH",  pair: "^(eth-)|(-eth)$"},
-                        {text: "LTC",  pair: "^(ltc-)|(-ltc)$"},
-                        {text: "QTUM", pair: "^(qtum-)|(-qtum)$"},
-                        {text: "USDT", pair: "^(usdt-)|(-usdt)$"},
-                        {text: "WBTC", pair: "^(wbtc-)|(-wbtc)$"}
-                    ]
+                    // fixed classic coins + custom ERC-20 tokens + held CA's,
+                    // built on the C++ side (viewModel.coinFilterList) so the
+                    // combo stays in sync with settings/wallet changes
+                    model: viewModel.coinFilterList
+
+                    // regenerating the model resets currentIndex: restore the
+                    // selection by value (its filter pair), or fall back to "(all)"
+                    property string selectedPair: ""
+                    onActivated: selectedPair = model[currentIndex] ? model[currentIndex].pair : ""
+                    onModelChanged: {
+                        if (!model) return
+                        for (var i = 0; i < model.length; ++i) {
+                            if (model[i].pair === selectedPair) {
+                                if (currentIndex !== i) currentIndex = i
+                                return
+                            }
+                        }
+                        currentIndex = 0
+                        selectedPair = ""
+                    }
                 }
             }   // RowLayout
 
@@ -530,7 +558,7 @@ Please try again later or create an offer yourself."
                             ? viewModel.allOffersFitBalance
                             : viewModel.allOffers
                         filterRole: "pair"
-                        filterString: coinSelector.model[coinSelector.currentIndex].pair
+                        filterString: coinSelector.model[coinSelector.currentIndex] ? coinSelector.model[coinSelector.currentIndex].pair : ""
                         filterCaseSensitivity: Qt.CaseInsensitive
                     }
 
@@ -610,8 +638,8 @@ Please try again later or create an offer yourself."
 
                 TableViewColumn {
                     role: "amountSend"
-                    //% "Send"
-                    title: qsTrId("atomic-swap-amount-send")
+                    //% "I send"
+                    title: qsTrId("atomic-swap-i-send")
                     width: offersTable.columnWidth
                     movable: false
                     resizable: false
@@ -625,8 +653,8 @@ Please try again later or create an offer yourself."
 
                 TableViewColumn {
                     role: "amountReceive"
-                    //% "Receive"
-                    title: qsTrId("general-receive")
+                    //% "I receive"
+                    title: qsTrId("atomic-swap-i-receive")
                     width: offersTable.columnWidth
                     movable: false
                     resizable: false
@@ -881,6 +909,7 @@ Please try again later or create an offer yourself."
                             beamRedeemTxKernelId:           txRolesMap && txRolesMap.beamRedeemTxKernelId ? txRolesMap.beamRedeemTxKernelId : ""
                             beamRefundTxKernelId:           txRolesMap && txRolesMap.beamRefundTxKernelId ? txRolesMap.beamRefundTxKernelId : ""
                             stateDetails:                   txRolesMap && txRolesMap.stateDetails ? txRolesMap.stateDetails : ""
+                            coinsUnlockNote:                txRolesMap && txRolesMap.coinsUnlockNote ? txRolesMap.coinsUnlockNote : ""
                             failureReason:                  txRolesMap && txRolesMap.failureReason ? txRolesMap.failureReason : ""
                                     
                             onTextCopied: function (text) {

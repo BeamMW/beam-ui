@@ -227,7 +227,7 @@ ColumnLayout {
                         connectionError:          modelData.connectionError
                         getAddressesElectrum:     modelData.getAddressesElectrum
                         folded:                   creating ? modelData.folded :
-                                                             (unfoldSection == modelData.coinID ? false : (unfoldSection == "ALL_COINS" ? modelData.isConnected : true))
+                                                             (unfoldSection == modelData.coinID ? false : true)
 
 
                         mainSettingsViewModel:    viewModel
@@ -376,6 +376,7 @@ ColumnLayout {
 
                 SwapEthSettings {
                     id:                       swapEthSettings
+                    ethSettings:              viewModel.ethSettings
                     title:                    viewModel.ethSettings.title
                     generalTitle:             viewModel.ethSettings.generalTitle
                     showSeedDialogTitle:      viewModel.ethSettings.showSeedDialogTitle
@@ -386,13 +387,15 @@ ColumnLayout {
                     mainSettingsViewModel:    viewModel
                     showStatus:               true
                     getEthereumAddresses:     viewModel.ethSettings.getEthereumAddresses
-                    folded:                   creating ? (unfoldSection == viewModel.ethSettings.coinID ? false : (unfoldSection == "ALL_COINS" ? viewModel.ethSettings.isConnected : true)) : viewModel.ethSettings.folded
+                    folded:                   creating ? (unfoldSection == viewModel.ethSettings.coinID ? false : true) : viewModel.ethSettings.folded
                     canChangeConnection:      viewModel.ethSettings.canChangeConnection
                     isConnected:              viewModel.ethSettings.isConnected
                     connectionStatus:         viewModel.ethSettings.connectionStatus
                     connectionError:          viewModel.ethSettings.connectionError
                     infuraProjectID:          viewModel.ethSettings.infuraProjectID
                     accountIndex:             viewModel.ethSettings.accountIndex
+                    useCustomRpc:             viewModel.ethSettings.useCustomRpc
+                    customRpcUrl:             viewModel.ethSettings.customRpcUrl
 
                     Connections {
                         target: viewModel.ethSettings
@@ -422,6 +425,14 @@ ColumnLayout {
                             swapEthSettings.accountIndex = viewModel.ethSettings.accountIndex
                         }
 
+                        function onUseCustomRpcChanged () {
+                            swapEthSettings.useCustomRpc = viewModel.ethSettings.useCustomRpc
+                        }
+
+                        function onCustomRpcUrlChanged () {
+                            swapEthSettings.customRpcUrl = viewModel.ethSettings.customRpcUrl
+                        }
+
                         function onSeedPhrasesChanged () {
                             swapEthSettings.seedPhrases = viewModel.ethSettings.seedPhrases
                         }
@@ -439,6 +450,7 @@ ColumnLayout {
                     onRestoreSeedPhrases:        viewModel.ethSettings.restoreSeedPhrases()
                     onCopySeedPhrases:           viewModel.ethSettings.copySeedPhrases()
                     onValidateCurrentSeedPhrase: viewModel.ethSettings.validateCurrentSeedPhrase()
+                    onValidateEndpoint:          viewModel.ethSettings.validateEndpoint()
 
                     Binding {
                         target:   viewModel.ethSettings
@@ -456,6 +468,18 @@ ColumnLayout {
                         target:   viewModel.ethSettings
                         property: "accountIndex"
                         value:    swapEthSettings.accountIndex
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "useCustomRpc"
+                        value:    swapEthSettings.useCustomRpc
+                    }
+
+                    Binding {
+                        target:   viewModel.ethSettings
+                        property: "customRpcUrl"
+                        value:    swapEthSettings.customRpcUrl
                     }
                 }
             }

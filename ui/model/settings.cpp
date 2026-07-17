@@ -44,6 +44,7 @@ namespace
     const char* kIsAlowedBeamMWLink = "beam_mw_links_allowed";
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
+    const char* kEthCustomTokens = "eth/customTokens";
     const char* kHideSeedValidationPromo = "hideSeedValidationPromo";
     const char* kDevMode ="dev_mode";
 
@@ -1177,6 +1178,43 @@ void WalletSettings::setLastAssetSelection(QVector<beam::Asset::ID> selection)
     out << selection;
 
     m_accountSettings.m_data.setValue(kLastAssetSelection, QVariant::fromValue<QByteArray>(ser));
+}
+
+QList<QMap<QString, QVariant>> WalletSettings::getEthCustomTokens() const
+{
+    Lock lock(m_mutex);
+
+    auto ser = m_accountSettings.m_data.value(kEthCustomTokens).value<QByteArray>();
+    QDataStream in(&ser, QIODevice::ReadOnly);
+    QVariantList res;
+    in >> res;
+
+    QList<QMap<QString, QVariant>> result;
+    for (const auto& entry : res)
+    {
+        result.push_back(entry.toMap());
+    }
+    return result;
+}
+
+void WalletSettings::setEthCustomTokens(const QList<QMap<QString, QVariant>>& tokens)
+{
+    {
+        Lock lock(m_mutex);
+
+        QVariantList toStore;
+        for (const auto& token : tokens)
+        {
+            toStore.push_back(token);
+        }
+
+        QByteArray ser;
+        QDataStream out(&ser, QIODevice::WriteOnly);
+        out << toStore;
+
+        m_accountSettings.m_data.setValue(kEthCustomTokens, QVariant::fromValue<QByteArray>(ser));
+    }
+    emit ethCustomTokensChanged();
 }
 
 bool WalletSettings::getShowInProgress() const

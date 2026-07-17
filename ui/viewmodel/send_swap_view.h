@@ -55,6 +55,17 @@ class SendSwapViewModel: public QObject
     Q_PROPERTY(unsigned int minimalBeamFeeGrothes           READ getMinimalBeamFeeGrothes       NOTIFY minimalBeamFeeGrothesChanged)
     Q_PROPERTY(QList<QMap<QString, QVariant>> currList      READ getCurrList                    NOTIFY  currListChanged)
 
+    Q_PROPERTY(bool    isErc20Swap        READ isErc20Swap        NOTIFY tokenChanged)
+    Q_PROPERTY(QString tokenContract      READ getTokenContract   NOTIFY tokenChanged)
+    Q_PROPERTY(QString tokenSymbol        READ getTokenSymbol     NOTIFY tokenChanged)
+    Q_PROPERTY(uint    tokenDecimals      READ getTokenDecimals   NOTIFY tokenChanged)
+    Q_PROPERTY(bool    isBeamAssetSwap    READ isBeamAssetSwap    NOTIFY tokenChanged)
+    Q_PROPERTY(uint    beamAssetId        READ getBeamAssetId     NOTIFY tokenChanged)
+    Q_PROPERTY(QString beamAssetUnitName  READ getBeamAssetUnitName NOTIFY tokenChanged)
+    Q_PROPERTY(bool    needsBeamForRedeemFee READ needsBeamForRedeemFee NOTIFY tokenChanged)
+    // bumped on estimatedFeeRateChanged so QML fee bindings re-evaluate
+    Q_PROPERTY(unsigned int feeRatesRevision  READ getFeeRatesRevision NOTIFY feeRatesRevisionChanged)
+
 public:
     SendSwapViewModel();
 
@@ -113,6 +124,16 @@ public:
     QString getReceiveFeeTitle() const;
     QList<QMap<QString, QVariant>> getCurrList() const;
 
+    bool isErc20Swap() const;
+    QString getTokenContract() const;
+    QString getTokenSymbol() const;
+    uint getTokenDecimals() const;
+    bool isBeamAssetSwap() const;
+    uint getBeamAssetId() const;
+    QString getBeamAssetUnitName() const;
+    bool needsBeamForRedeemFee() const;
+    unsigned int getFeeRatesRevision() const;
+
 public:
     Q_INVOKABLE void setParameters(const QVariant& parameters);    /// used to pass TxParameters directly without Token generation
     Q_INVOKABLE void sendMoney();
@@ -139,6 +160,7 @@ signals:
     void tokenGeneratebByNewAppVersion();
     void minimalBeamFeeGrothesChanged();
     void currListChanged();
+    void feeRatesRevisionChanged();
 
 public slots:
     void onChangeCalculated(beam::Amount changeAsset, beam::Amount changeBeam, beam::Asset::ID assetId);
@@ -147,6 +169,11 @@ public slots:
 private:
     void fillParameters(const beam::wallet::TxParameters& parameters);
     void recalcAvailable();
+
+    // true when @currency is the pair side the offer's custom ERC-20 token rides on
+    bool isTokenSide(OldWalletCurrency::OldCurrency currency) const;
+    // token side -> min(token decimals, 9) (WalletUnitsPerToken rule), otherwise the classic table
+    uint8_t effectiveDecimals(OldWalletCurrency::OldCurrency currency) const;
 
     beam::Amount _sendAmountGrothes;
     beam::Amount _sendFeeGrothes;
@@ -169,4 +196,13 @@ private:
 
     beam::Amount _minimalBeamFeeGrothes;
     bool _feeChangedByUI = false;
+    unsigned int _feeRatesRevision = 0;
+
+    // extended-offer fields (params 41-45), empty/0 when the offer is a
+    // classic swap
+    QString _tokenContract;
+    QString _tokenSymbol;
+    uint8_t _tokenDecimals = 0;
+    beam::Asset::ID _beamAssetId = 0;
+    QString _beamAssetUnitName;
 };

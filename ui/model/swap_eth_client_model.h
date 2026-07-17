@@ -35,6 +35,16 @@ public:
     beam::ethereum::Client::Status getStatus() const;
     bool canModifySettings() const;
     beam::ethereum::IBridge::ErrorType getConnectionError() const;
+    void validateEndpoint();
+
+    // symbol()/decimals() of an arbitrary ERC-20 contract (per-offer custom
+    // tokens have no static settings entry, unlike kEthTokens); reports back
+    // through gotTokenInfo
+    void requestTokenInfo(const std::string& contractAddress);
+
+    // wallet-units balance (already normalized to min(decimals,9) by Client::GetTokenBalance)
+    // of a stored custom ERC-20 token, or 0 if not fetched yet
+    beam::Amount getTokenBalance(const QString& contract) const;
 
 signals:
     void gotStatus(beam::ethereum::Client::Status status);
@@ -42,12 +52,16 @@ signals:
     void gotEstimatedGasPrice(beam::Amount estimatedFeeRate);
     void gotCanModifySettings(bool canModify);
     void gotConnectionError(const beam::ethereum::IBridge::ErrorType& error);
+    void gotTokenInfo(const QString& contract, const QString& symbol, uint decimals, const QString& error);
+    void gotTokenBalance(const QString& contract, beam::Amount balance);
 
     void canModifySettingsChanged();
     void balanceChanged();
+    void tokenBalancesChanged();
     void estimatedFeeRateChanged();
     void statusChanged();
     void connectionErrorChanged();
+    void endpointValidated(quint64 chainID, quint64 blockNumber, bool ok, bool wrongNetwork, const QString& errorMsg);
 
 private:
     void OnStatus(Status status) override;
@@ -56,6 +70,9 @@ private:
     void OnCanModifySettingsChanged(bool canModify) override;
     void OnChangedSettings() override;
     void OnConnectionError(beam::ethereum::IBridge::ErrorType error) override;
+    void OnEndpointValidated(uint64_t chainID, uint64_t blockNumber, const beam::ethereum::IBridge::Error& error) override;
+    void OnTokenBalance(const std::string& tokenContract, beam::Amount balance) override;
+    void OnTokenInfo(const std::string& tokenContract, const std::string& symbol, uint8_t decimals, const beam::ethereum::IBridge::Error& error) override;
 
 private slots:
     void requestBalance();
@@ -65,13 +82,16 @@ private slots:
     void setStatus(beam::ethereum::Client::Status status);
     void setCanModifySettings(bool canModify);
     void setConnectionError(beam::ethereum::IBridge::ErrorType error);
+    void setTokenBalance(const QString& contract, beam::Amount balance);
 
 private:
     QTimer m_balanceTimer;
     QTimer m_feeRateTimer;
     std::map<beam::wallet::AtomicSwapCoin, beam::Amount> m_balances;
+    std::map<QString, beam::Amount> m_tokenBalances; // key: lowercased contract address
     beam::Amount m_gasPrice = 0;
     Status m_status = Status::Unknown;
     bool m_canModifySettings = true;
     beam::ethereum::IBridge::ErrorType m_connectionError = beam::ethereum::IBridge::ErrorType::None;
+
 };

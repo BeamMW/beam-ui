@@ -20,7 +20,11 @@
 #include "qml_globals.h"
 #include "fee_helpers.h"
 #include "wallet/transactions/swaps/bridges/ethereum/ethereum_side.h"
+#include "wallet/transactions/swaps/bridges/ethereum/common.h"
 #include "atomic_swap/swap_utils.h"
+#include "model/assets_manager.h"
+#include "model/settings.h"
+#include <algorithm>
 
 namespace {
     enum
@@ -82,9 +86,68 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     connect(_walletModel,  &WalletModel::coinsSelected, this, &ReceiveSwapViewModel::onCoinsSelected);
     connect(_rates.get(), &ExchangeRatesManager::rateUnitChanged, this, &ReceiveSwapViewModel::secondCurrencyUnitNameChanged);
     connect(_rates.get(), &ExchangeRatesManager::activeRateChanged, this, &ReceiveSwapViewModel::secondCurrencyRateChanged);
+    connect(AppModel::getInstance().getAssets().get(), &AssetsManager::assetsListChanged, this, [this]()
+    {
+        // assets feed currList (one entry per asset), so a change there
+        // reshuffles both the combo model and index mapping
+        emit currListChanged();
+        emit sentCurrencyIndexChanged();
+        emit receiveCurrencyIndexChanged();
+        if (_selectedBeamAssetId != 0)
+        {
+            // drop the selection if its asset vanished from the wallet
+            for (const auto& asset : AppModel::getInstance().getAssets()->getAssetsList())
+            {
+                if (asset.value("assetId").toUInt() == static_cast<uint>(_selectedBeamAssetId))
+                {
+                    return;
+                }
+            }
+            setSelectedBeamAssetId(0);
+        }
+    });
+    connect(&AppModel::getInstance().getSettings(), &WalletSettings::ethCustomTokensChanged, this, [this]()
+    {
+        // the stored token list feeds currList (one entry per token), so a
+        // change there reshuffles both the combo model and index mapping
+        emit currListChanged();
+        emit sentCurrencyIndexChanged();
+        emit receiveCurrencyIndexChanged();
+        if (!_selectedTokenContract.isEmpty())
+        {
+            // drop the selection if its token was removed in the settings
+            for (const auto& token : getCustomTokensList())
+            {
+                if (token.value("contract").toString() == _selectedTokenContract)
+                {
+                    return;
+                }
+            }
+            setSelectedTokenContract(QString());
+        }
+    });
+    // the combo index depends on both the settled currency and (for the
+    // Ethereum side) which token is stamped; keep it in sync with either
+    connect(this, &ReceiveSwapViewModel::sentCurrencyChanged, this, &ReceiveSwapViewModel::sentCurrencyIndexChanged);
+    connect(this, &ReceiveSwapViewModel::receiveCurrencyChanged, this, &ReceiveSwapViewModel::receiveCurrencyIndexChanged);
+    connect(this, &ReceiveSwapViewModel::selectedTokenChanged, this, &ReceiveSwapViewModel::sentCurrencyIndexChanged);
+    connect(this, &ReceiveSwapViewModel::selectedTokenChanged, this, &ReceiveSwapViewModel::receiveCurrencyIndexChanged);
+    connect(this, &ReceiveSwapViewModel::selectedBeamAssetChanged, this, &ReceiveSwapViewModel::sentCurrencyIndexChanged);
+    connect(this, &ReceiveSwapViewModel::selectedBeamAssetChanged, this, &ReceiveSwapViewModel::receiveCurrencyIndexChanged);
+
+    swapui::connectFeeRateClients(this, [this]()
+    {
+        ++_feeRatesRevision;
+        emit feeRatesRevisionChanged();
+    });
 
     generateNewAddress();
     updateTransactionToken();
+}
+
+unsigned int ReceiveSwapViewModel::getFeeRatesRevision() const
+{
+    return _feeRatesRevision;
 }
 
 //void ReceiveSwapViewModel::onGeneratedNewAddress(const beam::wallet::WalletAddress& addr)
@@ -135,13 +198,13 @@ QString ReceiveSwapViewModel::getRate() const
 
     if (!beamAmount) return QString();
 
-    beamui::Currencies otherCurrency =
-        convertCurrency(isSendBeam() ? _receiveCurrency : _sentCurrency);
+    auto otherOldCurrency = isSendBeam() ? _receiveCurrency : _sentCurrency;
+    uint8_t otherDecimals = effectiveDecimals(otherOldCurrency);
 
     return QMLGlobals::divideWithPrecision(
-        beamui::AmountToUIString(otherCoinAmount, otherCurrency, false), 
+        beamui::AmountToUIStringExactDecimals(otherCoinAmount, otherDecimals),
         beamui::AmountToUIString(beamAmount),
-        beamui::getCurrencyDecimals(otherCurrency));
+        otherDecimals);
 }
 
 void ReceiveSwapViewModel::onSwapParamsLoaded(const beam::ByteBuffer& params)
@@ -202,12 +265,12 @@ void ReceiveSwapViewModel::onCoinsSelected(const beam::wallet::CoinsSelectionInf
 
 QString ReceiveSwapViewModel::getAmountToReceive() const
 {
-    return beamui::AmountToUIString(_amountToReceiveGrothes, convertCurrency(_receiveCurrency), false);
+    return beamui::AmountToUIStringExactDecimals(_amountToReceiveGrothes, effectiveDecimals(_receiveCurrency));
 }
 
 void ReceiveSwapViewModel::setAmountToReceive(QString value)
 {
-    auto amount = beamui::UIStringToAmount(value, convertCurrency(_receiveCurrency));
+    auto amount = beamui::UIStringToAmountExactDecimals(value, effectiveDecimals(_receiveCurrency));
     if (amount != _amountToReceiveGrothes)
     {
         _amountToReceiveGrothes = amount;
@@ -219,7 +282,7 @@ void ReceiveSwapViewModel::setAmountToReceive(QString value)
 
 QString ReceiveSwapViewModel::getAmountSent() const
 {
-    return beamui::AmountToUIString(_amountSentGrothes, convertCurrency(_sentCurrency), false);
+    return beamui::AmountToUIStringExactDecimals(_amountSentGrothes, effectiveDecimals(_sentCurrency));
 }
 
 unsigned int ReceiveSwapViewModel::getReceiveFee() const
@@ -229,7 +292,7 @@ unsigned int ReceiveSwapViewModel::getReceiveFee() const
 
 void ReceiveSwapViewModel::setAmountSent(QString value)
 {
-    auto amount = beamui::UIStringToAmount(value, convertCurrency(_sentCurrency));
+    auto amount = beamui::UIStringToAmountExactDecimals(value, effectiveDecimals(_sentCurrency));
     if (amount != _amountSentGrothes)
     {
         bool isPreviouseSendWasZero = _amountSentGrothes == 0;
@@ -292,6 +355,9 @@ void ReceiveSwapViewModel::setReceiveCurrency(OldWalletCurrency::OldCurrency val
         // different units for different currencies. example BTC and ETH
         QString amount = getAmountToReceive();
         _receiveCurrency = value;
+        // deferred: the QML sides-flip updates sent/receive currency one binding at
+        // a time, so the pair passes through transient states here
+        QMetaObject::invokeMethod(this, &ReceiveSwapViewModel::syncExtendedSelections, Qt::QueuedConnection);
         setAmountToReceive(amount);
         emit receiveCurrencyChanged();
         updateTransactionToken();
@@ -315,6 +381,9 @@ void ReceiveSwapViewModel::setSentCurrency(OldWalletCurrency::OldCurrency value)
         // different units for different currencies. example BTC and ETH
         QString amount = getAmountSent();
         _sentCurrency = value;
+        // deferred: the QML sides-flip updates sent/receive currency one binding at
+        // a time, so the pair passes through transient states here
+        QMetaObject::invokeMethod(this, &ReceiveSwapViewModel::syncExtendedSelections, Qt::QueuedConnection);
         setAmountSent(amount);
         emit sentCurrencyChanged();
         updateTransactionToken();
@@ -412,12 +481,23 @@ bool ReceiveSwapViewModel::isEnough() const
 
     if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam)
     {
+        if (_selectedBeamAssetId != 0)
+        {
+            // the offered value is a Confidential Asset; the fee is still paid in BEAM
+            return _walletModel->getAvailable(_selectedBeamAssetId) >= beam::AmountBig::Number(_amountSentGrothes) &&
+                   _walletModel->getAvailable(beam::Asset::s_BeamID) >= beam::AmountBig::Number(_sentFeeGrothes);
+        }
         return _walletModel->getAvailable(beam::Asset::s_BeamID) >= total;
     }
 
     auto swapCoin = convertCurrencyToSwapCoin(_sentCurrency);
     if (isEthereumBased(_sentCurrency))
     {
+        if (isTokenSide(_sentCurrency))
+        {
+            return swapui::enoughEthForTokenLock(_sentFeeGrothes);
+        }
+
         if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrEthereum)
         {
             total = _amountSentGrothes + beam::wallet::EthereumSide::CalcLockTxFee(_sentFeeGrothes, swapCoin);
@@ -517,8 +597,14 @@ void ReceiveSwapViewModel::updateTransactionToken()
     emit isReceiveFeeOKChanged();
 
     _isBeamSide = (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam);
-    auto swapCoin   = convertCurrencyToSwapCoin(
-        _isBeamSide ? _receiveCurrency : _sentCurrency);
+    const auto otherCurrency = _isBeamSide ? _receiveCurrency : _sentCurrency;
+
+    // a custom ERC-20 token replaces plain Ethereum as the swap coin: the core
+    // (EthereumSide::IsERC20Token, offers board ExtendedOffer wire coin) keys on
+    // AtomicSwapCoin::Erc20Token, the contract itself travels in param 43
+    const bool tokenActive = isTokenSide(otherCurrency);
+    auto swapCoin = tokenActive ? beam::wallet::AtomicSwapCoin::Erc20Token
+                                : convertCurrencyToSwapCoin(otherCurrency);
     auto beamAmount =
         _isBeamSide ? _amountSentGrothes : _amountToReceiveGrothes;
     auto swapAmount =
@@ -529,12 +615,34 @@ void ReceiveSwapViewModel::updateTransactionToken()
 
     QPointer<ReceiveSwapViewModel> guard = this;
 
-    auto onSwapParams = [guard, this](beam::wallet::TxParameters&& params)
+    auto onSwapParams = [guard, this, tokenActive](beam::wallet::TxParameters&& params)
     {
         if (!guard)
             return;
 
         _txParameters = std::move(params);
+
+        // both stampings re-checked against the current pair here: stale
+        // selections must never ride on an unrelated offer
+        if (_selectedBeamAssetId != 0 &&
+            (_sentCurrency == OldWalletCurrency::OldCurrency::CurrBeam ||
+             _receiveCurrency == OldWalletCurrency::OldCurrency::CurrBeam))
+        {
+            _txParameters.SetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetID,
+                                        beam::Asset::ID(_selectedBeamAssetId));
+            _txParameters.SetParameter(beam::wallet::TxParameterID::AtomicSwapBeamAssetName,
+                                        getSelectedBeamAssetUnitName().toStdString());
+        }
+
+        if (tokenActive && !_selectedTokenContract.isEmpty())
+        {
+            _txParameters.SetParameter(beam::wallet::TxParameterID::AtomicSwapTokenContract,
+                                        _selectedTokenContract.toStdString());
+            _txParameters.SetParameter(beam::wallet::TxParameterID::AtomicSwapTokenSymbol,
+                                        _selectedTokenSymbol.toStdString());
+            _txParameters.SetParameter(beam::wallet::TxParameterID::AtomicSwapTokenDecimals,
+                                        static_cast<uint8_t>(_selectedTokenDecimals));
+        }
 
 #ifdef BEAM_CLIENT_VERSION
         _txParameters.SetParameter(
@@ -611,5 +719,285 @@ QString ReceiveSwapViewModel::getReceiveFeeTitle() const
 
 QList<QMap<QString, QVariant>> ReceiveSwapViewModel::getCurrList() const
 {
-    return swapui::getUICurrList();
+    auto list = swapui::getUICurrList();
+
+    // Confidential Assets ride the BEAM swap side; each known asset gets its
+    // own entry appended after the classic currencies so it is picked in the
+    // same combo as BEAM/BTC/.../WBTC. "assetId" marks these entries for
+    // selectCurrencyByListIndex/currencyToListIndex.
+    for (const auto& asset : AppModel::getInstance().getAssets()->getAssetsList())
+    {
+        const auto assetId = asset.value("assetId").toUInt();
+        if (assetId == static_cast<uint>(beam::Asset::s_BeamID))
+        {
+            continue;
+        }
+
+        QMap<QString, QVariant> entry;
+        const auto name = asset.value("unitName").toString();
+
+        entry.insert("isBEAM", true);
+        entry.insert("unitName", name);
+        entry.insert("unitNameWithId", QString("%1 (%2)").arg(name).arg(assetId));
+        entry.insert("icon", asset.value("icon"));
+        entry.insert("iconWidth", 22);
+        entry.insert("iconHeight", 22);
+        entry.insert("decimals", beamui::getCurrencyDecimals(beamui::Currencies::Beam));
+        entry.insert("assetId", assetId);
+
+        list.push_back(entry);
+    }
+
+    // stored custom ERC-20 tokens ride the Ethereum swap coin; each gets its
+    // own entry appended after the classic currencies so it is picked in the
+    // same combo as BEAM/BTC/.../WBTC (issue #1267). "tokenContract" marks
+    // these entries for selectCurrencyByListIndex/currencyToListIndex; classic
+    // entries simply don't carry the key (falsy/empty when read back in QML).
+    for (const auto& token : getCustomTokensList())
+    {
+        QMap<QString, QVariant> entry;
+        const auto symbol = token.value("symbol").toString();
+        const auto decimals = static_cast<uint>(beamui::tokenWalletDecimals(token.value("decimals").toUInt()));
+
+        entry.insert("isBEAM", false);
+        entry.insert("unitName", symbol);
+        entry.insert("unitNameWithId", symbol);
+        // the combo delegate only renders a file icon (SvgImage source path,
+        // no room for the generated TokenIcon glyph); reuse the ETH icon
+        entry.insert("icon", "qrc:/assets/icon-eth.svg");
+        entry.insert("iconWidth", 22);
+        entry.insert("iconHeight", 22);
+        entry.insert("decimals", decimals);
+        entry.insert("tokenContract", token.value("contract"));
+
+        list.push_back(entry);
+    }
+
+    return list;
+}
+
+unsigned int ReceiveSwapViewModel::getSelectedBeamAssetId() const
+{
+    return static_cast<unsigned int>(_selectedBeamAssetId);
+}
+
+void ReceiveSwapViewModel::setSelectedBeamAssetId(unsigned int value)
+{
+    auto assetId = static_cast<beam::Asset::ID>(value);
+    if (assetId != _selectedBeamAssetId)
+    {
+        _selectedBeamAssetId = assetId;
+        emit selectedBeamAssetChanged();
+        emit currListChanged();
+        emit enoughChanged();
+        updateTransactionToken();
+    }
+}
+
+QString ReceiveSwapViewModel::getSelectedBeamAssetUnitName() const
+{
+    if (_selectedBeamAssetId == 0)
+    {
+        return QMLGlobals::getCurrencyUnitName(OldWalletCurrency::OldCurrency::CurrBeam);
+    }
+    return AppModel::getInstance().getAssets()->getUnitName(_selectedBeamAssetId, AssetsManager::NoShorten);
+}
+
+QList<QMap<QString, QVariant>> ReceiveSwapViewModel::getCustomTokensList() const
+{
+    return AppModel::getInstance().getSettings().getEthCustomTokens();
+}
+
+QString ReceiveSwapViewModel::getSelectedTokenContract() const
+{
+    return _selectedTokenContract;
+}
+
+void ReceiveSwapViewModel::setSelectedTokenContract(const QString& value)
+{
+    if (value == _selectedTokenContract)
+    {
+        return;
+    }
+
+    // the eth-side amount is stored in wallet units whose scale follows the
+    // selected token's decimals: keep the typed value, not the raw units
+    const bool sentIsEth = _sentCurrency == OldWalletCurrency::OldCurrency::CurrEthereum;
+    const bool receiveIsEth = _receiveCurrency == OldWalletCurrency::OldCurrency::CurrEthereum;
+    const QString ethSideAmount = sentIsEth ? getAmountSent()
+                                : receiveIsEth ? getAmountToReceive() : QString();
+
+    _selectedTokenContract = value;
+    _selectedTokenSymbol.clear();
+    _selectedTokenDecimals = 0;
+
+    if (!value.isEmpty())
+    {
+        for (const auto& token : getCustomTokensList())
+        {
+            if (token.value("contract").toString() == value)
+            {
+                _selectedTokenSymbol = token.value("symbol").toString();
+                _selectedTokenDecimals = token.value("decimals").toUInt();
+                break;
+            }
+        }
+    }
+
+    emit selectedTokenChanged();
+    emit currListChanged();
+
+    if (sentIsEth)
+    {
+        setAmountSent(ethSideAmount);
+        emit amountSentChanged();
+    }
+    else if (receiveIsEth)
+    {
+        setAmountToReceive(ethSideAmount);
+        emit amountReceiveChanged();
+    }
+
+    updateTransactionToken();
+}
+
+QString ReceiveSwapViewModel::getSelectedTokenSymbol() const
+{
+    return _selectedTokenSymbol;
+}
+
+unsigned int ReceiveSwapViewModel::getSelectedTokenDecimals() const
+{
+    return _selectedTokenDecimals;
+}
+
+int ReceiveSwapViewModel::getSentCurrencyIndex() const
+{
+    return currencyToListIndex(_sentCurrency);
+}
+
+void ReceiveSwapViewModel::setSentCurrencyIndex(int index)
+{
+    selectCurrencyByListIndex(true, index);
+}
+
+int ReceiveSwapViewModel::getReceiveCurrencyIndex() const
+{
+    return currencyToListIndex(_receiveCurrency);
+}
+
+void ReceiveSwapViewModel::setReceiveCurrencyIndex(int index)
+{
+    selectCurrencyByListIndex(false, index);
+}
+
+int ReceiveSwapViewModel::currencyToListIndex(OldWalletCurrency::OldCurrency currency) const
+{
+    if (currency == OldWalletCurrency::OldCurrency::CurrBeam && _selectedBeamAssetId != 0)
+    {
+        const auto list = getCurrList();
+        for (int i = 0; i < list.size(); ++i)
+        {
+            if (list[i].value("assetId").toUInt() == static_cast<uint>(_selectedBeamAssetId))
+            {
+                return i;
+            }
+        }
+        // the selected asset vanished from the wallet's list; fall back to
+        // the plain BEAM slot
+        return static_cast<int>(OldWalletCurrency::OldCurrency::CurrBeam);
+    }
+    if (isTokenSide(currency))
+    {
+        const auto list = getCurrList();
+        for (int i = 0; i < list.size(); ++i)
+        {
+            if (list[i].value("tokenContract").toString() == _selectedTokenContract)
+            {
+                return i;
+            }
+        }
+        // the selected token vanished from settings mid-flight (race with
+        // syncExtendedSelections); fall back to the plain Ethereum slot
+        return static_cast<int>(OldWalletCurrency::OldCurrency::CurrEthereum);
+    }
+    return static_cast<int>(currency);
+}
+
+void ReceiveSwapViewModel::selectCurrencyByListIndex(bool isSent, int index)
+{
+    const auto list = getCurrList();
+    if (index < 0 || index >= list.size())
+    {
+        // a stale/removed entry (e.g. combo model changed underneath a
+        // pending selection): ignore rather than crash
+        return;
+    }
+
+    const auto contract = list[index].value("tokenContract").toString();
+    const auto assetId = list[index].value("assetId").toUInt();
+    const auto currency = !contract.isEmpty() ? OldWalletCurrency::OldCurrency::CurrEthereum
+        : assetId != 0                        ? OldWalletCurrency::OldCurrency::CurrBeam
+                                              : static_cast<OldWalletCurrency::OldCurrency>(index);
+
+    if (!contract.isEmpty())
+    {
+        // stamp the token identity before flipping the enum so
+        // isTokenSide()/effectiveDecimals() already see it once
+        // setSentCurrency/setReceiveCurrency runs its amount conversion
+        setSelectedTokenContract(contract);
+    }
+    else if (currency == OldWalletCurrency::OldCurrency::CurrEthereum)
+    {
+        // explicit "plain ETH" pick on a side that already was Ethereum:
+        // syncExtendedSelections() only clears once neither side is
+        // Ethereum anymore, so drop the stale token stamp here
+        setSelectedTokenContract(QString());
+    }
+
+    if (assetId != 0)
+    {
+        setSelectedBeamAssetId(assetId);
+    }
+    else if (currency == OldWalletCurrency::OldCurrency::CurrBeam)
+    {
+        // explicit plain-BEAM pick drops a stale asset stamp
+        setSelectedBeamAssetId(0);
+    }
+
+    if (isSent)
+    {
+        setSentCurrency(currency);
+    }
+    else
+    {
+        setReceiveCurrency(currency);
+    }
+}
+
+bool ReceiveSwapViewModel::isTokenSide(OldWalletCurrency::OldCurrency currency) const
+{
+    return swapui::isTokenSide(currency, _selectedTokenContract);
+}
+
+uint8_t ReceiveSwapViewModel::effectiveDecimals(OldWalletCurrency::OldCurrency currency) const
+{
+    return swapui::effectiveSwapDecimals(currency, _selectedTokenContract, _selectedTokenDecimals);
+}
+
+void ReceiveSwapViewModel::syncExtendedSelections()
+{
+    if (_selectedBeamAssetId != 0 &&
+        _sentCurrency != OldWalletCurrency::OldCurrency::CurrBeam &&
+        _receiveCurrency != OldWalletCurrency::OldCurrency::CurrBeam)
+    {
+        setSelectedBeamAssetId(0);
+    }
+
+    if (!_selectedTokenContract.isEmpty() &&
+        _sentCurrency != OldWalletCurrency::OldCurrency::CurrEthereum &&
+        _receiveCurrency != OldWalletCurrency::OldCurrency::CurrEthereum)
+    {
+        setSelectedTokenContract(QString());
+    }
 }

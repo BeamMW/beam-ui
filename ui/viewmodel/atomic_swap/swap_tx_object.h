@@ -48,6 +48,7 @@ public:
     auto getFee() const -> QString override;
     auto getFailureReason() const -> QString override;
     QString getStateDetails() const override;
+    QString getCoinsUnlockNote() const;
     beam::wallet::AtomicSwapCoin getSwapCoinType() const;
     auto getStatus() const -> QString override;
     QString getAmountWithCurrency() const;
@@ -70,6 +71,7 @@ signals:
 private:
     auto getSwapAmountValue(bool sent) const -> beam::Amount;
     auto getSwapAmountWithCurrency(bool sent) const -> QString;
+    QString getSwapCoinAmountString(beam::Amount value, bool withCurrency) const;
 
     beam::wallet::SwapTxDescription m_swapTx;
     uint32_t m_lockTxMinConfirmations = 0;

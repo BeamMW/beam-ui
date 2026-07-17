@@ -7,7 +7,6 @@ import "../utils.js" as Utils
 
 SettingsFoldable {
     id:            control
-    height:        362
 
     property string generalTitle:             ""
     property alias  showSeedDialogTitle:      seedPhraseDialog.showSeedDialogTitle
@@ -22,10 +21,45 @@ SettingsFoldable {
 
     property alias  infuraProjectID:      infuraProjectIDInput.text
     property alias  accountIndex:         accountIndexInput.text
+    property alias  useCustomRpc:         useCustomRpcSwitch.checked
+    property alias  customRpcUrl:         customRpcUrlInput.text
 
     property alias seedPhrases:        seedPhraseDialog.seedPhrasesElectrum
     property alias phrasesSeparator:   seedPhraseDialog.phrasesSeparatorElectrum
     property bool  isCurrentSeedValid: false
+
+    // read-only feedback from the last "check connection" run; bound straight
+    // to the viewmodel so no push-mirroring is needed
+    readonly property string endpointCheckResult: ethSettings ? ethSettings.endpointCheckResult : ""
+    readonly property bool   endpointCheckOk:     ethSettings ? !!ethSettings.endpointCheckOk : false
+
+    // backing SwapEthSettingsItem, used directly for the custom-token flow
+    // rather than mirroring every field through property aliases + Connections
+    property var    ethSettings: undefined
+    property string newTokenSymbol:   ""
+    property int    newTokenDecimals: 0
+    property string newTokenError:    ""
+
+    function resetTokenLookup() {
+        newTokenSymbol   = ""
+        newTokenDecimals = 0
+        newTokenError    = ""
+    }
+    onUseCustomRpcChanged:    resetTokenLookup()
+    onCustomRpcUrlChanged:    resetTokenLookup()
+    onInfuraProjectIDChanged: resetTokenLookup()
+    // collapsing the section should not leave the token input focused/open underneath
+    onFoldedChanged: if (control.folded) addTokenPane.hide()
+
+    Connections {
+        target: ethSettings
+        function onTokenInfoReady(contract, symbol, decimals, error) {
+            if (contract !== newTokenAddress.text.trim()) return
+            newTokenSymbol   = symbol
+            newTokenDecimals = decimals
+            newTokenError    = error
+        }
+    }
 
     // function to get ethereum addresses
     property var   getEthereumAddresses:       undefined
@@ -61,12 +95,15 @@ SettingsFoldable {
     signal restoreSeedPhrases
     signal copySeedPhrases
     signal validateCurrentSeedPhrase
+    signal validateEndpoint
 
     QtObject {
         id: internalValues
         property string initialInfuraProjectID
         property string initialSeed
         property string initialAccountIndex
+        property bool   initialUseCustomRpc
+        property string initialCustomRpcUrl
 
         property bool   isSeedChanged: false
 
@@ -76,16 +113,21 @@ SettingsFoldable {
             control.restoreSeedPhrases()
 
             accountIndex = initialAccountIndex
+            useCustomRpc = initialUseCustomRpc
+            customRpcUrl = initialCustomRpcUrl
         }
 
         function save() {
             initialInfuraProjectID = infuraProjectID
             isSeedChanged = false
             initialAccountIndex = accountIndex
+            initialUseCustomRpc = useCustomRpc
+            initialCustomRpcUrl = customRpcUrl
         }
 
         function isChanged() {
-            return initialInfuraProjectID !== infuraProjectID || isSeedChanged ||initialAccountIndex != accountIndex
+            return initialInfuraProjectID !== infuraProjectID || isSeedChanged || initialAccountIndex != accountIndex ||
+                   initialUseCustomRpc !== useCustomRpc || initialCustomRpcUrl !== customRpcUrl
         }
     }
 
@@ -134,6 +176,41 @@ SettingsFoldable {
     content: ColumnLayout {
         spacing: 0
 
+        // Infura & Custom RPC switch
+        RowLayout {
+            height:   20
+            spacing:  10
+            Layout.fillWidth: true
+            SFText {
+                //% "Infura"
+                text:  qsTrId("settings-eth-infura")
+                color: useCustomRpcSwitch.checked ? control.color : Style.active
+                font.pixelSize: 14
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: useCustomRpcSwitch.checked = !useCustomRpcSwitch.checked
+                }
+            }
+            CustomSwitch {
+                id:          useCustomRpcSwitch
+                alwaysGreen: true
+                spacing:     0
+                enabled:     canEdit
+            }
+            SFText {
+                //% "Custom RPC"
+                text: qsTrId("settings-eth-custom-rpc")
+                color: useCustomRpcSwitch.checked ? Style.active : control.color
+                font.pixelSize: 14
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.LeftButton
+                    onClicked: useCustomRpcSwitch.checked = !useCustomRpcSwitch.checked
+                }
+            }
+        }
+
         GridLayout {
             Layout.topMargin: 20
             columns:          2
@@ -141,6 +218,7 @@ SettingsFoldable {
             rowSpacing:       13
 
             SFText {
+                visible:        !useCustomRpcSwitch.checked
                 font.pixelSize: 14
                 color:          control.color
                 //% "Infura project ID"
@@ -149,6 +227,7 @@ SettingsFoldable {
 
             SFTextInput {
                 id:               infuraProjectIDInput
+                visible:          !useCustomRpcSwitch.checked
                 Layout.fillWidth: true
                 color:            Style.content_main
                 font.pixelSize:     14
@@ -177,6 +256,38 @@ SettingsFoldable {
                     top: 20
                 }
             }
+        }
+
+        SFText {
+            visible:        useCustomRpcSwitch.checked
+            Layout.topMargin: 20
+            font.pixelSize: 14
+            color:          control.color
+            //% "Ethereum RPC endpoint"
+            text:           qsTrId("settings-eth-rpc-endpoint")
+        }
+
+        SFTextInput {
+            id:               customRpcUrlInput
+            visible:          useCustomRpcSwitch.checked
+            Layout.fillWidth: true
+            color:            Style.content_main
+            font.pixelSize:   14
+            activeFocusOnTab: true
+            underlineVisible: canEdit
+            readOnly:         !canEdit
+            placeholderText:  "https://mainnet.infura.io/v3/..."
+        }
+
+        SFText {
+            visible:        useCustomRpcSwitch.checked
+            Layout.fillWidth: true
+            Layout.topMargin: 7
+            font.pixelSize: 12
+            color:          Style.content_secondary
+            wrapMode:       Text.Wrap
+            //% "Works with any Ethereum JSON-RPC endpoint. Keyless public options: ethereum-rpc.publicnode.com, eth.drpc.org, rpc.mevblocker.io - or run your own node."
+            text:           qsTrId("settings-eth-rpc-note")
         }
 
         // seed: new || edit
@@ -303,18 +414,28 @@ SettingsFoldable {
             }
         }
 
-        // buttons
-        // "cancel" "apply"
-        // "connect to node" or "connect to electrum"
+        // check connection / cancel / apply / connect / disconnect - all on one centered row
         RowLayout {
             visible:                control.canChangeConnection
             Layout.preferredHeight: 52
             Layout.fillWidth:       true
             Layout.topMargin:       30
-            spacing:                15
+            spacing:                10
 
             Item {
                 Layout.fillWidth: true
+            }
+
+            CustomButton {
+                Layout.preferredHeight: 38
+                Layout.preferredWidth:  160
+                leftPadding:  20
+                rightPadding: 20
+                //% "Check connection"
+                text:         qsTrId("settings-eth-check-connection")
+                // don't allow checking the last-applied endpoint while there are unapplied edits on screen
+                enabled:      (isConnected || canApplySettings()) && !isSettingsChanged()
+                onClicked:    validateEndpoint()
             }
 
             CustomButton {
@@ -375,6 +496,7 @@ SettingsFoldable {
                 enabled:                isSettingsChanged() && canApplySettings()
                 onClicked:              applyChanges()
                 Layout.preferredHeight: 38
+                Layout.preferredWidth:  160
             }
 
             PrimaryButton {
@@ -387,11 +509,188 @@ SettingsFoldable {
                 icon.source:            "qrc:/assets/icon-done.svg"
                 onClicked:              connectToNode();
                 Layout.preferredHeight: 38
-                Layout.preferredWidth:  /*editElectrum ? 253 : */193
+                Layout.preferredWidth:  160
             }
 
             Item {
                 Layout.fillWidth: true
+            }
+        }
+
+        SFText {
+            visible:          endpointCheckResult !== ""
+            Layout.fillWidth: true
+            Layout.topMargin: 10
+            font.pixelSize:   14
+            wrapMode:         Text.Wrap
+            color:            endpointCheckOk ? Style.active : Style.validator_error
+            text:             (endpointCheckOk ? "✓ " : "✗ ") + endpointCheckResult
+        }
+
+        //
+        // Custom ERC-20 tokens (used as swap-offer receive currencies)
+        //
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.topMargin: 30
+            spacing: 10
+            visible: control.ethSettings !== undefined && control.ethSettings !== null
+
+            SFText {
+                font.pixelSize: 14
+                color: control.color
+                //% "Custom ERC-20 tokens"
+                text: qsTrId("settings-swap-token-section-title")
+            }
+
+            // built in - always supported natively, can't be removed
+            Repeater {
+                model: control.ethSettings ? control.ethSettings.builtinTokens : []
+                delegate: RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 10
+                    SvgImage {
+                        visible:    !!modelData.icon
+                        source:     modelData.icon ? modelData.icon : ""
+                        sourceSize: Qt.size(26, 26)
+                    }
+                    TokenIcon {
+                        visible:    !modelData.icon
+                        tokenColor: modelData.color
+                        symbol:     modelData.symbol
+                    }
+                    SFText {
+                        Layout.fillWidth: true
+                        font.pixelSize: 14
+                        color: Style.content_main
+                        elide: Text.ElideMiddle
+                        text: modelData.symbol + "  " + modelData.contract
+                    }
+                    SFText {
+                        font.pixelSize: 12
+                        color: control.color
+                        //% "built-in"
+                        text: qsTrId("settings-swap-token-builtin")
+                    }
+                }
+            }
+
+            // user-added
+            Repeater {
+                model: control.ethSettings ? control.ethSettings.customTokens : []
+                delegate: RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 10
+                    TokenIcon {
+                        tokenColor: modelData.color
+                        symbol:     modelData.symbol
+                    }
+                    SFText {
+                        Layout.fillWidth: true
+                        font.pixelSize: 14
+                        color: Style.content_main
+                        elide: Text.ElideMiddle
+                        text: modelData.symbol + "  " + modelData.contract
+                    }
+                    LinkButton {
+                        //% "remove"
+                        text: qsTrId("settings-swap-token-remove")
+                        onClicked: control.ethSettings.removeCustomToken(modelData.contract)
+                    }
+                }
+            }
+
+            // "+ Add token" link; clicking it reveals the input row below
+            LinkButton {
+                visible:   !addTokenPane.visible
+                //% "+ Add token"
+                text:      qsTrId("settings-swap-token-add-open")
+                onClicked: {
+                    addTokenPane.visible = true
+                    newTokenAddress.forceActiveFocus()
+                }
+            }
+
+            ColumnLayout {
+                id:      addTokenPane
+                visible: false
+                Layout.fillWidth: true
+                spacing: 10
+
+                function hide() {
+                    addTokenPane.visible = false
+                    newTokenAddress.focus = false
+                    newTokenAddress.text = ""
+                    control.resetTokenLookup()
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 10
+
+                    SFTextInput {
+                        id: newTokenAddress
+                        Layout.fillWidth: true
+                        font.pixelSize: 14
+                        color: Style.content_main
+                        underlineVisible: true
+                        //% "0x contract address"
+                        placeholderText: qsTrId("settings-swap-token-address-placeholder")
+                        onTextChanged: control.resetTokenLookup()
+                    }
+
+                    LinkButton {
+                        //% "cancel"
+                        text: qsTrId("settings-swap-token-add-cancel")
+                        onClicked: addTokenPane.hide()
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 15
+
+                    CustomButton {
+                        Layout.preferredHeight: 38
+                        leftPadding:  25
+                        rightPadding: 25
+                        //% "Look up"
+                        text: qsTrId("settings-swap-token-lookup")
+                        // the lookup queries the last-applied endpoint
+                        enabled: newTokenAddress.text.trim().length > 0 && !isSettingsChanged()
+                        onClicked: control.ethSettings.lookupToken(newTokenAddress.text.trim())
+                    }
+
+                    CustomButton {
+                        Layout.preferredHeight: 38
+                        leftPadding:  25
+                        rightPadding: 25
+                        //% "Add"
+                        text: qsTrId("settings-swap-token-add")
+                        enabled: newTokenSymbol.length > 0
+                        onClicked: {
+                            control.ethSettings.addCustomToken(newTokenAddress.text.trim(), newTokenSymbol, newTokenDecimals)
+                            // the rejection error is emitted synchronously
+                            if (newTokenError.length === 0)
+                                addTokenPane.hide()
+                        }
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                    }
+                }
+
+                SFText {
+                    visible: newTokenSymbol.length > 0 || newTokenError.length > 0
+                    Layout.fillWidth: true
+                    font.pixelSize: 12
+                    wrapMode: Text.Wrap
+                    color: newTokenError.length > 0 ? Style.validator_error : Style.content_secondary
+                    text: newTokenError.length > 0 ? newTokenError :
+                        //% "%1, %2 decimals"
+                        qsTrId("settings-swap-token-info").arg(newTokenSymbol).arg(newTokenDecimals)
+                }
             }
         }
     }
