@@ -735,7 +735,7 @@ QList<QMap<QString, QVariant>> SwapOffersViewModel::getCustomTokenCards() const
             continue;
         }
 
-        const auto walletDecimals = std::min<uint8_t>(decimals, 9);
+        const auto walletDecimals = beamui::tokenWalletDecimals(decimals);
         const auto balance = ethClient->getTokenBalance(contract);
 
         QMap<QString, QVariant> card;

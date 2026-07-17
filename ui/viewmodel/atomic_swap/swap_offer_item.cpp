@@ -18,18 +18,8 @@
 #include "wallet/transactions/swaps/common.h"
 #include "viewmodel/ui_helpers.h"
 #include "viewmodel/qml_globals.h"
+#include "swap_utils.h"
 #include <algorithm>
-
-namespace
-{
-    // token amounts are quoted in wallet units, min(decimals, 9) fractional
-    // digits (WalletUnitsPerToken rule, wallet/transactions/swaps/common.cpp)
-    uint8_t TokenWalletDecimals(uint8_t onChainDecimals)
-    {
-        return std::min<uint8_t>(onChainDecimals, 9);
-    }
-}
-
 
 SwapOfferItem::SwapOfferItem(QObject* parent /* = nullptr*/)
     : QObject(parent)
@@ -72,16 +62,6 @@ beam::Amount SwapOfferItem::rawAmountReceive() const
     return isSendBeam() ? m_offer.amountSwapCoin() : m_offer.amountBeam(); 
 }
 
-namespace
-{
-    // strips the trailing " UNIT" label AmountToUIString(value, Currencies, true) appends
-    QString StripUnit(const QString& value)
-    {
-        const auto idx = value.indexOf(' ');
-        return idx < 0 ? value : value.left(idx);
-    }
-}
-
 QString SwapOfferItem::rate() const
 {
     beam::Amount otherCoinAmount =
@@ -98,12 +78,12 @@ QString SwapOfferItem::rate() const
     {
         uint8_t onChainDecimals = 0;
         m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenDecimals, onChainDecimals);
-        otherDecimals = TokenWalletDecimals(onChainDecimals);
+        otherDecimals = beamui::tokenWalletDecimals(onChainDecimals);
         otherAmountStr = beamui::AmountToUIStringExactDecimals(otherCoinAmount, otherDecimals);
     }
     else
     {
-        otherAmountStr = StripUnit(beamui::AmountToUIString(otherCoinAmount, getSwapCoinType(), true));
+        otherAmountStr = beamui::AmountToUIString(otherCoinAmount, getSwapCoinType(), false);
     }
 
     return QMLGlobals::divideWithPrecision(
@@ -139,14 +119,7 @@ QString SwapOfferItem::amountSwapCoinSide(beam::Amount value) const
 {
     if (m_offer.ResolveCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
     {
-        std::string symbol;
-        uint8_t onChainDecimals = 0;
-        m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenSymbol, symbol);
-        m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenDecimals, onChainDecimals);
-        // exact-decimals variant: TokenWalletDecimals(0) is a valid 0, which the
-        // unitName overload would silently replace with the BEAM default
-        auto amountStr = beamui::AmountToUIStringExactDecimals(value, TokenWalletDecimals(onChainDecimals));
-        return symbol.empty() ? amountStr : amountStr + " " + QString::fromStdString(symbol);
+        return swapui::erc20AmountString(m_offer, value, true);
     }
     return beamui::AmountToUIString(value, getSwapCoinType());
 }
@@ -180,9 +153,7 @@ QString SwapOfferItem::getSwapCoinName() const
 {
     if (m_offer.ResolveCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
     {
-        std::string symbol;
-        m_offer.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenSymbol, symbol);
-        return symbol.empty() ? QString("ERC20") : QString::fromStdString(symbol);
+        return swapui::erc20Symbol(m_offer);
     }
     return toString(getSwapCoinType());
 }

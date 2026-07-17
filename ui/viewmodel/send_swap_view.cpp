@@ -43,24 +43,11 @@ SendSwapViewModel::SendSwapViewModel()
     connect(_rates.get(), SIGNAL(rateUnitChanged()), SIGNAL(secondCurrencyUnitNameChanged()));
     connect(_rates.get(), SIGNAL(activeRateChanged()), SIGNAL(secondCurrencyRateChanged()));
 
-    const auto onFeeRates = [this]()
+    swapui::connectFeeRateClients(this, [this]()
     {
         ++_feeRatesRevision;
         emit feeRatesRevisionChanged();
-    };
-    if (auto ethClient = AppModel::getInstance().getSwapEthClient(); ethClient)
-    {
-        connect(ethClient.get(), &SwapEthClientModel::estimatedFeeRateChanged, this, onFeeRates);
-    }
-    for (auto coin : {beam::wallet::AtomicSwapCoin::Bitcoin, beam::wallet::AtomicSwapCoin::Litecoin,
-                      beam::wallet::AtomicSwapCoin::Qtum, beam::wallet::AtomicSwapCoin::Dogecoin,
-                      beam::wallet::AtomicSwapCoin::Dash, beam::wallet::AtomicSwapCoin::Bitcoin_Cash})
-    {
-        if (auto client = AppModel::getInstance().getSwapCoinClient(coin); client)
-        {
-            connect(client.get(), &SwapCoinClientModel::estimatedFeeRateChanged, this, onFeeRates);
-        }
-    }
+    });
 }
 
 unsigned int SendSwapViewModel::getFeeRatesRevision() const
@@ -423,11 +410,7 @@ bool SendSwapViewModel::isEnough() const
     {
         if (isTokenSide(_sendCurrency))
         {
-            // no live balance for arbitrary custom tokens: only check the ETH
-            // that pays the lock gas (incl. the approve calls, kApproveTxGasLimit)
-            const beam::Amount lockFee = _sendFeeGrothes *
-                (beam::ethereum::kLockTxGasLimit + 2 * beam::ethereum::kApproveTxGasLimit);
-            return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >= lockFee;
+            return swapui::enoughEthForTokenLock(_sendFeeGrothes);
         }
 
         if (_sendCurrency == OldWalletCurrency::OldCurrency::CurrEthereum)
@@ -679,16 +662,10 @@ bool SendSwapViewModel::needsBeamForRedeemFee() const
 
 bool SendSwapViewModel::isTokenSide(OldWalletCurrency::OldCurrency currency) const
 {
-    return currency == OldWalletCurrency::OldCurrency::CurrEthereum && !_tokenContract.isEmpty();
+    return swapui::isTokenSide(currency, _tokenContract);
 }
 
 uint8_t SendSwapViewModel::effectiveDecimals(OldWalletCurrency::OldCurrency currency) const
 {
-    if (isTokenSide(currency))
-    {
-        // core stores AtomicSwapAmount in 10^min(decimals, 9) units per token
-        // (WalletUnitsPerToken, swaps/bridges/ethereum/common.cpp)
-        return std::min<uint8_t>(_tokenDecimals, 9);
-    }
-    return beamui::getCurrencyDecimals(convertCurrency(currency));
+    return swapui::effectiveSwapDecimals(currency, _tokenContract, _tokenDecimals);
 }

@@ -77,6 +77,13 @@ namespace beamui
     QString AmountToUIString(const beam::Amount& value, const QString& unitName, uint8_t decimalPlaces = 0);
     /// exact-decimals conversions: 0 is a valid decimal count here, unlike the overloads above/below
     QString AmountToUIStringExactDecimals(const beam::Amount& value, uint8_t decimalPlaces);
+
+    // token amounts are quoted in wallet units, min(decimals, 9) fractional
+    // digits (WalletUnitsPerToken rule, wallet/transactions/swaps/common.cpp)
+    constexpr uint8_t tokenWalletDecimals(uint32_t onChainDecimals)
+    {
+        return onChainDecimals < 9u ? static_cast<uint8_t>(onChainDecimals) : uint8_t(9);
+    }
     beam::Amount UIStringToAmountExactDecimals(const QString& value, uint8_t decimalPlaces);
     QString AmountBigToUIString(const beam::AmountBig::Number& value);
 

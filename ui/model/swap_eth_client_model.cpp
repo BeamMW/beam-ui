@@ -26,18 +26,6 @@ namespace
 {
     const int kBalanceUpdateInterval = 10 * 1000; // 10 seconds
     const int kFeeRateUpdateInterval = 60 * 1000; // 1 minute
-
-    // forwards ITokenInfoAsync calls onto the eth reactor thread, mirroring
-    // Client's own EthereumClientBridge (client.cpp)
-    struct TokenInfoAsyncBridge : public Bridge<ITokenInfoAsync>
-    {
-        BRIDGE_INIT(TokenInfoAsyncBridge);
-
-        void RequestTokenInfo(std::string contractAddress) override
-        {
-            call_async(&ITokenInfoAsync::RequestTokenInfo, std::move(contractAddress));
-        }
-    };
 }
 
 SwapEthClientModel::SwapEthClientModel(beam::ethereum::IBridgeHolder::Ptr bridgeHolder,
@@ -46,9 +34,6 @@ SwapEthClientModel::SwapEthClientModel(beam::ethereum::IBridgeHolder::Ptr bridge
     : ethereum::Client(bridgeHolder, std::move(settingsProvider), reactor)
     , m_balanceTimer(this)
     , m_feeRateTimer(this)
-    , m_tokenInfoBridgeHolder(bridgeHolder)
-    , m_tokenInfoReactor(reactor)
-    , m_tokenInfoAsync(std::make_shared<TokenInfoAsyncBridge>(*static_cast<ITokenInfoAsync*>(this), reactor))
 {
     qRegisterMetaType<beam::ethereum::Client::Status>("beam::ethereum::Client::Status");
     qRegisterMetaType<beam::ethereum::IBridge::ErrorType>("beam::ethereum::IBridge::ErrorType");
@@ -228,35 +213,24 @@ void SwapEthClientModel::setCanModifySettings(bool canModify)
 
 void SwapEthClientModel::requestTokenInfo(const std::string& contractAddress)
 {
-    m_tokenInfoAsync->RequestTokenInfo(contractAddress);
+    GetAsync()->GetTokenInfo(contractAddress);
 }
 
-void SwapEthClientModel::RequestTokenInfo(std::string contractAddress)
+void SwapEthClientModel::OnTokenInfo(const std::string& tokenContract, const std::string& symbol, uint8_t decimals, const beam::ethereum::IBridge::Error& error)
 {
-    // runs on the eth reactor thread
-    auto bridge = m_tokenInfoBridgeHolder->Get(m_tokenInfoReactor, *this);
-    if (!bridge)
+    QString errorStr;
+    if (error.m_type != beam::ethereum::IBridge::None)
     {
-        //% "Cannot connect to node. Please check your network connection."
-        emit gotTokenInfo(QString::fromStdString(contractAddress), QString(), 0, qtTrId("swap-connection-error"));
-        return;
+        errorStr = error.m_message.empty()
+            //% "Cannot connect to node. Please check your network connection."
+            ? qtTrId("swap-connection-error")
+            : QString::fromStdString(error.m_message);
     }
 
-    auto weak = weak_from_this();
-    bridge->getTokenInfo(contractAddress,
-        [this, weak, contractAddress](const ethereum::IBridge::Error& error, const std::string& symbol, uint8_t decimals)
-    {
-        auto sp = weak.lock(); // keeps *this alive across the emit below
-        if (!sp)
-        {
-            return;
-        }
-
-        emit gotTokenInfo(QString::fromStdString(contractAddress),
-                           QString::fromStdString(symbol),
-                           decimals,
-                           error.m_type == ethereum::IBridge::None ? QString() : QString::fromStdString(error.m_message));
-    });
+    emit gotTokenInfo(QString::fromStdString(tokenContract),
+                      QString::fromStdString(symbol),
+                      decimals,
+                      errorStr);
 }
 
 void SwapEthClientModel::setConnectionError(beam::ethereum::IBridge::ErrorType error)

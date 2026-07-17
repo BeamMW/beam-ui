@@ -135,24 +135,11 @@ ReceiveSwapViewModel::ReceiveSwapViewModel()
     connect(this, &ReceiveSwapViewModel::selectedBeamAssetChanged, this, &ReceiveSwapViewModel::sentCurrencyIndexChanged);
     connect(this, &ReceiveSwapViewModel::selectedBeamAssetChanged, this, &ReceiveSwapViewModel::receiveCurrencyIndexChanged);
 
-    const auto onFeeRates = [this]()
+    swapui::connectFeeRateClients(this, [this]()
     {
         ++_feeRatesRevision;
         emit feeRatesRevisionChanged();
-    };
-    if (auto ethClient = AppModel::getInstance().getSwapEthClient(); ethClient)
-    {
-        connect(ethClient.get(), &SwapEthClientModel::estimatedFeeRateChanged, this, onFeeRates);
-    }
-    for (auto coin : {beam::wallet::AtomicSwapCoin::Bitcoin, beam::wallet::AtomicSwapCoin::Litecoin,
-                      beam::wallet::AtomicSwapCoin::Qtum, beam::wallet::AtomicSwapCoin::Dogecoin,
-                      beam::wallet::AtomicSwapCoin::Dash, beam::wallet::AtomicSwapCoin::Bitcoin_Cash})
-    {
-        if (auto client = AppModel::getInstance().getSwapCoinClient(coin); client)
-        {
-            connect(client.get(), &SwapCoinClientModel::estimatedFeeRateChanged, this, onFeeRates);
-        }
-    }
+    });
 
     generateNewAddress();
     updateTransactionToken();
@@ -508,11 +495,7 @@ bool ReceiveSwapViewModel::isEnough() const
     {
         if (isTokenSide(_sentCurrency))
         {
-            // no live balance for arbitrary custom tokens: only check the ETH
-            // that pays the lock gas (incl. the approve calls, kApproveTxGasLimit)
-            const beam::Amount lockFee = _sentFeeGrothes *
-                (beam::ethereum::kLockTxGasLimit + 2 * beam::ethereum::kApproveTxGasLimit);
-            return AppModel::getInstance().getSwapEthClient()->getAvailable(beam::wallet::AtomicSwapCoin::Ethereum) >= lockFee;
+            return swapui::enoughEthForTokenLock(_sentFeeGrothes);
         }
 
         if (_sentCurrency == OldWalletCurrency::OldCurrency::CurrEthereum)
@@ -774,7 +757,7 @@ QList<QMap<QString, QVariant>> ReceiveSwapViewModel::getCurrList() const
     {
         QMap<QString, QVariant> entry;
         const auto symbol = token.value("symbol").toString();
-        const auto decimals = std::min(token.value("decimals").toUInt(), 9u);
+        const auto decimals = static_cast<uint>(beamui::tokenWalletDecimals(token.value("decimals").toUInt()));
 
         entry.insert("isBEAM", false);
         entry.insert("unitName", symbol);
@@ -994,18 +977,12 @@ void ReceiveSwapViewModel::selectCurrencyByListIndex(bool isSent, int index)
 
 bool ReceiveSwapViewModel::isTokenSide(OldWalletCurrency::OldCurrency currency) const
 {
-    return currency == OldWalletCurrency::OldCurrency::CurrEthereum && !_selectedTokenContract.isEmpty();
+    return swapui::isTokenSide(currency, _selectedTokenContract);
 }
 
 uint8_t ReceiveSwapViewModel::effectiveDecimals(OldWalletCurrency::OldCurrency currency) const
 {
-    if (isTokenSide(currency))
-    {
-        // core stores AtomicSwapAmount in 10^min(decimals, 9) units per token
-        // (WalletUnitsPerToken, swaps/bridges/ethereum/common.cpp)
-        return static_cast<uint8_t>(std::min(_selectedTokenDecimals, 9u));
-    }
-    return beamui::getCurrencyDecimals(convertCurrency(currency));
+    return swapui::effectiveSwapDecimals(currency, _selectedTokenContract, _selectedTokenDecimals);
 }
 
 void ReceiveSwapViewModel::syncExtendedSelections()

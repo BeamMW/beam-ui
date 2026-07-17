@@ -17,21 +17,10 @@
 #include <QObject>
 #include <QTimer>
 #include "wallet/transactions/swaps/bridges/ethereum/client.h"
-#include "utility/bridge.h"
-
-// outbound-only async interface used to marshal SwapEthClientModel::requestTokenInfo()
-// onto the eth reactor thread, the same way Client's own IClientAsync does
-class ITokenInfoAsync
-{
-public:
-    virtual ~ITokenInfoAsync() = default;
-    virtual void RequestTokenInfo(std::string contractAddress) = 0;
-};
 
 class SwapEthClientModel
     : public QObject
     , public beam::ethereum::Client
-    , private ITokenInfoAsync
 {
     Q_OBJECT
 public:
@@ -48,12 +37,9 @@ public:
     beam::ethereum::IBridge::ErrorType getConnectionError() const;
     void validateEndpoint();
 
-    // Looks up symbol()/decimals() of an arbitrary ERC-20 contract (per-offer
-    // custom tokens have no static settings entry, unlike kEthTokens). Client's
-    // IClientAsync has no such call, so this hops onto the eth reactor thread
-    // itself via the same Bridge<> utility Client uses internally, and reports
-    // back through gotTokenInfo (Qt auto-queues it to the UI thread like the
-    // other gotXXX signals below).
+    // symbol()/decimals() of an arbitrary ERC-20 contract (per-offer custom
+    // tokens have no static settings entry, unlike kEthTokens); reports back
+    // through gotTokenInfo
     void requestTokenInfo(const std::string& contractAddress);
 
     // wallet-units balance (already normalized to min(decimals,9) by Client::GetTokenBalance)
@@ -86,9 +72,7 @@ private:
     void OnConnectionError(beam::ethereum::IBridge::ErrorType error) override;
     void OnEndpointValidated(uint64_t chainID, uint64_t blockNumber, const beam::ethereum::IBridge::Error& error) override;
     void OnTokenBalance(const std::string& tokenContract, beam::Amount balance) override;
-
-    // ITokenInfoAsync, runs on the eth reactor thread
-    void RequestTokenInfo(std::string contractAddress) override;
+    void OnTokenInfo(const std::string& tokenContract, const std::string& symbol, uint8_t decimals, const beam::ethereum::IBridge::Error& error) override;
 
 private slots:
     void requestBalance();
@@ -110,9 +94,4 @@ private:
     bool m_canModifySettings = true;
     beam::ethereum::IBridge::ErrorType m_connectionError = beam::ethereum::IBridge::ErrorType::None;
 
-    // duplicated from Client (whose own copies are private) so getTokenInfo,
-    // which Client/IClientAsync don't expose, can reach the same shared bridge
-    beam::ethereum::IBridgeHolder::Ptr m_tokenInfoBridgeHolder;
-    beam::io::Reactor& m_tokenInfoReactor;
-    std::shared_ptr<ITokenInfoAsync> m_tokenInfoAsync;
 };

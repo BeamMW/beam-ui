@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "swap_tx_object.h"
+#include "swap_utils.h"
 #include "wallet/transactions/swaps/common.h"
 #include "wallet/transactions/swaps/swap_transaction.h"
 #include "core/ecc.h"
@@ -27,13 +28,6 @@ using namespace beam;
 namespace
 {
     constexpr uint32_t kSecondsPerHour = 60 * 60;
-
-    // token amounts are quoted in wallet units, min(decimals, 9) fractional
-    // digits (WalletUnitsPerToken rule, wallet/transactions/swaps/common.cpp)
-    uint8_t TokenWalletDecimals(uint8_t onChainDecimals)
-    {
-        return std::min<uint8_t>(onChainDecimals, 9);
-    }
 
     QString getWaitingPeerStr(const beam::wallet::SwapTxDescription& tx, Height currentHeight)
     {
@@ -202,9 +196,7 @@ auto SwapTxObject::getSwapCoinName() const -> QString
 {
     if (m_swapTx.getSwapCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
     {
-        std::string symbol;
-        _tx.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenSymbol, symbol);
-        return symbol.empty() ? QString("ERC20") : QString::fromStdString(symbol);
+        return swapui::erc20Symbol(_tx);
     }
     return toString(beamui::convertSwapCoinToCurrency(m_swapTx.getSwapCoin()));
 }
@@ -235,16 +227,7 @@ QString SwapTxObject::getSwapCoinAmountString(beam::Amount value, bool withCurre
 {
     if (m_swapTx.getSwapCoin() == beam::wallet::AtomicSwapCoin::Erc20Token)
     {
-        uint8_t onChainDecimals = 0;
-        _tx.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenDecimals, onChainDecimals);
-        auto amountStr = beamui::AmountToUIStringExactDecimals(value, TokenWalletDecimals(onChainDecimals));
-        if (!withCurrency)
-        {
-            return amountStr;
-        }
-        std::string symbol;
-        _tx.GetParameter(beam::wallet::TxParameterID::AtomicSwapTokenSymbol, symbol);
-        return symbol.empty() ? amountStr : amountStr + " " + QString::fromStdString(symbol);
+        return swapui::erc20AmountString(_tx, value, withCurrency);
     }
     return withCurrency ? AmountToUIString(value, beamui::convertSwapCoinToCurrency(m_swapTx.getSwapCoin()))
                          : beamui::AmountToUIString(value);
