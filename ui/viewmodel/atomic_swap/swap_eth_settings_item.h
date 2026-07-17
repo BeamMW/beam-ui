@@ -115,7 +115,6 @@ private:
     bool isBuiltinTokenContract(const QString& normalizedAddress) const;
     void loadCustomTokens();
     void saveCustomTokens();
-    void onGotTokenInfo(const QString& contract, const QString& symbol, uint decimals, const QString& error);
 
 signals:
     void infuraProjectIDChanged();

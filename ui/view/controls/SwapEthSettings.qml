@@ -28,8 +28,10 @@ SettingsFoldable {
     property alias phrasesSeparator:   seedPhraseDialog.phrasesSeparatorElectrum
     property bool  isCurrentSeedValid: false
 
-    property string endpointCheckResult: ""
-    property bool   endpointCheckOk:     false
+    // read-only feedback from the last "check connection" run; bound straight
+    // to the viewmodel so no push-mirroring is needed
+    readonly property string endpointCheckResult: ethSettings ? ethSettings.endpointCheckResult : ""
+    readonly property bool   endpointCheckOk:     ethSettings ? !!ethSettings.endpointCheckOk : false
 
     // backing SwapEthSettingsItem, used directly for the custom-token flow
     // rather than mirroring every field through property aliases + Connections

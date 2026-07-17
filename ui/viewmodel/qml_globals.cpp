@@ -418,15 +418,7 @@ QString QMLGlobals::getDefaultFee(OldWalletCurrency::OldCurrency currency)
     {
         return QString::fromStdString(std::to_string(minFeeBeam()));
     }
-
-    if (isEthereumBased(currency))
-    {
-        return QString::fromStdString(std::to_string(AppModel::getInstance().getSwapEthClient()->getGasPrice()));
-    }
-
-    auto swapCoin = convertCurrencyToSwapCoin(currency);
-    auto client = AppModel::getInstance().getSwapCoinClient(swapCoin);
-    return client ? QString::fromStdString(std::to_string(client->getEstimatedFeeRate())) : QString::fromStdString(std::to_string(0));
+    return getRecommendedFee(currency);
 }
 
 QString QMLGlobals::divideWithPrecision(const QString& dividend, const QString& divider, uint precision)

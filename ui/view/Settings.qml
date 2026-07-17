@@ -396,8 +396,6 @@ ColumnLayout {
                     accountIndex:             viewModel.ethSettings.accountIndex
                     useCustomRpc:             viewModel.ethSettings.useCustomRpc
                     customRpcUrl:             viewModel.ethSettings.customRpcUrl
-                    endpointCheckResult:      viewModel.ethSettings.endpointCheckResult
-                    endpointCheckOk:          viewModel.ethSettings.endpointCheckOk
 
                     Connections {
                         target: viewModel.ethSettings
@@ -433,11 +431,6 @@ ColumnLayout {
 
                         function onCustomRpcUrlChanged () {
                             swapEthSettings.customRpcUrl = viewModel.ethSettings.customRpcUrl
-                        }
-
-                        function onEndpointCheckResultChanged () {
-                            swapEthSettings.endpointCheckResult = viewModel.ethSettings.endpointCheckResult
-                            swapEthSettings.endpointCheckOk     = viewModel.ethSettings.endpointCheckOk
                         }
 
                         function onSeedPhrasesChanged () {

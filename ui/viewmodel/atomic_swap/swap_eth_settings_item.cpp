@@ -42,7 +42,7 @@ SwapEthSettingsItem::SwapEthSettingsItem()
     connect(coinClient.get(), SIGNAL(statusChanged()), this, SIGNAL(connectionStatusChanged()));
     connect(coinClient.get(), SIGNAL(connectionErrorChanged()), this, SIGNAL(connectionErrorChanged()));
     connect(coinClient.get(), &SwapEthClientModel::endpointValidated, this, &SwapEthSettingsItem::onEndpointValidated);
-    connect(coinClient.get(), &SwapEthClientModel::gotTokenInfo, this, &SwapEthSettingsItem::onGotTokenInfo);
+    connect(coinClient.get(), &SwapEthClientModel::gotTokenInfo, this, &SwapEthSettingsItem::tokenInfoReady);
     LoadSettings();
     loadCustomTokens();
 }
@@ -143,11 +143,6 @@ void SwapEthSettingsItem::lookupToken(const QString& contractAddress)
     {
         c->requestTokenInfo(address);
     }
-}
-
-void SwapEthSettingsItem::onGotTokenInfo(const QString& contract, const QString& symbol, uint decimals, const QString& error)
-{
-    emit tokenInfoReady(contract, symbol, decimals, error);
 }
 
 void SwapEthSettingsItem::addCustomToken(const QString& contractAddress, const QString& symbol, uint decimals)
