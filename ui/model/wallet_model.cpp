@@ -342,6 +342,16 @@ void WalletModel::onPaymentProofExported(const beam::wallet::TxID& txID, const b
     emit paymentProofExported(txID, QString::fromStdString(str));
 }
 
+void WalletModel::onSlatepackReady(const beam::wallet::TxID& txID, const std::string& armored)
+{
+    emit slatepackReady(txID, QString::fromStdString(armored));
+}
+
+void WalletModel::onSlatepackImportResult(bool ok, const std::string& error)
+{
+    emit slatepackImportResult(ok, QString::fromStdString(error));
+}
+
 void WalletModel::onPostFunctionToClientContext(MessageFunction&& func)
 {
     emit functionPosted(func);

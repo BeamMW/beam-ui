@@ -46,6 +46,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(QString  newTokenMsg       READ getNewTokenMsg                                    NOTIFY tokenChanged)
     Q_PROPERTY(bool     canChoose         READ getCanChoose                                      NOTIFY tokenChanged)
     Q_PROPERTY(bool     choiceOffline     READ getChoiceOffline     WRITE setChoiceOffline       NOTIFY choiceChanged)
+    Q_PROPERTY(bool     manualExchange    READ getManualExchange    WRITE setManualExchange      NOTIFY manualExchangeChanged)
     Q_PROPERTY(QString  sendType          READ getSendType                                       NOTIFY choiceChanged)
     Q_PROPERTY(bool     sendTypeOnline    READ getSendTypeOnline                                 NOTIFY choiceChanged)
     Q_PROPERTY(QString  tokenTip          READ getTokenTip                                       NOTIFY tokenTipChanged)
@@ -72,6 +73,8 @@ public:
 
     [[nodiscard]] bool getChoiceOffline() const;
     void setChoiceOffline(bool value);
+    [[nodiscard]] bool getManualExchange() const;
+    void setManualExchange(bool value);
 
     [[nodiscard]] QString getAssetAvailable() const;
     [[nodiscard]] QString getAssetRemaining() const;
@@ -110,6 +113,8 @@ signals:
     void tokenChanged();
     void endpointChanged();
     void tokenTipChanged();
+    void manualExchangeChanged();
+    void newSlatepack(const QString& armored);
     void choiceChanged();
     void sendMoneyVerified();
     void cantSendToExpired();
@@ -139,6 +144,7 @@ private:
     QString                    _newTokenMsg;
     QString                    _publicOfflineAddr;
     bool                       _choiceOffline = false;
+    bool                       _manualExchange = false;
     beam::wallet::TxParameters _txParameters;
     bool                       _maxPossible = false;
     size_t                     _vouchersLeft = 0;

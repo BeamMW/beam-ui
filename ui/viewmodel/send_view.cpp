@@ -44,6 +44,8 @@ SendViewModel::SendViewModel()
     connect(_amgr.get(),         &AssetsManager::assetsListChanged,        this,  &SendViewModel::assetsListChanged);
     connect(_walletModel,  &WalletModel::coinsSelected,              this,  &SendViewModel::onCoinsSelected);
     connect(_walletModel,  &WalletModel::sendMoneyVerified,          this,  &SendViewModel::sendMoneyVerified);
+    connect(_walletModel,  &WalletModel::slatepackReady,              this,
+            [this](const beam::wallet::TxID&, const QString& armored) { emit newSlatepack(armored); });
     connect(_walletModel,  &WalletModel::cantSendToExpired,          this,  &SendViewModel::cantSendToExpired);
     connect(_walletModel,  &WalletModel::publicAddressChanged,       this,  &SendViewModel::onPublicAddress);
 
@@ -343,6 +345,20 @@ void SendViewModel::setChoiceOffline(bool value)
         emit choiceChanged();
         emit tokenTipChanged();
         RefreshCsiAsync();
+    }
+}
+
+bool SendViewModel::getManualExchange() const
+{
+    return _manualExchange;
+}
+
+void SendViewModel::setManualExchange(bool value)
+{
+    if (_manualExchange != value)
+    {
+        _manualExchange = value;
+        emit manualExchangeChanged();
     }
 }
 
@@ -651,6 +667,10 @@ void SendViewModel::sendMoney()
     }
 
     params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
+
+    if (_manualExchange)
+        params.SetParameter(TxParameterID::ManualTransport, true);
+
     _walletModel->getAsync()->startTransaction(std::move(params));
 }
 

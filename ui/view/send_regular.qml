@@ -22,6 +22,12 @@ ColumnLayout {
                 .createObject(control)
                 .open();
         }
+
+        onNewSlatepack: function (armored) {
+            Qt.createComponent("controls/SlatepackDialog.qml")
+                .createObject(control, { "armored": armored })
+                .open();
+        }
     }
 
     TokenDuplicateChecker {
@@ -279,6 +285,28 @@ ColumnLayout {
                                         value:    offlineCheck.checked
                                     }
                                 }
+                            }
+                        }
+                    }
+
+                    //
+                    // Manual (Slatepack) exchange
+                    //
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.topMargin: 20
+                        visible: !viewModel.choiceOffline
+
+                        CustomSwitch {
+                            id: manualExchangeSwitch
+                            //% "Manual exchange (copy & paste, no SBBS)"
+                            text: qsTrId("send-manual-exchange")
+                            checked: viewModel.manualExchange
+
+                            Binding {
+                                target: viewModel
+                                property: "manualExchange"
+                                value: manualExchangeSwitch.checked
                             }
                         }
                     }
