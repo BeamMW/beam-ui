@@ -18,6 +18,7 @@
 #include "utility/bridge.h"
 #include "utility/io/asyncevent.h"
 #include "utility/helpers.h"
+#include "viewmodel/ui_helpers.h"
 #include "version.h"
 
 using namespace beam;
@@ -347,9 +348,19 @@ void WalletModel::onSlatepackReady(const beam::wallet::TxID& txID, const std::st
     emit slatepackReady(txID, QString::fromStdString(armored));
 }
 
-void WalletModel::onSlatepackImportResult(bool ok, const std::string& error)
+void WalletModel::onSlatepackImportResult(bool ok, const std::string& error, const beam::wallet::SlatepackEndpoint::ImportInfo& in)
 {
-    emit slatepackImportResult(ok, QString::fromStdString(error));
+    // Format amounts here (UI layer); the QML dialog resolves the asset's ticker + icon
+    // from assetId and renders the rest.
+    QVariantMap info;
+    info["amount"]      = beamui::AmountToUIString(in.m_Amount, "");
+    info["assetId"]     = static_cast<quint32>(in.m_AssetID);
+    info["fee"]         = beamui::AmountToUIString(in.m_Fee, "");
+    info["isSend"]      = in.m_IsSend;
+    info["addressFrom"] = QString::fromStdString(in.m_AddressFrom);
+    info["addressTo"]   = QString::fromStdString(in.m_AddressTo);
+    info["txId"]        = QString::fromStdString(in.m_TxID);
+    emit slatepackImportResult(ok, QString::fromStdString(error), info);
 }
 
 void WalletModel::onPostFunctionToClientContext(MessageFunction&& func)

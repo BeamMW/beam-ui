@@ -24,10 +24,12 @@ public:
     ~WalletViewModel() = default;
 
     Q_INVOKABLE void importSlatepack(const QString& text);
+    Q_INVOKABLE void commitSlatepack(const QString& txId);
+    Q_INVOKABLE void cancelSlatepack(const QString& txId);
 
 signals:
     void slatepackProduced(const QString& armored);
-    void slatepackImported(bool ok, const QString& error);
+    void slatepackImported(bool ok, const QString& error, const QVariantMap& info);
 
 private:
     WalletModel::Ptr _model;

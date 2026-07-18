@@ -4001,5 +4001,21 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Slatepack</source>
         <translation type="unfinished"></translation>
     </message>
+    <message id="send-slatepack-type">
+        <source>Manual (Slatepack)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

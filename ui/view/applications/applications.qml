@@ -97,6 +97,29 @@ ColumnLayout {
 
     signal showTxDetails(string txid)
 
+    WalletViewModel {
+        id: slatepackVM
+    }
+
+    Connections {
+        target: slatepackVM
+        function onSlatepackProduced(armored) {
+            Qt.createComponent("qrc:/controls/SlatepackDialog.qml")
+                .createObject(control, { "armored": armored })
+                .open();
+        }
+        function onSlatepackImported(ok, error, info) {
+            Qt.createComponent("qrc:/controls/SlatepackResultDialog.qml")
+                .createObject(control, {
+                    "ok": ok,
+                    "info": info,
+                    "errorText": error,
+                    "vm": slatepackVM
+                })
+                .open();
+        }
+    }
+
     ApplicationsViewModel {
         id: viewModel
 
@@ -229,6 +252,22 @@ ColumnLayout {
             font.pixelSize: 12
             onClicked: {
                 main.navigateReceive(assetsList.selectedId);
+            }
+        }
+
+        CustomButton {
+            id: slatepackButton
+            Layout.preferredHeight: 32
+            palette.button:     Style.active
+            palette.buttonText: Style.content_opposite
+            icon.source: "qrc:/assets/icon-copy-blue.svg"
+            //% "Slatepack"
+            text: qsTrId("slatepack-button")
+            font.pixelSize: 12
+            onClicked: {
+                Qt.createComponent("qrc:/controls/SlatepackImportDialog.qml")
+                    .createObject(control, { "onImport": function (text) { slatepackVM.importSlatepack(text) } })
+                    .open();
             }
         }
 

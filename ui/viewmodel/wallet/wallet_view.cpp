@@ -21,11 +21,31 @@ WalletViewModel::WalletViewModel()
     connect(_model, &WalletModel::slatepackReady, this,
             [this](const beam::wallet::TxID&, const QString& armored) { emit slatepackProduced(armored); });
     connect(_model, &WalletModel::slatepackImportResult, this,
-            [this](bool ok, const QString& error) { emit slatepackImported(ok, error); });
+            [this](bool ok, const QString& error, const QVariantMap& info) {
+                // Runs on the UI thread — safe to touch AssetsManager to resolve the ticker + icon.
+                QVariantMap m = info;
+                if (auto amgr = AppModel::getInstance().getAssets())
+                {
+                    const auto aid = static_cast<beam::Asset::ID>(info.value("assetId").toUInt());
+                    m["unitName"] = amgr->getUnitName(aid, AssetsManager::NoShorten);
+                    m["icon"]     = amgr->getIcon(aid);
+                }
+                emit slatepackImported(ok, error, m);
+            });
 }
 
 void WalletViewModel::importSlatepack(const QString& text)
 {
     _model->getAsync()->importSlatepack(text.toStdString());
+}
+
+void WalletViewModel::commitSlatepack(const QString& txId)
+{
+    _model->getAsync()->commitSlatepack(txId.toStdString());
+}
+
+void WalletViewModel::cancelSlatepack(const QString& txId)
+{
+    _model->getAsync()->cancelSlatepack(txId.toStdString());
 }
 

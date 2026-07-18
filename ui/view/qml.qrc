@@ -24,6 +24,9 @@
         <file>controls/PrimaryButton.qml</file>
         <file>controls/CustomButton.qml</file>
         <file>controls/ConfirmationDialog.qml</file>
+        <file>controls/SlatepackDialog.qml</file>
+        <file>controls/SlatepackImportDialog.qml</file>
+        <file>controls/SlatepackResultDialog.qml</file>
         <file>controls/ChangePasswordDialog.qml</file>
         <file>controls/ConfirmPasswordDialog.qml</file>
         <file>controls/SwapNADialog.qml</file>

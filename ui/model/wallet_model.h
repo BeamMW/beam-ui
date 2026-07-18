@@ -87,7 +87,7 @@ signals:
     void cantSendToExpired();
     void paymentProofExported(const beam::wallet::TxID& txID, const QString& proof);
     void slatepackReady(const beam::wallet::TxID& txID, const QString& armored);
-    void slatepackImportResult(bool ok, const QString& error);
+    void slatepackImportResult(bool ok, const QString& error, const QVariantMap& info);
     void addressChecked(const QString& addr, bool isValid);
     void functionPosted(const std::function<void()>&);
     void txHistoryExportedToCsv(const QString& data);
@@ -150,7 +150,7 @@ private:
     void onCantSendToExpired() override;
     void onPaymentProofExported(const beam::wallet::TxID& txID, const beam::ByteBuffer& proof) override;
     void onSlatepackReady(const beam::wallet::TxID& txID, const std::string& armored) override;
-    void onSlatepackImportResult(bool ok, const std::string& error) override;
+    void onSlatepackImportResult(bool ok, const std::string& error, const beam::wallet::SlatepackEndpoint::ImportInfo& info) override;
     void onCoinsByTx(const std::vector<beam::wallet::Coin>& coins) override;
     void onAddressChecked(const std::string& addr, bool isValid) override;
     void onImportRecoveryProgress(uint64_t done, uint64_t total) override;

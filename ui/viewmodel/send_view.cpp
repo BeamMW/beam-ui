@@ -340,6 +340,12 @@ void SendViewModel::setChoiceOffline(bool value)
     if (_choiceOffline != value)
     {
         _choiceOffline = value;
+        // Manual (Slatepack) exchange is interactive-only; selecting offline turns it off.
+        if (value && _manualExchange)
+        {
+            _manualExchange = false;
+            emit manualExchangeChanged();
+        }
         emit choiceChanged();
         emit tokenTipChanged();
         RefreshCsiAsync();
@@ -356,6 +362,9 @@ void SendViewModel::setManualExchange(bool value)
     if (_manualExchange != value)
     {
         _manualExchange = value;
+        // Slatepack is interactive-only; enabling it forces online.
+        if (value && _choiceOffline)
+            setChoiceOffline(false);
         emit manualExchangeChanged();
     }
 }

@@ -3990,5 +3990,21 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Slatepack</source>
         <translation>Slatepack</translation>
     </message>
+    <message id="send-slatepack-type">
+        <source>Manual (Slatepack)</source>
+        <translation>Manual (Slatepack)</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>You are sending</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>You are receiving</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>Review transaction</translation>
+    </message>
 </context>
 </TS>
