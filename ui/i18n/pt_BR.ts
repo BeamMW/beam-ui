@@ -3953,5 +3953,70 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Não foi possível extrair os arquivos da DApp.</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>Slatepack para enviar</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>Envie este Slatepack ao destinatário por qualquer canal. Cole a resposta dele na carteira para concluir a transação.</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>Colar Slatepack</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>Importar</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>Cole um Slatepack que você recebeu para continuar a transação.</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>Colar aqui</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>Falha na importação</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>Você está enviando</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>Você está recebendo</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>Revisar transação</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Salvar em arquivo</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Carregar de arquivo</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Copiar Slatepack</translation>
+    </message>
 </context>
 </TS>

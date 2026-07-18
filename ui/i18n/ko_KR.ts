@@ -3946,5 +3946,70 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>DApp 파일의 압축을 풀 수 없습니다.</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>보낼 Slatepack</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>이 Slatepack을 아무 채널로나 수신자에게 보내세요. 상대방의 응답을 지갑에 붙여넣으면 거래가 완료됩니다.</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>Slatepack 붙여넣기</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>가져오기</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>받은 Slatepack을 붙여넣어 거래를 계속하세요.</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>여기에 붙여넣기</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>가져오기 실패</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>보내는 중</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>받는 중</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>거래 검토</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>파일로 저장</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>파일에서 불러오기</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Slatepack 복사</translation>
+    </message>
 </context>
 </TS>

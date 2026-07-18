@@ -267,6 +267,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::IsExpired), "isExpired" },
         { static_cast<int>(Roles::HasPaymentProof), "hasPaymentProof" },
         { static_cast<int>(Roles::RawTxID), "rawTxID" },
+        { static_cast<int>(Roles::Slatepack), "slatepack" },
         { static_cast<int>(Roles::Search), "search" },
         { static_cast<int>(Roles::StateDetails), "stateDetails" },
         { static_cast<int>(Roles::Token), "token" },
@@ -326,6 +327,8 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
         case Roles::Action:
         case Roles::ActionSort:
             return value->isContractTx() ? value->getComment() : "";
+        case Roles::Slatepack:
+            return value->getSlatepack();
         case Roles::TimeCreated:
         {
             QDateTime datetime;

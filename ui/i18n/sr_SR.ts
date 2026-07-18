@@ -3978,5 +3978,70 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Nije moguće raspakovati DApp datoteke.</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>Slatepack za slanje</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>Pošaljite ovaj Slatepack primaocu bilo kojim kanalom. Nalepite njegov odgovor u novčanik da biste dovršili transakciju.</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>Nalepi Slatepack</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>Uvezi</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>Nalepite Slatepack koji ste primili da biste nastavili transakciju.</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>Nalepi ovde</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>Uvoz nije uspeo</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>Šaljete</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>Primate</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>Pregledaj transakciju</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Sačuvaj u datoteku</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Učitaj iz datoteke</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Kopiraj Slatepack</translation>
+    </message>
 </context>
 </TS>

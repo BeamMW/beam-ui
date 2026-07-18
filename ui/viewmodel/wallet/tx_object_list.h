@@ -54,6 +54,7 @@ public:
         IsExpired,
         HasPaymentProof,
         RawTxID,
+        Slatepack,
         Search,
         StateDetails,
         Token,

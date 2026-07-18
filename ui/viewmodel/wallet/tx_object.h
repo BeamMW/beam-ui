@@ -39,6 +39,7 @@ public:
     QString getAddressTo() const;
     virtual QString getFee() const;
     QString getKernelID() const;
+    QString getSlatepack() const;
     QString getTransactionID() const ;
     bool hasPaymentProof() const;
     virtual QString getStatus() const;

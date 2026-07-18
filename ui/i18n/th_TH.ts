@@ -3946,5 +3946,70 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>ไม่สามารถแตกไฟล์ DApp ได้</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>Slatepack ที่จะส่ง</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>ส่ง Slatepack นี้ให้ผู้รับผ่านช่องทางใดก็ได้ วางคำตอบของพวกเขากลับเข้าไปในกระเป๋าเงินเพื่อทำธุรกรรมให้เสร็จสมบูรณ์</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>วาง Slatepack</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>นำเข้า</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>วาง Slatepack ที่คุณได้รับเพื่อดำเนินธุรกรรมต่อ</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>วางที่นี่</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>การนำเข้าล้มเหลว</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>คุณกำลังส่ง</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>คุณกำลังรับ</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>ตรวจสอบธุรกรรม</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>บันทึกลงไฟล์</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>โหลดจากไฟล์</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>คัดลอก Slatepack</translation>
+    </message>
 </context>
 </TS>

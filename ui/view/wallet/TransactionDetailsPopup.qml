@@ -16,6 +16,7 @@ CustomDialog {
     property var comment: ""
     property var txID: ""
     property var kernelID: ""
+    property string slatepack: ""
     property var status: ""
     property var failureReason: ""
     property var isIncome: ""
@@ -37,6 +38,7 @@ CustomDialog {
     property string  addressType
     property bool    isShieldedTx: false
     property bool    isCompleted:  false
+    property bool    isInProgress: false
     property bool    isContractTx: false
     property int     minConfirmations: 0
     property string  confirmationsProgress: ""
@@ -703,6 +705,14 @@ CustomDialog {
             Layout.bottomMargin: 30
             Layout.topMargin: 30
             spacing: 20
+
+            CustomButton {
+                visible:            dialog.slatepack.length > 0 && dialog.isInProgress
+                //% "Copy Slatepack"
+                text:               qsTrId("tx-details-copy-slatepack")
+                icon.source:        "qrc:/assets/icon-copy.svg"
+                onClicked:          textCopied(dialog.slatepack)
+            }
 
             CustomButton {
                 //% "Close"
