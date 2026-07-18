@@ -623,7 +623,7 @@ ColumnLayout {
                     const instance = dialog.createObject(control,
                         {
                             addressText:   viewModel.token,
-                            //% "Manual (Slatepack)"
+                            //% "Slatepack"
                             typeText:      viewModel.manualExchange ? qsTrId("send-slatepack-type") : viewModel.sendType,
                             isOnline:      viewModel.sendTypeOnline || viewModel.manualExchange,
                             amounts: [{

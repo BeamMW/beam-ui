@@ -7,6 +7,7 @@ import "."
 ConfirmationDialog {
     id: thisDialog
     property var onImport: function (text) {}
+    property var vm:       null
 
     //% "Paste Slatepack"
     title: qsTrId("slatepack-import-title")
@@ -31,6 +32,16 @@ ConfirmationDialog {
             horizontalAlignment: Text.AlignHCenter
             //% "Paste a Slatepack you received to continue the transaction."
             text: qsTrId("slatepack-import-message")
+        }
+
+        CustomButton {
+            Layout.alignment: Qt.AlignHCenter
+            //% "Load from file"
+            text: qsTrId("slatepack-load-file")
+            onClicked: {
+                var t = thisDialog.vm.loadSlatepackFile();
+                if (t.length) input.text = t;
+            }
         }
 
         // Inset, scrollable box for the pasted Slatepack — mirrors SlatepackDialog.

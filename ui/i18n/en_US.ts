@@ -3991,8 +3991,16 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <translation>Slatepack</translation>
     </message>
     <message id="send-slatepack-type">
-        <source>Manual (Slatepack)</source>
-        <translation>Manual (Slatepack)</translation>
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Save to file</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Load from file</translation>
     </message>
     <message id="slatepack-import-sending">
         <source>You are sending</source>

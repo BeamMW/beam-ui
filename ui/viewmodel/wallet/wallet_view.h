@@ -26,9 +26,11 @@ public:
     Q_INVOKABLE void importSlatepack(const QString& text);
     Q_INVOKABLE void commitSlatepack(const QString& txId);
     Q_INVOKABLE void cancelSlatepack(const QString& txId);
+    Q_INVOKABLE void saveSlatepack(const QString& txId, const QString& armored);
+    Q_INVOKABLE QString loadSlatepackFile();
 
 signals:
-    void slatepackProduced(const QString& armored);
+    void slatepackProduced(const QString& txId, const QString& armored);
     void slatepackImported(bool ok, const QString& error, const QVariantMap& info);
 
 private:

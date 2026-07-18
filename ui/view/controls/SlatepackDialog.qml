@@ -7,6 +7,8 @@ import "."
 ConfirmationDialog {
     id: thisDialog
     property string armored: ""
+    property string txId:    ""
+    property var    vm:      null
 
     //% "Slatepack to send"
     title: qsTrId("slatepack-send-title")
@@ -55,6 +57,13 @@ ConfirmationDialog {
                     onCopyText: BeamGlobals.copyToClipboard(text)
                 }
             }
+        }
+
+        CustomButton {
+            Layout.alignment: Qt.AlignHCenter
+            //% "Save to file"
+            text:      qsTrId("slatepack-save-file")
+            onClicked: thisDialog.vm.saveSlatepack(thisDialog.txId, thisDialog.armored)
         }
 
         SFText {

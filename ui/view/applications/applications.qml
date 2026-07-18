@@ -103,9 +103,9 @@ ColumnLayout {
 
     Connections {
         target: slatepackVM
-        function onSlatepackProduced(armored) {
+        function onSlatepackProduced(txId, armored) {
             Qt.createComponent("qrc:/controls/SlatepackDialog.qml")
-                .createObject(control, { "armored": armored })
+                .createObject(control, { "armored": armored, "txId": txId, "vm": slatepackVM })
                 .open();
         }
         function onSlatepackImported(ok, error, info) {
@@ -266,7 +266,7 @@ ColumnLayout {
             font.pixelSize: 12
             onClicked: {
                 Qt.createComponent("qrc:/controls/SlatepackImportDialog.qml")
-                    .createObject(control, { "onImport": function (text) { slatepackVM.importSlatepack(text) } })
+                    .createObject(control, { "vm": slatepackVM, "onImport": function (text) { slatepackVM.importSlatepack(text) } })
                     .open();
             }
         }
