@@ -3964,27 +3964,27 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="slatepack-send-title">
         <source>Slatepack to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Slatepack для надсилання</translation>
     </message>
     <message id="slatepack-send-message">
         <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>Надішліть цей Slatepack одержувачу будь-яким каналом. Вставте його відповідь у гаманець, щоб завершити транзакцію.</translation>
     </message>
     <message id="slatepack-import-title">
         <source>Paste Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити Slatepack</translation>
     </message>
     <message id="slatepack-import-ok">
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпортувати</translation>
     </message>
     <message id="slatepack-import-message">
         <source>Paste a Slatepack you received to continue the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставте отриманий Slatepack, щоб продовжити транзакцію.</translation>
     </message>
     <message id="slatepack-import-placeholder">
         <source>Paste here</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставте сюди</translation>
     </message>
     <message id="send-manual-exchange">
         <source>Manual exchange (copy &amp; paste, no SBBS)</source>
@@ -3992,27 +3992,40 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="slatepack-import-failed">
         <source>Import failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося імпортувати</translation>
     </message>
     <message id="slatepack-button">
         <source>Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>Slatepack</translation>
     </message>
     <message id="send-slatepack-type">
-        <source>Manual (Slatepack)</source>
-        <translation type="unfinished"></translation>
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
     </message>
     <message id="slatepack-import-sending">
         <source>You are sending</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви надсилаєте</translation>
     </message>
     <message id="slatepack-import-receiving">
         <source>You are receiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви отримуєте</translation>
     </message>
     <message id="slatepack-review-title">
         <source>Review transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Переглянути транзакцію</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Зберегти у файл</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Завантажити з файлу</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Копіювати Slatepack</translation>
     </message>
 </context>
 </TS>

@@ -3948,27 +3948,27 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="slatepack-send-title">
         <source>Slatepack to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Gönderilecek Slatepack</translation>
     </message>
     <message id="slatepack-send-message">
         <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu Slatepack'i herhangi bir kanaldan alıcıya gönderin. İşlemi tamamlamak için yanıtını cüzdana yapıştırın.</translation>
     </message>
     <message id="slatepack-import-title">
         <source>Paste Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>Slatepack yapıştır</translation>
     </message>
     <message id="slatepack-import-ok">
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktar</translation>
     </message>
     <message id="slatepack-import-message">
         <source>Paste a Slatepack you received to continue the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>İşleme devam etmek için aldığınız bir Slatepack'i yapıştırın.</translation>
     </message>
     <message id="slatepack-import-placeholder">
         <source>Paste here</source>
-        <translation type="unfinished"></translation>
+        <translation>Buraya yapıştır</translation>
     </message>
     <message id="send-manual-exchange">
         <source>Manual exchange (copy &amp; paste, no SBBS)</source>
@@ -3976,27 +3976,40 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="slatepack-import-failed">
         <source>Import failed</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarma başarısız</translation>
     </message>
     <message id="slatepack-button">
         <source>Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>Slatepack</translation>
     </message>
     <message id="send-slatepack-type">
-        <source>Manual (Slatepack)</source>
-        <translation type="unfinished"></translation>
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
     </message>
     <message id="slatepack-import-sending">
         <source>You are sending</source>
-        <translation type="unfinished"></translation>
+        <translation>Gönderiyorsunuz</translation>
     </message>
     <message id="slatepack-import-receiving">
         <source>You are receiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Alıyorsunuz</translation>
     </message>
     <message id="slatepack-review-title">
         <source>Review transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>İşlemi incele</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Dosyaya kaydet</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Dosyadan yükle</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Slatepack'i kopyala</translation>
     </message>
 </context>
 </TS>

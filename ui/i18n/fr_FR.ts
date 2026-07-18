@@ -3954,27 +3954,27 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="slatepack-send-title">
         <source>Slatepack to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Slatepack à envoyer</translation>
     </message>
     <message id="slatepack-send-message">
         <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>Envoyez ce Slatepack au destinataire par n'importe quel canal. Collez sa réponse dans le portefeuille pour finaliser la transaction.</translation>
     </message>
     <message id="slatepack-import-title">
         <source>Paste Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>Coller le Slatepack</translation>
     </message>
     <message id="slatepack-import-ok">
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer</translation>
     </message>
     <message id="slatepack-import-message">
         <source>Paste a Slatepack you received to continue the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>Collez un Slatepack que vous avez reçu pour continuer la transaction.</translation>
     </message>
     <message id="slatepack-import-placeholder">
         <source>Paste here</source>
-        <translation type="unfinished"></translation>
+        <translation>Coller ici</translation>
     </message>
     <message id="send-manual-exchange">
         <source>Manual exchange (copy &amp; paste, no SBBS)</source>
@@ -3982,27 +3982,40 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="slatepack-import-failed">
         <source>Import failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de l'import</translation>
     </message>
     <message id="slatepack-button">
         <source>Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>Slatepack</translation>
     </message>
     <message id="send-slatepack-type">
-        <source>Manual (Slatepack)</source>
-        <translation type="unfinished"></translation>
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
     </message>
     <message id="slatepack-import-sending">
         <source>You are sending</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous envoyez</translation>
     </message>
     <message id="slatepack-import-receiving">
         <source>You are receiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous recevez</translation>
     </message>
     <message id="slatepack-review-title">
         <source>Review transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier la transaction</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Enregistrer dans un fichier</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Charger depuis un fichier</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Copier le Slatepack</translation>
     </message>
 </context>
 </TS>

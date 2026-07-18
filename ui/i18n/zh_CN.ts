@@ -3964,27 +3964,27 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="slatepack-send-title">
         <source>Slatepack to send</source>
-        <translation type="unfinished"></translation>
+        <translation>待发送的 Slatepack</translation>
     </message>
     <message id="slatepack-send-message">
         <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>通过任意渠道将此 Slatepack 发送给接收方。将对方的回复粘贴回钱包即可完成交易。</translation>
     </message>
     <message id="slatepack-import-title">
         <source>Paste Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴 Slatepack</translation>
     </message>
     <message id="slatepack-import-ok">
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>导入</translation>
     </message>
     <message id="slatepack-import-message">
         <source>Paste a Slatepack you received to continue the transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴您收到的 Slatepack 以继续交易。</translation>
     </message>
     <message id="slatepack-import-placeholder">
         <source>Paste here</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴到此处</translation>
     </message>
     <message id="send-manual-exchange">
         <source>Manual exchange (copy &amp; paste, no SBBS)</source>
@@ -3992,27 +3992,40 @@ Connect your Hardware Wallet to finalize the transaction.</source>
     </message>
     <message id="slatepack-import-failed">
         <source>Import failed</source>
-        <translation type="unfinished"></translation>
+        <translation>导入失败</translation>
     </message>
     <message id="slatepack-button">
         <source>Slatepack</source>
-        <translation type="unfinished"></translation>
+        <translation>Slatepack</translation>
     </message>
     <message id="send-slatepack-type">
-        <source>Manual (Slatepack)</source>
-        <translation type="unfinished"></translation>
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
     </message>
     <message id="slatepack-import-sending">
         <source>You are sending</source>
-        <translation type="unfinished"></translation>
+        <translation>您正在发送</translation>
     </message>
     <message id="slatepack-import-receiving">
         <source>You are receiving</source>
-        <translation type="unfinished"></translation>
+        <translation>您正在接收</translation>
     </message>
     <message id="slatepack-review-title">
         <source>Review transaction</source>
-        <translation type="unfinished"></translation>
+        <translation>查看交易</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>保存到文件</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>从文件加载</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>复制 Slatepack</translation>
     </message>
 </context>
 </TS>

@@ -4002,6 +4002,10 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Load from file</source>
         <translation>Load from file</translation>
     </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Copy Slatepack</translation>
+    </message>
     <message id="slatepack-import-sending">
         <source>You are sending</source>
         <translation>You are sending</translation>
