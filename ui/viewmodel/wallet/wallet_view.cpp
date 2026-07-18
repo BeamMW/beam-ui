@@ -13,8 +13,11 @@
 // limitations under the License.
 #include "wallet_view.h"
 #include "model/app_model.h"
-#include <QFileDialog>
+#include <QUrl>
 #include <QFile>
+#include <QDir>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 
 WalletViewModel::WalletViewModel()
@@ -53,10 +56,19 @@ void WalletViewModel::cancelSlatepack(const QString& txId)
     _model->getAsync()->cancelSlatepack(txId.toStdString());
 }
 
-void WalletViewModel::saveSlatepack(const QString& txId, const QString& armored)
+void WalletViewModel::saveSlatepackToFile(const QString& txId, const QString& armored)
 {
-    const QString path = QFileDialog::getSaveFileName(nullptr, "Save Slatepack",
-        txId + ".slatepack", "Slatepack (*.slatepack)");
+    // Constructed dialog + exec() with a null parent — the pattern AppsViewModel::chooseFile
+    // uses to open a native file dialog from inside a modal QML popup.
+    const QString dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QFileDialog dialog(nullptr, "Save Slatepack", QDir(dir).filePath(txId + ".slatepack"),
+                       "Slatepack files (*.slatepack)");
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setDefaultSuffix("slatepack");
+    dialog.setWindowModality(Qt::WindowModality::ApplicationModal);
+    if (!dialog.exec())
+        return;
+    const QString path = dialog.selectedFiles().value(0);
     if (path.isEmpty())
         return;
     QFile f(path);
@@ -64,10 +76,25 @@ void WalletViewModel::saveSlatepack(const QString& txId, const QString& armored)
         f.write(armored.toUtf8());
 }
 
-QString WalletViewModel::loadSlatepackFile()
+QString WalletViewModel::openSlatepackFromFile()
 {
-    const QString path = QFileDialog::getOpenFileName(nullptr, "Load Slatepack",
-        QString(), "Slatepack (*.slatepack);;All files (*)");
+    QFileDialog dialog(nullptr, "Load Slatepack", "", "Slatepack files (*.slatepack)");
+    dialog.setAcceptMode(QFileDialog::AcceptOpen);
+    dialog.setWindowModality(Qt::WindowModality::ApplicationModal);
+    if (!dialog.exec())
+        return QString();
+    const QString path = dialog.selectedFiles().value(0);
+    if (path.isEmpty())
+        return QString();
+    QFile f(path);
+    if (!f.open(QIODevice::ReadOnly))
+        return QString();
+    return QString::fromUtf8(f.readAll());
+}
+
+QString WalletViewModel::readSlatepackFile(const QUrl& file)
+{
+    const QString path = file.toLocalFile();
     if (path.isEmpty())
         return QString();
     QFile f(path);

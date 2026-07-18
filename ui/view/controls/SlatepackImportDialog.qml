@@ -39,8 +39,8 @@ ConfirmationDialog {
             //% "Load from file"
             text: qsTrId("slatepack-load-file")
             onClicked: {
-                var t = thisDialog.vm.loadSlatepackFile();
-                if (t.length) input.text = t;
+                var t = thisDialog.vm.openSlatepackFromFile();
+                if (t && t.length) input.text = t;
             }
         }
 
@@ -73,6 +73,16 @@ ConfirmationDialog {
                     //% "Paste here"
                     placeholderText: qsTrId("slatepack-import-placeholder")
                     background: Item {}
+                }
+            }
+
+            DropArea {
+                anchors.fill: parent
+                onDropped: (drop) => {
+                    if (drop.hasUrls && drop.urls.length && thisDialog.vm) {
+                        var t = thisDialog.vm.readSlatepackFile(drop.urls[0]);
+                        if (t.length) input.text = t;
+                    }
                 }
             }
         }

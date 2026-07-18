@@ -14,6 +14,7 @@
 #pragma once
 
 #include <QObject>
+#include <QUrl>
 #include "model/wallet_model.h"
 
 class WalletViewModel : public QObject
@@ -26,8 +27,9 @@ public:
     Q_INVOKABLE void importSlatepack(const QString& text);
     Q_INVOKABLE void commitSlatepack(const QString& txId);
     Q_INVOKABLE void cancelSlatepack(const QString& txId);
-    Q_INVOKABLE void saveSlatepack(const QString& txId, const QString& armored);
-    Q_INVOKABLE QString loadSlatepackFile();
+    Q_INVOKABLE void saveSlatepackToFile(const QString& txId, const QString& armored);
+    Q_INVOKABLE QString openSlatepackFromFile();
+    Q_INVOKABLE QString readSlatepackFile(const QUrl& file);  // drag-and-drop
 
 signals:
     void slatepackProduced(const QString& txId, const QString& armored);
