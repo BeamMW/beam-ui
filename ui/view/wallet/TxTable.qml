@@ -303,6 +303,8 @@ Control {
                 txDetails.comment          =  model.getRoleValue(row, "comment") || ""
                 txDetails.txID             =  model.getRoleValue(row, "txID") || ""
                 txDetails.kernelID         =  model.getRoleValue(row, "kernelID") || ""
+                txDetails.slatepack        =  model.getRoleValue(row, "slatepack") || ""
+                txDetails.isInProgress     =  model.getRoleValue(row, "isInProgress")
                 txDetails.status           =  model.getRoleValue(row, "status") || ""
                 txDetails.failureReason    =  model.getRoleValue(row, "failureReason") || ""
                 txDetails.isIncome         =  model.getRoleValue(row, "isIncome")
