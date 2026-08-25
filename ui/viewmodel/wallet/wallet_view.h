@@ -33,7 +33,8 @@ public:
 
 signals:
     void slatepackProduced(const QString& txId, const QString& armored);
-    void slatepackImported(bool ok, const QString& error, const QVariantMap& info);
+    // errorCode is a beam::wallet::slatepack::Error; QML maps it to a translated message.
+    void slatepackImported(bool ok, int errorCode, const QVariantMap& info);
 
 private:
     WalletModel::Ptr _model;

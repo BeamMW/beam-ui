@@ -354,11 +354,28 @@ void SendViewModel::setChoiceOffline(bool value)
 
 bool SendViewModel::getManualExchange() const
 {
-    return _manualExchange;
+    // Never report it on for a token that cannot do it - the flag may survive a token change.
+    return _manualExchange && getCanManualExchange();
+}
+
+bool SendViewModel::getCanManualExchange() const
+{
+    using namespace beam::wallet;
+    if (!getTokenValid())
+        return false;
+
+    // A Slatepack carries an interactive negotiation by hand. Tokens that can only transact
+    // offline - public offline and max privacy - have no interactive leg for it to carry, so the
+    // toggle is unavailable rather than silently overriding the address type.
+    const auto type = GetAddressType(_token.toStdString());
+    return type == TxAddressType::Regular || type == TxAddressType::Offline;
 }
 
 void SendViewModel::setManualExchange(bool value)
 {
+    if (value && !getCanManualExchange())
+        value = false;
+
     if (_manualExchange != value)
     {
         _manualExchange = value;
@@ -675,7 +692,7 @@ void SendViewModel::sendMoney()
 
     params.SetParameter(TxParameterID::OriginalToken, _token.toStdString());
 
-    if (_manualExchange)
+    if (getManualExchange())
         params.SetParameter(TxParameterID::ManualTransport, true);
 
     _walletModel->getAsync()->startTransaction(std::move(params));

@@ -20,10 +20,6 @@ ColumnLayout {
         tokenDuplicateChecker.checkTokenForDuplicate(token);
     }
 
-    WalletViewModel {
-        id: viewModel
-    }
-
     property bool openSend:     false
     property bool openReceive:  false
     property string token:      ""
@@ -85,6 +81,20 @@ ColumnLayout {
             font.pixelSize: 12
             onClicked: {
                 navigateReceive(assets.selectedId);
+            }
+        }
+
+        CustomButton {
+            id: slatepackButton
+            Layout.preferredHeight: 32
+            palette.button:     Style.active
+            palette.buttonText: Style.content_opposite
+            icon.source: "qrc:/assets/icon-copy-blue.svg"
+            //% "Slatepack"
+            text: qsTrId("slatepack-button")
+            font.pixelSize: 12
+            onClicked: {
+                main.openSlatepackImport();
             }
         }
 

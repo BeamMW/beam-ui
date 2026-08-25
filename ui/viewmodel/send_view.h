@@ -47,6 +47,7 @@ class SendViewModel: public QObject
     Q_PROPERTY(bool     canChoose         READ getCanChoose                                      NOTIFY tokenChanged)
     Q_PROPERTY(bool     choiceOffline     READ getChoiceOffline     WRITE setChoiceOffline       NOTIFY choiceChanged)
     Q_PROPERTY(bool     manualExchange    READ getManualExchange    WRITE setManualExchange      NOTIFY manualExchangeChanged)
+    Q_PROPERTY(bool     canManualExchange READ getCanManualExchange                                NOTIFY tokenChanged)
     Q_PROPERTY(QString  sendType          READ getSendType                                       NOTIFY choiceChanged)
     Q_PROPERTY(bool     sendTypeOnline    READ getSendTypeOnline                                 NOTIFY choiceChanged)
     Q_PROPERTY(QString  tokenTip          READ getTokenTip                                       NOTIFY tokenTipChanged)
@@ -74,6 +75,7 @@ public:
     [[nodiscard]] bool getChoiceOffline() const;
     void setChoiceOffline(bool value);
     [[nodiscard]] bool getManualExchange() const;
+    [[nodiscard]] bool getCanManualExchange() const;
     void setManualExchange(bool value);
 
     [[nodiscard]] QString getAssetAvailable() const;

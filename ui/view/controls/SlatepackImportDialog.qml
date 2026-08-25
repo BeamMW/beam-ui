@@ -6,8 +6,11 @@ import "."
 
 ConfirmationDialog {
     id: thisDialog
-    property var onImport: function (text) {}
-    property var vm:       null
+    property var vm: null
+
+    // A signal, not an `onImport` property: the `on` prefix is reserved for signal handlers in
+    // QML, and naming a plain property that way confuses both readers and tooling.
+    signal importRequested(string text)
 
     //% "Paste Slatepack"
     title: qsTrId("slatepack-import-title")
@@ -39,6 +42,7 @@ ConfirmationDialog {
             //% "Load from file"
             text: qsTrId("slatepack-load-file")
             onClicked: {
+                if (!thisDialog.vm) return;
                 var t = thisDialog.vm.openSlatepackFromFile();
                 if (t && t.length) input.text = t;
             }
@@ -81,7 +85,7 @@ ConfirmationDialog {
                 onDropped: (drop) => {
                     if (drop.hasUrls && drop.urls.length && thisDialog.vm) {
                         var t = thisDialog.vm.readSlatepackFile(drop.urls[0]);
-                        if (t.length) input.text = t;
+                        if (t && t.length) input.text = t;
                     }
                 }
             }
@@ -89,6 +93,6 @@ ConfirmationDialog {
     }
 
     onAccepted: {
-        thisDialog.onImport(input.text.trim());
+        thisDialog.importRequested(input.text.trim());
     }
 }

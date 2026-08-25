@@ -7,10 +7,15 @@ import "../utils.js" as Utils
 
 ConfirmationDialog {
     id: thisDialog
-    property bool   ok:        true
-    property var    info:      ({})   // { amount, fee, isSend, unitName, icon, addressFrom, addressTo, txId }
-    property string errorText: ""
-    property var    vm:        null   // WalletViewModel, for confirm/cancel
+    property bool ok:        true
+    property var  info:      ({})   // { amount, assetId, fee, isSend, unitName, icon, addressFrom, addressTo, txId }
+    property int  errorCode: SlatepackError.none
+    property var  vm:        null   // WalletViewModel, for confirm/cancel
+
+    // The pending import is held by the core endpoint until we confirm or discard it, so this
+    // dialog must not be dismissable without answering. Click-outside would close() without
+    // emitting rejected(), leaving the transaction stuck waiting for a decision.
+    closePolicy: Popup.NoAutoClose
 
     title: ok
         //% "Review transaction"
@@ -27,8 +32,13 @@ ConfirmationDialog {
     width: 600
 
     // Send confirms the previewed Slatepack (the transaction proceeds); Cancel discards it.
-    onAccepted: { if (ok && vm) vm.commitSlatepack(info.txId || "") }
-    onRejected: { if (ok && vm) vm.cancelSlatepack(info.txId || "") }
+    // Track the decision so onClosed can release the pending import if the dialog goes away by
+    // any other route - never leave the core endpoint holding a preview nobody will answer.
+    property bool _decided: false
+
+    onAccepted: { _decided = true; if (ok && vm) vm.commitSlatepack(info.txId || "") }
+    onRejected: { _decided = true; if (ok && vm) vm.cancelSlatepack(info.txId || "") }
+    onClosed:   { if (!_decided && ok && vm) vm.cancelSlatepack(info.txId || "") }
 
     contentItem: ColumnLayout {
         spacing: 16
@@ -248,7 +258,7 @@ ConfirmationDialog {
             color:               Style.validator_error
             wrapMode:            Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
-            text:                thisDialog.errorText
+            text:                SlatepackError.text(thisDialog.errorCode)
         }
     }
 }

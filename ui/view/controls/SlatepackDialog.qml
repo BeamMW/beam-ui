@@ -63,7 +63,10 @@ ConfirmationDialog {
             Layout.alignment: Qt.AlignHCenter
             //% "Save to file"
             text:      qsTrId("slatepack-save-file")
-            onClicked: thisDialog.vm.saveSlatepackToFile(thisDialog.txId, thisDialog.armored)
+            onClicked: {
+                if (thisDialog.vm)
+                    thisDialog.vm.saveSlatepackToFile(thisDialog.txId, thisDialog.armored)
+            }
         }
 
         SFText {

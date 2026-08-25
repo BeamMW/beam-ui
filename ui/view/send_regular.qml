@@ -291,6 +291,9 @@ ColumnLayout {
                         title: qsTrId("general-advanced")
                         Layout.fillWidth: true
                         folded: true
+                        // Offline-only addresses (public offline, max privacy) have no
+                        // interactive leg for a Slatepack to carry.
+                        visible: viewModel.canManualExchange
 
                         content: ColumnLayout {
                             spacing: 20
@@ -299,12 +302,13 @@ ColumnLayout {
                                 id: manualExchangeSwitch
                                 //% "Manual exchange (copy & paste, no SBBS)"
                                 text: qsTrId("send-manual-exchange")
+                                enabled: viewModel.canManualExchange
                                 checked: viewModel.manualExchange
 
                                 Binding {
                                     target: viewModel
                                     property: "manualExchange"
-                                    value: manualExchangeSwitch.checked
+                                    value: manualExchangeSwitch.checked && viewModel.canManualExchange
                                 }
                             }
                         }
