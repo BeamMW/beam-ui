@@ -4024,5 +4024,45 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Copy Slatepack</source>
         <translation>Sao chép Slatepack</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Văn bản này không chứa Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Slatepack này bị hỏng và không thể đọc được. Hãy yêu cầu người gửi gửi lại bản mới.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Slatepack này không vượt qua kiểm tra toàn vẹn. Có thể nó đã bị cắt hoặc thay đổi trên đường truyền.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Slatepack này được tạo bởi phiên bản ví không tương thích.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Ví này không hỗ trợ loại Slatepack này.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Slatepack này được gửi tới một ví khác.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Ví này không thể giải mã Slatepack vì không có khóa riêng tư.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Không thể xem trước Slatepack này trước khi áp dụng.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Slatepack này không còn chờ xác nhận. Vui lòng dán lại.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Không thể nhập Slatepack này.</translation>
+    </message>
 </context>
 </TS>

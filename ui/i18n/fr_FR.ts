@@ -3958,7 +3958,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="slatepack-send-message">
         <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
-        <translation>Envoyez ce Slatepack au destinataire par n'importe quel canal. Collez sa réponse dans le portefeuille pour finaliser la transaction.</translation>
+        <translation>Envoyez ce Slatepack au destinataire par n&apos;importe quel canal. Collez sa réponse dans le portefeuille pour finaliser la transaction.</translation>
     </message>
     <message id="slatepack-import-title">
         <source>Paste Slatepack</source>
@@ -3982,7 +3982,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="slatepack-import-failed">
         <source>Import failed</source>
-        <translation>Échec de l'import</translation>
+        <translation>Échec de l&apos;import</translation>
     </message>
     <message id="slatepack-button">
         <source>Slatepack</source>
@@ -4016,6 +4016,46 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     <message id="tx-details-copy-slatepack">
         <source>Copy Slatepack</source>
         <translation>Copier le Slatepack</translation>
+    </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Ce texte ne contient pas de Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Ce Slatepack est endommagé et illisible. Demandez à l&apos;expéditeur une nouvelle copie.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Ce Slatepack a échoué au contrôle d&apos;intégrité. Il a probablement été tronqué ou altéré en transit.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Ce Slatepack a été créé par une version de portefeuille incompatible.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Ce portefeuille ne prend pas en charge ce type de Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Ce Slatepack est adressé à un autre portefeuille.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Ce portefeuille ne peut pas déchiffrer les Slatepacks car il n&apos;a pas de clé privée.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Ce Slatepack ne peut pas être examiné avant d&apos;être appliqué.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Ce Slatepack n&apos;attend plus de confirmation. Veuillez le coller à nouveau.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Ce Slatepack n&apos;a pas pu être importé.</translation>
     </message>
 </context>
 </TS>

@@ -4011,5 +4011,45 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Copy Slatepack</source>
         <translation>คัดลอก Slatepack</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>ข้อความนี้ไม่มี Slatepack</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Slatepack นี้เสียหายและไม่สามารถอ่านได้ กรุณาขอสำเนาใหม่จากผู้ส่ง</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Slatepack นี้ไม่ผ่านการตรวจสอบความถูกต้อง อาจถูกตัดทอนหรือถูกแก้ไขระหว่างส่ง</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Slatepack นี้ถูกสร้างโดยกระเป๋าเงินเวอร์ชันที่ไม่รองรับ</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>กระเป๋าเงินนี้ไม่รองรับ Slatepack ประเภทนี้</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Slatepack นี้ถูกส่งถึงกระเป๋าเงินอื่น</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>กระเป๋าเงินนี้ถอดรหัส Slatepack ไม่ได้เพราะไม่มีคีย์ส่วนตัว</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>ไม่สามารถตรวจสอบ Slatepack นี้ก่อนนำไปใช้ได้</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Slatepack นี้ไม่ได้รอการยืนยันอีกต่อไป กรุณาวางใหม่อีกครั้ง</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>ไม่สามารถนำเข้า Slatepack นี้ได้</translation>
+    </message>
 </context>
 </TS>

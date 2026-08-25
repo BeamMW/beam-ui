@@ -4043,5 +4043,45 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Copy Slatepack</source>
         <translation>Kopiraj Slatepack</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Овај текст не садржи Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Овај Slatepack је оштећен и не може се прочитати. Затражите од пошиљаоца нову копију.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Овај Slatepack није прошао проверу интегритета. Вероватно је скраћен или измењен у преносу.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Овај Slatepack је направила некомпатибилна верзија новчаника.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Овај новчаник не подржава ову врсту Slatepack-а.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Овај Slatepack је упућен другом новчанику.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Овај новчаник не може да дешифрује Slatepack јер нема приватни кључ.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Овај Slatepack се не може прегледати пре примене.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Овај Slatepack више не чека потврду. Налепите га поново.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Овај Slatepack није могуће увезти.</translation>
+    </message>
 </context>
 </TS>

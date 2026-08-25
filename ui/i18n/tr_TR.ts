@@ -3952,7 +3952,7 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="slatepack-send-message">
         <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
-        <translation>Bu Slatepack'i herhangi bir kanaldan alıcıya gönderin. İşlemi tamamlamak için yanıtını cüzdana yapıştırın.</translation>
+        <translation>Bu Slatepack&apos;i herhangi bir kanaldan alıcıya gönderin. İşlemi tamamlamak için yanıtını cüzdana yapıştırın.</translation>
     </message>
     <message id="slatepack-import-title">
         <source>Paste Slatepack</source>
@@ -3964,7 +3964,7 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="slatepack-import-message">
         <source>Paste a Slatepack you received to continue the transaction.</source>
-        <translation>İşleme devam etmek için aldığınız bir Slatepack'i yapıştırın.</translation>
+        <translation>İşleme devam etmek için aldığınız bir Slatepack&apos;i yapıştırın.</translation>
     </message>
     <message id="slatepack-import-placeholder">
         <source>Paste here</source>
@@ -4009,7 +4009,47 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
     </message>
     <message id="tx-details-copy-slatepack">
         <source>Copy Slatepack</source>
-        <translation>Slatepack'i kopyala</translation>
+        <translation>Slatepack&apos;i kopyala</translation>
+    </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Bu metin bir Slatepack içermiyor.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Bu Slatepack bozuk ve okunamıyor. Gönderenden yeni bir kopya isteyin.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Bu Slatepack bütünlük kontrolünden geçemedi. Muhtemelen aktarım sırasında kesildi veya değiştirildi.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Bu Slatepack uyumsuz bir cüzdan sürümü tarafından oluşturulmuş.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Bu cüzdan bu tür Slatepack&apos;i desteklemiyor.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Bu Slatepack başka bir cüzdana gönderilmiş.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Bu cüzdan özel anahtarı olmadığı için Slatepack&apos;lerin şifresini çözemiyor.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Bu Slatepack uygulanmadan önce incelenemez.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Bu Slatepack artık onay beklemiyor. Lütfen tekrar yapıştırın.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Bu Slatepack içe aktarılamadı.</translation>
     </message>
 </context>
 </TS>

@@ -4011,5 +4011,45 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Copy Slatepack</source>
         <translation>Slatepack 복사</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>이 텍스트에는 Slatepack이 없습니다.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>이 Slatepack은 손상되어 읽을 수 없습니다. 보낸 사람에게 새 사본을 요청하세요.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>이 Slatepack의 무결성 검사가 실패했습니다. 전송 중에 잘리거나 변경되었을 수 있습니다.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>이 Slatepack은 호환되지 않는 지갑 버전에서 생성되었습니다.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>이 지갑은 이 유형의 Slatepack을 지원하지 않습니다.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>이 Slatepack은 다른 지갑으로 전송된 것입니다.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>이 지갑은 개인 키가 없어 Slatepack을 복호화할 수 없습니다.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>이 Slatepack은 적용 전에 검토할 수 없습니다.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>이 Slatepack은 더 이상 확인을 기다리지 않습니다. 다시 붙여넣어 주세요.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>이 Slatepack을 가져올 수 없습니다.</translation>
+    </message>
 </context>
 </TS>

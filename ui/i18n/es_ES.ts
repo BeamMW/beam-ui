@@ -4019,5 +4019,45 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>Copy Slatepack</source>
         <translation>Copiar Slatepack</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Este texto no contiene un Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Este Slatepack está dañado y no se puede leer. Pide al remitente una copia nueva.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Este Slatepack no ha superado la comprobación de integridad. Probablemente se truncó o se alteró en tránsito.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Este Slatepack fue creado por una versión de monedero incompatible.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Este monedero no admite este tipo de Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Este Slatepack está dirigido a otro monedero.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Este monedero no puede descifrar Slatepacks porque no tiene clave privada.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Este Slatepack no se puede revisar antes de aplicarse.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Este Slatepack ya no está esperando confirmación. Pégalo de nuevo.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>No se ha podido importar este Slatepack.</translation>
+    </message>
 </context>
 </TS>

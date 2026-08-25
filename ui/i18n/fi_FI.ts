@@ -4021,5 +4021,45 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Copy Slatepack</source>
         <translation>Kopioi Slatepack</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Tämä teksti ei sisällä Slatepackia.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Tämä Slatepack on vaurioitunut eikä sitä voi lukea. Pyydä lähettäjältä uusi kopio.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Tämä Slatepack ei läpäissyt eheystarkistusta. Se on todennäköisesti katkennut tai muuttunut siirron aikana.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Tämä Slatepack on luotu yhteensopimattomalla lompakkoversiolla.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Tämä lompakko ei tue tämäntyyppistä Slatepackia.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Tämä Slatepack on osoitettu toiselle lompakolle.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Tämä lompakko ei voi purkaa Slatepackien salausta, koska sillä ei ole yksityistä avainta.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Tätä Slatepackia ei voi tarkistaa ennen käyttöönottoa.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Tämä Slatepack ei enää odota vahvistusta. Liitä se uudelleen.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Tämän Slatepackin tuonti epäonnistui.</translation>
+    </message>
 </context>
 </TS>

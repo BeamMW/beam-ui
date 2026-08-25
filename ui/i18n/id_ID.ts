@@ -4011,5 +4011,45 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Copy Slatepack</source>
         <translation>Salin Slatepack</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Teks ini tidak berisi Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Slatepack ini rusak dan tidak dapat dibaca. Mintalah salinan baru kepada pengirim.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Slatepack ini gagal pemeriksaan integritas. Kemungkinan terpotong atau diubah saat pengiriman.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Slatepack ini dibuat oleh versi dompet yang tidak kompatibel.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Dompet ini tidak mendukung jenis Slatepack ini.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Slatepack ini ditujukan untuk dompet lain.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Dompet ini tidak dapat mendekripsi Slatepack karena tidak memiliki kunci privat.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Slatepack ini tidak dapat ditinjau sebelum diterapkan.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Slatepack ini tidak lagi menunggu konfirmasi. Silakan tempel kembali.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Slatepack ini tidak dapat diimpor.</translation>
+    </message>
 </context>
 </TS>

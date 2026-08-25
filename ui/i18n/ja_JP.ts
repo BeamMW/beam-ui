@@ -3988,5 +3988,45 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Copy Slatepack</source>
         <translation>Slatepackをコピー</translation>
     </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>このテキストには Slatepack が含まれていません。</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>この Slatepack は破損しており読み取れません。送信者に新しいコピーを依頼してください。</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>この Slatepack は整合性チェックに失敗しました。転送中に切り詰められたか改変された可能性があります。</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>この Slatepack は互換性のないウォレットバージョンで作成されました。</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>このウォレットはこの種類の Slatepack に対応していません。</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>この Slatepack は別のウォレット宛です。</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>このウォレットは秘密鍵を持たないため Slatepack を復号できません。</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>この Slatepack は適用前に確認できません。</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>この Slatepack は確認待ちではなくなりました。もう一度貼り付けてください。</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>この Slatepack をインポートできませんでした。</translation>
+    </message>
 </context>
 </TS>
