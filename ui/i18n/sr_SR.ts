@@ -3978,5 +3978,110 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Nije moguće raspakovati DApp datoteke.</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>Slatepack za slanje</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>Pošaljite ovaj Slatepack primaocu bilo kojim kanalom. Nalepite njegov odgovor u novčanik da biste dovršili transakciju.</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>Nalepi Slatepack</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>Uvezi</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>Nalepite Slatepack koji ste primili da biste nastavili transakciju.</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>Nalepi ovde</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>Uvoz nije uspeo</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>Šaljete</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>Primate</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>Pregledaj transakciju</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Sačuvaj u datoteku</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Učitaj iz datoteke</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Kopiraj Slatepack</translation>
+    </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Овај текст не садржи Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Овај Slatepack је оштећен и не може се прочитати. Затражите од пошиљаоца нову копију.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Овај Slatepack није прошао проверу интегритета. Вероватно је скраћен или измењен у преносу.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Овај Slatepack је направила некомпатибилна верзија новчаника.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Овај новчаник не подржава ову врсту Slatepack-а.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Овај Slatepack је упућен другом новчанику.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Овај новчаник не може да дешифрује Slatepack јер нема приватни кључ.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Овај Slatepack се не може прегледати пре примене.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Овај Slatepack више не чека потврду. Налепите га поново.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Овај Slatepack није могуће увезти.</translation>
+    </message>
 </context>
 </TS>

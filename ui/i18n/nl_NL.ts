@@ -3951,5 +3951,110 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Kan de DApp-bestanden niet uitpakken.</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>Te verzenden Slatepack</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>Stuur deze Slatepack via een willekeurig kanaal naar de ontvanger. Plak hun antwoord terug in de wallet om de transactie te voltooien.</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>Slatepack plakken</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>Importeren</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>Plak een ontvangen Slatepack om de transactie voort te zetten.</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>Hier plakken</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>Importeren mislukt</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>U verzendt</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>U ontvangt</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>Transactie controleren</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Opslaan naar bestand</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Laden uit bestand</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Slatepack kopiëren</translation>
+    </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Deze tekst bevat geen Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Deze Slatepack is beschadigd en kan niet worden gelezen. Vraag de afzender om een nieuwe kopie.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Deze Slatepack is niet door de integriteitscontrole gekomen. Waarschijnlijk is hij onderweg afgekapt of gewijzigd.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Deze Slatepack is gemaakt door een incompatibele wallet-versie.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Deze wallet ondersteunt dit soort Slatepack niet.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Deze Slatepack is aan een andere wallet gericht.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Deze wallet kan Slatepacks niet ontsleutelen omdat hij geen privésleutel heeft.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Deze Slatepack kan niet worden gecontroleerd voordat hij wordt toegepast.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Deze Slatepack wacht niet meer op bevestiging. Plak hem opnieuw.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Deze Slatepack kon niet worden geïmporteerd.</translation>
+    </message>
 </context>
 </TS>

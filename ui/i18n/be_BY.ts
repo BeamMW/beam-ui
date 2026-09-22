@@ -3965,5 +3965,110 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>Couldn&apos;t extract the DApp files.</source>
         <translation>Не ўдалося распакаваць файлы DApp.</translation>
     </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>Slatepack для адпраўкі</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>Адпраўце гэты Slatepack атрымальніку любым каналам. Устаўце яго адказ у кашалёк, каб завяршыць транзакцыю.</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>Уставіць Slatepack</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>Імпартаваць</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>Устаўце атрыманы Slatepack, каб працягнуць транзакцыю.</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>Устаўце сюды</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>Не ўдалося імпартаваць</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>Вы адпраўляеце</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>Вы атрымліваеце</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>Праверыць транзакцыю</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Захаваць у файл</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Загрузіць з файла</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Капіяваць Slatepack</translation>
+    </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Гэты тэкст не змяшчае Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Гэты Slatepack пашкоджаны і яго немагчыма прачытаць. Папрасіце адпраўніка даслаць новую копію.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Slatepack не прайшоў праверку цэласнасці. Верагодна, ён быў абрэзаны або зменены падчас перадачы.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Гэты Slatepack створаны несумяшчальнай версіяй кашалька.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Гэты кашалёк не падтрымлівае такі тып Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Гэты Slatepack адрасаваны іншаму кашальку.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Гэты кашалёк не можа расшыфраваць Slatepack, бо не мае прыватнага ключа.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Гэты Slatepack немагчыма праверыць да прымянення.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Гэты Slatepack больш не чакае пацвярджэння. Калі ласка, устаўце яго яшчэ раз.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Не ўдалося імпартаваць гэты Slatepack.</translation>
+    </message>
 </context>
 </TS>

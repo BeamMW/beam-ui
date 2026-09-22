@@ -407,6 +407,15 @@ QString TxObject::getKernelID() const
     return _kernelIDStr;
 }
 
+QString TxObject::getSlatepack() const
+{
+    // Last armored outgoing Slatepack we produced for this manual-transport tx (empty otherwise),
+    // so the UI can offer to re-copy it after the produce dialog was dismissed.
+    if (auto sp = _tx.GetParameter<std::string>(beam::wallet::TxParameterID::SlatepackOutgoing))
+        return QString::fromStdString(*sp);
+    return QString();
+}
+
 QString TxObject::getTransactionID() const
 {
     return QString::fromStdString(to_hex(_tx.m_txId.data(), _tx.m_txId.size()));

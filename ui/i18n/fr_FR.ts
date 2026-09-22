@@ -3926,7 +3926,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-cant-open">
         <source>Couldn&apos;t open the DApp file. It may be corrupted.</source>
-        <translation>Impossible d'ouvrir le fichier DApp. Il est peut-être corrompu.</translation>
+        <translation>Impossible d&apos;ouvrir le fichier DApp. Il est peut-être corrompu.</translation>
     </message>
     <message id="dapp-install-err-cant-read-manifest">
         <source>Couldn&apos;t read the DApp manifest.</source>
@@ -3934,7 +3934,7 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-unsupported">
         <source>This DApp is not supported by your wallet version.</source>
-        <translation>Cette DApp n'est pas prise en charge par votre version du portefeuille.</translation>
+        <translation>Cette DApp n&apos;est pas prise en charge par votre version du portefeuille.</translation>
     </message>
     <message id="dapp-install-err-invalid">
         <source>Invalid DApp file: the manifest is missing or incomplete.</source>
@@ -3946,11 +3946,116 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
     </message>
     <message id="dapp-install-err-folder">
         <source>Couldn&apos;t prepare the installation folder.</source>
-        <translation>Impossible de préparer le dossier d'installation.</translation>
+        <translation>Impossible de préparer le dossier d&apos;installation.</translation>
     </message>
     <message id="dapp-install-err-extract">
         <source>Couldn&apos;t extract the DApp files.</source>
-        <translation>Impossible d'extraire les fichiers de la DApp.</translation>
+        <translation>Impossible d&apos;extraire les fichiers de la DApp.</translation>
+    </message>
+    <message id="slatepack-send-title">
+        <source>Slatepack to send</source>
+        <translation>Slatepack à envoyer</translation>
+    </message>
+    <message id="slatepack-send-message">
+        <source>Send this Slatepack to the recipient over any channel. Paste their response back into the wallet to complete the transaction.</source>
+        <translation>Envoyez ce Slatepack au destinataire par n&apos;importe quel canal. Collez sa réponse dans le portefeuille pour finaliser la transaction.</translation>
+    </message>
+    <message id="slatepack-import-title">
+        <source>Paste Slatepack</source>
+        <translation>Coller le Slatepack</translation>
+    </message>
+    <message id="slatepack-import-ok">
+        <source>Import</source>
+        <translation>Importer</translation>
+    </message>
+    <message id="slatepack-import-message">
+        <source>Paste a Slatepack you received to continue the transaction.</source>
+        <translation>Collez un Slatepack que vous avez reçu pour continuer la transaction.</translation>
+    </message>
+    <message id="slatepack-import-placeholder">
+        <source>Paste here</source>
+        <translation>Coller ici</translation>
+    </message>
+    <message id="send-manual-exchange">
+        <source>Manual exchange (copy &amp; paste, no SBBS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="slatepack-import-failed">
+        <source>Import failed</source>
+        <translation>Échec de l&apos;import</translation>
+    </message>
+    <message id="slatepack-button">
+        <source>Slatepack</source>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="send-slatepack-type">
+        <source>Slatepack</source>
+        <oldsource>Manual (Slatepack)</oldsource>
+        <translation>Slatepack</translation>
+    </message>
+    <message id="slatepack-import-sending">
+        <source>You are sending</source>
+        <translation>Vous envoyez</translation>
+    </message>
+    <message id="slatepack-import-receiving">
+        <source>You are receiving</source>
+        <translation>Vous recevez</translation>
+    </message>
+    <message id="slatepack-review-title">
+        <source>Review transaction</source>
+        <translation>Vérifier la transaction</translation>
+    </message>
+    <message id="slatepack-save-file">
+        <source>Save to file</source>
+        <translation>Enregistrer dans un fichier</translation>
+    </message>
+    <message id="slatepack-load-file">
+        <source>Load from file</source>
+        <translation>Charger depuis un fichier</translation>
+    </message>
+    <message id="tx-details-copy-slatepack">
+        <source>Copy Slatepack</source>
+        <translation>Copier le Slatepack</translation>
+    </message>
+    <message id="slatepack-error-not-slatepack">
+        <source>This text does not contain a Slatepack.</source>
+        <translation>Ce texte ne contient pas de Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-damaged">
+        <source>This Slatepack is damaged and cannot be read. Ask the sender for a fresh copy.</source>
+        <translation>Ce Slatepack est endommagé et illisible. Demandez à l&apos;expéditeur une nouvelle copie.</translation>
+    </message>
+    <message id="slatepack-error-checksum">
+        <source>This Slatepack failed its integrity check. It was probably truncated or altered in transit.</source>
+        <translation>Ce Slatepack a échoué au contrôle d&apos;intégrité. Il a probablement été tronqué ou altéré en transit.</translation>
+    </message>
+    <message id="slatepack-error-version">
+        <source>This Slatepack was created by an incompatible wallet version.</source>
+        <translation>Ce Slatepack a été créé par une version de portefeuille incompatible.</translation>
+    </message>
+    <message id="slatepack-error-unsupported-type">
+        <source>This wallet does not support this kind of Slatepack.</source>
+        <translation>Ce portefeuille ne prend pas en charge ce type de Slatepack.</translation>
+    </message>
+    <message id="slatepack-error-not-yours">
+        <source>This Slatepack is addressed to a different wallet.</source>
+        <translation>Ce Slatepack est adressé à un autre portefeuille.</translation>
+    </message>
+    <message id="slatepack-error-read-only">
+        <source>This wallet cannot decrypt Slatepacks because it has no private key.</source>
+        <translation>Ce portefeuille ne peut pas déchiffrer les Slatepacks car il n&apos;a pas de clé privée.</translation>
+    </message>
+    <message id="slatepack-error-not-reviewable">
+        <source>This Slatepack cannot be reviewed before it is applied.</source>
+        <translation>Ce Slatepack ne peut pas être examiné avant d&apos;être appliqué.</translation>
+    </message>
+    <message id="slatepack-error-no-pending">
+        <source>This Slatepack is no longer waiting for confirmation. Please paste it again.</source>
+        <translation>Ce Slatepack n&apos;attend plus de confirmation. Veuillez le coller à nouveau.</translation>
+    </message>
+    <message id="slatepack-error-generic">
+        <source>This Slatepack could not be imported.</source>
+        <translation>Ce Slatepack n&apos;a pas pu être importé.</translation>
     </message>
 </context>
 </TS>

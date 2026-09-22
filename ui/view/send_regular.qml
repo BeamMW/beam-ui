@@ -218,7 +218,7 @@ ColumnLayout {
                         //% "Transaction type"
                         title: qsTrId("general-tx-type")
                         Layout.fillWidth: true
-                        visible: viewModel.canChoose
+                        visible: viewModel.canChoose && !viewModel.manualExchange
 
                         content: ColumnLayout {
                             spacing: 20
@@ -278,6 +278,37 @@ ColumnLayout {
                                         property: "choiceOffline"
                                         value:    offlineCheck.checked
                                     }
+                                }
+                            }
+                        }
+                    }
+
+                    //
+                    // Advanced (manual Slatepack exchange)
+                    //
+                    FoldablePanel {
+                        //% "Advanced"
+                        title: qsTrId("general-advanced")
+                        Layout.fillWidth: true
+                        folded: true
+                        // Offline-only addresses (public offline, max privacy) have no
+                        // interactive leg for a Slatepack to carry.
+                        visible: viewModel.canManualExchange
+
+                        content: ColumnLayout {
+                            spacing: 20
+
+                            CustomSwitch {
+                                id: manualExchangeSwitch
+                                //% "Manual exchange (copy & paste, no SBBS)"
+                                text: qsTrId("send-manual-exchange")
+                                enabled: viewModel.canManualExchange
+                                checked: viewModel.manualExchange
+
+                                Binding {
+                                    target: viewModel
+                                    property: "manualExchange"
+                                    value: manualExchangeSwitch.checked && viewModel.canManualExchange
                                 }
                             }
                         }
@@ -596,8 +627,9 @@ ColumnLayout {
                     const instance = dialog.createObject(control,
                         {
                             addressText:   viewModel.token,
-                            typeText:      viewModel.sendType,
-                            isOnline:      viewModel.sendTypeOnline,
+                            //% "Slatepack"
+                            typeText:      viewModel.manualExchange ? qsTrId("send-slatepack-type") : viewModel.sendType,
+                            isOnline:      viewModel.sendTypeOnline || viewModel.manualExchange,
                             amounts: [{
                                 amount:   viewModel.sendAmount,
                                 unitName: control.sendUnit,

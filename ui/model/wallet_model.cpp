@@ -18,6 +18,7 @@
 #include "utility/bridge.h"
 #include "utility/io/asyncevent.h"
 #include "utility/helpers.h"
+#include "viewmodel/ui_helpers.h"
 #include "version.h"
 
 using namespace beam;
@@ -340,6 +341,27 @@ void WalletModel::onPaymentProofExported(const beam::wallet::TxID& txID, const b
 
     beam::to_hex(str.data(), proof.data(), proof.size());
     emit paymentProofExported(txID, QString::fromStdString(str));
+}
+
+void WalletModel::onSlatepackReady(const beam::wallet::TxID& txID, const std::string& armored)
+{
+    emit slatepackReady(txID, QString::fromStdString(armored));
+}
+
+void WalletModel::onSlatepackImportResult(bool ok, beam::wallet::slatepack::Error error, const beam::wallet::SlatepackEndpoint::ImportInfo& in)
+{
+    // Amounts are formatted here; the ticker and icon for assetId are resolved one layer up, in
+    // WalletViewModel, which runs on the UI thread and may touch AssetsManager. The failure
+    // reason travels as a code, not a string, so the QML dialog can render it translated.
+    QVariantMap info;
+    info["amount"]      = beamui::AmountToUIString(in.m_Amount, "");
+    info["assetId"]     = static_cast<quint32>(in.m_AssetID);
+    info["fee"]         = beamui::AmountToUIString(in.m_Fee, "");
+    info["isSend"]      = in.m_IsSend;
+    info["addressFrom"] = QString::fromStdString(in.m_AddressFrom);
+    info["addressTo"]   = QString::fromStdString(in.m_AddressTo);
+    info["txId"]        = QString::fromStdString(in.m_TxID);
+    emit slatepackImportResult(ok, static_cast<int>(error), info);
 }
 
 void WalletModel::onPostFunctionToClientContext(MessageFunction&& func)

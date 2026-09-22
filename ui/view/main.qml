@@ -280,6 +280,50 @@ Rectangle {
         contentStack.push(Qt.createComponent(source), props)
     }
 
+    //
+    // Slatepack (manual, copy-paste transaction exchange).
+    //
+    // This lives on main, not on any one screen: a Slatepack is produced by the send flow and
+    // consumed from the wallet header, and the produced-pack dialog has to appear no matter
+    // which screen the user happens to be on when the negotiation message pops out. Hanging it
+    // off a stacked page would silently lose the dialog the moment that page is not loaded.
+    //
+    WalletViewModel {
+        id: slatepackVM
+    }
+
+    Connections {
+        target: slatepackVM
+        function onSlatepackProduced(txId, armored) {
+            var dlg = Qt.createComponent("qrc:/controls/SlatepackDialog.qml")
+                        .createObject(main, { "armored": armored, "txId": txId, "vm": slatepackVM });
+            if (dlg) dlg.open();
+            else console.error("Slatepack: cannot create SlatepackDialog");
+        }
+        function onSlatepackImported(ok, errorCode, info) {
+            var dlg = Qt.createComponent("qrc:/controls/SlatepackResultDialog.qml")
+                        .createObject(main, {
+                            "ok":        ok,
+                            "info":      info,
+                            "errorCode": errorCode,
+                            "vm":        slatepackVM
+                        });
+            if (dlg) dlg.open();
+            else console.error("Slatepack: cannot create SlatepackResultDialog");
+        }
+    }
+
+    function openSlatepackImport () {
+        var dlg = Qt.createComponent("qrc:/controls/SlatepackImportDialog.qml")
+                    .createObject(main, { "vm": slatepackVM });
+        if (!dlg) {
+            console.error("Slatepack: cannot create SlatepackImportDialog");
+            return;
+        }
+        dlg.importRequested.connect(function (text) { slatepackVM.importSlatepack(text) });
+        dlg.open();
+    }
+
     function openMaxPrivacyCoins (assetId, unitName, lockedAmount) {
         var details = Qt.createComponent("controls/MaxPrivacyCoinsDialog.qml").createObject(main, {
             "unitName":     unitName,
