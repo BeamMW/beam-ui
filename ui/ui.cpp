@@ -87,6 +87,24 @@ using namespace std;
 using namespace ECC;
 namespace
 {
+    // Qt6 drops the application command line instead of passing it to Chromium,
+    // so hand the debug port over through the environment
+    void SetupRemoteDebugging(int argc, char* argv[])
+    {
+        const QString option = "--" + QString(cli::APPS_REMOTE_DEBUG_PORT);
+        for (int i = 1; i < argc; ++i)
+        {
+            const auto arg = QString::fromLocal8Bit(argv[i]);
+            if (arg.startsWith(option + '='))
+            {
+                qputenv("QTWEBENGINE_REMOTE_DEBUGGING", arg.section('=', 1).toLocal8Bit());
+            }
+            else if (arg == option && i + 1 < argc)
+            {
+                qputenv("QTWEBENGINE_REMOTE_DEBUGGING", argv[i + 1]);
+            }
+        }
+    }
 
     void MigrateFolder(QDir& oldDataDir, QDir& newDataDir, const QString& folder)
     {
@@ -172,22 +190,12 @@ int main (int argc, char* argv[])
 
     // Qt6: AA_EnableHighDpiScaling is always on, AA_ShareOpenGLContexts is default for WebEngine
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+    SetupRemoteDebugging(argc, argv);
     QtWebEngineQuick::initialize();
 
     block_sigpipe();
 
-    // TODO:APPS Remove before we open apps for public
-    // Fixes this: https://bugreports.qt.io/browse/QTBUG-96214
-    #ifdef Q_OS_LINUX
-    const char* SECCOMP_FLAG = "--disable-seccomp-filter-sandbox";
-    std::vector<char*> newArgv(argv, argv + argc);
-    newArgv.push_back(const_cast<char*>(SECCOMP_FLAG));
-    newArgv.push_back(nullptr);
-    int newArgc = argc + 1;
-    QApplication app(newArgc, newArgv.data());
-    #else
     QApplication app(argc, argv);
-    #endif
 
     QApplication::setApplicationName(QMLGlobals::getAppName());
     QApplication::setWindowIcon(QIcon(Theme::iconPath()));

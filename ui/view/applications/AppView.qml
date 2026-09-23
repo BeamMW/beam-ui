@@ -428,6 +428,8 @@ ColumnLayout {
 
                     settings {
                         javascriptCanOpenWindows: false
+                        // dev apps are loaded from file://, Qt denies remote requests from local schemes
+                        localContentCanAccessRemoteUrls: control.activeApp ? control.activeApp.devApp === true : false
                     }
 
                     onNavigationRequested: function (ev) {
