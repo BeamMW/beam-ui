@@ -210,6 +210,12 @@ void WalletSettings::changeAccount(int accountIndex)
     new(&m_networkSettings) QSettings(getNetworkDataDir().filePath(SettingsFile), QSettings::IniFormat);
 }
 
+int WalletSettings::getAccountIndex() const
+{
+    Lock lock(m_mutex);
+    return m_accountIndex;
+}
+
 #if defined(BEAM_HW_WALLET)
 string WalletSettings::getTrezorWalletStorage() const
 {

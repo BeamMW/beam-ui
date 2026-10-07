@@ -17,6 +17,10 @@ StartLayout {
     property string firstButtonIcon:    ""
     property var    firstButtonAction:   function() {}
 
+    // unlocking a running wallet: switching account or network would destroy it
+    property bool   lockedMode:         false
+    showNetworkSelector:                !lockedMode
+
     // default methods for open wallet, can be changed for unlock wallet
     property var openWallet: function (pass, callback) {
         viewModel.openWallet(pass, callback);
@@ -76,6 +80,7 @@ StartLayout {
         }
 
         AccountSetup {
+            enabled:                !startLayout.lockedMode
             Layout.alignment:       Qt.AlignHCenter
             Layout.minimumWidth:    400
             Layout.maximumWidth:    400
@@ -235,7 +240,7 @@ StartLayout {
             //% "Add account"
             text: qsTrId("general-add-account")
             fontSize: 14
-            visible: viewModel.isOnlyOneInstanceStarted
+            visible: viewModel.isOnlyOneInstanceStarted && !startLayout.lockedMode
             onClicked: {
                 viewModel.isRecoveryMode = false;
                 startWizzardView.push(walletStartPage);

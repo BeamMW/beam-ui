@@ -329,6 +329,18 @@ StartViewModel::StartViewModel()
 #endif
 
 {
+    // select the account the AppModel currently points to
+    const auto& accounts = getAccounts();
+    const int realIndex = AppModel::getInstance().getSettings().getAccountIndex();
+    for (int i = 0; i < accounts.size(); ++i)
+    {
+        if (accounts[i][kIndex].toInt() == realIndex)
+        {
+            m_accountIndex = i;
+            break;
+        }
+    }
+
     findExistingWalletDBIfNeeded();
 
     connect(&AppModel::getInstance(), &AppModel::walletRemoved, this, &StartViewModel::onWalletRemoved);
