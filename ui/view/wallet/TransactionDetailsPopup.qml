@@ -42,6 +42,7 @@ CustomDialog {
     property bool    isContractTx: false
     property int     minConfirmations: 0
     property string  confirmationsProgress: ""
+    property string  blockHeight: ""
     property string  dappName: ""
 
     property var assetNames: []
@@ -600,6 +601,23 @@ CustomDialog {
                             openExternal(dialog.kernelID);
                         }
                     }
+                }
+
+                SFText {
+                    font.pixelSize: 14
+                    color: Style.content_secondary
+                    //% "Block height"
+                    text: qsTrId("tx-details-block-height") + ":"
+                    visible: blockHeightField.visible
+                }
+                SFLabel {
+                    id: blockHeightField
+                    copyMenuEnabled: true
+                    font.pixelSize: 14
+                    color: Style.content_main
+                    text: dialog.blockHeight
+                    visible: dialog.isCompleted && dialog.blockHeight.length
+                    onCopyText: textCopied(dialog.blockHeight)
                 }
 
                 Item {

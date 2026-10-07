@@ -54,6 +54,7 @@ public:
     QString getSource() const;
     uint32_t getMinConfirmations() const;
     QString getConfirmationProgress() const;
+    QString getKernelProofHeight() const;
     bool isActive() const;
     QString getAppId();
     bool isDappTx();

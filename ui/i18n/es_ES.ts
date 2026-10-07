@@ -4059,5 +4059,9 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>No se ha podido importar este Slatepack.</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>Altura del bloque</translation>
+    </message>
 </context>
 </TS>

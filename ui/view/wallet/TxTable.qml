@@ -318,6 +318,7 @@ Control {
                 txDetails.minConfirmations =  model.getRoleValue(row, "minConfirmations") || 0
                 txDetails.dappName         =   model.getRoleValue(row, "dappName") || ""
                 txDetails.confirmationsProgress = model.getRoleValue(row, "confirmationsProgress") || ""
+                txDetails.blockHeight      =  model.getRoleValue(row, "kernelProofHeight") || ""
 
                 var addrModel = {
                     isMaxPrivacy: model.getRoleValue(row, "isMaxPrivacy"),

@@ -229,6 +229,15 @@ QString TxObject::getConfirmationProgress() const
     return "unknown";
 }
 
+QString TxObject::getKernelProofHeight() const
+{
+    if (auto proofHeight = _tx.GetParameter<Height>(wallet::TxParameterID::KernelProofHeight); proofHeight)
+    {
+        return QString::number(*proofHeight);
+    }
+    return "";
+}
+
 beam::wallet::TxID TxObject::getTxID() const
 {
     return _tx.m_txId;

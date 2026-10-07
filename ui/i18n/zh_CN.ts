@@ -4067,5 +4067,9 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>This Slatepack could not be imported.</source>
         <translation>无法导入此 Slatepack。</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>区块高度</translation>
+    </message>
 </context>
 </TS>

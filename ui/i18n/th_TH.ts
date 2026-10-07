@@ -4051,5 +4051,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>ไม่สามารถนำเข้า Slatepack นี้ได้</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>ความสูงของบล็อก</translation>
+    </message>
 </context>
 </TS>

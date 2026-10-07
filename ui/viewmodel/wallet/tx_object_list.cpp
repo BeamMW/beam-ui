@@ -299,6 +299,7 @@ QHash<int, QByteArray> TxObjectList::roleNames() const
         { static_cast<int>(Roles::ActionSort), "actionSort"},
         { static_cast<int>(Roles::MinConfirmations), "minConfirmations"},
         { static_cast<int>(Roles::ConfirmationsProgress), "confirmationsProgress"},
+        { static_cast<int>(Roles::KernelProofHeight), "kernelProofHeight"},
         { static_cast<int>(Roles::IsDappTx), "isDappTx"},
         { static_cast<int>(Roles::DAppId), "dappId"},
         { static_cast<int>(Roles::DAppName), "dappName"},
@@ -538,6 +539,8 @@ QVariant TxObjectList::data(const QModelIndex &index, int role) const
             return value->getMinConfirmations();
         case Roles::ConfirmationsProgress:
             return value->getConfirmationProgress();
+        case Roles::KernelProofHeight:
+            return value->getKernelProofHeight();
         case Roles::IsDappTx:
             return value->isDappTx();
         case Roles::DAppId:
