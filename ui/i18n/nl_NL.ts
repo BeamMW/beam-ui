@@ -4056,5 +4056,9 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Deze Slatepack kon niet worden geïmporteerd.</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>Blokhoogte</translation>
+    </message>
 </context>
 </TS>

@@ -85,6 +85,7 @@ public:
         ActionSort,
         MinConfirmations,
         ConfirmationsProgress,
+        KernelProofHeight,
         IsDappTx,
         DAppId,
         DAppName,

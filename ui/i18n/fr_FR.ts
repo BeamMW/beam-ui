@@ -4057,5 +4057,9 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>This Slatepack could not be imported.</source>
         <translation>Ce Slatepack n&apos;a pas pu être importé.</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>Hauteur du bloc</translation>
+    </message>
 </context>
 </TS>

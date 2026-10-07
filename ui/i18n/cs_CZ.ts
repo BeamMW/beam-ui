@@ -4070,5 +4070,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Tento Slatepack se nepodařilo importovat.</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>Výška bloku</translation>
+    </message>
 </context>
 </TS>

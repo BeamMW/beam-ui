@@ -4061,5 +4061,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Tämän Slatepackin tuonti epäonnistui.</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>Lohkon korkeus</translation>
+    </message>
 </context>
 </TS>

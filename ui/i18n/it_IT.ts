@@ -4059,5 +4059,9 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Non è stato possibile importare questo Slatepack.</translation>
     </message>
+    <message id="tx-details-block-height">
+        <source>Block height</source>
+        <translation>Altezza del blocco</translation>
+    </message>
 </context>
 </TS>
