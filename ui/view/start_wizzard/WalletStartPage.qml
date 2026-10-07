@@ -9,10 +9,22 @@ import "../utils.js" as Utils
 
 StartLayout {
     property Item defaultFocusItem: createNewWallet
+    property bool isActivePage: StackView.status === StackView.Active
 
     onVisibleChanged: {
         if (visible) {
             viewModel.useHWWallet = false;
+        }
+    }
+
+    Connections {
+        target: viewModel
+        enabled: isActivePage
+        function onCurrentNetworkChanged() {
+            // go back to the login screen if the selected network already has accounts
+            if (viewModel.walletExists) {
+                startWizzardView.replace(null, openWalletPage);
+            }
         }
     }
 
