@@ -184,6 +184,7 @@ Item
             else if (isLockedMode) {
                 startWizzardView.push(openWalletPage,
                     { 
+                      "lockedMode": true,
                         "openWallet": function (pass, callback) {
                         if (viewModel.checkWalletPassword(pass)) {
                             callback("")

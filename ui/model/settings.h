@@ -32,6 +32,7 @@ public:
     WalletSettings(const QDir& appDataDir, const QString& applicationDirPath);
 
     void changeAccount(int accountIndex);
+    int getAccountIndex() const;
     QString getNodeAddress() const;
     void setNodeAddress(const QString& value);
 
