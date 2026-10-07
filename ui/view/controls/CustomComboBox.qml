@@ -22,6 +22,7 @@ ComboBox {
     property string underlineColor: color
     property bool enableScroll: false
     property int textMaxLenDrop: 0
+    property int dropWrapMode: Text.NoWrap
 
     property var modelWidth: 140
     property var calculatedWidth: Math.max(control.width, modelWidth)
@@ -66,6 +67,7 @@ ComboBox {
         width: calculatedWidth
         padding: 0
         leftPadding: control.leftPadding
+        rightPadding: control.dropWrapMode === Text.NoWrap ? 0 : control.rightPadding
         bottomPadding: control.dropSpacing
         topPadding: 2
 
@@ -124,6 +126,7 @@ ComboBox {
                 }
                 color: highlighted ? Style.active : Style.content_main
                 elide: Text.ElideMiddle
+                wrapMode: control.dropWrapMode
                 font.pixelSize: dropFontPixelSize
                 font.letterSpacing: fontLetterSpacing
                 font.styleName: highlighted ? "DemiBold" : "Normal"

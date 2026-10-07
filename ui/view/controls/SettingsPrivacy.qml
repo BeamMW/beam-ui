@@ -165,6 +165,7 @@ SettingsFoldable {
                     id: mpLockTimeLimit
                     fontPixelSize: 14
                     Layout.preferredWidth: 200
+                    dropWrapMode: Text.WordWrap
                     currentIndex: viewModel.maxPrivacyLockTimeLimit
                     model: [
                         //% "No limit"
