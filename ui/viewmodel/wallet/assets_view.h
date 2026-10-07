@@ -26,6 +26,7 @@ class AssetsViewModel : public QObject {
                                             READ getSelectedAssets         NOTIFY selectedAssetChanged)
     Q_PROPERTY(bool showSeedValidationPromo READ getShowValidationPromo    WRITE setShowValidationPromo  NOTIFY showValidationPromoChanged)
     Q_PROPERTY(bool canHideValidationPromo  READ getCanHideValidationPromo NOTIFY canHideValidationPromoChanged )
+    Q_PROPERTY(bool assetsPanelFolded       READ getAssetsPanelFolded      WRITE setAssetsPanelFolded    NOTIFY assetsPanelFoldedChanged)
 
 public:
     AssetsViewModel();
@@ -42,6 +43,9 @@ public:
 
     [[nodiscard]] bool getCanHideValidationPromo() const;
 
+    [[nodiscard]] bool getAssetsPanelFolded() const;
+    void setAssetsPanelFolded(bool value);
+
 public slots:
     void onNormalCoinsChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::Coin>& utxos);
     void onShieldedCoinChanged(beam::wallet::ChangeAction, const std::vector<beam::wallet::ShieldedCoin>& items);
@@ -50,6 +54,7 @@ signals:
     void selectedAssetChanged();
     void showValidationPromoChanged();
     void canHideValidationPromoChanged();
+    void assetsPanelFoldedChanged();
 
 private:
     bool hasBeamAmount() const;
