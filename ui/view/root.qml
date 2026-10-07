@@ -14,8 +14,9 @@ Window {
     property bool isFullscreen: appWindow.width >= Screen.width
 
     function setMinMax () {
-        var wlimit = appWindow.screen.width
-        var hlimit = appWindow.screen.height - (isFullscreen ? 0 : 100)
+        var available = BeamGlobals.getAvailableWindowSize(appWindow)
+        var wlimit = isFullscreen ? appWindow.screen.width : available.width
+        var hlimit = isFullscreen ? appWindow.screen.height : available.height
         var wmin = Math.min(1024, wlimit)
         var hmin = Math.min(852, hlimit)
 
@@ -31,6 +32,11 @@ Window {
     }
 
     onScreenChanged: function() {
+        appWindow.setMinMax()
+    }
+
+    // frame margins are known only after the window is shown
+    onVisibilityChanged: {
         appWindow.setMinMax()
     }
 

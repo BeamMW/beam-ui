@@ -15,6 +15,7 @@
 
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <QSize>
 #include "currencies.h"
 
 class QMLGlobals : public QObject
@@ -27,6 +28,8 @@ public:
     Q_INVOKABLE static void showMessage(const QString& message);
     Q_INVOKABLE static void logInfo(const QString& message);
     Q_INVOKABLE static void copyToClipboard(const QString& text);
+    // screen area available for the window content (without taskbar, dock and window frame)
+    Q_INVOKABLE static QSize getAvailableWindowSize(QObject* window);
     Q_INVOKABLE QString version();
     Q_INVOKABLE static bool isToken(const QString& text);
     Q_INVOKABLE static bool isSwapToken(const QString& text);

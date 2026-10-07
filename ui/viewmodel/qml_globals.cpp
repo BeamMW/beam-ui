@@ -15,6 +15,8 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QClipboard>
+#include <QScreen>
+#include <QWindow>
 #include "version.h"
 #include "model/app_model.h"
 #include "wallet/core/common.h"
@@ -115,6 +117,23 @@ void QMLGlobals::showMessage(const QString& message)
 void QMLGlobals::logInfo(const QString& message)
 {
     BEAM_LOG_INFO () << message.toStdString();
+}
+
+QSize QMLGlobals::getAvailableWindowSize(QObject* window)
+{
+    auto w = qobject_cast<QWindow*>(window);
+    auto screen = w && w->screen() ? w->screen() : QGuiApplication::primaryScreen();
+    if (!screen)
+        return {};
+
+    auto size = screen->availableGeometry().size();
+    if (w)
+    {
+        const auto margins = w->frameMargins();
+        size.rwidth() -= margins.left() + margins.right();
+        size.rheight() -= margins.top() + margins.bottom();
+    }
+    return size;
 }
 
 void QMLGlobals::copyToClipboard(const QString& text)
