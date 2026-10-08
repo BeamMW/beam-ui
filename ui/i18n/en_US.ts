@@ -4058,5 +4058,21 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>This Slatepack could not be imported.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>I send</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>I receive</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Amount I send</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Amount I receive</translation>
+    </message>
 </context>
 </TS>

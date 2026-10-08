@@ -4061,5 +4061,21 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Tämän Slatepackin tuonti epäonnistui.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Lähetän</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Vastaanotan</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Lähettämäni summa</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Vastaanottamani summa</translation>
+    </message>
 </context>
 </TS>

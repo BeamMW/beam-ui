@@ -4055,5 +4055,21 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
         <source>This Slatepack could not be imported.</source>
         <translation>Dieser Slatepack konnte nicht importiert werden.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Ich sende</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Ich erhalte</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Betrag, den ich sende</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Betrag, den ich erhalte</translation>
+    </message>
 </context>
 </TS>

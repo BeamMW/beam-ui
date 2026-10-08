@@ -4051,5 +4051,21 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>이 Slatepack을 가져올 수 없습니다.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>보내는 금액</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>받는 금액</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>보내는 금액</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>받는 금액</translation>
+    </message>
 </context>
 </TS>

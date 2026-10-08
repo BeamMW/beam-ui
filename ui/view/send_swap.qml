@@ -142,7 +142,7 @@ please review your settings and try again"
                     //
                     Panel {
                         //% "Send amount"
-                        title:                   qsTrId("sent-amount-label")
+                        title:                   qsTrId("swap-amount-i-send")
                         Layout.fillWidth:        true
 
                         content:
@@ -266,7 +266,7 @@ please review your settings and try again"
                     //
                     Panel {
                         //% "Receive amount"
-                        title:                   qsTrId("receive-amount-swap-label")
+                        title:                   qsTrId("swap-amount-i-receive")
                         Layout.fillWidth:        true
                         content:
 

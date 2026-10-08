@@ -4067,5 +4067,21 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>This Slatepack could not be imported.</source>
         <translation>无法导入此 Slatepack。</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>我发送</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>我接收</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>我发送的金额</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>我接收的金额</translation>
+    </message>
 </context>
 </TS>

@@ -4051,5 +4051,21 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>This Slatepack could not be imported.</source>
         <translation>Slatepack ini tidak dapat diimpor.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Saya kirim</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Saya terima</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Jumlah yang saya kirim</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Jumlah yang saya terima</translation>
+    </message>
 </context>
 </TS>

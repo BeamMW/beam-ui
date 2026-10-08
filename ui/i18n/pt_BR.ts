@@ -4058,5 +4058,21 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Não foi possível importar este Slatepack.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Eu envio</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Eu recebo</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Valor que envio</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Valor que recebo</translation>
+    </message>
 </context>
 </TS>
