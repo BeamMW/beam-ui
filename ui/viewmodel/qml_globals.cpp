@@ -117,6 +117,11 @@ void QMLGlobals::logInfo(const QString& message)
     BEAM_LOG_INFO () << message.toStdString();
 }
 
+QString QMLGlobals::getAccountPictureByIndex(int index)
+{
+    return WalletSettings::getAccountPictureByIndex(index);
+}
+
 void QMLGlobals::copyToClipboard(const QString& text)
 {
     QApplication::clipboard()->setText(text);

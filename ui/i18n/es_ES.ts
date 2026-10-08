@@ -4059,5 +4059,9 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>No se ha podido importar este Slatepack.</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>Editar cuenta</translation>
+    </message>
 </context>
 </TS>

@@ -4057,5 +4057,9 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>This Slatepack could not be imported.</source>
         <translation>Ce Slatepack n&apos;a pas pu être importé.</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>Modifier le compte</translation>
+    </message>
 </context>
 </TS>

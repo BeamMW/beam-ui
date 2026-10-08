@@ -1276,6 +1276,21 @@ void  WalletSettings::setAccountPictureIndex(int value)
     m_accountSettings.m_data.setValue(kAccountPicture, value);
 }
 
+bool WalletSettings::isAccountLabelUsed(const QString& label) const
+{
+    const auto accountDirName = getAccountDataDir().dirName();
+    for (const auto& dirInfo : getNetworkDataDir().entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot))
+    {
+        if (dirInfo.fileName() == accountDirName)
+            continue;
+
+        QSettings settings(QDir(dirInfo.absoluteFilePath()).filePath(SettingsFile), QSettings::IniFormat);
+        if (settings.value(kAccountLabel).toString() == label)
+            return true;
+    }
+    return false;
+}
+
 bool WalletSettings::isConnectToLocalNode() const
 {
     auto unpackedAddress = parseAddress(getNodeAddress());

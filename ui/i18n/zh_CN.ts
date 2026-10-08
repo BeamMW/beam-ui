@@ -4067,5 +4067,9 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>This Slatepack could not be imported.</source>
         <translation>无法导入此 Slatepack。</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>编辑账户</translation>
+    </message>
 </context>
 </TS>

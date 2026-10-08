@@ -4056,5 +4056,9 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Deze Slatepack kon niet worden geïmporteerd.</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>Account bewerken</translation>
+    </message>
 </context>
 </TS>

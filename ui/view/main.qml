@@ -16,6 +16,7 @@ Rectangle {
     readonly property bool devMode: viewModel.isDevMode
     readonly property string accountLabel: viewModel.accountLabel
     readonly property string accountPicture: viewModel.accountPicture
+    readonly property int accountPictureIndex: viewModel.accountPictureIndex
     readonly property alias unreadNotifications : viewModel.unreadNotifications
     property alias statusBar: statusBarInternal
     anchors.fill:   parent
@@ -429,6 +430,14 @@ Rectangle {
 
     function openAtomicSwaps() {
         navigateTo("atomic_swap")
+    }
+
+    function isAccountLabelUsed(label) {
+        return viewModel.isAccountLabelUsed(label)
+    }
+
+    function updateAccount(label, pictureIndex) {
+        viewModel.updateAccount(label, pictureIndex)
     }
 
     function openMessenger() {

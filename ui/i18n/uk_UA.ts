@@ -4067,5 +4067,9 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>This Slatepack could not be imported.</source>
         <translation>Не вдалося імпортувати цей Slatepack.</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>Змінити обліковий запис</translation>
+    </message>
 </context>
 </TS>

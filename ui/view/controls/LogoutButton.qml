@@ -40,6 +40,13 @@ Item {
             }
         }
         Action {
+            text:           qsTrId("account-edit-title")
+            icon.source:    "qrc:/assets/icon-edit.svg"
+            onTriggered: {
+                editAccountDialog.open();
+            }
+        }
+        Action {
             text:           qsTrId("settings-title")
             icon.source:    "qrc:/assets/icon-settings.svg"
             onTriggered: {
@@ -70,6 +77,9 @@ Item {
             horizontalAlignment:    Text.AlignRight
             rightPadding:           20
         }
+    }
+    EditAccountDialog {
+        id: editAccountDialog
     }
     CustomToolButton {
         id:                     logoutButton

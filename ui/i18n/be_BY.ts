@@ -4070,5 +4070,9 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>This Slatepack could not be imported.</source>
         <translation>Не ўдалося імпартаваць гэты Slatepack.</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>Змяніць акаўнт</translation>
+    </message>
 </context>
 </TS>
