@@ -63,8 +63,10 @@ namespace
     const char* kDevAppMinApiVer = "devapp/min_api_version";
     const char* kLocalAppsPort   = "apps/local_port";
     const char* kShadersPrivLvl  = "apps/shaders_privilege";
+    #ifdef BEAM_IPFS_SUPPORT
     const char* kIPFSPrefix      = "ipfsnode/";
     const char* kIPFSNodeStart   = "ipfs_node_start";
+    #endif
 
     const char* kDappStoreCID = "dappstore/cid";
     const char* kDappStorePath = "dappstore/path";

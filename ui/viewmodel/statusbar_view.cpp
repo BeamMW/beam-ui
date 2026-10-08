@@ -54,10 +54,9 @@ StatusbarViewModel::StatusbarViewModel()
     connect(m_exchangeRatesManager.get(), SIGNAL(updateTimeChanged()), SLOT(onExchangeRatesTimer()));
     m_model->getAsync()->getNetworkStatus();
 
+    #ifdef BEAM_IPFS_SUPPORT
     auto& settings = AppModel::getInstance().getSettings();
     connect(&settings, &WalletSettings::IPFSSettingsChanged, this, &StatusbarViewModel::onIPFSSettingsChanged);
-
-    #ifdef BEAM_IPFS_SUPPORT
     connect(m_model, &WalletModel::IPFSStatusChanged, this, &StatusbarViewModel::onIPFSStatus);
     m_model->getAsync()->getIPFSStatus();
     #endif
