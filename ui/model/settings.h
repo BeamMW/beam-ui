@@ -150,6 +150,9 @@ public:
     bool hideSeedValidationPromo() const;
     void setHideSeedValidationPromo(bool value);
 
+    bool isAssetsPanelFolded() const;
+    void setAssetsPanelFolded(bool value);
+
     void minConfirmationsInit();
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);

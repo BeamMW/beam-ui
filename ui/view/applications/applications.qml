@@ -295,6 +295,7 @@ ColumnLayout {
         AssetsPanel {
             id:                 assetsList
             Layout.fillWidth:   true
+            foldable:           true
             Binding {
                 target:    txTable
                 property:  "selectedAssets"

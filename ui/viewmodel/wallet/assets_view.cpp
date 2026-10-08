@@ -69,6 +69,20 @@ void AssetsViewModel::setShowValidationPromo(bool value)
     emit showValidationPromoChanged();
 }
 
+bool AssetsViewModel::getAssetsPanelFolded() const
+{
+    return _settings.isAssetsPanelFolded();
+}
+
+void AssetsViewModel::setAssetsPanelFolded(bool value)
+{
+    if (getAssetsPanelFolded() == value)
+        return;
+
+    _settings.setAssetsPanelFolded(value);
+    emit assetsPanelFoldedChanged();
+}
+
 bool AssetsViewModel::getCanHideValidationPromo() const
 {
     auto availableL = beam::AmountBig::get_Lo(_wallet->getAvailable(beam::Asset::s_BeamID));

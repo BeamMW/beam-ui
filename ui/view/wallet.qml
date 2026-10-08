@@ -134,6 +134,7 @@ ColumnLayout {
     AssetsPanel {
         id: assets
         Layout.fillWidth: true
+        foldable: true
 
         Binding {
             target:    txTable

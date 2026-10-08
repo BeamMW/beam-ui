@@ -53,6 +53,8 @@ Control {
     property bool   showSelected:   false
     property bool   selectable:     true
     property bool   showSettingLink:false
+    property bool   foldable:       false
+    readonly property bool folded:  foldable && viewModel.assetsPanelFolded
 
     property real   assetsFilterRowHeight: 40
 
@@ -101,18 +103,42 @@ Control {
         width: parent.width
         spacing: 0
 
-        SFText {
-            font {
-                pixelSize: 14
-                letterSpacing: 3.11
-                styleName: "DemiBold"; weight: Font.DemiBold
-                capitalization: Font.AllUppercase
+        RowLayout {
+            spacing: 10
+
+            SFText {
+                font {
+                    pixelSize: 14
+                    letterSpacing: 3.11
+                    styleName: "DemiBold"; weight: Font.DemiBold
+                    capitalization: Font.AllUppercase
+                }
+
+                opacity: 0.5
+                color: Style.content_main
+                //% "Assets"
+                text: qsTrId("wallet-assets-title")
             }
 
-            opacity: 0.5
-            color: Style.content_main
-            //% "Assets"
-            text: qsTrId("wallet-assets-title")
+            SvgImage {
+                Layout.alignment:     Qt.AlignVCenter
+                Layout.maximumHeight: 8
+                Layout.maximumWidth:  13
+                visible: control.foldable
+                source: control.folded ? "qrc:/assets/icon-grey-arrow-down.svg" : "qrc:/assets/icon-grey-arrow-up.svg"
+            }
+
+            HoverHandler {
+                enabled:     control.foldable
+                cursorShape: Qt.PointingHandCursor
+            }
+
+            TapHandler {
+                enabled: control.foldable
+                onTapped: {
+                    viewModel.assetsPanelFolded = !viewModel.assetsPanelFolded
+                }
+            }
         }
 
         LinkButton {
@@ -201,7 +227,8 @@ Control {
     contentItem: ScrollView {
         id: scroll
 
-        implicitHeight: control.scrollViewHeight
+        implicitHeight: control.folded ? 0 : control.scrollViewHeight
+        visible: !control.folded
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: control.hasScroll && hovered ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded
 
