@@ -4056,5 +4056,13 @@ Verbind uw Hardware Wallet om de transactie af te ronden.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Deze Slatepack kon niet worden geïmporteerd.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>verbonden node ondersteunt het ontvangen van offline transacties niet</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>U bent verbonden met een node die het ontvangen van offline transacties niet ondersteunt.</translation>
+    </message>
 </context>
 </TS>

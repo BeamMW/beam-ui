@@ -35,8 +35,8 @@ Item {
     property string error_msg_3rd_client: model.coinClientErrorMsg || model.ipfsError
     //% "online"
     property string statusOnline: qsTrId("status-online")
-    //% "connected node supports online transactions only"
-    property string statusOnlineRemote: qsTrId("status-online-remote")
+    //% "connected node is not compatible with receiving offline transactions"
+    property string statusOnlineRemote: qsTrId("status-online-remote-no-offline-receive")
     property var indicatorX: 60
     property var indicatorY: 32
     property real nodeSyncProgress: model.nodeSyncProgress

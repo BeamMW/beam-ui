@@ -4061,5 +4061,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Tämän Slatepackin tuonti epäonnistui.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>yhdistetty solmu ei tue offline-tapahtumien vastaanottamista</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Olet yhteydessä solmuun, joka ei tue offline-tapahtumien vastaanottamista.</translation>
+    </message>
 </context>
 </TS>

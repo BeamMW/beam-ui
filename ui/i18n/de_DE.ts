@@ -4055,5 +4055,13 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
         <source>This Slatepack could not be imported.</source>
         <translation>Dieser Slatepack konnte nicht importiert werden.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>verbundener Knoten unterstützt keinen Empfang von Offline-Transaktionen</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Sie sind mit einem Knoten verbunden, der keinen Empfang von Offline-Transaktionen unterstützt.</translation>
+    </message>
 </context>
 </TS>

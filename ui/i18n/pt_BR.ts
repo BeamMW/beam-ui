@@ -4058,5 +4058,13 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Não foi possível importar este Slatepack.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>o nó conectado não é compatível com o recebimento de transações offline</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Você está conectado a um nó que não é compatível com o recebimento de transações offline.</translation>
+    </message>
 </context>
 </TS>
