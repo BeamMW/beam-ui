@@ -45,6 +45,7 @@ namespace
     const char* kRateUnit = "rateUnit";
     const char* kLastAssetSelection = "lastAssetSelection";
     const char* kHideSeedValidationPromo = "hideSeedValidationPromo";
+    const char* kMessengerIgnoredAddresses = "messengerIgnoredAddresses";
     const char* kDevMode ="dev_mode";
 
     const char* kLocalNodeRun = "localnode/run";
@@ -773,6 +774,18 @@ void WalletSettings::setHideSeedValidationPromo(bool value)
 {
     Lock lock(m_mutex);
     m_accountSettings.m_data.setValue(kHideSeedValidationPromo, value);
+}
+
+QStringList WalletSettings::getMessengerIgnoredAddresses() const
+{
+    Lock lock(m_mutex);
+    return m_accountSettings.m_data.value(kMessengerIgnoredAddresses).toStringList();
+}
+
+void WalletSettings::setMessengerIgnoredAddresses(const QStringList& value)
+{
+    Lock lock(m_mutex);
+    m_accountSettings.m_data.setValue(kMessengerIgnoredAddresses, value);
 }
 
 QString WalletSettings::getDevAppUrl() const

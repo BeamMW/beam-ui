@@ -4059,5 +4059,13 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>No se ha podido importar este Slatepack.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Direcciones de las que mostrar mensajes</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Los chats con mensajes recibidos solo en direcciones no marcadas están ocultos.</translation>
+    </message>
 </context>
 </TS>

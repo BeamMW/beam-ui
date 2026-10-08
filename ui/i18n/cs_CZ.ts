@@ -4070,5 +4070,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Tento Slatepack se nepodařilo importovat.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Adresy, ze kterých zobrazovat zprávy</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Chaty se zprávami přijatými pouze na neoznačené adresy jsou skryté.</translation>
+    </message>
 </context>
 </TS>

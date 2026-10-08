@@ -53,23 +53,61 @@ QHash<int, QByteArray> MessengerChatListItem::roleNames() const
 MessengerChatList::MessengerChatList() :
     _walletModel(AppModel::getInstance().getWalletModel())
 {
+    const auto ignored = AppModel::getInstance().getSettings().getMessengerIgnoredAddresses();
+    _ignoredAddresses = QSet<QString>(ignored.begin(), ignored.end());
+
     connect(_walletModel,
             SIGNAL(addressesChanged(bool, const std::vector<beam::wallet::WalletAddress>&)),
             SLOT(onAddresses(bool, const std::vector<beam::wallet::WalletAddress>&)));
     connect(_walletModel,
-            SIGNAL(chatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& )),
-            SLOT(onChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& )));
+            SIGNAL(chatList(const std::vector<beam::wallet::ChatInfo>&)),
+            SLOT(onChatList(const std::vector<beam::wallet::ChatInfo>&)));
 
     connect(_walletModel,
             SIGNAL(instantMessage(beam::Timestamp, const beam::wallet::WalletID&, const std::string&, bool)),
             SLOT(onMessage(beam::Timestamp, const beam::wallet::WalletID&, const std::string&, bool)));
 
+    _walletModel->getAsync()->getAddresses(true);
     _walletModel->getAsync()->getAddresses(false);
 }
 
 QAbstractItemModel* MessengerChatList::getChats()
 {
     return &_chats;
+}
+
+QVariantList MessengerChatList::getOwnAddresses() const
+{
+    QVariantList result;
+    for (const auto& addr : _ownAddresses)
+    {
+        auto id = QString::fromStdString(std::to_string(addr.m_BbsAddr));
+        const bool ignored = _ignoredAddresses.contains(id);
+        if (addr.isExpired() && !ignored)
+            continue;
+
+        QVariantMap item;
+        item["address"] = id;
+        item["label"] = QString::fromStdString(addr.m_label);
+        item["ignored"] = ignored;
+        result.push_back(item);
+    }
+    return result;
+}
+
+void MessengerChatList::setAddressIgnored(const QString& address, bool ignored)
+{
+    if (ignored == _ignoredAddresses.contains(address))
+        return;
+
+    if (ignored)
+        _ignoredAddresses.insert(address);
+    else
+        _ignoredAddresses.remove(address);
+
+    AppModel::getInstance().getSettings().setMessengerIgnoredAddresses(QStringList(_ignoredAddresses.begin(), _ignoredAddresses.end()));
+    emit ownAddressesChanged();
+    updateChats();
 }
 
 void MessengerChatList::blockSignals()
@@ -80,6 +118,7 @@ void MessengerChatList::blockSignals()
 void MessengerChatList::unblockSignals()
 {
     _signalBlocker = false;
+    _walletModel->getAsync()->getAddresses(true);
     _walletModel->getAsync()->getAddresses(false);
 }
 
@@ -87,27 +126,44 @@ void MessengerChatList::onAddresses(bool own, const std::vector<beam::wallet::Wa
 {
     if (_signalBlocker) return;
 
-    if (!own)
-        _contacts = addresses;
+    if (own)
+    {
+        _ownAddresses = addresses;
+        emit ownAddressesChanged();
+        return;
+    }
 
+    _contacts = addresses;
     _walletModel->getAsync()->getChats();
 }
 
-void MessengerChatList::onChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats)
+void MessengerChatList::onChatList(const std::vector<beam::wallet::ChatInfo>& chats)
 {
     if (_signalBlocker) return;
 
-    std::vector<ChatItem> modifiedItems;
-    modifiedItems.reserve(chats.size());
+    _allChats = chats;
+    updateChats();
+}
 
-    for (const auto& item : chats)
+void MessengerChatList::updateChats()
+{
+    std::vector<ChatItem> modifiedItems;
+    modifiedItems.reserve(_allChats.size());
+
+    for (const auto& chat : _allChats)
     {
+        const bool isIgnored = !chat.m_myAddresses.empty() &&
+            std::all_of(chat.m_myAddresses.begin(), chat.m_myAddresses.end(),
+                        [this] (const auto& myAddr) { return _ignoredAddresses.contains(QString::fromStdString(std::to_string(myAddr))); });
+        if (isIgnored)
+            continue;
+
         std::string name = "Anonymous";
         auto it = std::find_if(_contacts.begin(), _contacts.end(),
-                               [&item] (const auto& addr) { return addr.m_BbsAddr == item.first;});
+                               [&chat] (const auto& addr) { return addr.m_BbsAddr == chat.m_counterpart;});
         if (it != _contacts.end())
             name = it->m_label;
-        modifiedItems.emplace_back(ChatItem{item.first, name, item.second});
+        modifiedItems.emplace_back(ChatItem{chat.m_counterpart, name, chat.m_hasUnread});
     }
     _chats.reset(modifiedItems);
     emit listChanged();

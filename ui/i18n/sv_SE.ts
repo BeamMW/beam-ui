@@ -4057,5 +4057,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Den här Slatepacken kunde inte importeras.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Adresser att visa meddelanden från</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Chattar med meddelanden som bara tagits emot på omarkerade adresser döljs.</translation>
+    </message>
 </context>
 </TS>

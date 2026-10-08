@@ -4064,5 +4064,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Không thể nhập Slatepack này.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Địa chỉ để hiển thị tin nhắn</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Các cuộc trò chuyện có tin nhắn chỉ nhận ở địa chỉ không được chọn sẽ bị ẩn.</translation>
+    </message>
 </context>
 </TS>

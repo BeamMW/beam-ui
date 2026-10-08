@@ -409,7 +409,7 @@ void WalletModel::onInstantMessage(Timestamp time, const beam::wallet::WalletID&
     emit instantMessage(time, counterpart, message, isIncome);
 }
 
-void WalletModel::onGetChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats)
+void WalletModel::onGetChatList(const std::vector<beam::wallet::ChatInfo>& chats)
 {
     emit chatList(chats);
 }
