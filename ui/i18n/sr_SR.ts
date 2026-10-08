@@ -4083,5 +4083,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Овај Slatepack није могуће увезти.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Adrese sa kojih se prikazuju poruke</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Četovi sa porukama primljenim samo na neoznačene adrese su skriveni.</translation>
+    </message>
 </context>
 </TS>

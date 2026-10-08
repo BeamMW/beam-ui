@@ -13,6 +13,7 @@
 // limitations under the License.
 #pragma once
 #include <QObject>
+#include <QSet>
 #include "model/wallet_model.h"
 #include "viewmodel/helpers/list_model.h"
 #include "wallet/core/common.h"
@@ -44,23 +45,33 @@ class MessengerChatList : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel* chats READ getChats NOTIFY listChanged)
+    Q_PROPERTY(QVariantList ownAddresses READ getOwnAddresses NOTIFY ownAddressesChanged)
 public:
     MessengerChatList();
     QAbstractItemModel* getChats();
+    QVariantList getOwnAddresses() const;
     Q_INVOKABLE void blockSignals();
     Q_INVOKABLE void unblockSignals();
+    // hide chats with messages received only on the ignored own addresses
+    Q_INVOKABLE void setAddressIgnored(const QString& address, bool ignored);
 
 public slots:
     void onAddresses(bool own, const std::vector<beam::wallet::WalletAddress>& addresses);
-    void onChatList(const std::vector<std::pair<beam::wallet::WalletID, bool>>& chats);
+    void onChatList(const std::vector<beam::wallet::ChatInfo>& chats);
     void onMessage(beam::Timestamp time, const beam::wallet::WalletID& counterpart, const std::string& message, bool isIncome);
 
 signals:
     void listChanged();
+    void ownAddressesChanged();
 
 private:
+    void updateChats();
+
     WalletModel::Ptr _walletModel;
     std::vector<beam::wallet::WalletAddress> _contacts;
+    std::vector<beam::wallet::WalletAddress> _ownAddresses;
+    std::vector<beam::wallet::ChatInfo> _allChats;
+    QSet<QString> _ignoredAddresses;
     MessengerChatListItem _chats;
     bool _signalBlocker = false;
 };

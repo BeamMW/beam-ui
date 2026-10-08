@@ -4055,5 +4055,13 @@ Verbinden Sie Ihre Hardware-Wallet um die Transaktion abzuschließen.</translati
         <source>This Slatepack could not be imported.</source>
         <translation>Dieser Slatepack konnte nicht importiert werden.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Adressen, deren Nachrichten angezeigt werden</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Chats mit Nachrichten, die nur an nicht markierte Adressen empfangen wurden, werden ausgeblendet.</translation>
+    </message>
 </context>
 </TS>

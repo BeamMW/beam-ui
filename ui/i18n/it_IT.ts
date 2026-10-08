@@ -4059,5 +4059,13 @@ Collega il tuo wallet Hardware per finalizzare la transazione.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Non è stato possibile importare questo Slatepack.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Indirizzi da cui mostrare i messaggi</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Le chat con messaggi ricevuti solo su indirizzi non selezionati sono nascoste.</translation>
+    </message>
 </context>
 </TS>

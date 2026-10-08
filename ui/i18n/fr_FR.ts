@@ -4057,5 +4057,13 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>This Slatepack could not be imported.</source>
         <translation>Ce Slatepack n&apos;a pas pu être importé.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Adresses dont afficher les messages</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Les discussions dont les messages ont été reçus uniquement sur des adresses non cochées sont masquées.</translation>
+    </message>
 </context>
 </TS>

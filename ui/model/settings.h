@@ -150,6 +150,9 @@ public:
     bool hideSeedValidationPromo() const;
     void setHideSeedValidationPromo(bool value);
 
+    QStringList getMessengerIgnoredAddresses() const;
+    void setMessengerIgnoredAddresses(const QStringList& value);
+
     void minConfirmationsInit();
     uint32_t getMinConfirmations() const;
     void setMinConfirmations(uint32_t value);

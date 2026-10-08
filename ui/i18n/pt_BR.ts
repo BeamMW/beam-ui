@@ -4058,5 +4058,13 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Não foi possível importar este Slatepack.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Endereços dos quais mostrar mensagens</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Conversas com mensagens recebidas apenas em endereços desmarcados ficam ocultas.</translation>
+    </message>
 </context>
 </TS>

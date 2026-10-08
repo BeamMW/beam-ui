@@ -4061,5 +4061,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Tämän Slatepackin tuonti epäonnistui.</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>Osoitteet, joiden viestit näytetään</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>Keskustelut, joiden viestit on vastaanotettu vain valitsemattomiin osoitteisiin, piilotetaan.</translation>
+    </message>
 </context>
 </TS>

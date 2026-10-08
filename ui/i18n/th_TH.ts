@@ -4051,5 +4051,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>ไม่สามารถนำเข้า Slatepack นี้ได้</translation>
     </message>
+    <message id="messenger-addresses-settings">
+        <source>Addresses to show messages from</source>
+        <translation>ที่อยู่ที่จะแสดงข้อความ</translation>
+    </message>
+    <message id="messenger-addresses-settings-description">
+        <source>Chats with messages received only on unchecked addresses are hidden.</source>
+        <translation>แชทที่มีข้อความได้รับเฉพาะที่อยู่ที่ไม่ได้เลือกจะถูกซ่อน</translation>
+    </message>
 </context>
 </TS>

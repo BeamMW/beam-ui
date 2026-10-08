@@ -46,6 +46,19 @@ ColumnLayout {
         RowLayout {
             spacing:          20
 
+            CustomToolButton {
+                Layout.preferredHeight: 32
+                icon.source: "qrc:/assets/icon-settings-white.svg"
+                hoverEnabled: true
+                onClicked: addressesDialog.open()
+
+                CustomToolTip {
+                    //% "Addresses to show messages from"
+                    text:    qsTrId("messenger-addresses-settings")
+                    visible: parent.hovered
+                }
+            }
+
             PrimaryButton {
                 id:                     newChatButton
                 Layout.preferredHeight: 32
@@ -56,6 +69,76 @@ ColumnLayout {
                 onClicked:    {
                     messengerRoot.openChat();
                 }
+            }
+        }
+    }
+
+    CustomDialog {
+        id:      addressesDialog
+        width:   560
+        height:  460
+        parent:  Overlay.overlay
+        x:       Math.round((parent.width - width) / 2)
+        y:       Math.round((parent.height - height) / 2)
+        modal:   true
+
+        contentItem: ColumnLayout {
+            spacing: 0
+            anchors.fill:    parent
+            anchors.margins: 30
+
+            SFText {
+                Layout.fillWidth:    true
+                horizontalAlignment: Text.AlignHCenter
+                color:               Style.content_main
+                font.pixelSize:      18
+                font.weight:         Font.Bold
+                text:                qsTrId("messenger-addresses-settings")
+            }
+
+            SFText {
+                Layout.fillWidth:    true
+                Layout.topMargin:    15
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode:            Text.Wrap
+                color:               Style.content_secondary
+                font.pixelSize:      14
+                //% "Chats with messages received only on unchecked addresses are hidden."
+                text:                qsTrId("messenger-addresses-settings-description")
+            }
+
+            ScrollView {
+                Layout.fillWidth:   true
+                Layout.fillHeight:  true
+                Layout.topMargin:   25
+                ScrollBar.vertical: CustomScrollBar {}
+                ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                clip:               true
+
+                ColumnLayout {
+                    width:   addressesDialog.availableWidth - 60
+                    spacing: 15
+
+                    Repeater {
+                        model: chatList.ownAddresses
+                        CustomCheckBox {
+                            Layout.fillWidth: true
+                            checked: !modelData.ignored
+                            text: modelData.label.length
+                                ? modelData.label + "\n" + modelData.address
+                                : modelData.address
+                            onToggled: chatList.setAddressIgnored(modelData.address, !checked)
+                        }
+                    }
+                }
+            }
+
+            CustomButton {
+                Layout.topMargin: 20
+                Layout.alignment: Qt.AlignHCenter
+                text:             qsTrId("general-close")
+                icon.source:      "qrc:/assets/icon-cancel-white.svg"
+                onClicked:        addressesDialog.close()
             }
         }
     }
