@@ -254,3 +254,20 @@ QString MainViewModel::getAccountPicture() const
 {
     return WalletSettings::getAccountPictureByIndex(m_settings.getAccountPictureIndex());
 }
+
+int MainViewModel::getAccountPictureIndex() const
+{
+    return m_settings.getAccountPictureIndex();
+}
+
+bool MainViewModel::isAccountLabelUsed(const QString& label) const
+{
+    return m_settings.isAccountLabelUsed(label);
+}
+
+void MainViewModel::updateAccount(const QString& label, int pictureIndex)
+{
+    m_settings.setAccountLabel(label);
+    m_settings.setAccountPictureIndex(pictureIndex);
+    emit accountChanged();
+}

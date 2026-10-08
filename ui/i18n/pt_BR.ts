@@ -4058,5 +4058,9 @@ Conecte a sua Carteira Física para finalizar a transação.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Não foi possível importar este Slatepack.</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>Editar conta</translation>
+    </message>
 </context>
 </TS>

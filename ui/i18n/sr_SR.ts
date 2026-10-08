@@ -4083,5 +4083,9 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Овај Slatepack није могуће увезти.</translation>
     </message>
+    <message id="account-edit-title">
+        <source>Edit account</source>
+        <translation>Izmeni nalog</translation>
+    </message>
 </context>
 </TS>

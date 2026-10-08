@@ -29,12 +29,15 @@ class MainViewModel : public QObject
     Q_PROPERTY(QString faucetAppID      READ getFaucetAppID         CONSTANT)
     Q_PROPERTY(QString ethBridgeAppID   READ getEthBridgeAppID      CONSTANT)
     Q_PROPERTY(bool isDevMode           READ getDevMode             CONSTANT)
-    Q_PROPERTY(QString accountLabel     READ getAccountLabel        CONSTANT)
-    Q_PROPERTY(QString accountPicture   READ getAccountPicture      CONSTANT)
+    Q_PROPERTY(QString accountLabel     READ getAccountLabel        NOTIFY accountChanged)
+    Q_PROPERTY(QString accountPicture   READ getAccountPicture      NOTIFY accountChanged)
+    Q_PROPERTY(int accountPictureIndex  READ getAccountPictureIndex NOTIFY accountChanged)
 public:
     MainViewModel();
 
     Q_INVOKABLE void resetLockTimer();
+    Q_INVOKABLE bool isAccountLabelUsed(const QString& label) const;
+    Q_INVOKABLE void updateAccount(const QString& label, int pictureIndex);
 
 signals:
     void gotoStartScreen();
@@ -45,6 +48,7 @@ signals:
     void unreadNotificationsChanged();
     void clipboardChanged(const QString& message);
     void hwError(const QString& message);
+    void accountChanged();
 
 public slots:
     void lockWallet();
@@ -65,6 +69,7 @@ private:
     [[nodiscard]] bool getDevMode() const;
     [[nodiscard]] QString getAccountLabel() const;
     [[nodiscard]] QString getAccountPicture() const;
+    [[nodiscard]] int getAccountPictureIndex() const;
 
 
 private:

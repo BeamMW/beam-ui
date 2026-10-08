@@ -8,9 +8,6 @@ import "../controls"
 import "../utils.js" as Utils
 
 WizzardPage {
-    function getPictureByIndex(i) { 
-        return viewModel.getAccountPictureByIndex(i)
-    }
     ColumnLayout {
         Layout.alignment:       Qt.AlignHCenter
         Layout.fillWidth:       false
@@ -64,54 +61,12 @@ WizzardPage {
                 font.pixelSize: 14
             }
         }
-        Grid {
+        AccountPictureGrid {
             id: picturesView
-            property int currentIndex: 0
             Layout.topMargin:       40
             Layout.alignment:       Qt.AlignHCenter
             Layout.fillWidth:       false
             Layout.fillHeight:      false
-            columnSpacing:          20
-            columns:                3
-            rowSpacing:             4
-            Repeater {
-                anchors.fill: parent
-                model:        9
-                delegate: Item {
-                    width: 100
-                    height: 100
-
-                    Item {
-                        anchors.fill: parent
-                        visible: picturesView.currentIndex == index
-                        Rectangle {
-                            id:             itemBorder
-                            anchors.fill:   parent
-                            border.color:   Style.active
-                            border.width:   3
-                            color:          "transparent"
-                            radius:         50
-                        }
-                        DropShadow {
-                            anchors.fill: parent
-                            radius: 5
-                            samples: 9
-                            color: Style.active
-                            source: itemBorder
-                        }
-                    }
-
-                    SvgImage {
-                        anchors.fill: parent
-                        source: getPictureByIndex(index)
-                    }
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: picturesView.currentIndex = index
-                    }
-
-                }
-            }
         }
     }
 

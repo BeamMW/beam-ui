@@ -172,6 +172,8 @@ public:
     QString getAccountLabel() const;
     void setAccountLabel(const QString& label);
     int getAccountPictureIndex() const;
+    // checks whether another account of the current network already has this label
+    bool isAccountLabelUsed(const QString& label) const;
     void setAccountPictureIndex(int value);
     bool isConnectToLocalNode() const;
 
