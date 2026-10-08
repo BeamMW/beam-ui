@@ -256,8 +256,8 @@ ColumnLayout {
         TableViewColumn {
             role: "send"
 
-            //% "Send"
-            title:     qsTrId("general-send")
+            //% "I send"
+            title:     qsTrId("swap-i-send")
             width:     150 * ordersTable.columnResizeRatio
             movable:   false
             resizable: false
@@ -283,8 +283,8 @@ ColumnLayout {
         TableViewColumn {
             role: "receive"
 
-            //% "Receive"
-            title: qsTrId("general-receive")
+            //% "I receive"
+            title: qsTrId("swap-i-receive")
             width:     150 * ordersTable.columnResizeRatio
             movable:   false
             resizable: false

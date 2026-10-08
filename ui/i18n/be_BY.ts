@@ -4070,5 +4070,21 @@ Connect your Hardware Wallet to finalize the transaction.</source>
         <source>This Slatepack could not be imported.</source>
         <translation>Не ўдалося імпартаваць гэты Slatepack.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Я адпраўляю</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Я атрымліваю</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Я адпраўляю</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Я атрымліваю</translation>
+    </message>
 </context>
 </TS>

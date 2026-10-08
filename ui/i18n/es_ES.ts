@@ -4059,5 +4059,21 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>No se ha podido importar este Slatepack.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Envío</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Recibo</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Cantidad que envío</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Cantidad que recibo</translation>
+    </message>
 </context>
 </TS>

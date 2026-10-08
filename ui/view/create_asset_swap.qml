@@ -56,7 +56,8 @@ ColumnLayout {
                     //
                     Panel {
                         //% "Send amount"
-                        title:                   qsTrId("sent-amount-label")
+                        //% "Amount I send"
+                        title:                   qsTrId("swap-amount-i-send")
                         Layout.fillWidth:        true
                         content:
                         AmountInput {
@@ -148,7 +149,8 @@ ColumnLayout {
                     //
                     Panel {
                         //% "Receive amount"
-                        title: qsTrId("receive-amount-swap-label")
+                        //% "Amount I receive"
+                        title: qsTrId("swap-amount-i-receive")
                         Layout.fillWidth:        true
                         content:
                         AmountInput {

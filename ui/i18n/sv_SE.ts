@@ -4057,5 +4057,21 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Den här Slatepacken kunde inte importeras.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Jag skickar</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Jag tar emot</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Belopp jag skickar</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Belopp jag tar emot</translation>
+    </message>
 </context>
 </TS>

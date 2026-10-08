@@ -4070,5 +4070,21 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Tento Slatepack se nepodařilo importovat.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>Posílám</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Dostanu</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Částka, kterou posílám</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Částka, kterou dostanu</translation>
+    </message>
 </context>
 </TS>

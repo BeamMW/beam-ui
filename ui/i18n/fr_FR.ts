@@ -4057,5 +4057,21 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>This Slatepack could not be imported.</source>
         <translation>Ce Slatepack n&apos;a pas pu être importé.</translation>
     </message>
+    <message id="swap-i-send">
+        <source>I send</source>
+        <translation>J&apos;envoie</translation>
+    </message>
+    <message id="swap-i-receive">
+        <source>I receive</source>
+        <translation>Je reçois</translation>
+    </message>
+    <message id="swap-amount-i-send">
+        <source>Amount I send</source>
+        <translation>Montant que j&apos;envoie</translation>
+    </message>
+    <message id="swap-amount-i-receive">
+        <source>Amount I receive</source>
+        <translation>Montant que je reçois</translation>
+    </message>
 </context>
 </TS>
