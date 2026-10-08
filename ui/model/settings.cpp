@@ -37,6 +37,7 @@ namespace
 {
     const char* kAccountLabel = "account/label";
     const char* kAccountPicture = "account/picture";
+    const char* kAccountLocale = "account/locale";
     const char* kNodeAddressName = "node/address";
     const char* kLocaleName = "locale";
     const char* kLockTimeoutName = "lock_timeout";
@@ -202,12 +203,26 @@ WalletSettings::WalletSettings(const QDir& appDataDir, const QString& applicatio
 
 void WalletSettings::changeAccount(int accountIndex)
 {
-    Lock lock(m_mutex);
-    m_networkSettings.~QSettings();
-    m_accountSettings.~AccountSettings();
-    m_accountIndex = accountIndex;
-    new(&m_accountSettings) AccountSettings(getAccountDataDir().filePath(SettingsFile));
-    new(&m_networkSettings) QSettings(getNetworkDataDir().filePath(SettingsFile), QSettings::IniFormat);
+    QString accountLocale;
+    {
+        Lock lock(m_mutex);
+        m_networkSettings.~QSettings();
+        m_accountSettings.~AccountSettings();
+        m_accountIndex = accountIndex;
+        new(&m_accountSettings) AccountSettings(getAccountDataDir().filePath(SettingsFile));
+        new(&m_networkSettings) QSettings(getNetworkDataDir().filePath(SettingsFile), QSettings::IniFormat);
+        accountLocale = m_accountSettings.m_data.value(kAccountLocale).toString();
+    }
+
+    // switch to the language of the account, if it was set
+    if (kSupportedLangs.count(accountLocale) && accountLocale != getLocale())
+    {
+        {
+            Lock lock(m_mutex);
+            m_globalData.setValue(kLocaleName, accountLocale);
+        }
+        emit localeChanged();
+    }
 }
 
 #if defined(BEAM_HW_WALLET)
@@ -472,8 +487,16 @@ void WalletSettings::setLocaleByLanguageName(const QString& language)
     {
         Lock lock(m_mutex);
         m_globalData.setValue(kLocaleName, locale);
+        m_accountSettings.m_data.setValue(kAccountLocale, locale);
     }
     emit localeChanged();
+}
+
+void WalletSettings::saveLocaleForAccount()
+{
+    const auto locale = getLocale();
+    Lock lock(m_mutex);
+    m_accountSettings.m_data.setValue(kAccountLocale, locale);
 }
 
 beam::wallet::Currency WalletSettings::getRateCurrency() const

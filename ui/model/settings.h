@@ -70,6 +70,8 @@ public:
     QString getLocale() const;
     QString getLanguageName() const;
     void setLocaleByLanguageName(const QString& language);
+    // remember the current language for the current account
+    void saveLocaleForAccount();
     static QStringList getSupportedLanguages();
 
     // Second currency settings

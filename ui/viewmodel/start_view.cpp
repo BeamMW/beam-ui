@@ -332,6 +332,8 @@ StartViewModel::StartViewModel()
     findExistingWalletDBIfNeeded();
 
     connect(&AppModel::getInstance(), &AppModel::walletRemoved, this, &StartViewModel::onWalletRemoved);
+    // the language may change when switching accounts
+    connect(&AppModel::getInstance().getSettings(), &WalletSettings::localeChanged, this, &StartViewModel::currentLanguageChanged);
 
 #if defined(BEAM_HW_WALLET)
     connect(&m_trezorThread, SIGNAL(ownerKeyImported()), this, SLOT(onTrezorOwnerKeyImported()));
@@ -846,6 +848,7 @@ void StartViewModel::createWallet(const QJSValue& callback)
         auto& settings = AppModel::getInstance().getSettings();
         settings.setAccountLabel(getNewAccountLabel());
         settings.setAccountPictureIndex(m_newAccountPictureIndex);
+        settings.saveLocaleForAccount();
         installApps(settings.getAppPathsToInstall());
         setupNode();
         try
