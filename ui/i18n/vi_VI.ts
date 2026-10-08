@@ -4064,5 +4064,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Không thể nhập Slatepack này.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>nút đã kết nối không hỗ trợ nhận giao dịch ngoại tuyến</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Bạn đang kết nối với một nút không hỗ trợ nhận giao dịch ngoại tuyến.</translation>
+    </message>
 </context>
 </TS>

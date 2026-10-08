@@ -4059,5 +4059,13 @@ Conecte el Wallet Físico para finalizar la transacción.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>No se ha podido importar este Slatepack.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>el nodo conectado no es compatible con la recepción de transacciones offline</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Está conectado a un nodo que no es compatible con la recepción de transacciones offline.</translation>
+    </message>
 </context>
 </TS>

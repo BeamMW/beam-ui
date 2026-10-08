@@ -4051,5 +4051,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Bu Slatepack içe aktarılamadı.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>bağlı düğüm çevrimdışı işlem almayı desteklemiyor</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Çevrimdışı işlem almayı desteklemeyen bir düğüme bağlısınız.</translation>
+    </message>
 </context>
 </TS>

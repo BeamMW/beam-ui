@@ -98,8 +98,8 @@ CustomDialog {
                     leftPadding:        30
                     color:              Style.content_secondary
                     font.italic:        true
-                    //% "You are currently connected to node that supports only online transactions."
-                    text: qsTrId("address-info-remote-node-warning")
+                    //% "You are currently connected to a node that is not compatible with receiving offline transactions."
+                    text: qsTrId("address-info-remote-node-no-offline-receive")
                 }
             }
         }

@@ -4057,5 +4057,13 @@ Connectez votre portefeuille physique pour finaliser la transaction.</translatio
         <source>This Slatepack could not be imported.</source>
         <translation>Ce Slatepack n&apos;a pas pu être importé.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>le nœud connecté n&apos;est pas compatible avec la réception de transactions hors ligne</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Vous êtes connecté à un nœud qui n&apos;est pas compatible avec la réception de transactions hors ligne.</translation>
+    </message>
 </context>
 </TS>

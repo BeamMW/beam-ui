@@ -4083,5 +4083,13 @@ Connect your Hardware Wallet to finalize the transaction.</translation>
         <source>This Slatepack could not be imported.</source>
         <translation>Овај Slatepack није могуће увезти.</translation>
     </message>
+    <message id="status-online-remote-no-offline-receive">
+        <source>connected node is not compatible with receiving offline transactions</source>
+        <translation>povezani čvor ne podržava primanje oflajn transakcija</translation>
+    </message>
+    <message id="address-info-remote-node-no-offline-receive">
+        <source>You are currently connected to a node that is not compatible with receiving offline transactions.</source>
+        <translation>Povezani ste sa čvorom koji ne podržava primanje oflajn transakcija.</translation>
+    </message>
 </context>
 </TS>
