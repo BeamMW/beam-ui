@@ -300,14 +300,13 @@ jobs:
         run: |
           mkdir signing
           cd signing
-          # Download AppImageTool
-          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          # Download appimagetool (AppImageKit's one is obsolete and produces AppImages requiring libfuse2)
+          wget -q https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           sudo chmod +x appimagetool-x86_64.AppImage
           cp ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage .
           # Extract, sign and pack AppImage
           ./Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-extract
-          ./appimagetool-x86_64.AppImage squashfs-root --sign
-          mv Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-x86_64.AppImage ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage
+          APPIMAGE_EXTRACT_AND_RUN=1 ./appimagetool-x86_64.AppImage --sign squashfs-root ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage
           # Output signature
           ../Beam_Wallet${{env.BEAM_DISPLAY_SUFFIX4}}-${{env.BEAM_VERSION}}-x86_64.AppImage --appimage-signature
 
@@ -336,13 +335,19 @@ jobs:
             *checksum.txt
           if-no-files-found: error
 
-      - uses: actions/upload-artifact@v4
+      # AppImage is a standalone executable, upload it (and its checksum) without zip
+      - uses: actions/upload-artifact@v7
         if: startsWith(matrix.os, 'ubuntu')
         with:
-          name: ${{env.PACKAGE_NAME}}-Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}
-          path: |
-            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
-            Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
+          path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage
+          archive: false
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v7
+        if: startsWith(matrix.os, 'ubuntu')
+        with:
+          path: Beam-Wallet${{env.BEAM_DISPLAY_SUFFIX2}}-${{env.BEAM_VERSION}}.AppImage-checksum.txt
+          archive: false
           if-no-files-found: error
 
       - uses: actions/upload-artifact@v4
