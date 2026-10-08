@@ -235,7 +235,7 @@ bool SettingsViewModel::getIPFSSupported() const
     #ifdef BEAM_IPFS_SUPPORT
     return true;
     #else
-    reutrn false;
+    return false;
     #endif
 }
 
